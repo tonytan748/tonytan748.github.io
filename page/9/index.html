@@ -1,0 +1,1483 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Page 9 | Tony Tan</title>
+  <meta name="author" content="Tony Tan">
+  
+  <meta name="description" content="Tony Tan">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Tony Tan">
+
+  
+    <meta property="og:image" content="">
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Tony Tan" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+</html>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Tony Tan</a></h1>
+  <h2><a href="/">a python progrmmer</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-07-26T16:00:00.000Z"><a href="/2014/07/27/a-sample-game-use-pygame/">2014-07-27</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/27/a-sample-game-use-pygame/">A Sample Game Use Pygame</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>a game by use pygame.</em></p>
+<pre>
+#-*-coding=utf-8-*-
+
+import sys
+import pygame
+import threading
+import random
+
+class Game:
+    def __init__(self):
+        pygame.init()
+        self.screen=pygame.display.set_mode((800,600))
+        pygame.display.set_caption('python game')
+        self.imgae=[]
+        self.imagerect=[]
+
+        self.vs=pygame.image.load('image/vs.gif')
+        self.o=pygame.image.load('image/o.gif')
+        self.p=pygame.image.load('image/p.gif')
+        self.u=pygame.image.load('iamge/o.gif')
+        self.title=pygame.image.load('iamge/title.gif')
+        self.start=pygame.image.load('image/start.gif')
+        self.exit=pygame.image.load('iamge/exit.gif')
+
+        for i in range(3):
+            gif=pygame.image.load('image/' + str(i) + '.gif')
+            self.image.append(gif)
+        for i in range(3):
+            image=self.image[i]
+            rect=image.get_rect()
+            rect.left=200 * (i+1) + rect.left
+            rect.top=400
+            self.imagerect.append(rect)
+
+    def Start(self):
+        self.screen.blit(self.title,(200,100,400,140))
+        self.screen.blit(self.start,(350,300,100,50))
+        self.screen.blit(self.exit,(350,400,100,50))
+        pygame.display.flip()
+        start=1
+        while start:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.isStart() == 0:
+                        start=0
+                    elif self.isStart(0 == 1:
+                        sys.exit()
+                    else:
+                        pass
+        self.run()
+
+    def run(self):
+        self.screen.fill((0,0,0))
+        for i in range(3):
+            self.screen.blit(self.image[i],self.imagerect[i])
+        pygame.display.flip()
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.Quit:
+                    sys.exit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    self.OnMouseButDown()
+                else:
+                    pass
+
+    def isStart(self):
+        pos = pygame.mouse.get_pos()
+        if pos[0] > 350 and pos[0] < 450:
+            if pos[1] > 300 and pos[1] < 350:
+                return 0
+            elif pos[1] > 400 and pos[1] < 450:
+                return 1
+            else:
+                return 2
+        else:
+            return 2
+
+    def OnMouseButDown(self)
+        self.screen.blit(self.vs,(300,150,140,140))
+        pos=pygame.mouse.get_pos()
+        if pos[1] > 400 and pos[1] < 500:
+            if pos[0] > 200 and pos[0] < 340:
+                self.screen.blit(self.image[0],(150,150,140,140))
+                self.isWin(0)
+            elif pos[0] > 400 and pos[0] < 540:
+                self.screen.blit(self.image[1],(150,150,140,140))
+                self.isWin(1)
+            elif pos[0] > 600 and pos[0] < 740:
+                self.screen.blit(self.image[2],(150,150,140,140))
+                self.isWin(2)
+            else:
+                pass
+
+    def isWin(self,value):
+        num=random.randint(0,2)
+        self.screen.blit(self.image[num],(450,150,590,240))
+        pygame.display.flip()
+
+        if num == value:
+            self.screen.blit(self.o,(220,10,140,70))
+            pygame.display.flip()
+        elif num < value:
+            if num == 0:
+                if value == 2:
+                    self.screen.blit(self.u,(220,10,140,70))
+                else:
+                    self.screen.blit(self.p,(220,10,140,70))
+                pygame.display.flip()
+            else:
+                self.screen.blit(self.u,(220,10,140,70))
+                pygame.display.flip()
+        else:
+            if num == 2:
+                if value == 1:
+                    self.screen.blit(self.u,(220,10,140,70))
+                else:
+                    self.screen.blit(self.p,(220,10,140,70))
+                pygame.display.flip()
+            else:
+                self.screen.blit(self.u,(220,10,140,70))
+                pygame.display.flip()
+
+game=Game()
+game.Start()
+
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-07-12T16:00:00.000Z"><a href="/2014/07/13/beautifulsoup-basic/">2014-07-13</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/13/beautifulsoup-basic/">BeautifulSoup Basic</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>What is BeautifulSoup? BeautifulSoup is a Python library from <a href="http://www.crummy.com" target="_blank" rel="noopener">www.crummy.com</a> </em></p>
+<p></p><h3>What is BeautifulSoup?</h3><br>BeautifulSoup is a Python library from <a href="http://www.crummy.com" target="_blank" rel="noopener">www.crummy.com</a> <p></p>
+<p></p><h3>What can it do</h3><br>On their website they write “Beautiful Soup parses anything you give it, and does the tree traversal stuff for you. <p></p>
+<p><b>You can tell it to:</b></p>
+<p>“Find all the links”</p>
+<p>“Find all the links of class externalLink”</p>
+<p>“Find all the links whose urls match “foo.com”</p>
+<p>“Find the table heading that’s got bold text, then give me that text.”” </p>
+<p></p><h3>BeautifulSoup Example</h3><br>In this example, we will try and find a link (a tag) in a webpage. <p></p>
+<p>Before we start, we have to import two modules. (BeutifulSoup and urllib2). </p>
+<p>Urlib2 is used to open the URL we want. </p>
+<p>We will use the soup.findAll method to search through the soup object to match fortext and html tags within the page. </p>
+<pre>
+from BeautifulSoup import BeautifulSoup
+import urllib2
+
+url = urllib2.urlopen("http://www.python.org")
+content = url.read()
+soup = BeautifulSoup(content)
+links = soup.findAll("a")
+</pre>
+
+<p>Output</p>
+<p><pre><br>That will print out all the elements in python.org with an “a” tag. </pre></p>
+<p>(The “a” tag defines a hyperlink, which is used to link from one page to another.)<br></p>
+<p></p><h3>BeautifulSoup Example 2</h3><br>To make it a bit more useful, we can specify the URL’s we want to return.  <p></p>
+<p><pre><br>from BeautifulSoup import BeautifulSoup<br>import urllib2<br>import re</pre></p>
+<p>url = urllib2.urlopen(“<a href="http://www.python.org&quot;" target="_blank" rel="noopener">http://www.python.org&quot;</a>)<br>content = url.read()<br>soup = BeautifulSoup(content)<br>for a in soup.findAll(‘a’,href=True):<br>    if re.findall(‘python’, a[‘href’]):<br>        print “Found the URL:”, a[‘href’]<br><br>Further Reading</p>
+<p>I recommend that you head over to <a href="http://www.crummy.com" target="_blank" rel="noopener">http://www.crummy.com</a> to read more about what you can do with this awesome module.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-07-11T16:00:00.000Z"><a href="/2014/07/12/remote-control-with-telnetlib-python-recipe/">2014-07-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/12/remote-control-with-telnetlib-python-recipe/">Remote control with telnetlib (Python recipe)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Remote control with telnetlib (Python recipe)</em></p>
+<p>Send commands to one or more logins using Python’s standard telnetlib module.</p>
+<p><pre></pre></p>
+<h1 id="auto-telnet-py-remote-control-via-telnet"><a href="#auto-telnet-py-remote-control-via-telnet" class="headerlink" title="auto_telnet.py - remote control via telnet"></a>auto_telnet.py - remote control via telnet</h1><p>import os, sys, string, telnetlib<br>from getpass import getpass</p>
+<p>class AutoTelnet:<br>    def <strong>init</strong>(self, user_list, cmd_list, **kw):<br>        self.host = kw.get(‘host’, ‘localhost’)<br>        self.timeout = kw.get(‘timeout’, 600)<br>        self.command_prompt = kw.get(‘command_prompt’, “$ “)<br>        self.passwd = {}<br>        for user in user_list:<br>            self.passwd[user] = getpass(“Enter user ‘%s’ password: “ % user)<br>        self.telnet = telnetlib.Telnet()<br>        for user in user_list:<br>            self.telnet.open(self.host)<br>            ok = self.action(user, cmd_list)<br>            if not ok:<br>                print “Unable to process:”, user<br>            self.telnet.close()</p>
+<pre><code>def action(self, user, cmd_list):
+    t = self.telnet
+    t.write(&quot;\n&quot;)
+    login_prompt = &quot;login: &quot;
+    response = t.read_until(login_prompt, 5)
+    if string.count(response, login_prompt):
+        print response
+    else:
+        return 0
+    password_prompt = &quot;Password:&quot;
+    t.write(&quot;%s\n&quot; % user)
+    response = t.read_until(password_prompt, 3)
+    if string.count(response, password_prompt):
+        print response
+    else:
+        return 0
+    t.write(&quot;%s\n&quot; % self.passwd[user])
+    response = t.read_until(self.command_prompt, 5)
+    if not string.count(response, self.command_prompt):
+        return 0
+    for cmd in cmd_list:
+        t.write(&quot;%s\n&quot; % cmd)
+        response = t.read_until(self.command_prompt, self.timeout)
+        if not string.count(response, self.command_prompt):
+            return 0
+        print response
+    return 1
+</code></pre><p>if <strong>name</strong> == ‘<strong>main</strong>‘:<br>    basename = os.path.splitext(os.path.basename(sys.argv[0]))[0]<br>    logname = os.environ.get(“LOGNAME”, os.environ.get(“USERNAME”))<br>    host = ‘localhost’<br>    import getopt<br>    optlist, user_list = getopt.getopt(sys.argv[1:], ‘c:f:h:’)<br>    usage = “””<br>usage: %s [-h host] [-f cmdfile] [-c “command”] user1 user2 …<br>    -c  command<br>    -f  command file<br>    -h  host  (default: ‘%s’)</p>
+<p>Example:  %s -c “echo $HOME” %s<br>“”” % (basename, host, basename, logname)<br>    if len(sys.argv) &lt; 2:<br>        print usage<br>        sys.exit(1)<br>    cmd_list = []<br>    for (opt, optarg) in optlist:<br>        if opt == ‘-f’:<br>            for r in open(optarg).readlines():<br>                if string.rstrip(r):<br>                    cmd_list.append(r)<br>        elif opt == ‘-c’:<br>            command = optarg<br>            if command[0] == ‘“‘ and command[-1] == ‘“‘:<br>                command = command[1:-1]<br>            cmd_list.append(command)<br>        elif opt == ‘-h’:<br>            host = optarg<br>    autoTelnet = AutoTelnet(user_list, cmd_list, host=host)</p>
+<p><br>Python’s telnetlib permits users to easily automate access to telnet servers, even from non-Unix machines.</p>
+<p>As an alternative to the popen() functions, telnetlib is probably a handy technique to have in your sysadmin toolbox.</p>
+<p>Production code will generally be more robust, but this example should be enough to get anyone started in the right direction.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-07-11T16:00:00.000Z"><a href="/2014/07/12/urllib2---user-agent/">2014-07-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/12/urllib2---user-agent/">Urllib2   User Agent</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>This post will show how to add headers to a HTTP request.</em></p>
+<p><pre><br>This post will show how to add headers to a HTTP request.</pre></p>
+<p>By default urllib2 identifies itself as Python-urllib/2.7 : GET / HTTP/1.1” 200<br>151 “-“ “Python-urllib/2.7”</p>
+<p>That can sometimes be confusing for certain sites. With the user_agent header in<br>Python, it’s possible to alter that and specify any identity you like.<br></p>
+<p><pre><br>The example below, use the Mozilla 5.10 as a User Agent, and that is also what<br>will show up in the web server log file.<br></pre></p>
+<p><pre><br>import urllib2</pre></p>
+<p>req = urllib2.Request(‘<a href="http://192.168.1.2/&#39;" target="_blank" rel="noopener">http://192.168.1.2/&#39;</a>)</p>
+<p>req.add_header(‘User-agent’, ‘Mozilla 5.10’)</p>
+<p>res = urllib2.urlopen(req)</p>
+<p>html = res.read()<br><br>This is what will show up in the log file.<br>“GET / HTTP/1.1” 200 151 “-“ “Mozilla 5.10”</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-07-11T16:00:00.000Z"><a href="/2014/07/12/using-telnet-in-python/">2014-07-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/12/using-telnet-in-python/">Using Telnet in Python</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>To make use of Telnet in Python, we can use the telnetlib module. </em></p>
+<p></p><h3>Using Telnet in Python</h3><br>To make use of Telnet in Python, we can use the telnetlib module. <p></p>
+<p>That module provides a Telnet class that implements the Telnet protocol.</p>
+<p>The Telnet module have several methods, in this example I will make use of these:<br>read_until, read_all() and write()</p>
+<p></p><h3>Telnet Script in Python</h3><br>Let’s make a telnet script<p></p>
+<pre>
+import getpass
+import sys
+import telnetlib
+
+HOST = "hostname"
+
+user = raw_input("Enter your remote account: ")
+
+password = getpass.getpass()
+
+tn = telnetlib.Telnet(HOST)
+
+tn.read_until("login: ")
+
+tn.write(user + "\n")
+
+if password:
+    tn.read_until("Password: ")
+    tn.write(password + "\n")
+
+tn.write("ls\n")
+
+tn.write("exit\n")
+
+print tn.read_all()
+
+</pre>
+
+<p>At ActiveState you can find more Python scripts using the telnetlib,<br>for example <a href="http://code.activestate.com/recipes/52228/" target="_blank" rel="noopener">this</a> script.</p>
+<p>For more information about using the Telnet client in Python, please see the<br><a href="http://docs.python.org/2/library/telnetlib.html" target="_blank" rel="noopener">official documentation</a>. </p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-07-02T16:00:00.000Z"><a href="/2014/07/03/python-cgi-programming/">2014-07-03</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/03/python-cgi-programming/">Python CGI Programming</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>How to write code in CGI programing</em></p>
+<h3>What is CGI?</h3><br><ul><br><li>The Common Gateway Interface, or CGI, is a set of standards that define how information is exchanged between the web server and a custom script.</li><br><li>The CGI specs are currently maintained by the NCSA and NCSA defines CGI is as follows:</li><br><li>The Common Gateway Interface, or CGI, is a standard for external gateway programs to interface with information servers such as HTTP servers.</li><br><li>The current version is CGI/1.1 and CGI/1.2 is under progress.</li><br></ul><br><br><h3>Web Browsing</h3><br>To understand the concept of CGI, lets see what happens when we click a hyper link to browse a particular web page or URL.<br><ul><br><li>Your browser contacts the HTTP web server and demands for the URL i.e., filename.</li><br><li>Web Server will parse the URL and will look for the filename in if it finds that file then sends it back to the browser, otherwise sends an error message indicating that you have requested a wrong file.</li><br><li>Web browser takes response from web server and displays either the received file or error message.</li><br></ul><br>However, it is possible to set up the HTTP server so that whenever a file in a certain directory is requested that file is not sent back; instead it is executed as a program, and whatever that program outputs is sent back for your browser to display. This function is called the Common Gateway Interface or CGI and the programs are called CGI scripts. These CGI programs can be a Python Script, PERL Script, Shell Script, C or C++ program, etc.<br><br><h3>CGI Architecture Diagram</h3>
+
+<p></p><h3>Web Server Support &amp; Configuration</h3><br>Before you proceed with CGI Programming, make sure that your Web Server supports CGI and it is configured to handle CGI Programs. All the CGI Programs to be executed by the HTTP server are kept in a pre-configured directory. This directory is called CGI Directory and by convention it is named as /var/www/cgi-bin. By convention, CGI files will have extension as .cgi, but you can keep your files with python extension .py as well.<p></p>
+<p>By default, the Linux server is configured to run only the scripts in the cgi-bin directory in /var/www. If you want to specify any other directory to run your CGI scripts, comment the following lines in the httpd.conf file:</p>
+<pre>
+<directory "="" var="" www="" cgi-bin"="">
+   AllowOverride None
+   Options ExecCGI
+   Order allow,deny
+   Allow from all
+</directory>
+
+<directory "="" var="" www="" cgi-bin"="">
+Options All
+</directory>
+</pre>
+Here, I assumed that you have Web Server up and running successfully and you are able to run any other CGI program like Perl or Shell, etc.
+
+<h3>First CGI Program</h3>
+Here is a simple link, which is linked to a CGI script called hello.py. This file is being kept in /var/www/cgi-bin directory and it has following content. Before running your CGI program, make sure you have change mode of file using chmod 755 hello.py UNIX command to make file executable.
+<pre>
+#!/usr/bin/python
+
+print "Content-type:text/html\r\n\r\n"
+print '<html>'
+print '<head><meta name="generator" content="Hexo 3.8.0">'
+print '<title>Hello Word - First CGI Program</title>'
+print '</head>'
+print '<body>'
+print '<h2>Hello Word! This is my first CGI program</h2>'
+print '</body>'
+print '</html>'
+</pre>
+If you click hello.py, then this produces the following output:
+<pre>
+Hello Word! This is my first CGI program
+</pre>
+This hello.py script is a simple Python script, which is writing its output on STDOUT file i.e., screen. There is one important and extra feature available which is first line to be printed <b>Content-type:text/html\r\n\r\n</b>. This line is sent back to the browser and specifiy the content type to be displayed on the browser screen.
+Now, you must have understood basic concept of CGI and you can write many complicated CGI programs using Python. This script can interact with any other external system also to exchange information such as RDBMS.
+
+<h3>HTTP Header</h3>
+The line <b>Content-type:text/html\r\n\r\n</b> is part of HTTP header which is sent to the browser to understand the content. All the HTTP header will be in the following form:
+<pre>
+HTTP Field Name: Field Content
+
+For Example
+Content-type: text/html\r\n\r\n
+</pre>
+There are few other important HTTP headers, which you will use frequently in your CGI Programming.
+Header    |Description
+___________________
+Content-type:    |A MIME string defining the format of the file being returned. Example is Content-type:text/html
+_________________
+Expires: Date    |The date the information becomes invalid. This should be used by the browser to decide when a page needs to be refreshed. A valid date string should be in the format 01 Jan 1998 12:00:00 GMT.
+_____________________
+Location: URL    |The URL that should be returned instead of the URL requested. You can use this field to redirect a request to any file.
+_______________
+Last-modified: Date    |The date of last modification of the resource.
+_______________
+Content-length: N    |The length, in bytes, of the data being returned. The browser uses this value to report the estimated download time for a file.
+_______________
+Set-Cookie: String    |Set the cookie passed through the string
+
+<h3>CGI Environment Variables</h3>
+All the CGI program will have access to the following environment variables. These variables play an important role while writing any CGI program.
+<table>
+<thead>
+    <tr>
+        <th>Variable Name</th>
+        <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <td>CONTENT_TYPE</td>
+        <td>The data type of the content. Used when the client is sending attached content to the server. For example, file upload, etc.</td>
+    </tr>
+    <tr>
+        <td>CONTENT_LENGTH</td>
+        <td>The length of the query information. It's available only for POST requests.</td>
+    </tr>
+    <tr>
+        <td>HTTP_COOKIE</td>
+        <td>Returns the set cookies in the form of key & value pair.</td>
+    </tr>
+    <tr>
+        <td>HTTP_USER_AGENT</td>
+        <td>The User-Agent request-header field contains information about the user agent originating the request. Its name of the web browser.</td>
+    </tr>
+    <tr>
+        <td>PATH_INFO</td>
+        <td>The path for the CGI script.</td>
+    </tr>
+    <tr>
+        <td>QUERY_STRING</td>
+        <td>The URL-encoded information that is sent with GET method request.</td>
+    </tr>
+    <tr>
+        <td>REMOTE_ADDR</td>
+        <td>The IP address of the remote host making the request. This can be useful for logging or for authentication purpose.</td>
+    </tr>
+    <tr>
+        <td>REMOTE_HOST</td>
+        <td>The fully qualified name of the host making the request. If this information is not available then REMOTE_ADDR can be used to get IR address.</td>
+    </tr>
+    <tr>
+        <td>REQUEST_METHOD</td>
+        <td>The method used to make the request. The most common methods are GET and POST.</td>
+    </tr>
+    <tr>
+        <td>SCRIPT_FILENAME</td>
+        <td>The full path to the CGI script.</td>
+    </tr>
+    <tr>
+        <td>SCRIPT_NAME</td>
+        <td>The name of the CGI script.</td>
+    </tr>
+    <tr>
+        <td>SERVER_NAME</td>
+        <td>The server's hostname or IP Address</td>
+    </tr>
+    <tr>
+        <td>SERVER_SOFTWARE</td>
+        <td>The name and version of the software the server is running.</td>
+    </tr>
+</tbody>
+</table>
+Here is small CGI program to list out all the CGI variables. Click this link to see the result <font color="red">Get Environment</font>
+<pre>
+#!/usr/bin/python
+
+import os
+
+print "Content-type: text/html\r\n\r\n";
+print "<font size="+1">Environment</font><\br>";
+for param in os.environ.keys():
+  print "<b>%20s</b>: %s<\br>" % (param, os.environ[param])
+</\br></\br></pre>
+
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-07-02T16:00:00.000Z"><a href="/2014/07/03/make-your-life-easier-with-virtualenvwrapper/">2014-07-03</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/03/make-your-life-easier-with-virtualenvwrapper/">Make your life easier with Virtualenvwrapper</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>When you do a lot of Python programming, you can make a mess of your system with Pip. Different apps need different requirements. One app needs version 1.2 of a package and another one needs 1.5. And then… you’re in trouble.</em></p>
+<p>When you want to know what packages have been installed by Pip, use this:</p>
+<pre>
+$ pip freeze
+</pre>
+
+<p>The result can be a very long list.</p>
+<p>For every project, whether it’s a simple application or a giant Django project, I create a new virtual environment with virtualenv. An easy way to do this is by using virtualenvwrapper.</p>
+<p></p><h3>Getting started with Virtualenv wrapper</h3><p></p>
+<pre>
+$ sudo pip install virtualenvwrapper
+</pre>
+There are some advanced settings which you can find in the manual.
+
+When installed, let's make a new environment called "testground".
+<pre>
+$ mkvirtualenv testground
+</pre>
+If your virtualenvwrapper is working well, you should see something like this:
+<pre>
+New python executable in testground/bin/python
+Installing Setuptools.........done.
+Installing Pip..............done.
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/predeactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/postdeactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/preactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/postactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/get_env_details
+
+(testground)yourname@yoursystem:~$ 
+</pre>
+
+<p>Take a look at the last line, which now says (testground) before the prompt. Your virtual environment is there, and your are in it.</p>
+<p>Now, do a pip freeze, it can result in something like this:</p>
+<pre>
+$ pip freeze
+argparse==1.2.1
+wsgiref==0.1.2
+</pre>
+
+<p>That list can be a lot shorter than the one outside the environment.</p>
+<p>You can now install something that only effects this environment. Let’s try Pillow, version 2.2.2.</p>
+<pre>
+$ pip install Pillow==2.2.2
+</pre>
+It will now try to install Pillow, when finished, do another pip fip freeze, and see if it's installed
+
+<h3>Switchting between virtualenvs</h3>
+Let's create another environment:
+<pre>
+$ mkvirtualenv coolapp
+</pre>
+once it's finished, it should have been activated automatically:
+<pre>
+...................done.
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/predeactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/postdeactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/preactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/postactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/get_env_details
+(coolapp)yourname@yoursystem:~$ 
+</pre>
+Now, let's switch to fist the virtualenv we made by the magic word "workon":
+<pre>
+$ workon testground
+(testground)yourname@yoursystem:~$ 
+</pre>
+There you go, it's as simpel as that
+
+<h3>No site packages</h3>
+Like with vitualenv, you can tell virtualenvwapper not to use the systems sitepackages with --no-site-packages:
+<pre>
+$ mkvirtualenv anotherenv --no-site-packages
+</pre>
+<h3>Remove a virtual environment</h3>
+It's very easy to get rid of a virtual env by using rmvirtualenv:
+<pre>
+$ rmvirtualenv coolapp
+
+Removing coolapp...
+</pre>
+
+<p></p><h3>List all virtualenvs</h3><p></p>
+<pre>
+$lsvirtualenv
+</pre>
+
+<p></p><h3>List your sitepackages</h3><p></p>
+<pre>
+$ lssitepackages
+
+#can result in this:
+easy_install.py   Pillow-2.2.2-py2.7.egg-info  pkg_resources.pyc
+easy_install.pyc  pip                          setuptools
+_markerlib        pip-1.4.1-py2.7.egg-info     setuptools-0.9.8-py2.7.egg-info
+PIL               pkg_resources.py
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-07-01T16:00:00.000Z"><a href="/2014/07/02/how-to-use-date-and-time-in-python/">2014-07-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/02/how-to-use-date-and-time-in-python/">How to use Date and Time in Python</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>This post will show some examples using Pythons datetime and time modules.</em></p>
+<p></p><h3>Date and Time Example</h3><p></p>
+<p>Let’s see what we can do with the datetime and time modules in Python</p><br><pre><br>import time<br>import datetime<br><br>print “Time in seconds since the epoch: %s” %time.time()<br>print “Current date and time: “ , datetime.datetime.now()<br>print “Or like this: “ ,datetime.datetime.now().strftime(“%y-%m-%d-%H-%M”)<br><br><br>print “Current year: “, datetime.date.today().strftime(“%Y”)<br>print “Month of year: “, datetime.date.today().strftime(“%B”)<br>print “Week number of the year: “, datetime.date.today().strftime(“%W”)<br>print “Weekday of the week: “, datetime.date.today().strftime(“%w”)<br>print “Day of year: “, datetime.date.today().strftime(“%j”)<br>print “Day of the month : “, datetime.date.today().strftime(“%d”)<br>print “Day of week: “, datetime.date.today().strftime(“%A”)<br></pre><br><br><h3>Output</h3><br>That will print out something like this:<br><p><br>Time in seconds since the epoch:     1349271346.46<br>Current date and time:          2012-10-03 15:35:46.461491<br>Or like this:                 12-10-03-15-35<br>Current year:                  2012<br>Month of year:              October<br>Week number of the year:          40<br>Weekday of the week:              3<br>Day of year:                  277<br>Day of the month :              03<br>Day of week:                  Wednesday<br></p>
+
+<p>Getting the weekday of a certain date (your pet’s birthday).</p>
+<pre>
+import datetime
+
+mydate = datetime.date(1943,3, 13)  #year, month, day
+print(mydate.strftime("%A"))
+
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-06-30T16:00:00.000Z"><a href="/2014/07/01/models-in-python/">2014-07-01</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/01/models-in-python/">Models in Python</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>In this part of the Python programming tutorial, we will talk about Python modules.</em></p>
+<p>A <b>module</b> is a file in which we have Python code. The modules in Python have the .py extension.<br>There are several ways to manage Python code:</p>
+<p><ul></ul></p>
+<p><li>functions</li></p>
+<p><li>classes</li></p>
+<p><li>modules</li></p>
+<p><li>packages</li><br><br>Python modules are used to organize Python code. For example, database related code is placed inside a database module, security code in a security module etc. Smaller Python scripts can have one module. But larger programs are split into several modules. Modules are grouped together to form packages.</p>
+<p></p><h3>Module names</h3><br>A module name is the file name with the .py extension. When we have a file called empty.py, empty is the module name. The <strong>name</strong> is a variable that holds the name of the module being referenced. The current module, the module being executed (called also the main module) has a special name: ‘<strong>main</strong>‘. With this name it can be referenced from the Python code.<p></p>
+<p>We have two files. empty.py and modulename.py. The second module is the main module, which is executed. It imports the first module. Modules are imported using the import keyword.</p>
+<p><pre><br>$ cat empty.py<br>“””<br>An empty module<br>“””<br></pre><br>This is empty.py module.</p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<p>import empty<br>import sys</p>
+<p>print <strong>name</strong><br>print empty.<strong>name</strong><br>print sys.<strong>name</strong><br><br>In this code example we import two modules. One built-in module (sys) and one custom module (empty). We print the names of modules to the console.</p>
+<p><pre><br>$ ./modulename.py<br><strong>main</strong><br>empty<br>sys<br></pre><br>The name of the module, which is being executed is always ‘<strong>main</strong>‘. Other modules are named after the file name. Modules can be imported into other modules using the import keyword.</p>
+<p></p><h3>Locating modules</h3><br>When a module is imported the interpreter first searches for a built-in module with that name. If not found, it then searches in a list of directories given by the variable sys.path. The sys.path is a list of strings that specifies the search path for modules. It consists of the current working directory, directory names specified in the <b>PYTHONPATH</b> environment variable plus some additional installation dependent directories. If the module is not found, an ImportError is raised.<p></p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<p>import sys<br>import textwrap</p>
+<p>sp = sorted(sys.path)<br>dnames = ‘, ‘.join(sp)</p>
+<p>print textwrap.fill(dnames)<br><br>The script prints all directories from sys.path variable.</p>
+<p><pre><br>import textwrap<br></pre><br>The textwrap module is used for easy formatting of paragraphs.</p>
+<p><pre><br>sp = sorted(sys.path)<br></pre><br>We retrieve a list of directories from the sys.path variable and sort them.</p>
+<p><pre><br>dnames = ‘, ‘.join(sp)<br></pre><br>We make a string out of the list.</p>
+<p><pre><br>$ ./syspath.py<br>/home/janbodnar/programming/python/modules,<br>/usr/lib/pymodules/python2.7, /usr/lib/python2.7, /usr/lib/python2.7<br>/dist-packages, /usr/lib/python2.7/dist-packages/PIL,<br>…<br></pre><br>Sample output.</p>
+<p></p><h3>The import keyword</h3><br>The import keyword can be used in several ways.<p></p>
+<p><pre><br>from module import *<br></pre><br>This construct will import all Python definitions into the namespace of another module. There is one exception. Objects beginning with underscore character _ are not imported. They are expected to be used only internally by the module being imported. This way of importing modules is not recommended.</p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<p>from math import *</p>
+<p>print cos(3)<br>print pi<br><br>This import construct has imported all definitions from the built-in math module. We can call the math funtcions directly, without referencing the math module.</p>
+<p><pre><br>$ ./everything.py<br>-0.9899924966<br>3.14159265359<br></pre><br>The use of this import construct may result in namespace pollution. We may have several objects of the same name and their definitions can be overriden.</p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<p>from math import  *</p>
+<p>pi = 3.14</p>
+<p>print cos(3)<br>print pi<br><br>The example will print 3.14 to the console. Which may not be, what we wanted. The namespace pollution may become critical in larger projects.</p>
+<p>The following example will show definitions, that are not being imported using this import construct.</p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<p>“””<br>names is a test module<br>“””</p>
+<p>_version = 1.0</p>
+<p>names = [“Paul”, “Frank”, “Jessica”, “Thomas”, “Katherine”]</p>
+<p>def show_names():<br>   for i in names:<br>      print i</p>
+<p>def _show_version():<br>   print _version<br><br>This is the names.py module.</p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<p>from names import *</p>
+<p>print locals()</p>
+<p>show_names()<br><br>The _version variable and the _show_version() function are not imported into the private.py module. We don’t see them in the namespace. The locals() function give us all the definitions available in the private module.</p>
+<p><pre><br>$ ./private.py<br>{‘<strong>builtins</strong>‘: <module '__builtin__'="" (built-in)="">, ‘<strong>file</strong>‘: ‘./private.py’,<br>‘show_names’: <function show_names="" at="" 0xb7dd233c="">,<br>‘names’: [‘Paul’, ‘Frank’, ‘Jessica’, ‘Thomas’, ‘Katherine’],<br> ‘<strong>name</strong>‘: ‘<strong>main</strong>‘, ‘<strong>doc</strong>‘: None}<br>Paul<br>Frank<br>Jessica<br>Thomas<br>Katherine<br></function></module></pre></p>
+<p><hr></p>
+<p><pre><br>from module import fun, var<br></pre><br>This import construct imports only specific objects from a module. This way we import only definitions that we need.</p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<p>from math import sin, pi</p>
+<p>print sin(3)<br>print pi<br><br>We import two objects from the math module. There is no way, how we could reference other definitions like e.g. a cos function.</p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<p>from names import _version, _show_version</p>
+<p>print _version<br>_show_version()<br><br>We could also import definitions beginning with an underscore. But this is a bad practice.</p>
+<p><pre><br>$ ./imnames.py<br>1.0<br>1.0<br></pre></p>
+<p><hr></p>
+<p><pre><br>import module<br></pre><br>The last construct is most widely used. It prevents the namespace pollution and enables to access all definitios from a module.</p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<p>import math</p>
+<p>pi = 3.14</p>
+<p>print math.cos(3)<br>print math.pi<br>print math.sin(3)<br>print pi<br><br>In this case, we reference the definitions via the module name. As we can see, we are able to use both pi variables. Our definition and the one from the math module.</p>
+<p><pre><br>$ ./widely.py<br>-0.9899924966<br>3.14159265359<br>0.14112000806<br>3.14<br></pre></p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<h1 id="importas-py"><a href="#importas-py" class="headerlink" title="importas.py"></a>importas.py</h1><p>import math as m</p>
+<p>print m.pi<br>print m.cos(3)<br><br>We can change the name through which we can reference the module. To do this, we use the as keyword.</p>
+<p><pre><br>$ ./importas.py<br>3.14159265359<br>-0.9899924966<br></pre></p>
+<p><hr><br>An ImportError is raised, if a module cannot be imported.</p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<p>try:<br>    import empty2<br>except ImportError, e:<br>    print ‘Failed to import:’, e<br><br>We have not created an empty2 module. Therefore an exception is raised.</p>
+<p><pre><br>$ ./importerror.py<br>Failed to import: No module named empty2<br></pre><br>Output.</p>
+<p></p><h3>Executing modules</h3><br>Modules can be imported into other modules or they can be also executed. Module authors often create a testing suite to test the module. Only if the module is executed as a script, the <strong>name</strong> attribute equals to <strong>main</strong>.<br>We will demonstrate this on a fibonacci module. Fibonacci numbers is a sequence of numbers, where each is the sum of its two immediate predecessors.<p></p>
+<p><pre></pre></p>
+<blockquote>
+<p>   #!/usr/bin/python</p>
+<p>   “””<br>   A module containing the fibonacci<br>   function.<br>   “””</p>
+<p>   def fib(n):<br>       a, b = 0, 1<br>       while b &lt; n:<br>           print b,<br>           (a, b) = (b, a + b)</p>
+<h1 id="testing"><a href="#testing" class="headerlink" title="testing"></a>testing</h1><p>   if <strong>name</strong> == ‘<strong>main</strong>‘:<br>      fib(500)<br><br>The module can be normally imported as usual. The module can be also executed.</p>
+</blockquote>
+<p><pre><br>$ ./fibonacci.py<br>1 1 2 3 5 8 13 21 34 55 89 144 233 377<br></pre><br>If we do import the fibonacci module, the test is not executed automatically.</p>
+<p><pre></pre></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>import fibonacci as fib<br>fib.fib(500)<br>1 1 2 3 5 8 13 21 34 55 89 144 233 377<br><br>The fibonacci module is imported and the fib() function is executed.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p></p><h3>The dir() function</h3><br>The built-in dir() function gives a sorted list of strings containing the names defined by a module.<p></p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<p>“””<br>This is dirfun module<br>“””</p>
+<p>import math, sys</p>
+<p>version = 1.0</p>
+<p>names = [“Paul”, “Frank”, “Jessica”, “Thomas”, “Katherine”]</p>
+<p>def show_names():</p>
+<p>   for i in names:<br>      print i</p>
+<p>print dir(sys.modules[‘<strong>main</strong>‘])<br><br>In this module, we import two system modules. We define a variable, a list and a function.</p>
+<p><pre><br>print dir(sys.modules[‘<strong>main</strong>‘])<br></pre><br>The dir() function returns all the names available in the current namespace of the module. ‘<strong>main</strong>‘ is the name of the current module. The sys.modules is a dictionary that maps module names to modules which have already been loaded.</p>
+<p><pre><br>$ ./dirfun.py<br>[‘<strong>builtins</strong>‘, ‘<strong>doc</strong>‘, ‘<strong>file</strong>‘, ‘<strong>name</strong>‘, ‘<strong>package</strong>‘, ‘math’,<br>‘names’, ‘show_names’, ‘sys’, ‘version’]<br></pre><br>We can see some built-in names like ‘<strong>file</strong>‘ or ‘<strong>name</strong>‘ and all the others, that we have defined.</p>
+<p></p><h3>The globals() function</h3><br>The globals() function returns a dictionary that represents the current global namespace. It is a dictionary of global names and their values. It is the dictionary of the current module.<p></p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<p>import sys<br>import textwrap</p>
+<p>version = 1.0</p>
+<p>def myfun():<br>    pass</p>
+<p>gl = globals()<br>gnames = ‘, ‘.join(gl)</p>
+<p>print textwrap.fill(gnames)<br><br>We use the globals() function to print all the global names of the current module.</p>
+<p><pre><br>$ ./globalsfun.py<br><strong>builtins</strong>, <strong>file</strong>, textwrap, <strong>package</strong>, sys, myfun, version,<br><strong>name</strong>, gl, <strong>doc</strong><br></pre><br>These are the global names of the current module.</p>
+<p></p><h3>The <strong>module</strong> attribute</h3><br>The <strong>module</strong> class attribute has the name of the module in which the class is defined.<p></p>
+<p><pre><br>“””<br>module animals<br>“””</pre></p>
+<p>class Cat:<br>  pass</p>
+<p>class Dog:<br>  pass<br><br>This are the contents of the animals.py file. We have two classes.</p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<p>from animals import Cat</p>
+<p>class Being:<br>    pass</p>
+<p>b = Being()<br>print b.<strong>module</strong></p>
+<p>c = Cat()<br>print c.<strong>module</strong><br><br>In this code we use the <strong>module</strong> attribute.</p>
+<p><pre><br>from animals import Cat<br></pre><br>From the animals module, we import the Cat class.</p>
+<p><pre><br>class Being:<br>    pass<br></pre><br>In the current module, we define a class Being.</p>
+<p><pre><br>b = Being()<br>print b.<strong>module</strong><br></pre><br>An instance of the Being class is created. We print the name of its module.</p>
+<p><pre><br>c = Cat()<br>print c.<strong>module</strong><br></pre><br>We create an object from the Cat class. We also print the module, where it was defined.</p>
+<p><pre><br>$ ./mclass.py<br><strong>main</strong><br>animals<br></pre><br>The current module’s name is <strong>main</strong>. And the Cat’s module name is animals.</p>
+<p>This chapter was about modules in Python.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-06-29T16:00:00.000Z"><a href="/2014/06/30/object-oriented-programming-in-python/">2014-06-30</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/06/30/object-oriented-programming-in-python/">Object oriented programming in Python</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>In this part of the Python programming tutorial, we will talk about object oriented programming in Python.</em></p>
+<p>There are three widely used programming paradigms there. Procedural programming, functional programming and object-oriented programming. Python supports both procedural and object-oriented programming. There is some limited support for f unctional programming too.</p>
+<p></p><h4>Object-oriented programming (OOP)</h4> is a programming paradigm that uses objects and their interactions to design applications and computer programs. (Wikipedia)<br>There are some basic programming concepts in OOP:<p></p>
+<ul><br><li>Abstraction</li><br><li>Polymorphism</li><br><li>Encapsulation</li><br><li>Inheritance</li><br></ul>
+
+<p>The <b>abstraction</b> is simplifying complex reality by modelling classes appropriate to the problem. The <b>polymorphism</b> is the process of using an operator or function in different ways for different data input. The <b>encapsulation</b> hides the implementation details of a class from other objects. The <b>inheritance</b> is a way to form new classes using classes that have already been defined.</p>
+<p></p><h3>Objects</h3><br>Everything in Python is an object. Objects are basic building blocks of a Python OOP program.<p></p>
+<pre>
+#!/usr/bin/python
+
+# objects.py
+
+import sys
+
+def function(): pass
+
+print type(1)
+print type("")
+print type([])
+print type({})
+print type(())
+print type(object)
+print type(function)
+print type(sys)
+</pre>
+
+<p>In this example we show, that all these entities are in fact objects. The <font color="blue">type()</font> function returns the type of the object specified.</p>
+<pre>
+$ ./objects.py 
+<type 'int'="">
+<type 'str'="">
+<type 'list'="">
+<type 'dict'="">
+<type 'tuple'="">
+<type 'type'="">
+<type 'function'="">
+<type 'module'="">
+</type></type></type></type></type></type></type></type></pre>
+
+<p></p><h3>The class keyword</h3><br>The previous objects were all built-in objects of the Python programming language. The user defined objects are created using the <font color="blue">class</font> keyword. The class is a blueprint that defines a nature of a future object. From classes we construct instances. An <b>instance</b> is a specific object created from a particular class. For example, Huck might be an instance of a Dog class.<p></p>
+<pre>
+#!/usr/bin/python
+
+# first.py
+
+class First:
+   pass
+
+fr = First()
+
+print type(fr)
+print type(First)
+</pre>
+This is our first class. The body of the class is left empty for now. It is a convention to give classes a name that starts with a capital letter.
+<pre>
+fr = First()
+</pre>
+Here we create a new instance of the First class. Or in other words, we instantiate the First class. The fr is a reference to our new object.
+<pre>
+$ ./first.py 
+<type 'instance'="">
+<type 'classobj'="">
+</type></type></pre>
+Here we see that fr is an instance object and First is a class object.
+Inside a class, we can define attributes and methods. An <b>attribute</b> is a characteristic of an object. This can be for example a salary of an employee. A <b>method</b> defines operations that we can perform with our objects. A method might define a cancellation of an account. Technically, attributes are variables and methods are functions defined inside a class.
+
+<h3>Attributes</h3>
+Attributes are characteristics of an object. A special method called <font color="blue">__init__()</font> is used to initialize the attributes of an object.
+<pre>
+#!/usr/bin/python
+
+# initialize.py
+
+class Cat:
+   def __init__(self, name):
+      self.name = name
+
+missy = Cat('Missy')
+lucky = Cat('Lucky')
+
+print missy.name
+print lucky.name
+</pre>
+In this code example, we have a Cat class. The special method <font color="blue">__init__()</font> is called automatically right after the object has been created.
+<pre>
+def __init__(self, name):
+</pre>
+Each method in a class definition begins with a reference to the instance object. It is by convention named self. There is nothing special about the self name. We could name it this, for example. The name is the argument. The value is passed during the class instantiation.
+<pre>
+self.name = name
+</pre>
+Here we pass an attribute to an instance object.
+<pre>
+missy = Cat('Missy')
+lucky = Cat('Lucky')
+</pre>
+Here we instantiate two objects. Missy and Lucky cats. The number of arguments must correspond to the <font color="blue">__init__()</font> method of the class definition. The 'Missy' and 'Lucky' strings become the name parameter of the <font color="blue">__init__()</font> method.
+<pre>
+print missy.name
+print lucky.name
+</pre>
+Here we print the instance variables of two cat objects. Each instance of a class can have their own attributes.
+<pre>
+$ ./initialize.py 
+Missy
+Lucky
+</pre>
+The attributes can be assigned dynamically, not just during initialization. This shows the next example.
+<pre>
+#!/usr/bin/python
+
+# dynamic.py
+
+class Dynamic:
+   pass
+
+d = Dynamic()
+d.name = "Dynamic"
+print d.name
+</pre>
+We define and create an empty Dynamic class.
+<pre>
+d.name = "Dynamic"
+</pre>
+This line of code creates a new name attribute.
+<pre>
+$ ./dynamic.py 
+Dynamic
+</pre>
+
+<p>So far, we have been talking about the instance attributes. In Python there are also so called <b>class object attributes</b>. Class object attributes are same for all instances of a class.</p>
+<pre>
+#!/usr/bin/python
+
+# cat.py
+
+
+class Cat:
+   species = 'mammal'
+
+   def __init__(self, name, age):
+      self.name = name
+      self.age = age
+
+
+missy = Cat('Missy', 3)
+lucky = Cat('Lucky', 5)
+
+print missy.name, missy.age
+print lucky.name, lucky.age
+
+print Cat.species
+print missy.__class__.species
+print lucky.__class__.species
+</pre>
+In our example, we have two cats with specific name and age attributes. Both cats share some characteristics. Missy and Lucky are both mammals. This is reflected in a class level attribute species. The attribute is defined outside any method name in the body of a class.
+<pre>
+print Cat.species
+print missy.__class__.species
+</pre>
+There are two ways, how we can access the class object attributes. Either via the name of the Cat class, or with the help of a special __class__ attribute.
+<pre>
+$ ./cat.py 
+Missy 3
+Lucky 5
+mammal
+mammal
+mammal
+</pre>
+
+<p></p><h3>Methods</h3><br>Methods are functions defined inside the body of a class. They are used to perform operations with the attributes of our objects. Methods are essential in encapsulation concept of the OOP paradigm. For example, we might have a connect() method in our AccessDatabase class. We need not to be informed, how exactly the method connect connects to the database. We only know, that it is used to connect to a database. This is essential in dividing responsibilities in programming. Especially in large applications.<p></p>
+<pre>
+#!/usr/bin/python
+
+# circle.py
+
+class Circle:
+   pi = 3.141592
+
+   def __init__(self, radius=1):
+      self.radius = radius 
+
+   def area(self):
+      return self.radius * self.radius * Circle.pi
+
+   def setRadius(self, radius):
+      self.radius = radius
+
+   def getRadius(self):
+      return self.radius
+
+c = Circle()
+
+c.setRadius(5)
+print c.getRadius()
+print c.area()
+</pre>
+In the code example, we have a Circle class. We define three new methods.
+<pre>
+def area(self):
+    return self.radius * self.radius * Circle.pi
+</pre>
+The area() method returns the area of a circle.
+<pre>
+def setRadius(self, radius):
+    self.radius = radius
+</pre>
+The setRadius() method sets a new value for a radius attribute.
+<pre>
+def getRadius(self):
+    return self.radius
+</pre>
+The getRadius() method returns the current radius.
+<pre>
+c.setRadius(5)
+</pre>
+The method is called on an instance object. The c object is paired with the self parameter of the class definition. The number 5 is paired with the radius parameter.
+<pre>
+$ ./circle.py 
+5
+78.5398
+</pre>
+In Python, we can call methods in two ways. There are bounded and unbounded method calls.
+<pre>
+#!/usr/bin/python
+
+# methods.py
+
+class Methods:
+   def __init__(self):
+      self.name = 'Methods'
+
+   def getName(self):
+      return self.name
+
+
+m = Methods()
+
+print m.getName()
+print Methods.getName(m)
+</pre>
+In this example, we demostrate both method calls.
+<pre>
+print m.getName()
+</pre>
+This is the <b>bounded</b> method call. The Python interpreter automatically pairs the m instance with the self parameter.
+<pre>
+print Methods.getName(m)
+</pre>
+And this is the <b>unbounded</b> method call. The instance object is explicitly given to the getName() method.
+<pre>
+$ ./methods.py 
+Methods
+Methods
+</pre>
+
+<p></p><h3>Inheritance</h3><br>The inheritance is a way to form new classes using classes that have already been defined. The newly formed classes are called <b>derived</b> classes, the classes that we derive from are called base classes. Important benefits of inheritance are code reuse and reduction of complexity of a program. The derived classes (descendants) override or extend the functionality of base classes (ancestors).<p></p>
+<pre>
+#!/usr/bin/python
+
+# inherit.py
+
+
+class Animal:
+   def __init__(self):
+      print "Animal created"
+
+   def whoAmI(self):
+      print "Animal"
+
+   def eat(self):
+      print "Eating"
+
+
+class Dog(Animal):
+   def __init__(self):
+      Animal.__init__(self)
+      print "Dog created"
+
+   def whoAmI(self):
+      print "Dog"
+
+   def bark(self):
+      print "Woof!"
+
+
+d = Dog()
+d.whoAmI()
+d.eat()
+d.bark()
+</pre>
+In this example, we have two classes. Animal and Dog. The animal is the base class, the Dog is the derived class. The derived class inherits the functionality of the base class. It is shown by the eat() method. The derived class modifies existing behaviour of the base class, shown by the whoAmI() method. Finally, the derived class extends the functionality of the base class, by defining a new bark() method.
+<pre>
+class Dog(Animal):
+    def __init__(self):
+       Animal.__init__(self)
+       print "Dog created"
+</pre>
+We put the ancestor classes in round brackets after the name of the descendant class. If the derived class provides it's own <font color="blue">__init__()</font> method, it must explicitly call the base class <font color="blue">__init__()</font> method.
+<pre>
+$ ./inherit.py 
+Animal created
+Dog created
+Dog
+Eating
+Woof!
+</pre>
+
+<p></p><h3>Polymorphism</h3><br>The polymorphism is the process of using an operator or function in different ways for different data input. In practical terms, polymorphism means that if class B inherits from class A, it doesn’t have to inherit everything about class A; it can do some of the things that class A does differently. (wikipedia)<p></p>
+<pre>
+#!/usr/bin/python
+
+# basic.py
+
+
+a = "alfa"
+b = (1, 2, 3, 4)
+c = ['o', 'm', 'e', 'g', 'a']
+
+print a[2]
+print b[1]
+print c[3]
+</pre>
+Python programming language uses polymorphism extensively in built-in types. Here we use the same indexing operator for three different data types.
+<pre>
+$ ./basic.py 
+f
+2
+g
+</pre>
+Polymorphism is most commonly used when dealing with inheritance.
+<pre>
+#!/usr/bin/python
+
+# polymorphism.py
+
+
+class Animal:
+   def __init__(self, name=''):
+      self.name = name
+
+   def talk(self):
+      pass
+
+
+class Cat(Animal):
+   def talk(self):
+      print "Meow!"
+
+
+class Dog(Animal):
+   def talk(self):
+      print "Woof!"
+
+
+a = Animal()
+a.talk()
+
+c = Cat("Missy")
+c.talk()
+
+d = Dog("Rocky")
+d.talk()
+</pre>
+Here we have two species. A dog and a cat. Both are animals. The Dog class and the Cat class inherit the Animal class. They have a talk() method, which gives different output for them.
+<pre>
+$ ./polymorphism.py 
+Meow!
+Woof!
+</pre>
+
+<p></p><h3>Special Methods</h3><br>Classes in Python programming language can implement certain operations with special method names. These methods are not called directly, but by a specific language syntax. This is similar to what is known as <b>operator overloading</b> in C++ or Ruby.<p></p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<h1 id="book-py"><a href="#book-py" class="headerlink" title="book.py"></a>book.py</h1><p>class Book:<br>   def <strong>init</strong>(self, title, author, pages):<br>      print “A book is created”<br>      self.title = title<br>      self.author = author<br>      self.pages = pages</p>
+<p>   def <strong>str</strong>(self):<br>      return “Title:%s , author:%s, pages:%s “ % \<br>              (self.title, self.author, self.pages)</p>
+<p>   def <strong>len</strong>(self):<br>      return self.pages</p>
+<p>   def <strong>del</strong>(self):<br>      print “A book is destroyed”</p>
+<p>book = Book(“Inside Steve’s Brain”, “Leander Kahney”, 304)</p>
+<p>print book<br>print len(book)<br>del book<br><br>In our code example, we have a book class. Here we introduce four special methods. The <font color="blue"><strong>init</strong>()</font>, <font color="blue"><strong>str</strong>()</font>, <font color="blue"><strong>len</strong>()</font> and the <font color="blue"><strong>del</strong>()</font> methods.</p>
+<p><pre><br>book = Book(“Inside Steve’s Brain”, “Leander Kahney”, 304)<br></pre><br>Here we call the <font color="blue"><strong>init</strong>()</font> method. The method creates a new instance of a Book class.</p>
+<p><pre><br>print len(book)<br></pre><br>The <font color="blue">len()</font> function invokes the <font color="blue"><strong>len</strong>()</font> method. In our case, we print the number of pages of our book.</p>
+<p><pre><br>del book<br></pre><br>The del keyword deletes an object. It calls the <font color="blue"><strong>del</strong>()</font> method.<br>In the next example we implement a vector class and demonstrate addition and substraction operations on it.</p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<h1 id="vector-py"><a href="#vector-py" class="headerlink" title="vector.py"></a>vector.py</h1><p>class Vector:</p>
+<p>  def <strong>init</strong>(self, data):<br>    self.data = data</p>
+<p>  def <strong>str</strong>(self):<br>    return repr(self.data)</p>
+<p>  def <strong>add</strong>(self, other):<br>    data = []<br>    for j in range(len(self.data)):<br>      data.append(self.data[j] + other.data[j])<br>    return Vector(data)</p>
+<p>  def <strong>sub</strong>(self, other):<br>    data = []<br>    for j in range(len(self.data)):<br>      data.append(self.data[j] - other.data[j])<br>    return Vector(data)</p>
+<p>x = Vector([1, 2, 3])<br>y = Vector([3, 0, 2])<br>print x + y<br>print y - x<br></p>
+<p><pre><br>def <strong>add</strong>(self, other):<br>    data = []<br>    for j in range(len(self.data)):<br>      data.append(self.data[j] + other.data[j])<br>    return Vector(data)<br></pre><br>Here we implement the addition operation of vectors. The <font color="blue"><strong>add</strong>()</font> method is called, when we add two Vector objects with the + operator. Here we add each member of the respective vectors.</p>
+<p><pre><br>$ ./vector.py<br>[4, 2, 5]<br>[2, -2, -1]<br></pre><br>In this part of the Python tutorial, we have covered object-oriented programming in Python.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/page/8/" class="alignleft prev">Prev</a>
+  
+  
+    <a href="/page/10/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Github/">Github</a><small>1</small></li>
+  
+    <li><a href="/categories/Karrigell/">Karrigell</a><small>1</small></li>
+  
+    <li><a href="/categories/VIM/">VIM</a><small>2</small></li>
+  
+    <li><a href="/categories/django/">django</a><small>8</small></li>
+  
+    <li><a href="/categories/jekyll/">jekyll</a><small>2</small></li>
+  
+    <li><a href="/categories/kivy/">kivy</a><small>1</small></li>
+  
+    <li><a href="/categories/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/categories/normal/">normal</a><small>1</small></li>
+  
+    <li><a href="/categories/other/">other</a><small>2</small></li>
+  
+    <li><a href="/categories/python/">python</a><small>63</small></li>
+  
+    <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/categories/system/">system</a><small>2</small></li>
+  
+    <li><a href="/categories/tornado/">tornado</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/django/">django</a><small>2</small></li>
+  
+    <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
+  
+    <li><a href="/tags/flask/">flask</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>10</small></li>
+  
+    <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>2</small></li>
+  
+    <li><a href="/tags/tornado/">tornado</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2019 Tony Tan
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

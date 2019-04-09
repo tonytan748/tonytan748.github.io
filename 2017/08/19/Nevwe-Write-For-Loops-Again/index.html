@@ -1,0 +1,247 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Nevwe Write For-Loops Again | Tony Tan</title>
+  <meta name="author" content="Tony Tan">
+  
+  <meta name="description" content="Tony Tan">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Nevwe Write For-Loops Again">
+  <meta property="og:site_name" content="Tony Tan">
+
+  
+    <meta property="og:image" content="">
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Tony Tan" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+</html>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Tony Tan</a></h1>
+  <h2><a href="/">a python progrmmer</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-08-19T00:15:44.000Z"><a href="/2017/08/19/Nevwe-Write-For-Loops-Again/">2017-08-19</a></time>
+      
+      
+  
+    <h1 class="title">Nevwe Write For-Loops Again</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Translate from <a href="https://dev.to/dawranliou/never-write-for-loops-again" target="_blank" rel="noopener">Randy Daw-Ran Liou </a></p>
+<p>This is a challenge. I challenge you to avoid writing for-loops in every scenario. Also, I challenge you to find the scenarios that are so freaking hard to write anything else but a for-loop. Please share your findings. I’d like to hear about them.</p>
+<p>It’s been a while since I started exploring the amazing language features in Python. At the beginning, it’s just a challenge I gave myself to practice using more language features instead of those I learned from other programming language. And things are just getting more fun! Not only the code become shorter and cleaner, but also code looks more structured and disciplined. I’ll get into those benefits more in this article.</p>
+<p>But first, let’s take a step back and see what’s the intuition behind writing a for-loop:<br>1.To go through a sequence to extract out some information<br>2.To generate another sequence out of the current sequence<br>3.This is my second nature to write for-loops because I’m a programmer</p>
+<p>Fortunately, there are already great tools that are built into Python to help you accomplish the goals! All you need is to shift your mind and look at the things in a different angle.</p>
+<h2 id="What-you-gain-by-not-writing-for-loops-everywhere"><a href="#What-you-gain-by-not-writing-for-loops-everywhere" class="headerlink" title="What you gain by not writing for-loops everywhere"></a>What you gain by not writing for-loops everywhere</h2><p>1.Fewer lines of code<br>2.Better code readability<br>3.Leave indentation for managing context only</p>
+<p>Let’s see the code skeleton below:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 1</span><br><span class="line">with ...:</span><br><span class="line">    for ...:</span><br><span class="line">        if ...:</span><br><span class="line">            try:</span><br><span class="line">            except:</span><br><span class="line">        else:</span><br></pre></td></tr></table></figure></p>
+<p>In this example, we are dealing with multiple layers of code. THIS IS HARD TO READ. The problem I found in this code is that it is mixing the <strong>administrative</strong> logic (the <code>with</code>, <code>try-except</code>) with the <strong>business logic</strong> (the <code>for</code>, <code>if</code>) by giving them the indentation ubiquitously. If you are disciplined about using indentation only for administrative logic, your core business logic would stand out immediately.</p>
+<blockquote>
+<p>“Flat is better than nested” - The Zen of Python</p>
+</blockquote>
+<h2 id="Tools-you-can-use-to-avoid-using-for-loops"><a href="#Tools-you-can-use-to-avoid-using-for-loops" class="headerlink" title="Tools you can use to avoid using for-loops"></a>Tools you can use to avoid using for-loops</h2><h3 id="1-List-Comprehension-Generator-Expression"><a href="#1-List-Comprehension-Generator-Expression" class="headerlink" title="1.List Comprehension / Generator Expression"></a>1.List Comprehension / Generator Expression</h3><p>Let’s see a simple example. Basically you want to compile a sequence based on another existing sequence:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">result = []</span><br><span class="line">for item in item_list:</span><br><span class="line">    new_item = do_something_with(item)</span><br><span class="line">    result.append(item)</span><br></pre></td></tr></table></figure></p>
+<p>You can use <code>map</code> if you love MapReduce, or, Python has List Comprehension:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result = [do_something_with(item) for item in item_list]</span><br></pre></td></tr></table></figure></p>
+<p>Similarly, if you wish to get a iterator only, you can use Generator Expression with almost the same syntax. (How can you not love the consistency in Python?)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result = (do_something_with(item) for item in item_list)</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-Functions"><a href="#2-Functions" class="headerlink" title="2. Functions"></a>2. Functions</h3><p>Thinking in a higher-order, more functional programming way, if you want to map a sequence to another, simply call the <code>map</code> function. (Be my guest to use list comprehension here instead.)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">doubled_list = map(lambda x: x * 2, old_list)</span><br></pre></td></tr></table></figure>
+<p>If you want to reduce a sequence into a single, use <code>reduce</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from functools import reduce</span><br><span class="line">summation = reduce(lambda x, y: x + y, numbers)</span><br></pre></td></tr></table></figure>
+<p>Also, lots of Python’s builtin functions consumes iterables:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = list(range(10))</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span><br><span class="line">&gt;&gt;&gt; all(a)</span><br><span class="line">False</span><br><span class="line">&gt;&gt;&gt; any(a)</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; max(a)</span><br><span class="line">9</span><br><span class="line">&gt;&gt;&gt; min(a)</span><br><span class="line">0</span><br><span class="line">&gt;&gt;&gt; list(filter(bool, a))</span><br><span class="line">[1, 2, 3, 4, 5, 6, 7, 8, 9]</span><br><span class="line">&gt;&gt;&gt; set(a)</span><br><span class="line">&#123;0, 1, 2, 3, 4, 5, 6, 7, 8, 9&#125;</span><br><span class="line">&gt;&gt;&gt; dict(zip(a,a))</span><br><span class="line">&#123;0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9&#125;</span><br><span class="line">&gt;&gt;&gt; sorted(a, reverse=True)</span><br><span class="line">[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]</span><br><span class="line">&gt;&gt;&gt; str(a)</span><br><span class="line">&apos;[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]&apos;</span><br><span class="line">&gt;&gt;&gt; sum(a)</span><br><span class="line">45</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-Extract-Functions-or-Generators"><a href="#3-Extract-Functions-or-Generators" class="headerlink" title="3. Extract Functions or Generators"></a>3. Extract Functions or Generators</h3><p>The above two methods are great to deal with simpler logic. How about more complex logic? As a programmer, we write functions to abstract out the difficult things. Same idea applies here. If you are writing this:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">results = []</span><br><span class="line">for item in item_list:</span><br><span class="line">    # setups</span><br><span class="line">    # condition</span><br><span class="line">    # processing</span><br><span class="line">    # calculation</span><br><span class="line">    results.append(result)</span><br></pre></td></tr></table></figure></p>
+<p>Apparently you are giving too much responsibility to a single code block. Instead, I propose you do:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def process_item(item):</span><br><span class="line">    # setups</span><br><span class="line">    # condition</span><br><span class="line">    # processing</span><br><span class="line">    # calculation</span><br><span class="line">    return result</span><br><span class="line"></span><br><span class="line">results = [process_item(item) for item in item_list]</span><br></pre></td></tr></table></figure></p>
+<p>How about nested for-loops?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">results = []</span><br><span class="line">for i in range(10):</span><br><span class="line">    for j in range(i):</span><br><span class="line">        results.append((i, j))</span><br></pre></td></tr></table></figure></p>
+<p>List Comprehension got your back:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">results = [(i, j)</span><br><span class="line">           for i in range(10)</span><br><span class="line">           for j in range(i)]</span><br></pre></td></tr></table></figure></p>
+<p>How about if you have some internal state in the code block to<br>keep?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># finding the max prior to the current item</span><br><span class="line">a = [3, 4, 6, 2, 1, 9, 0, 7, 5, 8]</span><br><span class="line">results = []</span><br><span class="line">current_max = 0</span><br><span class="line">for i in a:</span><br><span class="line">    current_max = max(i, current_max)</span><br><span class="line">    results.append(current_max)</span><br><span class="line"></span><br><span class="line"># results = [3, 4, 6, 6, 6, 9, 9, 9, 9, 9]</span><br></pre></td></tr></table></figure></p>
+<p>Let’s extract a generator to achieve this:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def max_generator(numbers):</span><br><span class="line">    current_max = 0</span><br><span class="line">    for i in numbers:</span><br><span class="line">        current_max = max(i, current_max)</span><br><span class="line">        yield current_max</span><br><span class="line"></span><br><span class="line">a = [3, 4, 6, 2, 1, 9, 0, 7, 5, 8]</span><br><span class="line">results = list(max_generator(a))</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>“Oh wait, you just used a for-loop in the generator function. That’s cheating!”</p>
+</blockquote>
+<p>Fine, smart ass, let’s try the following.</p>
+<h3 id="4-Don’t-write-it-yourself-itertools-got-you-covered"><a href="#4-Don’t-write-it-yourself-itertools-got-you-covered" class="headerlink" title="4. Don’t write it yourself. itertools got you covered"></a>4. Don’t write it yourself. <code>itertools</code> got you covered</h3><p>This module is simply brilliant. I believe this module covers 80% of the cases that you makes you want to write for-loops. For example, the last example can be rewritten to:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from itertools import accumulate</span><br><span class="line">a = [3, 4, 6, 2, 1, 9, 0, 7, 5, 8]</span><br><span class="line">resutls = list(accumulate(a, max))</span><br></pre></td></tr></table></figure></p>
+<p>Also, if you are iterating on combinatoric sequnces, there are <code>product()</code>, <code>permutations()</code>, <code>combinations()</code> to use.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>1.You don’t need to write for-loops in most scenarios<br>2.You should avoid writing for-loops, so you have better code readability</p>
+<h2 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h2><p>1.Look at your code again. Spot any places that you wrote a for-loop previously by intuition. Think again and see if it make sense to re-write it without using for-loop.<br>2.Share your cases that are hard to code without using for-loops</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/python/">python</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/python/">python</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://deenter.com/2017/08/19/Nevwe-Write-For-Loops-Again/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Github/">Github</a><small>1</small></li>
+  
+    <li><a href="/categories/Karrigell/">Karrigell</a><small>1</small></li>
+  
+    <li><a href="/categories/VIM/">VIM</a><small>2</small></li>
+  
+    <li><a href="/categories/django/">django</a><small>8</small></li>
+  
+    <li><a href="/categories/jekyll/">jekyll</a><small>2</small></li>
+  
+    <li><a href="/categories/kivy/">kivy</a><small>1</small></li>
+  
+    <li><a href="/categories/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/categories/normal/">normal</a><small>1</small></li>
+  
+    <li><a href="/categories/other/">other</a><small>2</small></li>
+  
+    <li><a href="/categories/python/">python</a><small>63</small></li>
+  
+    <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/categories/system/">system</a><small>2</small></li>
+  
+    <li><a href="/categories/tornado/">tornado</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/django/">django</a><small>2</small></li>
+  
+    <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
+  
+    <li><a href="/tags/flask/">flask</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>10</small></li>
+  
+    <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>2</small></li>
+  
+    <li><a href="/tags/tornado/">tornado</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2019 Tony Tan
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

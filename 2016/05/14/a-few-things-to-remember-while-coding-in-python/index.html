@@ -1,0 +1,279 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>A Few Things To Remember While Coding In Python | Tony Tan</title>
+  <meta name="author" content="Tony Tan">
+  
+  <meta name="description" content="Tony Tan">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="A Few Things To Remember While Coding In Python">
+  <meta property="og:site_name" content="Tony Tan">
+
+  
+    <meta property="og:image" content="">
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Tony Tan" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+</html>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Tony Tan</a></h1>
+  <h2><a href="/">a python progrmmer</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-13T16:00:00.000Z"><a href="/2016/05/14/a-few-things-to-remember-while-coding-in-python/">2016-05-14</a></time>
+      
+      
+  
+    <h1 class="title">A Few Things To Remember While Coding In Python</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Transfer from <a href="http://satyajit.ranjeev.in/2012/05/17/python-a-few-things-to-remember.html" target="_blank" rel="noopener">http://satyajit.ranjeev.in/2012/05/17/python-a-few-things-to-remember.html</a></p>
+<h3 id="Zen-of-Python"><a href="#Zen-of-Python" class="headerlink" title="Zen of Python"></a>Zen of Python</h3><p>Learing the culture that surrounds a language bringd you one step closer to being a better programmer. If you haven’t read the Zen of Python yet open a Python prompt and type ‘import this’.For each of the item on the list you can find example here <a href="http://artifex.org/~hblanks/talks/2011/pep20_by_example.html" target="_blank" rel="noopener">http://artifex.org/~hblanks/talks/2011/pep20_by_example.html</a></p>
+<p>One caught my attention:</p>
+<p><strong>Beautiful is better then ugly</strong></p>
+<p>Give me a function that takes a list of numbers and return only the even ones,divided by two.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#-----------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">halve_evens_only = lambda nums: map(lambda i: i/2, filter(lambda i: not i%2, nums))</span><br><span class="line"></span><br><span class="line">#-----------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">def halve_evens_only(nums):</span><br><span class="line">    return [i/2 for i in nums if not i % 2]</span><br></pre></td></tr></table></figure>
+<h3 id="Remembar-the-very-simple-things-in-Python"><a href="#Remembar-the-very-simple-things-in-Python" class="headerlink" title="Remembar the very simple things in Python"></a>Remembar the very simple things in Python</h3><ul>
+<li>Swaping two variables:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a,b = b, a</span><br></pre></td></tr></table></figure>
+<ul>
+<li>The step argument in slice operator. For example:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = [1,2,3,4,5]</span><br><span class="line">&gt;&gt;&gt;a[::2] #iterate over the whole list in 2-increments</span><br><span class="line">[1,3,5]</span><br></pre></td></tr></table></figure>
+<p>THe special case x[:-1:] is a useful idiom for ‘x reversed’.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;z[::-1]</span><br><span class="line">[5,4,3,2,1]</span><br></pre></td></tr></table></figure>
+<p>UPDATE: Do keep in mind <code>x.reverse()</code> reverses the list in place and slices gives you the ability to do this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;x[::-1]</span><br><span class="line">[5,4,3,2,1]</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;x[::-2]</span><br><span class="line">[5,3,1]</span><br></pre></td></tr></table></figure>
+<h3 id="Don’t-use-mutables-as-defaults"><a href="#Don’t-use-mutables-as-defaults" class="headerlink" title="Don’t use mutables as defaults"></a>Don’t use mutables as defaults</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def function(x,l=[]):    #Don&apos;t do this</span><br><span class="line"></span><br><span class="line">def function(x,l=None):    #way better</span><br><span class="line">	if l is None:</span><br><span class="line">		l = []</span><br></pre></td></tr></table></figure>
+<p>UPDATE: I realise I haven’t explained why. I would recommend reading the <a href="http://effbot.org/zone/default-values.htm" target="_blank" rel="noopener">article by Fredrik Lundh</a>. In short it is by design that this happens. “Default parameter values are always evaluted when, and only when, the “def” statement they belong to is executed;”</p>
+<h3 id="Use-iteritems-rather-than-items"><a href="#Use-iteritems-rather-than-items" class="headerlink" title="Use iteritems rather than items"></a>Use iteritems rather than items</h3><p><code>iteritems</code> uses <code>generators</code> and thus are better whle iterating though very large lists.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">d = &#123;1:&apos;1&apos;,2:&apos;2&apos;,3:&apos;3&apos;&#125;</span><br><span class="line"></span><br><span class="line">for key, val in d.items()    # builds complete list when called.</span><br><span class="line"></span><br><span class="line">for key, val in d.iteritems()    # calls values only when requested.</span><br></pre></td></tr></table></figure>
+<p>This is similar with <code>range</code> and <code>xrange</code> only calls values when requested.</p>
+<p>UPDATE: Do note that the <code>iteritems,iterkeys,itervalues</code> are removed from Python3.x. The <code>dict.keys()</code>,<code>dict.items()</code> and ‘dict.values()’ return views instead of <code>lists</code>.</p>
+<p><a href="http://docs.python.org/release/3.1.5/whatsnew/3.0.html#views-and-iterators-instead-of-lists" target="_blank" rel="noopener">http://docs.python.org/release/3.1.5/whatsnew/3.0.html#views-and-iterators-instead-of-lists</a></p>
+<h3 id="Use-isinstance-rather-than-type"><a href="#Use-isinstance-rather-than-type" class="headerlink" title="Use isinstance rather than type"></a>Use <code>isinstance</code> rather than type</h3><p>Don’t do</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if type(s) == type(&quot;&quot;): ,,,</span><br><span class="line">if type(seq) == list or type(seq) == tuple: ...</span><br></pre></td></tr></table></figure>
+<p>rather:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if isinstance(s, basestring): ...</span><br><span class="line">if isinstance(seq, (list, tuple)): ...</span><br></pre></td></tr></table></figure>
+<p>For why not to do so: <a href="http://stackoverflow.com/a/1549854/504262" target="_blank" rel="noopener">http://stackoverflow.com/a/1549854/504262</a></p>
+<p>Notice I used <code>basestring</code> and not <code>str</code> as you might be trying to check if a nuicode object is a string. For example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = u&apos;aaa&apos;</span><br><span class="line">&gt;&gt;&gt; print isinstance(a, basestring)</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; print isinstance(a, str)</span><br><span class="line">False</span><br></pre></td></tr></table></figure>
+<p>This is because in Python version below 3.0 there are two string types <code>str</code> and <code>uuicode</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  object</span><br><span class="line">     |</span><br><span class="line">     |</span><br><span class="line">basestring</span><br><span class="line">    /\</span><br><span class="line">  /    \</span><br><span class="line">str   unicode</span><br></pre></td></tr></table></figure>
+<h3 id="Learn-the-various-collection"><a href="#Learn-the-various-collection" class="headerlink" title="Learn the various collection"></a>Learn the various <code>collection</code></h3><p>Python has various container datatypes which are better alternative to the built-in containers like <code>list</code> and <code>dict</code> for specific cases.</p>
+<p>UPDATE: I’m sure most do not use this. Carelessness from my side. A few may consider writing it this way:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">freqs = &#123;&#125;</span><br><span class="line">for c in &quot;abcdgfgdgddgf&quot;:</span><br><span class="line">  try:</span><br><span class="line">    freqs[c] += 1</span><br><span class="line">  except:</span><br><span class="line">    freqs[c] = 1</span><br></pre></td></tr></table></figure>
+<p>Some may say a better solution would be:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">freqs = &#123;&#125;</span><br><span class="line">for c in &quot;fgsdcacacacscac&quot;:</span><br><span class="line">  freqs[c] = freqs.get(c,0) + 1</span><br></pre></td></tr></table></figure>
+<p>Rether go for the <code>collection</code> type <code>defaultdict</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from collections import defaultdict</span><br><span class="line">freqs = defaultdict(int)</span><br><span class="line">for c in &quot;fgdhffjjg&quot;:</span><br><span class="line">  freqs[c] += 1</span><br></pre></td></tr></table></figure>
+<p><strong>Other collections</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">namedtuple()    # factory function for creating tuple subclasses with named fields</span><br><span class="line">deque    #list-like container with fast appends and pops on either end</span><br><span class="line">Counter    #dict subclass for counting hashable objects</span><br><span class="line">OrderedDict    #dict subclass that remembers the order entries were added</span><br><span class="line">defaultdict    #dict subclass that calls a factory function to supply missing values</span><br></pre></td></tr></table></figure>
+<p>UPDATE: As noted by a few in Hacker News I could have used <code>Counter</code> instead of <code>defaultdict</code>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from collections import Counter</span><br><span class="line">&gt;&gt;&gt; c = Counter(&quot;ghdgdfgfhgfhgfh&quot;)</span><br><span class="line">&gt;&gt;&gt; c[&apos;d&apos;]</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+<h3 id="When-creating-classes-Python’s-magic-methods"><a href="#When-creating-classes-Python’s-magic-methods" class="headerlink" title="When creating classes Python’s magic methods"></a>When creating classes Python’s magic methods</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">__eq__(self, other)    # Defines behavior for the equality operator, ==</span><br><span class="line">__ne__(self,other)    # Defines behavior for the inequality operator, !=</span><br><span class="line">__lt__(self,other)     # Defines behavior for the less-than operator, &lt;.</span><br><span class="line">  __gt__(self, other)      # Defines behavior for the greater-than operator, &gt;.</span><br><span class="line">  __le__(self, other)      # Defines behavior for the less-than-or-equal-to operator, &lt;=.</span><br><span class="line">  __ge__(self, other)      # Defines behavior for the greater-than-or-equal-to operator, &gt;=.</span><br></pre></td></tr></table></figure>
+<p>There are serveral others.</p>
+<h3 id="Conditional-Assignments"><a href="#Conditional-Assignments" class="headerlink" title="Conditional Assignments"></a>Conditional Assignments</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = 3 if (y == 1) else 2    It does exactly what it sounds like:&quot;assign 3 to x if y is 1, otherwise assign 2 to x&quot;, You can also chain it if you have something more complicated:</span><br><span class="line">x = 3 if (y == 1) else 2 if (y == -1) else 1</span><br></pre></td></tr></table></figure>
+<p>Though at a certain point, it goes a little too far.</p>
+<p>Note that you can use if … else in any expression. For example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(func1 if y == 1 else func2)(arg1, arg2)</span><br></pre></td></tr></table></figure>
+<p>Here <code>func1</code> will be called if y is 1 and func2. otherwise. In both cases the corresponding function will be called with arguments arg1 and arg2.</p>
+<p>Analogously, the following is also valid:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x = (class1 if y == 1 else class2)(arg1, arg2)</span><br></pre></td></tr></table></figure>
+<p>where <code>class1</code> and <code>class2</code> are two classes.</p>
+<h3 id="Use-the-Ellipsis-when-necessary"><a href="#Use-the-Ellipsis-when-necessary" class="headerlink" title="Use the Ellipsis when necessary."></a>Use the <code>Ellipsis</code> when necessary.</h3><p>UPDATE: As one commenter mentioned in Hacker News “Using Ellipsis for getting all items is a violation of the only One Way TO Do It principle. The standard notation is [:].” I do agree with him. A better example is given using numpy in <a href="http://stackoverflow.com/a/118508/504262" target="_blank" rel="noopener">stackoverflow</a>:</p>
+<p>The ellipsis is used to slice higher-dimensional data structures.</p>
+<p>It’s designed to mean at this point. insert as many full slices(:) to extend the multi-dimensional slice to all dimensions.</p>
+<p>Example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from numpy import arrage</span><br><span class="line">&gt;&gt;&gt; a = arange(16).reshape(2,2,2,2)</span><br></pre></td></tr></table></figure>
+<p>Now, you have a 4-dimensional matrix of order 2x2x2x2. To select all first elements in the 4th dimension, you can use the ellipsis notation</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a[...,0].flatten()</span><br><span class="line">array([0,2,4,6,8,10,12,14])</span><br></pre></td></tr></table></figure>
+<p><strong>Previous suggestion.</strong></p>
+<p>When creating a class you can use <code>__gititem__</code> to make you class’s object work like a dictionary. Take this class as an example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class MyCLass(object):</span><br><span class="line">  def __init__(self,a,b,c,d):</span><br><span class="line">    self.a, self.b,self.c,self.d = a,b,c,d</span><br><span class="line"></span><br><span class="line">  def __getitem__(self, item):</span><br><span class="line">    return getattr(self,item)</span><br><span class="line"></span><br><span class="line">x = MyCLass(10,12,22,14)</span><br></pre></td></tr></table></figure>
+<p>Because of <code>__getitem__</code> you will be able to get the value of <code>a</code> in the object <code>x</code> by <code>x[&#39;a&#39;]</code>. This is probably a know fact.</p>
+<p>This object is used to extend the Python slicing.(<a href="(http://docs.python.org/library/stdtypes.html#bltin-ellipsis-object">(http://docs.python.org/library/stdtypes.html#bltin-ellipsis-object</a>). Thus if we add a clause:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def __getitem__(self,item):</span><br><span class="line">  if item is Ellipsis:</span><br><span class="line">    return [self.a, self.b,self.c, self.d]</span><br><span class="line">  else:</span><br><span class="line">    return getattr(self, item)</span><br></pre></td></tr></table></figure>
+<p>We can use <code>x[...]</code> to get list containing all the items.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; x = MyCLass(11,24,23,12)</span><br><span class="line">&gt;&gt;&gt; x[...]</span><br><span class="line">(11,24,23,12)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/python/">python</a>
+  </div>
+
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://deenter.com/2016/05/14/a-few-things-to-remember-while-coding-in-python/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Github/">Github</a><small>1</small></li>
+  
+    <li><a href="/categories/Karrigell/">Karrigell</a><small>1</small></li>
+  
+    <li><a href="/categories/VIM/">VIM</a><small>2</small></li>
+  
+    <li><a href="/categories/django/">django</a><small>8</small></li>
+  
+    <li><a href="/categories/jekyll/">jekyll</a><small>2</small></li>
+  
+    <li><a href="/categories/kivy/">kivy</a><small>1</small></li>
+  
+    <li><a href="/categories/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/categories/normal/">normal</a><small>1</small></li>
+  
+    <li><a href="/categories/other/">other</a><small>2</small></li>
+  
+    <li><a href="/categories/python/">python</a><small>63</small></li>
+  
+    <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/categories/system/">system</a><small>2</small></li>
+  
+    <li><a href="/categories/tornado/">tornado</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/django/">django</a><small>2</small></li>
+  
+    <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
+  
+    <li><a href="/tags/flask/">flask</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>10</small></li>
+  
+    <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>2</small></li>
+  
+    <li><a href="/tags/tornado/">tornado</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2019 Tony Tan
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

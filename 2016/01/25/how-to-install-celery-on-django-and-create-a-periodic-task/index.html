@@ -1,0 +1,278 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>How to install Celery on Django and create a periodic task | Tony Tan</title>
+  <meta name="author" content="Tony Tan">
+  
+  <meta name="description" content="Tony Tan">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="How to install Celery on Django and create a periodic task">
+  <meta property="og:site_name" content="Tony Tan">
+
+  
+    <meta property="og:image" content="">
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Tony Tan" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+</html>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Tony Tan</a></h1>
+  <h2><a href="/">a python progrmmer</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-01-24T16:00:00.000Z"><a href="/2016/01/25/how-to-install-celery-on-django-and-create-a-periodic-task/">2016-01-25</a></time>
+      
+      
+  
+    <h1 class="title">How to install Celery on Django and create a periodic task</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>How to install Celery on Django and create a periodic task</em></p>
+<p>Celery 3.1.19 and Django 1.8.7.<br>This post explains how to set up Celery with Django, using RabbitMQ as a message broker.</p>
+<p>It also explains how to create a Periodic Task.</p>
+<h3 id="The-Broker-RabbitMQ"><a href="#The-Broker-RabbitMQ" class="headerlink" title="The Broker RabbitMQ"></a>The Broker RabbitMQ</h3><p>First, we need to choose what is called a Message Broker, required by Celery in order to send and receive messages. Here we will use RabbitMQ, which is feature-complete, stable, durable and easy to install.<br>Moreover, it is the default broker so is does not require additional configuration.</p>
+<p>Check out how to install it for your particular system here. If you are using Ubuntu you can install it by following:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install rabbitmq</span><br></pre></td></tr></table></figure>
+<p>The RabbitMQ server scripts are installed into /usr/local/sbin. This is not automatically added to your path, so open or edit a .bash_profile in your home folder and the following line.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=$PATH:/usr/local/sbin</span><br></pre></td></tr></table></figure>
+<p>The server can then be statted with</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo rabbitmqctl stop</span><br></pre></td></tr></table></figure>
+<p>You can find a detailed description on how to use RabbitMQ with Celery here.</p>
+<p>After installing RabbitMQ we need to create a RabbitMQ user, a virtual host and allow that user to access the virtaul host. We also start the server before that:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo rabbitmq-server -detached</span><br><span class="line">$ sudo rabbitmqctl add_user myuser mypassword</span><br><span class="line">$ sudo rabbitmqctl add_host myvhost</span><br><span class="line">$ sudo rabbitmqctl set_permissions -p myvhost myuser &quot;.*&quot; &quot;.*&quot; &quot;.*&quot;</span><br></pre></td></tr></table></figure>
+<p>Then, open your Django project settings.py file and configure RabbitMQ by adding the lines:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BROKER_URL = &quot;amqp://myuser:mypassword@localhost:5672/myvhost&quot;</span><br></pre></td></tr></table></figure>
+<p>This tells celery, where your broker (your queue) is located. Here, we are running Celery at the same machine as RabbitMQ and using the localhost to find it.</p>
+<h3 id="Celery"><a href="#Celery" class="headerlink" title="Celery"></a>Celery</h3><p>Celery is on the Python Package Index(PyPi), and can be easily installed with pip or easy_install.</p>
+<p>Remember to active first your virtual environment(if you want to install Virtualenv to create a virtual enviroment check this post).</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install celery</span><br></pre></td></tr></table></figure>
+<p>Next, add this package to your requirements.txt file. so that both the production environment and the development environment on your local machine will use it. Recall that you can check the packages used by the current environment with</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip freeze</span><br></pre></td></tr></table></figure>
+<p>You will see that you have installed celery, pytz, billard, kombu, anyjson and amqp. Write them all on you requirements file. You can also write them directly by using</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip freeze &gt; requirements.txt</span><br></pre></td></tr></table></figure>
+<p>Now, we need to create a Celery instance, called a Celery app. Create a file at the same level of your settings.py file:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ touch myprojectfolder/myproject/celery.py</span><br></pre></td></tr></table></figure>
+<p>And write the following code:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">from celery import Celery</span><br><span class="line">from django.conf import settings</span><br><span class="line"></span><br><span class="line">os.environ.setdefault(&apos;DJANGO_SETTINGS_MODULE&apos;,&apos;myproject.settings&apos;)</span><br><span class="line"></span><br><span class="line">app = Celery(&apos;myproject&apos;)</span><br><span class="line">app.config_fron_object(&apos;django.conf:settings&apos;)</span><br><span class="line"></span><br><span class="line">app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)</span><br></pre></td></tr></table></figure>
+<p>Then, to ensure that the app is loaded when Django starts, you need to import this app in the <strong>init</strong>.py file.</p>
+<p>Open the <strong>init</strong>.py file that is at the same level than the settings.py and celery.py file and write:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from .celery import app as celery_app</span><br></pre></td></tr></table></figure>
+<p>Moreover, for security purposes, you should specigy a list of accepted content-types in the settings.py file.</p>
+<p>In this case, we will set json as our content type:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CELERY_ACCEPT_CONTENT = [&apos;json&apos;]</span><br></pre></td></tr></table></figure>
+<p>Theb we need to specify the task serializer accodingly:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CELERY_TASK_SERIALIZER = &apos;json&apos;</span><br><span class="line">CELERY_RESULT_SERIALZIER = &apos;json&apos;</span><br></pre></td></tr></table></figure>
+<p>Finally, we can specify the time zone we are in:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CELERY_TIMEZONE = &apos;Asia/Shanghai&apos;</span><br></pre></td></tr></table></figure>
+<p>Note: In Celery 3.0+ the setting CELERY_ENABLE_UTC is enabled default (it is set to True). This setting, if enabled, makes the dates and times in messages to be converted to use the UTC timezone.</p>
+<h3 id="Django-celery"><a href="#Django-celery" class="headerlink" title="Django-celery"></a>Django-celery</h3><p>If you want to store task results in the Django database, you will have to install the django-celery packags.</p>
+<p>This package defines a result backend to keep track of the state of the tasks. To install it user:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install django-celery</span><br></pre></td></tr></table></figure>
+<p>remember to include it in your requirements file, Then add it to your installed apps in your settings file:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS(</span><br><span class="line">	...,</span><br><span class="line">	&apos;djangocelery&apos;,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>Next we need to create the corresponding database tables of this app, which can be done with:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python manage.py migrate djcelery</span><br></pre></td></tr></table></figure>
+<p>As we have indicated Celery to use our settings.py file, we can configure Celery to use the django-celery backend by adding this line into the settings.py file:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CELERY_RESULT_BACKED = &apos;djcelery.backends.database:DatabaseBackend&apos;</span><br><span class="line">CELERYBEAT_SCHEDULER = &apos;djcelery.schedulers.DatabaseScheduler&apos;</span><br></pre></td></tr></table></figure>
+<h3 id="Create-a-Periodic-Task"><a href="#Create-a-Periodic-Task" class="headerlink" title="Create a Periodic Task"></a>Create a Periodic Task</h3><p>One thing you might want to use in your project is a Scraper, for example, whick is an aplication that runs periodicaly at night to update some data for your web site.</p>
+<p>Choose or create an application in your django project to include the Scraper. Then, create and edit the file myapp/utils/scrapers.py (note: you must have an empty <strong>init</strong>.py file inside the utils folder). The scrapers.py file must contain a function that performs that performs your desired operations, like accessing an API and modifying your database.</p>
+<p>In this example, we just write:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def scraper_example(a,b):</span><br><span class="line">	return a + b</span><br></pre></td></tr></table></figure>
+<p>Then, create the file myapp/tasks.py and edit it:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from celery.task.schedules import crontab</span><br><span class="line">from celery.decorators import peeriodic_task</span><br><span class="line">from myapp.utils import scrapers</span><br><span class="line">from celery.utils.log import get_task_logger</span><br><span class="line">from datetime import datetime</span><br><span class="line"></span><br><span class="line">logger = get_task_logger(__name__)</span><br><span class="line"></span><br><span class="line">@periodic_task(run_every=(crontab(hour=&apos;*&apos;, minute=&apos;*&apos;, day_of_week=&apos;*&apos;)))</span><br><span class="line">def scraper_example():</span><br><span class="line">	logger.info(&quot;Start task&quot;)</span><br><span class="line">	now = datetime.now()</span><br><span class="line">	result = scrapers.scraper_example(now.day,now.minute)</span><br><span class="line">	logger.info(&quot;Task finished: result = %i&quot; % result)</span><br></pre></td></tr></table></figure>
+<p>Here we have created a periodic task that will run every minute, and that writes into the logger two messages indicating the beginning and the end of the task, and calls our scraper function.</p>
+<h3 id="Run-it"><a href="#Run-it" class="headerlink" title="Run it"></a>Run it</h3><p>Now we created the periodic task, but how we can run it? First start your RabbitMQ server:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo rabbitmq-server -detached</span><br></pre></td></tr></table></figure>
+<p>Next start a Celery worker</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python manage.py celeryd --verbosity=2 --loglevel=DEBUG</span><br></pre></td></tr></table></figure>
+<p>If the installtion is correct, you should see at the top of the text displayed something like</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">transport: amqp://myuser@localhost:5673/myvhost</span><br><span class="line">results: djcelery.backends.database:DatabaseBackend</span><br></pre></td></tr></table></figure>
+<p>And a list of the application tasks:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[tasks]</span><br><span class="line">  . celery.backend_cleanup</span><br><span class="line">  . ......etc</span><br><span class="line">  . myapp.tasks.scraper_example</span><br></pre></td></tr></table></figure>
+<p>Next open a new tab and start celerybeat, which will send the registered tasks periodically to RabbitMQ:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python manage.py celerybeat --verbosity=2 --loglevel=DEBUG</span><br></pre></td></tr></table></figure>
+<p>If you go back to the Celery woeker tab, you will see the results of your tasks.</p>
+<p>And finally. open another tab and start your django development server:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python manage.py runserver</span><br></pre></td></tr></table></figure>
+<p>Note: Beat needs to store the last run times of the tasks in a local database file, which by default is celerybeat-schedule.db and it’s placed at the same level of your manage.py file. If you are using GIT as version control, you should include this file into your gitignore file.</p>
+<p>That’s all.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/python/">python</a>
+  </div>
+
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://deenter.com/2016/01/25/how-to-install-celery-on-django-and-create-a-periodic-task/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Github/">Github</a><small>1</small></li>
+  
+    <li><a href="/categories/Karrigell/">Karrigell</a><small>1</small></li>
+  
+    <li><a href="/categories/VIM/">VIM</a><small>2</small></li>
+  
+    <li><a href="/categories/django/">django</a><small>8</small></li>
+  
+    <li><a href="/categories/jekyll/">jekyll</a><small>2</small></li>
+  
+    <li><a href="/categories/kivy/">kivy</a><small>1</small></li>
+  
+    <li><a href="/categories/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/categories/normal/">normal</a><small>1</small></li>
+  
+    <li><a href="/categories/other/">other</a><small>2</small></li>
+  
+    <li><a href="/categories/python/">python</a><small>63</small></li>
+  
+    <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/categories/system/">system</a><small>2</small></li>
+  
+    <li><a href="/categories/tornado/">tornado</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/django/">django</a><small>2</small></li>
+  
+    <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
+  
+    <li><a href="/tags/flask/">flask</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>10</small></li>
+  
+    <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>2</small></li>
+  
+    <li><a href="/tags/tornado/">tornado</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2019 Tony Tan
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
