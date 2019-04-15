@@ -54,6 +54,89 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-12-08T16:00:00.000Z"><a href="/2015/12/09/PIP-Guide/">2015-12-09</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/09/PIP-Guide/">PIP Guide</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>PIP Guide</em></p>
+<p>###目录</p>
+<ol>
+<li>前言</li>
+<li>获取pip<br>2.1. 脚本安装pip<br>2.2. 使用包管理软件安装<br>2.3. 更新pip</li>
+<li>pip基本使用<br>3.1. 安装PyPI软件<br>3.2. 查看具体安装文件<br>3.3. 查看哪些软件需要更新<br>3.4. 升级软件包<br>3.5. 卸载软件包</li>
+<li>pip简明手册<br>4.1. 安装具体版本软件<br>4.2. Requirements文件安装依赖软件<br>4.3. 列出软件包清单<br>4.4. 查看软件包信息<br>4.5. 搜寻<br>4.6. 配置文件<br>4.7 命令行自动补全</li>
+<li>后记</li>
+</ol>
+<p>###1 前言<br>pip 是一个Python包管理工具，主要是用于安装 PyPI 上的软件包，可以替代 easy_install 工具。</p>
+<p>GitHub: <a href="https://github.com/pypa/pip" target="_blank" rel="noopener">https://github.com/pypa/pip</a><br>Doc: <a href="https://pip.pypa.io/en/latest/" target="_blank" rel="noopener">https://pip.pypa.io/en/latest/</a></p>
+<p>###2 获取pip</p>
+<p>#####2.1 脚本安装pip</p>
+<p>  $ curl -O <a href="https://raw.github.com/pypa/pip/master/contrib/get-pip.py" target="_blank" rel="noopener">https://raw.github.com/pypa/pip/master/contrib/get-pip.py</a></p>
+<p>  $ python get-pip.py</p>
+<p>#####2.2 使用包管理软件安装<br>  $ sudo yum install python-pip</p>
+<p>  $ sudo apt-get install python-pip</p>
+<p>#####2.3 更新pip<br>  $ pip install -U pip</p>
+<p>###3 pip基本使用</p>
+<p>#####3.1 安装PyPI软件<br>  $ pip install SomePackage</p>
+<p>  […]<br>  Successfully installed SomePackage’</p>
+<p>#####3.2 查看具体安装文件<br>  $ pip show –files SomePackage</p>
+<p>  Name: SomePackage<br>  Version: 1.0<br>  Location: /my/env/lib/pythonx.x/site-packages<br>  Files:<br>   ../somepackage/<strong>init</strong>.py<br>   […]</p>
+<p>#####3.3 查看哪些软件需要更新<br>  $ pip list –outdated</p>
+<p>  SomePackage (Current: 1.0 Latest: 2.0)</p>
+<p>#####3.4 升级软件包<br>  $ pip install –upgrade SomePackage</p>
+<p>  […]<br>  Found existing installation: SomePackage 1.0<br>  Uninstalling SomePackage:<br>    Successfully uninstalled SomePackage<br>  Running setup.py install for SomePackage<br>  Successfully installed SomePackage</p>
+<p>#####3.5 卸载软件包<br>  $ pip uninstall SomePackage</p>
+<p>  Uninstalling SomePackage:<br>    /my/env/lib/pythonx.x/site-packages/somepackage<br>  Proceed (y/n)? y<br>  Successfully uninstalled SomePackage</p>
+<p>###4 pip简明手册</p>
+<p>#####4.1 安装具体版本软件<br>  $ pip install SomePackage            # latest version<br>  $ pip install SomePackage==1.0.4     # specific version<br>  $ pip install ‘SomePackage&gt;=1.0.4’     # minimum version’</p>
+<p>#####4.2 Requirements文件安装依赖软件<br>Requirements文件 一般记录的是依赖软件列表，通过pip可以一次性安装依赖软件包:</p>
+<p>  $ pip freeze &gt; requirements.txt</p>
+<p>  $ pip install -r requirements.txt’</p>
+<p>#####4.3 列出软件包清单<br>  $ pip list</p>
+<p>  $ pip list –outdated</p>
+<p>  ipython (Current: 1.2.0 Latest: 2.3.0)’</p>
+<p>#####4.4 查看软件包信息</p>
+<h2 id="pip-show-pip"><a href="#pip-show-pip" class="headerlink" title="  $ pip show pip"></a>  $ pip show pip</h2><p>  Name: pip<br>  Version: 1.4.1<br>  Location: /Library/Python/2.7/site-packages/pip-1.4.1-py2.7.egg<br>  Requires:</p>
+<h2 id="pip-show-pyopencl"><a href="#pip-show-pyopencl" class="headerlink" title="  $ pip show pyopencl"></a>  $ pip show pyopencl</h2><p>  Name: pyopencl<br>  Version: 2014.1<br>  Location: /Library/Python/2.7/site-packages<br>  Requires: pytools, pytest, decorator’</p>
+<p>#####4.5 搜寻<br>  $ pip search pycuda</p>
+<p>  pycuda                    - Python wrapper for Nvidia CUDA<br>  pyfft                     - FFT library for PyCuda and PyOpenCL<br>  cudatree                  - Random Forests for the GPU using PyCUDA<br>  reikna                    - GPGPU algorithms for PyCUDA and PyOpenCL<br>  compyte                   - A common set of compute primitives for PyCUDA and PyOpenCL (to be created)’</p>
+<p>#####4.6 配置文件<br>配置文件: $HOME/.pip/pip.conf, 举例:</p>
+<p>  [global]<br>  timeout = 60<br>  index-url = <a href="http://download.zope.org/ppix" target="_blank" rel="noopener">http://download.zope.org/ppix</a></p>
+<p>  [install]<br>  ignore-installed = true<br>  no-dependencies = yes’</p>
+<p>#####4.7 命令行自动补全<br>对于bash:</p>
+<p>  $ pip completion –bash &gt;&gt; ~/.profile’</p>
+<p>对于zsh:</p>
+<p>  $ pip completion –zsh &gt;&gt; ~/.zprofile</p>
+<p>加载此配置文件后，则pip命令支持自动补全功能.</p>
+<p>###5 后记<br>应该尽量使用pip，不要继续使用easy_install.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-08-27T16:00:00.000Z"><a href="/2015/08/28/Fill-Character-in-String-Python/">2015-08-28</a></time>
       
       
@@ -1054,47 +1137,6 @@ def export_item_list(request):
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-10-18T16:00:00.000Z"><a href="/2014/10/19/Set-Mysql-In-Python34-Virtualenv/">2014-10-19</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/10/19/Set-Mysql-In-Python34-Virtualenv/">Set Mysql In Python34 Virtualenv</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>Set mysql in python34 virtualenv</em></p>
-<p>Normally if you install mysql in ubuntu python34 virtualenv, use</p>
-<pre class="code">sudo apt-get install mysqlclient</pre>
-
-<p>so it’s better use the follow install</p>
-<pre class="code">
-sudo apt-get install python3-dev libmysqlclient-dev
-sudo apt-get install mysqlclient
-</pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1129,7 +1171,7 @@ sudo apt-get install mysqlclient
   
     <li><a href="/categories/other/">other</a><small>2</small></li>
   
-    <li><a href="/categories/python/">python</a><small>63</small></li>
+    <li><a href="/categories/python/">python</a><small>64</small></li>
   
     <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   
@@ -1154,7 +1196,7 @@ sudo apt-get install mysqlclient
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   
-    <li><a href="/tags/python/">python</a><small>10</small></li>
+    <li><a href="/tags/python/">python</a><small>11</small></li>
   
     <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   

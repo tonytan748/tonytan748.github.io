@@ -54,6 +54,56 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-09-15T16:00:00.000Z"><a href="/2014/09/16/how-to-set-lightness-in-ubuntu1404/">2014-09-16</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/09/16/how-to-set-lightness-in-ubuntu1404/">how to set lightness in ubuntu14.04</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>How to set lightness in Ubuntu14.04</em></p>
+<p>Open the folder.</p>
+<pre>
+sudo vim /etc/default/grub
+</pre>
+Change the following code
+<pre>
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+GRUB_CMDLINE_LINUX=""
+</pre>
+To
+<pre>
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash acpi_osi=Linux"
+GRUB_CMDLINE_LINUX="acpi_osi=Linux acpi_backlight=vendor"
+</pre>
+Save and Restart.
+<pre>
+sudo update-grub && sudo reboot
+</pre>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-09-08T16:00:00.000Z"><a href="/2014/09/09/Creating-an-Application-in-Kivy-Part-1/">2014-09-09</a></time>
       
       
@@ -1140,66 +1190,6 @@ arg3: 3
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-08-16T16:00:00.000Z"><a href="/2014/08/17/use-frabic-in-update-github/">2014-08-17</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/08/17/use-frabic-in-update-github/">Use Frabic in update Github</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>Fabic is used for automating deployment of your application.</em></p>
-<p>Fabric is used for automating deployment of your application.</p>
-<p>Install:</p>
-<pre>
-    $ pip install fabric
-</pre>
-
-<p>Create the fabfile:</p>
-<pre>
-    $ touch fabfile.py
-</pre>
-
-<p>Then add the following code:</p>
-<pre>
-from fabric.api import local
-
-def deploy():
-    local('git add .')
-    comment=raw_input('please type in commit:')
-    local('git commit -m "%s"' % comment)
-    local('git push origin master')
-</pre>
-
-<p>Run:</p>
-<pre>
-$ fab deploy
-</pre>
-
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1234,7 +1224,7 @@ $ fab deploy
   
     <li><a href="/categories/other/">other</a><small>2</small></li>
   
-    <li><a href="/categories/python/">python</a><small>63</small></li>
+    <li><a href="/categories/python/">python</a><small>64</small></li>
   
     <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   
@@ -1259,7 +1249,7 @@ $ fab deploy
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   
-    <li><a href="/tags/python/">python</a><small>10</small></li>
+    <li><a href="/tags/python/">python</a><small>11</small></li>
   
     <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   

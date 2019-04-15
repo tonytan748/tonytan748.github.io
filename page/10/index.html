@@ -54,6 +54,431 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-06-29T16:00:00.000Z"><a href="/2014/06/30/object-oriented-programming-in-python/">2014-06-30</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/06/30/object-oriented-programming-in-python/">Object oriented programming in Python</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>In this part of the Python programming tutorial, we will talk about object oriented programming in Python.</em></p>
+<p>There are three widely used programming paradigms there. Procedural programming, functional programming and object-oriented programming. Python supports both procedural and object-oriented programming. There is some limited support for f unctional programming too.</p>
+<p></p><h4>Object-oriented programming (OOP)</h4> is a programming paradigm that uses objects and their interactions to design applications and computer programs. (Wikipedia)<br>There are some basic programming concepts in OOP:<p></p>
+<ul><br><li>Abstraction</li><br><li>Polymorphism</li><br><li>Encapsulation</li><br><li>Inheritance</li><br></ul>
+
+<p>The <b>abstraction</b> is simplifying complex reality by modelling classes appropriate to the problem. The <b>polymorphism</b> is the process of using an operator or function in different ways for different data input. The <b>encapsulation</b> hides the implementation details of a class from other objects. The <b>inheritance</b> is a way to form new classes using classes that have already been defined.</p>
+<p></p><h3>Objects</h3><br>Everything in Python is an object. Objects are basic building blocks of a Python OOP program.<p></p>
+<pre>
+#!/usr/bin/python
+
+# objects.py
+
+import sys
+
+def function(): pass
+
+print type(1)
+print type("")
+print type([])
+print type({})
+print type(())
+print type(object)
+print type(function)
+print type(sys)
+</pre>
+
+<p>In this example we show, that all these entities are in fact objects. The <font color="blue">type()</font> function returns the type of the object specified.</p>
+<pre>
+$ ./objects.py 
+<type 'int'="">
+<type 'str'="">
+<type 'list'="">
+<type 'dict'="">
+<type 'tuple'="">
+<type 'type'="">
+<type 'function'="">
+<type 'module'="">
+</type></type></type></type></type></type></type></type></pre>
+
+<p></p><h3>The class keyword</h3><br>The previous objects were all built-in objects of the Python programming language. The user defined objects are created using the <font color="blue">class</font> keyword. The class is a blueprint that defines a nature of a future object. From classes we construct instances. An <b>instance</b> is a specific object created from a particular class. For example, Huck might be an instance of a Dog class.<p></p>
+<pre>
+#!/usr/bin/python
+
+# first.py
+
+class First:
+   pass
+
+fr = First()
+
+print type(fr)
+print type(First)
+</pre>
+This is our first class. The body of the class is left empty for now. It is a convention to give classes a name that starts with a capital letter.
+<pre>
+fr = First()
+</pre>
+Here we create a new instance of the First class. Or in other words, we instantiate the First class. The fr is a reference to our new object.
+<pre>
+$ ./first.py 
+<type 'instance'="">
+<type 'classobj'="">
+</type></type></pre>
+Here we see that fr is an instance object and First is a class object.
+Inside a class, we can define attributes and methods. An <b>attribute</b> is a characteristic of an object. This can be for example a salary of an employee. A <b>method</b> defines operations that we can perform with our objects. A method might define a cancellation of an account. Technically, attributes are variables and methods are functions defined inside a class.
+
+<h3>Attributes</h3>
+Attributes are characteristics of an object. A special method called <font color="blue">__init__()</font> is used to initialize the attributes of an object.
+<pre>
+#!/usr/bin/python
+
+# initialize.py
+
+class Cat:
+   def __init__(self, name):
+      self.name = name
+
+missy = Cat('Missy')
+lucky = Cat('Lucky')
+
+print missy.name
+print lucky.name
+</pre>
+In this code example, we have a Cat class. The special method <font color="blue">__init__()</font> is called automatically right after the object has been created.
+<pre>
+def __init__(self, name):
+</pre>
+Each method in a class definition begins with a reference to the instance object. It is by convention named self. There is nothing special about the self name. We could name it this, for example. The name is the argument. The value is passed during the class instantiation.
+<pre>
+self.name = name
+</pre>
+Here we pass an attribute to an instance object.
+<pre>
+missy = Cat('Missy')
+lucky = Cat('Lucky')
+</pre>
+Here we instantiate two objects. Missy and Lucky cats. The number of arguments must correspond to the <font color="blue">__init__()</font> method of the class definition. The 'Missy' and 'Lucky' strings become the name parameter of the <font color="blue">__init__()</font> method.
+<pre>
+print missy.name
+print lucky.name
+</pre>
+Here we print the instance variables of two cat objects. Each instance of a class can have their own attributes.
+<pre>
+$ ./initialize.py 
+Missy
+Lucky
+</pre>
+The attributes can be assigned dynamically, not just during initialization. This shows the next example.
+<pre>
+#!/usr/bin/python
+
+# dynamic.py
+
+class Dynamic:
+   pass
+
+d = Dynamic()
+d.name = "Dynamic"
+print d.name
+</pre>
+We define and create an empty Dynamic class.
+<pre>
+d.name = "Dynamic"
+</pre>
+This line of code creates a new name attribute.
+<pre>
+$ ./dynamic.py 
+Dynamic
+</pre>
+
+<p>So far, we have been talking about the instance attributes. In Python there are also so called <b>class object attributes</b>. Class object attributes are same for all instances of a class.</p>
+<pre>
+#!/usr/bin/python
+
+# cat.py
+
+
+class Cat:
+   species = 'mammal'
+
+   def __init__(self, name, age):
+      self.name = name
+      self.age = age
+
+
+missy = Cat('Missy', 3)
+lucky = Cat('Lucky', 5)
+
+print missy.name, missy.age
+print lucky.name, lucky.age
+
+print Cat.species
+print missy.__class__.species
+print lucky.__class__.species
+</pre>
+In our example, we have two cats with specific name and age attributes. Both cats share some characteristics. Missy and Lucky are both mammals. This is reflected in a class level attribute species. The attribute is defined outside any method name in the body of a class.
+<pre>
+print Cat.species
+print missy.__class__.species
+</pre>
+There are two ways, how we can access the class object attributes. Either via the name of the Cat class, or with the help of a special __class__ attribute.
+<pre>
+$ ./cat.py 
+Missy 3
+Lucky 5
+mammal
+mammal
+mammal
+</pre>
+
+<p></p><h3>Methods</h3><br>Methods are functions defined inside the body of a class. They are used to perform operations with the attributes of our objects. Methods are essential in encapsulation concept of the OOP paradigm. For example, we might have a connect() method in our AccessDatabase class. We need not to be informed, how exactly the method connect connects to the database. We only know, that it is used to connect to a database. This is essential in dividing responsibilities in programming. Especially in large applications.<p></p>
+<pre>
+#!/usr/bin/python
+
+# circle.py
+
+class Circle:
+   pi = 3.141592
+
+   def __init__(self, radius=1):
+      self.radius = radius 
+
+   def area(self):
+      return self.radius * self.radius * Circle.pi
+
+   def setRadius(self, radius):
+      self.radius = radius
+
+   def getRadius(self):
+      return self.radius
+
+c = Circle()
+
+c.setRadius(5)
+print c.getRadius()
+print c.area()
+</pre>
+In the code example, we have a Circle class. We define three new methods.
+<pre>
+def area(self):
+    return self.radius * self.radius * Circle.pi
+</pre>
+The area() method returns the area of a circle.
+<pre>
+def setRadius(self, radius):
+    self.radius = radius
+</pre>
+The setRadius() method sets a new value for a radius attribute.
+<pre>
+def getRadius(self):
+    return self.radius
+</pre>
+The getRadius() method returns the current radius.
+<pre>
+c.setRadius(5)
+</pre>
+The method is called on an instance object. The c object is paired with the self parameter of the class definition. The number 5 is paired with the radius parameter.
+<pre>
+$ ./circle.py 
+5
+78.5398
+</pre>
+In Python, we can call methods in two ways. There are bounded and unbounded method calls.
+<pre>
+#!/usr/bin/python
+
+# methods.py
+
+class Methods:
+   def __init__(self):
+      self.name = 'Methods'
+
+   def getName(self):
+      return self.name
+
+
+m = Methods()
+
+print m.getName()
+print Methods.getName(m)
+</pre>
+In this example, we demostrate both method calls.
+<pre>
+print m.getName()
+</pre>
+This is the <b>bounded</b> method call. The Python interpreter automatically pairs the m instance with the self parameter.
+<pre>
+print Methods.getName(m)
+</pre>
+And this is the <b>unbounded</b> method call. The instance object is explicitly given to the getName() method.
+<pre>
+$ ./methods.py 
+Methods
+Methods
+</pre>
+
+<p></p><h3>Inheritance</h3><br>The inheritance is a way to form new classes using classes that have already been defined. The newly formed classes are called <b>derived</b> classes, the classes that we derive from are called base classes. Important benefits of inheritance are code reuse and reduction of complexity of a program. The derived classes (descendants) override or extend the functionality of base classes (ancestors).<p></p>
+<pre>
+#!/usr/bin/python
+
+# inherit.py
+
+
+class Animal:
+   def __init__(self):
+      print "Animal created"
+
+   def whoAmI(self):
+      print "Animal"
+
+   def eat(self):
+      print "Eating"
+
+
+class Dog(Animal):
+   def __init__(self):
+      Animal.__init__(self)
+      print "Dog created"
+
+   def whoAmI(self):
+      print "Dog"
+
+   def bark(self):
+      print "Woof!"
+
+
+d = Dog()
+d.whoAmI()
+d.eat()
+d.bark()
+</pre>
+In this example, we have two classes. Animal and Dog. The animal is the base class, the Dog is the derived class. The derived class inherits the functionality of the base class. It is shown by the eat() method. The derived class modifies existing behaviour of the base class, shown by the whoAmI() method. Finally, the derived class extends the functionality of the base class, by defining a new bark() method.
+<pre>
+class Dog(Animal):
+    def __init__(self):
+       Animal.__init__(self)
+       print "Dog created"
+</pre>
+We put the ancestor classes in round brackets after the name of the descendant class. If the derived class provides it's own <font color="blue">__init__()</font> method, it must explicitly call the base class <font color="blue">__init__()</font> method.
+<pre>
+$ ./inherit.py 
+Animal created
+Dog created
+Dog
+Eating
+Woof!
+</pre>
+
+<p></p><h3>Polymorphism</h3><br>The polymorphism is the process of using an operator or function in different ways for different data input. In practical terms, polymorphism means that if class B inherits from class A, it doesn’t have to inherit everything about class A; it can do some of the things that class A does differently. (wikipedia)<p></p>
+<pre>
+#!/usr/bin/python
+
+# basic.py
+
+
+a = "alfa"
+b = (1, 2, 3, 4)
+c = ['o', 'm', 'e', 'g', 'a']
+
+print a[2]
+print b[1]
+print c[3]
+</pre>
+Python programming language uses polymorphism extensively in built-in types. Here we use the same indexing operator for three different data types.
+<pre>
+$ ./basic.py 
+f
+2
+g
+</pre>
+Polymorphism is most commonly used when dealing with inheritance.
+<pre>
+#!/usr/bin/python
+
+# polymorphism.py
+
+
+class Animal:
+   def __init__(self, name=''):
+      self.name = name
+
+   def talk(self):
+      pass
+
+
+class Cat(Animal):
+   def talk(self):
+      print "Meow!"
+
+
+class Dog(Animal):
+   def talk(self):
+      print "Woof!"
+
+
+a = Animal()
+a.talk()
+
+c = Cat("Missy")
+c.talk()
+
+d = Dog("Rocky")
+d.talk()
+</pre>
+Here we have two species. A dog and a cat. Both are animals. The Dog class and the Cat class inherit the Animal class. They have a talk() method, which gives different output for them.
+<pre>
+$ ./polymorphism.py 
+Meow!
+Woof!
+</pre>
+
+<p></p><h3>Special Methods</h3><br>Classes in Python programming language can implement certain operations with special method names. These methods are not called directly, but by a specific language syntax. This is similar to what is known as <b>operator overloading</b> in C++ or Ruby.<p></p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<h1 id="book-py"><a href="#book-py" class="headerlink" title="book.py"></a>book.py</h1><p>class Book:<br>   def <strong>init</strong>(self, title, author, pages):<br>      print “A book is created”<br>      self.title = title<br>      self.author = author<br>      self.pages = pages</p>
+<p>   def <strong>str</strong>(self):<br>      return “Title:%s , author:%s, pages:%s “ % \<br>              (self.title, self.author, self.pages)</p>
+<p>   def <strong>len</strong>(self):<br>      return self.pages</p>
+<p>   def <strong>del</strong>(self):<br>      print “A book is destroyed”</p>
+<p>book = Book(“Inside Steve’s Brain”, “Leander Kahney”, 304)</p>
+<p>print book<br>print len(book)<br>del book<br><br>In our code example, we have a book class. Here we introduce four special methods. The <font color="blue"><strong>init</strong>()</font>, <font color="blue"><strong>str</strong>()</font>, <font color="blue"><strong>len</strong>()</font> and the <font color="blue"><strong>del</strong>()</font> methods.</p>
+<p><pre><br>book = Book(“Inside Steve’s Brain”, “Leander Kahney”, 304)<br></pre><br>Here we call the <font color="blue"><strong>init</strong>()</font> method. The method creates a new instance of a Book class.</p>
+<p><pre><br>print len(book)<br></pre><br>The <font color="blue">len()</font> function invokes the <font color="blue"><strong>len</strong>()</font> method. In our case, we print the number of pages of our book.</p>
+<p><pre><br>del book<br></pre><br>The del keyword deletes an object. It calls the <font color="blue"><strong>del</strong>()</font> method.<br>In the next example we implement a vector class and demonstrate addition and substraction operations on it.</p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<h1 id="vector-py"><a href="#vector-py" class="headerlink" title="vector.py"></a>vector.py</h1><p>class Vector:</p>
+<p>  def <strong>init</strong>(self, data):<br>    self.data = data</p>
+<p>  def <strong>str</strong>(self):<br>    return repr(self.data)</p>
+<p>  def <strong>add</strong>(self, other):<br>    data = []<br>    for j in range(len(self.data)):<br>      data.append(self.data[j] + other.data[j])<br>    return Vector(data)</p>
+<p>  def <strong>sub</strong>(self, other):<br>    data = []<br>    for j in range(len(self.data)):<br>      data.append(self.data[j] - other.data[j])<br>    return Vector(data)</p>
+<p>x = Vector([1, 2, 3])<br>y = Vector([3, 0, 2])<br>print x + y<br>print y - x<br></p>
+<p><pre><br>def <strong>add</strong>(self, other):<br>    data = []<br>    for j in range(len(self.data)):<br>      data.append(self.data[j] + other.data[j])<br>    return Vector(data)<br></pre><br>Here we implement the addition operation of vectors. The <font color="blue"><strong>add</strong>()</font> method is called, when we add two Vector objects with the + operator. Here we add each member of the respective vectors.</p>
+<p><pre><br>$ ./vector.py<br>[4, 2, 5]<br>[2, -2, -1]<br></pre><br>In this part of the Python tutorial, we have covered object-oriented programming in Python.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-06-28T16:00:00.000Z"><a href="/2014/06/29/jekyll-quick-start/">2014-06-29</a></time>
       
       
@@ -104,6 +529,40 @@
 </ul>
 <h2 id="Programming-Interface"><a href="#Programming-Interface" class="headerlink" title="Programming Interface"></a>Programming Interface</h2><p>The API pages document main data-structures and code available for use in Jekyll and Jekyll-Bootstrap. Consult these pages for how and where to use the data and code provided.</p>
 <h2 id="Jekyll-Introduction"><a href="#Jekyll-Introduction" class="headerlink" title="Jekyll Introduction"></a>Jekyll Introduction</h2><p>I highly recommend reading the Jekyll Introduction if you plan to customize your blog. The introduction is meant for core understanding of how and why Jekyll works the way it does. This will provide you with the proper context, knowledge-base, and fundamentals necessary to understand and be efficient in working with Jekyll and Jekyll-Bootstrap.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-06-28T16:00:00.000Z"><a href="/2014/06/29/search-google-with-python-tutorial/">2014-06-29</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/06/29/search-google-with-python-tutorial/">Search Google with Python Tutorial</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>How to get the web address in google use Python</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">import urllib </span><br><span class="line">import mechanize  </span><br><span class="line">from bs4 import BeautifulSoup </span><br><span class="line">import re  </span><br><span class="line">def getGoogleLinks(link,depth):  </span><br><span class="line">	br=mechanize.Browser()</span><br><span class="line">	br.set_handler_robots(False)</span><br><span class="line"> 	br.addheaders=[(&apos;User-agent&apos;:&apos;chrome&apos;)]</span><br><span class="line">  	term=link.replace(&quot; &quot;,&quot;+&quot;)</span><br><span class="line"> 	query=&quot;http://www.google.com.sg/search?num=100&amp;q=&quot; + term + &quot;&amp;start=&quot; + depth</span><br><span class="line">  	htmltext=br.open(query).read()</span><br><span class="line"> 	print htmltext</span><br><span class="line">  	soup=BeautifulSoup(htmltext)</span><br><span class="line">  	search=soup.findAll(&apos;div&apos;,attrs=&#123;&apos;id&apos;:&apos;search&apos;&#125;)</span><br><span class="line">  	searchtext=str(search[0])</span><br><span class="line"> 	soup1=BeautifulSoup(searchtext)</span><br><span class="line"> 	list_items=soup1.findAll(&apos;li&apos;)</span><br><span class="line">  	print list_items[0]</span><br><span class="line"> 	regex=&quot;q(?!.*q).*?&amp;amp&quot;</span><br><span class="line"> 	pattern=re.compile(regex)</span><br><span class="line">  	results_array=[]</span><br><span class="line">  	for li in list_items:</span><br><span class="line"> 		soup2=BeautifulSoup(str(li))</span><br><span class="line"> 		links=soup2.findAll(&apos;a&apos;)</span><br><span class="line"> 		prink links</span><br><span class="line"> 		source_link= links[0]</span><br><span class="line"> 		print source_link</span><br><span class="line"> 		source_url=re.findall(pattern,str(source_link))</span><br><span class="line"> 		if source_url and source_url[0].startswith==&quot;http&quot;:</span><br><span class="line"> 			results_array.append(source_url[0].replace(&quot;q=&quot;,&quot;&quot;).replace(&quot;&amp;amp&quot;,&quot;&quot;)) </span><br><span class="line">		return results_array</span><br><span class="line">  </span><br><span class="line">print getGoogleLinks(&apos;cars&apos;,&apos;100&apos;)</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -209,40 +668,6 @@ server.close()
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-06-28T16:00:00.000Z"><a href="/2014/06/29/search-google-with-python-tutorial/">2014-06-29</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/06/29/search-google-with-python-tutorial/">Search Google with Python Tutorial</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>How to get the web address in google use Python</em></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">import urllib </span><br><span class="line">import mechanize  </span><br><span class="line">from bs4 import BeautifulSoup </span><br><span class="line">import re  </span><br><span class="line">def getGoogleLinks(link,depth):  </span><br><span class="line">	br=mechanize.Browser()</span><br><span class="line">	br.set_handler_robots(False)</span><br><span class="line"> 	br.addheaders=[(&apos;User-agent&apos;:&apos;chrome&apos;)]</span><br><span class="line">  	term=link.replace(&quot; &quot;,&quot;+&quot;)</span><br><span class="line"> 	query=&quot;http://www.google.com.sg/search?num=100&amp;q=&quot; + term + &quot;&amp;start=&quot; + depth</span><br><span class="line">  	htmltext=br.open(query).read()</span><br><span class="line"> 	print htmltext</span><br><span class="line">  	soup=BeautifulSoup(htmltext)</span><br><span class="line">  	search=soup.findAll(&apos;div&apos;,attrs=&#123;&apos;id&apos;:&apos;search&apos;&#125;)</span><br><span class="line">  	searchtext=str(search[0])</span><br><span class="line"> 	soup1=BeautifulSoup(searchtext)</span><br><span class="line"> 	list_items=soup1.findAll(&apos;li&apos;)</span><br><span class="line">  	print list_items[0]</span><br><span class="line"> 	regex=&quot;q(?!.*q).*?&amp;amp&quot;</span><br><span class="line"> 	pattern=re.compile(regex)</span><br><span class="line">  	results_array=[]</span><br><span class="line">  	for li in list_items:</span><br><span class="line"> 		soup2=BeautifulSoup(str(li))</span><br><span class="line"> 		links=soup2.findAll(&apos;a&apos;)</span><br><span class="line"> 		prink links</span><br><span class="line"> 		source_link= links[0]</span><br><span class="line"> 		print source_link</span><br><span class="line"> 		source_url=re.findall(pattern,str(source_link))</span><br><span class="line"> 		if source_url and source_url[0].startswith==&quot;http&quot;:</span><br><span class="line"> 			results_array.append(source_url[0].replace(&quot;q=&quot;,&quot;&quot;).replace(&quot;&amp;amp&quot;,&quot;&quot;)) </span><br><span class="line">		return results_array</span><br><span class="line">  </span><br><span class="line">print getGoogleLinks(&apos;cars&apos;,&apos;100&apos;)</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2014-06-28T16:00:00.000Z"><a href="/2014/06/29/karrigell-tutorial/">2014-06-29</a></time>
       
       
@@ -291,54 +716,6 @@ server.close()
 
 <p></p><h2>8. Redirection</h2><p></p>
 <p>To perform an HTTP redirection from inside a script, you raise an exception available in the namespace, HTTP_REDIRECTION, with the url as argument : </p><br><p><pre class=" python">raise HTTP_REDIRECTION,”index.html” </pre> </p><br><p>For instance, if you want to enter a new record in a database, here is a simple ks script : </p><br><p><br>    <pre class=" python"><br>    from HTMLTags import *<br>    def index():<br>        print FORM(TEXT(‘login’)+INPUT(name=”login”)+BR()+TEXT(‘password’)+INPUT(name=”password”)+BR()+INPUT(Type=”submit”),action = “insert”)<br>    def insert(login,password):<br>         (… perform insertion in the database here …)<br>         raise HTTP_REDIRECTION,”index”<br>    </pre><br></p><br><p>After the insertion has been performed, the program will ask another entry </p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-06-26T16:00:00.000Z"><a href="/2014/06/27/Python-sqlite3-get-column-name/">2014-06-27</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/06/27/Python-sqlite3-get-column-name/">Python sqlite3 get table column name</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>Get the column name use inquiry result:</p>
-<pre>
-import sqlite3
-
-db=sqlite3.connect('data.db')
-cur=db.cursor()
-cur.execute('SELECT * FROM table')
-col_name_list=[i[0] for i in cur.description]
-print col_name_list
-</pre>
-
-<p>Get all column names:</p>
-<pre>
-cur.execute('PRAGMA table_info(table)')
-print cur.fetchall()
-</pre>
 
       
     </div>
@@ -415,6 +792,54 @@ rake page name="pages/页面名称.md"
 git add .
 git commit -m '一些说明'
 git push origin master
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-06-26T16:00:00.000Z"><a href="/2014/06/27/Python-sqlite3-get-column-name/">2014-06-27</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/06/27/Python-sqlite3-get-column-name/">Python sqlite3 get table column name</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Get the column name use inquiry result:</p>
+<pre>
+import sqlite3
+
+db=sqlite3.connect('data.db')
+cur=db.cursor()
+cur.execute('SELECT * FROM table')
+col_name_list=[i[0] for i in cur.description]
+print col_name_list
+</pre>
+
+<p>Get all column names:</p>
+<pre>
+cur.execute('PRAGMA table_info(table)')
+print cur.fetchall()
 </pre>
 
       
@@ -599,47 +1024,13 @@ follow symlinks = yes</pre>
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-06-20T16:00:00.000Z"><a href="/2014/06/21/First-post-ever/">2014-06-21</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/06/21/First-post-ever/">First Post Ever</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>This is my first blog, I’m not sure whether is better or not. but this is for my best now…</p>
-<p>I’m very like Python and Linux, but I also wish get a chance to do it in workingenvertment, every night I open computer and key in codes and I thought I will be success in this part even I must face the black screen and white words, I make sure I will get a color world!</p>
-<p>Thank you for your coming to my website, wish you have a good day and better life.</p>
-<p>In my opinion, family is first, so I also thanks for my family.</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
     <a href="/page/9/" class="alignleft prev">Prev</a>
   
+  
+    <a href="/page/11/" class="alignright next">Next</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
@@ -667,7 +1058,7 @@ follow symlinks = yes</pre>
   
     <li><a href="/categories/other/">other</a><small>2</small></li>
   
-    <li><a href="/categories/python/">python</a><small>63</small></li>
+    <li><a href="/categories/python/">python</a><small>64</small></li>
   
     <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   
@@ -692,7 +1083,7 @@ follow symlinks = yes</pre>
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   
-    <li><a href="/tags/python/">python</a><small>10</small></li>
+    <li><a href="/tags/python/">python</a><small>11</small></li>
   
     <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   

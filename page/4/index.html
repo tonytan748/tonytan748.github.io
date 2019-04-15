@@ -54,6 +54,108 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-05-13T16:00:00.000Z"><a href="/2016/05/14/a-few-things-to-remember-while-coding-in-python/">2016-05-14</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/14/a-few-things-to-remember-while-coding-in-python/">A Few Things To Remember While Coding In Python</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Transfer from <a href="http://satyajit.ranjeev.in/2012/05/17/python-a-few-things-to-remember.html" target="_blank" rel="noopener">http://satyajit.ranjeev.in/2012/05/17/python-a-few-things-to-remember.html</a></p>
+<h3 id="Zen-of-Python"><a href="#Zen-of-Python" class="headerlink" title="Zen of Python"></a>Zen of Python</h3><p>Learing the culture that surrounds a language bringd you one step closer to being a better programmer. If you haven’t read the Zen of Python yet open a Python prompt and type ‘import this’.For each of the item on the list you can find example here <a href="http://artifex.org/~hblanks/talks/2011/pep20_by_example.html" target="_blank" rel="noopener">http://artifex.org/~hblanks/talks/2011/pep20_by_example.html</a></p>
+<p>One caught my attention:</p>
+<p><strong>Beautiful is better then ugly</strong></p>
+<p>Give me a function that takes a list of numbers and return only the even ones,divided by two.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#-----------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">halve_evens_only = lambda nums: map(lambda i: i/2, filter(lambda i: not i%2, nums))</span><br><span class="line"></span><br><span class="line">#-----------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">def halve_evens_only(nums):</span><br><span class="line">    return [i/2 for i in nums if not i % 2]</span><br></pre></td></tr></table></figure>
+<h3 id="Remembar-the-very-simple-things-in-Python"><a href="#Remembar-the-very-simple-things-in-Python" class="headerlink" title="Remembar the very simple things in Python"></a>Remembar the very simple things in Python</h3><ul>
+<li>Swaping two variables:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a,b = b, a</span><br></pre></td></tr></table></figure>
+<ul>
+<li>The step argument in slice operator. For example:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = [1,2,3,4,5]</span><br><span class="line">&gt;&gt;&gt;a[::2] #iterate over the whole list in 2-increments</span><br><span class="line">[1,3,5]</span><br></pre></td></tr></table></figure>
+<p>THe special case x[:-1:] is a useful idiom for ‘x reversed’.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;z[::-1]</span><br><span class="line">[5,4,3,2,1]</span><br></pre></td></tr></table></figure>
+<p>UPDATE: Do keep in mind <code>x.reverse()</code> reverses the list in place and slices gives you the ability to do this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;x[::-1]</span><br><span class="line">[5,4,3,2,1]</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;x[::-2]</span><br><span class="line">[5,3,1]</span><br></pre></td></tr></table></figure>
+<h3 id="Don’t-use-mutables-as-defaults"><a href="#Don’t-use-mutables-as-defaults" class="headerlink" title="Don’t use mutables as defaults"></a>Don’t use mutables as defaults</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def function(x,l=[]):    #Don&apos;t do this</span><br><span class="line"></span><br><span class="line">def function(x,l=None):    #way better</span><br><span class="line">	if l is None:</span><br><span class="line">		l = []</span><br></pre></td></tr></table></figure>
+<p>UPDATE: I realise I haven’t explained why. I would recommend reading the <a href="http://effbot.org/zone/default-values.htm" target="_blank" rel="noopener">article by Fredrik Lundh</a>. In short it is by design that this happens. “Default parameter values are always evaluted when, and only when, the “def” statement they belong to is executed;”</p>
+<h3 id="Use-iteritems-rather-than-items"><a href="#Use-iteritems-rather-than-items" class="headerlink" title="Use iteritems rather than items"></a>Use iteritems rather than items</h3><p><code>iteritems</code> uses <code>generators</code> and thus are better whle iterating though very large lists.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">d = &#123;1:&apos;1&apos;,2:&apos;2&apos;,3:&apos;3&apos;&#125;</span><br><span class="line"></span><br><span class="line">for key, val in d.items()    # builds complete list when called.</span><br><span class="line"></span><br><span class="line">for key, val in d.iteritems()    # calls values only when requested.</span><br></pre></td></tr></table></figure>
+<p>This is similar with <code>range</code> and <code>xrange</code> only calls values when requested.</p>
+<p>UPDATE: Do note that the <code>iteritems,iterkeys,itervalues</code> are removed from Python3.x. The <code>dict.keys()</code>,<code>dict.items()</code> and ‘dict.values()’ return views instead of <code>lists</code>.</p>
+<p><a href="http://docs.python.org/release/3.1.5/whatsnew/3.0.html#views-and-iterators-instead-of-lists" target="_blank" rel="noopener">http://docs.python.org/release/3.1.5/whatsnew/3.0.html#views-and-iterators-instead-of-lists</a></p>
+<h3 id="Use-isinstance-rather-than-type"><a href="#Use-isinstance-rather-than-type" class="headerlink" title="Use isinstance rather than type"></a>Use <code>isinstance</code> rather than type</h3><p>Don’t do</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if type(s) == type(&quot;&quot;): ,,,</span><br><span class="line">if type(seq) == list or type(seq) == tuple: ...</span><br></pre></td></tr></table></figure>
+<p>rather:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if isinstance(s, basestring): ...</span><br><span class="line">if isinstance(seq, (list, tuple)): ...</span><br></pre></td></tr></table></figure>
+<p>For why not to do so: <a href="http://stackoverflow.com/a/1549854/504262" target="_blank" rel="noopener">http://stackoverflow.com/a/1549854/504262</a></p>
+<p>Notice I used <code>basestring</code> and not <code>str</code> as you might be trying to check if a nuicode object is a string. For example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = u&apos;aaa&apos;</span><br><span class="line">&gt;&gt;&gt; print isinstance(a, basestring)</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; print isinstance(a, str)</span><br><span class="line">False</span><br></pre></td></tr></table></figure>
+<p>This is because in Python version below 3.0 there are two string types <code>str</code> and <code>uuicode</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  object</span><br><span class="line">     |</span><br><span class="line">     |</span><br><span class="line">basestring</span><br><span class="line">    /\</span><br><span class="line">  /    \</span><br><span class="line">str   unicode</span><br></pre></td></tr></table></figure>
+<h3 id="Learn-the-various-collection"><a href="#Learn-the-various-collection" class="headerlink" title="Learn the various collection"></a>Learn the various <code>collection</code></h3><p>Python has various container datatypes which are better alternative to the built-in containers like <code>list</code> and <code>dict</code> for specific cases.</p>
+<p>UPDATE: I’m sure most do not use this. Carelessness from my side. A few may consider writing it this way:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">freqs = &#123;&#125;</span><br><span class="line">for c in &quot;abcdgfgdgddgf&quot;:</span><br><span class="line">  try:</span><br><span class="line">    freqs[c] += 1</span><br><span class="line">  except:</span><br><span class="line">    freqs[c] = 1</span><br></pre></td></tr></table></figure>
+<p>Some may say a better solution would be:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">freqs = &#123;&#125;</span><br><span class="line">for c in &quot;fgsdcacacacscac&quot;:</span><br><span class="line">  freqs[c] = freqs.get(c,0) + 1</span><br></pre></td></tr></table></figure>
+<p>Rether go for the <code>collection</code> type <code>defaultdict</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from collections import defaultdict</span><br><span class="line">freqs = defaultdict(int)</span><br><span class="line">for c in &quot;fgdhffjjg&quot;:</span><br><span class="line">  freqs[c] += 1</span><br></pre></td></tr></table></figure>
+<p><strong>Other collections</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">namedtuple()    # factory function for creating tuple subclasses with named fields</span><br><span class="line">deque    #list-like container with fast appends and pops on either end</span><br><span class="line">Counter    #dict subclass for counting hashable objects</span><br><span class="line">OrderedDict    #dict subclass that remembers the order entries were added</span><br><span class="line">defaultdict    #dict subclass that calls a factory function to supply missing values</span><br></pre></td></tr></table></figure>
+<p>UPDATE: As noted by a few in Hacker News I could have used <code>Counter</code> instead of <code>defaultdict</code>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from collections import Counter</span><br><span class="line">&gt;&gt;&gt; c = Counter(&quot;ghdgdfgfhgfhgfh&quot;)</span><br><span class="line">&gt;&gt;&gt; c[&apos;d&apos;]</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+<h3 id="When-creating-classes-Python’s-magic-methods"><a href="#When-creating-classes-Python’s-magic-methods" class="headerlink" title="When creating classes Python’s magic methods"></a>When creating classes Python’s magic methods</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">__eq__(self, other)    # Defines behavior for the equality operator, ==</span><br><span class="line">__ne__(self,other)    # Defines behavior for the inequality operator, !=</span><br><span class="line">__lt__(self,other)     # Defines behavior for the less-than operator, &lt;.</span><br><span class="line">  __gt__(self, other)      # Defines behavior for the greater-than operator, &gt;.</span><br><span class="line">  __le__(self, other)      # Defines behavior for the less-than-or-equal-to operator, &lt;=.</span><br><span class="line">  __ge__(self, other)      # Defines behavior for the greater-than-or-equal-to operator, &gt;=.</span><br></pre></td></tr></table></figure>
+<p>There are serveral others.</p>
+<h3 id="Conditional-Assignments"><a href="#Conditional-Assignments" class="headerlink" title="Conditional Assignments"></a>Conditional Assignments</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = 3 if (y == 1) else 2    It does exactly what it sounds like:&quot;assign 3 to x if y is 1, otherwise assign 2 to x&quot;, You can also chain it if you have something more complicated:</span><br><span class="line">x = 3 if (y == 1) else 2 if (y == -1) else 1</span><br></pre></td></tr></table></figure>
+<p>Though at a certain point, it goes a little too far.</p>
+<p>Note that you can use if … else in any expression. For example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(func1 if y == 1 else func2)(arg1, arg2)</span><br></pre></td></tr></table></figure>
+<p>Here <code>func1</code> will be called if y is 1 and func2. otherwise. In both cases the corresponding function will be called with arguments arg1 and arg2.</p>
+<p>Analogously, the following is also valid:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x = (class1 if y == 1 else class2)(arg1, arg2)</span><br></pre></td></tr></table></figure>
+<p>where <code>class1</code> and <code>class2</code> are two classes.</p>
+<h3 id="Use-the-Ellipsis-when-necessary"><a href="#Use-the-Ellipsis-when-necessary" class="headerlink" title="Use the Ellipsis when necessary."></a>Use the <code>Ellipsis</code> when necessary.</h3><p>UPDATE: As one commenter mentioned in Hacker News “Using Ellipsis for getting all items is a violation of the only One Way TO Do It principle. The standard notation is [:].” I do agree with him. A better example is given using numpy in <a href="http://stackoverflow.com/a/118508/504262" target="_blank" rel="noopener">stackoverflow</a>:</p>
+<p>The ellipsis is used to slice higher-dimensional data structures.</p>
+<p>It’s designed to mean at this point. insert as many full slices(:) to extend the multi-dimensional slice to all dimensions.</p>
+<p>Example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from numpy import arrage</span><br><span class="line">&gt;&gt;&gt; a = arange(16).reshape(2,2,2,2)</span><br></pre></td></tr></table></figure>
+<p>Now, you have a 4-dimensional matrix of order 2x2x2x2. To select all first elements in the 4th dimension, you can use the ellipsis notation</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a[...,0].flatten()</span><br><span class="line">array([0,2,4,6,8,10,12,14])</span><br></pre></td></tr></table></figure>
+<p><strong>Previous suggestion.</strong></p>
+<p>When creating a class you can use <code>__gititem__</code> to make you class’s object work like a dictionary. Take this class as an example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class MyCLass(object):</span><br><span class="line">  def __init__(self,a,b,c,d):</span><br><span class="line">    self.a, self.b,self.c,self.d = a,b,c,d</span><br><span class="line"></span><br><span class="line">  def __getitem__(self, item):</span><br><span class="line">    return getattr(self,item)</span><br><span class="line"></span><br><span class="line">x = MyCLass(10,12,22,14)</span><br></pre></td></tr></table></figure>
+<p>Because of <code>__getitem__</code> you will be able to get the value of <code>a</code> in the object <code>x</code> by <code>x[&#39;a&#39;]</code>. This is probably a know fact.</p>
+<p>This object is used to extend the Python slicing.(<a href="(http://docs.python.org/library/stdtypes.html#bltin-ellipsis-object">(http://docs.python.org/library/stdtypes.html#bltin-ellipsis-object</a>). Thus if we add a clause:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def __getitem__(self,item):</span><br><span class="line">  if item is Ellipsis:</span><br><span class="line">    return [self.a, self.b,self.c, self.d]</span><br><span class="line">  else:</span><br><span class="line">    return getattr(self, item)</span><br></pre></td></tr></table></figure>
+<p>We can use <code>x[...]</code> to get list containing all the items.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; x = MyCLass(11,24,23,12)</span><br><span class="line">&gt;&gt;&gt; x[...]</span><br><span class="line">(11,24,23,12)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-05-09T16:00:00.000Z"><a href="/2016/05/10/ipython-notebook-introduction-1/">2016-05-10</a></time>
       
       
@@ -1340,89 +1442,6 @@ with open('json/globe_volcanoes.json', 'w') as f:
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-12-08T16:00:00.000Z"><a href="/2015/12/09/PIP-Guide/">2015-12-09</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/12/09/PIP-Guide/">PIP Guide</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>PIP Guide</em></p>
-<p>###目录</p>
-<ol>
-<li>前言</li>
-<li>获取pip<br>2.1. 脚本安装pip<br>2.2. 使用包管理软件安装<br>2.3. 更新pip</li>
-<li>pip基本使用<br>3.1. 安装PyPI软件<br>3.2. 查看具体安装文件<br>3.3. 查看哪些软件需要更新<br>3.4. 升级软件包<br>3.5. 卸载软件包</li>
-<li>pip简明手册<br>4.1. 安装具体版本软件<br>4.2. Requirements文件安装依赖软件<br>4.3. 列出软件包清单<br>4.4. 查看软件包信息<br>4.5. 搜寻<br>4.6. 配置文件<br>4.7 命令行自动补全</li>
-<li>后记</li>
-</ol>
-<p>###1 前言<br>pip 是一个Python包管理工具，主要是用于安装 PyPI 上的软件包，可以替代 easy_install 工具。</p>
-<p>GitHub: <a href="https://github.com/pypa/pip" target="_blank" rel="noopener">https://github.com/pypa/pip</a><br>Doc: <a href="https://pip.pypa.io/en/latest/" target="_blank" rel="noopener">https://pip.pypa.io/en/latest/</a></p>
-<p>###2 获取pip</p>
-<p>#####2.1 脚本安装pip</p>
-<p>  $ curl -O <a href="https://raw.github.com/pypa/pip/master/contrib/get-pip.py" target="_blank" rel="noopener">https://raw.github.com/pypa/pip/master/contrib/get-pip.py</a></p>
-<p>  $ python get-pip.py</p>
-<p>#####2.2 使用包管理软件安装<br>  $ sudo yum install python-pip</p>
-<p>  $ sudo apt-get install python-pip</p>
-<p>#####2.3 更新pip<br>  $ pip install -U pip</p>
-<p>###3 pip基本使用</p>
-<p>#####3.1 安装PyPI软件<br>  $ pip install SomePackage</p>
-<p>  […]<br>  Successfully installed SomePackage’</p>
-<p>#####3.2 查看具体安装文件<br>  $ pip show –files SomePackage</p>
-<p>  Name: SomePackage<br>  Version: 1.0<br>  Location: /my/env/lib/pythonx.x/site-packages<br>  Files:<br>   ../somepackage/<strong>init</strong>.py<br>   […]</p>
-<p>#####3.3 查看哪些软件需要更新<br>  $ pip list –outdated</p>
-<p>  SomePackage (Current: 1.0 Latest: 2.0)</p>
-<p>#####3.4 升级软件包<br>  $ pip install –upgrade SomePackage</p>
-<p>  […]<br>  Found existing installation: SomePackage 1.0<br>  Uninstalling SomePackage:<br>    Successfully uninstalled SomePackage<br>  Running setup.py install for SomePackage<br>  Successfully installed SomePackage</p>
-<p>#####3.5 卸载软件包<br>  $ pip uninstall SomePackage</p>
-<p>  Uninstalling SomePackage:<br>    /my/env/lib/pythonx.x/site-packages/somepackage<br>  Proceed (y/n)? y<br>  Successfully uninstalled SomePackage</p>
-<p>###4 pip简明手册</p>
-<p>#####4.1 安装具体版本软件<br>  $ pip install SomePackage            # latest version<br>  $ pip install SomePackage==1.0.4     # specific version<br>  $ pip install ‘SomePackage&gt;=1.0.4’     # minimum version’</p>
-<p>#####4.2 Requirements文件安装依赖软件<br>Requirements文件 一般记录的是依赖软件列表，通过pip可以一次性安装依赖软件包:</p>
-<p>  $ pip freeze &gt; requirements.txt</p>
-<p>  $ pip install -r requirements.txt’</p>
-<p>#####4.3 列出软件包清单<br>  $ pip list</p>
-<p>  $ pip list –outdated</p>
-<p>  ipython (Current: 1.2.0 Latest: 2.3.0)’</p>
-<p>#####4.4 查看软件包信息</p>
-<h2 id="pip-show-pip"><a href="#pip-show-pip" class="headerlink" title="  $ pip show pip"></a>  $ pip show pip</h2><p>  Name: pip<br>  Version: 1.4.1<br>  Location: /Library/Python/2.7/site-packages/pip-1.4.1-py2.7.egg<br>  Requires:</p>
-<h2 id="pip-show-pyopencl"><a href="#pip-show-pyopencl" class="headerlink" title="  $ pip show pyopencl"></a>  $ pip show pyopencl</h2><p>  Name: pyopencl<br>  Version: 2014.1<br>  Location: /Library/Python/2.7/site-packages<br>  Requires: pytools, pytest, decorator’</p>
-<p>#####4.5 搜寻<br>  $ pip search pycuda</p>
-<p>  pycuda                    - Python wrapper for Nvidia CUDA<br>  pyfft                     - FFT library for PyCuda and PyOpenCL<br>  cudatree                  - Random Forests for the GPU using PyCUDA<br>  reikna                    - GPGPU algorithms for PyCUDA and PyOpenCL<br>  compyte                   - A common set of compute primitives for PyCUDA and PyOpenCL (to be created)’</p>
-<p>#####4.6 配置文件<br>配置文件: $HOME/.pip/pip.conf, 举例:</p>
-<p>  [global]<br>  timeout = 60<br>  index-url = <a href="http://download.zope.org/ppix" target="_blank" rel="noopener">http://download.zope.org/ppix</a></p>
-<p>  [install]<br>  ignore-installed = true<br>  no-dependencies = yes’</p>
-<p>#####4.7 命令行自动补全<br>对于bash:</p>
-<p>  $ pip completion –bash &gt;&gt; ~/.profile’</p>
-<p>对于zsh:</p>
-<p>  $ pip completion –zsh &gt;&gt; ~/.zprofile</p>
-<p>加载此配置文件后，则pip命令支持自动补全功能.</p>
-<p>###5 后记<br>应该尽量使用pip，不要继续使用easy_install.</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1457,7 +1476,7 @@ with open('json/globe_volcanoes.json', 'w') as f:
   
     <li><a href="/categories/other/">other</a><small>2</small></li>
   
-    <li><a href="/categories/python/">python</a><small>63</small></li>
+    <li><a href="/categories/python/">python</a><small>64</small></li>
   
     <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   
@@ -1482,7 +1501,7 @@ with open('json/globe_volcanoes.json', 'w') as f:
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   
-    <li><a href="/tags/python/">python</a><small>10</small></li>
+    <li><a href="/tags/python/">python</a><small>11</small></li>
   
     <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   
