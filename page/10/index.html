@@ -54,6 +54,50 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-07-01T16:00:00.000Z"><a href="/2014/07/02/how-to-use-date-and-time-in-python/">2014-07-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/02/how-to-use-date-and-time-in-python/">How to use Date and Time in Python</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>This post will show some examples using Pythons datetime and time modules.</em></p>
+<p></p><h3>Date and Time Example</h3><p></p>
+<p>Let’s see what we can do with the datetime and time modules in Python</p><br><pre><br>import time<br>import datetime<br><br>print “Time in seconds since the epoch: %s” %time.time()<br>print “Current date and time: “ , datetime.datetime.now()<br>print “Or like this: “ ,datetime.datetime.now().strftime(“%y-%m-%d-%H-%M”)<br><br><br>print “Current year: “, datetime.date.today().strftime(“%Y”)<br>print “Month of year: “, datetime.date.today().strftime(“%B”)<br>print “Week number of the year: “, datetime.date.today().strftime(“%W”)<br>print “Weekday of the week: “, datetime.date.today().strftime(“%w”)<br>print “Day of year: “, datetime.date.today().strftime(“%j”)<br>print “Day of the month : “, datetime.date.today().strftime(“%d”)<br>print “Day of week: “, datetime.date.today().strftime(“%A”)<br></pre><br><br><h3>Output</h3><br>That will print out something like this:<br><p><br>Time in seconds since the epoch:     1349271346.46<br>Current date and time:          2012-10-03 15:35:46.461491<br>Or like this:                 12-10-03-15-35<br>Current year:                  2012<br>Month of year:              October<br>Week number of the year:          40<br>Weekday of the week:              3<br>Day of year:                  277<br>Day of the month :              03<br>Day of week:                  Wednesday<br></p>
+
+<p>Getting the weekday of a certain date (your pet’s birthday).</p>
+<pre>
+import datetime
+
+mydate = datetime.date(1943,3, 13)  #year, month, day
+print(mydate.strftime("%A"))
+
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-06-30T16:00:00.000Z"><a href="/2014/07/01/models-in-python/">2014-07-01</a></time>
       
       
@@ -645,123 +689,6 @@ Woof!
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-06-28T16:00:00.000Z"><a href="/2014/06/29/socket-client-and-server-in-python/">2014-06-29</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/06/29/socket-client-and-server-in-python/">Socket client and server in Python </a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>A sample example for connection server and client use socket in Python</em></p>
-<p>Client.py</p>
-<pre>
-import socket 
-s=socket.socket(socket.AF_INET,socket.SOCK_STREAM) 
-s.connect(('localhost',8081)) 
-s.send('Happy hacking') 
-data=s.recv(1024) 
-s.close() 
-print "Received:" 
-print data
-</pre>
-
-<p>Server.py</p>
-<pre>
-import socket 
-import sys 
-
-#Create a TCP/IP socket to listen on 
-server=socket.socket(socket.AF_INET,socket.SOCK_STREAM)  
-
-#Prevent from "address already in use" upon server restart 
-server.setsockopt(socket.SOL_SOCKET,socket.SO_REUSERADDR,1)  
-#Bind the socket to port 8081 on all interfaces 
-server_address=('localhost',8081) 
-print  'starting up on %s port %s' % server_address 
-server.bind(server_address)  
-
-#Listen for connections 
-server.listen(5)  
-
-#Wait for one incomming connection 
-connection,client_address=server.accept() 
-print 'connection from ', connection.getpeername()  
-
-#Let's receive something 
-data=connection.recv(4096) 
-if data: 
-    print "received ", repr(data)
-     #send it back nicely formatted
-     data=data.rstrip()
-     connection.send('%s\n%s\n%s\n' % ('-'*80,data.center(80),'-'*80))
-     print "Response sent!"
-#close the connection from our side 
-connection.shutdown(socket.SHUT_RD | socket.SHUT_WR) 
-connection.close() 
-print "Connection closed."  
-
-#Aa and stop listening 
-server.close()
-</pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-06-28T16:00:00.000Z"><a href="/2014/06/29/search-google-with-python-tutorial/">2014-06-29</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/06/29/search-google-with-python-tutorial/">Search Google with Python Tutorial</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>How to get the web address in google use Python</em></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">import urllib </span><br><span class="line">import mechanize  </span><br><span class="line">from bs4 import BeautifulSoup </span><br><span class="line">import re  </span><br><span class="line">def getGoogleLinks(link,depth):  </span><br><span class="line">	br=mechanize.Browser()</span><br><span class="line">	br.set_handler_robots(False)</span><br><span class="line"> 	br.addheaders=[(&apos;User-agent&apos;:&apos;chrome&apos;)]</span><br><span class="line">  	term=link.replace(&quot; &quot;,&quot;+&quot;)</span><br><span class="line"> 	query=&quot;http://www.google.com.sg/search?num=100&amp;q=&quot; + term + &quot;&amp;start=&quot; + depth</span><br><span class="line">  	htmltext=br.open(query).read()</span><br><span class="line"> 	print htmltext</span><br><span class="line">  	soup=BeautifulSoup(htmltext)</span><br><span class="line">  	search=soup.findAll(&apos;div&apos;,attrs=&#123;&apos;id&apos;:&apos;search&apos;&#125;)</span><br><span class="line">  	searchtext=str(search[0])</span><br><span class="line"> 	soup1=BeautifulSoup(searchtext)</span><br><span class="line"> 	list_items=soup1.findAll(&apos;li&apos;)</span><br><span class="line">  	print list_items[0]</span><br><span class="line"> 	regex=&quot;q(?!.*q).*?&amp;amp&quot;</span><br><span class="line"> 	pattern=re.compile(regex)</span><br><span class="line">  	results_array=[]</span><br><span class="line">  	for li in list_items:</span><br><span class="line"> 		soup2=BeautifulSoup(str(li))</span><br><span class="line"> 		links=soup2.findAll(&apos;a&apos;)</span><br><span class="line"> 		prink links</span><br><span class="line"> 		source_link= links[0]</span><br><span class="line"> 		print source_link</span><br><span class="line"> 		source_url=re.findall(pattern,str(source_link))</span><br><span class="line"> 		if source_url and source_url[0].startswith==&quot;http&quot;:</span><br><span class="line"> 			results_array.append(source_url[0].replace(&quot;q=&quot;,&quot;&quot;).replace(&quot;&amp;amp&quot;,&quot;&quot;)) </span><br><span class="line">		return results_array</span><br><span class="line">  </span><br><span class="line">print getGoogleLinks(&apos;cars&apos;,&apos;100&apos;)</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2014-06-28T16:00:00.000Z"><a href="/2014/06/29/jekyll-quick-start/">2014-06-29</a></time>
       
       
@@ -904,31 +831,100 @@ server.close()
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-06-26T16:00:00.000Z"><a href="/2014/06/27/Python-sqlite3-get-column-name/">2014-06-27</a></time>
+        <time datetime="2014-06-28T16:00:00.000Z"><a href="/2014/06/29/search-google-with-python-tutorial/">2014-06-29</a></time>
       
       
   
-    <h1 class="title"><a href="/2014/06/27/Python-sqlite3-get-column-name/">Python sqlite3 get table column name</a></h1>
+    <h1 class="title"><a href="/2014/06/29/search-google-with-python-tutorial/">Search Google with Python Tutorial</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p>Get the column name use inquiry result:</p>
-<pre>
-import sqlite3
+        <p><em>How to get the web address in google use Python</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">import urllib </span><br><span class="line">import mechanize  </span><br><span class="line">from bs4 import BeautifulSoup </span><br><span class="line">import re  </span><br><span class="line">def getGoogleLinks(link,depth):  </span><br><span class="line">	br=mechanize.Browser()</span><br><span class="line">	br.set_handler_robots(False)</span><br><span class="line"> 	br.addheaders=[(&apos;User-agent&apos;:&apos;chrome&apos;)]</span><br><span class="line">  	term=link.replace(&quot; &quot;,&quot;+&quot;)</span><br><span class="line"> 	query=&quot;http://www.google.com.sg/search?num=100&amp;q=&quot; + term + &quot;&amp;start=&quot; + depth</span><br><span class="line">  	htmltext=br.open(query).read()</span><br><span class="line"> 	print htmltext</span><br><span class="line">  	soup=BeautifulSoup(htmltext)</span><br><span class="line">  	search=soup.findAll(&apos;div&apos;,attrs=&#123;&apos;id&apos;:&apos;search&apos;&#125;)</span><br><span class="line">  	searchtext=str(search[0])</span><br><span class="line"> 	soup1=BeautifulSoup(searchtext)</span><br><span class="line"> 	list_items=soup1.findAll(&apos;li&apos;)</span><br><span class="line">  	print list_items[0]</span><br><span class="line"> 	regex=&quot;q(?!.*q).*?&amp;amp&quot;</span><br><span class="line"> 	pattern=re.compile(regex)</span><br><span class="line">  	results_array=[]</span><br><span class="line">  	for li in list_items:</span><br><span class="line"> 		soup2=BeautifulSoup(str(li))</span><br><span class="line"> 		links=soup2.findAll(&apos;a&apos;)</span><br><span class="line"> 		prink links</span><br><span class="line"> 		source_link= links[0]</span><br><span class="line"> 		print source_link</span><br><span class="line"> 		source_url=re.findall(pattern,str(source_link))</span><br><span class="line"> 		if source_url and source_url[0].startswith==&quot;http&quot;:</span><br><span class="line"> 			results_array.append(source_url[0].replace(&quot;q=&quot;,&quot;&quot;).replace(&quot;&amp;amp&quot;,&quot;&quot;)) </span><br><span class="line">		return results_array</span><br><span class="line">  </span><br><span class="line">print getGoogleLinks(&apos;cars&apos;,&apos;100&apos;)</span><br></pre></td></tr></table></figure>
 
-db=sqlite3.connect('data.db')
-cur=db.cursor()
-cur.execute('SELECT * FROM table')
-col_name_list=[i[0] for i in cur.description]
-print col_name_list
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-06-28T16:00:00.000Z"><a href="/2014/06/29/socket-client-and-server-in-python/">2014-06-29</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/06/29/socket-client-and-server-in-python/">Socket client and server in Python </a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>A sample example for connection server and client use socket in Python</em></p>
+<p>Client.py</p>
+<pre>
+import socket 
+s=socket.socket(socket.AF_INET,socket.SOCK_STREAM) 
+s.connect(('localhost',8081)) 
+s.send('Happy hacking') 
+data=s.recv(1024) 
+s.close() 
+print "Received:" 
+print data
 </pre>
 
-<p>Get all column names:</p>
+<p>Server.py</p>
 <pre>
-cur.execute('PRAGMA table_info(table)')
-print cur.fetchall()
+import socket 
+import sys 
+
+#Create a TCP/IP socket to listen on 
+server=socket.socket(socket.AF_INET,socket.SOCK_STREAM)  
+
+#Prevent from "address already in use" upon server restart 
+server.setsockopt(socket.SOL_SOCKET,socket.SO_REUSERADDR,1)  
+#Bind the socket to port 8081 on all interfaces 
+server_address=('localhost',8081) 
+print  'starting up on %s port %s' % server_address 
+server.bind(server_address)  
+
+#Listen for connections 
+server.listen(5)  
+
+#Wait for one incomming connection 
+connection,client_address=server.accept() 
+print 'connection from ', connection.getpeername()  
+
+#Let's receive something 
+data=connection.recv(4096) 
+if data: 
+    print "received ", repr(data)
+     #send it back nicely formatted
+     data=data.rstrip()
+     connection.send('%s\n%s\n%s\n' % ('-'*80,data.center(80),'-'*80))
+     print "Response sent!"
+#close the connection from our side 
+connection.shutdown(socket.SHUT_RD | socket.SHUT_WR) 
+connection.close() 
+print "Connection closed."  
+
+#Aa and stop listening 
+server.close()
 </pre>
 
       
@@ -1029,6 +1025,54 @@ git push origin master
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-06-26T16:00:00.000Z"><a href="/2014/06/27/Python-sqlite3-get-column-name/">2014-06-27</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/06/27/Python-sqlite3-get-column-name/">Python sqlite3 get table column name</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Get the column name use inquiry result:</p>
+<pre>
+import sqlite3
+
+db=sqlite3.connect('data.db')
+cur=db.cursor()
+cur.execute('SELECT * FROM table')
+col_name_list=[i[0] for i in cur.description]
+print col_name_list
+</pre>
+
+<p>Get all column names:</p>
+<pre>
+cur.execute('PRAGMA table_info(table)')
+print cur.fetchall()
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-06-25T16:00:00.000Z"><a href="/2014/06/26/How-to-automatically-run-a-script-when-logging-into-Ubuntu-Desktop/">2014-06-26</a></time>
       
       
@@ -1068,79 +1112,6 @@ X-GNOME-Autostart-enabled=true
 </pre>
 
 <p>If the start-up script requires sudo access like an above example, you will need to set up password-less sudo.</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-06-23T16:00:00.000Z"><a href="/2014/06/24/Set-Samba-in-Ubuntu/">2014-06-24</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/06/24/Set-Samba-in-Ubuntu/">Set Samba in Ubuntu</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>Install Samba:</p>
-<pre class="code">sudo apt-get install samba
-sudo apt-get install smbfs</pre>
-
-<p>Setup</p>
-<pre class="code">cd /
-sudo mkdir data
-chmod 777 data</pre>
-
-
-<p>Open file: /etc/samba/smb.conf, search “; security = user”, change to:</p>
-<pre class="code">security = user
-username map = /etc/samba/smbusers</pre>
-
-<p>the same time add the following code in the end:</p>
-<pre class="code">[data]
-comment = data
-path = /data
-public = yes
-writable = true
-valid users  = tony
-create mask = 0775
-force user = tony
-force group = tony
-available = yes
-browseable = yes</pre>
-
-<p>Add user, “tony” is my user, if you want use other username, you can create it:</p>
-<pre class="code">sudo smbpassed -a tony #add "tony", and set password
-sudo vi /etc/samba/sambusers #create "sambausers",and change tony = "tony"</pre>
-
-<p>Test and restart:</p>
-<pre class="code">sudo testparam
-sudo /etc/init.d/samba restart</pre>
-
-<p>Use<br>In Windows system, right click “Computer” -&gt; Map Desk -&gt; Folder,choose the desic name and key in “//ip/data”, click “Yes”, key in password. Now you can look the samba folder.<br>Trouble Shooting</p>
-<pre class="code">unix extensions = no</pre>
-
-<p>this code need add in [blobalthe following code need add in [data]:</p>
-<pre class="code">wide links = yes
-follow symlinks = yes</pre>
 
       
     </div>
@@ -1216,7 +1187,7 @@ follow symlinks = yes</pre>
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   
-    <li><a href="/tags/python/">python</a><small>12</small></li>
+    <li><a href="/tags/python/">python</a><small>13</small></li>
   
     <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   
@@ -1232,7 +1203,7 @@ follow symlinks = yes</pre>
   </div>
   <footer id="footer" class="inner"><div class="alignleft">
   
-  &copy; 2019 Tony Tan
+  &copy; 2020 Tony Tan
   
 </div>
 <div class="clearfix"></div></footer>

@@ -54,6 +54,118 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2020-11-09T03:13:21.000Z"><a href="/2020/11/09/How-to-set-up-a-perfect-Python-project/">2020-11-09</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2020/11/09/How-to-set-up-a-perfect-Python-project/">How to set up a perfect Python project</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>This blog is from <a href="https://sourcery.ai/blog/python-best-practices/" target="_blank" rel="noopener">here</a></p>
+<p>When starting a new Python project, it is tempting to just dive in and start coding. Spending a tiny amount of time to setup a project with the best tools will save immense time and lead to a happier coding experience.</p>
+<p>In an ideal world, dependencies would be identical for all developers, code would be perfectly formatted, common errors forbidden and everything would be covered by tests. Additionally, all of these would ensured at each commit.</p>
+<p>In this article I’ll go through how to set up a project that does exactly that. You can either follow along with the steps or jump straight to generating a new project automatically by installing <a href="https://sourcery.ai/blog/python-best-practices/#pipx" target="_blank" rel="noopener">pipx</a> and <a href="https://sourcery.ai/blog/python-best-practices/#pipenv" target="_blank" rel="noopener">pipenv</a> then <a href="https://sourcery.ai/blog/python-best-practices/#pipenv" target="_blank" rel="noopener">generating a new project</a>.</p>
+<p>Let’s create a new project directory:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir best_practices</span><br><span class="line">cd best_practices</span><br></pre></td></tr></table></figure>
+<h1 id="Python-command-line-tools-with-pipx"><a href="#Python-command-line-tools-with-pipx" class="headerlink" title="Python command line tools with pipx"></a>Python command line tools with pipx</h1><p><a href="https://pipxproject.github.io/pipx/" target="_blank" rel="noopener">Pipx</a> is a handy utility that allows quick installation of python command line tools. We’ll be using it to install pipenv and cookiecutter.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python3 -m pip install --user pipx</span><br><span class="line">python3 -m pipx ensurepath</span><br></pre></td></tr></table></figure>
+<h1 id="Dependency-management-with-pipenv"><a href="#Dependency-management-with-pipenv" class="headerlink" title="Dependency management with pipenv"></a>Dependency management with pipenv</h1><blockquote>
+<p><a href="https://github.com/pypa/pipenv" target="_blank" rel="noopener">Pipenv</a> automatically creates and manages a virtualenv for your projects, as well as adding/removing packages from your Pipfile as you install/uninstall packages. It also generates the ever-important Pipfile.lock, which is used to produce deterministic builds.</p>
+</blockquote>
+<p>Knowing that you and your teammates are using the same library versions is a huge confidence boost. Pipenv takes care of this and has gained massive traction in the last year or so.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipx install pipenv</span><br></pre></td></tr></table></figure>
+<h1 id="Code-formatting-with-black-and-isort"><a href="#Code-formatting-with-black-and-isort" class="headerlink" title="Code formatting with black and isort"></a>Code formatting with black and isort</h1><p><a href="https://github.com/psf/black" target="_blank" rel="noopener">Black</a> formats our code:</p>
+<blockquote>
+<p>Black is the uncompromising Python code formatter. By using it, you agree to cede control over minutiae of hand-formatting. In return, Black gives you speed, determinism, and freedom from pycodestyle nagging about formatting. You will save time and mental energy for more important matters.<br>Blackened code looks the same regardless of the project you’re reading. Formatting becomes transparent after a while and you can focus on the content instead.<br>Black makes code review faster by producing the smallest diffs possible.</p>
+</blockquote>
+<p>while <a href="https://github.com/timothycrosley/isort" target="_blank" rel="noopener">isort</a> sorts our imports:</p>
+<blockquote>
+<p>isort your python imports for you so you don’t have to. isort is a Python utility / library to sort imports alphabetically, and automatically separated into sections.</p>
+</blockquote>
+<p>Let’s install them using pipenv as development dependencies so they don’t clutter a deployment:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install black isort --dev</span><br></pre></td></tr></table></figure>
+<p>Black and isort have incompatible default options so we’ll override isort to follow black’s lead. Create a <code>setup.cfg</code> file and add this config:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[isort]</span><br><span class="line">multi_line_output=3</span><br><span class="line">include_trailing_comma=True</span><br><span class="line">force_grid_wrap=0</span><br><span class="line">use_parentheses=True</span><br><span class="line">line_length=88</span><br></pre></td></tr></table></figure>
+<p>We can run these tools with:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pipenv run black</span><br><span class="line">pipenv run isort</span><br></pre></td></tr></table></figure>
+<h1 id="Style-enforcement-with-flake8"><a href="#Style-enforcement-with-flake8" class="headerlink" title="Style enforcement with flake8"></a>Style enforcement with flake8</h1><p>Flake8 ensures our code follows the standard python conventions as defined in PEP8. Install using pipenv:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install flake8 --dev</span><br></pre></td></tr></table></figure>
+<p>Just like isort it needs a little configuration to work well with black. Add this config to <code>setup.cfg</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[flake8]</span><br><span class="line">ignore = E203, E266, E501, W503</span><br><span class="line">max-line-length = 88</span><br><span class="line">max-complexity = 18</span><br><span class="line">select = B,C,E,F,W,T4</span><br></pre></td></tr></table></figure>
+<p>Now we can run flake8 with pipenv run flake8.</p>
+<h1 id="Static-types-with-mypy"><a href="#Static-types-with-mypy" class="headerlink" title="Static types with mypy"></a>Static types with mypy</h1><blockquote>
+<p><a href="http://mypy-lang.org/" target="_blank" rel="noopener">Mypy</a> is an optional static type checker for Python that aims to combine the benefits of dynamic (or “duck”) typing and static typing. Mypy combines the expressive power and convenience of Python with a powerful type system and compile-time type checking. Mypy type checks standard Python programs; run them using any Python VM with basically no runtime overhead.</p>
+</blockquote>
+<p>Having types in Python takes a little getting used to but the benefits are substantial. From the website:</p>
+<ul>
+<li>Static typing can make programs easier to understand and maintain</li>
+<li>Static typing can help you find bugs earlier and with less testing and debugging</li>
+<li>Static typing can help you find difficult-to-find bugs before your code goes into production</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install mypy --dev</span><br></pre></td></tr></table></figure>
+<p>Mypy by default will recursively check all imports for type annotations which leads to errors when libraries do not include these annotations. We need to configure mypy to run only on our code and to ignore any errors for imports without type annotations. We are assuming that our code lives in the best_practices package for the following config. Add this to <code>setup.cfg</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[mypy]</span><br><span class="line">files=best_practices,test</span><br><span class="line">ignore_missing_imports=true</span><br></pre></td></tr></table></figure>
+<p>Now we can run mypy with:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv run mypy</span><br></pre></td></tr></table></figure>
+<p>Here’s a useful <a href="https://mypy.readthedocs.io/en/latest/cheat_sheet_py3.html" target="_blank" rel="noopener">cheat sheet</a> for using it.</p>
+<h1 id="Testing-with-pytest-and-pytest-cov"><a href="#Testing-with-pytest-and-pytest-cov" class="headerlink" title="Testing with pytest and pytest-cov"></a>Testing with pytest and pytest-cov</h1><p>Writing tests with <a href="https://docs.pytest.org/en/latest/" target="_blank" rel="noopener">pytest</a> is incredibly easy and removing any friction to writing tests means we will write more of them!</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install pytest pytest-cov --dev</span><br></pre></td></tr></table></figure>
+<p>Here’s a simple example from the pytest website:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># content of test_sample.py</span><br><span class="line">def inc(x):</span><br><span class="line">    return x + 1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def test_answer():</span><br><span class="line">    assert inc(3) == 5</span><br></pre></td></tr></table></figure>
+<p>To execute it:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ pipenv run pytest</span><br><span class="line">=========================== test session starts ============================</span><br><span class="line">platform linux -- Python 3.x.y, pytest-5.x.y, py-1.x.y, pluggy-0.x.y</span><br><span class="line">cachedir: $PYTHON_PREFIX/.pytest_cache</span><br><span class="line">rootdir: $REGENDOC_TMPDIR</span><br><span class="line">collected 1 item</span><br><span class="line"></span><br><span class="line">test_sample.py F                                                     [100%]</span><br><span class="line"></span><br><span class="line">================================= FAILURES =================================</span><br><span class="line">_______________________________ test_answer ________________________________</span><br><span class="line"></span><br><span class="line">    def test_answer():</span><br><span class="line">&gt;       assert inc(3) == 5</span><br><span class="line">E       assert 4 == 5</span><br><span class="line">E        +  where 4 = inc(3)</span><br><span class="line"></span><br><span class="line">test_sample.py:6: AssertionError</span><br><span class="line">========================= 1 failed in 0.12 seconds =========================</span><br></pre></td></tr></table></figure>
+<p>All our tests should go in the <code>test</code> directory so add this config to <code>setup.cfg</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[tool:pytest]</span><br><span class="line">testpaths=test</span><br></pre></td></tr></table></figure>
+<p>We also want to check how much of our code is covered by tests. Create a new file <code>.coveragerc</code> to only return coverage statistics for our application code, again we are assuming our application code lives in the <code>best_practices</code> module:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[run]</span><br><span class="line">source = best_practices</span><br><span class="line"></span><br><span class="line">[report]</span><br><span class="line">exclude_lines =</span><br><span class="line">    # Have to re-enable the standard pragma</span><br><span class="line">    pragma: no cover</span><br><span class="line"></span><br><span class="line">    # Don&apos;t complain about missing debug-only code:</span><br><span class="line">    def __repr__</span><br><span class="line">    if self\.debug</span><br><span class="line"></span><br><span class="line">    # Don&apos;t complain if tests don&apos;t hit defensive assertion code:</span><br><span class="line">    raise AssertionError</span><br><span class="line">    raise NotImplementedError</span><br><span class="line"></span><br><span class="line">    # Don&apos;t complain if non-runnable code isn&apos;t run:</span><br><span class="line">    if 0:</span><br><span class="line">    if __name__ == .__main__.:</span><br></pre></td></tr></table></figure>
+<p>We can now run our tests and report coverage with</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv run pytest --cov --cov-fail-under=100</span><br></pre></td></tr></table></figure>
+<p>This will fail if our test coverage of the application code is less than 100%.</p>
+<h1 id="Git-hooks-with-pre-commit"><a href="#Git-hooks-with-pre-commit" class="headerlink" title="Git hooks with pre-commit"></a>Git hooks with pre-commit</h1><p>Git hooks allow you to run scripts any time you want to commit or push. This lets us run all of our linting and tests automatically every time we commit/push. <a href="https://pre-commit.com/" target="_blank" rel="noopener">pre‑commit</a> allows easy configuration of these hooks:</p>
+<blockquote>
+<p>Git hook scripts are useful for identifying simple issues before submission to code review. We run our hooks on every commit to automatically point out issues in code such as missing semicolons, trailing whitespace, and debug statements. By pointing these issues out before code review, this allows a code reviewer to focus on the architecture of a change while not wasting time with trivial style nitpicks.</p>
+</blockquote>
+<p>Here we configure all of the above tools to run on any changed python files on committing, and also to run pytest coverage only when pushing as it can be slow. Create a new file <code>.pre-commit-config.yaml</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">repos:</span><br><span class="line">  - repo: local</span><br><span class="line">    hooks:</span><br><span class="line">      - id: isort</span><br><span class="line">        name: isort</span><br><span class="line">        stages: [commit]</span><br><span class="line">        language: system</span><br><span class="line">        entry: pipenv run isort</span><br><span class="line">        types: [python]</span><br><span class="line"></span><br><span class="line">      - id: black</span><br><span class="line">        name: black</span><br><span class="line">        stages: [commit]</span><br><span class="line">        language: system</span><br><span class="line">        entry: pipenv run black</span><br><span class="line">        types: [python]</span><br><span class="line"></span><br><span class="line">      - id: flake8</span><br><span class="line">        name: flake8</span><br><span class="line">        stages: [commit]</span><br><span class="line">        language: system</span><br><span class="line">        entry: pipenv run flake8</span><br><span class="line">        types: [python]</span><br><span class="line">        exclude: setup.py</span><br><span class="line"></span><br><span class="line">      - id: mypy</span><br><span class="line">        name: mypy</span><br><span class="line">        stages: [commit]</span><br><span class="line">        language: system</span><br><span class="line">        entry: pipenv run mypy</span><br><span class="line">        types: [python]</span><br><span class="line">        pass_filenames: false</span><br><span class="line"></span><br><span class="line">      - id: pytest</span><br><span class="line">        name: pytest</span><br><span class="line">        stages: [commit]</span><br><span class="line">        language: system</span><br><span class="line">        entry: pipenv run pytest</span><br><span class="line">        types: [python]</span><br><span class="line"></span><br><span class="line">      - id: pytest-cov</span><br><span class="line">        name: pytest</span><br><span class="line">        stages: [push]</span><br><span class="line">        language: system</span><br><span class="line">        entry: pipenv run pytest --cov --cov-fail-under=100</span><br><span class="line">        types: [python]</span><br><span class="line">        pass_filenames: false</span><br></pre></td></tr></table></figure>
+<p>If you ever need to skip these hooks you can run <code>git commit --no-verify</code> or <code>git push --no-verify</code></p>
+<h1 id="Generate-a-project-using-cookiecutter"><a href="#Generate-a-project-using-cookiecutter" class="headerlink" title="Generate a project using cookiecutter"></a>Generate a project using cookiecutter</h1><p>Now we’ve seen what an ideal project contains, we can turn this into a <a href="https://github.com/sourcery-ai/python-best-practices-cookiecutter" target="_blank" rel="noopener">template</a> to generate a new project with a single command:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipx run cookiecutter gh:sourcery-ai/python-best-practices-cookiecutter</span><br></pre></td></tr></table></figure>
+<p>Fill in the project name and repo name and your project will be generated for you.</p>
+<p>To finish setting up, follow these steps:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># Enter project directory</span><br><span class="line">cd &lt;repo_name&gt;</span><br><span class="line"></span><br><span class="line"># Initialise git repo</span><br><span class="line">git init</span><br><span class="line"></span><br><span class="line"># Install dependencies</span><br><span class="line">pipenv install --dev</span><br><span class="line"></span><br><span class="line"># Setup pre-commit and pre-push hooks</span><br><span class="line">pipenv run pre-commit install -t pre-commit</span><br><span class="line">pipenv run pre-commit install -t pre-push</span><br></pre></td></tr></table></figure>
+<p>The template project contains a very simple Python file and test to try the tools out on. Once you’re happy with the code you can then do your first <code>git commit</code> and all the hooks will be run.</p>
+<h1 id="Editor-Integration"><a href="#Editor-Integration" class="headerlink" title="Editor Integration"></a>Editor Integration</h1><p>While it is great to know that the standard of code on our project will always be maintained at the highest level when committing code, it is somewhat frustrating to find out any issues after we think the code changes have all been done. It is much better to get the issues displayed in real-time.</p>
+<p>Spend some time to make sure these commands are run by your code editor when saving a file. Having instant feedback means you can quickly fixup any minor issues introduced while the code is fresh in the mind.</p>
+<p>Personally I use some excellent Vim plugins to accomplish this:</p>
+<ul>
+<li><a href="https://github.com/dense-analysis/ale" target="_blank" rel="noopener">ale</a> runs flake8 in real-time, and runs black, isort and mypy on file save</li>
+<li><a href="https://github.com/janko/vim-test" target="_blank" rel="noopener">vim-test</a> with <a href="https://github.com/janko/vim-test#projectionist-integration" target="_blank" rel="noopener">projectionist integration</a> runs pytest on file save</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2019-05-17T02:00:55.000Z"><a href="/2019/05/17/Python-datetime模块介绍及示例/">2019-05-17</a></time>
       
       
@@ -1066,71 +1178,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2017-08-19T00:15:44.000Z"><a href="/2017/08/19/Nevwe-Write-For-Loops-Again/">2017-08-19</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2017/08/19/Nevwe-Write-For-Loops-Again/">Nevwe Write For-Loops Again</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>Translate from <a href="https://dev.to/dawranliou/never-write-for-loops-again" target="_blank" rel="noopener">Randy Daw-Ran Liou </a></p>
-<p>This is a challenge. I challenge you to avoid writing for-loops in every scenario. Also, I challenge you to find the scenarios that are so freaking hard to write anything else but a for-loop. Please share your findings. I’d like to hear about them.</p>
-<p>It’s been a while since I started exploring the amazing language features in Python. At the beginning, it’s just a challenge I gave myself to practice using more language features instead of those I learned from other programming language. And things are just getting more fun! Not only the code become shorter and cleaner, but also code looks more structured and disciplined. I’ll get into those benefits more in this article.</p>
-<p>But first, let’s take a step back and see what’s the intuition behind writing a for-loop:<br>1.To go through a sequence to extract out some information<br>2.To generate another sequence out of the current sequence<br>3.This is my second nature to write for-loops because I’m a programmer</p>
-<p>Fortunately, there are already great tools that are built into Python to help you accomplish the goals! All you need is to shift your mind and look at the things in a different angle.</p>
-<h2 id="What-you-gain-by-not-writing-for-loops-everywhere"><a href="#What-you-gain-by-not-writing-for-loops-everywhere" class="headerlink" title="What you gain by not writing for-loops everywhere"></a>What you gain by not writing for-loops everywhere</h2><p>1.Fewer lines of code<br>2.Better code readability<br>3.Leave indentation for managing context only</p>
-<p>Let’s see the code skeleton below:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 1</span><br><span class="line">with ...:</span><br><span class="line">    for ...:</span><br><span class="line">        if ...:</span><br><span class="line">            try:</span><br><span class="line">            except:</span><br><span class="line">        else:</span><br></pre></td></tr></table></figure></p>
-<p>In this example, we are dealing with multiple layers of code. THIS IS HARD TO READ. The problem I found in this code is that it is mixing the <strong>administrative</strong> logic (the <code>with</code>, <code>try-except</code>) with the <strong>business logic</strong> (the <code>for</code>, <code>if</code>) by giving them the indentation ubiquitously. If you are disciplined about using indentation only for administrative logic, your core business logic would stand out immediately.</p>
-<blockquote>
-<p>“Flat is better than nested” - The Zen of Python</p>
-</blockquote>
-<h2 id="Tools-you-can-use-to-avoid-using-for-loops"><a href="#Tools-you-can-use-to-avoid-using-for-loops" class="headerlink" title="Tools you can use to avoid using for-loops"></a>Tools you can use to avoid using for-loops</h2><h3 id="1-List-Comprehension-Generator-Expression"><a href="#1-List-Comprehension-Generator-Expression" class="headerlink" title="1.List Comprehension / Generator Expression"></a>1.List Comprehension / Generator Expression</h3><p>Let’s see a simple example. Basically you want to compile a sequence based on another existing sequence:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">result = []</span><br><span class="line">for item in item_list:</span><br><span class="line">    new_item = do_something_with(item)</span><br><span class="line">    result.append(item)</span><br></pre></td></tr></table></figure></p>
-<p>You can use <code>map</code> if you love MapReduce, or, Python has List Comprehension:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result = [do_something_with(item) for item in item_list]</span><br></pre></td></tr></table></figure></p>
-<p>Similarly, if you wish to get a iterator only, you can use Generator Expression with almost the same syntax. (How can you not love the consistency in Python?)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result = (do_something_with(item) for item in item_list)</span><br></pre></td></tr></table></figure></p>
-<h3 id="2-Functions"><a href="#2-Functions" class="headerlink" title="2. Functions"></a>2. Functions</h3><p>Thinking in a higher-order, more functional programming way, if you want to map a sequence to another, simply call the <code>map</code> function. (Be my guest to use list comprehension here instead.)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">doubled_list = map(lambda x: x * 2, old_list)</span><br></pre></td></tr></table></figure>
-<p>If you want to reduce a sequence into a single, use <code>reduce</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from functools import reduce</span><br><span class="line">summation = reduce(lambda x, y: x + y, numbers)</span><br></pre></td></tr></table></figure>
-<p>Also, lots of Python’s builtin functions consumes iterables:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = list(range(10))</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span><br><span class="line">&gt;&gt;&gt; all(a)</span><br><span class="line">False</span><br><span class="line">&gt;&gt;&gt; any(a)</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; max(a)</span><br><span class="line">9</span><br><span class="line">&gt;&gt;&gt; min(a)</span><br><span class="line">0</span><br><span class="line">&gt;&gt;&gt; list(filter(bool, a))</span><br><span class="line">[1, 2, 3, 4, 5, 6, 7, 8, 9]</span><br><span class="line">&gt;&gt;&gt; set(a)</span><br><span class="line">&#123;0, 1, 2, 3, 4, 5, 6, 7, 8, 9&#125;</span><br><span class="line">&gt;&gt;&gt; dict(zip(a,a))</span><br><span class="line">&#123;0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9&#125;</span><br><span class="line">&gt;&gt;&gt; sorted(a, reverse=True)</span><br><span class="line">[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]</span><br><span class="line">&gt;&gt;&gt; str(a)</span><br><span class="line">&apos;[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]&apos;</span><br><span class="line">&gt;&gt;&gt; sum(a)</span><br><span class="line">45</span><br></pre></td></tr></table></figure></p>
-<h3 id="3-Extract-Functions-or-Generators"><a href="#3-Extract-Functions-or-Generators" class="headerlink" title="3. Extract Functions or Generators"></a>3. Extract Functions or Generators</h3><p>The above two methods are great to deal with simpler logic. How about more complex logic? As a programmer, we write functions to abstract out the difficult things. Same idea applies here. If you are writing this:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">results = []</span><br><span class="line">for item in item_list:</span><br><span class="line">    # setups</span><br><span class="line">    # condition</span><br><span class="line">    # processing</span><br><span class="line">    # calculation</span><br><span class="line">    results.append(result)</span><br></pre></td></tr></table></figure></p>
-<p>Apparently you are giving too much responsibility to a single code block. Instead, I propose you do:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def process_item(item):</span><br><span class="line">    # setups</span><br><span class="line">    # condition</span><br><span class="line">    # processing</span><br><span class="line">    # calculation</span><br><span class="line">    return result</span><br><span class="line"></span><br><span class="line">results = [process_item(item) for item in item_list]</span><br></pre></td></tr></table></figure></p>
-<p>How about nested for-loops?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">results = []</span><br><span class="line">for i in range(10):</span><br><span class="line">    for j in range(i):</span><br><span class="line">        results.append((i, j))</span><br></pre></td></tr></table></figure></p>
-<p>List Comprehension got your back:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">results = [(i, j)</span><br><span class="line">           for i in range(10)</span><br><span class="line">           for j in range(i)]</span><br></pre></td></tr></table></figure></p>
-<p>How about if you have some internal state in the code block to<br>keep?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># finding the max prior to the current item</span><br><span class="line">a = [3, 4, 6, 2, 1, 9, 0, 7, 5, 8]</span><br><span class="line">results = []</span><br><span class="line">current_max = 0</span><br><span class="line">for i in a:</span><br><span class="line">    current_max = max(i, current_max)</span><br><span class="line">    results.append(current_max)</span><br><span class="line"></span><br><span class="line"># results = [3, 4, 6, 6, 6, 9, 9, 9, 9, 9]</span><br></pre></td></tr></table></figure></p>
-<p>Let’s extract a generator to achieve this:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def max_generator(numbers):</span><br><span class="line">    current_max = 0</span><br><span class="line">    for i in numbers:</span><br><span class="line">        current_max = max(i, current_max)</span><br><span class="line">        yield current_max</span><br><span class="line"></span><br><span class="line">a = [3, 4, 6, 2, 1, 9, 0, 7, 5, 8]</span><br><span class="line">results = list(max_generator(a))</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>“Oh wait, you just used a for-loop in the generator function. That’s cheating!”</p>
-</blockquote>
-<p>Fine, smart ass, let’s try the following.</p>
-<h3 id="4-Don’t-write-it-yourself-itertools-got-you-covered"><a href="#4-Don’t-write-it-yourself-itertools-got-you-covered" class="headerlink" title="4. Don’t write it yourself. itertools got you covered"></a>4. Don’t write it yourself. <code>itertools</code> got you covered</h3><p>This module is simply brilliant. I believe this module covers 80% of the cases that you makes you want to write for-loops. For example, the last example can be rewritten to:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from itertools import accumulate</span><br><span class="line">a = [3, 4, 6, 2, 1, 9, 0, 7, 5, 8]</span><br><span class="line">resutls = list(accumulate(a, max))</span><br></pre></td></tr></table></figure></p>
-<p>Also, if you are iterating on combinatoric sequnces, there are <code>product()</code>, <code>permutations()</code>, <code>combinations()</code> to use.</p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>1.You don’t need to write for-loops in most scenarios<br>2.You should avoid writing for-loops, so you have better code readability</p>
-<h2 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h2><p>1.Look at your code again. Spot any places that you wrote a for-loop previously by intuition. Think again and see if it make sense to re-write it without using for-loop.<br>2.Share your cases that are hard to code without using for-loops</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1188,7 +1235,7 @@
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   
-    <li><a href="/tags/python/">python</a><small>12</small></li>
+    <li><a href="/tags/python/">python</a><small>13</small></li>
   
     <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   
@@ -1204,7 +1251,7 @@
   </div>
   <footer id="footer" class="inner"><div class="alignleft">
   
-  &copy; 2019 Tony Tan
+  &copy; 2020 Tony Tan
   
 </div>
 <div class="clearfix"></div></footer>

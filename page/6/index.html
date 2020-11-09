@@ -54,6 +54,157 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-11-21T16:00:00.000Z"><a href="/2014/11/22/pygeoipmappy/">2014-11-22</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/11/22/pygeoipmappy/">pygeoipmap.py</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>pygeoipmap.py</em></p>
+<pre>
+#!/usr/bin/env python
+# coding: utf-8
+
+from __future__ import print_function, unicode_literals, with_statement
+import argparse
+import requests
+import json
+import numpy
+import csv
+import matplotlib
+# Anti-Grain Geometry (AGG) backend so PyGeoIpMap can be used 'headless'
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+import GeoIP
+
+def get_ip(ip_file):
+    """
+    Returns a list of IP addresses from a file containing one IP per line.
+    """
+    with open(ip_file, 'r') as f:
+        ip_list = [line.strip() for line in f]
+    return ip_list
+
+
+def get_lat_lon(ip_list=[], lats=[], lons=[]):
+    """
+    This function connects to the FreeGeoIP web service to get info from
+    a list of IP addresses.
+    Returns two lists (latitude and longitude).
+    """
+    print("Processing {} IPs...".format(len(ip_list)))
+    for ip in ip_list:
+        r = requests.get("https://freegeoip.net/json/"+ip)
+        json_response = r.json()
+        print("{ip}, {region_name}, {country_name}, {latitude}, {longitude}".format(**json_response))
+        if json_response['latitude'] and json_response['longitude']:
+            lats.append(json_response['latitude'])
+            lons.append(json_response['longitude'])
+    return lats, lons
+
+def geoip_lat_lon(gi, ip_list=[], lats=[], lons=[]):
+    """
+    This function uses the MaxMind library and databases to geolocate IP addresses
+    Returns two lists (latitude and longitude).
+    """
+    print("Processing {} IPs...".format(len(ip_list)))
+    for ip in ip_list:
+        try:
+            r = gi.record_by_addr(ip)
+        except Exception:
+            print("Unable to locate IP: %s" % ip)
+            continue
+        if r is not None:
+            print("%s {country_code} {latitude}, {longitude}".format(**r) % ip)
+            lats.append(r['latitude'])
+            lons.append(r['longitude'])
+    return lats, lons
+
+def get_lat_lon_from_csv(csv_file, lats=[], lons=[]):
+    """
+    Retrieves the last two rows of a CSV formatted file to use as latitude
+    and longitude.
+    Returns two lists (latitudes and longitudes).
+    Example CSV file:
+    119.80.39.54, Beijing, China, 39.9289, 116.3883
+    101.44.1.135, Shanghai, China, 31.0456, 121.3997
+    219.144.17.74, Xian, China, 34.2583, 108.9286
+    64.27.26.7, Los Angeles, United States, 34.053, -118.2642
+    """
+    with open(csv_file, 'rb') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            lats.append(row[-2])
+            lons.append(row[-1])
+    return lats, lons
+
+
+def generate_map(output, lats=[], lons=[]):
+    """
+    Using Basemap and the matplotlib toolkit, this function generates a map and
+    puts a red dot at the location of every IP addresses found in the list.
+    The map is then saved in the file specified in `output`.
+    """
+    print("Generating map and saving it to {}".format(output))
+    m = Basemap(projection='cyl', resolution='l')
+    m.bluemarble()
+    x, y = m(lons, lats)
+    m.scatter(x, y, s=1, color='#ff0000', marker='o', alpha=0.3)
+    plt.savefig(output, dpi=300, bbox_inches='tight')
+
+
+def main():
+    parser = argparse.ArgumentParser(description='Visualize community on a map.')
+    parser.add_argument('input', type=str, help='Input file. One IP per line or, if FORMAT set to \'csv\', CSV formatted file ending with latitude and longitude positions')
+    parser.add_argument('-o', '--output', default='output.png', help='Path to save the file (e.g. /tmp/output.png)')
+    parser.add_argument('-f', '--format', default='ip', choices=['ip', 'csv'], help='Format of the input file.')
+    parser.add_argument('-s', '--service', default='f', choices=['f','m'], help='Geolocation service (f=FreeGeoIP, m=MaxMind local database)')
+    parser.add_argument('-db', '--db', default='./GeoLiteCity.dat', help='Full path to MaxMind database file (default = ./GeoLiteCity.dat)')
+    args = parser.parse_args()
+
+    output = args.output
+
+    if args.format == 'ip':
+        ip_list = get_ip(args.input)
+        if args.service == 'm':
+            gi = GeoIP.open(args.db, GeoIP.GEOIP_STANDARD)
+            lats, lons = geoip_lat_lon(gi, ip_list)
+        else:  # default service
+            lats, lons = get_lat_lon(ip_list)
+    elif args.format == 'csv':
+        lats, lons = get_lat_lon_from_csv(args.input)
+
+    generate_map(output, lats, lons)
+
+if __name__ == '__main__':
+    main()
+</pre>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-11-10T16:00:00.000Z"><a href="/2014/11/11/export-excel-in-django17/">2014-11-11</a></time>
       
       
@@ -417,133 +568,6 @@ sudo apt-get install mysqlclient
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-10-12T16:00:00.000Z"><a href="/2014/10/13/dajngo-episode-3-introduction-to-south-migrations/">2014-10-13</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/10/13/dajngo-episode-3-introduction-to-south-migrations/">Dajngo Episode 3 Introduction to South Migrations</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>Introduction to South Migrations</em></p>
-<p>Install SOUTH:</p>
-<pre>
-pip install South
-</pre>
-
-<pre>
-vim settings.py
-</pre>
-In "INSTALLED_APP"
-Add
-<pre>
-'south',
-</pre>
-
-<pre>
-python manage.py syncdb
-</pre>
-Create a new app.
-<pre>
-python manage.py startapp page
-</pre>
-Add 'page' to project.
-<pre>
-vim settings.py
-</pre>
-
-<pre>
-'page',
-</pre>
-In page part, edit models.
-<pre>
-vim page/models.py
-</pre>
-
-<pre>
-from django.db import models
-class Page(models.Model):
-    title=models.CharField(max_length=200)
-    slug=models.SlugField(max_length=200)
-    body=models.TextField()
-</pre>
-
-<pre>
-python manage.py schemamigration page --initial
-</pre>
-
-<pre>
-python manage.py migrate page
-</pre>
-
-<p>Update models.</p>
-<pre>
-vim page/models.py
-</pre>
-
-<pre>
-from datetime import datetime
-
-pub_date=models.DateTimeField(default=datetime.now())
-</pre>
-
-<pre>
-python manage.py schemamigration page --auto
-</pre>
-
-<pre>
-python manage.py migrate page
-</pre>
-
-<p>In another app “post”,</p>
-<pre>
-python manage.py convert_to_south post
-</pre>
-
-<pre>
-vim post/models.py
-</pre>
-
-<pre>
-from datetime import datetime
-pub_date=models.DateTimeField(default=datetime.now())
-</pre>
-
-<pre>
-python manage.py schemamigration post --auto
-</pre>
-
-<pre>
-python manage.py migrate post
-</pre>
-
-<pre>
-python manage.py migrate post 0001 --fake
-</pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2014-10-12T16:00:00.000Z"><a href="/2014/10/13/create-and-apply-filters-to-lists-of-file-paths-python-recipe/">2014-10-13</a></time>
       
       
@@ -658,6 +682,133 @@ if __name__ == '__main__':
         print '  ', file
     print
 </pre>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-10-12T16:00:00.000Z"><a href="/2014/10/13/dajngo-episode-3-introduction-to-south-migrations/">2014-10-13</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/10/13/dajngo-episode-3-introduction-to-south-migrations/">Dajngo Episode 3 Introduction to South Migrations</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Introduction to South Migrations</em></p>
+<p>Install SOUTH:</p>
+<pre>
+pip install South
+</pre>
+
+<pre>
+vim settings.py
+</pre>
+In "INSTALLED_APP"
+Add
+<pre>
+'south',
+</pre>
+
+<pre>
+python manage.py syncdb
+</pre>
+Create a new app.
+<pre>
+python manage.py startapp page
+</pre>
+Add 'page' to project.
+<pre>
+vim settings.py
+</pre>
+
+<pre>
+'page',
+</pre>
+In page part, edit models.
+<pre>
+vim page/models.py
+</pre>
+
+<pre>
+from django.db import models
+class Page(models.Model):
+    title=models.CharField(max_length=200)
+    slug=models.SlugField(max_length=200)
+    body=models.TextField()
+</pre>
+
+<pre>
+python manage.py schemamigration page --initial
+</pre>
+
+<pre>
+python manage.py migrate page
+</pre>
+
+<p>Update models.</p>
+<pre>
+vim page/models.py
+</pre>
+
+<pre>
+from datetime import datetime
+
+pub_date=models.DateTimeField(default=datetime.now())
+</pre>
+
+<pre>
+python manage.py schemamigration page --auto
+</pre>
+
+<pre>
+python manage.py migrate page
+</pre>
+
+<p>In another app “post”,</p>
+<pre>
+python manage.py convert_to_south post
+</pre>
+
+<pre>
+vim post/models.py
+</pre>
+
+<pre>
+from datetime import datetime
+pub_date=models.DateTimeField(default=datetime.now())
+</pre>
+
+<pre>
+python manage.py schemamigration post --auto
+</pre>
+
+<pre>
+python manage.py migrate post
+</pre>
+
+<pre>
+python manage.py migrate post 0001 --fake
+</pre>
+
       
     </div>
     <footer>
@@ -824,148 +975,6 @@ heroku open
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-09-22T16:00:00.000Z"><a href="/2014/09/23/how-to-use-pyhton-to-generate-source-file-of-2-ways/">2014-09-23</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/09/23/how-to-use-pyhton-to-generate-source-file-of-2-ways/">How to use Pyhton to generate source file of 2 ways</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>How to use Pyhton to generate source file of 2 ways</em></p>
-<p>利用Python的字符串处理模块，开发人员可以编写脚本用来生成那些格式相同的C、C++、JAVA源程序、头文件和测试文件，从而避免大量的重复工作。本文概述两种利用Python string类生成java源代码的方法。</p>
-<h4><b>String Template</b></h4>
-
-<p>Template是一个好东西，可以将字符串的格式固定下来，重复利用。Template也可以让开发人员可以分别考虑字符串的格式和其内容了，无形中减轻了开发人员的压力。Template属于string中的一个类，有两个重要的方法：substitute和safe_substitute。替换时使用substitute()，若未能提供模板所需的全部参数值时会发生异常。使用safe_substitute() 则会替换存在的字典值,保留未存在的替换符号。要使用的话可用以下方式调用：</p>
-<pre>
-from string import Template
-</pre>
-
-<p>Template有个特殊标示符$,它具有以下的规则：</p>
-<p>（1）主要实现方式为$xxx,其中xxx是满足python命名规则的字符串，即不能以数字开头、不能为关键字等；</p>
-<p>（2）如果$xxx需要和其他字符串接触时，用{}将xxx包裹起来；</p>
-<p>开发人员通过编写template文件，并通过Template方法创建模板、substitute方法替换字符串即可快捷的生成所需的文件。编写template文件时一定要注意“$”的使用，因为Python会将以“$”开头的字符串理解成需要替换的变量。</p>
-<h4><b>replace</b></h4>
-
-<pre>
-str.replace(old,new[,max])
-</pre>
-
-<p>Python replace() 方法把字符串中的 old（旧字符串） 替换成 new(新字符串)，如果指定第三个参数max，则替换不超过 max 次。</p>
-<p>模板文件tenplate.java</p>
-<pre>
-/**
-* created since ${now}
-*/
-package com.alipay.mspcore.common.dal.ibatis;
-import java.util.Date;
-import junit.framework.Assert;
-import com.alipay.mspcore.common.dal.daointerface.${testObject}DAO;
-import com.alipay.mspcore.common.dal.dataobject.${testObject};
-import com.alipay.sofa.runtime.test.AnnotatedAutowireSofaTestCase;
-import com.iwallet.biz.common.util.money.Money;
-/**
-* @author ${author}
-* @version ${version}: MBIM_Service${testObject}_Device.java, ${now} ${author}
-*/
-public class Ibatis${testObject}DAOTester extends AnnotatedAutowireSofaTestCase {
-    @Override
-    public String[] getConfigurationLocations() {
-        return new String[] { "META-INF/spring/common-dal-db.xml",
-            "META-INF/spring/mobilespcore-common-dal-dao.xml",
-            "META-INF/spring/common-dal.xml" };
-    }
-    @Override
-    public String[] getResourceFilterNames() {
-        return new String[] { "META-INF/spring/common-dal-db.xml" };
-    }
-    @Override
-    public String[] getWebServiceConfigurationLocations() {
-        return new String[] {};
-    }
-    private ${testObject}DAO get${testObject}DAO() {
-        ${testObject}DAO dao = (${testObject}DAO) this.getBean("${testObjVarName}DAO", ${testObject}DAO.class, null);
-        return dao;
-    }
-    public void test${testObject}DAO() {
-        ${testObject}DAO configDAO = get${testObject}DAO();
-        Assert.assertNotNull(configDAO);
-    }
-    public void test() {
-        ${testObject}DO ${testObjVarName}DO = new ${testObject}DO();
-        ${testObjVarName}DO.setGmtCreate(new Date());
-        ${testObjVarName}DO.setGmtModified(new Date());
-        ${testObjVarName}DO.setId(10000);
-        ${testObject}DAO ${testObjVarName}DAO = get${testObject}DAO();
-        long result = ${testObjVarName}DAO.insert(${testObjVarName}DO);
-        Assert.assertTrue(result > 0);
-    }
-}
-</pre>
-
-<p>Python代码</p>
-<pre>
-import os
-import datetime
-from string import Template
-
-tplFilePath="D:\\template.java"
-path="D:\\code_gen"
-testObjectList=['Basic_connect','Sms','Phonebook']
-
-for testObj in testObjectList:
-    testObjVarName=testObj[0].lower() + testObj[1:]
-    filename="MBIM_Service_" + testObj + '_device.java'
-author='Aye'
-version='0.1'
-now=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
-tplFile=open(tplFilePath)
-gFile=open(pathfilename,'w')
-
-lines=[]
-tmp=Template(tplFile.read())
-lines.append(tmp.substitute(author=author,now=now,version=version))
-gFile.weitelines(lines)
-
-tplFile.close()
-gFile.close()
-print 'generate %s over.~~' % (path+filename)
-
-</pre>
-
-<p>运行结果</p>
-<pre>
-generate D:\Project\Python\code_gen\MBIM_Service_Basic_connect_device.java over. ~ ~
-generate D:\Project\Python\code_gen\MBIM_Service_Sms_device.java over. ~ ~
-generate D:\Project\Python\code_gen\MBIM_Service_Phonebook_device.java over. ~ ~
-</pre>
-
-
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1025,7 +1034,7 @@ generate D:\Project\Python\code_gen\MBIM_Service_Phonebook_device.java over. ~ ~
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   
-    <li><a href="/tags/python/">python</a><small>12</small></li>
+    <li><a href="/tags/python/">python</a><small>13</small></li>
   
     <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   
@@ -1041,7 +1050,7 @@ generate D:\Project\Python\code_gen\MBIM_Service_Phonebook_device.java over. ~ ~
   </div>
   <footer id="footer" class="inner"><div class="alignleft">
   
-  &copy; 2019 Tony Tan
+  &copy; 2020 Tony Tan
   
 </div>
 <div class="clearfix"></div></footer>

@@ -54,6 +54,203 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-08-22T16:00:00.000Z"><a href="/2014/08/23/lean-djangos-10-precautions/">2014-08-23</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/23/lean-djangos-10-precautions/">Lean Django&#39;s 10 Precautions</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Here note summarize the ten points that can help you better lean Django,reduce errors and avoid detours,it is worth a look.</em></p>
+<p>Here note summarize the ten points that can help you better lean Django,reduce errors and avoid detours,it is worth a look.</p>
+<h3>1.Don’t include project’s name in reference code.</h3>
+
+<p>If you create a project’s name “project”, include a application’s name “app”, it’s no good like this.</p>
+<pre>
+from project.app.models import Author
+</pre>
+
+<p>the disadvantages is the project and application are tight coupling. cannot reuse application. it’s very difficulty to change new project.</p>
+<p>So it’s the way for recommended.</p>
+<pre>
+from app.models import Author
+</pre>
+
+<p>In addition, it’s need set the project path in the “PYTHONPATH”.</p>
+<h3>2.Don’t hardcoed “MEDIA_ROOT” and “TEMPLATE_DIRS”</h3>
+
+<p>Don’t use the following code in the “settings.py”:</p>
+<pre>
+TEMPLATE_DIRS=("/home/html/project/templates",)
+MEDIA_ROOT="/home/html/project/appmedia/"
+</pre>
+
+<p>The problems will coming when you deployed to the production environment.</p>
+<p>this way is recommended.</p>
+<pre>
+SITE_ROOT=os.path.realpath(os.path.dirname(__file__))
+MEDIA_ROOR=os.path.join(SITE_ROOT,'appmedia')
+TEMPLATE_DIRS=(os.path.join(SITE_ROOT,'templates'),)
+</pre>
+
+<p>you also can use <b>abspath</b>, you can find the different with <b>realpath</b> in <a href="http://rob.cogit8.org/blog/2009/May/05/django-and-relativity-updated/" target="_blank" rel="noopener">http://rob.cogit8.org/blog/2009/May/05/django-and-relativity-updated/</a></p>
+<h3>3.Don’t hearcoded static file in tempaltes.</h3>
+
+<p>Don’t use the following ways when use CSS, Javascript or images in templates.</p>
+<pre>
+
+&#60;link rel="stylesheet" type="text/css" hef="/appmedia/amazing.css" /&#62;
+&#60;script type="text/javascript" src="/appmedia/jquery.min.js"&#62;&#60;/script&#62;
+
+</pre>
+
+<p>if you move to another server, you must manual change the address one by one.</p>
+<p>so it’s good way to use <b>&#123;&#123; MEDIA_URL &#125;&#125;</b></p>
+<pre>
+
+&#60;link rel="stylesheet" type="text/css" href="&#123;&#123; MEDIA_URL &#125;&#125;amazing.css" /&#62;
+&#60;script type="text/javascript" src="&#123;&#123;MEDIA_URL&#125;&#125;jquery.min.js"&#62;&#60;/script&#62;
+</pre>
+
+<p>Use <b>“RequestContext”</b> to get the template context.</p>
+<pre>
+return render_to_response("app/template.html",&#123;'var':'foo'&#125;,context_instance=RequestContext(request))
+</pre>
+
+<p>you also can get current user information from “RequestContext”.</p>
+<h3>4.Don’t write normal logic in “views.py”</h3>
+
+<p>Write normal logic in views, it’s bad for reuse code.<br>it’s commended put in <b>models</b> or create a <b>helper</b> model.<br>Yes. if you get the Author from models, you can put the code in to view for get Author list.</p>
+<h3>5.Don’t forget change DEBUG to False when release.</h3>
+
+
+<p>One Way:</p>
+<pre>
+import socket
+
+if socket.gethostname() == 'productionserver.com'
+    DEBUG=False
+else:
+    DEBUG=True
+</pre>
+
+<p>Another Way:</p>
+<pre>
+#File Name: settings_debuy.py
+#the setting information include test models
+#Use "python manage.py runserver settings=settings_debug.py" to run project.
+
+from settings import *
+DEBUG=True
+
+#you also setting more variables which used in testing.
+</pre>
+
+
+
+<h3>6.Loading one time template tag.</h3>
+
+<p>Normally, we loading template tags in templates.</p>
+<pre>
+&#123;% load template_tags %&#125;
+</pre>
+We must write the same code in pages everytime to load tempalte tag.
+
+So the following code is very cool!
+<pre>
+from django import template
+template.add_to_builtins('app.templatetags.custom_tag_module')
+</pre>
+It's only put the code in the modules which is loading when project start running. i.e. settings.py, urls.py, models.py etc..
+
+the above code can loading custom tag modules or filters when start running project. They can be used in template. 
+
+
+
+<h3>7.The rational allocation and use URL.</h3>
+
+Don't put all url settings in one "urls.py".
+It's better set the URL in app's urls.py.
+
+the static file path don't use hard-coded. url also don't use hard-coded. otherwise you must change so many when you change one url. it's better to use url function.
+
+In /project/askalumini/urls.py, define the name for each url, it can help us to effectively deal with the view url, templates and models, rather than hard-coded. 
+
+To ensure that the name of the only, please follow the url named &#60;appname&#62; / &#60;somelabel&#62; idiom.
+
+For example, in views.py have the code.
+<pre>
+HttpResponseRedirect("/askalumini/questions/54")
+</pre>
+
+<p>please change to:</p>
+<pre>
+from django.core.urlresolvers import reverse
+HttpResponseRedirect(reverse('askquestiondisploy',kwargs=&#123;'questionno':q.id&#125;))
+</pre>
+
+<p>Use models.permalink decorator in the model used to format url:</p>
+<pre>
+@models.permalink
+def get_absolute_url(self):
+    return ('profileur12',(),&#123;'userid':self.user.id&#125;)
+</pre>
+
+<p>Url tag instead of using hard-coded in the template:</p>
+<pre>
+&#123;% url askquestiondisploy 345%&#125;
+&#60;a href="&#123;% url askquestiondisploy 345 %&#125;"&#62;Ask Question&#60;/a&#62;
+</pre>
+
+
+
+<h3>8.Debugging.</h3>
+
+<p>Debugging usually with some third-party tools to get more runtime information.<br>You can use <b>django-debug-toolbar</b> to see debugging information.</p>
+<p>Another tool is <b>Werkzeug debugger</b>, it can open the python shell on the wrong page, allows you to more easily track the error message</p>
+<p>There <b>pdb</b>, a powerful debugging tool: <a href="http://ericholscher.com/blog/2008/aug/31/using-pdb-python-debugger-django-debugging-series-/" target="_blank" rel="noopener">http://ericholscher.com/blog/2008/aug/31/using-pdb-python-debugger-django-debugging-series-/</a></p>
+<h3>9.Learn Pinax.</h3>
+
+<p>Django biggest advantage is code reuse, DRY, <b>pinax</b> is such a platform that contains a lot of code can be used directly, for example openid, email verification, and so on. Please visit: http: //pinaxproject.com/</p>
+<h3>10.Learn some useful third-party applications.</h3>
+
+<h5>1) Database Upgrade Tool</h5>
+
+<p>What’s Database upgrade tool? you use “syncdb”, after one year, you changed models, do you want contunue to run “syncdb”? or “ALTER TABLE”..?</p>
+<p><b>South</b> is a stronger solution, but you must to learning how to use: <a href="http://south.aeracode.org/" target="_blank" rel="noopener">http://south.aeracode.org/</a></p>
+<h5>2) Templates System</h5>
+
+<p><b>Jinja</b> is a complete system of third-party template, you can replace the default template system, which offers many superior characteristics.</p>
+<h5>3) Third-party applications</h5>
+
+<p><b>django command extensions</b> provide a lot of useful command-line functions:<br><b>shell_plus</b> load all django model</p>
+<p><b>runserver_plus</b> integrated debugging tools Werkzeug</p>
+<p>Generation model diagram, you can show it to your boss</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-08-20T16:00:00.000Z"><a href="/2014/08/21/how-to-use-args-and-kwargs-in-python/">2014-08-21</a></time>
       
       
@@ -624,6 +821,106 @@ $ git config credential.helper cache
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-08-11T16:00:00.000Z"><a href="/2014/08/12/how-to-install-google-authenticator-on-linux/">2014-08-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/12/how-to-install-google-authenticator-on-linux/">How to install Google Authenticator on Linux</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Question I want to use Google Authenticator to set up two factor authentication. How can I install Google Authenticator on [insert your Linux distro]?</em></p>
+<p>Question: I want to use Google Authenticator to set up two factor authentication. How can I install Google Authenticator on [insert your Linux distro]?</p>
+<p>Google Authenticator is an application which can generate time-based one-time passcode to be used for two-factor authentication. You can install Google Authenticator on Linux as a pre-built package or by building it from the source.</p>
+<h3>Install Google Authenticator as a Pre-built Package</h3>
+
+<p>For those of you who don’t want to build Google Authenticator, it is available as a pre-built package on several Linux distros. The pre-built package contains Google Authenticator binary and its PAM module.</p>
+<p>To install Google Authenticator on Ubuntu:</p>
+<pre>
+$ sudo apt-get install libpam-google-authenticator
+</pre>
+
+<p>To install Google Authenticator on Fedora:</p>
+<pre>
+$ sudo yum install google-authenticator
+</pre>
+
+<p>To install Google Authenticator on CentOS, first enable EPEL repository, and then run:</p>
+<pre>
+$ sudo yum install google-authenticator
+</pre>
+
+<h3>Compile Google Authenticator on Linux</h3>
+
+<p>First, install prerequisites for building Google Authenticator.</p>
+<p>On Debian, Ubuntu or Linux Mint:</p>
+<pre>
+$ sudo apt-get install wget make gcc libpam0g-dev
+</pre>
+
+<p>On CentOS, Fedora or RHEL:</p>
+<pre>
+$ sudo yum install wget make gcc pam-devel
+</pre>
+
+<p>Then download the source code of Google Authenticator, and compile it as follows.</p>
+<pre>
+$ wget https://google-authenticator.googlecode.com/files/libpam-google-authenticator-1.0-source.tar.bz2 
+$ tar xvfvj libpam-google-authenticator-1.0-source.tar.bz2 
+$ cd libpam-google-authenticator-1.0 
+$ make
+</pre>
+
+<p>If build is successful, you will see pam_google_authenticator.so and google-authenticator created in the directory.</p>
+<p>Finally, go ahead and install Google Authenticator.</p>
+<pre>
+$ sudo make install
+</pre>
+
+<p>For instructions on how to set up two-factor authentication for SSH logins with Google Authenticator, refer to this guideline.</p>
+<h3>Troubleshoot</h3>
+
+<ol>
+<li>I am getting the following error when compiling Google Authenticator.</li>
+</ol>
+<pre>
+fatal error: security/pam_appl.h: No such file or directory
+</pre>
+
+<p>To fix this problem, install the following package.</p>
+<p>On Debian, Ubuntu or Linux Mint:</p>
+<pre>
+$ sudo apt-get install libpam0g-dev
+</pre>
+
+<p>On CentOS, Fedora or RHEL:</p>
+<pre>
+$ sudo yum install pam-devel
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-08-11T16:00:00.000Z"><a href="/2014/08/12/how-to-set-up-a-samba-file-server-to-use-with-windows-clients/">2014-08-12</a></time>
       
       
@@ -754,106 +1051,6 @@ writeable = yes
 <p><img src="https://farm4.staticflickr.com/3888/14653806037_5438b5034e_z.jpg"></p>
 <p>And we can see the results in Windows 7 (3.98 MB free of 4.00 MB):</p>
 <p><img src="https://farm4.staticflickr.com/3919/14653805967_c2b1551869_o.png"></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-08-11T16:00:00.000Z"><a href="/2014/08/12/how-to-install-google-authenticator-on-linux/">2014-08-12</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/08/12/how-to-install-google-authenticator-on-linux/">How to install Google Authenticator on Linux</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>Question I want to use Google Authenticator to set up two factor authentication. How can I install Google Authenticator on [insert your Linux distro]?</em></p>
-<p>Question: I want to use Google Authenticator to set up two factor authentication. How can I install Google Authenticator on [insert your Linux distro]?</p>
-<p>Google Authenticator is an application which can generate time-based one-time passcode to be used for two-factor authentication. You can install Google Authenticator on Linux as a pre-built package or by building it from the source.</p>
-<h3>Install Google Authenticator as a Pre-built Package</h3>
-
-<p>For those of you who don’t want to build Google Authenticator, it is available as a pre-built package on several Linux distros. The pre-built package contains Google Authenticator binary and its PAM module.</p>
-<p>To install Google Authenticator on Ubuntu:</p>
-<pre>
-$ sudo apt-get install libpam-google-authenticator
-</pre>
-
-<p>To install Google Authenticator on Fedora:</p>
-<pre>
-$ sudo yum install google-authenticator
-</pre>
-
-<p>To install Google Authenticator on CentOS, first enable EPEL repository, and then run:</p>
-<pre>
-$ sudo yum install google-authenticator
-</pre>
-
-<h3>Compile Google Authenticator on Linux</h3>
-
-<p>First, install prerequisites for building Google Authenticator.</p>
-<p>On Debian, Ubuntu or Linux Mint:</p>
-<pre>
-$ sudo apt-get install wget make gcc libpam0g-dev
-</pre>
-
-<p>On CentOS, Fedora or RHEL:</p>
-<pre>
-$ sudo yum install wget make gcc pam-devel
-</pre>
-
-<p>Then download the source code of Google Authenticator, and compile it as follows.</p>
-<pre>
-$ wget https://google-authenticator.googlecode.com/files/libpam-google-authenticator-1.0-source.tar.bz2 
-$ tar xvfvj libpam-google-authenticator-1.0-source.tar.bz2 
-$ cd libpam-google-authenticator-1.0 
-$ make
-</pre>
-
-<p>If build is successful, you will see pam_google_authenticator.so and google-authenticator created in the directory.</p>
-<p>Finally, go ahead and install Google Authenticator.</p>
-<pre>
-$ sudo make install
-</pre>
-
-<p>For instructions on how to set up two-factor authentication for SSH logins with Google Authenticator, refer to this guideline.</p>
-<h3>Troubleshoot</h3>
-
-<ol>
-<li>I am getting the following error when compiling Google Authenticator.</li>
-</ol>
-<pre>
-fatal error: security/pam_appl.h: No such file or directory
-</pre>
-
-<p>To fix this problem, install the following package.</p>
-<p>On Debian, Ubuntu or Linux Mint:</p>
-<pre>
-$ sudo apt-get install libpam0g-dev
-</pre>
-
-<p>On CentOS, Fedora or RHEL:</p>
-<pre>
-$ sudo yum install pam-devel
-</pre>
 
       
     </div>
@@ -1140,82 +1337,6 @@ if __name__=="__main__":
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-08-03T16:00:00.000Z"><a href="/2014/08/04/read--open-a-csv-file--randomly-select-an-entry/">2014-08-04</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/08/04/read--open-a-csv-file--randomly-select-an-entry/">Read &amp; Open a CSV File &amp; Randomly Select an Entry</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>Read &amp; Open a CSV File &amp; Randomly Select an Entry</em></p>
-<p>This is following the <a href="https://www.youtube.com/watch?v=NUVblHTElTk&amp;index=3&amp;list=PLEsfXFp6DpzR6FatOy4RtoXfu4PeYO_RL" target="_blank" rel="noopener">https://www.youtube.com/watch?v=NUVblHTElTk&amp;index=3&amp;list=PLEsfXFp6DpzR6FatOy4RtoXfu4PeYO_RL</a>.</p>
-<pre>
-
-#-*-coding=utf-8-*- 
-import os
-import random
-import csv
-import string
-
-def get_file_path(filename):
-    currentdirpath=os.getcwd()
-    file_path=os.path.join(os.getcwd(),filename)
-    return file_path
-
-path=get_file_path('choice.csv')
-
-def get_random_string():
-    rnstring=''
-    for i in range(0,4)
-         rnstring += random.choice(string.ascii_letters)
-     return rnstring
-
-def read_csv(filepath):
-    emails={}
-     i=0
-    with open(filepath,'rU') as csvfile:
-         reader = csv.reader(csvfile)
-         for row in reader:
-             if not 'Email Address' in row:
-                 email, domain = row[0].split('@')
-                 fake_email=email[:4] + get_random_string() + "@" + domain
-                 emails[i] = fake_email
-                 i += 1
-     return emails
-
-def get_winner():
-     emails=read_csv(path)
-     ran_num=random.randint(0,len(emails)-1)
-     winner=emails[ran_num]
-     print winner,ran_num
-get_winner()
-
-</pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1275,7 +1396,7 @@ get_winner()
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   
-    <li><a href="/tags/python/">python</a><small>12</small></li>
+    <li><a href="/tags/python/">python</a><small>13</small></li>
   
     <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   
@@ -1291,7 +1412,7 @@ get_winner()
   </div>
   <footer id="footer" class="inner"><div class="alignleft">
   
-  &copy; 2019 Tony Tan
+  &copy; 2020 Tony Tan
   
 </div>
 <div class="clearfix"></div></footer>

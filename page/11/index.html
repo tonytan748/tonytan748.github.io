@@ -54,6 +54,79 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-06-23T16:00:00.000Z"><a href="/2014/06/24/Set-Samba-in-Ubuntu/">2014-06-24</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/06/24/Set-Samba-in-Ubuntu/">Set Samba in Ubuntu</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Install Samba:</p>
+<pre class="code">sudo apt-get install samba
+sudo apt-get install smbfs</pre>
+
+<p>Setup</p>
+<pre class="code">cd /
+sudo mkdir data
+chmod 777 data</pre>
+
+
+<p>Open file: /etc/samba/smb.conf, search “; security = user”, change to:</p>
+<pre class="code">security = user
+username map = /etc/samba/smbusers</pre>
+
+<p>the same time add the following code in the end:</p>
+<pre class="code">[data]
+comment = data
+path = /data
+public = yes
+writable = true
+valid users  = tony
+create mask = 0775
+force user = tony
+force group = tony
+available = yes
+browseable = yes</pre>
+
+<p>Add user, “tony” is my user, if you want use other username, you can create it:</p>
+<pre class="code">sudo smbpassed -a tony #add "tony", and set password
+sudo vi /etc/samba/sambusers #create "sambausers",and change tony = "tony"</pre>
+
+<p>Test and restart:</p>
+<pre class="code">sudo testparam
+sudo /etc/init.d/samba restart</pre>
+
+<p>Use<br>In Windows system, right click “Computer” -&gt; Map Desk -&gt; Folder,choose the desic name and key in “//ip/data”, click “Yes”, key in password. Now you can look the samba folder.<br>Trouble Shooting</p>
+<pre class="code">unix extensions = no</pre>
+
+<p>this code need add in [blobalthe following code need add in [data]:</p>
+<pre class="code">wide links = yes
+follow symlinks = yes</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-06-21T16:00:00.000Z"><a href="/2014/06/22/Programmin-is-like-writing-a-book/">2014-06-22</a></time>
       
       
@@ -174,7 +247,7 @@
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   
-    <li><a href="/tags/python/">python</a><small>12</small></li>
+    <li><a href="/tags/python/">python</a><small>13</small></li>
   
     <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   
@@ -190,7 +263,7 @@
   </div>
   <footer id="footer" class="inner"><div class="alignleft">
   
-  &copy; 2019 Tony Tan
+  &copy; 2020 Tony Tan
   
 </div>
 <div class="clearfix"></div></footer>
