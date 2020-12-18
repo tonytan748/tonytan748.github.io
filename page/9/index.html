@@ -54,6 +54,101 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-08-09T16:00:00.000Z"><a href="/2014/08/10/python-handle-photos/">2014-08-10</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/10/python-handle-photos/">Python: handle photos</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Some ways to handle photos in Python</em></p>
+<pre>
+
+#coding=utf-8
+import Image
+import urllib2
+import StringIO
+impoert os
+
+#change photo size
+def resize_img(img_path):
+    try:
+        img=Image.open(img_path)
+        (width,height)=img.size
+        new_width=200
+        new_height=height*new_width/width
+        out=img.resize((new_width,new_height),Image.ANTIALIAS)
+        ext=os.path.splitext(img_path)[1]
+        new_file_name='%s%s' % ('small',ext)
+        out.save(new_file,quality=95)
+    except Exception,e:
+        print e
+
+</pre>
+
+<pre>
+#change photo type
+def change_img_type(img_path):
+    try:
+        img=Image.open(img_path)
+        img.save('new_type.png')
+    except Exception,e:
+        print e
+
+</pre>
+
+<pre>
+
+#deal with photo from remote
+def handle_remote_img(img_url):
+    try:
+        request=urllib2.Request(img_url)
+        img_data=urllib2.urlopen(request).read()
+        img_buffer=StringIO.StringIO(img_data)
+        img=Image.dopen(img_buffer)
+        img.save('remote.jpg')
+        (width,height)=img.size
+        out=img.resize((200,height*200/width),Image.ANTIALITS)
+        out.save('remote_small.jpg')
+    except Exception,e:
+        print e
+
+</pre>
+
+<pre>
+
+if __name__=="__main__":
+    img_path='linuxany.jpg'
+    resize_img(img_path)
+    change_img_type(img_path)
+    img_url="http://img.****"
+    handle_remote_img(img.url)
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-08-03T16:00:00.000Z"><a href="/2014/08/04/read--open-a-csv-file--randomly-select-an-entry/">2014-08-04</a></time>
       
       
@@ -715,135 +810,6 @@ print tn.read_all()
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-07-02T16:00:00.000Z"><a href="/2014/07/03/make-your-life-easier-with-virtualenvwrapper/">2014-07-03</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/07/03/make-your-life-easier-with-virtualenvwrapper/">Make your life easier with Virtualenvwrapper</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>When you do a lot of Python programming, you can make a mess of your system with Pip. Different apps need different requirements. One app needs version 1.2 of a package and another one needs 1.5. And then… you’re in trouble.</em></p>
-<p>When you want to know what packages have been installed by Pip, use this:</p>
-<pre>
-$ pip freeze
-</pre>
-
-<p>The result can be a very long list.</p>
-<p>For every project, whether it’s a simple application or a giant Django project, I create a new virtual environment with virtualenv. An easy way to do this is by using virtualenvwrapper.</p>
-<p></p><h3>Getting started with Virtualenv wrapper</h3><p></p>
-<pre>
-$ sudo pip install virtualenvwrapper
-</pre>
-There are some advanced settings which you can find in the manual.
-
-When installed, let's make a new environment called "testground".
-<pre>
-$ mkvirtualenv testground
-</pre>
-If your virtualenvwrapper is working well, you should see something like this:
-<pre>
-New python executable in testground/bin/python
-Installing Setuptools.........done.
-Installing Pip..............done.
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/predeactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/postdeactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/preactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/postactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/get_env_details
-
-(testground)yourname@yoursystem:~$ 
-</pre>
-
-<p>Take a look at the last line, which now says (testground) before the prompt. Your virtual environment is there, and your are in it.</p>
-<p>Now, do a pip freeze, it can result in something like this:</p>
-<pre>
-$ pip freeze
-argparse==1.2.1
-wsgiref==0.1.2
-</pre>
-
-<p>That list can be a lot shorter than the one outside the environment.</p>
-<p>You can now install something that only effects this environment. Let’s try Pillow, version 2.2.2.</p>
-<pre>
-$ pip install Pillow==2.2.2
-</pre>
-It will now try to install Pillow, when finished, do another pip fip freeze, and see if it's installed
-
-<h3>Switchting between virtualenvs</h3>
-Let's create another environment:
-<pre>
-$ mkvirtualenv coolapp
-</pre>
-once it's finished, it should have been activated automatically:
-<pre>
-...................done.
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/predeactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/postdeactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/preactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/postactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/get_env_details
-(coolapp)yourname@yoursystem:~$ 
-</pre>
-Now, let's switch to fist the virtualenv we made by the magic word "workon":
-<pre>
-$ workon testground
-(testground)yourname@yoursystem:~$ 
-</pre>
-There you go, it's as simpel as that
-
-<h3>No site packages</h3>
-Like with vitualenv, you can tell virtualenvwapper not to use the systems sitepackages with --no-site-packages:
-<pre>
-$ mkvirtualenv anotherenv --no-site-packages
-</pre>
-<h3>Remove a virtual environment</h3>
-It's very easy to get rid of a virtual env by using rmvirtualenv:
-<pre>
-$ rmvirtualenv coolapp
-
-Removing coolapp...
-</pre>
-
-<p></p><h3>List all virtualenvs</h3><p></p>
-<pre>
-$lsvirtualenv
-</pre>
-
-<p></p><h3>List your sitepackages</h3><p></p>
-<pre>
-$ lssitepackages
-
-#can result in this:
-easy_install.py   Pillow-2.2.2-py2.7.egg-info  pkg_resources.pyc
-easy_install.pyc  pip                          setuptools
-_markerlib        pip-1.4.1-py2.7.egg-info     setuptools-0.9.8-py2.7.egg-info
-PIL               pkg_resources.py
-</pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2014-07-02T16:00:00.000Z"><a href="/2014/07/03/python-cgi-programming/">2014-07-03</a></time>
       
       
@@ -1069,7 +1035,7 @@ for param in os.environ.keys():
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   
-    <li><a href="/tags/python/">python</a><small>13</small></li>
+    <li><a href="/tags/python/">python</a><small>14</small></li>
   
     <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   

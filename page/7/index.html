@@ -54,126 +54,58 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-09-22T16:00:00.000Z"><a href="/2014/09/23/how-to-use-pyhton-to-generate-source-file-of-2-ways/">2014-09-23</a></time>
+        <time datetime="2014-10-02T16:00:00.000Z"><a href="/2014/10/03/django-episode-4-deploying-django-to-heroku/">2014-10-03</a></time>
       
       
   
-    <h1 class="title"><a href="/2014/09/23/how-to-use-pyhton-to-generate-source-file-of-2-ways/">How to use Pyhton to generate source file of 2 ways</a></h1>
+    <h1 class="title"><a href="/2014/10/03/django-episode-4-deploying-django-to-heroku/">Django Episode 4 Deploying Django to Heroku</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p><em>How to use Pyhton to generate source file of 2 ways</em></p>
-<p>利用Python的字符串处理模块，开发人员可以编写脚本用来生成那些格式相同的C、C++、JAVA源程序、头文件和测试文件，从而避免大量的重复工作。本文概述两种利用Python string类生成java源代码的方法。</p>
-<h4><b>String Template</b></h4>
-
-<p>Template是一个好东西，可以将字符串的格式固定下来，重复利用。Template也可以让开发人员可以分别考虑字符串的格式和其内容了，无形中减轻了开发人员的压力。Template属于string中的一个类，有两个重要的方法：substitute和safe_substitute。替换时使用substitute()，若未能提供模板所需的全部参数值时会发生异常。使用safe_substitute() 则会替换存在的字典值,保留未存在的替换符号。要使用的话可用以下方式调用：</p>
+        <p><em>Deploying Django to Heroku</em></p>
 <pre>
-from string import Template
+ls blog
 </pre>
 
-<p>Template有个特殊标示符$,它具有以下的规则：</p>
-<p>（1）主要实现方式为$xxx,其中xxx是满足python命名规则的字符串，即不能以数字开头、不能为关键字等；</p>
-<p>（2）如果$xxx需要和其他字符串接触时，用{}将xxx包裹起来；</p>
-<p>开发人员通过编写template文件，并通过Template方法创建模板、substitute方法替换字符串即可快捷的生成所需的文件。编写template文件时一定要注意“$”的使用，因为Python会将以“$”开头的字符串理解成需要替换的变量。</p>
-<h4><b>replace</b></h4>
-
 <pre>
-str.replace(old,new[,max])
+vim requirements.txt
 </pre>
 
-<p>Python replace() 方法把字符串中的 old（旧字符串） 替换成 new(新字符串)，如果指定第三个参数max，则替换不超过 max 次。</p>
-<p>模板文件tenplate.java</p>
 <pre>
-/**
-* created since ${now}
-*/
-package com.alipay.mspcore.common.dal.ibatis;
-import java.util.Date;
-import junit.framework.Assert;
-import com.alipay.mspcore.common.dal.daointerface.${testObject}DAO;
-import com.alipay.mspcore.common.dal.dataobject.${testObject};
-import com.alipay.sofa.runtime.test.AnnotatedAutowireSofaTestCase;
-import com.iwallet.biz.common.util.money.Money;
-/**
-* @author ${author}
-* @version ${version}: MBIM_Service${testObject}_Device.java, ${now} ${author}
-*/
-public class Ibatis${testObject}DAOTester extends AnnotatedAutowireSofaTestCase {
-    @Override
-    public String[] getConfigurationLocations() {
-        return new String[] { "META-INF/spring/common-dal-db.xml",
-            "META-INF/spring/mobilespcore-common-dal-dao.xml",
-            "META-INF/spring/common-dal.xml" };
-    }
-    @Override
-    public String[] getResourceFilterNames() {
-        return new String[] { "META-INF/spring/common-dal-db.xml" };
-    }
-    @Override
-    public String[] getWebServiceConfigurationLocations() {
-        return new String[] {};
-    }
-    private ${testObject}DAO get${testObject}DAO() {
-        ${testObject}DAO dao = (${testObject}DAO) this.getBean("${testObjVarName}DAO", ${testObject}DAO.class, null);
-        return dao;
-    }
-    public void test${testObject}DAO() {
-        ${testObject}DAO configDAO = get${testObject}DAO();
-        Assert.assertNotNull(configDAO);
-    }
-    public void test() {
-        ${testObject}DO ${testObjVarName}DO = new ${testObject}DO();
-        ${testObjVarName}DO.setGmtCreate(new Date());
-        ${testObjVarName}DO.setGmtModified(new Date());
-        ${testObjVarName}DO.setId(10000);
-        ${testObject}DAO ${testObjVarName}DAO = get${testObject}DAO();
-        long result = ${testObjVarName}DAO.insert(${testObjVarName}DO);
-        Assert.assertTrue(result > 0);
-    }
-}
+Django &#60;=1.*.*
+South
+psycopg2=2.4.2
 </pre>
 
-<p>Python代码</p>
 <pre>
-import os
-import datetime
-from string import Template
-
-tplFilePath="D:\\template.java"
-path="D:\\code_gen"
-testObjectList=['Basic_connect','Sms','Phonebook']
-
-for testObj in testObjectList:
-    testObjVarName=testObj[0].lower() + testObj[1:]
-    filename="MBIM_Service_" + testObj + '_device.java'
-author='Aye'
-version='0.1'
-now=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
-tplFile=open(tplFilePath)
-gFile=open(pathfilename,'w')
-
-lines=[]
-tmp=Template(tplFile.read())
-lines.append(tmp.substitute(author=author,now=now,version=version))
-gFile.weitelines(lines)
-
-tplFile.close()
-gFile.close()
-print 'generate %s over.~~' % (path+filename)
-
+pip install -r requirements.txt
 </pre>
 
-<p>运行结果</p>
 <pre>
-generate D:\Project\Python\code_gen\MBIM_Service_Basic_connect_device.java over. ~ ~
-generate D:\Project\Python\code_gen\MBIM_Service_Sms_device.java over. ~ ~
-generate D:\Project\Python\code_gen\MBIM_Service_Phonebook_device.java over. ~ ~
+gir commit -am "change requirements"
 </pre>
 
+<pre>
+heroku create --stack cedor
+</pre>
 
+<pre>
+git push heroku master
+</pre>
+
+<pre>
+heroku run python blog/manage.py syncdb
+</pre>
+
+<pre>
+heroku run python blog/manage.py migrate
+</pre>
+
+<pre>
+heroku open
+</pre>
 
       
     </div>
@@ -295,6 +227,148 @@ Example:  %s -c "echo $HOME" %s
 <p>As an alternative to the popen() functions, telnetlib is probably a handy technique to have in your sysadmin toolbox.</p>
 <p>Production code will generally be more robust, but this example should be enough to get anyone started in the right direction.</p>
 <p>this title is come from <a href="http://code.activestate.com/recipes/52228/" target="_blank" rel="noopener">http://code.activestate.com/recipes/52228/</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-09-22T16:00:00.000Z"><a href="/2014/09/23/how-to-use-pyhton-to-generate-source-file-of-2-ways/">2014-09-23</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/09/23/how-to-use-pyhton-to-generate-source-file-of-2-ways/">How to use Pyhton to generate source file of 2 ways</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>How to use Pyhton to generate source file of 2 ways</em></p>
+<p>利用Python的字符串处理模块，开发人员可以编写脚本用来生成那些格式相同的C、C++、JAVA源程序、头文件和测试文件，从而避免大量的重复工作。本文概述两种利用Python string类生成java源代码的方法。</p>
+<h4><b>String Template</b></h4>
+
+<p>Template是一个好东西，可以将字符串的格式固定下来，重复利用。Template也可以让开发人员可以分别考虑字符串的格式和其内容了，无形中减轻了开发人员的压力。Template属于string中的一个类，有两个重要的方法：substitute和safe_substitute。替换时使用substitute()，若未能提供模板所需的全部参数值时会发生异常。使用safe_substitute() 则会替换存在的字典值,保留未存在的替换符号。要使用的话可用以下方式调用：</p>
+<pre>
+from string import Template
+</pre>
+
+<p>Template有个特殊标示符$,它具有以下的规则：</p>
+<p>（1）主要实现方式为$xxx,其中xxx是满足python命名规则的字符串，即不能以数字开头、不能为关键字等；</p>
+<p>（2）如果$xxx需要和其他字符串接触时，用{}将xxx包裹起来；</p>
+<p>开发人员通过编写template文件，并通过Template方法创建模板、substitute方法替换字符串即可快捷的生成所需的文件。编写template文件时一定要注意“$”的使用，因为Python会将以“$”开头的字符串理解成需要替换的变量。</p>
+<h4><b>replace</b></h4>
+
+<pre>
+str.replace(old,new[,max])
+</pre>
+
+<p>Python replace() 方法把字符串中的 old（旧字符串） 替换成 new(新字符串)，如果指定第三个参数max，则替换不超过 max 次。</p>
+<p>模板文件tenplate.java</p>
+<pre>
+/**
+* created since ${now}
+*/
+package com.alipay.mspcore.common.dal.ibatis;
+import java.util.Date;
+import junit.framework.Assert;
+import com.alipay.mspcore.common.dal.daointerface.${testObject}DAO;
+import com.alipay.mspcore.common.dal.dataobject.${testObject};
+import com.alipay.sofa.runtime.test.AnnotatedAutowireSofaTestCase;
+import com.iwallet.biz.common.util.money.Money;
+/**
+* @author ${author}
+* @version ${version}: MBIM_Service${testObject}_Device.java, ${now} ${author}
+*/
+public class Ibatis${testObject}DAOTester extends AnnotatedAutowireSofaTestCase {
+    @Override
+    public String[] getConfigurationLocations() {
+        return new String[] { "META-INF/spring/common-dal-db.xml",
+            "META-INF/spring/mobilespcore-common-dal-dao.xml",
+            "META-INF/spring/common-dal.xml" };
+    }
+    @Override
+    public String[] getResourceFilterNames() {
+        return new String[] { "META-INF/spring/common-dal-db.xml" };
+    }
+    @Override
+    public String[] getWebServiceConfigurationLocations() {
+        return new String[] {};
+    }
+    private ${testObject}DAO get${testObject}DAO() {
+        ${testObject}DAO dao = (${testObject}DAO) this.getBean("${testObjVarName}DAO", ${testObject}DAO.class, null);
+        return dao;
+    }
+    public void test${testObject}DAO() {
+        ${testObject}DAO configDAO = get${testObject}DAO();
+        Assert.assertNotNull(configDAO);
+    }
+    public void test() {
+        ${testObject}DO ${testObjVarName}DO = new ${testObject}DO();
+        ${testObjVarName}DO.setGmtCreate(new Date());
+        ${testObjVarName}DO.setGmtModified(new Date());
+        ${testObjVarName}DO.setId(10000);
+        ${testObject}DAO ${testObjVarName}DAO = get${testObject}DAO();
+        long result = ${testObjVarName}DAO.insert(${testObjVarName}DO);
+        Assert.assertTrue(result > 0);
+    }
+}
+</pre>
+
+<p>Python代码</p>
+<pre>
+import os
+import datetime
+from string import Template
+
+tplFilePath="D:\\template.java"
+path="D:\\code_gen"
+testObjectList=['Basic_connect','Sms','Phonebook']
+
+for testObj in testObjectList:
+    testObjVarName=testObj[0].lower() + testObj[1:]
+    filename="MBIM_Service_" + testObj + '_device.java'
+author='Aye'
+version='0.1'
+now=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+tplFile=open(tplFilePath)
+gFile=open(pathfilename,'w')
+
+lines=[]
+tmp=Template(tplFile.read())
+lines.append(tmp.substitute(author=author,now=now,version=version))
+gFile.weitelines(lines)
+
+tplFile.close()
+gFile.close()
+print 'generate %s over.~~' % (path+filename)
+
+</pre>
+
+<p>运行结果</p>
+<pre>
+generate D:\Project\Python\code_gen\MBIM_Service_Basic_connect_device.java over. ~ ~
+generate D:\Project\Python\code_gen\MBIM_Service_Sms_device.java over. ~ ~
+generate D:\Project\Python\code_gen\MBIM_Service_Phonebook_device.java over. ~ ~
+</pre>
+
+
 
       
     </div>
@@ -948,208 +1022,6 @@ echo 550 > /sys/class/backlight/intel_backlight/brightness
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-08-24T16:00:00.000Z"><a href="/2014/08/25/12-basic-knowledge-in-python/">2014-08-25</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/08/25/12-basic-knowledge-in-python/">12 Basic Knowledge in Python</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>Python编程中常用的12种基础知识总结：正则表达式替换，遍历目录方法，列表按列排序、去重，字典排序，字典、列表、字符串互转，时间对象操作，命令行参数解析(getopt)，print 格式化输出，进制转换，Python调用系统命令或者脚本，Python 读写文件</em></p>
-<h2>1、正则表达式替换</h2>
-
-<p><br><br>目标: 将字符串line中的 overview.gif 替换成其他字符串</p>
-<p><br></p>
-<pre>
->>> line = '&#60;IMG ALIGN="middle" SRC=\'#\'" /span&#62;
->>> mo=re.compile(r'(?&#60;=SRC=)"([\w+\.]+)"',re.I)  
-
->>> mo.sub(r'"\1****"',line)  
-'&#60;IMG ALIGN="middle" SRC=\'#\'" /span&#62;
-
->>> mo.sub(r'replace_str_\1',line)  
-'&#60;IMG ALIGN="middle" replace_str_overview.gif BORDER="0" ALT=""&#62;'&#60; /span&#62;
-
->>> mo.sub(r'"testetstset"',line)  
-'&#60;IMG ALIGN="middle" SRC=\'#\'" /span&#62;
-</pre>
-
-<p><br><br>注意: 其中 \1 是匹配到的数据，可以通过这样的方式直接引用<br><br><br><br></p>
-<h2>2、遍历目录方法</h2>
-
-<p><br><br>在某些时候，我们需要遍历某个目录找出特定的文件列表，可以通过os.walk方法来遍历，非常方便<br><br></p>
-<p><pre><br>import os<br>fileList = []<br>rootdir = “/data”<br>for root, subFolders, files in os.walk(rootdir):<br>if ‘.svn’ in subFolders: subFolders.remove(‘.svn’)  # 排除特定目录<br>for file in files:<br>  if file.find(“.t2t”) != -1:# 查找特定扩展名的文件<br>      file_dir_path = os.path.join(root,file)<br>      fileList.append(file_dir_path)  </pre></p>
-<p>print fileList<br><br><br><br><br></p>
-<h2>3、列表按列排序(list sort)</h2>
-
-<p><br><br>如果列表的每个元素都是一个元组(tuple),我们要根据元组的某列来排序的化，可参考如下方法<br><br></p>
-<p>下面例子我们是根据元组的第2列和第3列数据来排序的,而且是倒序(reverse=True)</p>
-<p><br></p>
-<p><pre></pre></p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>a = [(‘2011-03-17’, ‘2.26’, 6429600, ‘0.0’), (‘2011-03-16’, ‘2.26’, 12036900, ‘-3.0’),<br> (‘2011-03-15’, ‘2.33’, 15615500,’-19.1’)]<br>print a[0][0]<br>2011-03-17<br>b = sorted(a, key=lambda result: result[1],reverse=True)<br>print b<br>[(‘2011-03-15’, ‘2.33’, 15615500, ‘-19.1’), (‘2011-03-17’, ‘2.26’, 6429600, ‘0.0’),<br>(‘2011-03-16’, ‘2.26’, 12036900, ‘-3.0’)]<br>c = sorted(a, key=lambda result: result[2],reverse=True)<br>print c<br>[(‘2011-03-15’, ‘2.33’, 15615500, ‘-19.1’), (‘2011-03-16’, ‘2.26’, 12036900, ‘-3.0’),<br>(‘2011-03-17’, ‘2.26’, 6429600, ‘0.0’)]<br><br><br><br><br></p>
-</blockquote>
-</blockquote>
-</blockquote>
-<h2>4、列表去重(list uniq)</h2>
-
-<p><br><br>有时候需要将list中重复的元素删除，就要使用如下方法</p>
-<p><br></p>
-<p><pre></pre></p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>lst= [(1,’sss’),(2,’fsdf’),(1,’sss’),(3,’fd’)]<br>set(lst)<br>set([(2, ‘fsdf’), (3, ‘fd’), (1, ‘sss’)])</p>
-<p>lst = [1, 1, 3, 4, 4, 5, 6, 7, 6]<br>set(lst)<br>set([1, 3, 4, 5, 6, 7])<br><br><br><br><br></p>
-</blockquote>
-</blockquote>
-</blockquote>
-<h2>5、字典排序(dict sort)</h2>
-
-<p><br><br>一般来说，我们都是根据字典的key来进行排序，但是我们如果想根据字典的value值来排序，就使用如下方法</p>
-<p><br></p>
-<p><pre></pre></p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>from operator import itemgetter<br>aa = &#123;”a”:”1”,”sss”:”2”,”ffdf”:’5’,”ffff2”:’3’&#125;<br>sort_aa = sorted(aa.items(),key=itemgetter(1))<br>sort_aa<br>[(‘a’, ‘1’), (‘sss’, ‘2’), (‘ffff2’, ‘3’), (‘ffdf’, ‘5’)]<br><br><br></p>
-</blockquote>
-</blockquote>
-</blockquote>
-<p>从上面的运行结果看到，按照字典的value值进行排序的</p>
-<p><br><br><br></p>
-<h2>6、字典,列表,字符串互转</h2>
-
-<p><br><br>以下是生成数据库连接字符串,从字典转换到字符串<br><br></p>
-<p><pre></pre></p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>params = &#123;”server”:”mpilgrim”, “database”:”master”, “uid”:”sa”, “pwd”:”secret”&#125;<br>[“%s=%s” % (k, v) for k, v in params.items()]<br>[‘server=mpilgrim’, ‘uid=sa’, ‘database=master’, ‘pwd=secret’]<br>“;”.join([“%s=%s” % (k, v) for k, v in params.items()])<br>‘server=mpilgrim;uid=sa;database=master;pwd=secret’<br><br><br></p>
-</blockquote>
-</blockquote>
-</blockquote>
-<p>下面的例子 是将字符串转化为字典<br><br></p>
-<p><pre></pre></p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>a = ‘server=mpilgrim;uid=sa;database=master;pwd=secret’<br>aa = &#123;&#125;<br>for i in a.split(‘;’):aa[i.split(‘=’,1)[0]] = i.split(‘=’,1)[1]<br>…<br>aa<br>&#123;’pwd’: ‘secret’, ‘database’: ‘master’, ‘uid’: ‘sa’, ‘server’: ‘mpilgrim’&#125;<br><br><br><br><br></p>
-</blockquote>
-</blockquote>
-</blockquote>
-<h2>7、时间对象操作</h2>
-
-<p><br></p>
-<p><pre><br>将时间对象转换成字符串</pre></p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>import datetime<br>datetime.datetime.now().strftime(“%Y-%m-%d %H:%M”)<br>  ‘2011-01-20 14:05’</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<p>时间大小比较</p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>import time<br>t1 = time.strptime(‘2011-01-20 14:05’,”%Y-%m-%d %H:%M”)<br>t2 = time.strptime(‘2011-01-20 16:05’,”%Y-%m-%d %H:%M”)<br>t1 &#62; t2<br>  False<br>t1 &#60; t2<br>  True</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<p>时间差值计算,计算8小时前的时间</p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>datetime.datetime.now().strftime(“%Y-%m-%d %H:%M”)<br>  ‘2011-01-20 15:02’<br>(datetime.datetime.now() - datetime.timedelta(hours=8)).strftime(“%Y-%m-%d %H:%M”)<br>  ‘2011-01-20 07:03’</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<p>将字符串转换成时间对象</p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>endtime=datetime.datetime.strptime(‘20100701’,”%Y%m%d”)<br>type(endtime)<br>  &#60;type ‘datetime.datetime’&#62;<br>print endtime<br>  2010-07-01 00:00:00</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<p>将从 1970-01-01 00:00:00 UTC 到现在的秒数，格式化输出   </p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>import time<br>a = 1302153828<br>time.strftime(“%Y-%m-%d %H:%M:%S”,time.localtime(a))<br>  ‘2011-04-07 13:23:48’<br><br><br><br><br></p>
-</blockquote>
-</blockquote>
-</blockquote>
-<h2>8、命令行参数解析(getopt)</h2>
-
-<p><br><br>通常在编写一些日运维脚本时，需要根据不同的条件，输入不同的命令行选项来实现不同的功能 在Python中提供了getopt模块很好的实现了命令行参数的解析,下面距离说明。请看如下程序:</p>
-<p><br></p>
-<p><pre></pre></p>
-<p>#!/usr/bin/env python</p>
-<h1 id="coding-utf-8"><a href="#coding-utf-8" class="headerlink" title="-- coding: utf-8 --"></a>-<em>- coding: utf-8 -</em>-</h1><p>import sys,os,getopt<br>def usage():<br>    print ‘’’<br>    Usage: analyse_stock.py [options…]<br>    Options:<br>    -e : Exchange Name<br>    -c : User-Defined Category Name<br>    -f : Read stock info from file and save to db<br>    -d : delete from db by stock code<br>    -n : stock name<br>    -s : stock code<br>    -h : this help info<br>    test.py -s haha -n “HA Ha”<br>    ‘’’</p>
-<p>try:<br>    opts, args = getopt.getopt(sys.argv[1:],’he:c:f:d:n:s:’)<br>except getopt.GetoptError:<br>    usage()<br>    sys.exit()<br>if len(opts) == 0:<br>    usage()<br>    sys.exit()  </p>
-<p>for opt, arg in opts:<br>    if opt in (‘-h’, ‘–help’):<br>        usage()<br>        sys.exit()<br>    elif opt == ‘-d’:<br>        print “del stock %s” % arg<br>    elif opt == ‘-f’:<br>        print “read file %s” % arg<br>    elif opt == ‘-c’:<br>        print “user-defined %s “ % arg<br>    elif opt == ‘-e’:<br>        print “Exchange Name %s” % arg<br>    elif opt == ‘-s’:<br>        print “Stock code %s” % arg<br>    elif opt == ‘-n’:<br>        print “Stock name %s” % arg  </p>
-<p>sys.exit()<br><br><br><br><br></p>
-<h2>9、print 格式化输出</h2>
-
-<p><br></p>
-<p></p><h4>9.1、格式化输出字符串</h4><br><br><p></p>
-<p><pre><br>截取字符串输出,下面例子将只输出字符串的前3个字母</pre></p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>str=”abcdefg”<br>print “%.3s” % str<br>  abc<br>按固定宽度输出，不足使用空格补全,下面例子输出宽度为10<br>str=”abcdefg”<br>print “%10s” % str<br>     abcdefg<br>截取字符串，按照固定宽度输出<br>str=”abcdefg”<br>print “%10.3s” % str<br>         abc<br>浮点类型数据位数保留<br>import fpformat<br>a= 0.0030000000005<br>b=fpformat.fix(a,6)<br>print b<br>  0.003000<br>对浮点数四舍五入,主要使用到round函数<br>from decimal import <em><br>a =”2.26”<br>b =”2.29”<br>c = Decimal(a) - Decimal(b)<br>print c<br>  -0.03<br>c / Decimal(a) </em> 100<br>  Decimal(‘-1.327433628318584070796460177’)<br>Decimal(str(round(c / Decimal(a) * 100, 2)))<br>  Decimal(‘-1.33’)<br><br><br></p>
-</blockquote>
-</blockquote>
-</blockquote>
-<p></p><h4>9.2、进制转换</h4><br><br><p></p>
-<p>有些时候需要作不同进制转换，可以参考下面的例子(%x 十六进制,%d 十进制,%o 八进制)</p>
-<p><br></p>
-<p><pre></pre></p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>num = 10<br>print “Hex = %x,Dec = %d,Oct = %o” %(num,num,num)<br>  Hex = a,Dec = 10,Oct = 12<br><br><br><br><br></p>
-</blockquote>
-</blockquote>
-</blockquote>
-<h2>10、Python调用系统命令或者脚本</h2><br><br><br><br><pre><br>使用 os.system() 调用系统命令 , 程序中无法获得到输出和返回值<br>&gt;&gt;&gt; import os<br>&gt;&gt;&gt; os.system(‘ls -l /proc/cpuinfo’)<br>&gt;&gt;&gt; os.system(“ls -l /proc/cpuinfo”)<br>  -r–r–r– 1 root root 0  3月 29 16:53 /proc/cpuinfo<br>  0<br><br>使用 os.popen() 调用系统命令, 程序中可以获得命令输出，但是不能得到执行的返回值<br>&gt;&gt;&gt; out = os.popen(“ls -l /proc/cpuinfo”)<br>&gt;&gt;&gt; print out.read()<br>  -r–r–r– 1 root root 0  3月 29 16:59 /proc/cpuinfo<br><br>使用 commands.getstatusoutput() 调用系统命令, 程序中可以获得命令输出和执行的返回值<br>&gt;&gt;&gt; import commands<br>&gt;&gt;&gt; commands.getstatusoutput(‘ls /bin/ls’)<br>  (0, ‘/bin/ls’)<br></pre><br><br><br><br><br><br><br><h2>11、Python 捕获用户 Ctrl+C ,Ctrl+D 事件</h2>
-
-<p><br><br>有些时候，需要在程序中捕获用户键盘事件，比如ctrl+c退出，这样可以更好的安全退出程序<br><br></p>
-<p><pre><br>try:<br>    do_some_func()<br>except KeyboardInterrupt:<br>    print “User Press Ctrl+C,Exit”<br>except EOFError:<br>    print “User Press Ctrl+D,Exit”<br></pre><br><br><br><br></p>
-<p></p><h2>12、Python 读写文件</h2><br><br><p></p>
-<p><pre><br>一次性读入文件到列表，速度较快，适用文件比较小的情况下<br>track_file = “track_stock.conf”<br>fd = open(track_file)<br>content_list = fd.readlines()<br>fd.close()<br>for line in content_list:<br>    print line  </pre></p>
-<p>逐行读入，速度较慢,适用没有足够内存读取整个文件(文件太大)<br>fd = open(file_path)<br>fd.seek(0)<br>title = fd.readline()<br>keyword = fd.readline()<br>uuid = fd.readline()<br>fd.close()  </p>
-<p>写文件 write 与 writelines 的区别   </p>
-<p>Fd.write(str) : 把str写到文件中，write()并不会在str后加上一个换行符<br>Fd.writelines(content) : 把content的内容全部写到文件中,原样写入，不会在每行后面加上任何东西<br><br><br></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1209,7 +1081,7 @@ echo 550 > /sys/class/backlight/intel_backlight/brightness
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   
-    <li><a href="/tags/python/">python</a><small>13</small></li>
+    <li><a href="/tags/python/">python</a><small>14</small></li>
   
     <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   

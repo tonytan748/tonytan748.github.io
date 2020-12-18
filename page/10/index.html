@@ -54,6 +54,135 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-07-02T16:00:00.000Z"><a href="/2014/07/03/make-your-life-easier-with-virtualenvwrapper/">2014-07-03</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/03/make-your-life-easier-with-virtualenvwrapper/">Make your life easier with Virtualenvwrapper</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>When you do a lot of Python programming, you can make a mess of your system with Pip. Different apps need different requirements. One app needs version 1.2 of a package and another one needs 1.5. And then… you’re in trouble.</em></p>
+<p>When you want to know what packages have been installed by Pip, use this:</p>
+<pre>
+$ pip freeze
+</pre>
+
+<p>The result can be a very long list.</p>
+<p>For every project, whether it’s a simple application or a giant Django project, I create a new virtual environment with virtualenv. An easy way to do this is by using virtualenvwrapper.</p>
+<p></p><h3>Getting started with Virtualenv wrapper</h3><p></p>
+<pre>
+$ sudo pip install virtualenvwrapper
+</pre>
+There are some advanced settings which you can find in the manual.
+
+When installed, let's make a new environment called "testground".
+<pre>
+$ mkvirtualenv testground
+</pre>
+If your virtualenvwrapper is working well, you should see something like this:
+<pre>
+New python executable in testground/bin/python
+Installing Setuptools.........done.
+Installing Pip..............done.
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/predeactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/postdeactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/preactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/postactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/get_env_details
+
+(testground)yourname@yoursystem:~$ 
+</pre>
+
+<p>Take a look at the last line, which now says (testground) before the prompt. Your virtual environment is there, and your are in it.</p>
+<p>Now, do a pip freeze, it can result in something like this:</p>
+<pre>
+$ pip freeze
+argparse==1.2.1
+wsgiref==0.1.2
+</pre>
+
+<p>That list can be a lot shorter than the one outside the environment.</p>
+<p>You can now install something that only effects this environment. Let’s try Pillow, version 2.2.2.</p>
+<pre>
+$ pip install Pillow==2.2.2
+</pre>
+It will now try to install Pillow, when finished, do another pip fip freeze, and see if it's installed
+
+<h3>Switchting between virtualenvs</h3>
+Let's create another environment:
+<pre>
+$ mkvirtualenv coolapp
+</pre>
+once it's finished, it should have been activated automatically:
+<pre>
+...................done.
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/predeactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/postdeactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/preactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/postactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/get_env_details
+(coolapp)yourname@yoursystem:~$ 
+</pre>
+Now, let's switch to fist the virtualenv we made by the magic word "workon":
+<pre>
+$ workon testground
+(testground)yourname@yoursystem:~$ 
+</pre>
+There you go, it's as simpel as that
+
+<h3>No site packages</h3>
+Like with vitualenv, you can tell virtualenvwapper not to use the systems sitepackages with --no-site-packages:
+<pre>
+$ mkvirtualenv anotherenv --no-site-packages
+</pre>
+<h3>Remove a virtual environment</h3>
+It's very easy to get rid of a virtual env by using rmvirtualenv:
+<pre>
+$ rmvirtualenv coolapp
+
+Removing coolapp...
+</pre>
+
+<p></p><h3>List all virtualenvs</h3><p></p>
+<pre>
+$lsvirtualenv
+</pre>
+
+<p></p><h3>List your sitepackages</h3><p></p>
+<pre>
+$ lssitepackages
+
+#can result in this:
+easy_install.py   Pillow-2.2.2-py2.7.egg-info  pkg_resources.pyc
+easy_install.pyc  pip                          setuptools
+_markerlib        pip-1.4.1-py2.7.egg-info     setuptools-0.9.8-py2.7.egg-info
+PIL               pkg_resources.py
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-07-01T16:00:00.000Z"><a href="/2014/07/02/how-to-use-date-and-time-in-python/">2014-07-02</a></time>
       
       
@@ -689,78 +818,6 @@ Woof!
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-06-28T16:00:00.000Z"><a href="/2014/06/29/jekyll-quick-start/">2014-06-29</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/06/29/jekyll-quick-start/">Jekyll Quick Start</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>How to create github blog, how to install jekyll-bootstrap,run jekyll locally, create a post,create a page,publish,customize</em></p>
-<h1 id="Host-on-GitHub-in-3-minutes"><a href="#Host-on-GitHub-in-3-minutes" class="headerlink" title="Host on GitHub in 3 minutes"></a>Host on GitHub in 3 minutes</h1><p>Make sure to input your GitHub username so the instructions reflect the exact code you need to run to host your blog.</p>
-<h2 id="1-Create-a-New-Repository"><a href="#1-Create-a-New-Repository" class="headerlink" title="1. Create a New Repository"></a>1. Create a New Repository</h2><p>Go to your <a href="https://github.com" target="_blank" rel="noopener">https://github.com</a> and create a new repository named<br><br><strong>USERNAME.github.com</strong></p>
-<h2 id="2-Install-Jekyll-Bootstrap"><a href="#2-Install-Jekyll-Bootstrap" class="headerlink" title="2. Install Jekyll-Bootstrap"></a>2. Install Jekyll-Bootstrap</h2><p>Enter these commands into your terminal in a directory you want your blog to be:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/plusjade/jekyll-bootstrap.git USERNAME.github.com </span><br><span class="line">cd USERNAME.github.com </span><br><span class="line">git remote set-url origin git@github.com:USERNAME/USERNAME.github.com.git </span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
-<h2 id="3-Profit"><a href="#3-Profit" class="headerlink" title="3. Profit"></a>3. Profit</h2><p>After GitHub has a couple minutes to do its magic your blog will be publicly available at <a href="http://USERNAME.github.com" target="_blank" rel="noopener">http://USERNAME.github.com</a></p>
-<h1 id="Already-have-your-blog-on-GitHub"><a href="#Already-have-your-blog-on-GitHub" class="headerlink" title="Already have your blog on GitHub?"></a>Already have your blog on GitHub?</h1><p>I’ll assume you have the Jekyll gem installed on your local machine. Run Jekyll-Bootstrap locally to see what all the fuss is about:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/plusjade/jekyll-bootstrap.git </span><br><span class="line">$ cd jekyll-bootstrap </span><br><span class="line">$ jekyll serve</span><br></pre></td></tr></table></figure>
-<p>See it in action at <a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a>.</p>
-<h2 id="2-Run-Jekyll-Locally"><a href="#2-Run-Jekyll-Locally" class="headerlink" title="2. Run Jekyll Locally"></a>2. Run Jekyll Locally</h2><p>In order to preview your blog locally you’ll need to install the Jekyll ruby gem. Note gem dependencies will also be installed. You don’t have to run a local version but it helps if you want to preview your content before publishing.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gem install jekyll</span><br></pre></td></tr></table></figure>
-<p>If you run into a problem please consult the original Jekyll installation documentation. You can also create a support issue using GitHub Issues.</p>
-<p>Once the gem is installed you can navigate to your Jekyll-Bootstrap directory. If you’ve followed the homepage instructions this will be: USERNAME.github.com. Once in the directory you’ll run jekyll with server support:</p>
-<p><strong>remember to change USERNAME to your GitHub username.</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd USERNAME.github.com  </span><br><span class="line">$ jekyll serve</span><br></pre></td></tr></table></figure>
-<p>Your blog is now available at: <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a>.</p>
-<h2 id="3-Create-a-Post"><a href="#3-Create-a-Post" class="headerlink" title="3. Create a Post"></a>3. Create a Post</h2><p>Create posts easily via rake task:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rake post title=&quot;Hello World&quot;</span><br></pre></td></tr></table></figure>
-<p>The rake task automatically creates a file with properly formatted filename and YAML Front Matter. Make sure to specify your own title. By default, the date is the current date.</p>
-<p>The rake task will never overwrite existing posts unless you tell it to.</p>
-<h2 id="4-Create-a-Page"><a href="#4-Create-a-Page" class="headerlink" title="4. Create a Page"></a>4. Create a Page</h2><p>Create pages easily via rake task:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rake page name=&quot;about.md&quot;</span><br></pre></td></tr></table></figure>
-<p>Create a nested page:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rake page name=&quot;pages/about.md&quot;</span><br></pre></td></tr></table></figure>
-<p>Create a page with a “pretty” path:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rake page name=&quot;pages/about&quot; </span><br><span class="line"># this will create the file: ./pages/about/index.html</span><br></pre></td></tr></table></figure>
-<p>The rake task automatically creates a page file with properly formatted filename and YAML Front Matter as well as includes the Jekyll Bootstrap “setup” file.</p>
-<h2 id="5-Publish"><a href="#5-Publish" class="headerlink" title="5. Publish"></a>5. Publish</h2><p>After you’ve added posts or made changes to your theme or other files, simply commit them to your git repo and push the commits up to GitHub.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git add . </span><br><span class="line">$ git commit -m &quot;Add new content&quot; </span><br><span class="line">$ git push origin master</span><br></pre></td></tr></table></figure>
-<p>A GitHub post-commit hook will automatically deploy your changes to your hosted blog. You will receive a success or failure notice for every commit you make to your blog.</p>
-<h2 id="6-Customize"><a href="#6-Customize" class="headerlink" title="6. Customize"></a>6. Customize</h2><p>Jekyll-Bootstrap can be used as-is as a basic blogging platform. However there are plenty of ways to dig into deeper customization. The following outlines deeper Jekyll-Bootstrap customization techniques:</p>
-<h1 id="Themes"><a href="#Themes" class="headerlink" title="Themes"></a>Themes</h1><p>Jekyll-Bootstrap supports modular theming. Themes can co-exist and be enabled/disabled on demand. Editing, configuring, and creating themes is docummented in the Theming section.</p>
-<h2 id="Blog-Configuration"><a href="#Blog-Configuration" class="headerlink" title="Blog Configuration"></a>Blog Configuration</h2><p>Jekyll and Jekyll-Bootstrap has a simple but powerful Jekyll Configuration System. You can:</p>
-<ul>
-<li>Specify a custom permalink format for blog posts.</li>
-<li>Specify a commenting engine like disqus, intensedebate, livefyre, or custom.</li>
-<li>Specify an analytics engine like google, getclicky, or custom.</li>
-</ul>
-<h2 id="Programming-Interface"><a href="#Programming-Interface" class="headerlink" title="Programming Interface"></a>Programming Interface</h2><p>The API pages document main data-structures and code available for use in Jekyll and Jekyll-Bootstrap. Consult these pages for how and where to use the data and code provided.</p>
-<h2 id="Jekyll-Introduction"><a href="#Jekyll-Introduction" class="headerlink" title="Jekyll Introduction"></a>Jekyll Introduction</h2><p>I highly recommend reading the Jekyll Introduction if you plan to customize your blog. The introduction is meant for core understanding of how and why Jekyll works the way it does. This will provide you with the proper context, knowledge-base, and fundamentals necessary to understand and be efficient in working with Jekyll and Jekyll-Bootstrap.</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2014-06-28T16:00:00.000Z"><a href="/2014/06/29/karrigell-tutorial/">2014-06-29</a></time>
       
       
@@ -809,40 +866,6 @@ Woof!
 
 <p></p><h2>8. Redirection</h2><p></p>
 <p>To perform an HTTP redirection from inside a script, you raise an exception available in the namespace, HTTP_REDIRECTION, with the url as argument : </p><br><p><pre class=" python">raise HTTP_REDIRECTION,”index.html” </pre> </p><br><p>For instance, if you want to enter a new record in a database, here is a simple ks script : </p><br><p><br>    <pre class=" python"><br>    from HTMLTags import *<br>    def index():<br>        print FORM(TEXT(‘login’)+INPUT(name=”login”)+BR()+TEXT(‘password’)+INPUT(name=”password”)+BR()+INPUT(Type=”submit”),action = “insert”)<br>    def insert(login,password):<br>         (… perform insertion in the database here …)<br>         raise HTTP_REDIRECTION,”index”<br>    </pre><br></p><br><p>After the insertion has been performed, the program will ask another entry </p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-06-28T16:00:00.000Z"><a href="/2014/06/29/search-google-with-python-tutorial/">2014-06-29</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/06/29/search-google-with-python-tutorial/">Search Google with Python Tutorial</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>How to get the web address in google use Python</em></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">import urllib </span><br><span class="line">import mechanize  </span><br><span class="line">from bs4 import BeautifulSoup </span><br><span class="line">import re  </span><br><span class="line">def getGoogleLinks(link,depth):  </span><br><span class="line">	br=mechanize.Browser()</span><br><span class="line">	br.set_handler_robots(False)</span><br><span class="line"> 	br.addheaders=[(&apos;User-agent&apos;:&apos;chrome&apos;)]</span><br><span class="line">  	term=link.replace(&quot; &quot;,&quot;+&quot;)</span><br><span class="line"> 	query=&quot;http://www.google.com.sg/search?num=100&amp;q=&quot; + term + &quot;&amp;start=&quot; + depth</span><br><span class="line">  	htmltext=br.open(query).read()</span><br><span class="line"> 	print htmltext</span><br><span class="line">  	soup=BeautifulSoup(htmltext)</span><br><span class="line">  	search=soup.findAll(&apos;div&apos;,attrs=&#123;&apos;id&apos;:&apos;search&apos;&#125;)</span><br><span class="line">  	searchtext=str(search[0])</span><br><span class="line"> 	soup1=BeautifulSoup(searchtext)</span><br><span class="line"> 	list_items=soup1.findAll(&apos;li&apos;)</span><br><span class="line">  	print list_items[0]</span><br><span class="line"> 	regex=&quot;q(?!.*q).*?&amp;amp&quot;</span><br><span class="line"> 	pattern=re.compile(regex)</span><br><span class="line">  	results_array=[]</span><br><span class="line">  	for li in list_items:</span><br><span class="line"> 		soup2=BeautifulSoup(str(li))</span><br><span class="line"> 		links=soup2.findAll(&apos;a&apos;)</span><br><span class="line"> 		prink links</span><br><span class="line"> 		source_link= links[0]</span><br><span class="line"> 		print source_link</span><br><span class="line"> 		source_url=re.findall(pattern,str(source_link))</span><br><span class="line"> 		if source_url and source_url[0].startswith==&quot;http&quot;:</span><br><span class="line"> 			results_array.append(source_url[0].replace(&quot;q=&quot;,&quot;&quot;).replace(&quot;&amp;amp&quot;,&quot;&quot;)) </span><br><span class="line">		return results_array</span><br><span class="line">  </span><br><span class="line">print getGoogleLinks(&apos;cars&apos;,&apos;100&apos;)</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -948,61 +971,90 @@ server.close()
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-06-26T16:00:00.000Z"><a href="/2014/06/27/Jekyll-variable-and-jekyll-template-grammar/">2014-06-27</a></time>
+        <time datetime="2014-06-28T16:00:00.000Z"><a href="/2014/06/29/search-google-with-python-tutorial/">2014-06-29</a></time>
       
       
   
-    <h1 class="title"><a href="/2014/06/27/Jekyll-variable-and-jekyll-template-grammar/">Jekyll variable and jekyll template grammar</a></h1>
+    <h1 class="title"><a href="/2014/06/29/search-google-with-python-tutorial/">Search Google with Python Tutorial</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <ul>
-<li>本文主要讲述Jekyll变量 和 Jekyll模板语法教程相关内容：Jekyll变量和Jekyll模板语法，包括全局变量、Site变量、Page变量和需要注意的内容，其中变解释内容翻译自官方wiki。 *</li>
+        <p><em>How to get the web address in google use Python</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">import urllib </span><br><span class="line">import mechanize  </span><br><span class="line">from bs4 import BeautifulSoup </span><br><span class="line">import re  </span><br><span class="line">def getGoogleLinks(link,depth):  </span><br><span class="line">	br=mechanize.Browser()</span><br><span class="line">	br.set_handler_robots(False)</span><br><span class="line"> 	br.addheaders=[(&apos;User-agent&apos;:&apos;chrome&apos;)]</span><br><span class="line">  	term=link.replace(&quot; &quot;,&quot;+&quot;)</span><br><span class="line"> 	query=&quot;http://www.google.com.sg/search?num=100&amp;q=&quot; + term + &quot;&amp;start=&quot; + depth</span><br><span class="line">  	htmltext=br.open(query).read()</span><br><span class="line"> 	print htmltext</span><br><span class="line">  	soup=BeautifulSoup(htmltext)</span><br><span class="line">  	search=soup.findAll(&apos;div&apos;,attrs=&#123;&apos;id&apos;:&apos;search&apos;&#125;)</span><br><span class="line">  	searchtext=str(search[0])</span><br><span class="line"> 	soup1=BeautifulSoup(searchtext)</span><br><span class="line"> 	list_items=soup1.findAll(&apos;li&apos;)</span><br><span class="line">  	print list_items[0]</span><br><span class="line"> 	regex=&quot;q(?!.*q).*?&amp;amp&quot;</span><br><span class="line"> 	pattern=re.compile(regex)</span><br><span class="line">  	results_array=[]</span><br><span class="line">  	for li in list_items:</span><br><span class="line"> 		soup2=BeautifulSoup(str(li))</span><br><span class="line"> 		links=soup2.findAll(&apos;a&apos;)</span><br><span class="line"> 		prink links</span><br><span class="line"> 		source_link= links[0]</span><br><span class="line"> 		print source_link</span><br><span class="line"> 		source_url=re.findall(pattern,str(source_link))</span><br><span class="line"> 		if source_url and source_url[0].startswith==&quot;http&quot;:</span><br><span class="line"> 			results_array.append(source_url[0].replace(&quot;q=&quot;,&quot;&quot;).replace(&quot;&amp;amp&quot;,&quot;&quot;)) </span><br><span class="line">		return results_array</span><br><span class="line">  </span><br><span class="line">print getGoogleLinks(&apos;cars&apos;,&apos;100&apos;)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-06-28T16:00:00.000Z"><a href="/2014/06/29/jekyll-quick-start/">2014-06-29</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/06/29/jekyll-quick-start/">Jekyll Quick Start</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>How to create github blog, how to install jekyll-bootstrap,run jekyll locally, create a post,create a page,publish,customize</em></p>
+<h1 id="Host-on-GitHub-in-3-minutes"><a href="#Host-on-GitHub-in-3-minutes" class="headerlink" title="Host on GitHub in 3 minutes"></a>Host on GitHub in 3 minutes</h1><p>Make sure to input your GitHub username so the instructions reflect the exact code you need to run to host your blog.</p>
+<h2 id="1-Create-a-New-Repository"><a href="#1-Create-a-New-Repository" class="headerlink" title="1. Create a New Repository"></a>1. Create a New Repository</h2><p>Go to your <a href="https://github.com" target="_blank" rel="noopener">https://github.com</a> and create a new repository named<br><br><strong>USERNAME.github.com</strong></p>
+<h2 id="2-Install-Jekyll-Bootstrap"><a href="#2-Install-Jekyll-Bootstrap" class="headerlink" title="2. Install Jekyll-Bootstrap"></a>2. Install Jekyll-Bootstrap</h2><p>Enter these commands into your terminal in a directory you want your blog to be:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/plusjade/jekyll-bootstrap.git USERNAME.github.com </span><br><span class="line">cd USERNAME.github.com </span><br><span class="line">git remote set-url origin git@github.com:USERNAME/USERNAME.github.com.git </span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
+<h2 id="3-Profit"><a href="#3-Profit" class="headerlink" title="3. Profit"></a>3. Profit</h2><p>After GitHub has a couple minutes to do its magic your blog will be publicly available at <a href="http://USERNAME.github.com" target="_blank" rel="noopener">http://USERNAME.github.com</a></p>
+<h1 id="Already-have-your-blog-on-GitHub"><a href="#Already-have-your-blog-on-GitHub" class="headerlink" title="Already have your blog on GitHub?"></a>Already have your blog on GitHub?</h1><p>I’ll assume you have the Jekyll gem installed on your local machine. Run Jekyll-Bootstrap locally to see what all the fuss is about:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/plusjade/jekyll-bootstrap.git </span><br><span class="line">$ cd jekyll-bootstrap </span><br><span class="line">$ jekyll serve</span><br></pre></td></tr></table></figure>
+<p>See it in action at <a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a>.</p>
+<h2 id="2-Run-Jekyll-Locally"><a href="#2-Run-Jekyll-Locally" class="headerlink" title="2. Run Jekyll Locally"></a>2. Run Jekyll Locally</h2><p>In order to preview your blog locally you’ll need to install the Jekyll ruby gem. Note gem dependencies will also be installed. You don’t have to run a local version but it helps if you want to preview your content before publishing.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gem install jekyll</span><br></pre></td></tr></table></figure>
+<p>If you run into a problem please consult the original Jekyll installation documentation. You can also create a support issue using GitHub Issues.</p>
+<p>Once the gem is installed you can navigate to your Jekyll-Bootstrap directory. If you’ve followed the homepage instructions this will be: USERNAME.github.com. Once in the directory you’ll run jekyll with server support:</p>
+<p><strong>remember to change USERNAME to your GitHub username.</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd USERNAME.github.com  </span><br><span class="line">$ jekyll serve</span><br></pre></td></tr></table></figure>
+<p>Your blog is now available at: <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a>.</p>
+<h2 id="3-Create-a-Post"><a href="#3-Create-a-Post" class="headerlink" title="3. Create a Post"></a>3. Create a Post</h2><p>Create posts easily via rake task:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rake post title=&quot;Hello World&quot;</span><br></pre></td></tr></table></figure>
+<p>The rake task automatically creates a file with properly formatted filename and YAML Front Matter. Make sure to specify your own title. By default, the date is the current date.</p>
+<p>The rake task will never overwrite existing posts unless you tell it to.</p>
+<h2 id="4-Create-a-Page"><a href="#4-Create-a-Page" class="headerlink" title="4. Create a Page"></a>4. Create a Page</h2><p>Create pages easily via rake task:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rake page name=&quot;about.md&quot;</span><br></pre></td></tr></table></figure>
+<p>Create a nested page:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rake page name=&quot;pages/about.md&quot;</span><br></pre></td></tr></table></figure>
+<p>Create a page with a “pretty” path:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rake page name=&quot;pages/about&quot; </span><br><span class="line"># this will create the file: ./pages/about/index.html</span><br></pre></td></tr></table></figure>
+<p>The rake task automatically creates a page file with properly formatted filename and YAML Front Matter as well as includes the Jekyll Bootstrap “setup” file.</p>
+<h2 id="5-Publish"><a href="#5-Publish" class="headerlink" title="5. Publish"></a>5. Publish</h2><p>After you’ve added posts or made changes to your theme or other files, simply commit them to your git repo and push the commits up to GitHub.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git add . </span><br><span class="line">$ git commit -m &quot;Add new content&quot; </span><br><span class="line">$ git push origin master</span><br></pre></td></tr></table></figure>
+<p>A GitHub post-commit hook will automatically deploy your changes to your hosted blog. You will receive a success or failure notice for every commit you make to your blog.</p>
+<h2 id="6-Customize"><a href="#6-Customize" class="headerlink" title="6. Customize"></a>6. Customize</h2><p>Jekyll-Bootstrap can be used as-is as a basic blogging platform. However there are plenty of ways to dig into deeper customization. The following outlines deeper Jekyll-Bootstrap customization techniques:</p>
+<h1 id="Themes"><a href="#Themes" class="headerlink" title="Themes"></a>Themes</h1><p>Jekyll-Bootstrap supports modular theming. Themes can co-exist and be enabled/disabled on demand. Editing, configuring, and creating themes is docummented in the Theming section.</p>
+<h2 id="Blog-Configuration"><a href="#Blog-Configuration" class="headerlink" title="Blog Configuration"></a>Blog Configuration</h2><p>Jekyll and Jekyll-Bootstrap has a simple but powerful Jekyll Configuration System. You can:</p>
+<ul>
+<li>Specify a custom permalink format for blog posts.</li>
+<li>Specify a commenting engine like disqus, intensedebate, livefyre, or custom.</li>
+<li>Specify an analytics engine like google, getclicky, or custom.</li>
 </ul>
-<p>Jekyll会遍历你的站点，来寻找需要处理的文件。任何具有 YAML 前置数据的文件都将会被处理，每一个这样的文件，Jekyll都会通过Liquid模板系统使用许多可用的页面变量。下面是一个可用变量的列表。</p>
-<b>Jekyll 目录及一些说明</b>
-
-<p><i>Jekyll 标准目录树</i></p>
-<pre>
-_config.yml   Jekyll的配置文件
-_includes     include 文件所在的文件夹
-_layouts      模版文
-_posts        自己要发
-_sites        预览时产生的文件
-</pre>
-
-<p>Jekyll的安装及配置</p>
-<p>_includes文件夹中所放的文件是最终要<br>_layouts中放的一些模版，模版是用包含page或post内容的。Jekyll的模板使用HTML语法来写，并包含YAML Front Matter。所有的模板都可用Liquid来与网站进行交互。所有的模板都可以使用全局变量site和page,site变量包含该网站所有可以接触得到的内容和元数据(meta-data),page变量包含的是当前渲染的page或post的所有可以接触得到的数据。<br>_post文件夹中放的是自己要发布的post文章。post文件的命名规则为YEAR-MONTH-DATE-title.MARKUP，使用rake post会自动将post文件命名合适。而对于page，所有放在根目录下或不以下划线开头的文件夹中有格式的文件都会被Jekyll处理成page。这里说的有格式是指文件含有YAML Front Matter。所有的post和page都要用markdown或者texile或者HTML语法来写，并可以包含Liquid模版的语法。还要有 YAML Front Matter (Jekyll只处理具有YAML Front Matter的文件)。YAML Front Matter必须放在文件的开头，一对—之间，用户可在这一对—间设置预先定义的变量或用户自己的数据</p>
-<p><b>Jekyll模板全局变量</b></p>
-<table><br><tr><td>变量</td><td>描述</td></tr><br><tr><td>site</td><td>全站的信息+_config.yml文件中的配置选项</td></tr><br><tr><td>page</td><td>这个变量中包含YAML前置数据,另外加上两个额外的变量值:url和content。</td></tr><br><tr><td>content</td><td>在布局模板文件中，这里变量包含了页面的子视图。这个变量将会把渲染后的内容插入到模板文件中。这个变量不能在文章和页面文件中使用。</td></tr><br><tr><td>paginator</td><td>一旦paginate配置选项被设置了，这个变量才能被使用。</td></tr><br></table>
-
-<p><b>Jekyll模板Site变量</b></p>
-<table><br><tr><td>变量</td><td>描述</td></tr><br><tr><td>site.time</td><td>当前的时间(当你运行Jekyll时的时间)</td></tr><br><tr><td>site.posts</td><td>一个按时间逆序的文章列表。</td></tr><br><tr><td>site.related_posts</td><td>如果当前被处理的页面是一个文章文件，那这个变量是一个包含了最多10篇相关文章的列表。默认来说，这些相关文章是低质量但计算快的。为了得到高质量但计算慢的结果，运行Jekyll命令时可以加上–lsi选项。(潜在语意索引)</td></tr><br><tr><td>site.categories.CATEGORY</td><td>所有在CATEGORY分类中的文章列表</td></tr><br><tr><td>site.tags.TAG</td><td>所有拥有TAG标签的文章的列表</td></tr><br><tr><td>site.[CONFIGURATION_DATA]</td><td>截止0.5.2版本，所有在_config.yml中的数据都能够通过site变量调用。举例来说，如果你有一个这样的选项在你的配置文件中:url: <a href="http://higrid.net，那在文章和页面文件中可以这样调用{" target="_blank" rel="noopener">http://higrid.net，那在文章和页面文件中可以这样调用{</a> { site.url } }。Jekyll并不会自动解析修改过的_config.yml文件，你想要启用新的设置选项，你需要重启Jekyll</td></tr><br></table>
-
-<p><b>Jekyll模板Page变量</b></p>
-<table><br><tr><td>变量</td><td>描述</td></tr><br><tr><td>page.content</td><td>页面中未渲染的内容</td></tr><br><tr><td>page.title</td><td>文章的标题</td></tr><br><tr><td>page.url</td><td>除去域名以外的URL，例子:/2013/12/14/higrid-net.html</td></tr><br><tr><td>page.date</td><td>指定每一篇文章的时间，这个选项能够覆盖一篇文章中前置数据设置的时间，它的格式是这样的:YYYY-MM-DD HH:MM:SS</td></tr><br><tr><td>page.id</td><td>每一篇文章的唯一标示符(在RSS中非常有用) 例子：/2008/12/14/higrid-net</td></tr><br><tr><td>page.categories</td><td>这篇文章隶属的分类的一个列表，分类是通过在_post目录中的目录结构推导而来的。举例来说，在路径/work/code/_posts/2008-12-24-closures.textile下的文件，这个变量将会是[work,code]。这个变量也能在YAML前置数据中被指定。</td></tr><br><tr><td>page.tags</td><td>这篇文章的标签的列表。这些数据能够在YAML前置数据中指定</td></tr><br><tr><td>page.next</td><td>按时间序的下一篇文章</td></tr><br><tr><td>page.content</td><td>按时间序的上一篇文章</td></tr><br></table><br>注意:任何你自己指定的自定义前置数据都能够通过page调用。举例来说，如果你在页面的前置数据中设置了custom_css: true，那这个值可以在模板可以这样调用:page.custom_css<br><br><b>Jekyll模板Paginator变量</b><br><table><br><tr><td>变量</td><td>描述</td></tr><br><tr><td>paginator.per_page</td><td>每一个页面上文章的数量</td></tr><br><tr><td>paginator.posts</td><td>当前页面上可用的文章</td></tr><br><tr><td>paginator.total_posts</td><td>所有文章的数量</td></tr><br><tr><td>paginator.total_pages</td><td>所有页面的数量</td></tr><br><tr><td>paginator.page</td><td>当前页面的数量</td></tr><br><tr><td>paginator.previous_page</td><td>前面的页面的数量</td></tr><br><tr><td>paginator.next_page</td><td>接下来的的页面的数量</td></tr><br></table>
-
-<p>Post或Page的创建及发布</p>
-<p><hr></p>
-<p><i>创建Post文章</i></p>
-<pre>
-rake post title="文章标题"
-</pre>
-
-<p>会自动创建一个具有合适文件名和YAML Front Matter的文件(使用时将”文章标题”替换成你要创建的文章的标题)。</p>
-<p><i>创建Page页面</i></p>
-<pre>
-rake page name="页面名称.md"   或者
-rake page name="pages/页面名称.md"
-</pre>
-<i>发布Post或Page</i>
-<pre>
-git add .
-git commit -m '一些说明'
-git push origin master
-</pre>
+<h2 id="Programming-Interface"><a href="#Programming-Interface" class="headerlink" title="Programming Interface"></a>Programming Interface</h2><p>The API pages document main data-structures and code available for use in Jekyll and Jekyll-Bootstrap. Consult these pages for how and where to use the data and code provided.</p>
+<h2 id="Jekyll-Introduction"><a href="#Jekyll-Introduction" class="headerlink" title="Jekyll Introduction"></a>Jekyll Introduction</h2><p>I highly recommend reading the Jekyll Introduction if you plan to customize your blog. The introduction is meant for core understanding of how and why Jekyll works the way it does. This will provide you with the proper context, knowledge-base, and fundamentals necessary to understand and be efficient in working with Jekyll and Jekyll-Bootstrap.</p>
 
       
     </div>
@@ -1073,45 +1125,61 @@ print cur.fetchall()
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-06-25T16:00:00.000Z"><a href="/2014/06/26/How-to-automatically-run-a-script-when-logging-into-Ubuntu-Desktop/">2014-06-26</a></time>
+        <time datetime="2014-06-26T16:00:00.000Z"><a href="/2014/06/27/Jekyll-variable-and-jekyll-template-grammar/">2014-06-27</a></time>
       
       
   
-    <h1 class="title"><a href="/2014/06/26/How-to-automatically-run-a-script-when-logging-into-Ubuntu-Desktop/">How to automatically run a script when logging into Ubuntu Desktop</a></h1>
+    <h1 class="title"><a href="/2014/06/27/Jekyll-variable-and-jekyll-template-grammar/">Jekyll variable and jekyll template grammar</a></h1>
   
 
     </header>
     <div class="entry">
       
         <ul>
-<li>There are circumstances where you wish to have a script run automatically when you log in to Ubuntu Desktop. Such a script can configure various user-specific or system-wide settings on your Ubuntu system, upon user’s desktop login.  *</li>
+<li>本文主要讲述Jekyll变量 和 Jekyll模板语法教程相关内容：Jekyll变量和Jekyll模板语法，包括全局变量、Site变量、Page变量和需要注意的内容，其中变解释内容翻译自官方wiki。 *</li>
 </ul>
-<p>In Linux, there are start-up scripts named ~/.bash_profile, ~/.bashrc, or ~/.profile which get executed when you start a shell. However, in Ubuntu Desktop, such start-up scripts get executed when you open up a terminal window, but NOT when you log in to Ubuntu Desktop GUI. Also, when you open multiple terminal windows, these kinds of start-up scripts are executed as many times, in order to initialize user’s shell environment in terminal windows.<br>If what you want is to run a script at the time of user’s Ubuntu Desktop login, you can follow this guideline.</p>
-<p>Create a XDG configuration file for the start-up script you want to run.</p>
-<aside><pre>$ vi ~/.config/autostart/my_script.desktop</pre></aside>
+<p>Jekyll会遍历你的站点，来寻找需要处理的文件。任何具有 YAML 前置数据的文件都将会被处理，每一个这样的文件，Jekyll都会通过Liquid模板系统使用许多可用的页面变量。下面是一个可用变量的列表。</p>
+<b>Jekyll 目录及一些说明</b>
 
+<p><i>Jekyll 标准目录树</i></p>
 <pre>
-[Desktop Entry] 
-Type=Application 
-Name=My Script 
-Exec=~/bin/my_custom_script.sh 
-Icon=system-run 
-X-GNOME-Autostart-enabled=true
+_config.yml   Jekyll的配置文件
+_includes     include 文件所在的文件夹
+_layouts      模版文
+_posts        自己要发
+_sites        预览时产生的文件
 </pre>
 
-<p>The above XDG configuration file will set up “user-specific” auto-start. If you want all users to use the same start-up script “system-wide”, create a similar XDG configuration file in the following location instead.</p>
-<aside><pre>$ sudo vi /etc/xdg/autostart/my_script.desktop</pre></aside>
+<p>Jekyll的安装及配置</p>
+<p>_includes文件夹中所放的文件是最终要<br>_layouts中放的一些模版，模版是用包含page或post内容的。Jekyll的模板使用HTML语法来写，并包含YAML Front Matter。所有的模板都可用Liquid来与网站进行交互。所有的模板都可以使用全局变量site和page,site变量包含该网站所有可以接触得到的内容和元数据(meta-data),page变量包含的是当前渲染的page或post的所有可以接触得到的数据。<br>_post文件夹中放的是自己要发布的post文章。post文件的命名规则为YEAR-MONTH-DATE-title.MARKUP，使用rake post会自动将post文件命名合适。而对于page，所有放在根目录下或不以下划线开头的文件夹中有格式的文件都会被Jekyll处理成page。这里说的有格式是指文件含有YAML Front Matter。所有的post和page都要用markdown或者texile或者HTML语法来写，并可以包含Liquid模版的语法。还要有 YAML Front Matter (Jekyll只处理具有YAML Front Matter的文件)。YAML Front Matter必须放在文件的开头，一对—之间，用户可在这一对—间设置预先定义的变量或用户自己的数据</p>
+<p><b>Jekyll模板全局变量</b></p>
+<table><br><tr><td>变量</td><td>描述</td></tr><br><tr><td>site</td><td>全站的信息+_config.yml文件中的配置选项</td></tr><br><tr><td>page</td><td>这个变量中包含YAML前置数据,另外加上两个额外的变量值:url和content。</td></tr><br><tr><td>content</td><td>在布局模板文件中，这里变量包含了页面的子视图。这个变量将会把渲染后的内容插入到模板文件中。这个变量不能在文章和页面文件中使用。</td></tr><br><tr><td>paginator</td><td>一旦paginate配置选项被设置了，这个变量才能被使用。</td></tr><br></table>
 
+<p><b>Jekyll模板Site变量</b></p>
+<table><br><tr><td>变量</td><td>描述</td></tr><br><tr><td>site.time</td><td>当前的时间(当你运行Jekyll时的时间)</td></tr><br><tr><td>site.posts</td><td>一个按时间逆序的文章列表。</td></tr><br><tr><td>site.related_posts</td><td>如果当前被处理的页面是一个文章文件，那这个变量是一个包含了最多10篇相关文章的列表。默认来说，这些相关文章是低质量但计算快的。为了得到高质量但计算慢的结果，运行Jekyll命令时可以加上–lsi选项。(潜在语意索引)</td></tr><br><tr><td>site.categories.CATEGORY</td><td>所有在CATEGORY分类中的文章列表</td></tr><br><tr><td>site.tags.TAG</td><td>所有拥有TAG标签的文章的列表</td></tr><br><tr><td>site.[CONFIGURATION_DATA]</td><td>截止0.5.2版本，所有在_config.yml中的数据都能够通过site变量调用。举例来说，如果你有一个这样的选项在你的配置文件中:url: <a href="http://higrid.net，那在文章和页面文件中可以这样调用{" target="_blank" rel="noopener">http://higrid.net，那在文章和页面文件中可以这样调用{</a> { site.url } }。Jekyll并不会自动解析修改过的_config.yml文件，你想要启用新的设置选项，你需要重启Jekyll</td></tr><br></table>
+
+<p><b>Jekyll模板Page变量</b></p>
+<table><br><tr><td>变量</td><td>描述</td></tr><br><tr><td>page.content</td><td>页面中未渲染的内容</td></tr><br><tr><td>page.title</td><td>文章的标题</td></tr><br><tr><td>page.url</td><td>除去域名以外的URL，例子:/2013/12/14/higrid-net.html</td></tr><br><tr><td>page.date</td><td>指定每一篇文章的时间，这个选项能够覆盖一篇文章中前置数据设置的时间，它的格式是这样的:YYYY-MM-DD HH:MM:SS</td></tr><br><tr><td>page.id</td><td>每一篇文章的唯一标示符(在RSS中非常有用) 例子：/2008/12/14/higrid-net</td></tr><br><tr><td>page.categories</td><td>这篇文章隶属的分类的一个列表，分类是通过在_post目录中的目录结构推导而来的。举例来说，在路径/work/code/_posts/2008-12-24-closures.textile下的文件，这个变量将会是[work,code]。这个变量也能在YAML前置数据中被指定。</td></tr><br><tr><td>page.tags</td><td>这篇文章的标签的列表。这些数据能够在YAML前置数据中指定</td></tr><br><tr><td>page.next</td><td>按时间序的下一篇文章</td></tr><br><tr><td>page.content</td><td>按时间序的上一篇文章</td></tr><br></table><br>注意:任何你自己指定的自定义前置数据都能够通过page调用。举例来说，如果你在页面的前置数据中设置了custom_css: true，那这个值可以在模板可以这样调用:page.custom_css<br><br><b>Jekyll模板Paginator变量</b><br><table><br><tr><td>变量</td><td>描述</td></tr><br><tr><td>paginator.per_page</td><td>每一个页面上文章的数量</td></tr><br><tr><td>paginator.posts</td><td>当前页面上可用的文章</td></tr><br><tr><td>paginator.total_posts</td><td>所有文章的数量</td></tr><br><tr><td>paginator.total_pages</td><td>所有页面的数量</td></tr><br><tr><td>paginator.page</td><td>当前页面的数量</td></tr><br><tr><td>paginator.previous_page</td><td>前面的页面的数量</td></tr><br><tr><td>paginator.next_page</td><td>接下来的的页面的数量</td></tr><br></table>
+
+<p>Post或Page的创建及发布</p>
+<p><hr></p>
+<p><i>创建Post文章</i></p>
 <pre>
-[Desktop Entry] 
-Type=Application 
-Name=My Script 
-Exec=sudo /sbin/my_custom_script.sh 
-Icon=system-run 
-X-GNOME-Autostart-enabled=true
+rake post title="文章标题"
 </pre>
 
-<p>If the start-up script requires sudo access like an above example, you will need to set up password-less sudo.</p>
+<p>会自动创建一个具有合适文件名和YAML Front Matter的文件(使用时将”文章标题”替换成你要创建的文章的标题)。</p>
+<p><i>创建Page页面</i></p>
+<pre>
+rake page name="页面名称.md"   或者
+rake page name="pages/页面名称.md"
+</pre>
+<i>发布Post或Page</i>
+<pre>
+git add .
+git commit -m '一些说明'
+git push origin master
+</pre>
 
       
     </div>
@@ -1187,7 +1255,7 @@ X-GNOME-Autostart-enabled=true
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   
-    <li><a href="/tags/python/">python</a><small>13</small></li>
+    <li><a href="/tags/python/">python</a><small>14</small></li>
   
     <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   
