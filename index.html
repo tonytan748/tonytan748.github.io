@@ -90,7 +90,7 @@
                 $('form#{{ opts.model_name }}_form :input:visible:enabled:first').focus()
             {% endif %}
                 });
-        $.get(&apos;/common/choose/province/&apos;,function(p_info){          // 获取省份接口 这里的地址自定义，已经实际的接口地址位置
+        $.get(&apos;/common/choose/province/&apos;,function(p_info){          // 获取省份接口 这里的地址自定义，已实际的接口地址为准
             var province_info = $(&apos;#id_province&apos;).empty().append(&apos;&lt;option value&gt;&apos;+&apos;---------&apos;+&apos;&lt;/option&gt;&apos;);
             // id_province 已实际的省份字段名为准，可在admin页面中查找
             $.each(p_info.p_lists,function(i,province){
@@ -99,7 +99,7 @@
 
             $(&apos;#id_province&apos;).change(function(){
                 p_id = $(this).val();
-                $.get(&apos;/common/choose/city/&apos;,{&apos;p_id&apos;:p_id},function(c_info){        // 获取城市接口 这里的地址自定义，已经实际的接口地址位置
+                $.get(&apos;/common/choose/city/&apos;,{&apos;p_id&apos;:p_id},function(c_info){        // 获取城市接口 这里的地址自定义，已实际的接口地址为准
                     var city_info = $(&apos;#id_city&apos;).empty().append(&apos;&lt;option value&gt;&apos;+&apos;---------&apos;+&apos;&lt;/option&gt;&apos;);
                     // id_city 已实际的城市字段名为准，可在admin页面中查找
                     $.each(c_info.c_lists,function(i,city){
@@ -110,7 +110,7 @@
 
             $(&apos;#id_city&apos;).change(function(){
                 c_id = $(this).val();
-                $.get(&apos;/common/choose/area/&apos;,{&quot;c_id&quot;: c_id},function(a_info){       // 获取地区接口 这里的地址自定义，已经实际的接口地址位置
+                $.get(&apos;/common/choose/area/&apos;,{&quot;c_id&quot;: c_id},function(a_info){       // 获取地区接口 这里的地址自定义，已实际的接口地址为准
                     var area_info = $(&apos;#id_district&apos;).empty().append(&apos;&lt;option value&gt;&apos;+&apos;---------&apos;+&apos;&lt;/option&gt;&apos;);
                     // id_district 已实际的地区字段名为准，可在admin页面中查找
                     $.each(a_info.a_lists,function(i,area){
