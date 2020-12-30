@@ -149,6 +149,60 @@ if __name__=="__main__":
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-08-09T16:00:00.000Z"><a href="/2014/08/10/python-lambda-reduce/">2014-08-10</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/10/python-lambda-reduce/">Python: lambda reduce</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>how to use lambda and reduce in python</em></p>
+<p>lambda:<br>一句话函数：</p>
+<pre>
+    linuxany=lambda x,y: x+y
+</pre>
+#给ff传两个参数，bda定的x+y
+<pre>
+    print linuxany(2,3)  # print 5
+</pre>
+
+<p>reduce内建函数是一个二来将一个数据集合（链表，元组等）中的所有数据进行下列操作：用传给reduce中的函数func()（必须是一个二元操作函数）先对集合中的第1，2个数据进行操作，得到的结果再与第3个数据用func()函数运算，最后得到一个结果。<br>如：<br>先定义一个二元操作函数</p>
+<pre>
+    def linuxany(x,y):
+        return x+y
+        reduce(linuxany,(1,2,3,4,5))
+</pre>
+
+<p>lambda和reduce结合起来使用：</p>
+<pre>
+    print reduce(lambda x,y:x+y,range(10))
+</pre>
+
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-08-03T16:00:00.000Z"><a href="/2014/08/04/read--open-a-csv-file--randomly-select-an-entry/">2014-08-04</a></time>
       
       
@@ -359,6 +413,56 @@ hduser@ubuntu:/usr/local/hadoop$
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-07-26T16:00:00.000Z"><a href="/2014/07/27/tkinter-canvas-sample/">2014-07-27</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/27/tkinter-canvas-sample/">Tkinter Canvas Sample</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>A sample for tkinter canvas.</em></p>
+<pre>
+import Tkinter
+root = Tkinter.Tk(0
+canvas=Tkinter.Canvas(root,width=600,height=400,bg='white')
+
+canvas.create_text(302,77,text='Use Canvas', fill='gray')
+canvas.create_text(300,75,text='Use Canvas',fill='blue')
+canvas.create_polygon(290,114,316,114,330,130,310,146,284,146,270,130)
+canvas.create_oval(280,120,320,140,fill='white')
+canvas.create_line(250,130,350,130)
+canvas.create_line(300,100,300,160)
+canvas.create_arc(100,200,500,400,start=0,extent=240,fill='pink')
+canvas.create_arc(103,203,500,400,start=241,extent=118,fill='red')
+canvas.pack()
+
+root.mainloop()
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-07-26T16:00:00.000Z"><a href="/2014/07/27/a-sample-game-use-pygame/">2014-07-27</a></time>
       
       
@@ -520,56 +624,6 @@ game.Start()
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-07-26T16:00:00.000Z"><a href="/2014/07/27/tkinter-canvas-sample/">2014-07-27</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/07/27/tkinter-canvas-sample/">Tkinter Canvas Sample</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>A sample for tkinter canvas.</em></p>
-<pre>
-import Tkinter
-root = Tkinter.Tk(0
-canvas=Tkinter.Canvas(root,width=600,height=400,bg='white')
-
-canvas.create_text(302,77,text='Use Canvas', fill='gray')
-canvas.create_text(300,75,text='Use Canvas',fill='blue')
-canvas.create_polygon(290,114,316,114,330,130,310,146,284,146,270,130)
-canvas.create_oval(280,120,320,140,fill='white')
-canvas.create_line(250,130,350,130)
-canvas.create_line(300,100,300,160)
-canvas.create_arc(100,200,500,400,start=0,extent=240,fill='pink')
-canvas.create_arc(103,203,500,400,start=241,extent=118,fill='red')
-canvas.pack()
-
-root.mainloop()
-</pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2014-07-12T16:00:00.000Z"><a href="/2014/07/13/beautifulsoup-basic/">2014-07-13</a></time>
       
       
@@ -609,48 +663,6 @@ links = soup.findAll("a")
 <p><pre><br>from BeautifulSoup import BeautifulSoup<br>import urllib2<br>import re</pre></p>
 <p>url = urllib2.urlopen(“<a href="http://www.python.org&quot;" target="_blank" rel="noopener">http://www.python.org&quot;</a>)<br>content = url.read()<br>soup = BeautifulSoup(content)<br>for a in soup.findAll(‘a’,href=True):<br>    if re.findall(‘python’, a[‘href’]):<br>        print “Found the URL:”, a[‘href’]<br><br>Further Reading</p>
 <p>I recommend that you head over to <a href="http://www.crummy.com" target="_blank" rel="noopener">http://www.crummy.com</a> to read more about what you can do with this awesome module.</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-07-11T16:00:00.000Z"><a href="/2014/07/12/urllib2---user-agent/">2014-07-12</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/07/12/urllib2---user-agent/">Urllib2   User Agent</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>This post will show how to add headers to a HTTP request.</em></p>
-<p><pre><br>This post will show how to add headers to a HTTP request.</pre></p>
-<p>By default urllib2 identifies itself as Python-urllib/2.7 : GET / HTTP/1.1” 200<br>151 “-“ “Python-urllib/2.7”</p>
-<p>That can sometimes be confusing for certain sites. With the user_agent header in<br>Python, it’s possible to alter that and specify any identity you like.<br></p>
-<p><pre><br>The example below, use the Mozilla 5.10 as a User Agent, and that is also what<br>will show up in the web server log file.<br></pre></p>
-<p><pre><br>import urllib2</pre></p>
-<p>req = urllib2.Request(‘<a href="http://192.168.1.2/&#39;" target="_blank" rel="noopener">http://192.168.1.2/&#39;</a>)</p>
-<p>req.add_header(‘User-agent’, ‘Mozilla 5.10’)</p>
-<p>res = urllib2.urlopen(req)</p>
-<p>html = res.read()<br><br>This is what will show up in the log file.<br>“GET / HTTP/1.1” 200 151 “-“ “Mozilla 5.10”</p>
 
       
     </div>
@@ -810,156 +822,26 @@ print tn.read_all()
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-07-02T16:00:00.000Z"><a href="/2014/07/03/python-cgi-programming/">2014-07-03</a></time>
+        <time datetime="2014-07-11T16:00:00.000Z"><a href="/2014/07/12/urllib2---user-agent/">2014-07-12</a></time>
       
       
   
-    <h1 class="title"><a href="/2014/07/03/python-cgi-programming/">Python CGI Programming</a></h1>
+    <h1 class="title"><a href="/2014/07/12/urllib2---user-agent/">Urllib2   User Agent</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p><em>How to write code in CGI programing</em></p>
-<h3>What is CGI?</h3><br><ul><br><li>The Common Gateway Interface, or CGI, is a set of standards that define how information is exchanged between the web server and a custom script.</li><br><li>The CGI specs are currently maintained by the NCSA and NCSA defines CGI is as follows:</li><br><li>The Common Gateway Interface, or CGI, is a standard for external gateway programs to interface with information servers such as HTTP servers.</li><br><li>The current version is CGI/1.1 and CGI/1.2 is under progress.</li><br></ul><br><br><h3>Web Browsing</h3><br>To understand the concept of CGI, lets see what happens when we click a hyper link to browse a particular web page or URL.<br><ul><br><li>Your browser contacts the HTTP web server and demands for the URL i.e., filename.</li><br><li>Web Server will parse the URL and will look for the filename in if it finds that file then sends it back to the browser, otherwise sends an error message indicating that you have requested a wrong file.</li><br><li>Web browser takes response from web server and displays either the received file or error message.</li><br></ul><br>However, it is possible to set up the HTTP server so that whenever a file in a certain directory is requested that file is not sent back; instead it is executed as a program, and whatever that program outputs is sent back for your browser to display. This function is called the Common Gateway Interface or CGI and the programs are called CGI scripts. These CGI programs can be a Python Script, PERL Script, Shell Script, C or C++ program, etc.<br><br><h3>CGI Architecture Diagram</h3>
-
-<p></p><h3>Web Server Support &amp; Configuration</h3><br>Before you proceed with CGI Programming, make sure that your Web Server supports CGI and it is configured to handle CGI Programs. All the CGI Programs to be executed by the HTTP server are kept in a pre-configured directory. This directory is called CGI Directory and by convention it is named as /var/www/cgi-bin. By convention, CGI files will have extension as .cgi, but you can keep your files with python extension .py as well.<p></p>
-<p>By default, the Linux server is configured to run only the scripts in the cgi-bin directory in /var/www. If you want to specify any other directory to run your CGI scripts, comment the following lines in the httpd.conf file:</p>
-<pre>
-<directory "="" var="" www="" cgi-bin"="">
-   AllowOverride None
-   Options ExecCGI
-   Order allow,deny
-   Allow from all
-</directory>
-
-<directory "="" var="" www="" cgi-bin"="">
-Options All
-</directory>
-</pre>
-Here, I assumed that you have Web Server up and running successfully and you are able to run any other CGI program like Perl or Shell, etc.
-
-<h3>First CGI Program</h3>
-Here is a simple link, which is linked to a CGI script called hello.py. This file is being kept in /var/www/cgi-bin directory and it has following content. Before running your CGI program, make sure you have change mode of file using chmod 755 hello.py UNIX command to make file executable.
-<pre>
-#!/usr/bin/python
-
-print "Content-type:text/html\r\n\r\n"
-print '<html>'
-print '<head><meta name="generator" content="Hexo 3.8.0">'
-print '<title>Hello Word - First CGI Program</title>'
-print '</head>'
-print '<body>'
-print '<h2>Hello Word! This is my first CGI program</h2>'
-print '</body>'
-print '</html>'
-</pre>
-If you click hello.py, then this produces the following output:
-<pre>
-Hello Word! This is my first CGI program
-</pre>
-This hello.py script is a simple Python script, which is writing its output on STDOUT file i.e., screen. There is one important and extra feature available which is first line to be printed <b>Content-type:text/html\r\n\r\n</b>. This line is sent back to the browser and specifiy the content type to be displayed on the browser screen.
-Now, you must have understood basic concept of CGI and you can write many complicated CGI programs using Python. This script can interact with any other external system also to exchange information such as RDBMS.
-
-<h3>HTTP Header</h3>
-The line <b>Content-type:text/html\r\n\r\n</b> is part of HTTP header which is sent to the browser to understand the content. All the HTTP header will be in the following form:
-<pre>
-HTTP Field Name: Field Content
-
-For Example
-Content-type: text/html\r\n\r\n
-</pre>
-There are few other important HTTP headers, which you will use frequently in your CGI Programming.
-Header    |Description
-___________________
-Content-type:    |A MIME string defining the format of the file being returned. Example is Content-type:text/html
-_________________
-Expires: Date    |The date the information becomes invalid. This should be used by the browser to decide when a page needs to be refreshed. A valid date string should be in the format 01 Jan 1998 12:00:00 GMT.
-_____________________
-Location: URL    |The URL that should be returned instead of the URL requested. You can use this field to redirect a request to any file.
-_______________
-Last-modified: Date    |The date of last modification of the resource.
-_______________
-Content-length: N    |The length, in bytes, of the data being returned. The browser uses this value to report the estimated download time for a file.
-_______________
-Set-Cookie: String    |Set the cookie passed through the string
-
-<h3>CGI Environment Variables</h3>
-All the CGI program will have access to the following environment variables. These variables play an important role while writing any CGI program.
-<table>
-<thead>
-    <tr>
-        <th>Variable Name</th>
-        <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-    <tr>
-        <td>CONTENT_TYPE</td>
-        <td>The data type of the content. Used when the client is sending attached content to the server. For example, file upload, etc.</td>
-    </tr>
-    <tr>
-        <td>CONTENT_LENGTH</td>
-        <td>The length of the query information. It's available only for POST requests.</td>
-    </tr>
-    <tr>
-        <td>HTTP_COOKIE</td>
-        <td>Returns the set cookies in the form of key & value pair.</td>
-    </tr>
-    <tr>
-        <td>HTTP_USER_AGENT</td>
-        <td>The User-Agent request-header field contains information about the user agent originating the request. Its name of the web browser.</td>
-    </tr>
-    <tr>
-        <td>PATH_INFO</td>
-        <td>The path for the CGI script.</td>
-    </tr>
-    <tr>
-        <td>QUERY_STRING</td>
-        <td>The URL-encoded information that is sent with GET method request.</td>
-    </tr>
-    <tr>
-        <td>REMOTE_ADDR</td>
-        <td>The IP address of the remote host making the request. This can be useful for logging or for authentication purpose.</td>
-    </tr>
-    <tr>
-        <td>REMOTE_HOST</td>
-        <td>The fully qualified name of the host making the request. If this information is not available then REMOTE_ADDR can be used to get IR address.</td>
-    </tr>
-    <tr>
-        <td>REQUEST_METHOD</td>
-        <td>The method used to make the request. The most common methods are GET and POST.</td>
-    </tr>
-    <tr>
-        <td>SCRIPT_FILENAME</td>
-        <td>The full path to the CGI script.</td>
-    </tr>
-    <tr>
-        <td>SCRIPT_NAME</td>
-        <td>The name of the CGI script.</td>
-    </tr>
-    <tr>
-        <td>SERVER_NAME</td>
-        <td>The server's hostname or IP Address</td>
-    </tr>
-    <tr>
-        <td>SERVER_SOFTWARE</td>
-        <td>The name and version of the software the server is running.</td>
-    </tr>
-</tbody>
-</table>
-Here is small CGI program to list out all the CGI variables. Click this link to see the result <font color="red">Get Environment</font>
-<pre>
-#!/usr/bin/python
-
-import os
-
-print "Content-type: text/html\r\n\r\n";
-print "<font size="+1">Environment</font><\br>";
-for param in os.environ.keys():
-  print "<b>%20s</b>: %s<\br>" % (param, os.environ[param])
-</\br></\br></pre>
-
+        <p><em>This post will show how to add headers to a HTTP request.</em></p>
+<p><pre><br>This post will show how to add headers to a HTTP request.</pre></p>
+<p>By default urllib2 identifies itself as Python-urllib/2.7 : GET / HTTP/1.1” 200<br>151 “-“ “Python-urllib/2.7”</p>
+<p>That can sometimes be confusing for certain sites. With the user_agent header in<br>Python, it’s possible to alter that and specify any identity you like.<br></p>
+<p><pre><br>The example below, use the Mozilla 5.10 as a User Agent, and that is also what<br>will show up in the web server log file.<br></pre></p>
+<p><pre><br>import urllib2</pre></p>
+<p>req = urllib2.Request(‘<a href="http://192.168.1.2/&#39;" target="_blank" rel="noopener">http://192.168.1.2/&#39;</a>)</p>
+<p>req.add_header(‘User-agent’, ‘Mozilla 5.10’)</p>
+<p>res = urllib2.urlopen(req)</p>
+<p>html = res.read()<br><br>This is what will show up in the log file.<br>“GET / HTTP/1.1” 200 151 “-“ “Mozilla 5.10”</p>
 
       
     </div>
@@ -1027,7 +909,7 @@ for param in os.environ.keys():
   <h3 class="title">Tags</h3>
   <ul class="entry">
   
-    <li><a href="/tags/django/">django</a><small>2</small></li>
+    <li><a href="/tags/django/">django</a><small>3</small></li>
   
     <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
   

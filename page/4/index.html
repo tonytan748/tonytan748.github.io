@@ -54,6 +54,79 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-06-25T16:00:00.000Z"><a href="/2016/06/26/prtfect-single-code-for-python/">2016-06-26</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/06/26/prtfect-single-code-for-python/">Prtfect Single Code for Python</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>some coding for python which one line to finish a common</em></p>
+<ul>
+<li>Product 2 for every element in list</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print map(lambda x:x*2, range(1,11))</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Sum of all elements in list</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print sum(range(1,1001))</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Check if there are some world in a string</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wordlist = [&quot;scala&quot;, &quot;akka&quot;, &quot;play framework&quot;, &quot;sbt&quot;, &quot;typesafe&quot;]</span><br><span class="line">tweet = &quot;This is an example tweet talking about scala and sbt.&quot;</span><br><span class="line"></span><br><span class="line">print map(lambda x: x in tweet.split(), wordlist)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Read file</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print open(&apos;ten_one_lines.py&apos;).readlines()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Happy Birthday</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print map(lambda x: &quot;Happy Birthday to &quot; + (&quot;you&quot; if x!=2 else &quot;dear Name&quot;), range(4))</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Filter nums in list</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print reduce(lambda (a,b),c: (a+[c],b) if c &gt; 60 else (a,b+[c]), [49, 58, 76, 82, 88. 90], ([], []))</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Obtin XML web service data and analysis</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from xml.dom.minidom import parse, parseString</span><br><span class="line">import urllib2</span><br><span class="line"></span><br><span class="line">print parse(urllib2.urlopen(&apos;http://search.twitter.com/..&apos;)).toprettyxml(encoding=&quot;utf-8&quot;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Find the max and min data in list</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print min([14,35,-1,46,38])</span><br><span class="line">print max([14,35,-1,46,38])</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Milti processing</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import multiprocessing</span><br><span class="line">import math</span><br><span class="line"></span><br><span class="line">print list(mulriprocessing.Pool(pricesses=4).map(math.exp, range(1, 11)))</span><br></pre></td></tr></table></figure>
+<ul>
+<li>“Sieve of Eratosthenes” algorithm</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">n = 50</span><br><span class="line">print sorted(set(range(2, n+1)).difference(set((p * f) for p in range(2, int(n**0.5) + 2) for f in range(2, (n/p)+1))))</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-06-20T16:00:00.000Z"><a href="/2016/06/21/nifty-python-tricks/">2016-06-21</a></time>
       
       
@@ -1298,43 +1371,6 @@ with open('json/globe_volcanoes.json', 'w') as f:
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-02-12T16:00:00.000Z"><a href="/2016/02/13/the-samplest-django-project/">2016-02-13</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/02/13/the-samplest-django-project/">The Samplest Django Project</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>Create a Django project in a python file</em></p>
-<p>project_name.py</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line">BASE_PATH = os.path.dirname(__file__)</span><br><span class="line"></span><br><span class="line">from django.conf import settings</span><br><span class="line">from django.conf.urls import patterns, url</span><br><span class="line">from django.core.management import execute_from_command_line</span><br><span class="line">from django.shortcuts import render</span><br><span class="line"></span><br><span class="line">settings.configure(</span><br><span class="line">    DEBUG=True,</span><br><span class="line">    SECRET_KEY=&quot;thisisasampleesedjangoprject&quot;,</span><br><span class="line">    ROOT_URLCONF=sys.module[__name__],</span><br><span class="line">    TEMPLATE_DIRS=(</span><br><span class="line">        os.path.join(BASE_PATH, &apos;templates&apos;),</span><br><span class="line">    ),</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">def index(request):</span><br><span class="line">    return render(request,&apos;index.html&apos;,&#123;&apos;request&apos;:request&#125;)</span><br><span class="line"></span><br><span class="line">urlpatterns = patterns(&apos;&apos;,</span><br><span class="line">    url(r&apos;^$&apos;,index,name=&apos;index&apos;),</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">    execute_from_command_line(sys.argv)</span><br></pre></td></tr></table></figure>
-<p>Run it:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python project_name.py runserver</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1386,7 +1422,7 @@ with open('json/globe_volcanoes.json', 'w') as f:
   <h3 class="title">Tags</h3>
   <ul class="entry">
   
-    <li><a href="/tags/django/">django</a><small>2</small></li>
+    <li><a href="/tags/django/">django</a><small>3</small></li>
   
     <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
   

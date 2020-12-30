@@ -48,6 +48,67 @@
 </header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="django">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2020-12-30T01:45:03.000Z"><a href="/2020/12/30/后台edite页面实现三级联动/">2020-12-30</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2020/12/30/后台edite页面实现三级联动/">后台edite页面实现三级联动</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>在项目中使用Django admin作为后台管理，在店铺表编辑页面需要设置省市区三级联动，查了很多资源，没有发现原生支持的联动方式。 在网上借鉴了别人的写法。</p>
+<p>配置：</p>
+<ul>
+<li><p>Python 3.7</p>
+</li>
+<li><p>Django3.1</p>
+</li>
+</ul>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
+<li><p>在app文件下创建templates文件夹，创建<code>shop_detail.html</code>用于复写店铺编辑页。 文件名字可自定义。</p>
+</li>
+<li><p>在app的admin.py中增加并注册ShopAdmin类，在类中增加<code>change_form_template = &quot;shop_detail.html&quot;</code>，指向的html文件名和1中的一致。</p>
+</li>
+<li><p>从当前python环境中，找到Django包，复制里面的<code>chang_form.html</code>全部内容到前面创建的html中。 该html具体地址为<code>python3.7/site-packages/django/contrib/admin/templates/admin/change_form.html</code>。</p>
+</li>
+<li><p>编辑<code>shop_detail.html</code></p>
+<ul>
+<li>将以下ajax请求增加到替换到<code> ... </code>中。</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">        (function($) &#123;</span><br><span class="line">            $(document).ready(function() &#123;</span><br><span class="line">                $(&apos;.add-another&apos;).click(function(e) &#123;</span><br><span class="line">                    e.preventDefault();</span><br><span class="line">                    var event = $.Event(&apos;django:add-another-related&apos;);</span><br><span class="line">                    $(this).trigger(event);</span><br><span class="line">                    if (!event.isDefaultPrevented()) &#123;</span><br><span class="line">                        showAddAnotherPopup(this);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line"></span><br><span class="line">            &#123;% if adminform and add %&#125;</span><br><span class="line">                $(&apos;form#&#123;&#123; opts.model_name &#125;&#125;_form :input:visible:enabled:first&apos;).focus()</span><br><span class="line">            &#123;% endif %&#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">            $.get(&apos;/common/choose/province/&apos;,function(p_info)&#123;          // 获取省份接口 这里的地址自定义，已经实际的接口地址位置</span><br><span class="line">                var province_info = $(&apos;#id_province&apos;).empty().append(&apos;&lt;option value&gt;&apos;+&apos;---------&apos;+&apos;&lt;/option&gt;&apos;);</span><br><span class="line">                // id_province 已实际的省份字段名为准，可在admin页面中查找</span><br><span class="line">                $.each(p_info.p_lists,function(i,province)&#123;</span><br><span class="line">                    province_info.append(&apos;&lt;option value=&quot;&apos;+province.p_id+&apos;&quot;&gt;&apos;+province.p_name+&apos;&lt;/option&gt;&apos;)</span><br><span class="line">                &#125;);</span><br><span class="line"></span><br><span class="line">                $(&apos;#id_province&apos;).change(function()&#123;</span><br><span class="line">                    p_id = $(this).val();</span><br><span class="line">                    $.get(&apos;/common/choose/city/&apos;,&#123;&apos;p_id&apos;:p_id&#125;,function(c_info)&#123;        // 获取城市接口 这里的地址自定义，已经实际的接口地址位置</span><br><span class="line">                        var city_info = $(&apos;#id_city&apos;).empty().append(&apos;&lt;option value&gt;&apos;+&apos;---------&apos;+&apos;&lt;/option&gt;&apos;);</span><br><span class="line">                        // id_city 已实际的城市字段名为准，可在admin页面中查找</span><br><span class="line">                        $.each(c_info.c_lists,function(i,city)&#123;</span><br><span class="line">                            city_info.append(&apos;&lt;option value=&quot;&apos;+city.c_id+&apos;&quot;&gt;&apos;+city.c_name+&apos;&lt;/option&gt;&apos;)</span><br><span class="line">                        &#125;)</span><br><span class="line">                    &#125;)</span><br><span class="line">                &#125;);</span><br><span class="line"></span><br><span class="line">                $(&apos;#id_city&apos;).change(function()&#123;</span><br><span class="line">                    c_id = $(this).val();</span><br><span class="line">                    $.get(&apos;/common/choose/area/&apos;,&#123;&quot;c_id&quot;: c_id&#125;,function(a_info)&#123;       // 获取地区接口 这里的地址自定义，已经实际的接口地址位置</span><br><span class="line">                        var area_info = $(&apos;#id_district&apos;).empty().append(&apos;&lt;option value&gt;&apos;+&apos;---------&apos;+&apos;&lt;/option&gt;&apos;);</span><br><span class="line">                        // id_district 已实际的地区字段名为准，可在admin页面中查找</span><br><span class="line">                        $.each(a_info.a_lists,function(i,area)&#123;</span><br><span class="line">                            area_info.append(&apos;&lt;option value=&quot;&apos;+area.a_id+&apos;&quot;&gt;&apos;+area.a_name+&apos;&lt;/option&gt;&apos;)</span><br><span class="line">                        &#125;);</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;)(django.jQuery);</span><br><span class="line">    &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<pre><code>* 注意里面的省市区字段在page页面中的类名，不确定的话可通过浏览器开发者工具查找。
+
+* 增加省市区调用接口， 我的地区表在`common`模块中，同时为避免接口地址冲突，增加了 `/choose`字段。
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">def choose_province(request):</span><br><span class="line">    &quot;&quot;&quot;查询省&quot;&quot;&quot;</span><br><span class="line">    provinces = Area.objects.filter(parent=None)</span><br><span class="line">    p_lists = [&#123;&quot;p_id&quot;: province.id, &quot;p_name&quot;: province.name&#125; for province in provinces]</span><br><span class="line">    p_info = &#123;&quot;p_lists&quot;: p_lists&#125;</span><br><span class="line">    return JsonResponse(p_info, safe=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def choose_city(request):</span><br><span class="line">    &quot;&quot;&quot;查询市&quot;&quot;&quot;</span><br><span class="line">    p_id = request.GET.get(&apos;p_id&apos;)</span><br><span class="line">    print(p_id, &apos;--------&apos;)</span><br><span class="line">    if not p_id:</span><br><span class="line">        return JsonResponse(&#123;&#125;, safe=False)</span><br><span class="line">    citys = Area.objects.filter(parent_id=p_id)</span><br><span class="line">    c_lists = [&#123;&quot;c_id&quot;: city.id, &quot;c_name&quot;: city.name&#125; for city in citys]</span><br><span class="line">    print(c_lists[0:5])</span><br><span class="line">    c_info = &#123;&quot;c_lists&quot;: c_lists&#125;</span><br><span class="line">    return JsonResponse(c_info, safe=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def choose_area(request):</span><br><span class="line">    &quot;&quot;&quot;查询区&quot;&quot;&quot;</span><br><span class="line">    c_id = request.GET.get(&apos;c_id&apos;)</span><br><span class="line">    print(c_id, &apos;=======&apos;)</span><br><span class="line">    if not c_id:</span><br><span class="line">        return JsonResponse(&#123;&#125;, safe=False)</span><br><span class="line">    areas = Area.objects.filter(parent_id=c_id)</span><br><span class="line">    print(areas)</span><br><span class="line">    a_lists = [&#123;&quot;a_id&quot;: area.id, &quot;a_name&quot;: area.name&#125; for area in areas]</span><br><span class="line">    a_info = &#123;&quot;a_lists&quot;: a_lists&#125;</span><br><span class="line">    print(a_info)</span><br><span class="line">    return JsonResponse(a_info, safe=False)</span><br></pre></td></tr></table></figure>
+<pre><code>* URL地址设置。
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">url(r&apos;^choose/province/$&apos;, views.choose_province),</span><br><span class="line">url(r&apos;^choose/city/$&apos;, views.choose_city),</span><br><span class="line">url(r&apos;^choose/area/$&apos;, views.choose_area),</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Django admin功能比较齐全，以前只是按照文档使用，并没有涉及到修改页面。 通过这个3级联动，也清楚了admin的部分原理。对于一些复杂的页面，可以用自定义的形式来重构页面。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="npm">
   
   <div class="post-content">
@@ -1155,60 +1216,6 @@
 
 
 
-  <article class="_post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2018-06-12T15:22:33.000Z"><a href="/2018/06/12/Enhance-your-Python-with-an-interactive-shell/">2018-06-12</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2018/06/12/Enhance-your-Python-with-an-interactive-shell/">Enhance your Python with an interactive shell</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>Original source is <a href="https://fedoramagazine.org/enhance-python-interactive-shell/" target="_blank" rel="noopener">here</a></p>
-<p>The Python programming language has become one of the most popular languages used in IT. One reason for this success is it can be used to solve a variety of problems. From web development to data science, machine learning to task automation, the Python ecosystem is rich in popular frameworks and libraries. This article presents some useful Python shells available in the Fedora packages collection to make development easier.</p>
-<h2 id="Python-Shell"><a href="#Python-Shell" class="headerlink" title="Python Shell"></a>Python Shell</h2><p>The Python Shell lets you use the interpreter in an interactive mode. It’s very useful to test code or try a new library. In Fedora you can invoke the default shell by typing python3 in a terminal session. Some more advanced and enhanced shells are available to Fedora, though.</p>
-<h2 id="IPython"><a href="#IPython" class="headerlink" title="IPython"></a>IPython</h2><p>IPython provides many useful enhancements to the Python shell. Examples include tab completion, object introspection, system shell access and command history retrieval.  Many of these features are also used by the Jupyter Notebook , since it uses IPython underneath.</p>
-<h3 id="Install-and-run-IPython"><a href="#Install-and-run-IPython" class="headerlink" title="Install and run IPython"></a>Install and run IPython</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dnf install ipython3</span><br><span class="line">ipython3</span><br></pre></td></tr></table></figure>
-<p>Using tab completion prompts you with possible choices. This features comes in handy when you use an unfamiliar library.</p>
-<p>If you need more information, use the documentation by typing the ? command. For more details, you can use the ?? command.</p>
-<p>Another cool feature is the ability to execute a system shell command using the ! character. The result of the command can then be referenced in the IPython shell.</p>
-<p>A comprehensive list of IPython features is available in the official documentation.</p>
-<h2 id="bpython"><a href="#bpython" class="headerlink" title="bpython"></a>bpython</h2><p>bpython doesn’t do as much as  IPython, but nonetheless it provides a useful set of features in a simple and lightweight package. Among other features, bpython provides:</p>
-<ul>
-<li>In-line syntax highlighting</li>
-<li>Autocomplete with suggestions as you type</li>
-<li>Expected parameter list</li>
-<li>Ability to send or save code to a pastebin service or file</li>
-</ul>
-<h3 id="Install-and-run-bpython"><a href="#Install-and-run-bpython" class="headerlink" title="Install and run bpython"></a>Install and run bpython</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dnf install bpython3</span><br><span class="line">bpython3</span><br></pre></td></tr></table></figure>
-<p>As you type, bpython offers you choices to autocomplete your code.</p>
-<p>When you call a function or method, the expected parameters and the docstring are automatically displayed.</p>
-<p>Another neat feature is the ability to open the current bpython session in an external editor (Vim by default) using the function key F7. This is very useful when testing more complex programs.</p>
-<p>For more details about configuration and features, consult the bpython documentation.</p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Using an enhanced Python shell is a good way to increase productivity. It gives you enhanced features to write a quick prototype or try out a new library. Are you using an enhanced Python shell? Feel free to mention it in the comment section below.</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1258,7 +1265,7 @@
   <h3 class="title">Tags</h3>
   <ul class="entry">
   
-    <li><a href="/tags/django/">django</a><small>2</small></li>
+    <li><a href="/tags/django/">django</a><small>3</small></li>
   
     <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
   

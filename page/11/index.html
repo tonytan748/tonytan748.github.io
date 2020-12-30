@@ -54,6 +54,83 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-06-26T16:00:00.000Z"><a href="/2014/06/27/Jekyll-variable-and-jekyll-template-grammar/">2014-06-27</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/06/27/Jekyll-variable-and-jekyll-template-grammar/">Jekyll variable and jekyll template grammar</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li>本文主要讲述Jekyll变量 和 Jekyll模板语法教程相关内容：Jekyll变量和Jekyll模板语法，包括全局变量、Site变量、Page变量和需要注意的内容，其中变解释内容翻译自官方wiki。 *</li>
+</ul>
+<p>Jekyll会遍历你的站点，来寻找需要处理的文件。任何具有 YAML 前置数据的文件都将会被处理，每一个这样的文件，Jekyll都会通过Liquid模板系统使用许多可用的页面变量。下面是一个可用变量的列表。</p>
+<b>Jekyll 目录及一些说明</b>
+
+<p><i>Jekyll 标准目录树</i></p>
+<pre>
+_config.yml   Jekyll的配置文件
+_includes     include 文件所在的文件夹
+_layouts      模版文
+_posts        自己要发
+_sites        预览时产生的文件
+</pre>
+
+<p>Jekyll的安装及配置</p>
+<p>_includes文件夹中所放的文件是最终要<br>_layouts中放的一些模版，模版是用包含page或post内容的。Jekyll的模板使用HTML语法来写，并包含YAML Front Matter。所有的模板都可用Liquid来与网站进行交互。所有的模板都可以使用全局变量site和page,site变量包含该网站所有可以接触得到的内容和元数据(meta-data),page变量包含的是当前渲染的page或post的所有可以接触得到的数据。<br>_post文件夹中放的是自己要发布的post文章。post文件的命名规则为YEAR-MONTH-DATE-title.MARKUP，使用rake post会自动将post文件命名合适。而对于page，所有放在根目录下或不以下划线开头的文件夹中有格式的文件都会被Jekyll处理成page。这里说的有格式是指文件含有YAML Front Matter。所有的post和page都要用markdown或者texile或者HTML语法来写，并可以包含Liquid模版的语法。还要有 YAML Front Matter (Jekyll只处理具有YAML Front Matter的文件)。YAML Front Matter必须放在文件的开头，一对—之间，用户可在这一对—间设置预先定义的变量或用户自己的数据</p>
+<p><b>Jekyll模板全局变量</b></p>
+<table><br><tr><td>变量</td><td>描述</td></tr><br><tr><td>site</td><td>全站的信息+_config.yml文件中的配置选项</td></tr><br><tr><td>page</td><td>这个变量中包含YAML前置数据,另外加上两个额外的变量值:url和content。</td></tr><br><tr><td>content</td><td>在布局模板文件中，这里变量包含了页面的子视图。这个变量将会把渲染后的内容插入到模板文件中。这个变量不能在文章和页面文件中使用。</td></tr><br><tr><td>paginator</td><td>一旦paginate配置选项被设置了，这个变量才能被使用。</td></tr><br></table>
+
+<p><b>Jekyll模板Site变量</b></p>
+<table><br><tr><td>变量</td><td>描述</td></tr><br><tr><td>site.time</td><td>当前的时间(当你运行Jekyll时的时间)</td></tr><br><tr><td>site.posts</td><td>一个按时间逆序的文章列表。</td></tr><br><tr><td>site.related_posts</td><td>如果当前被处理的页面是一个文章文件，那这个变量是一个包含了最多10篇相关文章的列表。默认来说，这些相关文章是低质量但计算快的。为了得到高质量但计算慢的结果，运行Jekyll命令时可以加上–lsi选项。(潜在语意索引)</td></tr><br><tr><td>site.categories.CATEGORY</td><td>所有在CATEGORY分类中的文章列表</td></tr><br><tr><td>site.tags.TAG</td><td>所有拥有TAG标签的文章的列表</td></tr><br><tr><td>site.[CONFIGURATION_DATA]</td><td>截止0.5.2版本，所有在_config.yml中的数据都能够通过site变量调用。举例来说，如果你有一个这样的选项在你的配置文件中:url: <a href="http://higrid.net，那在文章和页面文件中可以这样调用{" target="_blank" rel="noopener">http://higrid.net，那在文章和页面文件中可以这样调用{</a> { site.url } }。Jekyll并不会自动解析修改过的_config.yml文件，你想要启用新的设置选项，你需要重启Jekyll</td></tr><br></table>
+
+<p><b>Jekyll模板Page变量</b></p>
+<table><br><tr><td>变量</td><td>描述</td></tr><br><tr><td>page.content</td><td>页面中未渲染的内容</td></tr><br><tr><td>page.title</td><td>文章的标题</td></tr><br><tr><td>page.url</td><td>除去域名以外的URL，例子:/2013/12/14/higrid-net.html</td></tr><br><tr><td>page.date</td><td>指定每一篇文章的时间，这个选项能够覆盖一篇文章中前置数据设置的时间，它的格式是这样的:YYYY-MM-DD HH:MM:SS</td></tr><br><tr><td>page.id</td><td>每一篇文章的唯一标示符(在RSS中非常有用) 例子：/2008/12/14/higrid-net</td></tr><br><tr><td>page.categories</td><td>这篇文章隶属的分类的一个列表，分类是通过在_post目录中的目录结构推导而来的。举例来说，在路径/work/code/_posts/2008-12-24-closures.textile下的文件，这个变量将会是[work,code]。这个变量也能在YAML前置数据中被指定。</td></tr><br><tr><td>page.tags</td><td>这篇文章的标签的列表。这些数据能够在YAML前置数据中指定</td></tr><br><tr><td>page.next</td><td>按时间序的下一篇文章</td></tr><br><tr><td>page.content</td><td>按时间序的上一篇文章</td></tr><br></table><br>注意:任何你自己指定的自定义前置数据都能够通过page调用。举例来说，如果你在页面的前置数据中设置了custom_css: true，那这个值可以在模板可以这样调用:page.custom_css<br><br><b>Jekyll模板Paginator变量</b><br><table><br><tr><td>变量</td><td>描述</td></tr><br><tr><td>paginator.per_page</td><td>每一个页面上文章的数量</td></tr><br><tr><td>paginator.posts</td><td>当前页面上可用的文章</td></tr><br><tr><td>paginator.total_posts</td><td>所有文章的数量</td></tr><br><tr><td>paginator.total_pages</td><td>所有页面的数量</td></tr><br><tr><td>paginator.page</td><td>当前页面的数量</td></tr><br><tr><td>paginator.previous_page</td><td>前面的页面的数量</td></tr><br><tr><td>paginator.next_page</td><td>接下来的的页面的数量</td></tr><br></table>
+
+<p>Post或Page的创建及发布</p>
+<p><hr></p>
+<p><i>创建Post文章</i></p>
+<pre>
+rake post title="文章标题"
+</pre>
+
+<p>会自动创建一个具有合适文件名和YAML Front Matter的文件(使用时将”文章标题”替换成你要创建的文章的标题)。</p>
+<p><i>创建Page页面</i></p>
+<pre>
+rake page name="页面名称.md"   或者
+rake page name="pages/页面名称.md"
+</pre>
+<i>发布Post或Page</i>
+<pre>
+git add .
+git commit -m '一些说明'
+git push origin master
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-06-25T16:00:00.000Z"><a href="/2014/06/26/How-to-automatically-run-a-script-when-logging-into-Ubuntu-Desktop/">2014-06-26</a></time>
       
       
@@ -300,7 +377,7 @@ follow symlinks = yes</pre>
   <h3 class="title">Tags</h3>
   <ul class="entry">
   
-    <li><a href="/tags/django/">django</a><small>2</small></li>
+    <li><a href="/tags/django/">django</a><small>3</small></li>
   
     <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
   

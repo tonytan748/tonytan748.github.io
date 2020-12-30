@@ -54,6 +54,83 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-10-02T16:00:00.000Z"><a href="/2014/10/03/django-episode-5-rss-with-the-syndication-framework/">2014-10-03</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/10/03/django-episode-5-rss-with-the-syndication-framework/">Django Episode 5 RSS With the Syndication Framework</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>RSS With the Syndication Framework</em></p>
+<p>Create feed.py</p>
+<pre>
+vim post/feed.py
+</pre>
+
+<pre>
+from django.contrib.syndication.views import Feed
+from post.models import *
+
+class LastestPostFeed(Feed):
+    title="my blog"
+    link="http://www.xxxxx.com"
+    description="my blog about something"
+
+    def items(self):
+        return Post.objects.all().order_by('-id')[:10]
+
+    def item_title(self,item):
+        return item.title
+
+    def item_description(self,item):
+        return item.body
+
+    def item_link(self,item):
+        return 'http://example.com/%s' % item.slug
+</pre>
+
+<pre>
+vim urls.py
+</pre>
+
+<pre>
+from post.feeds import LastestPostFeed
+
+url(r'^rss/mian',LastestPostFeed()),
+</pre>
+
+<pre>
+python manage.py runserver
+</pre>
+
+<pre>
+localhose:8000/rss/main
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-10-02T16:00:00.000Z"><a href="/2014/10/03/django-episode-4-deploying-django-to-heroku/">2014-10-03</a></time>
       
       
@@ -947,39 +1024,6 @@ echo 550 > /sys/class/backlight/intel_backlight/brightness
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-08-25T16:00:00.000Z"><a href="/2014/08/26/making-love-out-of-nothing-at-all/">2014-08-26</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/08/26/making-love-out-of-nothing-at-all/">Air Supply ----- Making love Out of nothing at all </a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h1 id="Air-Supply-Making-love-Out-of-nothing-at-all"><a href="#Air-Supply-Making-love-Out-of-nothing-at-all" class="headerlink" title="Air Supply - Making love Out of nothing at all"></a>Air Supply - Making love Out of nothing at all</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">I know just how to whisper</span><br><span class="line">And I know just how to cry</span><br><span class="line"></span><br><span class="line">I know just where to find the answers</span><br><span class="line">And I know just how to lie</span><br><span class="line"></span><br><span class="line">I know just how to fake it</span><br><span class="line">And I know just how to scheme</span><br><span class="line"></span><br><span class="line">I know just when to face the truth</span><br><span class="line">And then I know just when to dream</span><br><span class="line"></span><br><span class="line">And I know just where to touch you</span><br><span class="line">And I know just what to prove</span><br><span class="line">I know when to pull you closer</span><br><span class="line">And I know when to let you loose</span><br><span class="line"></span><br><span class="line">And I know the night is fading</span><br><span class="line">And I know the time&apos;s gonna fly</span><br><span class="line">And I&apos;m never gonna tell you</span><br><span class="line">Everything I gotta tell you</span><br><span class="line">But I know I gotta give it a try</span><br><span class="line"></span><br><span class="line">And I know the roads to rich</span><br><span class="line">And I know the ways to fame</span><br><span class="line">I know all the rules</span><br><span class="line">And I know how to break &apos;em</span><br><span class="line">And I always know the name of the game</span><br><span class="line"></span><br><span class="line">But I don&apos;t know how to leave you</span><br><span class="line">And I&apos;ll never let you fall</span><br><span class="line">And I don&apos;t know how you do it</span><br><span class="line">Making love out of nothing at all</span><br><span class="line"></span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line"></span><br><span class="line">Everytime I see you all the rays of the sun</span><br><span class="line">Are streaming through the waves in your hair</span><br><span class="line"></span><br><span class="line">And every star in the sky is taking aim at you eyes</span><br><span class="line">Like a spotlight</span><br><span class="line"></span><br><span class="line">The beating of you heart is a drum and it&apos;s lost</span><br><span class="line">And it&apos;s looking for a rhythm like you</span><br><span class="line"></span><br><span class="line">You can take the darkness from the pit of night</span><br><span class="line">And turn into a beacom burning endlessly bright</span><br><span class="line"></span><br><span class="line">I&apos;ve gotta follow it cause everything I know</span><br><span class="line">Well it&apos;s nothong till I give it to you</span><br><span class="line"></span><br><span class="line">I can make the runner stumble</span><br><span class="line">I can make the final block</span><br><span class="line">And I can make every tackle at the sound of the whistle</span><br><span class="line">I can make all the stadiums rock</span><br><span class="line"></span><br><span class="line">I can make tonight forever</span><br><span class="line">Or I can make it disappear by the dawn</span><br><span class="line">I can make you every promise that has ever been made</span><br><span class="line">I can make all your deamons be gone</span><br><span class="line"></span><br><span class="line">But I&apos;m never gonna make it withour you</span><br><span class="line">Do you really want to see me crawl</span><br><span class="line">And I&apos;m never gonna make it like you do</span><br><span class="line">Making love out of nothing at all</span><br><span class="line"></span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line"></span><br><span class="line">... ...</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2014-08-25T16:00:00.000Z"><a href="/2014/08/26/how-to-use-python-yield/">2014-08-26</a></time>
       
       
@@ -1073,7 +1117,7 @@ echo 550 > /sys/class/backlight/intel_backlight/brightness
   <h3 class="title">Tags</h3>
   <ul class="entry">
   
-    <li><a href="/tags/django/">django</a><small>2</small></li>
+    <li><a href="/tags/django/">django</a><small>3</small></li>
   
     <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
   

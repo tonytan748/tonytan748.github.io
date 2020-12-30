@@ -48,6 +48,60 @@
 </header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="_post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2018-06-12T15:22:33.000Z"><a href="/2018/06/12/Enhance-your-Python-with-an-interactive-shell/">2018-06-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2018/06/12/Enhance-your-Python-with-an-interactive-shell/">Enhance your Python with an interactive shell</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Original source is <a href="https://fedoramagazine.org/enhance-python-interactive-shell/" target="_blank" rel="noopener">here</a></p>
+<p>The Python programming language has become one of the most popular languages used in IT. One reason for this success is it can be used to solve a variety of problems. From web development to data science, machine learning to task automation, the Python ecosystem is rich in popular frameworks and libraries. This article presents some useful Python shells available in the Fedora packages collection to make development easier.</p>
+<h2 id="Python-Shell"><a href="#Python-Shell" class="headerlink" title="Python Shell"></a>Python Shell</h2><p>The Python Shell lets you use the interpreter in an interactive mode. It’s very useful to test code or try a new library. In Fedora you can invoke the default shell by typing python3 in a terminal session. Some more advanced and enhanced shells are available to Fedora, though.</p>
+<h2 id="IPython"><a href="#IPython" class="headerlink" title="IPython"></a>IPython</h2><p>IPython provides many useful enhancements to the Python shell. Examples include tab completion, object introspection, system shell access and command history retrieval.  Many of these features are also used by the Jupyter Notebook , since it uses IPython underneath.</p>
+<h3 id="Install-and-run-IPython"><a href="#Install-and-run-IPython" class="headerlink" title="Install and run IPython"></a>Install and run IPython</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dnf install ipython3</span><br><span class="line">ipython3</span><br></pre></td></tr></table></figure>
+<p>Using tab completion prompts you with possible choices. This features comes in handy when you use an unfamiliar library.</p>
+<p>If you need more information, use the documentation by typing the ? command. For more details, you can use the ?? command.</p>
+<p>Another cool feature is the ability to execute a system shell command using the ! character. The result of the command can then be referenced in the IPython shell.</p>
+<p>A comprehensive list of IPython features is available in the official documentation.</p>
+<h2 id="bpython"><a href="#bpython" class="headerlink" title="bpython"></a>bpython</h2><p>bpython doesn’t do as much as  IPython, but nonetheless it provides a useful set of features in a simple and lightweight package. Among other features, bpython provides:</p>
+<ul>
+<li>In-line syntax highlighting</li>
+<li>Autocomplete with suggestions as you type</li>
+<li>Expected parameter list</li>
+<li>Ability to send or save code to a pastebin service or file</li>
+</ul>
+<h3 id="Install-and-run-bpython"><a href="#Install-and-run-bpython" class="headerlink" title="Install and run bpython"></a>Install and run bpython</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dnf install bpython3</span><br><span class="line">bpython3</span><br></pre></td></tr></table></figure>
+<p>As you type, bpython offers you choices to autocomplete your code.</p>
+<p>When you call a function or method, the expected parameters and the docstring are automatically displayed.</p>
+<p>Another neat feature is the ability to open the current bpython session in an external editor (Vim by default) using the function key F7. This is very useful when testing more complex programs.</p>
+<p>For more details about configuration and features, consult the bpython documentation.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Using an enhanced Python shell is a good way to increase productivity. It gives you enhanced features to write a quick prototype or try out a new library. Are you using an enhanced Python shell? Feel free to mention it in the comment section below.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -801,39 +855,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2017-03-19T14:26:01.000Z"><a href="/2017/03/19/Creating-a-multiprocessing-Downloader-App/">2017-03-19</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2017/03/19/Creating-a-multiprocessing-Downloader-App/">Creating a multiprocessing Downloader App</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">import multiprocessing</span><br><span class="line">import os</span><br><span class="line">import requests</span><br><span class="line"></span><br><span class="line">class MultiProcDownloader(object):</span><br><span class="line">    def __init__(self, urls):</span><br><span class="line">        self.urls = urls</span><br><span class="line"></span><br><span class="line">    def run(self):</span><br><span class="line">        jobs = []</span><br><span class="line">        for url in self.urls:</span><br><span class="line">            process = multiprocessing.Process(target=self.worker, args=(url,))</span><br><span class="line">            jobs.append(process)</span><br><span class="line">            process.start()</span><br><span class="line">        for job in jobs:</span><br><span class="line">            job.join()</span><br><span class="line"></span><br><span class="line">    def worker(self, url):</span><br><span class="line">        fname = os.path.basename(url)</span><br><span class="line">        msg = &apos;Starting download of %s&apos;%fname</span><br><span class="line">        print(msg, multiprocessing.current_process().name)</span><br><span class="line">        r = requests.get(url)</span><br><span class="line">        with open(fname, &apos;wb&apos;) as f:</span><br><span class="line">            f.write(r.content)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">    urls = [&quot;http://www.irs.gov/pub/irs-pdf/f1040.pdf&quot;,</span><br><span class="line">            &quot;http://www.irs.gov/pub/irs-pdf/f1040a.pdf&quot;,</span><br><span class="line">            &quot;http://www.irs.gov/pub/irs-pdf/f1040ez.pdf&quot;,</span><br><span class="line">            &quot;http://www.irs.gov/pub/irs-pdf/f1040es.pdf&quot;,</span><br><span class="line">            &quot;http://www.irs.gov/pub/irs-pdf/f1040sb.pdf&quot;]</span><br><span class="line">    downloader = MultiProcDownloader(urls)</span><br><span class="line">    downloader.run()</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -885,7 +906,7 @@
   <h3 class="title">Tags</h3>
   <ul class="entry">
   
-    <li><a href="/tags/django/">django</a><small>2</small></li>
+    <li><a href="/tags/django/">django</a><small>3</small></li>
   
     <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
   
