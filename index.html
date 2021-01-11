@@ -48,6 +48,47 @@
 </header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="go">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2021-01-11T05:19:14.000Z"><a href="/2021/01/11/modulesb报错/">2021-01-11</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2021/01/11/modulesb报错/">解决Go中ambiguous import in multiple modules错误</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Gin 中使用gormt将mysql数据库自动生成gorm结构体后：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">go get -u -v github.com/xxjwxc/gormt@master</span><br><span class="line">gormt -H=127.0.0.1 -d=oauth_db -p=qwer -u=root --port=3306</span><br></pre></td></tr></table></figure></p>
+<p>再此运行Gin时会报<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">build command-line-arguments: cannot load github.com/ugorji/go/codec: ambiguous import: found github.com/ugorji/go/codec in multiple modules:</span><br><span class="line">        github.com/ugorji/go v1.1.4 (/Users/tonytan/go/pkg/mod/github.com/ugorji/go@v1.1.4/codec)</span><br><span class="line">        github.com/ugorji/go/codec v0.0.0-20181209151446-772ced7fd4c2 (/Users/tonytan/go/pkg/mod/github.com/ugorji/go/codec@v0.0.0-20181209151446-772ced7fd4c2)</span><br></pre></td></tr></table></figure></p>
+<p>错误.</p>
+<p>报错的字面意思是有一个包多个地方引用但版本不一致。</p>
+<p>网上查询找到解决方法，详见 <a href="https://github.com/ugorji/go/issues/279。" target="_blank" rel="noopener">https://github.com/ugorji/go/issues/279。</a></p>
+<p>1.1.2版本修复了该问题</p>
+<p>这时需要运行以下命令：</p>
+<p>go get <a href="mailto:github.com/ugorji/go@v1.1.2" target="_blank" rel="noopener">github.com/ugorji/go@v1.1.2</a></p>
+<p>已安装了1.1.4，但是还是报错，如果安装1.1.2,则能解决改问题</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="django">
   
   <div class="post-content">
@@ -1181,46 +1222,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2018-11-06T00:57:26.000Z"><a href="/2018/11/06/How-to-resoved-can-not-usw-Tab-in-Ubuntu-terminal/">2018-11-06</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2018/11/06/How-to-resoved-can-not-usw-Tab-in-Ubuntu-terminal/">How to resoved can not usw &#39;Tab&#39; in Ubuntu terminal</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <ol>
-<li>Check current shell:</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># echo $SHELL</span><br><span class="line"></span><br><span class="line">/bin/sh</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>Change shell to <code>/bin/bash</code>:</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># usermod -s /bin/bash &lt;username&gt;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1275,6 +1276,8 @@
     <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
   
     <li><a href="/tags/flask/">flask</a><small>1</small></li>
+  
+    <li><a href="/tags/gin/">gin</a><small>1</small></li>
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   

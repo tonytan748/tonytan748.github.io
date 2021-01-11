@@ -54,6 +54,54 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-08-25T16:00:00.000Z"><a href="/2014/08/26/how-to-use-python-yield/">2014-08-26</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/26/how-to-use-python-yield/">How To Use Python yield</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>a sample example to understand and use yield</em></p>
+<p></p><h2>yield 用法说明</h2><br><br><p></p>
+<p>yield 简单来说就是一个<b>生成器</b>,<b>生成器</b>是这样一个函数，它记住上一次返回时在函数体中的位置。对生成器函数的第二次(n次)调用跳转至该函数中间，而上次调用的所有局部变量都保持不变。</p>
+<p><br></p>
+<ul><br>    <li>生成器是一个函数，函数的所有参数都会保留</li><br>    <li>第二次调用此函数时使用的参数是前一次保留下的</li><br>    <li>生成器还记住了它在流控制构造</li><br></ul>
+
+
+<p></p><h2>yield 运行机制</h2><br><br><p></p>
+<p>当生成器要一个数时，生成器会执行，直至出现yield语句，生成器返回yield参数，之后生成器停止继续执行。<br>当需要下一个数时，生成器从上次的状态开始执行，直至出现yield语句，返回参数，停止。如此反复。<br><br></p>
+<p></p><h2>例子：</h2><br><br><p></p>
+<p><pre></pre></p>
+<p>#生成全排列<br>def perm(items,n=None):<br>    if n is None:<br>        n=len(items)<br>    for i in range(len(items)):<br>        v=items[i:i+1]<br>        if n ==1:<br>            yield v<br>        else:<br>            rest=items[:i] + items[i+1]<br>            for p in perm(rest,n-1):<br>                yield v + p</p>
+<p>#生成组合<br>def comb(items,n=None):<br>    if n is None:<br>        n=len(items)<br>    for i in range(len(items)):<br>        v=items[i:i+1]<br>        if n==1:<br>            yield v<br>        else:<br>            rest=items[i+1:]<br>            for c in comb(rest,n-1):<br>                yield v+c</p>
+<p>a=perm(‘abc’)<br>for b in a:<br>    print b<br>    break<br>print ‘=’*20<br>for b in a:<br>    print b<br><br><br><br>结果如下：</p>
+<p><pre><br>102 pvopf006 ~/test&gt; ./generator.py</pre></p>
+<h2 id="abc"><a href="#abc" class="headerlink" title="abc"></a>abc</h2><p>acb<br>bac<br>bca<br>cab<br>cba<br><br><br><br>可以看到，在第一个循环break后，生成器没有继续执行，而第二个循环接着第一个循环执行</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-08-25T16:00:00.000Z"><a href="/2014/08/26/making-love-out-of-nothing-at-all/">2014-08-26</a></time>
       
       
@@ -1056,127 +1104,6 @@ $ git config credential.helper cache
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-08-11T16:00:00.000Z"><a href="/2014/08/12/what-are-useful-online-tools-for-linux/">2014-08-12</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/08/12/what-are-useful-online-tools-for-linux/">What are useful online tools for Linux</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>As you know, GNU Linux is much more than just an OS. There is literally a whole sphere on the Internet dedicated to the penguin OS.</em></p>
-<p>As you know, GNU Linux is much more than just an OS. There is literally a whole sphere on the Internet dedicated to the penguin OS. If you read this post, you are probably inclined towards reading about Linux online. Among all the pages that you can find on the subject, there are a couple of websites that every Linux adventurer should have in his bookmarks. These websites are more than just tutorials or reviews. They are real tools that you can access from anywhere and share with everyone. So today I shall propose you a non-exhaustive list of sixteen websites that should be in your bookmarks. Some of them can also be useful for Windows or Mac users: that’s the extent of their reach.</p>
-<h3>1. <a href="ExplainShell.com">ExplainShell.com</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3841/14517716647_3b6a1a564d_z.jpg"></p>
-<p>If you are interested in Linux command line, you should use this website. If you are not interested in Linux command line, you should use it even more as it will explain in detail how a command works. This could prevent you from launching a command detrimental to your computer, and is a good way to learn with a great interface.</p>
-<h3>2. <a href="BashrcGenerator.com">BashrcGenerator.com</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3900/14703872782_033e5acdb8_z.jpg"></p>
-<p>If you want to begin with Linux command line, or if you want to quickly get a customized shell prompt but not sure how, this website will generate for you PS1 prompt code to place your .bashrc file in your home directory. You can drag and drop the elements that you would like to see in your prompt, like your username and the current time, and the website will write the code for you. It’s easy and very readable. Definitely a must for the lazy.</p>
-<h3>3. <a href="Vim-adventures.com">Vim-adventures.com</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3838/14681149696_0c533fd6de_z.jpg"></p>
-<p>I only recently discovered this website, but it already sucked in many hours of my life. In short: a RPG game with Vim commands. Move your character in the isometric levels with the ‘h,j,k,l’ keys, gain new commands/abilities, collect keys, and learn how to use Vim proficiently very quickly.</p>
-<h3>4. <a href="Try.Github.com">Try Github</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3874/14517499739_0452848d68_z.jpg"></p>
-<p>The pitch is simple: learn Git in 15 minutes. This website simulates a console, and walks you though the steps of collaborative editing. The interface is very stylish and the intention is worthy. The only downside is for the Git allergic. But it is definitely a good skill to have, and a good place to learn it.</p>
-<h3>5. <a href="Shortcutfoo.com">Shortcutfoo.com</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3906/14517499799_f142ea37cb_z.jpg"></p>
-<p>Another shortcut database, shortcutfoo is a bit more standard in its way to present its content to the user, but definitely more straight-forward than funny mini-games. The shortcuts of several programs are available and grouped by categories. As it might not be super complete for software like Vim, which is completely reliant on shortcuts, it is perfect for giving a quick tip or a general overview.</p>
-<h3>6. <a href="#">GitHub Free Programming Books</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3867/14517499989_408a28d8be_z.jpg"></p>
-<p>As you might guess from the URL, this is a collection of free online books about programming, written collaboratively using Git. The content is awesome and the authors deserve to be praised for such work. It might not be the easiest read at first, but it is one of the most instructive for sure. We can only hope that the movement will keep growing.</p>
-
-
-<h3>7. <a href="Collabedit.com">Collabedit.com</a></h3>
-
-<p><img src="https://farm3.staticflickr.com/2940/14681150086_2d169d67f9_z.jpg"></p>
-<p>If you ever plan on giving a phone interview, you should check out collabedit beforehand. It allows you to create a document, select the programming language that you want to write in, and then share that document via the URL. The people opening the link will be able to freely interact in real time with the text, allowing you to judge their programming skills or just exchange snippets. It even comes with the proper syntax highlighting and a chat widget. In other words, it is the instant-Google Document of programmers.</p>
-
-
-<h3>8. <a href="Cpp.sh">Cpp.sh</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3840/14700981001_af3ac40b65_z.jpg"></p>
-<p>This is one of those websites that extend beyond just Linux, but it is so useful that it deserves its place here. In short, an online development environment for C++. Just write your code in your navigator and run it. As a bonus, you get an auto-indentation feature, Ctrl+Z, and the possibility to share the URL with your buddy. This is just one of those crazy things that you can do from a simple browser.</p>
-
-
-<h3>9. <a href="Copy.sh">Copy.sh</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3883/14517479870_da521931eb_z.jpg"></p>
-<p>In continuation with crazy things that you can do from your browser, copy.sh lets you run a virtual machine online. Just that. It gained fame relatively recently, but the idea is just insane. From the navigator you can select among the defaults virtual images to run, or upload your own iso file. The code for that feat has been shared on GitHub. Just amazing.</p>
-
-
-<h3>10. <a href="Commandlinefu.com">Commandlinefu.com</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3887/14517495938_ca3b831ca9_z.jpg"></p>
-<p>We all keep a big snippet of command-line “gems” on our computer. commandlinefu’s goal is to release those snippets to the world. As a collaborative database, it resembles the Wikipedia of the command line. Everyone is free to register and post their favorite command on the website for everyone else to see. You will then be able to access that knowledge from everywhere and share it with everyone. If you are interested in mastering the shell, commandlinefu also proposes great features like random commands and a news feed to learn something new every day.</p>
-
-
-<h3>11. <a href="Alias.sh">Alias.sh</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3868/14701762124_a7b3547aca_z.jpg"></p>
-<p>Another collaborative database, alias.sh (I love the URL) is a bit like commandlinefu but for shell aliases. You can share and discover useful aliases which will make your CLI experience so much better. I personally like the alias to get the dimensions of a picture.  </p><br><pre><br>1 function dim(){ sips $1 -g pixelWidth -g pixelHeight }<br></pre><br><p>All the seconds you save with alias.sh probably accumulate with time, and turn to years by the end of your life.</p>
-
-
-<h3>12. <a href="Distrowatch.com">Distrowatch.com</a></h3>
-
-<p><img src="https://farm3.staticflickr.com/2910/14681149996_50a45bff78_z.jpg"></p>
-<p>Who does not know Distrowatch? Besides giving a precise ranking of Linux distributions based on their website popularity, Distrowatch is also a very useful database. Whether you are looking for a new distribution to try, or just curious, it presents an exhaustive account of every Linux you can find, with information like which default desktop environment it uses, or package system, or its default applications. And all the versions, and with easily accessible download links. In a word, the Linux database.</p>
-
-
-<h3>13. <a href="Linuxmanpages.com">Linuxmanpages.com</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3911/14704165765_8e30cb3d3f_z.jpg"></p>
-<p>Everything is in the URL: access the manual pages for popular commands from anywhere. Not really sure if this would actually be useful for Linux users as you can access that from your actual terminal, but the intent is remarkable.</p>
-
-
-<h3>14. <a href="AwesomeCow.com">AwesomeCow.com</a></h3>
-
-<p><img src="https://farm6.staticflickr.com/5558/14704165965_02b10ee293_z.jpg"></p>
-<p>This is maybe a bit less hardcore Linux, but definitely useful to some. Awesomecow is a search engine for finding alternatives to Windows software on Linux. It can be helpful for anyone migrating to the penguin, or nostalgic of a Windows program. I see this as a strength, showing that Linux can compete with the professional spheres when it comes sot software quality. Or at least try to.</p>
-
-
-<h3>15. <a href="PenguSpy.com">PenguSpy.com</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3904/14517495728_f6877e8e3b_z.jpg"></p>
-<p>Before Steam started to show up on Linux, gaming was probably one of the penguin’s weakness. But the website penguspy made the effort of fighting that weakness by collecting all Linux compatible games in a database with a sexy interface. Games can be sorted by categories, release dates, ratings, etc. I really hope that websites like this are not going to disappear because of Steam as it remains one of my favorites of this list.</p>
-
-
-<h3>16. <a href="http://lxr.free-electrons.com/" target="_blank" rel="noopener">Linux Cross Reference by Free Electrons</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3913/14712049464_6b666e2cfa_z.jpg"></p>
-<p>Finally, for all the experts and the curious, lxr is the anagram from Linux Cross Reference, and allows us to interactively view the Linux Kernel code online. The navigation is made easy via identifiers, and you can compare the different versions of the files with a standard diff markup. The interface is sober and straight-forward, and this is just a website that perfectly illustrates the concept of open source.</p>
-
-<p>To conclude, there are a lot more websites which deserve to be listed, and this might be a topic for a part two to this post. But this is a good start. It serves as an appetizer to what can be found online as tools for Linux users. If you have any other pages that you would like to share, following this thematic, do so in the comments. And maybe contribute to a sequel to this list.</p>
-
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2014-08-11T16:00:00.000Z"><a href="/2014/08/12/how-to-set-up-a-samba-file-server-to-use-with-windows-clients/">2014-08-12</a></time>
       
       
@@ -1329,84 +1256,105 @@ writeable = yes
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-08-11T16:00:00.000Z"><a href="/2014/08/12/how-to-install-google-authenticator-on-linux/">2014-08-12</a></time>
+        <time datetime="2014-08-11T16:00:00.000Z"><a href="/2014/08/12/what-are-useful-online-tools-for-linux/">2014-08-12</a></time>
       
       
   
-    <h1 class="title"><a href="/2014/08/12/how-to-install-google-authenticator-on-linux/">How to install Google Authenticator on Linux</a></h1>
+    <h1 class="title"><a href="/2014/08/12/what-are-useful-online-tools-for-linux/">What are useful online tools for Linux</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p><em>Question I want to use Google Authenticator to set up two factor authentication. How can I install Google Authenticator on [insert your Linux distro]?</em></p>
-<p>Question: I want to use Google Authenticator to set up two factor authentication. How can I install Google Authenticator on [insert your Linux distro]?</p>
-<p>Google Authenticator is an application which can generate time-based one-time passcode to be used for two-factor authentication. You can install Google Authenticator on Linux as a pre-built package or by building it from the source.</p>
-<h3>Install Google Authenticator as a Pre-built Package</h3>
+        <p><em>As you know, GNU Linux is much more than just an OS. There is literally a whole sphere on the Internet dedicated to the penguin OS.</em></p>
+<p>As you know, GNU Linux is much more than just an OS. There is literally a whole sphere on the Internet dedicated to the penguin OS. If you read this post, you are probably inclined towards reading about Linux online. Among all the pages that you can find on the subject, there are a couple of websites that every Linux adventurer should have in his bookmarks. These websites are more than just tutorials or reviews. They are real tools that you can access from anywhere and share with everyone. So today I shall propose you a non-exhaustive list of sixteen websites that should be in your bookmarks. Some of them can also be useful for Windows or Mac users: that’s the extent of their reach.</p>
+<h3>1. <a href="ExplainShell.com">ExplainShell.com</a></h3>
 
-<p>For those of you who don’t want to build Google Authenticator, it is available as a pre-built package on several Linux distros. The pre-built package contains Google Authenticator binary and its PAM module.</p>
-<p>To install Google Authenticator on Ubuntu:</p>
-<pre>
-$ sudo apt-get install libpam-google-authenticator
-</pre>
+<p><img src="https://farm4.staticflickr.com/3841/14517716647_3b6a1a564d_z.jpg"></p>
+<p>If you are interested in Linux command line, you should use this website. If you are not interested in Linux command line, you should use it even more as it will explain in detail how a command works. This could prevent you from launching a command detrimental to your computer, and is a good way to learn with a great interface.</p>
+<h3>2. <a href="BashrcGenerator.com">BashrcGenerator.com</a></h3>
 
-<p>To install Google Authenticator on Fedora:</p>
-<pre>
-$ sudo yum install google-authenticator
-</pre>
+<p><img src="https://farm4.staticflickr.com/3900/14703872782_033e5acdb8_z.jpg"></p>
+<p>If you want to begin with Linux command line, or if you want to quickly get a customized shell prompt but not sure how, this website will generate for you PS1 prompt code to place your .bashrc file in your home directory. You can drag and drop the elements that you would like to see in your prompt, like your username and the current time, and the website will write the code for you. It’s easy and very readable. Definitely a must for the lazy.</p>
+<h3>3. <a href="Vim-adventures.com">Vim-adventures.com</a></h3>
 
-<p>To install Google Authenticator on CentOS, first enable EPEL repository, and then run:</p>
-<pre>
-$ sudo yum install google-authenticator
-</pre>
+<p><img src="https://farm4.staticflickr.com/3838/14681149696_0c533fd6de_z.jpg"></p>
+<p>I only recently discovered this website, but it already sucked in many hours of my life. In short: a RPG game with Vim commands. Move your character in the isometric levels with the ‘h,j,k,l’ keys, gain new commands/abilities, collect keys, and learn how to use Vim proficiently very quickly.</p>
+<h3>4. <a href="Try.Github.com">Try Github</a></h3>
 
-<h3>Compile Google Authenticator on Linux</h3>
+<p><img src="https://farm4.staticflickr.com/3874/14517499739_0452848d68_z.jpg"></p>
+<p>The pitch is simple: learn Git in 15 minutes. This website simulates a console, and walks you though the steps of collaborative editing. The interface is very stylish and the intention is worthy. The only downside is for the Git allergic. But it is definitely a good skill to have, and a good place to learn it.</p>
+<h3>5. <a href="Shortcutfoo.com">Shortcutfoo.com</a></h3>
 
-<p>First, install prerequisites for building Google Authenticator.</p>
-<p>On Debian, Ubuntu or Linux Mint:</p>
-<pre>
-$ sudo apt-get install wget make gcc libpam0g-dev
-</pre>
+<p><img src="https://farm4.staticflickr.com/3906/14517499799_f142ea37cb_z.jpg"></p>
+<p>Another shortcut database, shortcutfoo is a bit more standard in its way to present its content to the user, but definitely more straight-forward than funny mini-games. The shortcuts of several programs are available and grouped by categories. As it might not be super complete for software like Vim, which is completely reliant on shortcuts, it is perfect for giving a quick tip or a general overview.</p>
+<h3>6. <a href="#">GitHub Free Programming Books</a></h3>
 
-<p>On CentOS, Fedora or RHEL:</p>
-<pre>
-$ sudo yum install wget make gcc pam-devel
-</pre>
+<p><img src="https://farm4.staticflickr.com/3867/14517499989_408a28d8be_z.jpg"></p>
+<p>As you might guess from the URL, this is a collection of free online books about programming, written collaboratively using Git. The content is awesome and the authors deserve to be praised for such work. It might not be the easiest read at first, but it is one of the most instructive for sure. We can only hope that the movement will keep growing.</p>
 
-<p>Then download the source code of Google Authenticator, and compile it as follows.</p>
-<pre>
-$ wget https://google-authenticator.googlecode.com/files/libpam-google-authenticator-1.0-source.tar.bz2 
-$ tar xvfvj libpam-google-authenticator-1.0-source.tar.bz2 
-$ cd libpam-google-authenticator-1.0 
-$ make
-</pre>
 
-<p>If build is successful, you will see pam_google_authenticator.so and google-authenticator created in the directory.</p>
-<p>Finally, go ahead and install Google Authenticator.</p>
-<pre>
-$ sudo make install
-</pre>
+<h3>7. <a href="Collabedit.com">Collabedit.com</a></h3>
 
-<p>For instructions on how to set up two-factor authentication for SSH logins with Google Authenticator, refer to this guideline.</p>
-<h3>Troubleshoot</h3>
+<p><img src="https://farm3.staticflickr.com/2940/14681150086_2d169d67f9_z.jpg"></p>
+<p>If you ever plan on giving a phone interview, you should check out collabedit beforehand. It allows you to create a document, select the programming language that you want to write in, and then share that document via the URL. The people opening the link will be able to freely interact in real time with the text, allowing you to judge their programming skills or just exchange snippets. It even comes with the proper syntax highlighting and a chat widget. In other words, it is the instant-Google Document of programmers.</p>
 
-<ol>
-<li>I am getting the following error when compiling Google Authenticator.</li>
-</ol>
-<pre>
-fatal error: security/pam_appl.h: No such file or directory
-</pre>
 
-<p>To fix this problem, install the following package.</p>
-<p>On Debian, Ubuntu or Linux Mint:</p>
-<pre>
-$ sudo apt-get install libpam0g-dev
-</pre>
+<h3>8. <a href="Cpp.sh">Cpp.sh</a></h3>
 
-<p>On CentOS, Fedora or RHEL:</p>
-<pre>
-$ sudo yum install pam-devel
-</pre>
+<p><img src="https://farm4.staticflickr.com/3840/14700981001_af3ac40b65_z.jpg"></p>
+<p>This is one of those websites that extend beyond just Linux, but it is so useful that it deserves its place here. In short, an online development environment for C++. Just write your code in your navigator and run it. As a bonus, you get an auto-indentation feature, Ctrl+Z, and the possibility to share the URL with your buddy. This is just one of those crazy things that you can do from a simple browser.</p>
+
+
+<h3>9. <a href="Copy.sh">Copy.sh</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3883/14517479870_da521931eb_z.jpg"></p>
+<p>In continuation with crazy things that you can do from your browser, copy.sh lets you run a virtual machine online. Just that. It gained fame relatively recently, but the idea is just insane. From the navigator you can select among the defaults virtual images to run, or upload your own iso file. The code for that feat has been shared on GitHub. Just amazing.</p>
+
+
+<h3>10. <a href="Commandlinefu.com">Commandlinefu.com</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3887/14517495938_ca3b831ca9_z.jpg"></p>
+<p>We all keep a big snippet of command-line “gems” on our computer. commandlinefu’s goal is to release those snippets to the world. As a collaborative database, it resembles the Wikipedia of the command line. Everyone is free to register and post their favorite command on the website for everyone else to see. You will then be able to access that knowledge from everywhere and share it with everyone. If you are interested in mastering the shell, commandlinefu also proposes great features like random commands and a news feed to learn something new every day.</p>
+
+
+<h3>11. <a href="Alias.sh">Alias.sh</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3868/14701762124_a7b3547aca_z.jpg"></p>
+<p>Another collaborative database, alias.sh (I love the URL) is a bit like commandlinefu but for shell aliases. You can share and discover useful aliases which will make your CLI experience so much better. I personally like the alias to get the dimensions of a picture.  </p><br><pre><br>1 function dim(){ sips $1 -g pixelWidth -g pixelHeight }<br></pre><br><p>All the seconds you save with alias.sh probably accumulate with time, and turn to years by the end of your life.</p>
+
+
+<h3>12. <a href="Distrowatch.com">Distrowatch.com</a></h3>
+
+<p><img src="https://farm3.staticflickr.com/2910/14681149996_50a45bff78_z.jpg"></p>
+<p>Who does not know Distrowatch? Besides giving a precise ranking of Linux distributions based on their website popularity, Distrowatch is also a very useful database. Whether you are looking for a new distribution to try, or just curious, it presents an exhaustive account of every Linux you can find, with information like which default desktop environment it uses, or package system, or its default applications. And all the versions, and with easily accessible download links. In a word, the Linux database.</p>
+
+
+<h3>13. <a href="Linuxmanpages.com">Linuxmanpages.com</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3911/14704165765_8e30cb3d3f_z.jpg"></p>
+<p>Everything is in the URL: access the manual pages for popular commands from anywhere. Not really sure if this would actually be useful for Linux users as you can access that from your actual terminal, but the intent is remarkable.</p>
+
+
+<h3>14. <a href="AwesomeCow.com">AwesomeCow.com</a></h3>
+
+<p><img src="https://farm6.staticflickr.com/5558/14704165965_02b10ee293_z.jpg"></p>
+<p>This is maybe a bit less hardcore Linux, but definitely useful to some. Awesomecow is a search engine for finding alternatives to Windows software on Linux. It can be helpful for anyone migrating to the penguin, or nostalgic of a Windows program. I see this as a strength, showing that Linux can compete with the professional spheres when it comes sot software quality. Or at least try to.</p>
+
+
+<h3>15. <a href="PenguSpy.com">PenguSpy.com</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3904/14517495728_f6877e8e3b_z.jpg"></p>
+<p>Before Steam started to show up on Linux, gaming was probably one of the penguin’s weakness. But the website penguspy made the effort of fighting that weakness by collecting all Linux compatible games in a database with a sexy interface. Games can be sorted by categories, release dates, ratings, etc. I really hope that websites like this are not going to disappear because of Steam as it remains one of my favorites of this list.</p>
+
+
+<h3>16. <a href="http://lxr.free-electrons.com/" target="_blank" rel="noopener">Linux Cross Reference by Free Electrons</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3913/14712049464_6b666e2cfa_z.jpg"></p>
+<p>Finally, for all the experts and the curious, lxr is the anagram from Linux Cross Reference, and allows us to interactively view the Linux Kernel code online. The navigation is made easy via identifiers, and you can compare the different versions of the files with a standard diff markup. The interface is sober and straight-forward, and this is just a website that perfectly illustrates the concept of open source.</p>
+
+<p>To conclude, there are a lot more websites which deserve to be listed, and this might be a topic for a part two to this post. But this is a good start. It serves as an appetizer to what can be found online as tools for Linux users. If you have any other pages that you would like to share, following this thematic, do so in the comments. And maybe contribute to a sequel to this list.</p>
+
 
       
     </div>
@@ -1479,6 +1427,8 @@ $ sudo yum install pam-devel
     <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
   
     <li><a href="/tags/flask/">flask</a><small>1</small></li>
+  
+    <li><a href="/tags/gin/">gin</a><small>1</small></li>
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   

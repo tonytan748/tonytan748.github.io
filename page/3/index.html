@@ -54,6 +54,111 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2017-04-01T08:36:29.000Z"><a href="/2017/04/01/Building-RESTful-APIs-with-Tornado/">2017-04-01</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/04/01/Building-RESTful-APIs-with-Tornado/">Building RESTful APIs with Tornado</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>this blog is forward from <a href="http://www.drdobbs.com/open-source/building-restful-apis-with-tornado/240160382?pgno=1" target="_blank" rel="noopener">here</a></p>
+<p>Tornado is a Python Web framework and asynchronous networking library that provides excellent scalability due to its non-blocking network I/O. It also greatly facilitates building a RESTful API quickly. These features are central to Tornado, as it is the open-source version of FriendFeed’s Web server. A few weeks ago, Tornado 3.  was released, and it introduced many improvements. In this article, I show how to build a RESTful API with the latest Tornado Web framework and I illustrate how to take advantage of its asynchronous features.</p>
+<h2 id="Mapping-URL-Patterns-to-Request-Handlers"><a href="#Mapping-URL-Patterns-to-Request-Handlers" class="headerlink" title="Mapping URL Patterns to Request Handlers"></a>Mapping URL Patterns to Request Handlers</h2><p>To get going, download the latest stable version and perform a manual installation or execute an automatic installation with pip by running pip install tornado.</p>
+<p>To build a RESTful API with Tornado, it is necessary to map URL patterns to your subclasses of tornado.web.RequestHandler, which override the methods to handle HTTP requests to the URL. For example, if you want to handle an HTTP GET request with a synchronous operation, you must create a new subclass of tornado.web.RequestHandler and define the get() method. Then, you map the URL pattern in tornado.web.Application.</p>
+<p>Listing One shows a very simple RESTful API that declares two subclasses of tornado.web.RequestHandler that define the get method: VersionHandler and GetGameByIdHandler.</p>
+<h2 id="Listing-One-A-simple-RESTful-API-in-Tornado"><a href="#Listing-One-A-simple-RESTful-API-in-Tornado" class="headerlink" title="Listing One: A simple RESTful API in Tornado."></a>Listing One: A simple RESTful API in Tornado.</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">from datetime import date</span><br><span class="line">import tornado.escape</span><br><span class="line">import tornado.ioloop</span><br><span class="line">import tornado.web</span><br><span class="line"> </span><br><span class="line">class VersionHandler(tornado.web.RequestHandler):</span><br><span class="line">    def get(self):</span><br><span class="line">        response = &#123; &apos;version&apos;: &apos;3.5.1&apos;,</span><br><span class="line">            &apos;last_build&apos;:  date.today().isoformat() &#125;</span><br><span class="line">        self.write(response)</span><br><span class="line"></span><br><span class="line">class GetGameByIdHandler(tornado.web.RequestHandler):</span><br><span class="line">    def get(self, id):</span><br><span class="line">        response = &#123; &apos;id&apos;: int(id),</span><br><span class="line">            &apos;name&apos;: &apos;Crazy Game&apos;,</span><br><span class="line">            &apos;release_date&apos;: date.today().isoformat() &#125;</span><br><span class="line">        self.write(response)</span><br><span class="line">        </span><br><span class="line">application = tornado.web.Application([</span><br><span class="line">    (r&quot;/getgamebyid/([0-9]+)&quot;, GetGameByIdHandler),</span><br><span class="line">    (r&quot;/version&quot;, VersionHandler)</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    application.listen(8888)</span><br><span class="line">    tornado.ioloop.IOLoop.instance().start()</span><br></pre></td></tr></table></figure>
+<p>The code is easy to understand. It creates an instance of tornado.web.Application named application with the collection of request handlers that make up the Web application. The code passes a list of tuples to the Application constructor. The list is composed of a regular expression (regexp) and a tornado.web.RequestHandler subclass (request_class). The application.listen method builds an HTTP server for the application with the defined rules on the specified port. In this case, the code uses the default 8888 port. Then, the call to tornado.ioloop.IOLoop.instance().start() starts the server created with application.listen.</p>
+<p>When the Web application receives a request, Tornado iterates over that list and creates an instance of the first tornado.web.RequestHandler subclass whose associated regular expression matches the request path, and then calls the head(), get(), post(), delete(), patch(), put() or options() method with the corresponding parameters for the new instance based on the HTTP request. For example, Table 1 shows some HTTP requests that match the regular expressions defined in the previous code.</p>
+<table>
+<thead>
+<tr>
+<th>HTTP verb and request URL</th>
+<th>Tuple (regexp, request_class) that matches the request path</th>
+<th>RequestHandler subclass and method that is called</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET <a href="http://localhost:8888/getgamebyid/500" target="_blank" rel="noopener">http://localhost:8888/getgamebyid/500</a></td>
+<td>(r”/getgamebyid/([0-9]+)”, GetGameByIdHandler)</td>
+<td>GetGameByIdHandler.get</td>
+</tr>
+<tr>
+<td>GET <a href="http://localhost:8888/version" target="_blank" rel="noopener">http://localhost:8888/version</a></td>
+<td>(r”/version”, VersionHandler)</td>
+<td>VersionHandler.get</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Table-1-Matching-HTTP-requests"><a href="#Table-1-Matching-HTTP-requests" class="headerlink" title="Table 1: Matching HTTP requests."></a>Table 1: Matching HTTP requests.</h2><p>The simplest case is the VersionHandler.get method, which just receives self as a parameter because the URL pattern doesn’t include any parameter. The method creates a response dictionary, then calls the self.write method with response as a parameter. The self.write method writes the received chunk to the output buffer. Because the chunk (response) is a dictionary, self.write writes it as JSON and sets the Content-Type of the response to application/json. The following lines show the example response for GET <a href="http://localhost:8888/version" target="_blank" rel="noopener">http://localhost:8888/version</a> and the response headers:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;last_build&quot;: &quot;2013-08-08&quot;, &quot;version&quot;: &quot;3.5.1&quot;</span><br><span class="line">Date: Thu, 08 Aug 2013 19:45:04 GMT</span><br><span class="line">Etag: &quot;d733ae69693feb59f735e29bc6b93770afe1684f&quot;</span><br><span class="line">Content-Type: application/json; charset=UTF-8</span><br><span class="line">Server: TornadoServer/3.1</span><br><span class="line">Content-Length: 48&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+<p>If you want to send the data with a different Content-Type, you can call the self.set_header with “Content-Type” as the response header name and the desired value for it. You have to call self.set_header after calling self.write, as shown in Listing Two. It sets the Content-Type to text/plain instead of the default application/json in a new version of the VersionHandler class. Tornado encodes all header values as UTF-8.</p>
+<h2 id="Listing-Two-Changing-the-content-type"><a href="#Listing-Two-Changing-the-content-type" class="headerlink" title="Listing Two: Changing the content type."></a>Listing Two: Changing the content type.</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class VersionHandler(tornado.web.RequestHandler):</span><br><span class="line">    def get(self):</span><br><span class="line">        self.write(&quot;Version: 3.5.1. Last build: &quot; + date.today().isoformat())</span><br><span class="line">            self.set_header(&quot;Content-Type&quot;, &quot;text/plain&quot;)</span><br></pre></td></tr></table></figure>
+<p>The following lines show the example response for GET <a href="http://localhost:8888/version" target="_blank" rel="noopener">http://localhost:8888/version</a> and the response headers with the new version of the VersionHandler class:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Server: TornadoServer/3.1</span><br><span class="line">Content-Type: text/plain</span><br><span class="line">Etag: &quot;c305b564aa650a7d5ae34901e278664d2dc81f37&quot;</span><br><span class="line">Content-Length: 38</span><br><span class="line">Date: Fri, 09 Aug 2013 02:50:48 GMT</span><br></pre></td></tr></table></figure>
+<p>The GetGameByIdHandler.get method receives two parameters: self and id. The method creates a response dictionary that includes the integer value received for the id parameter, then calls the self.write method with response as a parameter. The sample doesn’t include any validation for the id parameter in order to keep the code as simple as possible, as I’m focused on the way in which the get method works. I assume you already know how to perform validations in Python. The following lines show the example response for GET <a href="http://localhost:8888/getgamebyid/500" target="_blank" rel="noopener">http://localhost:8888/getgamebyid/500</a> and the response headers:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;release_date&quot;: &quot;2013-08-09&quot;, &quot;id&quot;: 500, &quot;name&quot;: &quot;Crazy Game&quot;&#125;</span><br><span class="line"> </span><br><span class="line"> Content-Length: 63</span><br><span class="line"> Server: TornadoServer/3.1</span><br><span class="line"> Content-Type: application/json; charset=UTF-8</span><br><span class="line"> Etag: &quot;489191987742a29dd10c9c8e90c085bd07a22f0e&quot;</span><br><span class="line"> Date: Fri, 09 Aug 2013 03:17:34 GMT</span><br></pre></td></tr></table></figure>
+<p>If you need to access additional request parameters such as the headers and body data, you can access them through self.request. This variable is a tornado.httpserver.HTTPRequest instance that provides all the information about the HTTP request. The HTTPRequest class is defined in httpserver.py.</p>
+<h2 id="Working-with-Asynchronous-Code"><a href="#Working-with-Asynchronous-Code" class="headerlink" title="Working with Asynchronous Code"></a>Working with Asynchronous Code</h2><p>If you’ve ever worked with callbacks, you know how difficult it is to read and understand code split into different methods. Tornado provides a generator-based interface (tornado.gen) to enable you to write asynchronous code in handlers in a single generator.</p>
+<p>You simply need to use the @tornado.gen.coroutine decorator for asynchronous generators in the required method and you don’t need to add the @tornado.web.asynchronous decorator. Listing Three shows a new subclass of tornado.web.RequestHandler and defines the get() method with the @tornado.gen.coroutine decorator. You need to add two imports to add the code to the previous listing: import tornado.gen and import tornado.httpclient.</p>
+<h2 id="Listing-Three-A-different-subclass-of-tornado-web-RequestHandler"><a href="#Listing-Three-A-different-subclass-of-tornado-web-RequestHandler" class="headerlink" title="Listing Three: A different subclass of tornado.web.RequestHandler."></a>Listing Three: A different subclass of tornado.web.RequestHandler.</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class GetFullPageAsyncHandler(tornado.web.RequestHandler):</span><br><span class="line">    @tornado.gen.coroutine</span><br><span class="line">    def get(self):</span><br><span class="line">        http_client = tornado.httpclient.AsyncHTTPClient()</span><br><span class="line">        http_response = yield http_client.fetch(&quot;http://www.drdobbs.com/web-development&quot;)</span><br><span class="line">        response = http_response.body.decode().replace(</span><br><span class="line">            &quot;Most Recent Premium Content&quot;, &quot;Most Recent Content&quot;)</span><br><span class="line">        self.write(response)</span><br><span class="line">        self.set_header(&quot;Content-Type&quot;, &quot;text/html&quot;)</span><br></pre></td></tr></table></figure>
+<p>Because I’ve added a new subclass of RequestHandler, it is necessary to map the URL pattern in tornado.Web.Application. Listing Four shows the new code that maps the /getfullpage URL to the GetFullPageAsyncHandler.</p>
+<h2 id="Listing-Four-Mapping-a-URL-to-a-handler"><a href="#Listing-Four-Mapping-a-URL-to-a-handler" class="headerlink" title="Listing Four: Mapping a URL to a handler."></a>Listing Four: Mapping a URL to a handler.</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">application = tornado.web.Application([</span><br><span class="line">    (r&quot;/getfullpage&quot;, GetFullPageAsyncHandler),</span><br><span class="line">    (r&quot;/getgamebyid/([0-9]+)&quot;, GetGameByIdHandler),</span><br><span class="line">    (r&quot;/version&quot;, VersionHandler),            </span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+<p>The GetFullPageAsyncHandler.get method creates a tornado.httpclient.AsyncHTTPClient instance (http_client) that represents a non-blocking HTTP client. Then, the code calls the http_client.fetch method of this instance to asynchronously execute a request. The fetch method returns a Future, whose result is an HTTPResponse, and raises an HTTPError if the request returns a response code other than 200. The code uses the yield keyword to retrieve the HTTPResponse from the Future returned by the fetch method.</p>
+<p>The call to fetch retrieves the Dr. Dobb’s Web Development page from <a href="http://www.drdobbs.com/web-development" target="_blank" rel="noopener">http://www.drdobbs.com/web-development</a> with an asynchronous execution. When fetch finishes its execution with a successful response code equal to 200, http_response will be an HTTPRequest instance with the contents of the retrieved HTML page in http_response.body. The method continues its execution with the line after the call to fetch. You have all the code that needs to be executed in the get method with the @tornado.gen.coroutine decorator, and you don’t have to worry about writing a callback for on_fetch. The next line decodes the response body to a string and replaces “Most Recent Premium Content” with “Most Recent Content.” Then, the code calls the self.write method to write the modified string and sets the Content-Type of the response to application/html.</p>
+<p>Listing Five is the equivalent code, which uses the @tornado.web.asynchronous decorator instead of @tornado.gen.coroutine. In this case, it is necessary to define the on_fetch method that works as the callback for the http_client.fetch method; therefore, the code is split into two methods.</p>
+<h2 id="Listing-Five-The-equivalent-functionality-using-a-decorator"><a href="#Listing-Five-The-equivalent-functionality-using-a-decorator" class="headerlink" title="Listing Five: The equivalent functionality using a decorator."></a>Listing Five: The equivalent functionality using a decorator.</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class GetFullPageAsyncNewHandler(tornado.web.RequestHandler):</span><br><span class="line">    @tornado.web.asynchronous</span><br><span class="line">    def get(self):</span><br><span class="line">        http_client = tornado.httpclient.AsyncHTTPClient()</span><br><span class="line">        http_client.fetch(&quot;http://www.drdobbs.com/web-development&quot;, callback=self.on_fetch)</span><br><span class="line"></span><br><span class="line">    def on_fetch(self, http_response):</span><br><span class="line">        if http_response.error: raise tornado.web.HTTPError(500)</span><br><span class="line">        response = http_response.body.decode().replace(&quot;Most Recent Premium Content&quot;, &quot;Most Recent Content&quot;)</span><br><span class="line">        self.write(response)</span><br><span class="line">        self.set_header(&quot;Content-Type&quot;, &quot;text/html&quot;)</span><br><span class="line">        self.finish()</span><br></pre></td></tr></table></figure>
+<p>When the fetch method finishes retrieving the content, it executes the code in on_fetch. Because the get method uses @tornado.web.asynchronous, it is your responsibility to call self.finish() to finish the HTTP request. Thus, the on_fetch method calls self_finish in its last line, after calling self.write and self.set_header. As you can see, it is much easier to use the @tornado.gen.coroutine decorator.</p>
+<h2 id="Understanding-How-Tornado-Works-with-a-RequestHandler-Subclass"><a href="#Understanding-How-Tornado-Works-with-a-RequestHandler-Subclass" class="headerlink" title="Understanding How Tornado Works with a RequestHandler Subclass"></a>Understanding How Tornado Works with a RequestHandler Subclass</h2><p>The RequestHandler class defines a SUPPORTED_METHODS class variable with the following code. If you need support for different methods, you need to override the SUPPORTED_METHODS class variable in your RequestHandler subclass:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SUPPORTED_METHODS = (&quot;GET&quot;, &quot;HEAD&quot;, &quot;POST&quot;, &quot;DELETE&quot;, &quot;PATCH&quot;, &quot;PUT&quot;, &quot;OPTIONS&quot;)</span><br></pre></td></tr></table></figure>
+<p>The default code for the head(), get(), post(), delete(), patch(), put(), and options() methods is a single line that raises an HTTPError. Listing Six shows the code for the get method:</p>
+<h3 id="Listing-Six-The-get-method"><a href="#Listing-Six-The-get-method" class="headerlink" title="Listing Six: The get() method."></a>Listing Six: The get() method.</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def get(self, *args, **kwargs):</span><br><span class="line">   raise HTTPError(405)</span><br></pre></td></tr></table></figure>
+<p>Whenever the Web application receives a request and matches the URL pattern, Tornado performs the following actions:</p>
+<ol>
+<li>It creates a new instance of the RequestHandler subclass that has been mapped to the URL pattern.</li>
+<li>It calls the initialize method with the keyword arguments specified in the application configuration. You can override the initialize method to save the arguments into member variables.</li>
+<li>No matter what the HTTP request, Tornado calls the prepare method. If you call either finish or send_error, Tornado won’t call any additional methods. You can override the prepare method to execute code that is necessary for any HTTP request, then write your specific code in the head(), get(), post(), delete(), patch(), put() or options() method.</li>
+<li>It calls the method according to the HTTP request with the arguments based on the URL regular expression that captured the different groups. As you already know, you must override the methods you want your RequestHandler subclass to be able to process. For example, if there is an HTTP GET request, Tornado will call the get method with the different arguments.</li>
+<li>If the handler is synchronous, Tornado calls on_finish after the previous method called, according to the HTTP request returns. But if the handler is asynchronous, Tornado executes on_finish after the code calls finish. The previous asynchronous example showed the usage of finish. You can override the on_finish method to perform cleanup or logging. Notice that Tornado calls on_finish after it sends the response to the client.</li>
+</ol>
+<p>If the client closes the connection in asynchronous handlers, Tornado calls on_connection_close. You can override this method to clean up resources in this specific scenario. However, the cleanup after processing the request must be included in the on_finish method.</p>
+<p>Listing Seven shows a new version of the GetGameByIdHandler class that overrides the initialize method to receive a string specified in the application configuration. The initialize method just saves common_string into a member variable, then the get method uses the string in the response:</p>
+<h3 id="Listing-Seven-Overriding-the-initialize-method"><a href="#Listing-Seven-Overriding-the-initialize-method" class="headerlink" title="Listing Seven: Overriding the initialize() method."></a>Listing Seven: Overriding the initialize() method.</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class GetGameByIdHandler(tornado.web.RequestHandler):</span><br><span class="line">    def initialize(self, common_string):</span><br><span class="line">        self.common_string = common_string</span><br><span class="line"></span><br><span class="line">    def get(self, id):</span><br><span class="line">        response = &#123; &apos;id&apos;: int(id),</span><br><span class="line">                     &apos;name&apos;: &apos;Crazy Game&apos;,</span><br><span class="line">                     &apos;release_date&apos;: date.today().isoformat(),</span><br><span class="line">                     &apos;common_string&apos;: self.common_string &#125;</span><br><span class="line">        self.write(response)</span><br></pre></td></tr></table></figure>
+<p>The following code shows the changes in the arguments passed to the tornado.web.Application constructor to pass a value for common_string in a dictionary for the GetGameByIdHandler request handler:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">application = tornado.web.Application([</span><br><span class="line">    (r&quot;/getgamebyid/([0-9]+)&quot;, GetGameByIdHandler,</span><br><span class="line">    dict(common_string=&apos;Value defined in Application&apos;)),</span><br></pre></td></tr></table></figure>
+<p>In this case, I’ve used a simple string as the value passed from the application. However, the most common usage will be to pass one or more common objects (for example, a database object).</p>
+<h2 id="Returning-Errors-in-a-Request-Handler"><a href="#Returning-Errors-in-a-Request-Handler" class="headerlink" title="Returning Errors in a Request Handler"></a>Returning Errors in a Request Handler</h2><p>Listing Eight shows the code for the ErrorHandler request handler that demonstrates the simplest use of the three different mechanisms to return errors in a handler method.</p>
+<h3 id="Listing-Eight-A-simple-error-request-handler"><a href="#Listing-Eight-A-simple-error-request-handler" class="headerlink" title="Listing Eight: A simple error request handler."></a>Listing Eight: A simple error request handler.</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class ErrorHandler(tornado.web.RequestHandler):</span><br><span class="line">    def get(self, error_code):</span><br><span class="line">        if error_code == 1:</span><br><span class="line">            self.set_status(500)</span><br><span class="line">        elif error_code == 2:</span><br><span class="line">            self.send_error(500)</span><br><span class="line">        else:</span><br><span class="line">            raise tornado.web.HTTPError(500)</span><br></pre></td></tr></table></figure>
+<p>It is necessary to add the appropriate mapping to the Application constructor parameters with the following line:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(r&quot;/error/([0-9]+)&quot;, ErrorHandler),</span><br></pre></td></tr></table></figure>
+<p>If error_code is equal to 1, the get method calls self.set_status, which sets the status code for the response. It is also possible to specify a reason string as the second parameter. If error_code is equal to 2, the get method calls self.send_error, which sends the specified HTTP error code to the browser. Any other error_code value will make the get method raise a tornado.web.HTTPError exception with the 500 status code.</p>
+<p>The three different mechanisms to return errors return the default error page, which you can change by overriding the write_error method in your RequestHandler subclasses.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>In this article, I’ve provided many examples to show how to easy it is to start developing RESTful APIs with Tornado. I’ve covered basic features, but you will definitely want to dive deeper into Tornado’s additional useful features when building a complete RESTful API. Tornado’s source code comes with good documentation for the different methods and variables, so you can easily build the methods you need to use as you write code.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2017-03-19T14:26:01.000Z"><a href="/2017/03/19/Creating-a-multiprocessing-Downloader-App/">2017-03-19</a></time>
       
       
@@ -772,110 +877,6 @@ print data.dtypes
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-07-02T16:00:00.000Z"><a href="/2016/07/03/curl-command-reference/">2016-07-03</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/07/03/curl-command-reference/">CURL command reference</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <table>
-<thead>
-<tr>
-<th>Operations</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>-X</td>
-<td>appoint HTTP request method, like POST, GET</td>
-</tr>
-<tr>
-<td>-H</td>
-<td>appoint request header, for example Content-type:application/json</td>
-</tr>
-<tr>
-<td>-d</td>
-<td>appoint request data</td>
-</tr>
-<tr>
-<td>–data-binary</td>
-<td>appoint send files</td>
-</tr>
-<tr>
-<td>-i</td>
-<td>show response header info</td>
-</tr>
-<tr>
-<td>-u</td>
-<td>appoint authentication username and password</td>
-</tr>
-<tr>
-<td>-v</td>
-<td>point request header info</td>
-</tr>
-</tbody>
-</table>
-<p>For example:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">curl -X PATCH http://127.0.0.1:5000/echo  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">result:</span><br><span class="line">GET /echo</span><br><span class="line">ECHO: GET</span><br><span class="line"> </span><br><span class="line">POST /ECHO</span><br><span class="line">ECHO: POST</span><br></pre></td></tr></table></figure>
-<pre><code>curl -H &quot;Content-type: application/json&quot; \
--X POST http://127.0.0.1:5000/messages -d &apos;{&quot;message&quot;:&quot;Hello Data&quot;}&apos;  
-
-result:
-POST /messages {&quot;message&quot;: &quot;Hello Data&quot;}
-Content-type: application/json
-JSON Message: {&quot;message&quot;: &quot;Hello Data&quot;}
-
-POST /message &lt;message.bin&gt;
-Content-type: application/octet-stream
-Binary message written!
-
-
-curl -i http://127.0.0.1:5000/hello  
-
-result:
-GET /hello
-HTTP/1.0 200 OK
-Content-Type: application/json
-Content-Length: 31
-Link: http://luisrei.com
-Server: Werkzeug/0.8.2 Python/2.7.1
-Date: Wed, 25 Apr 2012 16:40:27 GMT
-{&quot;hello&quot;: &quot;world&quot;, &quot;number&quot;: 3}
-
-
-curl -v -u &quot;admin:secret&quot; http://127.0.0.1:5000/secrets
-
-# result:
-GET /secrets Authorization: Basic YWRtaW46c2VjcmV0
-Shhh this is top secret spy stuff!
-
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -932,6 +933,8 @@ Shhh this is top secret spy stuff!
     <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
   
     <li><a href="/tags/flask/">flask</a><small>1</small></li>
+  
+    <li><a href="/tags/gin/">gin</a><small>1</small></li>
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   

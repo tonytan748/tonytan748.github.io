@@ -54,6 +54,106 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-08-11T16:00:00.000Z"><a href="/2014/08/12/how-to-install-google-authenticator-on-linux/">2014-08-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/12/how-to-install-google-authenticator-on-linux/">How to install Google Authenticator on Linux</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Question I want to use Google Authenticator to set up two factor authentication. How can I install Google Authenticator on [insert your Linux distro]?</em></p>
+<p>Question: I want to use Google Authenticator to set up two factor authentication. How can I install Google Authenticator on [insert your Linux distro]?</p>
+<p>Google Authenticator is an application which can generate time-based one-time passcode to be used for two-factor authentication. You can install Google Authenticator on Linux as a pre-built package or by building it from the source.</p>
+<h3>Install Google Authenticator as a Pre-built Package</h3>
+
+<p>For those of you who don’t want to build Google Authenticator, it is available as a pre-built package on several Linux distros. The pre-built package contains Google Authenticator binary and its PAM module.</p>
+<p>To install Google Authenticator on Ubuntu:</p>
+<pre>
+$ sudo apt-get install libpam-google-authenticator
+</pre>
+
+<p>To install Google Authenticator on Fedora:</p>
+<pre>
+$ sudo yum install google-authenticator
+</pre>
+
+<p>To install Google Authenticator on CentOS, first enable EPEL repository, and then run:</p>
+<pre>
+$ sudo yum install google-authenticator
+</pre>
+
+<h3>Compile Google Authenticator on Linux</h3>
+
+<p>First, install prerequisites for building Google Authenticator.</p>
+<p>On Debian, Ubuntu or Linux Mint:</p>
+<pre>
+$ sudo apt-get install wget make gcc libpam0g-dev
+</pre>
+
+<p>On CentOS, Fedora or RHEL:</p>
+<pre>
+$ sudo yum install wget make gcc pam-devel
+</pre>
+
+<p>Then download the source code of Google Authenticator, and compile it as follows.</p>
+<pre>
+$ wget https://google-authenticator.googlecode.com/files/libpam-google-authenticator-1.0-source.tar.bz2 
+$ tar xvfvj libpam-google-authenticator-1.0-source.tar.bz2 
+$ cd libpam-google-authenticator-1.0 
+$ make
+</pre>
+
+<p>If build is successful, you will see pam_google_authenticator.so and google-authenticator created in the directory.</p>
+<p>Finally, go ahead and install Google Authenticator.</p>
+<pre>
+$ sudo make install
+</pre>
+
+<p>For instructions on how to set up two-factor authentication for SSH logins with Google Authenticator, refer to this guideline.</p>
+<h3>Troubleshoot</h3>
+
+<ol>
+<li>I am getting the following error when compiling Google Authenticator.</li>
+</ol>
+<pre>
+fatal error: security/pam_appl.h: No such file or directory
+</pre>
+
+<p>To fix this problem, install the following package.</p>
+<p>On Debian, Ubuntu or Linux Mint:</p>
+<pre>
+$ sudo apt-get install libpam0g-dev
+</pre>
+
+<p>On CentOS, Fedora or RHEL:</p>
+<pre>
+$ sudo yum install pam-devel
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-08-09T16:00:00.000Z"><a href="/2014/08/10/python-handle-photos/">2014-08-10</a></time>
       
       
@@ -789,75 +889,6 @@ print tn.read_all()
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-07-11T16:00:00.000Z"><a href="/2014/07/12/remote-control-with-telnetlib-python-recipe/">2014-07-12</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/07/12/remote-control-with-telnetlib-python-recipe/">Remote control with telnetlib (Python recipe)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>Remote control with telnetlib (Python recipe)</em></p>
-<p>Send commands to one or more logins using Python’s standard telnetlib module.</p>
-<p><pre></pre></p>
-<h1 id="auto-telnet-py-remote-control-via-telnet"><a href="#auto-telnet-py-remote-control-via-telnet" class="headerlink" title="auto_telnet.py - remote control via telnet"></a>auto_telnet.py - remote control via telnet</h1><p>import os, sys, string, telnetlib<br>from getpass import getpass</p>
-<p>class AutoTelnet:<br>    def <strong>init</strong>(self, user_list, cmd_list, **kw):<br>        self.host = kw.get(‘host’, ‘localhost’)<br>        self.timeout = kw.get(‘timeout’, 600)<br>        self.command_prompt = kw.get(‘command_prompt’, “$ “)<br>        self.passwd = {}<br>        for user in user_list:<br>            self.passwd[user] = getpass(“Enter user ‘%s’ password: “ % user)<br>        self.telnet = telnetlib.Telnet()<br>        for user in user_list:<br>            self.telnet.open(self.host)<br>            ok = self.action(user, cmd_list)<br>            if not ok:<br>                print “Unable to process:”, user<br>            self.telnet.close()</p>
-<pre><code>def action(self, user, cmd_list):
-    t = self.telnet
-    t.write(&quot;\n&quot;)
-    login_prompt = &quot;login: &quot;
-    response = t.read_until(login_prompt, 5)
-    if string.count(response, login_prompt):
-        print response
-    else:
-        return 0
-    password_prompt = &quot;Password:&quot;
-    t.write(&quot;%s\n&quot; % user)
-    response = t.read_until(password_prompt, 3)
-    if string.count(response, password_prompt):
-        print response
-    else:
-        return 0
-    t.write(&quot;%s\n&quot; % self.passwd[user])
-    response = t.read_until(self.command_prompt, 5)
-    if not string.count(response, self.command_prompt):
-        return 0
-    for cmd in cmd_list:
-        t.write(&quot;%s\n&quot; % cmd)
-        response = t.read_until(self.command_prompt, self.timeout)
-        if not string.count(response, self.command_prompt):
-            return 0
-        print response
-    return 1
-</code></pre><p>if <strong>name</strong> == ‘<strong>main</strong>‘:<br>    basename = os.path.splitext(os.path.basename(sys.argv[0]))[0]<br>    logname = os.environ.get(“LOGNAME”, os.environ.get(“USERNAME”))<br>    host = ‘localhost’<br>    import getopt<br>    optlist, user_list = getopt.getopt(sys.argv[1:], ‘c:f:h:’)<br>    usage = “””<br>usage: %s [-h host] [-f cmdfile] [-c “command”] user1 user2 …<br>    -c  command<br>    -f  command file<br>    -h  host  (default: ‘%s’)</p>
-<p>Example:  %s -c “echo $HOME” %s<br>“”” % (basename, host, basename, logname)<br>    if len(sys.argv) &lt; 2:<br>        print usage<br>        sys.exit(1)<br>    cmd_list = []<br>    for (opt, optarg) in optlist:<br>        if opt == ‘-f’:<br>            for r in open(optarg).readlines():<br>                if string.rstrip(r):<br>                    cmd_list.append(r)<br>        elif opt == ‘-c’:<br>            command = optarg<br>            if command[0] == ‘“‘ and command[-1] == ‘“‘:<br>                command = command[1:-1]<br>            cmd_list.append(command)<br>        elif opt == ‘-h’:<br>            host = optarg<br>    autoTelnet = AutoTelnet(user_list, cmd_list, host=host)</p>
-<p><br>Python’s telnetlib permits users to easily automate access to telnet servers, even from non-Unix machines.</p>
-<p>As an alternative to the popen() functions, telnetlib is probably a handy technique to have in your sysadmin toolbox.</p>
-<p>Production code will generally be more robust, but this example should be enough to get anyone started in the right direction.</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -914,6 +945,8 @@ print tn.read_all()
     <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
   
     <li><a href="/tags/flask/">flask</a><small>1</small></li>
+  
+    <li><a href="/tags/gin/">gin</a><small>1</small></li>
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   
