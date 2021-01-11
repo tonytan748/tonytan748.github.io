@@ -937,6 +937,133 @@ sudo apt-get install mysqlclient
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-10-12T16:00:00.000Z"><a href="/2014/10/13/dajngo-episode-3-introduction-to-south-migrations/">2014-10-13</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/10/13/dajngo-episode-3-introduction-to-south-migrations/">Dajngo Episode 3 Introduction to South Migrations</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Introduction to South Migrations</em></p>
+<p>Install SOUTH:</p>
+<pre>
+pip install South
+</pre>
+
+<pre>
+vim settings.py
+</pre>
+In "INSTALLED_APP"
+Add
+<pre>
+'south',
+</pre>
+
+<pre>
+python manage.py syncdb
+</pre>
+Create a new app.
+<pre>
+python manage.py startapp page
+</pre>
+Add 'page' to project.
+<pre>
+vim settings.py
+</pre>
+
+<pre>
+'page',
+</pre>
+In page part, edit models.
+<pre>
+vim page/models.py
+</pre>
+
+<pre>
+from django.db import models
+class Page(models.Model):
+    title=models.CharField(max_length=200)
+    slug=models.SlugField(max_length=200)
+    body=models.TextField()
+</pre>
+
+<pre>
+python manage.py schemamigration page --initial
+</pre>
+
+<pre>
+python manage.py migrate page
+</pre>
+
+<p>Update models.</p>
+<pre>
+vim page/models.py
+</pre>
+
+<pre>
+from datetime import datetime
+
+pub_date=models.DateTimeField(default=datetime.now())
+</pre>
+
+<pre>
+python manage.py schemamigration page --auto
+</pre>
+
+<pre>
+python manage.py migrate page
+</pre>
+
+<p>In another app “post”,</p>
+<pre>
+python manage.py convert_to_south post
+</pre>
+
+<pre>
+vim post/models.py
+</pre>
+
+<pre>
+from datetime import datetime
+pub_date=models.DateTimeField(default=datetime.now())
+</pre>
+
+<pre>
+python manage.py schemamigration post --auto
+</pre>
+
+<pre>
+python manage.py migrate post
+</pre>
+
+<pre>
+python manage.py migrate post 0001 --fake
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-10-12T16:00:00.000Z"><a href="/2014/10/13/create-and-apply-filters-to-lists-of-file-paths-python-recipe/">2014-10-13</a></time>
       
       
@@ -1051,133 +1178,6 @@ if __name__ == '__main__':
         print '  ', file
     print
 </pre>
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-10-12T16:00:00.000Z"><a href="/2014/10/13/dajngo-episode-3-introduction-to-south-migrations/">2014-10-13</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/10/13/dajngo-episode-3-introduction-to-south-migrations/">Dajngo Episode 3 Introduction to South Migrations</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>Introduction to South Migrations</em></p>
-<p>Install SOUTH:</p>
-<pre>
-pip install South
-</pre>
-
-<pre>
-vim settings.py
-</pre>
-In "INSTALLED_APP"
-Add
-<pre>
-'south',
-</pre>
-
-<pre>
-python manage.py syncdb
-</pre>
-Create a new app.
-<pre>
-python manage.py startapp page
-</pre>
-Add 'page' to project.
-<pre>
-vim settings.py
-</pre>
-
-<pre>
-'page',
-</pre>
-In page part, edit models.
-<pre>
-vim page/models.py
-</pre>
-
-<pre>
-from django.db import models
-class Page(models.Model):
-    title=models.CharField(max_length=200)
-    slug=models.SlugField(max_length=200)
-    body=models.TextField()
-</pre>
-
-<pre>
-python manage.py schemamigration page --initial
-</pre>
-
-<pre>
-python manage.py migrate page
-</pre>
-
-<p>Update models.</p>
-<pre>
-vim page/models.py
-</pre>
-
-<pre>
-from datetime import datetime
-
-pub_date=models.DateTimeField(default=datetime.now())
-</pre>
-
-<pre>
-python manage.py schemamigration page --auto
-</pre>
-
-<pre>
-python manage.py migrate page
-</pre>
-
-<p>In another app “post”,</p>
-<pre>
-python manage.py convert_to_south post
-</pre>
-
-<pre>
-vim post/models.py
-</pre>
-
-<pre>
-from datetime import datetime
-pub_date=models.DateTimeField(default=datetime.now())
-</pre>
-
-<pre>
-python manage.py schemamigration post --auto
-</pre>
-
-<pre>
-python manage.py migrate post
-</pre>
-
-<pre>
-python manage.py migrate post 0001 --fake
-</pre>
-
       
     </div>
     <footer>
