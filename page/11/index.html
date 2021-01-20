@@ -54,6 +54,89 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-06-28T16:00:00.000Z"><a href="/2014/06/29/socket-client-and-server-in-python/">2014-06-29</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/06/29/socket-client-and-server-in-python/">Socket client and server in Python </a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>A sample example for connection server and client use socket in Python</em></p>
+<p>Client.py</p>
+<pre>
+import socket 
+s=socket.socket(socket.AF_INET,socket.SOCK_STREAM) 
+s.connect(('localhost',8081)) 
+s.send('Happy hacking') 
+data=s.recv(1024) 
+s.close() 
+print "Received:" 
+print data
+</pre>
+
+<p>Server.py</p>
+<pre>
+import socket 
+import sys 
+
+#Create a TCP/IP socket to listen on 
+server=socket.socket(socket.AF_INET,socket.SOCK_STREAM)  
+
+#Prevent from "address already in use" upon server restart 
+server.setsockopt(socket.SOL_SOCKET,socket.SO_REUSERADDR,1)  
+#Bind the socket to port 8081 on all interfaces 
+server_address=('localhost',8081) 
+print  'starting up on %s port %s' % server_address 
+server.bind(server_address)  
+
+#Listen for connections 
+server.listen(5)  
+
+#Wait for one incomming connection 
+connection,client_address=server.accept() 
+print 'connection from ', connection.getpeername()  
+
+#Let's receive something 
+data=connection.recv(4096) 
+if data: 
+    print "received ", repr(data)
+     #send it back nicely formatted
+     data=data.rstrip()
+     connection.send('%s\n%s\n%s\n' % ('-'*80,data.center(80),'-'*80))
+     print "Response sent!"
+#close the connection from our side 
+connection.shutdown(socket.SHUT_RD | socket.SHUT_WR) 
+connection.close() 
+print "Connection closed."  
+
+#Aa and stop listening 
+server.close()
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-06-26T16:00:00.000Z"><a href="/2014/06/27/Python-sqlite3-get-column-name/">2014-06-27</a></time>
       
       
@@ -431,7 +514,7 @@ follow symlinks = yes</pre>
   
     <li><a href="/tags/flask/">flask</a><small>1</small></li>
   
-    <li><a href="/tags/gin/">gin</a><small>1</small></li>
+    <li><a href="/tags/go/">go</a><small>2</small></li>
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   

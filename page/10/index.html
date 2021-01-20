@@ -54,6 +54,48 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-07-11T16:00:00.000Z"><a href="/2014/07/12/urllib2---user-agent/">2014-07-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/12/urllib2---user-agent/">Urllib2   User Agent</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>This post will show how to add headers to a HTTP request.</em></p>
+<p><pre><br>This post will show how to add headers to a HTTP request.</pre></p>
+<p>By default urllib2 identifies itself as Python-urllib/2.7 : GET / HTTP/1.1” 200<br>151 “-“ “Python-urllib/2.7”</p>
+<p>That can sometimes be confusing for certain sites. With the user_agent header in<br>Python, it’s possible to alter that and specify any identity you like.<br></p>
+<p><pre><br>The example below, use the Mozilla 5.10 as a User Agent, and that is also what<br>will show up in the web server log file.<br></pre></p>
+<p><pre><br>import urllib2</pre></p>
+<p>req = urllib2.Request(‘<a href="http://192.168.1.2/&#39;" target="_blank" rel="noopener">http://192.168.1.2/&#39;</a>)</p>
+<p>req.add_header(‘User-agent’, ‘Mozilla 5.10’)</p>
+<p>res = urllib2.urlopen(req)</p>
+<p>html = res.read()<br><br>This is what will show up in the log file.<br>“GET / HTTP/1.1” 200 151 “-“ “Mozilla 5.10”</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-07-11T16:00:00.000Z"><a href="/2014/07/12/remote-control-with-telnetlib-python-recipe/">2014-07-12</a></time>
       
       
@@ -1129,89 +1171,6 @@ Woof!
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-06-28T16:00:00.000Z"><a href="/2014/06/29/socket-client-and-server-in-python/">2014-06-29</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/06/29/socket-client-and-server-in-python/">Socket client and server in Python </a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>A sample example for connection server and client use socket in Python</em></p>
-<p>Client.py</p>
-<pre>
-import socket 
-s=socket.socket(socket.AF_INET,socket.SOCK_STREAM) 
-s.connect(('localhost',8081)) 
-s.send('Happy hacking') 
-data=s.recv(1024) 
-s.close() 
-print "Received:" 
-print data
-</pre>
-
-<p>Server.py</p>
-<pre>
-import socket 
-import sys 
-
-#Create a TCP/IP socket to listen on 
-server=socket.socket(socket.AF_INET,socket.SOCK_STREAM)  
-
-#Prevent from "address already in use" upon server restart 
-server.setsockopt(socket.SOL_SOCKET,socket.SO_REUSERADDR,1)  
-#Bind the socket to port 8081 on all interfaces 
-server_address=('localhost',8081) 
-print  'starting up on %s port %s' % server_address 
-server.bind(server_address)  
-
-#Listen for connections 
-server.listen(5)  
-
-#Wait for one incomming connection 
-connection,client_address=server.accept() 
-print 'connection from ', connection.getpeername()  
-
-#Let's receive something 
-data=connection.recv(4096) 
-if data: 
-    print "received ", repr(data)
-     #send it back nicely formatted
-     data=data.rstrip()
-     connection.send('%s\n%s\n%s\n' % ('-'*80,data.center(80),'-'*80))
-     print "Response sent!"
-#close the connection from our side 
-connection.shutdown(socket.SHUT_RD | socket.SHUT_WR) 
-connection.close() 
-print "Connection closed."  
-
-#Aa and stop listening 
-server.close()
-</pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2014-06-28T16:00:00.000Z"><a href="/2014/06/29/search-google-with-python-tutorial/">2014-06-29</a></time>
       
       
@@ -1369,7 +1328,7 @@ server.close()
   
     <li><a href="/tags/flask/">flask</a><small>1</small></li>
   
-    <li><a href="/tags/gin/">gin</a><small>1</small></li>
+    <li><a href="/tags/go/">go</a><small>2</small></li>
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   

@@ -48,7 +48,43 @@
 </header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
-  <article class="go">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2021-01-20T06:18:57.000Z"><a href="/2021/01/20/Go安装go-redis依赖被墙问题/">2021-01-20</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2021/01/20/Go安装go-redis依赖被墙问题/">Go安装go-redis依赖被墙问题</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>GO安装go-redis时，报<code>verifying github.com/go-redis/redis@v6.15.9+incompatible: github.com/go-redis/redis@v6.15.9+incompatible: Get https://sum.golang.org/lookup/github.com/go-redis/redis@v6.15.9+incompatible: dial tcp 108.177.125.141:443: i/o timeout</code>错误。</p>
+<p>是由于国内被墙问题导致。</p>
+<p>设置<code>GOPROXY</code>为代理地址后再次安装即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">export GOPROXY=https://goproxy.io</span><br><span class="line">go get -u github.com/go-redis/redis/v8</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 安装完成后可重设下GOPROXY为空</span><br><span class="line">export GOPROXY=</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
   
   <div class="post-content">
     <header>
@@ -89,7 +125,7 @@
 
 
 
-  <article class="django">
+  <article class="post">
   
   <div class="post-content">
     <header>
@@ -155,7 +191,7 @@
 
 
 
-  <article class="npm">
+  <article class="post">
   
   <div class="post-content">
     <header>
@@ -1189,39 +1225,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2018-11-06T01:02:37.000Z"><a href="/2018/11/06/how-to-change-between-in-string-and-bytes-in-pyhton/">2018-11-06</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2018/11/06/how-to-change-between-in-string-and-bytes-in-pyhton/">how to change between in string and bytes in pyhton</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">x = &apos;abc&apos;</span><br><span class="line"></span><br><span class="line"># string to bytes</span><br><span class="line"></span><br><span class="line">b = bytes(x, encoding=&apos;utf-8&apos;)</span><br><span class="line"></span><br><span class="line">#butes to str</span><br><span class="line"></span><br><span class="line">s = str(b, encoding=&apos;utf-8&apos;)</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1277,7 +1280,7 @@
   
     <li><a href="/tags/flask/">flask</a><small>1</small></li>
   
-    <li><a href="/tags/gin/">gin</a><small>1</small></li>
+    <li><a href="/tags/go/">go</a><small>2</small></li>
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   

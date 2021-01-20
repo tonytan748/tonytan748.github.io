@@ -181,6 +181,141 @@ python manage.py migrate post 0001 --fake
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-10-12T16:00:00.000Z"><a href="/2014/10/13/create-and-apply-filters-to-lists-of-file-paths-python-recipe/">2014-10-13</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/10/13/create-and-apply-filters-to-lists-of-file-paths-python-recipe/">Create and apply filters to lists of file paths -- Python recipe</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Create and apply filters to lists of file paths (Python recipe)</em></p>
+<p>An experiment with filtering lists of files, documentation is written directly into the code.</p>
+<pre>
+"""
+This is a bit of an experiment with a technique of applying filters to lists of
+files.
+
+The base functions are IterFiles which is a simple wrapper around os.walk and
+then Filter which is used to create filter functions.
+
+Whitelist and Blacklist are then examples of filters created using the Filter 
+function as a decorator
+
+As a demonstration of creating filters on the fly, HasMode is then created in 
+the __main__ section
+"""
+
+import os
+import fnmatch
+import time
+
+def IterFiles(folder, **extraWalkArgs):
+    '''
+    A simple wrapper around os.walk that returns file paths.
+    **extraWalkArgs are passed to os.walk if you want to change the defaults 
+    there.
+    '''
+    for root, dirs, files in os.walk(folder, **extraWalkArgs):
+        for fileName in files:
+            yield os.path.join(root, fileName)
+
+def Filter(func):
+    '''
+    This is the filter creator function, you can also use it as a decorator.
+
+    usage: Filter(function, *args **keywordArgs)
+    args and keywordArgs are automatically passed to the function during 
+    iteration.
+
+    The function passed to it must take a valid file path as a first argument
+    example:
+        @Filter
+        def MinSize(file, minsize):
+            return os.path.getsize(file) >= minsize:
+        # Now you have created a filter that can take a list of files and a
+        # minsize argument and apply the minsize condition to the files list
+        # Print files in '.' that are 1MB or larger
+        for file in MinSize(os.listdir('.'), 1024*1024):
+            print file
+    '''
+    def wrapper(files, *a, **kw):
+        for file in files:
+            if func(file, *a, **kw):
+                yield file
+    return wrapper
+
+@Filter
+def Whitelist(file, patterns):
+    for pat in patterns:
+        if fnmatch.fnmatch(file, pat):
+            return True
+    return False
+
+@Filter
+def Blacklist(file, patterns):
+    for pat in patterns:
+        if fnmatch.fnmatch(file, pat):
+            return False
+    return True
+
+if __name__ == '__main__':
+    folder = '.' # folder to process
+
+    # get an iterator of all files under &#60;folder&#62;
+    files = IterFiles(folder)
+    # apply a whitelist to the files iterator
+    wfiles = Whitelist(files, ('*.py', '*.txt'))
+    # apply a blacklist to the whitelisted-files iterator
+    bfiles = Blacklist(wfiles, ('*/__init__.py','*/*test*.py'))
+    print 'whitelist/blacklist test'
+    print bfiles # prints a generator object as we haven't iterated over it yet
+    for file in bfiles: # iterate and print results
+        print '  ', file
+
+    # Filters can also constructed on the fly
+    # the HasMode function constructed here checks the file mode, it filters
+    # out all files that don't have the mode you pass into it.
+    import stat # for permission constants
+    HasMode = Filter(lambda file, mode: os.stat(file).st_mode & mode == mode)
+    print 'files others have read and write access to'
+    mode = stat.S_IROTH|stat.S_IWOTH
+    for file in HasMode(IterFiles(folder), mode):
+        print '  ', file
+    print
+
+    # just to state the obvious, you don't have to use IterFilesInFolder to get
+    # a list of files to feed a filter, just something that is iterable but 
+    # contains actual valid file paths
+    files = os.listdir('.')
+    print 'python files in current dir'
+    for file in Whitelist(files, ('*.py',)):
+        print '  ', file
+    print
+</pre>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-10-02T16:00:00.000Z"><a href="/2014/10/03/django-episode-4-deploying-django-to-heroku/">2014-10-03</a></time>
       
       
@@ -1110,41 +1245,6 @@ echo 550 > /sys/class/backlight/intel_backlight/brightness
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-08-26T16:00:00.000Z"><a href="/2014/08/27/gui-applications/">2014-08-27</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/08/27/gui-applications/">GUI Applications</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>Alphabetical list of GUI Applications.</em></p>
-<h3>Camelot</h3><br>Camelot provides components for building applications on top of Python, SQLAlchemy and Qt. It is inspired by the Django admin interface.<br><br>The main resource for information is the website: <a href="http://www.python-camelot.com" target="_blank" rel="noopener">http://www.python-camelot.com</a> and the mailing list <a href="https://groups.google.com/forum/#!forum/project-camelot" target="_blank" rel="noopener">https://groups.google.com/forum/#!forum/project-camelot</a><br><br><br><h3>Cocoa</h3><br>Note<br>The Cocoa framework is only available on OS X. Don’t pick this if you’re writing a cross-platform application!<br><br><br><h3>GTk</h3><br>PyGTK provides Python bindings for the GTK+ toolkit. Like the GTK+ library itself, it is currently licensed under the GNU LGPL. It is worth noting that PyGTK only currently supports the Gtk-2.X API (NOT Gtk-3.0). It is currently recommended that PyGTK not be used for new projects and that existing applications be ported from PyGTK to PyGObject.<br><br><br><h3>Kivy</h3><br>Kivy is a Python library for development of multi-touch enabled media rich applications. The aim is to allow for quick and easy interaction design and rapid prototyping, while making your code reusable and deployable.<br><br>Kivy is written in Python, based on OpenGL and supports different input devices such as: Mouse, Dual Mouse, TUIO, WiiMote, WM_TOUCH, HIDtouch, Apple’s products and so on.<br><br>Kivy is actively being developed by a community and free to use. It operates on all major platforms (Linux, OSX, Windows, Android).<br><br>The main resource for information is the website: <a href="http://kivy.org" target="_blank" rel="noopener">http://kivy.org</a><br><br><br><h3>PyObjC</h3><br>Note<br>Only available on OS X. Don’t pick this if you’re writing a cross-platform application.<br><br><br><h3>PySide</h3><br>PySide is a Python binding of the cross-platform GUI toolkit Qt.<br><br><a href="http://developer.qt.nokia.com/wiki/PySideDownloads/" target="_blank" rel="noopener">http://developer.qt.nokia.com/wiki/PySideDownloads/</a><br><br><br><h3>PyQt</h3><br>Note<br>If your software does not fully comply with the GPL you will need a commercial license!<br>PyQt provides Python bindings for the Qt Framework (see below).<br><br><a href="http://www.riverbankcomputing.co.uk/software/pyqt/download" target="_blank" rel="noopener">http://www.riverbankcomputing.co.uk/software/pyqt/download</a><br><br><br><br><h3>PyjamasDesktop (pyjs Desktop)</h3><br>PyjamasDesktop is a port of Pyjamas. PyjamasDesktop is application widget set for desktop and a cross-platform framework. (After release v0.6 PyjamasDesktop is a part of Pyjamas (Pyjs)). Briefly, it allows the exact same Python web application source code to be executed as a standalone desktop application.<br><br>Python Wiki for PyjamasDesktop.<br><br>The main website; pyjs Desktop.<br><br><br><br><br><h3>Qt</h3><br>Qt is a cross-platform application framework that is widely used for developing software with a GUI but can also be used for non-GUI applications.<br><br><br><h3>Tk</h3><br>Tkinter is a thin object-oriented layer on top of Tcl/Tk. It has the advantage of being included with the Python standard library, making it the most convenient and compatible toolkit to program with.<br><br>Both Tk and Tkinter are available on most Unix platforms, as well as on Windows and Macintosh systems. Starting with the 8.0 release, Tk offers native look and feel on all platforms.<br><br>There’s a good multi-language Tk tutorial with Python examples at TkDocs. There’s more information available on the Python Wiki.<br><br><br><h3>wxPython</h3><br>wxPython is a GUI toolkit for the Python programming language. It allows Python programmers to create programs with a robust, highly functional graphical user interface, simply and easily. It is implemented as a Python extension module (native code) that wraps the popular wxWidgets cross platform GUI library, which is written in C++.<br><br>Install (Stable) wxPython go to <a href="http://www.wxpython.org/download.php#stable" target="_blank" rel="noopener">http://www.wxpython.org/download.php#stable</a> and download the appropriate package for your OS.<br><br><br><br><br><h3></h3>
-
-<h3></h3>
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1202,7 +1302,7 @@ echo 550 > /sys/class/backlight/intel_backlight/brightness
   
     <li><a href="/tags/flask/">flask</a><small>1</small></li>
   
-    <li><a href="/tags/gin/">gin</a><small>1</small></li>
+    <li><a href="/tags/go/">go</a><small>2</small></li>
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   

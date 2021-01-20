@@ -54,6 +54,39 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2018-11-06T01:02:37.000Z"><a href="/2018/11/06/how-to-change-between-in-string-and-bytes-in-pyhton/">2018-11-06</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2018/11/06/how-to-change-between-in-string-and-bytes-in-pyhton/">how to change between in string and bytes in pyhton</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">x = &apos;abc&apos;</span><br><span class="line"></span><br><span class="line"># string to bytes</span><br><span class="line"></span><br><span class="line">b = bytes(x, encoding=&apos;utf-8&apos;)</span><br><span class="line"></span><br><span class="line">#butes to str</span><br><span class="line"></span><br><span class="line">s = str(b, encoding=&apos;utf-8&apos;)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2018-11-06T00:57:26.000Z"><a href="/2018/11/06/How-to-resoved-can-not-usw-Tab-in-Ubuntu-terminal/">2018-11-06</a></time>
       
       
@@ -755,41 +788,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2017-04-03T14:37:37.000Z"><a href="/2017/04/03/SQLAlchemy-Example-Create-Database-CURD-Faker/">2017-04-03</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2017/04/03/SQLAlchemy-Example-Create-Database-CURD-Faker/">SQLAlchemy Example: Create Database, CURD, Faker</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pip install sqlalchemy</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pip install faker</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"># coding: utf-8</span><br><span class="line">import random</span><br><span class="line">from faker import Factory</span><br><span class="line"></span><br><span class="line">from sqlalchemy import create_engine, Table</span><br><span class="line">from sqlalchemy.ext.declarative import declarative_base</span><br><span class="line">from sqlalchemy import ForeignKey</span><br><span class="line">from sqlalchemy import Column, String, Integer, Text</span><br><span class="line">from sqlalchemy.orm import sessionmaker, relationship</span><br><span class="line"></span><br><span class="line">engine = create_engine(&apos;mysql+mysqldb://root@localhost:3306/blog?charset=utf8&apos;)</span><br><span class="line">Base = declarative_base()</span><br><span class="line"></span><br><span class="line">class User(Base):</span><br><span class="line">    __tablename__ = &apos;users&apos;</span><br><span class="line"></span><br><span class="line">    id = Column(Integer, primary_key=True)</span><br><span class="line">    username = Column(String(64), nullable=False, index=True)</span><br><span class="line">    password = Column(String(64), nullable=False)</span><br><span class="line">    email = Column(String(64), nullable=False, index=True)</span><br><span class="line">    articles = relationship(&apos;Article&apos;, backref=&apos;author&apos;)</span><br><span class="line">    userinfo = relationship(&apos;UserInfo&apos;, backref=&apos;user&apos;, uselist=False)</span><br><span class="line"></span><br><span class="line">    def __repr__(self):</span><br><span class="line">        return &apos;&#123;&#125;(&#123;&#125;)&apos;.format(self.__class__.__name__, self.username)</span><br><span class="line"></span><br><span class="line">class UserInfo(Base):</span><br><span class="line">    __tablename__ = &apos;userinfos&apos;</span><br><span class="line"></span><br><span class="line">    id = Column(Integer, primary_key=True)</span><br><span class="line">    name = Column(String(64))</span><br><span class="line">    qq = Column(String(11))</span><br><span class="line">    phone = Column(String(11))</span><br><span class="line">    link = Column(String(64))</span><br><span class="line">    user_id = Column(Integer, ForeignKey(&apos;users.id&apos;))</span><br><span class="line"></span><br><span class="line"> class Article(Base):</span><br><span class="line">    __tablename__ = &apos;articles&apos;</span><br><span class="line"></span><br><span class="line">    id = Column(Integer, primary_key=True)</span><br><span class="line">    title = Column(String(255), nullable=False, index=True)</span><br><span class="line">    content = Column(Text)</span><br><span class="line">    user_id = Column(Integer, ForeignKey(&apos;users.id&apos;))</span><br><span class="line">    cate_id = Column(Integer, ForeignKey(&apos;categories.id&apos;))</span><br><span class="line">    tags = relationship(&apos;Tag&apos;, secondary=&apos;article_tag&apos;, backref=&apos;articles&apos;)</span><br><span class="line"></span><br><span class="line">    def __repr__(self):</span><br><span class="line">        return &quot;&#123;&#125;(&#123;&#125;)&quot;.format(self.__class__.__name__, self.title)</span><br><span class="line"></span><br><span class="line">class Category(Base):</span><br><span class="line">    __tablename__ = &apos;categories&apos;</span><br><span class="line"></span><br><span class="line">    id = Column(Integer, primary_key=True)</span><br><span class="line">    name = Column(String(64), nullable=False, index=True)</span><br><span class="line">    articles = relationship(&apos;Article&apos;, backref=&apos;category&apos;)</span><br><span class="line"></span><br><span class="line">    def __repr__(self):</span><br><span class="line">        return &apos;&#123;&#125;(&#123;&#125;)&apos;.format(self.__class__.__name__, self.name)</span><br><span class="line"></span><br><span class="line">article_tag = Table(</span><br><span class="line">    &apos;article_tag&apos;, Base.metadata,</span><br><span class="line">    Column(&apos;article_id&apos;, Integer, ForeignKey(&apos;article.id&apos;)),</span><br><span class="line">    Column(&apos;tag_id&apos;, Integer, ForeignKey(&apos;tags.id&apos;)),</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">class Tag(Base):</span><br><span class="line">    __tablename__ = &apos;tags&apos;</span><br><span class="line"></span><br><span class="line">    id = Column(Integer, primary_key=True)</span><br><span class="line">    name = Column(String(64), nullable=False, index=True)</span><br><span class="line"></span><br><span class="line">    def __repr__(self):</span><br><span class="line">        return &apos;&#123;&#125;(&#123;&#125;)&apos;.format(self.__class__.__name__, self.name)</span><br><span class="line"></span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">    Base.metadata.create_al(engine)</span><br><span class="line"></span><br><span class="line">    faker = Factory.create()</span><br><span class="line">    Session = sessionmaker(bind=engine)</span><br><span class="line">    session = Session()</span><br><span class="line"></span><br><span class="line">    faker_users = [User(username=faker.name(),password=faker.word(),email=faker.email()) for i in range(10)]</span><br><span class="line">    session.add_all(faker_usres)</span><br><span class="line"></span><br><span class="line">    faker_categories = [Category(name=faker.word()) for i in range(5)]</span><br><span class="line">    session.add_all(faker_categories)</span><br><span class="line"></span><br><span class="line">    faker_tags = [Tag(name=faker.word()) for i in range(20)]</span><br><span class="line">    session.add_all(faker_tags)</span><br><span class="line"></span><br><span class="line">    for i in range(100):</span><br><span class="line">        article = Article(title=faker.sentence(), content=&apos; &apos;.join(faker.sentence(nb=random.rendint(10, 20))), author=random.choice(faker_users), category=random.choice(faker_categories))</span><br><span class="line">        for tag in random.sample(faker_tags, randon.randint(2, 5)):</span><br><span class="line">            article.tags.append(tag)</span><br><span class="line">        session.add(article)</span><br><span class="line"></span><br><span class="line">    session.commit()</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -847,7 +845,7 @@
   
     <li><a href="/tags/flask/">flask</a><small>1</small></li>
   
-    <li><a href="/tags/gin/">gin</a><small>1</small></li>
+    <li><a href="/tags/go/">go</a><small>2</small></li>
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   

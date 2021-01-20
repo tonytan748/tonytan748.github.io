@@ -54,6 +54,105 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-07-03T16:00:00.000Z"><a href="/2015/07/04/windowspython/">2015-07-04</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/07/04/windowspython/">Windows如何使用Python操作摄像头</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Windows如何使用Python操作摄像头</em></p>
+<blockquote>
+<p>用过USB摄像头的都知道，你需要使用鼠标来操作它，比如截个图，录个像什么的，要点N次鼠标，对于我们那些不喜欢多次点击鼠标的人来说，这是一件很boring的事情，所以，本文将教你如何使用Python来操作摄像头。</p>
+</blockquote>
+<blockquote>
+<p>这里，我们需要三个Python库： VideoCapture， PIL  和 pygame。使用这三个库你可以非常容易的编写一个摄像头程序。之所以使用pygame，其目的就是因为这个库可以处理视频帧（fps）。下面是代码：</p>
+</blockquote>
+<pre>
+from VideoCapture import Device
+import ImageDraw, sys, pygame, time
+from pygame.locals import *
+from PIL import ImageEnhance
+
+res = (640,480)
+pygame.init()
+cam = Device()
+cam.setResolution(res[0],res[1])
+screen = pygame.display.set_mode((640,480))
+pygame.display.set_caption('Webcam')
+pygame.font.init()
+font = pygame.font.SysFont("Courier",11)
+
+def disp(phrase,loc):
+    s = font.render(phrase, True, (200,200,200))
+    sh = font.render(phrase, True, (50,50,50))
+    screen.blit(sh, (loc[0]+1,loc[1]+1))
+    screen.blit(s, loc)
+
+brightness = 1.0
+contrast = 1.0
+shots = 0
+
+while 1:
+    camshot = ImageEnhance.Brightness(cam.getImage()).enhance(brightness)
+    camshot = ImageEnhance.Contrast(camshot).enhance(contrast)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT: sys.exit()
+    keyinput = pygame.key.get_pressed()
+    if keyinput[K_1]: brightness -= .1
+    if keyinput[K_2]: brightness += .1
+    if keyinput[K_3]: contrast -= .1
+    if keyinput[K_4]: contrast += .1
+    if keyinput[K_q]: cam.displayCapturePinProperties()
+    if keyinput[K_w]: cam.displayCaptureFilterProperties()
+    if keyinput[K_s]:
+        filename = str(time.time()) + ".jpg"
+        cam.saveSnapshot(filename, quality=80, timestamp=0)
+        shots += 1
+    camshot = pygame.image.frombuffer(camshot.tostring(), res, "RGB")
+    screen.blit(camshot, (0,0))
+    disp("S:" + str(shots), (10,4))
+    disp("B:" + str(brightness), (10,16))
+    disp("C:" + str(contrast), (10,28))
+    pygame.display.flip()
+</pre>
+
+<blockquote>
+<p>这段代码中的一些要点的解释如下：</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>第15行的那个函数是在视频上显示些信息。这个例子中，显示的是抓图的数量以及当前的亮度和对比度。这个函数先显示深灰色的文本，然后偏移几个像素，再显示浅灰色的，这样可以有阴影的效果。</li>
+<li>第26行是在调整亮度和对比度。30-33行是在设置数字键1-4用于调整亮度和对比度。</li>
+<li>34 和35行是在设置 ‘q’ 和 ‘w’ 来显示摄像头的对话框。在那里你可以调整分辨率和暴光度等等。</li>
+<li>36行及以下的代码，是在存一个抓图文件。文件名中使用了当前时间。.</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-06-02T16:00:00.000Z"><a href="/2015/06/03/top-10-algorithm/">2015-06-03</a></time>
       
       
@@ -1053,141 +1152,6 @@ sudo apt-get install mysqlclient
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-10-12T16:00:00.000Z"><a href="/2014/10/13/create-and-apply-filters-to-lists-of-file-paths-python-recipe/">2014-10-13</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/10/13/create-and-apply-filters-to-lists-of-file-paths-python-recipe/">Create and apply filters to lists of file paths -- Python recipe</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>Create and apply filters to lists of file paths (Python recipe)</em></p>
-<p>An experiment with filtering lists of files, documentation is written directly into the code.</p>
-<pre>
-"""
-This is a bit of an experiment with a technique of applying filters to lists of
-files.
-
-The base functions are IterFiles which is a simple wrapper around os.walk and
-then Filter which is used to create filter functions.
-
-Whitelist and Blacklist are then examples of filters created using the Filter 
-function as a decorator
-
-As a demonstration of creating filters on the fly, HasMode is then created in 
-the __main__ section
-"""
-
-import os
-import fnmatch
-import time
-
-def IterFiles(folder, **extraWalkArgs):
-    '''
-    A simple wrapper around os.walk that returns file paths.
-    **extraWalkArgs are passed to os.walk if you want to change the defaults 
-    there.
-    '''
-    for root, dirs, files in os.walk(folder, **extraWalkArgs):
-        for fileName in files:
-            yield os.path.join(root, fileName)
-
-def Filter(func):
-    '''
-    This is the filter creator function, you can also use it as a decorator.
-
-    usage: Filter(function, *args **keywordArgs)
-    args and keywordArgs are automatically passed to the function during 
-    iteration.
-
-    The function passed to it must take a valid file path as a first argument
-    example:
-        @Filter
-        def MinSize(file, minsize):
-            return os.path.getsize(file) >= minsize:
-        # Now you have created a filter that can take a list of files and a
-        # minsize argument and apply the minsize condition to the files list
-        # Print files in '.' that are 1MB or larger
-        for file in MinSize(os.listdir('.'), 1024*1024):
-            print file
-    '''
-    def wrapper(files, *a, **kw):
-        for file in files:
-            if func(file, *a, **kw):
-                yield file
-    return wrapper
-
-@Filter
-def Whitelist(file, patterns):
-    for pat in patterns:
-        if fnmatch.fnmatch(file, pat):
-            return True
-    return False
-
-@Filter
-def Blacklist(file, patterns):
-    for pat in patterns:
-        if fnmatch.fnmatch(file, pat):
-            return False
-    return True
-
-if __name__ == '__main__':
-    folder = '.' # folder to process
-
-    # get an iterator of all files under &#60;folder&#62;
-    files = IterFiles(folder)
-    # apply a whitelist to the files iterator
-    wfiles = Whitelist(files, ('*.py', '*.txt'))
-    # apply a blacklist to the whitelisted-files iterator
-    bfiles = Blacklist(wfiles, ('*/__init__.py','*/*test*.py'))
-    print 'whitelist/blacklist test'
-    print bfiles # prints a generator object as we haven't iterated over it yet
-    for file in bfiles: # iterate and print results
-        print '  ', file
-
-    # Filters can also constructed on the fly
-    # the HasMode function constructed here checks the file mode, it filters
-    # out all files that don't have the mode you pass into it.
-    import stat # for permission constants
-    HasMode = Filter(lambda file, mode: os.stat(file).st_mode & mode == mode)
-    print 'files others have read and write access to'
-    mode = stat.S_IROTH|stat.S_IWOTH
-    for file in HasMode(IterFiles(folder), mode):
-        print '  ', file
-    print
-
-    # just to state the obvious, you don't have to use IterFilesInFolder to get
-    # a list of files to feed a filter, just something that is iterable but 
-    # contains actual valid file paths
-    files = os.listdir('.')
-    print 'python files in current dir'
-    for file in Whitelist(files, ('*.py',)):
-        print '  ', file
-    print
-</pre>
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1245,7 +1209,7 @@ if __name__ == '__main__':
   
     <li><a href="/tags/flask/">flask</a><small>1</small></li>
   
-    <li><a href="/tags/gin/">gin</a><small>1</small></li>
+    <li><a href="/tags/go/">go</a><small>2</small></li>
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   
