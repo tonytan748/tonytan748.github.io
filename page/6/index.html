@@ -54,6 +54,69 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-08-16T16:00:00.000Z"><a href="/2015/08/17/Download-Files-By-Three-Ways/">2015-08-17</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/08/17/Download-Files-By-Three-Ways/">Download Files by Three Ways</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Use urllib urllib2 requests download files from url</em></p>
+<p>Way 1:</p>
+<pre>
+  import urllib 
+  print "downloading with urllib" 
+  url = 'http://www.pythontab.com/test/demo.zip'  
+  print "downloading with urllib"
+  urllib.urlretrieve(url, "demo.zip")
+</pre>
+
+<p>Way 2:</p>
+<pre>
+  import urllib2
+  print "downloading with urllib2"
+  url = 'http://www.pythontab.com/test/demo.zip' 
+  f = urllib2.urlopen(url) 
+  data = f.read() 
+  with open("demo2.zip", "wb") as code:     
+    code.write(data)
+</pre>
+
+<p>Way 3:</p>
+<pre>
+  import requests 
+  print "downloading with requests"
+  url = 'http://www.pythontab.com/test/demo.zip' 
+  r = requests.get(url) 
+  with open("demo3.zip", "wb") as code:
+     code.write(r.content)
+</pre>
+
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-07-03T16:00:00.000Z"><a href="/2015/07/04/windowspython/">2015-07-04</a></time>
       
       
@@ -1033,125 +1096,6 @@ sudo apt-get install mysqlclient
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-10-13T16:00:00.000Z"><a href="/2014/10/14/vim-commands-cheatsheet/">2014-10-14</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/10/14/vim-commands-cheatsheet/">vim commands cheatsheet</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>vim commands cheatsheet</em></p>
-<p>##Cursor movement</p>
-<p>h - move left</p>
-<p>j - move down</p>
-<p>k - move up</p>
-<p>l - move right</p>
-<p>w - jump by start of words (punctuation considered words)</p>
-<p>W - jump by words (spaces separate words)</p>
-<p>e - jump to end of words (punctuation considered words)</p>
-<p>E - jump to end of words (no punctuation)</p>
-<p>b - jump backward by words (punctuation considered words)</p>
-<p>B - jump backward by words (no punctuation)</p>
-<p>0 - (zero) start of line</p>
-<p>^ - first non-blank character of line</p>
-<p>$ - end of line</p>
-<p>G - Go To command (prefix with number - 5G goes to line 5)</p>
-<p>Note: Prefix a cursor movement command with a number to repeat it. For example, 4j moves down 4 lines.</p>
-<p>##Insert Mode - Inserting/Appending text</p>
-<p>i - start insert mode at cursor</p>
-<p>I - insert at the beginning of the line</p>
-<p>a - append after the cursor</p>
-<p>A - append at the end of the line</p>
-<p>o - open (append) blank line below current line (no need to press return)</p>
-<p>O - open blank line above current line</p>
-<p>ea - append at end of word</p>
-<p>Esc - exit insert mode</p>
-<p>##Editing</p>
-<p>r - replace a single character (does not use insert mode)</p>
-<p>J - join line below to the current one</p>
-<p>cc - change (replace) an entire line</p>
-<p>cw - change (replace) to the end of word</p>
-<p>c$ - change (replace) to the end of line</p>
-<p>s - delete character at cursor and subsitute text</p>
-<p>S - delete line at cursor and substitute text (same as cc)</p>
-<p>xp - transpose two letters (delete and paste, technically)</p>
-<p>u - undo</p>
-<p>. - repeat last command</p>
-<p>##Marking text (visual mode)</p>
-<p>v - start visual mode, mark lines, then do command (such as y-yank)</p>
-<p>V - start Linewise visual mode</p>
-<p>o - move to other end of marked area</p>
-<p>Ctrl+v - start visual block mode</p>
-<p>O - move to Other corner of block</p>
-<p>aw - mark a word</p>
-<p>ab - a () block (with braces)</p>
-<p>aB - a {} block (with brackets)</p>
-<p>ib - inner () block</p>
-<p>iB - inner {} block</p>
-<p>Esc - exit visual mode</p>
-<p>##Visual commands</p>
-<p>&#62; - shift right</p>
-<p>&#60; - shift left</p>
-<p>y - yank (copy) marked text</p>
-<p>d - delete marked text</p>
-<p>~ - switch case</p>
-<p>##Cut and Paste</p>
-<p>yy - yank (copy) a line</p>
-<p>2yy - yank 2 lines</p>
-<p>yw - yank word</p>
-<p>y$ - yank to end of line</p>
-<p>p - put (paste) the clipboard after cursor</p>
-<p>P - put (paste) before cursor</p>
-<p>dd - delete (cut) a line</p>
-<p>dw - delete (cut) the current word</p>
-<p>x - delete (cut) current character</p>
-<p>##Exiting</p>
-<p>:w - write (save) the file, but don’t exit</p>
-<p>:wq - write (save) and quit</p>
-<p>:q - quit (fails if anything has changed)</p>
-<p>:q! - quit and throw away changes</p>
-<p>##Search/Replace</p>
-<p>/pattern - search for pattern</p>
-<p>?pattern - search backward for pattern</p>
-<p>n - repeat search in same direction</p>
-<p>N - repeat search in opposite direction</p>
-<p>:%s/old/new/g - replace all old with new throughout file</p>
-<p>:%s/old/new/gc - replace all old with new throughout file with confirmations</p>
-<p>##Working with multiple files</p>
-<p>:e filename - Edit a file in a new buffer</p>
-<p>:bnext (or :bn) - go to next buffer</p>
-<p>:bprev (of :bp) - go to previous buffer</p>
-<p>:bd - delete a buffer (close a file)</p>
-<p>:sp filename - Open a file in a new buffer and split window</p>
-<p>ctrl+ws - Split windows</p>
-<p>ctrl+ww - switch between windows</p>
-<p>ctrl+wq - Quit a window</p>
-<p>ctrl+wv - Split windows vertically</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1203,7 +1147,7 @@ sudo apt-get install mysqlclient
   <h3 class="title">Tags</h3>
   <ul class="entry">
   
-    <li><a href="/tags/django/">django</a><small>3</small></li>
+    <li><a href="/tags/django/">django</a><small>4</small></li>
   
     <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
   

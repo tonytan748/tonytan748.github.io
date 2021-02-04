@@ -54,6 +54,92 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2017-05-22T08:47:39.000Z"><a href="/2017/05/22/Understanding-Django-s-Cached-property-Decorator/">2017-05-22</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/05/22/Understanding-Django-s-Cached-property-Decorator/">Understanding Django&#39;s Cached_property Decorator</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>This blog is transfer from <a href="http://ericplumb.com/blog/understanding-djangos-cached_property-decorator.html" target="_blank" rel="noopener">http://ericplumb.com/blog/understanding-djangos-cached_property-decorator.html</a></p>
+<p>There is not a lot of documentation out there about Django’s <code>cached_property</code> decorator, which is one worth using. Today I want to talk about what it does, how I discovered it, and explore how it works.</p>
+<p>Let’s get started with what it does and why you would use it. How often, in Python or Django, do you find yourself doing something like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class House():</span><br><span class="line">    @property</span><br><span class="line">    def color(self):</span><br><span class="line">        if not getattr(self, &apos;_color&apos;, None):</span><br><span class="line">            self._color = load_color_from_db(self.id)</span><br><span class="line">        return self._color</span><br></pre></td></tr></table></figure>
+<p>When objects have a method or property which is expensive to access (DB query, intensive calculation, etc.), it makes sense to only make the effort to retrieve the value once. This pattern allows you to access it subsequent times without paying the cost for any access past the first.</p>
+<p>However, it’s somewhat clunky, and adds a namespace-polluting attribute to your object, and — most of all — if you have several properties with the same issue, you will find yourself repeating yourself a lot.[^1]</p>
+<h1 id="DIY-DRY"><a href="#DIY-DRY" class="headerlink" title="DIY DRY"></a>DIY DRY</h1><p>When I realized that this was a pattern worth abstracting, I wrote a <code>cached_property</code> decorator which looked something like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def cached_property(method):</span><br><span class="line">    prop_name = &apos;_()&apos;.format(method.__name__)</span><br><span class="line">    def wrapped_func(self, *args, **kwargs):</span><br><span class="line">        if not hasattr(self, prop_name):</span><br><span class="line">            setattr(self, prop_name, method(self, *args, **kwargs))</span><br><span class="line">        return getattr(self, prop_name)</span><br><span class="line">    return property(wrapped_func)</span><br></pre></td></tr></table></figure>
+<p>Demonstrating its use:[^2]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; class House():</span><br><span class="line">...     @property</span><br><span class="line">...     def color(self):</span><br><span class="line">...         print(&quot;Accessing color&quot;)</span><br><span class="line">...         return &quot;blue&quot;</span><br><span class="line">...     @cached_property</span><br><span class="line">...     def square_footage(self):</span><br><span class="line">...         print(&quot;Accessing square footage&quot;)</span><br><span class="line">...         return 1500</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; h.color</span><br><span class="line">Accessing color</span><br><span class="line">&apos;blue&apos;</span><br><span class="line">&gt;&gt;&gt; h.color    # Prints &quot;Accessing color&quot; each time you asscee the property</span><br><span class="line">Accessing color</span><br><span class="line">&apos;blue&apos;</span><br><span class="line">&gt;&gt;&gt; h.square_footage</span><br><span class="line">Accessing square footage</span><br><span class="line">1500</span><br><span class="line">&gt;&gt;&gt; h.square_footage    # Only prints message the first time</span><br><span class="line">1500</span><br></pre></td></tr></table></figure></p>
+<h1 id="Serendipity"><a href="#Serendipity" class="headerlink" title="Serendipity"></a>Serendipity</h1><p>I was pretty proud of myself after having written this decorator. While I didn’t like that it created extra attributes on my object, it replaced lots of clunky <code>if</code> blocks with a clean decorator.</p>
+<p>I immediately resolved to go through some Django projects and add the decorator to all the objects I’d previously been using the first pattern on. At some point, I typed <code>@cached_property</code> and activated autoimport, [^3] and what to my wondering eyes should appear but <code>django.utils.functional.cached_property</code>!</p>
+<p>What is this!? Had my genius idea been pre-empted? I imported it into my project and tried it out and: in a word, yes. Its effect was precisely the same as that of my little handmade decorator. (You can test this for yourself by trying the console session above, replacing the decorator definition with <code>from django.utils.functional import cached_property</code>.)</p>
+<p>Well, let’s see if my version is any faster:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; timeit.timeit(&quot;&quot;&quot;</span><br><span class="line">... class House():</span><br><span class="line">...     @cached_property</span><br><span class="line">...     def color(self):</span><br><span class="line">...         return 5</span><br><span class="line">... &quot;&quot;&quot;, setup=&quot;from django.utils.functional import cached_property&quot;)</span><br><span class="line">2.063973829377808</span><br><span class="line">&gt;&gt;&gt; timeit.timeit(&quot;&quot;&quot;</span><br><span class="line">class House():</span><br><span class="line">    @cached_property</span><br><span class="line">    def color(self):</span><br><span class="line">        return 5</span><br><span class="line">&quot;&quot;&quot;, setup=&quot;&quot;&quot;</span><br><span class="line">def cached_property(method):</span><br><span class="line">    prop_name=&apos;_()&apos;.format(method.__name__)</span><br><span class="line">    def wrapped_func(self, *args, **kwargs):</span><br><span class="line">        if not hasattr(self, prop_name):</span><br><span class="line">            setattr(self, prop_name, method(self, *args, **kwargs))</span><br><span class="line">        return getattr(self, prop_name)</span><br><span class="line">    return property(wrapped_func)</span><br><span class="line">&quot;&quot;&quot;)</span><br><span class="line">3.4206963438101354</span><br></pre></td></tr></table></figure></p>
+<p>I’m 75% slower; damn. Well, I’ve been thoroughly outprogrammed here — all that’s left is to look at the Django code and see how they implemented this.</p>
+<h1 id="Django-Knows"><a href="#Django-Knows" class="headerlink" title="Django Knows"></a>Django Knows</h1><p>The code for this decorator is at <a href="https://github.com/django/django/blob/2456ffa42c33d63b54579eae0f5b9cf2a8cd3714/django/utils/functional.py#L38-50" target="_blank" rel="noopener">https://github.com/django/django/blob/2456ffa42c33d63b54579eae0f5b9cf2a8cd3714/django/utils/functional.py#L38-50</a> and is reproduced below. [^4]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class cached_property(object):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Decorator that converts a method with a single self argument into a property cached on the instance</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def __init__(self, func):</span><br><span class="line">        self.func = func</span><br><span class="line">    def __get__(self, instance, type=None):</span><br><span class="line">        if instance is None:</span><br><span class="line">            return self</span><br><span class="line">        res = instance.__dict__[self.func.__name__] = self.func(instance)</span><br><span class="line">        return res</span><br></pre></td></tr></table></figure>
+<p>Remarkably simple for what it does. It is a class-based decorator rather than a more familiar function-based one. In addition to allowing it to keep state, this allows it to do something extremely clever and audacious at the expense of extensibility. Let’s go through it briefly, using the following code as a concrete example.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class House(object):</span><br><span class="line">    @cached_property</span><br><span class="line">    def color(self):</span><br><span class="line">        return &apos;blue&apos;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong><code>__init__</code></strong></li>
+</ol>
+<p><small>The <code>__init__</code> method of a class-based decorator is called when its decorated function is defined (in this case at class definition time), with its only argument besides the omnipresent self being the decorated function. The <code>cached_property</code> decorator class simply stores this function (a method, in this case) for future reference. Important for the next item is that at this point, <code>House.color</code> is a <code>cached_property</code> object instance.</small></p>
+<ol start="2">
+<li><strong><code>__get__</code></strong></li>
+</ol>
+<p><small>Those of you who use class-based decorators are probably more familiar with implementing the decoration logic in the <code>__call__</code> method. This is where the genius comes in: if <code>h</code> is a <code>House</code> instance, at the time the <code>h.color</code> attribute is accessed, if it points to an object like the current <code>cached_property</code> instance, Python calls the special <code>__get__()</code> descriptor method of that object. (This object’s class is in fact referred to as a descriptor class in the docs, and the containing class (<code>House</code> in this case) as the owner class.)</small></p>
+<p><small>The arguments to <code>__get__()</code> are as follows:</small></p>
+<ul>
+<li><p><small> <code>self</code>, the current <code>cached_property</code> instance, on which the original method is stored as <code>self.func</code></small></p>
+</li>
+<li><p><small> <code>instance</code>, the instance of the owner class — in this case <code>h</code>. This is essentially a second <code>self</code> argument, with the instance in this case being the one we actually care about.</small></p>
+</li>
+<li><p><small> <code>type</code>, the class type of the owner class — in this case <code>House</code>.</small></p>
+</li>
+</ul>
+<p><small>With this in mind, look at what <code>__get__()</code> does. Ignore the <code>if</code> block for now and let’s focus on the next line, starting from the right and going left.</small></p>
+<p><small><strong><code>self.func(instance)</code></strong></small></p>
+<p><small>calls the original (decorated) method which was cached as <code>self.func</code> under this <code>cached_property</code> instance at definition time. The <code>instance</code> argument it passes is the <code>House</code> instance which <code>color</code> was referenced from. Normally, when you call an instance method, this first argument would be named <code>self</code>.</small></p>
+<p><small>See where this is going? <code>self.func(instance)</code> is the same as calling <code>h.color()</code> (or <code>House.color(h)</code>) if you hadn’t decorated the method at all.</small></p>
+<p><small><strong><code>instance.__dict__[self.func.__name__]</code></strong></small></p>
+<p><small>is where the magic happens. It asks <code>self.func</code> what its <code>__name__</code> is (in this case <code>color</code>), then uses the instance’s <code>__dict__</code> attribute to replace itself with a property consisting of the value calculated in step 1. In other words, before this statement is executed, <code>h.color</code> refers to a <code>cached_property</code> instance. After it is executed, <code>h.color</code> refers to the string “blue”. What this instance is doing, at the very time it’s being accessed, is replacing itself with the value calculated by the decorated method.</small></p>
+<ul>
+<li><small> <strong><code>res = ...</code></strong></small></li>
+</ul>
+<p><small>It’s all over now but for the cleanup. The calculated value is passed to a temporary variable which is then <code>return</code> ed so that this invocation of <code>cached_property.__get__()</code> (accessed via <code>h.color</code>) returns the value (“blue”) which is now stored as the property <code>h.color</code>.</small></p>
+<p><small>So that’s <code>cached_property.__get__()</code>, which selflessly overwrites its containing instance with a dumb value. Once out of the scope of this function, the <code>cached_property</code> instance is no longer referred to and can be garbage-collected.</small></p>
+<ol start="3">
+<li><strong><code>if instance is None: return self</code></strong><br><small>Briefly on this: this is relevant when the <code>color</code> attribute is accessed via the class instead of an instance, e.g. <code>House.color</code> instead of <code>h.color</code>. It simply returns the <code>cached_property</code> instance itself. This isn’t all that useful to the user, and I assume it’s just done to avoid a <code>TypeError</code> when the cached function would otherwise be called with a <code>None</code> instance. [^5]</small></li>
+</ol>
+<p>So that’s what some brilliant mind on the Django team came up with. Being able to “monkeypatch” attributes and properties is one of the benefits of any dynamic language, but seldom have I seen it used so audaciously. It also shows the power of Python’s double-underscore descriptors, which continue to amaze me in what they are capable of.</p>
+<p>Now that I’m done gushing, one note about this decorator is that it will only work for object methods, not pure functions. Can you tell why? This is one downside of this method over the function-based decorator — that one could fairly easily be extended to work on any function. However, it would be just as easy to write a module-level version of this decorator.</p>
+<h1 id="Wrapping-Up"><a href="#Wrapping-Up" class="headerlink" title="Wrapping Up"></a>Wrapping Up</h1><p>The links above on class-based decorators and Python’s descriptor methods are both worth reading in their entirety. Both helped me understand what was going on in Django’s cached_property definition, especially understanding the double level of indirection (i.e., inside <code>cached_property.__get__()</code>, <code>self</code> represents the <code>cached_property</code> object whereas <code>instance</code> represents the object whose method it’s decorating) and the use of <code>__get__</code> instead of the more familiar <code>__call__</code>.</p>
+<p>If you read this far, thanks! Comments and corrections are always appreciated.</p>
+<p>[^1]: I initially typed “if you have several properties with this same property.” Talk about repeating yourself repeating yourself.<br>[^2]: Note that if you try this example in an IDE or console with autocomplete, you may find it printing the “Accessing” messages as soon as you have typed h.. This is because your console is accessing the properties as it tries to inspect which properties/methods are on the object in order to bring up the autocomplete options. You can test this by copy/pasting “h.color” which gives it no time to autocomplete.<br>[^3]: <code>Ctrl + Shift + O</code> in Eclipse, <code>Alt + Enter</code> while on the unimported name in IDEA. Of course you knew this already, but for those who didn’t: you’re welcome.<br>[^4]: Updated 7/25/13 to reflect changes in Django codebase — Django 1.4.0, about which I originally wrote this article, did not have the <code>if instance is None</code> check<br>[^5]: A side effect of this is that if you implemented a <code>__call__</code> method on cached_property which simply returned <code>self.func(instance)</code>, you could then use <code>House.color(h)</code> as a way to get the value via a function call instead of attribute access. This isn’t much more than a parlor trick though.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2017-04-03T14:37:37.000Z"><a href="/2017/04/03/SQLAlchemy-Example-Create-Database-CURD-Faker/">2017-04-03</a></time>
       
       
@@ -658,214 +744,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-08-11T16:00:00.000Z"><a href="/2016/08/12/12-useful-pandas-techniques-in-python-for-data-manipulation/">2016-08-12</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/08/12/12-useful-pandas-techniques-in-python-for-data-manipulation/">12 Useful Pandas Techniques in Python for Data Manipulation</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>12 Useful Pandas Techniques in Python for Data Manipulation</em></p>
-<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>Python is fast becoming the preferred language for data scientists – and for good reasons. It provides the larger ecosystem of a programming language and the depth of good scientific computation libraries. If you are starting to learn Python, have a look at learning path on Python.</p>
-<p>Among its scientific computation libraries, I found Pandas to be the most useful for data science operations. Pandas, along with Scikit-learn provides almost the entire stack needed by a data scientist. This article focuses on providing 12 ways for data manipulation in Python. I’ve also shared some tips &amp; tricks which will allow you to work faster.</p>
-<p>I would recommend that you look at the codes for data exploration before going ahead. To help you understand better, I’ve taken a data set to perform these operations and manipulations.</p>
-<p>Data Set: I’ve used the data set of Loan Prediction problem. Download the data set and get started.</p>
-<h1 id="Let’s-get-started"><a href="#Let’s-get-started" class="headerlink" title="Let’s get started"></a>Let’s get started</h1><p>I’ll start by importing modules and loading the data set into Python environment:</p>
-<pre><code>import pandas as pd
-import numpy as np
-data = pd.read_csv(&quot;train.csv&quot;, index_col=&quot;Loan_ID&quot;)
-</code></pre><h1 id="1-–-Boolean-Indexing"><a href="#1-–-Boolean-Indexing" class="headerlink" title="1 – Boolean Indexing"></a>1 – Boolean Indexing</h1><p>What do you do, if you want to filter values of a column based on conditions from another set of columns? For instance, we want a list of all females who are not graduate and got a loan. Boolean indexing can help here. You can use the following code:</p>
-<pre><code>data.loc[(data[&quot;Gender&quot;]==&quot;Female&quot;) &amp; (data[&quot;Education&quot;]==&quot;Not Graduate&quot;) &amp; (data[&quot;Loan_Status&quot;]==&quot;Y&quot;), [&quot;Gender&quot;,&quot;Education&quot;,&quot;Loan_Status&quot;]]
-</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/1.-boolean-indexing-217x300.png" alt=""></p>
-<p>Read More: <a href="http://pandas.pydata.org/pandas-docs/stable/indexing.html" target="_blank" rel="noopener">Pandas Selecting and Indexing</a></p>
-<h1 id="2-–-Apply-Function"><a href="#2-–-Apply-Function" class="headerlink" title="2 – Apply Function"></a>2 – Apply Function</h1><p>It is one of the commonly used functions for playing with data and creating new variables. Apply returns some value after passing each row/column of a data frame with some function. The function can be both default or user-defined. For instance, here it can be used to find the #missing values in each row and column.</p>
-<p>Create a new function:</p>
-<pre><code>def num_missing(x):
-    return sum(x.isnull())
-</code></pre><p>Applying per column:</p>
-<pre><code>print &quot;Missing values per column:&quot;
-print data.apply(num_missing, axis=0) #axis=0 defines that function is to be applied on each column
-</code></pre><p>Applying per row:</p>
-<pre><code>print &quot;\nMissing values per row:&quot;
-print data.apply(num_missing, axis=1).head() #axis=1 defines that function is to be applied on each row
-</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/3-apply-161x300.png" alt=""></p>
-<p>Thus we get the desired result.</p>
-<p>Note: head() function is used in second output because it contains many rows.</p>
-<p>Read More: <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.apply.html#pandas.DataFrame.apply" target="_blank" rel="noopener">Pandas Reference (apply)</a></p>
-<h1 id="3-–-Imputing-missing-files"><a href="#3-–-Imputing-missing-files" class="headerlink" title="3 – Imputing missing files"></a>3 – Imputing missing files</h1><p>‘fillna()’ does it in one go. It is used for updating missing values with the overall mean/mode/median of the column. Let’s impute the ‘Gender’, ‘Married’ and ‘Self_Employed’ columns with their respective modes.</p>
-<p>First we import a function to determine the mode</p>
-<pre><code>from scipy.stats import mode
-mode(data[&apos;Gender&apos;])
-</code></pre><p>Output: <em>ModeResult(mode=array([‘Male’], dtype=object), count=array([489]))</em></p>
-<p>This returns both mode and count. Remember that mode can be an array as there can be multiple values with high frequency. We will take the first one by default always using:</p>
-<pre><code>mode(data[&apos;Gender&apos;]).mode[0]
-</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/4.2-mode2.png" alt=""></p>
-<p>Now we can fill the missing values and check using technique #2.</p>
-<p>Impute the values:</p>
-<pre><code>data[&apos;Gender&apos;].fillna(mode(data[&apos;Gender&apos;]).mode[0], inplace=True)
-data[&apos;Married&apos;].fillna(mode(data[&apos;Married&apos;]).mode[0], inplace=True)
-data[&apos;Self_Employed&apos;].fillna(mode(data[&apos;Self_Employed&apos;]).mode[0], inplace=True)
-</code></pre><p>Now check the #missing values again to confirm:</p>
-<pre><code>print data.apply(num_missing, axis=0)
-</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/4.3-after-impute.png" alt=""></p>
-<p>Hence, it is confirmed that missing values are imputed. Please note that this is the most primitive form of imputation. Other sophisticated techniques include modeling the missing values, using grouped averages (mean/mode/median). I’ll cover that part in my next articles.</p>
-<p>Read More: <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.fillna.html#pandas.DataFrame.fillna" target="_blank" rel="noopener">Pandas Reference (fillna)</a></p>
-<h1 id="4-–-Pivot-Table"><a href="#4-–-Pivot-Table" class="headerlink" title="4 – Pivot Table"></a>4 – Pivot Table</h1><p>Pandas can be used to create MS Excel style pivot tables. For instance, in this case, a key column is “LoanAmount” which has missing values. We can impute it using mean amount of each ‘Gender’, ‘Married’ and ‘Self_Employed’ group. The mean ‘LoanAmount’ of each group can be determined as:</p>
-<p>Determine pivot table</p>
-<pre><code>impute_grps = data.pivot_table(values=[&quot;LoanAmount&quot;], index=[&quot;Gender&quot;,&quot;Married&quot;,&quot;Self_Employed&quot;], aggfunc=np.mean)
-print impute_grps
-</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/5.-pivot-table-262x141.png" alt=""></p>
-<p>More: <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.pivot_table.html#pandas.DataFrame.pivot_table" target="_blank" rel="noopener">Pandas Reference (Pivot Table)</a></p>
-<h1 id="5-–-Multi-Indexing"><a href="#5-–-Multi-Indexing" class="headerlink" title="5 – Multi-Indexing"></a>5 – Multi-Indexing</h1><p>If you notice the output of step #3, it has a strange property. Each index is made up of a combination of 3 values. This is called Multi-Indexing. It helps in performing operations really fast.</p>
-<p>Continuing the example from #3, we have the values for each group but they have not been imputed.<br>This can be done using the various techniques learned till now.</p>
-<p>iterate only through rows with missing LoanAmount</p>
-<pre>
-    for i,row in data.loc[data['LoanAmount'].isnull(),:].iterrows():
-        ind = tuple([row['Gender'],row['Married'],row['Self_Employed']])
-        data.loc[i,'LoanAmount'] = impute_grps.loc[ind].values[0]
-</pre>
-
-
-<p>Now check the #missing values again to confirm:</p>
-<pre><code>print data.apply(num_missing, axis=0)
-</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/6.-multi-indexing.png" alt=""></p>
-<p>Note:</p>
-<p>1.Multi-index requires tuple for defining groups of indices in loc statement. This a tuple used in function.<br>2.The .values[0] suffix is required because, by default a series element is returned which has an index not matching with that of the dataframe. In this case, a direct assignment gives an error.</p>
-<h1 id="6-Crosstab"><a href="#6-Crosstab" class="headerlink" title="6. Crosstab"></a>6. Crosstab</h1><p>This function is used to get an initial “feel” (view) of the data. Here, we can validate some basic hypothesis. For instance, in this case, “Credit_History” is expected to affect the loan status significantly. This can be tested using cross-tabulation as shown below:</p>
-<pre><code>pd.crosstab(data[&quot;Credit_History&quot;],data[&quot;Loan_Status&quot;],margins=True)
-</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/7.1-abs-crosstab.png" alt=""></p>
-<p>These are absolute numbers. But, percentages can be more intuitive in making some quick insights. We can do this using the apply function:</p>
-<pre><code>def percConvert(ser):
-    return ser/float(ser[-1])
-    pd.crosstab(data[&quot;Credit_History&quot;],data[&quot;Loan_Status&quot;],margins=True).apply(percConvert, axis=1)
-</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/7.2-perc-crosstab.png" alt=""></p>
-<p>Now, it is evident that people with a credit history have much higher chances of getting a loan as 80% people with credit history got a loan as compared to only 9% without credit history.</p>
-<p>But that’s not it. It tells an interesting story. Since I know that having a credit history is super important, what if I predict loan status to be Y for ones with credit history and N otherwise. Surprisingly, we’ll be right 82+378=460 times out of 614 which is a whopping 75%!</p>
-<p>I won’t blame you if you’re wondering why the hell do we need statistical models. But trust me, increasing the accuracy by even 0.001% beyond this mark is a challenging task. Would you take this challenge?</p>
-<p>Note: 75% is on train set. The test set will be slightly different but close. Also, I hope this gives some intuition into why even a 0.05% increase in accuracy can result in jump of 500 ranks on the Kaggle leaderboard.</p>
-<p>Read More: <a href="http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.crosstab.html" target="_blank" rel="noopener">Pandas Reference (crosstab)</a></p>
-<h1 id="7-–-Merge-DataFrames"><a href="#7-–-Merge-DataFrames" class="headerlink" title="7 – Merge DataFrames"></a>7 – Merge DataFrames</h1><p>Merging dataframes become essential when we have information coming from different sources to be collated. Consider a hypothetical case where the average property rates (INR per sq meters) is available for different property types. Let’s define a dataframe as:</p>
-<pre><code>prop_rates = pd.DataFrame([1000, 5000, 12000], index=[&apos;Rural&apos;,&apos;Semiurban&apos;,&apos;Urban&apos;],columns=[&apos;rates&apos;])
-prop_rates
-</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/8.1-rates.png" alt=""></p>
-<p>Now we can merge this information with the original dataframe as:</p>
-<pre><code>data_merged = data.merge(right=prop_rates, how=&apos;inner&apos;,left_on=&apos;Property_Area&apos;,right_index=True, sort=False)
-data_merged.pivot_table(values=&apos;Credit_History&apos;,index=[&apos;Property_Area&apos;,&apos;rates&apos;], aggfunc=len)
-</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/8.2-pivot.png" alt=""></p>
-<p>The pivot table validates successful merge operation. Note that the ‘values’ argument is irrelevant here because we are simply counting the values.</p>
-<p>ReadMore: <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.merge.html#pandas.DataFrame.merge" target="_blank" rel="noopener">Pandas Reference (merge)</a></p>
-<h1 id="8-–-Sorting-DataFrames"><a href="#8-–-Sorting-DataFrames" class="headerlink" title="8 – Sorting DataFrames"></a>8 – Sorting DataFrames</h1><p>Pandas allow easy sorting based on multiple columns. This can be done as:</p>
-<pre><code>data_sorted = data.sort_values([&apos;ApplicantIncome&apos;,&apos;CoapplicantIncome&apos;], ascending=False)
-data_sorted[[&apos;ApplicantIncome&apos;,&apos;CoapplicantIncome&apos;]].head(10)
-</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/9.-sort-300x295.png" alt=""></p>
-<p>Note: Pandas “sort” function is now deprecated. We should use “sort_values” instead.</p>
-<p>More: <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.sort_values.html#pandas.DataFrame.sort_values" target="_blank" rel="noopener">Pandas Reference (sort_values)</a></p>
-<h1 id="9-–-Plotting-Boxplot-amp-Histogram"><a href="#9-–-Plotting-Boxplot-amp-Histogram" class="headerlink" title="9 – Plotting (Boxplot &amp; Histogram)"></a>9 – Plotting (Boxplot &amp; Histogram)</h1><p>Many of you might be unaware that boxplots and histograms can be directly plotted in Pandas and calling matplotlib separately is not necessary. It’s just a 1-line command. For instance, if we want to compare the distribution of ApplicantIncome by Loan_Status:</p>
-<pre><code>import matplotlib.pyplot as plt
-%matplotlib inline
-data.boxplot(column=&quot;ApplicantIncome&quot;,by=&quot;Loan_Status&quot;)
-</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/10.1-boxplot-300x215.png" alt=""></p>
-<pre><code>data.hist(column=&quot;ApplicantIncome&quot;,by=&quot;Loan_Status&quot;,bins=30)
-</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/10.2-hist-300x217.png" alt=""></p>
-<p>This shows that income is not a big deciding factor on its own as there is no appreciable difference between the people who received and were denied the loan.</p>
-<p>Read More: <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.hist.html#pandas.DataFrame.hist" target="_blank" rel="noopener">Pandas Reference (hist)</a>|<a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.boxplot.html#pandas.DataFrame.boxplot" target="_blank" rel="noopener"> Pandas Reference (boxplot)</a></p>
-<h1 id="10-–-Cut-function-for-binning"><a href="#10-–-Cut-function-for-binning" class="headerlink" title="10 – Cut function for binning"></a>10 – Cut function for binning</h1><p>Sometimes numerical values make more sense if clustered together. For example, if we’re trying to model traffic (#cars on road) with time of the day (minutes). The exact minute of an hour might not be that relevant for predicting traffic as compared to actual period of the day like “Morning”, “Afternoon”, “Evening”, “Night”, “Late Night”. Modeling traffic this way will be more intuitive and will avoid overfitting.</p>
-<p>Here we define a simple function which can be re-used for binning any variable fairly easily.</p>
-<p>Binning:</p>
-<pre><code>def binning(col, cut_points, labels=None):
-    #Define min and max values:
-    minval = col.min()
-    maxval = col.max()
-
-#create list by adding min and max to cut_points
-break_points = [minval] + cut_points + [maxval]
-
-#if no labels provided, use default labels 0 ... (n-1)
-if not labels:
-    labels = range(len(cut_points)+1)
-
-#Binning using cut function of pandas
-colBin = pd.cut(col,bins=break_points,labels=labels,include_lowest=True)
-return colBin
-
-#Binning age:
-cut_points = [90,140,190]
-labels = [&quot;low&quot;,&quot;medium&quot;,&quot;high&quot;,&quot;very high&quot;]
-data[&quot;LoanAmount_Bin&quot;] = binning(data[&quot;LoanAmount&quot;], cut_points, labels)
-print pd.value_counts(data[&quot;LoanAmount_Bin&quot;], sort=False)
-</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2016/01/eg12-257x144.png" alt=""></p>
-<p>Read More: <a href="http://pandas.pydata.org/pandas-docs/version/0.17.1/generated/pandas.cut.html" target="_blank" rel="noopener">Pandas Reference (cut)</a></p>
-<h1 id="11-–-Coding-nominal-data"><a href="#11-–-Coding-nominal-data" class="headerlink" title="11 – Coding nominal data"></a>11 – Coding nominal data</h1><p>Often, we find a case where we’ve to modify the categories of a nominal variable. This can be due to various reasons:</p>
-<p>1.Some algorithms (like Logistic Regression) require all inputs to be numeric. So nominal variables are mostly coded as 0, 1….(n-1)<br>2.Sometimes a category might be represented in 2 ways. For e.g. temperature might be recorded as “High”, “Medium”, “Low”, “H”, “low”. Here, both “High” and “H” refer to same category. Similarly, in “Low” and “low” there is only a difference of case. But, python would read them as different levels.<br>3.Some categories might have very low frequencies and its generally a good idea to combine them.</p>
-<p>Here I’ve defined a generic function which takes in input as a dictionary and codes the values using ‘replace’ function in Pandas.</p>
-<pre><code>#Define a generic function using Pandas replace function
-def coding(col, codeDict):
-    colCoded = pd.Series(col, copy=True)
-    for key, value in codeDict.items():
-        colCoded.replace(key, value, inplace=True)
-    return colCoded
-
-#Coding LoanStatus as Y=1, N=0:
-print &apos;Before Coding:&apos;
-print pd.value_counts(data[&quot;Loan_Status&quot;])
-data[&quot;Loan_Status_Coded&quot;] = coding(data[&quot;Loan_Status&quot;], {&apos;N&apos;:0,&apos;Y&apos;:1})
-print &apos;\nAfter Coding:&apos;
-print pd.value_counts(data[&quot;Loan_Status_Coded&quot;])
-</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/12.-code.png" alt=""></p>
-<p>Similar counts before and after proves the coding.</p>
-<p>Read More: <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.replace.html#pandas.DataFrame.replace" target="_blank" rel="noopener">Pandas Reference (replace)</a></p>
-<h1 id="12-–-Iterating-over-rows-of-a-dataframe"><a href="#12-–-Iterating-over-rows-of-a-dataframe" class="headerlink" title="12 – Iterating over rows of a dataframe"></a>12 – Iterating over rows of a dataframe</h1><p>This is not a frequently used operation. Still, you don’t want to get stuck. Right? At times you may need to iterate through all rows using a for loop. For instance, one common problem we face is the incorrect treatment of variables in Python. This generally happens when:</p>
-<p>1.Nominal variables with numeric categories are treated as numerical.<br>2.Numeric variables with characters entered in one of the rows (due to a data error) are considered categorical.</p>
-<p>So it’s generally a good idea to manually define the column types. If we check the data types of all columns:</p>
-<pre><code>#Check current type:
-data.dtypes
-</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/2.1-initial-type.png" alt=""></p>
-<p>Here we see that Credit_History is a nominal variable but appearing as float. A good way to tackle such issues is to create a csv file with column names and types. This way, we can make a generic function to read the file and assign column data types. For instance, here I have created a csv file datatypes.csv.</p>
-<pre><code>#Load the file:
-colTypes = pd.read_csv(&apos;datatypes.csv&apos;)
-print colTypes
-</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2016/01/2.2-file-content-300x227.png" alt=""></p>
-<p>After loading this file, we can iterate through each row and assign the datatype using column ‘type’ to the variable name defined in the ‘feature’ column.</p>
-<pre><code>#Iterate through each row and assign variable type.
-#Note: astype is used to assign types
-
-for i, row in colTypes.iterrows():  #i: dataframe index; row: each row in series format
-    if row[&apos;type&apos;]==&quot;categorical&quot;:
-        data[row[&apos;feature&apos;]]=data[row[&apos;feature&apos;]].astype(np.object)
-    elif row[&apos;type&apos;]==&quot;continuous&quot;:
-        data[row[&apos;feature&apos;]]=data[row[&apos;feature&apos;]].astype(np.float)
-print data.dtypes
-</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2016/01/2.3-after-changing-300x276.png" alt=""></p>
-<p>Now the credit history column is modified to ‘object’ type which is used for representing nominal variables in Pandas.</p>
-<p>Read More: <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.iterrows.html#pandas.DataFrame.iterrows" target="_blank" rel="noopener">Pandas Reference (iterrows)</a></p>
-<h1 id="End-Notes"><a href="#End-Notes" class="headerlink" title="End Notes"></a>End Notes</h1><p>In this article, we covered various functions of Pandas which can make our life easy while performing data exploration and feature engineering. Also, we defined some generic functions which can be reused for achieving similar objective on different datasets.</p>
-<p>Also See: If you have any doubts pertaining to Pandas or Python in general, feel free to discuss with us.</p>
-<p>Did you find the article useful? Do you use some better (easier/faster) techniques for performing the tasks discussed above? Do you think there are better alternatives to Pandas in Python? We’ll be glad if you share your thoughts as comments below.</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -917,7 +795,7 @@ print data.dtypes
   <h3 class="title">Tags</h3>
   <ul class="entry">
   
-    <li><a href="/tags/django/">django</a><small>3</small></li>
+    <li><a href="/tags/django/">django</a><small>4</small></li>
   
     <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
   

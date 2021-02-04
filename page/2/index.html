@@ -54,6 +54,131 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2018-11-17T06:03:15.000Z"><a href="/2018/11/17/Flask-application-run-threads-in-the-background/">2018-11-17</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2018/11/17/Flask-application-run-threads-in-the-background/">Flask application run threads in the background</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Example is following:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">from flask import Flask</span><br><span class="line">from time import sleep</span><br><span class="line">from concurrent.futures import ThreadPoolExecutor</span><br><span class="line"></span><br><span class="line">executor = ThreadPoolExecutor(2)</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line">@app.route(&apos;/jobs&apos;)</span><br><span class="line">def run_jobs():</span><br><span class="line">	executor.submit(some_long_task1)</span><br><span class="line">	executor.submit(some_long_task2, &apos;hello&apos;, 123)</span><br><span class="line">	return &apos;Two jobs was launched in background!&apos;</span><br><span class="line"></span><br><span class="line">def some_long_task1():</span><br><span class="line">	print(&apos;Task #1 started&apos;)</span><br><span class="line">	sleep(10)</span><br><span class="line">	print(&apos;Task #1 is done&apos;)</span><br><span class="line"></span><br><span class="line">def some_long_task2(arg1, arg2):</span><br><span class="line">	print(&apos;Task #2 started&apos;)</span><br><span class="line">	sleep(5)</span><br><span class="line">	print(&apos;Task #2 is done&apos;)</span><br><span class="line"></span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">	app.run()</span><br></pre></td></tr></table></figure>
+<p><code>concurrent.futures</code> is introduced from python3.2, and provied higher abstract than <code>threading</code> and <code>multiprocessing</code>, it’s include two class <code>ThreadPoolExecutor</code> and <code>ProcessPoolExecutor</code>.</p>
+<p>for more information you can view in <a href="https://docs.python.org/3/library/concurrent.futures.html#module-concurrent.futures" target="_blank" rel="noopener">python docuemnts for concurrent.furtures</a></p>
+<ol>
+<li>Executor</li>
+</ol>
+<p>Executor is a base module, this is a abstract class, the subclass is <code>ThreadPoolExecutor</code> and <code>ProcessPoolExecutor</code> which is to be used create thred pool and process pool.</p>
+<p>the methods is following:</p>
+<ul>
+<li><code>Executor.submit(fn, *args, **kwargs)</code></li>
+</ul>
+<p>example is:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">with ThreadPoolExecutor(max_workers=2) as executor:</span><br><span class="line">	future = executor.submit(pow, 22, 123)</span><br><span class="line">	print(futrue.result())</span><br></pre></td></tr></table></figure></p>
+<p>we use <code>submit</code> method join a <code>task</code> in tread pool, <code>submit</code> return a <code>Future</code> object. and the <code>future.result()</code> is use <code>result</code> method get the result.<br>it will wainting untill the method is finished.<br>we use <code>with</code> for auto call ‘shutdown’ method otherwise we have to wait some release code.</p>
+<ul>
+<li><code>Executor.map(fn, *args, **kwargs)</code></li>
+</ul>
+<p>the <code>map</code> method is same with python map method. but it can set out time by arguement. <code>timeout</code> is int or float. if method overtime, will <code>raise TimeoutError</code>. it will no time out if it’s not set <code>timeout</code>.</p>
+<table>
+<thead>
+<tr>
+<th>arguement</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>func</td>
+<td>the method</td>
+</tr>
+<tr>
+<td>iterables</td>
+<td>iter object</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>timeout setting</td>
+</tr>
+</tbody>
+</table>
+<p>example is:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">form concurrent.futures import ThreadPoolExecutor</span><br><span class="line">import requests</span><br><span class="line">URLS = [&quot;http://www.163.com&quot;, &quot;https://www.baidu.com&quot;, &quot;https://github.com&quot;]</span><br><span class="line"></span><br><span class="line">def load_url(url):</span><br><span class="line">	req = requests.get(url)</span><br><span class="line">	print(f&quot;&#123;url&#125; page is &#123;len(req.content)&#125; bytes&quot;)</span><br><span class="line"></span><br><span class="line">executor = ThreadPoolExecutor(max_workers=3)</span><br><span class="line">executor.map(load_url, URLS)</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>Executor.shutdown(wait=True)</code></li>
+</ul>
+<p>this method is used by release system resources. <code>Executor</code> have <code>__enter__</code> and <code>__exit__</code> methods, so it can use <code>with</code>.</p>
+<ol start="2">
+<li>Future</li>
+</ol>
+<p><code>submit</code> method will return a <code>futrue</code> object. <code>future</code> have many methods for shadow task status. <code>Future</code> is created by <code>Executor.submit()</code>.</p>
+<table>
+<thead>
+<tr>
+<th>method</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cancel()</td>
+<td>cancel call, it cannot cancel if running now and return False, otherwise return True</td>
+</tr>
+<tr>
+<td>cancelled()</td>
+<td>check if is it cancel success or false and return True or False</td>
+</tr>
+<tr>
+<td>running()</td>
+<td></td>
+</tr>
+<tr>
+<td>done()</td>
+<td>check if is it call success or fail when running and return True or False</td>
+</tr>
+<tr>
+<td>result(Timeout=None)</td>
+<td>get result, if it’s not finished, it will waitting</td>
+</tr>
+<tr>
+<td>exception(timeout=None)</td>
+<td>get the except</td>
+</tr>
+<tr>
+<td>add_done_callback(fn)</td>
+<td>it will bind fn to future object.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>wait</code></li>
+</ul>
+<p><code>wait</code> method will return a tuple, the tuple include two set, it is <code>completed</code> and <code>uncompleted</code>.<br><code>wait</code> method have 3 arguements <code>FIRST_COMPLETED</code>, <code>FIRST_EXCEPTION</code> and <code>ALL_COMPLETE</code>, the default is <code>ALL_COMPLETED</code>.</p>
+<p>If use default <code>ALL_COMPLETED</code>, the program will blocked untill all tasks completed and then run main thread.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from concurrent.future import ThreadPoolExecutor, wait, as_completed</span><br><span class="line">import requests</span><br><span class="line">URLS = [&apos;http://www.163.com&apos;, &apos;http://www.baidu.com&apos;]</span><br><span class="line">def load_url(url):</span><br><span class="line">	req = requests.get(url)</span><br><span class="line">	print(f&apos;&#123;url&#125; page is &#123;len(req.content)&#125; bytes&apos;)</span><br><span class="line"></span><br><span class="line">executor = ThreadPoolExecutor(max_workers=3)</span><br><span class="line">f_list = []</span><br><span class="line">for url in URLS:</span><br><span class="line">	future = executor.submit(load_url, url)</span><br><span class="line">	f_list.append(future)</span><br><span class="line"></span><br><span class="line">print(wait(f_list))</span><br><span class="line">print(&apos;Main Thread is closed&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>If use <code>FIRST_COMPLETED</code>, the program will closed but not waiting all tasks finished.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from concurrent.future import ThreadPoolExecutor, wait, as_completed</span><br><span class="line">import requests</span><br><span class="line">URLS = [&apos;http://www.163.com&apos;, &apos;http://www.baidu.com&apos;]</span><br><span class="line">def load_url(url):</span><br><span class="line">	req = requests.get(url)</span><br><span class="line">	print(f&apos;&#123;url&#125; page is &#123;len(req.content)&#125; bytes&apos;)</span><br><span class="line"></span><br><span class="line">executor = ThreadPoolExecutor(max_workers=3)</span><br><span class="line">f_list = []</span><br><span class="line">for url in URLS:</span><br><span class="line">	future = executor.submit(load_url, url)</span><br><span class="line">	f_list.append(future)</span><br><span class="line"></span><br><span class="line">print(wait(f_list, return_when=&quot;FIRST_COMPLETED&quot;))</span><br><span class="line">print(&apos;Main Thread is closed&apos;)</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2018-11-06T01:02:37.000Z"><a href="/2018/11/06/how-to-change-between-in-string-and-bytes-in-pyhton/">2018-11-06</a></time>
       
       
@@ -702,92 +827,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2017-05-22T08:47:39.000Z"><a href="/2017/05/22/Understanding-Django-s-Cached-property-Decorator/">2017-05-22</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2017/05/22/Understanding-Django-s-Cached-property-Decorator/">Understanding Django&#39;s Cached_property Decorator</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>This blog is transfer from <a href="http://ericplumb.com/blog/understanding-djangos-cached_property-decorator.html" target="_blank" rel="noopener">http://ericplumb.com/blog/understanding-djangos-cached_property-decorator.html</a></p>
-<p>There is not a lot of documentation out there about Django’s <code>cached_property</code> decorator, which is one worth using. Today I want to talk about what it does, how I discovered it, and explore how it works.</p>
-<p>Let’s get started with what it does and why you would use it. How often, in Python or Django, do you find yourself doing something like this:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class House():</span><br><span class="line">    @property</span><br><span class="line">    def color(self):</span><br><span class="line">        if not getattr(self, &apos;_color&apos;, None):</span><br><span class="line">            self._color = load_color_from_db(self.id)</span><br><span class="line">        return self._color</span><br></pre></td></tr></table></figure>
-<p>When objects have a method or property which is expensive to access (DB query, intensive calculation, etc.), it makes sense to only make the effort to retrieve the value once. This pattern allows you to access it subsequent times without paying the cost for any access past the first.</p>
-<p>However, it’s somewhat clunky, and adds a namespace-polluting attribute to your object, and — most of all — if you have several properties with the same issue, you will find yourself repeating yourself a lot.[^1]</p>
-<h1 id="DIY-DRY"><a href="#DIY-DRY" class="headerlink" title="DIY DRY"></a>DIY DRY</h1><p>When I realized that this was a pattern worth abstracting, I wrote a <code>cached_property</code> decorator which looked something like this:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def cached_property(method):</span><br><span class="line">    prop_name = &apos;_()&apos;.format(method.__name__)</span><br><span class="line">    def wrapped_func(self, *args, **kwargs):</span><br><span class="line">        if not hasattr(self, prop_name):</span><br><span class="line">            setattr(self, prop_name, method(self, *args, **kwargs))</span><br><span class="line">        return getattr(self, prop_name)</span><br><span class="line">    return property(wrapped_func)</span><br></pre></td></tr></table></figure>
-<p>Demonstrating its use:[^2]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; class House():</span><br><span class="line">...     @property</span><br><span class="line">...     def color(self):</span><br><span class="line">...         print(&quot;Accessing color&quot;)</span><br><span class="line">...         return &quot;blue&quot;</span><br><span class="line">...     @cached_property</span><br><span class="line">...     def square_footage(self):</span><br><span class="line">...         print(&quot;Accessing square footage&quot;)</span><br><span class="line">...         return 1500</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; h.color</span><br><span class="line">Accessing color</span><br><span class="line">&apos;blue&apos;</span><br><span class="line">&gt;&gt;&gt; h.color    # Prints &quot;Accessing color&quot; each time you asscee the property</span><br><span class="line">Accessing color</span><br><span class="line">&apos;blue&apos;</span><br><span class="line">&gt;&gt;&gt; h.square_footage</span><br><span class="line">Accessing square footage</span><br><span class="line">1500</span><br><span class="line">&gt;&gt;&gt; h.square_footage    # Only prints message the first time</span><br><span class="line">1500</span><br></pre></td></tr></table></figure></p>
-<h1 id="Serendipity"><a href="#Serendipity" class="headerlink" title="Serendipity"></a>Serendipity</h1><p>I was pretty proud of myself after having written this decorator. While I didn’t like that it created extra attributes on my object, it replaced lots of clunky <code>if</code> blocks with a clean decorator.</p>
-<p>I immediately resolved to go through some Django projects and add the decorator to all the objects I’d previously been using the first pattern on. At some point, I typed <code>@cached_property</code> and activated autoimport, [^3] and what to my wondering eyes should appear but <code>django.utils.functional.cached_property</code>!</p>
-<p>What is this!? Had my genius idea been pre-empted? I imported it into my project and tried it out and: in a word, yes. Its effect was precisely the same as that of my little handmade decorator. (You can test this for yourself by trying the console session above, replacing the decorator definition with <code>from django.utils.functional import cached_property</code>.)</p>
-<p>Well, let’s see if my version is any faster:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; timeit.timeit(&quot;&quot;&quot;</span><br><span class="line">... class House():</span><br><span class="line">...     @cached_property</span><br><span class="line">...     def color(self):</span><br><span class="line">...         return 5</span><br><span class="line">... &quot;&quot;&quot;, setup=&quot;from django.utils.functional import cached_property&quot;)</span><br><span class="line">2.063973829377808</span><br><span class="line">&gt;&gt;&gt; timeit.timeit(&quot;&quot;&quot;</span><br><span class="line">class House():</span><br><span class="line">    @cached_property</span><br><span class="line">    def color(self):</span><br><span class="line">        return 5</span><br><span class="line">&quot;&quot;&quot;, setup=&quot;&quot;&quot;</span><br><span class="line">def cached_property(method):</span><br><span class="line">    prop_name=&apos;_()&apos;.format(method.__name__)</span><br><span class="line">    def wrapped_func(self, *args, **kwargs):</span><br><span class="line">        if not hasattr(self, prop_name):</span><br><span class="line">            setattr(self, prop_name, method(self, *args, **kwargs))</span><br><span class="line">        return getattr(self, prop_name)</span><br><span class="line">    return property(wrapped_func)</span><br><span class="line">&quot;&quot;&quot;)</span><br><span class="line">3.4206963438101354</span><br></pre></td></tr></table></figure></p>
-<p>I’m 75% slower; damn. Well, I’ve been thoroughly outprogrammed here — all that’s left is to look at the Django code and see how they implemented this.</p>
-<h1 id="Django-Knows"><a href="#Django-Knows" class="headerlink" title="Django Knows"></a>Django Knows</h1><p>The code for this decorator is at <a href="https://github.com/django/django/blob/2456ffa42c33d63b54579eae0f5b9cf2a8cd3714/django/utils/functional.py#L38-50" target="_blank" rel="noopener">https://github.com/django/django/blob/2456ffa42c33d63b54579eae0f5b9cf2a8cd3714/django/utils/functional.py#L38-50</a> and is reproduced below. [^4]</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class cached_property(object):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Decorator that converts a method with a single self argument into a property cached on the instance</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def __init__(self, func):</span><br><span class="line">        self.func = func</span><br><span class="line">    def __get__(self, instance, type=None):</span><br><span class="line">        if instance is None:</span><br><span class="line">            return self</span><br><span class="line">        res = instance.__dict__[self.func.__name__] = self.func(instance)</span><br><span class="line">        return res</span><br></pre></td></tr></table></figure>
-<p>Remarkably simple for what it does. It is a class-based decorator rather than a more familiar function-based one. In addition to allowing it to keep state, this allows it to do something extremely clever and audacious at the expense of extensibility. Let’s go through it briefly, using the following code as a concrete example.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class House(object):</span><br><span class="line">    @cached_property</span><br><span class="line">    def color(self):</span><br><span class="line">        return &apos;blue&apos;</span><br></pre></td></tr></table></figure>
-<ol>
-<li><strong><code>__init__</code></strong></li>
-</ol>
-<p><small>The <code>__init__</code> method of a class-based decorator is called when its decorated function is defined (in this case at class definition time), with its only argument besides the omnipresent self being the decorated function. The <code>cached_property</code> decorator class simply stores this function (a method, in this case) for future reference. Important for the next item is that at this point, <code>House.color</code> is a <code>cached_property</code> object instance.</small></p>
-<ol start="2">
-<li><strong><code>__get__</code></strong></li>
-</ol>
-<p><small>Those of you who use class-based decorators are probably more familiar with implementing the decoration logic in the <code>__call__</code> method. This is where the genius comes in: if <code>h</code> is a <code>House</code> instance, at the time the <code>h.color</code> attribute is accessed, if it points to an object like the current <code>cached_property</code> instance, Python calls the special <code>__get__()</code> descriptor method of that object. (This object’s class is in fact referred to as a descriptor class in the docs, and the containing class (<code>House</code> in this case) as the owner class.)</small></p>
-<p><small>The arguments to <code>__get__()</code> are as follows:</small></p>
-<ul>
-<li><p><small> <code>self</code>, the current <code>cached_property</code> instance, on which the original method is stored as <code>self.func</code></small></p>
-</li>
-<li><p><small> <code>instance</code>, the instance of the owner class — in this case <code>h</code>. This is essentially a second <code>self</code> argument, with the instance in this case being the one we actually care about.</small></p>
-</li>
-<li><p><small> <code>type</code>, the class type of the owner class — in this case <code>House</code>.</small></p>
-</li>
-</ul>
-<p><small>With this in mind, look at what <code>__get__()</code> does. Ignore the <code>if</code> block for now and let’s focus on the next line, starting from the right and going left.</small></p>
-<p><small><strong><code>self.func(instance)</code></strong></small></p>
-<p><small>calls the original (decorated) method which was cached as <code>self.func</code> under this <code>cached_property</code> instance at definition time. The <code>instance</code> argument it passes is the <code>House</code> instance which <code>color</code> was referenced from. Normally, when you call an instance method, this first argument would be named <code>self</code>.</small></p>
-<p><small>See where this is going? <code>self.func(instance)</code> is the same as calling <code>h.color()</code> (or <code>House.color(h)</code>) if you hadn’t decorated the method at all.</small></p>
-<p><small><strong><code>instance.__dict__[self.func.__name__]</code></strong></small></p>
-<p><small>is where the magic happens. It asks <code>self.func</code> what its <code>__name__</code> is (in this case <code>color</code>), then uses the instance’s <code>__dict__</code> attribute to replace itself with a property consisting of the value calculated in step 1. In other words, before this statement is executed, <code>h.color</code> refers to a <code>cached_property</code> instance. After it is executed, <code>h.color</code> refers to the string “blue”. What this instance is doing, at the very time it’s being accessed, is replacing itself with the value calculated by the decorated method.</small></p>
-<ul>
-<li><small> <strong><code>res = ...</code></strong></small></li>
-</ul>
-<p><small>It’s all over now but for the cleanup. The calculated value is passed to a temporary variable which is then <code>return</code> ed so that this invocation of <code>cached_property.__get__()</code> (accessed via <code>h.color</code>) returns the value (“blue”) which is now stored as the property <code>h.color</code>.</small></p>
-<p><small>So that’s <code>cached_property.__get__()</code>, which selflessly overwrites its containing instance with a dumb value. Once out of the scope of this function, the <code>cached_property</code> instance is no longer referred to and can be garbage-collected.</small></p>
-<ol start="3">
-<li><strong><code>if instance is None: return self</code></strong><br><small>Briefly on this: this is relevant when the <code>color</code> attribute is accessed via the class instead of an instance, e.g. <code>House.color</code> instead of <code>h.color</code>. It simply returns the <code>cached_property</code> instance itself. This isn’t all that useful to the user, and I assume it’s just done to avoid a <code>TypeError</code> when the cached function would otherwise be called with a <code>None</code> instance. [^5]</small></li>
-</ol>
-<p>So that’s what some brilliant mind on the Django team came up with. Being able to “monkeypatch” attributes and properties is one of the benefits of any dynamic language, but seldom have I seen it used so audaciously. It also shows the power of Python’s double-underscore descriptors, which continue to amaze me in what they are capable of.</p>
-<p>Now that I’m done gushing, one note about this decorator is that it will only work for object methods, not pure functions. Can you tell why? This is one downside of this method over the function-based decorator — that one could fairly easily be extended to work on any function. However, it would be just as easy to write a module-level version of this decorator.</p>
-<h1 id="Wrapping-Up"><a href="#Wrapping-Up" class="headerlink" title="Wrapping Up"></a>Wrapping Up</h1><p>The links above on class-based decorators and Python’s descriptor methods are both worth reading in their entirety. Both helped me understand what was going on in Django’s cached_property definition, especially understanding the double level of indirection (i.e., inside <code>cached_property.__get__()</code>, <code>self</code> represents the <code>cached_property</code> object whereas <code>instance</code> represents the object whose method it’s decorating) and the use of <code>__get__</code> instead of the more familiar <code>__call__</code>.</p>
-<p>If you read this far, thanks! Comments and corrections are always appreciated.</p>
-<p>[^1]: I initially typed “if you have several properties with this same property.” Talk about repeating yourself repeating yourself.<br>[^2]: Note that if you try this example in an IDE or console with autocomplete, you may find it printing the “Accessing” messages as soon as you have typed h.. This is because your console is accessing the properties as it tries to inspect which properties/methods are on the object in order to bring up the autocomplete options. You can test this by copy/pasting “h.color” which gives it no time to autocomplete.<br>[^3]: <code>Ctrl + Shift + O</code> in Eclipse, <code>Alt + Enter</code> while on the unimported name in IDEA. Of course you knew this already, but for those who didn’t: you’re welcome.<br>[^4]: Updated 7/25/13 to reflect changes in Django codebase — Django 1.4.0, about which I originally wrote this article, did not have the <code>if instance is None</code> check<br>[^5]: A side effect of this is that if you implemented a <code>__call__</code> method on cached_property which simply returned <code>self.func(instance)</code>, you could then use <code>House.color(h)</code> as a way to get the value via a function call instead of attribute access. This isn’t much more than a parlor trick though.</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -839,7 +878,7 @@
   <h3 class="title">Tags</h3>
   <ul class="entry">
   
-    <li><a href="/tags/django/">django</a><small>3</small></li>
+    <li><a href="/tags/django/">django</a><small>4</small></li>
   
     <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
   

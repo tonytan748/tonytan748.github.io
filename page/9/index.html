@@ -54,84 +54,136 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-08-11T16:00:00.000Z"><a href="/2014/08/12/how-to-install-google-authenticator-on-linux/">2014-08-12</a></time>
+        <time datetime="2014-08-11T16:00:00.000Z"><a href="/2014/08/12/how-to-set-up-a-samba-file-server-to-use-with-windows-clients/">2014-08-12</a></time>
       
       
   
-    <h1 class="title"><a href="/2014/08/12/how-to-install-google-authenticator-on-linux/">How to install Google Authenticator on Linux</a></h1>
+    <h1 class="title"><a href="/2014/08/12/how-to-set-up-a-samba-file-server-to-use-with-windows-clients/">How to set up a Samba file server to use with Windows clients</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p><em>Question I want to use Google Authenticator to set up two factor authentication. How can I install Google Authenticator on [insert your Linux distro]?</em></p>
-<p>Question: I want to use Google Authenticator to set up two factor authentication. How can I install Google Authenticator on [insert your Linux distro]?</p>
-<p>Google Authenticator is an application which can generate time-based one-time passcode to be used for two-factor authentication. You can install Google Authenticator on Linux as a pre-built package or by building it from the source.</p>
-<h3>Install Google Authenticator as a Pre-built Package</h3>
+        <p><em>According to the Samba project web site, Samba is an open source/free software suite that provides seamless file and print services to SMB/CIFS clients.</em></p>
+<p>According to the Samba project web site, Samba is an open source/free software suite that provides seamless file and print services to SMB/CIFS clients. Unlike other implementations of the SMB/CIFS networking protocol (such as LM Server for HP-UX, LAN Server for OS/2, or VisionFS), Samba (along with its source code) is freely available (at no cost to the end user), and allows for interoperability between Linux/Unix servers and Windows/Unix/Linux clients.</p>
+<p>For these reasons, Samba is the preferred solution for a file server in networks where different operating systems (other than Linux) coexist - the most common setup being the case of multiple Microsoft Windows clients accessing a Linux server where Samba is installed, which is the situation we are going to deal with in this article.</p>
+<p>Please note that on the other hand, if our network consists of only Unix-based clients (such as Linux, AIX, or Solaris, to name a few examples), we can consider using NFS (although Samba is still an option in this case), which has greater reported speeds.</p>
+<h3>Installing Samba in Debian and CentOS</h3>
 
-<p>For those of you who don’t want to build Google Authenticator, it is available as a pre-built package on several Linux distros. The pre-built package contains Google Authenticator binary and its PAM module.</p>
-<p>To install Google Authenticator on Ubuntu:</p>
+<p>Before we proceed with the installation, we can use our operating system’s package management system to look for information about Samba:</p>
+<p>On Debian:</p>
 <pre>
-$ sudo apt-get install libpam-google-authenticator
+# aptitude show samba
 </pre>
 
-<p>To install Google Authenticator on Fedora:</p>
+<p>On CentOS:</p>
 <pre>
-$ sudo yum install google-authenticator
+# yum info samba
 </pre>
 
-<p>To install Google Authenticator on CentOS, first enable EPEL repository, and then run:</p>
+<p>In the following screenshot we can see the output of ‘aptitude show samba’ (‘yum info samba’ yields similar results):</p>
+<p><img src="https://farm4.staticflickr.com/3868/14837993244_0fa525eb35_z.jpg"></p>
+<p>Now let’s install Samba (the screenshot below corresponds to the installation on a Debian 7 [Wheezy] server):</p>
+<p>On Debian:</p>
 <pre>
-$ sudo yum install google-authenticator
+# aptitude install samba
 </pre>
 
-<h3>Compile Google Authenticator on Linux</h3>
-
-<p>First, install prerequisites for building Google Authenticator.</p>
-<p>On Debian, Ubuntu or Linux Mint:</p>
+<p>On CentOS:</p>
 <pre>
-$ sudo apt-get install wget make gcc libpam0g-dev
+# yum install samba
 </pre>
 
-<p>On CentOS, Fedora or RHEL:</p>
+<h3>Adding Users to Samba</h3>
+
+<p>For versions earlier than 4.x, a local Unix account is required for adding users to Samba:</p>
 <pre>
-$ sudo yum install wget make gcc pam-devel
+# adduser username
 </pre>
 
-<p>Then download the source code of Google Authenticator, and compile it as follows.</p>
+<p><img src="https://farm6.staticflickr.com/5574/14837266181_fed68bddf2_o.png"></p>
+<p>Next, we need to add the user to Samba using the smbpasswd command with the ‘-a’ option, which specifies that the username following should be added to the local smbpasswd file. We will be prompted to enter a password (which does not necessarily have to be the same as the password of the local Unix account):</p>
 <pre>
-$ wget https://google-authenticator.googlecode.com/files/libpam-google-authenticator-1.0-source.tar.bz2 
-$ tar xvfvj libpam-google-authenticator-1.0-source.tar.bz2 
-$ cd libpam-google-authenticator-1.0 
-$ make
+# smbpassword -a username
 </pre>
 
-<p>If build is successful, you will see pam_google_authenticator.so and google-authenticator created in the directory.</p>
-<p>Finally, go ahead and install Google Authenticator.</p>
+<p><img src="https://farm6.staticflickr.com/5555/14653711099_578f8613ca.jpg"></p>
+<p>Finally, we will give access to user xmodulo to a directory within our system that will be used as a Samba share for him (and other users as well, if needed). This is done by opening the /etc/samba/smb.conf file with a text editor (such as Vim), navigating to the end of the file, and creating a section (enclose name between square brackets) with a descriptive name, such as [xmodulo]:</p>
 <pre>
-$ sudo make install
+# SAMBA SHARE 
+[xmodulo] 
+path = /home/xmodulo 
+available = yes 
+valid users = xmodulo 
+read only = no 
+browseable = yes 
+public = yes 
+writeable = yes
 </pre>
 
-<p>For instructions on how to set up two-factor authentication for SSH logins with Google Authenticator, refer to this guideline.</p>
-<h3>Troubleshoot</h3>
-
-<ol>
-<li>I am getting the following error when compiling Google Authenticator.</li>
-</ol>
+<p>We must now restart Samba and -just in case- check the smb.conf file for syntax errors with the testparm command:</p>
 <pre>
-fatal error: security/pam_appl.h: No such file or directory
+# service samba restart 
+# testparm
 </pre>
 
-<p>To fix this problem, install the following package.</p>
-<p>On Debian, Ubuntu or Linux Mint:</p>
+<p><img src="https://farm6.staticflickr.com/5589/14653655390_becb4f4981_z.jpg"></p>
+<p>If there are any errors, they will be reported when testparm ends.</p>
+<h3>Mapping the Samba Share as a Network Drive on a Windows 7 PC</h3>
+
+<p>Right click on Computer, and select “Map network drive”:</p>
+<p><img src="https://farm6.staticflickr.com/5571/14837993154_981b73ea92.jpg"></p>
+<p>Type the IP address of the machine where Samba is installed, followed by the name of the share (this is the name that is enclosed between single brackets in the smb.conf file), and make sure that the “Connect using different credentials” checkbox is checked:</p>
+<p><img src="https://farm4.staticflickr.com/3881/14839997172_d67ec98933_o.png"></p>
+<p>Enter the username and password that were set with ‘smbpasswd -a’ earlier:</p>
+<p><img src="https://farm6.staticflickr.com/5563/14653711029_ddfea53bd6_o.png"></p>
+<p>Go to Computer and check if the network drive has been added correctly:</p>
+<p><img src="https://farm6.staticflickr.com/5584/14837993124_c664728039_o.png"></p>
+<p>As a test, let’s create a pdf file from the man page of Samba, and save it in the /home/xmodulo directory:</p>
+<p><img src="https://farm6.staticflickr.com/5593/14860219723_e8380f0d0f_o.png"></p>
+<p>Next, we can verify that the file is accessible from Windows:</p>
+<p><img src="https://farm4.staticflickr.com/3869/14817386696_74a12dfdcd_o.png"></p>
+<p>And we can open it using our default pdf reader:</p>
+<p><img src="https://farm6.staticflickr.com/5584/14653655350_8a243b1493_z.jpg"></p>
+<p>Finally, let’s see if we can save a file from Windows in our newly mapped network drive. We will open the change.log file that lists the features of Notepad++:</p>
+<p><img src="https://farm6.staticflickr.com/5565/14817386676_18c1d7bc60_o.png"></p>
+<p>and try to save it in Z:\ as a plain text file (.txt extension); then let’s see if the file is visible in Linux:</p>
+<p><img src="https://farm4.staticflickr.com/3841/14817386656_fb09a95a65_o.png"></p>
+<h3>Enabling quotas</h3>
+
+<p>As a first step, we need to verify whether the current kernel has been compiled with quota support:</p>
 <pre>
-$ sudo apt-get install libpam0g-dev
+# cat /boot/config-$(uname -r) | grep -i config_quota
 </pre>
 
-<p>On CentOS, Fedora or RHEL:</p>
+<p><img src="https://farm4.staticflickr.com/3867/14837993054_081dc9b0dc_z.jpg"></p>
+<p>Each file system has up to five types of quota limits that can be enforced on it: user soft limit, user hard limit, group soft limit, group hard limit, and grace time.</p>
+<p>We will now enable quotas for the /home file system by adding the usrquota and grpquota mount options to the existing defaults option in the line that corresponds to the /home filesystem in the /etc/fstab file, and we will remount the file system in order to apply the changes:</p>
+<p><img src="https://farm6.staticflickr.com/5561/14653806067_b8b0dc2333_z.jpg"></p>
+<p>Next, we need to create two files that will serve as the databases for user and group quotas: <b>aquota.user</b> and <b>aquota.group</b>, respectively, in <b>/home</b>. Then, we will generate the table of current disk usage per file system with quotas enabled:</p>
 <pre>
-$ sudo yum install pam-devel
+# quotacheck -cug /home 
+# quotacheck -avugm
 </pre>
+
+<p><img src="https://farm6.staticflickr.com/5584/14837265971_654e8f3bc0_o.png"></p>
+<p>Even though we have enabled quotas for the /home file system, we have not yet set any limits for any user or group. Check for quota information for existing user/group:</p>
+<pre>
+# quota -u username 
+# quota -g groupname
+</pre>
+
+<p><img src="https://farm6.staticflickr.com/5582/14653735848_8de88d69c4_o.png"></p>
+<p>Finally, the last couple of steps consist of assigning the quotas per user and / or group with the quotatool command (note that this task can also be performed by using edquota, but quotatool is more straightforward and less error-prone).</p>
+<p>To set the soft limits to 4 MB and the hard limit to 5 MB for the user called xmodulo, and 10 MB / 15 MB for the xmodulo group:</p>
+<pre>
+# quotatool -u xmodulo -bq 4M -l '5 Mb' /home 
+# quotatool -g xmodulo -bq 10M -l '15 Mb' /home
+</pre>
+
+<p><img src="https://farm4.staticflickr.com/3888/14653806037_5438b5034e_z.jpg"></p>
+<p>And we can see the results in Windows 7 (3.98 MB free of 4.00 MB):</p>
+<p><img src="https://farm4.staticflickr.com/3919/14653805967_c2b1551869_o.png"></p>
 
       
     </div>
@@ -253,6 +305,106 @@ $ sudo yum install pam-devel
 
 <p>To conclude, there are a lot more websites which deserve to be listed, and this might be a topic for a part two to this post. But this is a good start. It serves as an appetizer to what can be found online as tools for Linux users. If you have any other pages that you would like to share, following this thematic, do so in the comments. And maybe contribute to a sequel to this list.</p>
 
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-08-11T16:00:00.000Z"><a href="/2014/08/12/how-to-install-google-authenticator-on-linux/">2014-08-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/12/how-to-install-google-authenticator-on-linux/">How to install Google Authenticator on Linux</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Question I want to use Google Authenticator to set up two factor authentication. How can I install Google Authenticator on [insert your Linux distro]?</em></p>
+<p>Question: I want to use Google Authenticator to set up two factor authentication. How can I install Google Authenticator on [insert your Linux distro]?</p>
+<p>Google Authenticator is an application which can generate time-based one-time passcode to be used for two-factor authentication. You can install Google Authenticator on Linux as a pre-built package or by building it from the source.</p>
+<h3>Install Google Authenticator as a Pre-built Package</h3>
+
+<p>For those of you who don’t want to build Google Authenticator, it is available as a pre-built package on several Linux distros. The pre-built package contains Google Authenticator binary and its PAM module.</p>
+<p>To install Google Authenticator on Ubuntu:</p>
+<pre>
+$ sudo apt-get install libpam-google-authenticator
+</pre>
+
+<p>To install Google Authenticator on Fedora:</p>
+<pre>
+$ sudo yum install google-authenticator
+</pre>
+
+<p>To install Google Authenticator on CentOS, first enable EPEL repository, and then run:</p>
+<pre>
+$ sudo yum install google-authenticator
+</pre>
+
+<h3>Compile Google Authenticator on Linux</h3>
+
+<p>First, install prerequisites for building Google Authenticator.</p>
+<p>On Debian, Ubuntu or Linux Mint:</p>
+<pre>
+$ sudo apt-get install wget make gcc libpam0g-dev
+</pre>
+
+<p>On CentOS, Fedora or RHEL:</p>
+<pre>
+$ sudo yum install wget make gcc pam-devel
+</pre>
+
+<p>Then download the source code of Google Authenticator, and compile it as follows.</p>
+<pre>
+$ wget https://google-authenticator.googlecode.com/files/libpam-google-authenticator-1.0-source.tar.bz2 
+$ tar xvfvj libpam-google-authenticator-1.0-source.tar.bz2 
+$ cd libpam-google-authenticator-1.0 
+$ make
+</pre>
+
+<p>If build is successful, you will see pam_google_authenticator.so and google-authenticator created in the directory.</p>
+<p>Finally, go ahead and install Google Authenticator.</p>
+<pre>
+$ sudo make install
+</pre>
+
+<p>For instructions on how to set up two-factor authentication for SSH logins with Google Authenticator, refer to this guideline.</p>
+<h3>Troubleshoot</h3>
+
+<ol>
+<li>I am getting the following error when compiling Google Authenticator.</li>
+</ol>
+<pre>
+fatal error: security/pam_appl.h: No such file or directory
+</pre>
+
+<p>To fix this problem, install the following package.</p>
+<p>On Debian, Ubuntu or Linux Mint:</p>
+<pre>
+$ sudo apt-get install libpam0g-dev
+</pre>
+
+<p>On CentOS, Fedora or RHEL:</p>
+<pre>
+$ sudo yum install pam-devel
+</pre>
 
       
     </div>
@@ -634,6 +786,56 @@ hduser@ubuntu:/usr/local/hadoop$
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-07-26T16:00:00.000Z"><a href="/2014/07/27/tkinter-canvas-sample/">2014-07-27</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/27/tkinter-canvas-sample/">Tkinter Canvas Sample</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>A sample for tkinter canvas.</em></p>
+<pre>
+import Tkinter
+root = Tkinter.Tk(0
+canvas=Tkinter.Canvas(root,width=600,height=400,bg='white')
+
+canvas.create_text(302,77,text='Use Canvas', fill='gray')
+canvas.create_text(300,75,text='Use Canvas',fill='blue')
+canvas.create_polygon(290,114,316,114,330,130,310,146,284,146,270,130)
+canvas.create_oval(280,120,320,140,fill='white')
+canvas.create_line(250,130,350,130)
+canvas.create_line(300,100,300,160)
+canvas.create_arc(100,200,500,400,start=0,extent=240,fill='pink')
+canvas.create_arc(103,203,500,400,start=241,extent=118,fill='red')
+canvas.pack()
+
+root.mainloop()
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-07-26T16:00:00.000Z"><a href="/2014/07/27/a-sample-game-use-pygame/">2014-07-27</a></time>
       
       
@@ -795,56 +997,6 @@ game.Start()
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-07-26T16:00:00.000Z"><a href="/2014/07/27/tkinter-canvas-sample/">2014-07-27</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/07/27/tkinter-canvas-sample/">Tkinter Canvas Sample</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>A sample for tkinter canvas.</em></p>
-<pre>
-import Tkinter
-root = Tkinter.Tk(0
-canvas=Tkinter.Canvas(root,width=600,height=400,bg='white')
-
-canvas.create_text(302,77,text='Use Canvas', fill='gray')
-canvas.create_text(300,75,text='Use Canvas',fill='blue')
-canvas.create_polygon(290,114,316,114,330,130,310,146,284,146,270,130)
-canvas.create_oval(280,120,320,140,fill='white')
-canvas.create_line(250,130,350,130)
-canvas.create_line(300,100,300,160)
-canvas.create_arc(100,200,500,400,start=0,extent=240,fill='pink')
-canvas.create_arc(103,203,500,400,start=241,extent=118,fill='red')
-canvas.pack()
-
-root.mainloop()
-</pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2014-07-12T16:00:00.000Z"><a href="/2014/07/13/beautifulsoup-basic/">2014-07-13</a></time>
       
       
@@ -884,74 +1036,6 @@ links = soup.findAll("a")
 <p><pre><br>from BeautifulSoup import BeautifulSoup<br>import urllib2<br>import re</pre></p>
 <p>url = urllib2.urlopen(“<a href="http://www.python.org&quot;" target="_blank" rel="noopener">http://www.python.org&quot;</a>)<br>content = url.read()<br>soup = BeautifulSoup(content)<br>for a in soup.findAll(‘a’,href=True):<br>    if re.findall(‘python’, a[‘href’]):<br>        print “Found the URL:”, a[‘href’]<br><br>Further Reading</p>
 <p>I recommend that you head over to <a href="http://www.crummy.com" target="_blank" rel="noopener">http://www.crummy.com</a> to read more about what you can do with this awesome module.</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-07-11T16:00:00.000Z"><a href="/2014/07/12/using-telnet-in-python/">2014-07-12</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/07/12/using-telnet-in-python/">Using Telnet in Python</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>To make use of Telnet in Python, we can use the telnetlib module. </em></p>
-<p></p><h3>Using Telnet in Python</h3><br>To make use of Telnet in Python, we can use the telnetlib module. <p></p>
-<p>That module provides a Telnet class that implements the Telnet protocol.</p>
-<p>The Telnet module have several methods, in this example I will make use of these:<br>read_until, read_all() and write()</p>
-<p></p><h3>Telnet Script in Python</h3><br>Let’s make a telnet script<p></p>
-<pre>
-import getpass
-import sys
-import telnetlib
-
-HOST = "hostname"
-
-user = raw_input("Enter your remote account: ")
-
-password = getpass.getpass()
-
-tn = telnetlib.Telnet(HOST)
-
-tn.read_until("login: ")
-
-tn.write(user + "\n")
-
-if password:
-    tn.read_until("Password: ")
-    tn.write(password + "\n")
-
-tn.write("ls\n")
-
-tn.write("exit\n")
-
-print tn.read_all()
-
-</pre>
-
-<p>At ActiveState you can find more Python scripts using the telnetlib,<br>for example <a href="http://code.activestate.com/recipes/52228/" target="_blank" rel="noopener">this</a> script.</p>
-<p>For more information about using the Telnet client in Python, please see the<br><a href="http://docs.python.org/2/library/telnetlib.html" target="_blank" rel="noopener">official documentation</a>. </p>
 
       
     </div>
@@ -1019,7 +1103,7 @@ print tn.read_all()
   <h3 class="title">Tags</h3>
   <ul class="entry">
   
-    <li><a href="/tags/django/">django</a><small>3</small></li>
+    <li><a href="/tags/django/">django</a><small>4</small></li>
   
     <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
   

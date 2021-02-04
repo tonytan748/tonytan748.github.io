@@ -54,111 +54,103 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-10-12T16:00:00.000Z"><a href="/2014/10/13/dajngo-episode-3-introduction-to-south-migrations/">2014-10-13</a></time>
+        <time datetime="2014-10-13T16:00:00.000Z"><a href="/2014/10/14/vim-commands-cheatsheet/">2014-10-14</a></time>
       
       
   
-    <h1 class="title"><a href="/2014/10/13/dajngo-episode-3-introduction-to-south-migrations/">Dajngo Episode 3 Introduction to South Migrations</a></h1>
+    <h1 class="title"><a href="/2014/10/14/vim-commands-cheatsheet/">vim commands cheatsheet</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p><em>Introduction to South Migrations</em></p>
-<p>Install SOUTH:</p>
-<pre>
-pip install South
-</pre>
-
-<pre>
-vim settings.py
-</pre>
-In "INSTALLED_APP"
-Add
-<pre>
-'south',
-</pre>
-
-<pre>
-python manage.py syncdb
-</pre>
-Create a new app.
-<pre>
-python manage.py startapp page
-</pre>
-Add 'page' to project.
-<pre>
-vim settings.py
-</pre>
-
-<pre>
-'page',
-</pre>
-In page part, edit models.
-<pre>
-vim page/models.py
-</pre>
-
-<pre>
-from django.db import models
-class Page(models.Model):
-    title=models.CharField(max_length=200)
-    slug=models.SlugField(max_length=200)
-    body=models.TextField()
-</pre>
-
-<pre>
-python manage.py schemamigration page --initial
-</pre>
-
-<pre>
-python manage.py migrate page
-</pre>
-
-<p>Update models.</p>
-<pre>
-vim page/models.py
-</pre>
-
-<pre>
-from datetime import datetime
-
-pub_date=models.DateTimeField(default=datetime.now())
-</pre>
-
-<pre>
-python manage.py schemamigration page --auto
-</pre>
-
-<pre>
-python manage.py migrate page
-</pre>
-
-<p>In another app “post”,</p>
-<pre>
-python manage.py convert_to_south post
-</pre>
-
-<pre>
-vim post/models.py
-</pre>
-
-<pre>
-from datetime import datetime
-pub_date=models.DateTimeField(default=datetime.now())
-</pre>
-
-<pre>
-python manage.py schemamigration post --auto
-</pre>
-
-<pre>
-python manage.py migrate post
-</pre>
-
-<pre>
-python manage.py migrate post 0001 --fake
-</pre>
+        <p><em>vim commands cheatsheet</em></p>
+<p>##Cursor movement</p>
+<p>h - move left</p>
+<p>j - move down</p>
+<p>k - move up</p>
+<p>l - move right</p>
+<p>w - jump by start of words (punctuation considered words)</p>
+<p>W - jump by words (spaces separate words)</p>
+<p>e - jump to end of words (punctuation considered words)</p>
+<p>E - jump to end of words (no punctuation)</p>
+<p>b - jump backward by words (punctuation considered words)</p>
+<p>B - jump backward by words (no punctuation)</p>
+<p>0 - (zero) start of line</p>
+<p>^ - first non-blank character of line</p>
+<p>$ - end of line</p>
+<p>G - Go To command (prefix with number - 5G goes to line 5)</p>
+<p>Note: Prefix a cursor movement command with a number to repeat it. For example, 4j moves down 4 lines.</p>
+<p>##Insert Mode - Inserting/Appending text</p>
+<p>i - start insert mode at cursor</p>
+<p>I - insert at the beginning of the line</p>
+<p>a - append after the cursor</p>
+<p>A - append at the end of the line</p>
+<p>o - open (append) blank line below current line (no need to press return)</p>
+<p>O - open blank line above current line</p>
+<p>ea - append at end of word</p>
+<p>Esc - exit insert mode</p>
+<p>##Editing</p>
+<p>r - replace a single character (does not use insert mode)</p>
+<p>J - join line below to the current one</p>
+<p>cc - change (replace) an entire line</p>
+<p>cw - change (replace) to the end of word</p>
+<p>c$ - change (replace) to the end of line</p>
+<p>s - delete character at cursor and subsitute text</p>
+<p>S - delete line at cursor and substitute text (same as cc)</p>
+<p>xp - transpose two letters (delete and paste, technically)</p>
+<p>u - undo</p>
+<p>. - repeat last command</p>
+<p>##Marking text (visual mode)</p>
+<p>v - start visual mode, mark lines, then do command (such as y-yank)</p>
+<p>V - start Linewise visual mode</p>
+<p>o - move to other end of marked area</p>
+<p>Ctrl+v - start visual block mode</p>
+<p>O - move to Other corner of block</p>
+<p>aw - mark a word</p>
+<p>ab - a () block (with braces)</p>
+<p>aB - a {} block (with brackets)</p>
+<p>ib - inner () block</p>
+<p>iB - inner {} block</p>
+<p>Esc - exit visual mode</p>
+<p>##Visual commands</p>
+<p>&#62; - shift right</p>
+<p>&#60; - shift left</p>
+<p>y - yank (copy) marked text</p>
+<p>d - delete marked text</p>
+<p>~ - switch case</p>
+<p>##Cut and Paste</p>
+<p>yy - yank (copy) a line</p>
+<p>2yy - yank 2 lines</p>
+<p>yw - yank word</p>
+<p>y$ - yank to end of line</p>
+<p>p - put (paste) the clipboard after cursor</p>
+<p>P - put (paste) before cursor</p>
+<p>dd - delete (cut) a line</p>
+<p>dw - delete (cut) the current word</p>
+<p>x - delete (cut) current character</p>
+<p>##Exiting</p>
+<p>:w - write (save) the file, but don’t exit</p>
+<p>:wq - write (save) and quit</p>
+<p>:q - quit (fails if anything has changed)</p>
+<p>:q! - quit and throw away changes</p>
+<p>##Search/Replace</p>
+<p>/pattern - search for pattern</p>
+<p>?pattern - search backward for pattern</p>
+<p>n - repeat search in same direction</p>
+<p>N - repeat search in opposite direction</p>
+<p>:%s/old/new/g - replace all old with new throughout file</p>
+<p>:%s/old/new/gc - replace all old with new throughout file with confirmations</p>
+<p>##Working with multiple files</p>
+<p>:e filename - Edit a file in a new buffer</p>
+<p>:bnext (or :bn) - go to next buffer</p>
+<p>:bprev (of :bp) - go to previous buffer</p>
+<p>:bd - delete a buffer (close a file)</p>
+<p>:sp filename - Open a file in a new buffer and split window</p>
+<p>ctrl+ws - Split windows</p>
+<p>ctrl+ww - switch between windows</p>
+<p>ctrl+wq - Quit a window</p>
+<p>ctrl+wv - Split windows vertically</p>
 
       
     </div>
@@ -316,57 +308,110 @@ if __name__ == '__main__':
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-10-02T16:00:00.000Z"><a href="/2014/10/03/django-episode-4-deploying-django-to-heroku/">2014-10-03</a></time>
+        <time datetime="2014-10-12T16:00:00.000Z"><a href="/2014/10/13/dajngo-episode-3-introduction-to-south-migrations/">2014-10-13</a></time>
       
       
   
-    <h1 class="title"><a href="/2014/10/03/django-episode-4-deploying-django-to-heroku/">Django Episode 4 Deploying Django to Heroku</a></h1>
+    <h1 class="title"><a href="/2014/10/13/dajngo-episode-3-introduction-to-south-migrations/">Dajngo Episode 3 Introduction to South Migrations</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p><em>Deploying Django to Heroku</em></p>
+        <p><em>Introduction to South Migrations</em></p>
+<p>Install SOUTH:</p>
 <pre>
-ls blog
+pip install South
 </pre>
 
 <pre>
-vim requirements.txt
+vim settings.py
+</pre>
+In "INSTALLED_APP"
+Add
+<pre>
+'south',
 </pre>
 
 <pre>
-Django &#60;=1.*.*
-South
-psycopg2=2.4.2
+python manage.py syncdb
+</pre>
+Create a new app.
+<pre>
+python manage.py startapp page
+</pre>
+Add 'page' to project.
+<pre>
+vim settings.py
 </pre>
 
 <pre>
-pip install -r requirements.txt
+'page',
+</pre>
+In page part, edit models.
+<pre>
+vim page/models.py
 </pre>
 
 <pre>
-gir commit -am "change requirements"
+from django.db import models
+class Page(models.Model):
+    title=models.CharField(max_length=200)
+    slug=models.SlugField(max_length=200)
+    body=models.TextField()
 </pre>
 
 <pre>
-heroku create --stack cedor
+python manage.py schemamigration page --initial
 </pre>
 
 <pre>
-git push heroku master
+python manage.py migrate page
+</pre>
+
+<p>Update models.</p>
+<pre>
+vim page/models.py
 </pre>
 
 <pre>
-heroku run python blog/manage.py syncdb
+from datetime import datetime
+
+pub_date=models.DateTimeField(default=datetime.now())
 </pre>
 
 <pre>
-heroku run python blog/manage.py migrate
+python manage.py schemamigration page --auto
 </pre>
 
 <pre>
-heroku open
+python manage.py migrate page
+</pre>
+
+<p>In another app “post”,</p>
+<pre>
+python manage.py convert_to_south post
+</pre>
+
+<pre>
+vim post/models.py
+</pre>
+
+<pre>
+from datetime import datetime
+pub_date=models.DateTimeField(default=datetime.now())
+</pre>
+
+<pre>
+python manage.py schemamigration post --auto
+</pre>
+
+<pre>
+python manage.py migrate post
+</pre>
+
+<pre>
+python manage.py migrate post 0001 --fake
 </pre>
 
       
@@ -467,105 +512,58 @@ localhose:8000/rss/main
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-09-22T16:00:00.000Z"><a href="/2014/09/23/remote-control-with-telnetlib-python-recipe/">2014-09-23</a></time>
+        <time datetime="2014-10-02T16:00:00.000Z"><a href="/2014/10/03/django-episode-4-deploying-django-to-heroku/">2014-10-03</a></time>
       
       
   
-    <h1 class="title"><a href="/2014/09/23/remote-control-with-telnetlib-python-recipe/">Remote control with telnetlib (Python recipe)</a></h1>
+    <h1 class="title"><a href="/2014/10/03/django-episode-4-deploying-django-to-heroku/">Django Episode 4 Deploying Django to Heroku</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p><em>Remote control with telnetlib (Python recipe)</em></p>
+        <p><em>Deploying Django to Heroku</em></p>
 <pre>
-
-# auto_telnet.py - remote control via telnet
-import os, sys, string, telnetlib
-from getpass import getpass
-
-class AutoTelnet:
-    def __init__(self, user_list, cmd_list, **kw):
-        self.host = kw.get('host', 'localhost')
-        self.timeout = kw.get('timeout', 600)
-        self.command_prompt = kw.get('command_prompt', "$ ")
-        self.passwd = {}
-        for user in user_list:
-            self.passwd[user] = getpass("Enter user '%s' password: " % user)
-        self.telnet = telnetlib.Telnet()
-        for user in user_list:
-            self.telnet.open(self.host)
-            ok = self.action(user, cmd_list)
-            if not ok:
-                print "Unable to process:", user
-            self.telnet.close()
-
-    def action(self, user, cmd_list):
-        t = self.telnet
-        t.write("\n")
-        login_prompt = "login: "
-        response = t.read_until(login_prompt, 5)
-        if string.count(response, login_prompt):
-            print response
-        else:
-            return 0
-        password_prompt = "Password:"
-        t.write("%s\n" % user)
-        response = t.read_until(password_prompt, 3)
-        if string.count(response, password_prompt):
-            print response
-        else:
-            return 0
-        t.write("%s\n" % self.passwd[user])
-        response = t.read_until(self.command_prompt, 5)
-        if not string.count(response, self.command_prompt):
-            return 0
-        for cmd in cmd_list:
-            t.write("%s\n" % cmd)
-            response = t.read_until(self.command_prompt, self.timeout)
-            if not string.count(response, self.command_prompt):
-                return 0
-            print response
-        return 1
-
-if __name__ == '__main__':
-    basename = os.path.splitext(os.path.basename(sys.argv[0]))[0]
-    logname = os.environ.get("LOGNAME", os.environ.get("USERNAME"))
-    host = 'localhost'
-    import getopt
-    optlist, user_list = getopt.getopt(sys.argv[1:], 'c:f:h:')
-    usage = """
-usage: %s [-h host] [-f cmdfile] [-c "command"] user1 user2 ...
-    -c  command
-    -f  command file
-    -h  host  (default: '%s')
-
-Example:  %s -c "echo $HOME" %s
-""" % (basename, host, basename, logname)
-    if len(sys.argv) &#60; 2:
-        print usage
-        sys.exit(1)
-    cmd_list = []
-    for (opt, optarg) in optlist:
-        if opt == '-f':
-            for r in open(optarg).readlines():
-                if string.rstrip(r):
-                    cmd_list.append(r)
-        elif opt == '-c':
-            command = optarg
-            if command[0] == '"' and command[-1] == '"':
-                command = command[1:-1]
-            cmd_list.append(command)
-        elif opt == '-h':
-            host = optarg
-    autoTelnet = AutoTelnet(user_list, cmd_list, host=host)
-
+ls blog
 </pre>
 
-<p>Python’s telnetlib permits users to easily automate access to telnet servers, even from non-Unix machines.</p>
-<p>As an alternative to the popen() functions, telnetlib is probably a handy technique to have in your sysadmin toolbox.</p>
-<p>Production code will generally be more robust, but this example should be enough to get anyone started in the right direction.</p>
-<p>this title is come from <a href="http://code.activestate.com/recipes/52228/" target="_blank" rel="noopener">http://code.activestate.com/recipes/52228/</a></p>
+<pre>
+vim requirements.txt
+</pre>
+
+<pre>
+Django &#60;=1.*.*
+South
+psycopg2=2.4.2
+</pre>
+
+<pre>
+pip install -r requirements.txt
+</pre>
+
+<pre>
+gir commit -am "change requirements"
+</pre>
+
+<pre>
+heroku create --stack cedor
+</pre>
+
+<pre>
+git push heroku master
+</pre>
+
+<pre>
+heroku run python blog/manage.py syncdb
+</pre>
+
+<pre>
+heroku run python blog/manage.py migrate
+</pre>
+
+<pre>
+heroku open
+</pre>
 
       
     </div>
@@ -708,6 +706,127 @@ generate D:\Project\Python\code_gen\MBIM_Service_Phonebook_device.java over. ~ ~
 </pre>
 
 
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-09-22T16:00:00.000Z"><a href="/2014/09/23/remote-control-with-telnetlib-python-recipe/">2014-09-23</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/09/23/remote-control-with-telnetlib-python-recipe/">Remote control with telnetlib (Python recipe)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Remote control with telnetlib (Python recipe)</em></p>
+<pre>
+
+# auto_telnet.py - remote control via telnet
+import os, sys, string, telnetlib
+from getpass import getpass
+
+class AutoTelnet:
+    def __init__(self, user_list, cmd_list, **kw):
+        self.host = kw.get('host', 'localhost')
+        self.timeout = kw.get('timeout', 600)
+        self.command_prompt = kw.get('command_prompt', "$ ")
+        self.passwd = {}
+        for user in user_list:
+            self.passwd[user] = getpass("Enter user '%s' password: " % user)
+        self.telnet = telnetlib.Telnet()
+        for user in user_list:
+            self.telnet.open(self.host)
+            ok = self.action(user, cmd_list)
+            if not ok:
+                print "Unable to process:", user
+            self.telnet.close()
+
+    def action(self, user, cmd_list):
+        t = self.telnet
+        t.write("\n")
+        login_prompt = "login: "
+        response = t.read_until(login_prompt, 5)
+        if string.count(response, login_prompt):
+            print response
+        else:
+            return 0
+        password_prompt = "Password:"
+        t.write("%s\n" % user)
+        response = t.read_until(password_prompt, 3)
+        if string.count(response, password_prompt):
+            print response
+        else:
+            return 0
+        t.write("%s\n" % self.passwd[user])
+        response = t.read_until(self.command_prompt, 5)
+        if not string.count(response, self.command_prompt):
+            return 0
+        for cmd in cmd_list:
+            t.write("%s\n" % cmd)
+            response = t.read_until(self.command_prompt, self.timeout)
+            if not string.count(response, self.command_prompt):
+                return 0
+            print response
+        return 1
+
+if __name__ == '__main__':
+    basename = os.path.splitext(os.path.basename(sys.argv[0]))[0]
+    logname = os.environ.get("LOGNAME", os.environ.get("USERNAME"))
+    host = 'localhost'
+    import getopt
+    optlist, user_list = getopt.getopt(sys.argv[1:], 'c:f:h:')
+    usage = """
+usage: %s [-h host] [-f cmdfile] [-c "command"] user1 user2 ...
+    -c  command
+    -f  command file
+    -h  host  (default: '%s')
+
+Example:  %s -c "echo $HOME" %s
+""" % (basename, host, basename, logname)
+    if len(sys.argv) &#60; 2:
+        print usage
+        sys.exit(1)
+    cmd_list = []
+    for (opt, optarg) in optlist:
+        if opt == '-f':
+            for r in open(optarg).readlines():
+                if string.rstrip(r):
+                    cmd_list.append(r)
+        elif opt == '-c':
+            command = optarg
+            if command[0] == '"' and command[-1] == '"':
+                command = command[1:-1]
+            cmd_list.append(command)
+        elif opt == '-h':
+            host = optarg
+    autoTelnet = AutoTelnet(user_list, cmd_list, host=host)
+
+</pre>
+
+<p>Python’s telnetlib permits users to easily automate access to telnet servers, even from non-Unix machines.</p>
+<p>As an alternative to the popen() functions, telnetlib is probably a handy technique to have in your sysadmin toolbox.</p>
+<p>Production code will generally be more robust, but this example should be enough to get anyone started in the right direction.</p>
+<p>this title is come from <a href="http://code.activestate.com/recipes/52228/" target="_blank" rel="noopener">http://code.activestate.com/recipes/52228/</a></p>
 
       
     </div>
@@ -1202,49 +1321,6 @@ i&#60;C-V&#62;后续字符 输入特殊的 ASCII 字符或键。
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-08-29T16:00:00.000Z"><a href="/2014/08/30/how-to-change-the-brightness-in-ubuntu1404/">2014-08-30</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/08/30/how-to-change-the-brightness-in-ubuntu1404/">How to change the brightness in Ubuntu14.04</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>How to change the brightness in Ubuntu14.04</em></p>
-<pre>
-sudo vim /etc/rs.local
-</pre>
-
-<p>add one line before “exit 0”</p>
-<pre>
-echo 550 > /sys/class/backlight/intel_backlight/brightness
-</pre>
-
-<p>noted the “500”, the max light is 1000, so I change to half darkness.</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1296,7 +1372,7 @@ echo 550 > /sys/class/backlight/intel_backlight/brightness
   <h3 class="title">Tags</h3>
   <ul class="entry">
   
-    <li><a href="/tags/django/">django</a><small>3</small></li>
+    <li><a href="/tags/django/">django</a><small>4</small></li>
   
     <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
   

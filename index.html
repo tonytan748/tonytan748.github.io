@@ -54,6 +54,50 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2021-02-04T06:46:12.000Z"><a href="/2021/02/04/Django-queryset实现按指定字段的值进行排序/">2021-02-04</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2021/02/04/Django-queryset实现按指定字段的值进行排序/">[Django]queryset实现按指定字段的值进行排序</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>文章转载于<a href="https://zgljl2012.com/django-querysetshi-xian-an-zhi-ding-zi-duan-de-zhi-jin-xing-pai-xu/" target="_blank" rel="noopener">这里</a></p>
+<p>最近碰到一个需求，要对用户的学历进行排序，也就是按照[‘中专及以下’, ‘高中’, ‘大专’, ‘本科’, ‘硕士’, ‘博士’]的顺序进行排序，这就需要使用Django的ORM实现按指定字段的值进行排序。</p>
+<ol>
+<li>MySQL中的SQL语句的语法：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from user_education where user_id = 1 ORDER BY FIELD(degree, &apos;中专及以下&apos;, &apos;高中&apos;, &apos;大专&apos;, &apos;本科&apos;, &apos;硕士&apos;, &apos;博士&apos;) DESC</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>python代码</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ordering = &apos;FIELD(`degree`, &#123;&#125;)&apos;.format(&apos;,&apos;.join([ &quot;&apos;&#123;&#125;&apos;&quot;.format(i) for i in educations]))</span><br><span class="line">education_last = Education.objects.filter(user_id=user[&apos;id&apos;]).\</span><br><span class="line">								   extra(select=&#123;&apos;ordering&apos;: ordering&#125;, order_by=(&apos;-ordering&apos;,))</span><br></pre></td></tr></table></figure>
+<p>可通过数据库日志看到生成的sql语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT (FIELD(`degree`, &apos;中专及以下&apos;,&apos;高中&apos;,&apos;大专&apos;,&apos;本科&apos;,&apos;硕士&apos;,&apos;博士&apos;)) AS `ordering` FROM `user_education` WHERE `user_education`.`user_id` = 31 ORDER BY `ordering` DESC LIMIT 1</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2021-01-20T06:18:57.000Z"><a href="/2021/01/20/Go安装go-redis依赖被墙问题/">2021-01-20</a></time>
       
       
@@ -1100,131 +1144,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2018-11-17T06:03:15.000Z"><a href="/2018/11/17/Flask-application-run-threads-in-the-background/">2018-11-17</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2018/11/17/Flask-application-run-threads-in-the-background/">Flask application run threads in the background</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>Example is following:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">from flask import Flask</span><br><span class="line">from time import sleep</span><br><span class="line">from concurrent.futures import ThreadPoolExecutor</span><br><span class="line"></span><br><span class="line">executor = ThreadPoolExecutor(2)</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line">@app.route(&apos;/jobs&apos;)</span><br><span class="line">def run_jobs():</span><br><span class="line">	executor.submit(some_long_task1)</span><br><span class="line">	executor.submit(some_long_task2, &apos;hello&apos;, 123)</span><br><span class="line">	return &apos;Two jobs was launched in background!&apos;</span><br><span class="line"></span><br><span class="line">def some_long_task1():</span><br><span class="line">	print(&apos;Task #1 started&apos;)</span><br><span class="line">	sleep(10)</span><br><span class="line">	print(&apos;Task #1 is done&apos;)</span><br><span class="line"></span><br><span class="line">def some_long_task2(arg1, arg2):</span><br><span class="line">	print(&apos;Task #2 started&apos;)</span><br><span class="line">	sleep(5)</span><br><span class="line">	print(&apos;Task #2 is done&apos;)</span><br><span class="line"></span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">	app.run()</span><br></pre></td></tr></table></figure>
-<p><code>concurrent.futures</code> is introduced from python3.2, and provied higher abstract than <code>threading</code> and <code>multiprocessing</code>, it’s include two class <code>ThreadPoolExecutor</code> and <code>ProcessPoolExecutor</code>.</p>
-<p>for more information you can view in <a href="https://docs.python.org/3/library/concurrent.futures.html#module-concurrent.futures" target="_blank" rel="noopener">python docuemnts for concurrent.furtures</a></p>
-<ol>
-<li>Executor</li>
-</ol>
-<p>Executor is a base module, this is a abstract class, the subclass is <code>ThreadPoolExecutor</code> and <code>ProcessPoolExecutor</code> which is to be used create thred pool and process pool.</p>
-<p>the methods is following:</p>
-<ul>
-<li><code>Executor.submit(fn, *args, **kwargs)</code></li>
-</ul>
-<p>example is:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">with ThreadPoolExecutor(max_workers=2) as executor:</span><br><span class="line">	future = executor.submit(pow, 22, 123)</span><br><span class="line">	print(futrue.result())</span><br></pre></td></tr></table></figure></p>
-<p>we use <code>submit</code> method join a <code>task</code> in tread pool, <code>submit</code> return a <code>Future</code> object. and the <code>future.result()</code> is use <code>result</code> method get the result.<br>it will wainting untill the method is finished.<br>we use <code>with</code> for auto call ‘shutdown’ method otherwise we have to wait some release code.</p>
-<ul>
-<li><code>Executor.map(fn, *args, **kwargs)</code></li>
-</ul>
-<p>the <code>map</code> method is same with python map method. but it can set out time by arguement. <code>timeout</code> is int or float. if method overtime, will <code>raise TimeoutError</code>. it will no time out if it’s not set <code>timeout</code>.</p>
-<table>
-<thead>
-<tr>
-<th>arguement</th>
-<th>desc</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>func</td>
-<td>the method</td>
-</tr>
-<tr>
-<td>iterables</td>
-<td>iter object</td>
-</tr>
-<tr>
-<td>timeout</td>
-<td>timeout setting</td>
-</tr>
-</tbody>
-</table>
-<p>example is:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">form concurrent.futures import ThreadPoolExecutor</span><br><span class="line">import requests</span><br><span class="line">URLS = [&quot;http://www.163.com&quot;, &quot;https://www.baidu.com&quot;, &quot;https://github.com&quot;]</span><br><span class="line"></span><br><span class="line">def load_url(url):</span><br><span class="line">	req = requests.get(url)</span><br><span class="line">	print(f&quot;&#123;url&#125; page is &#123;len(req.content)&#125; bytes&quot;)</span><br><span class="line"></span><br><span class="line">executor = ThreadPoolExecutor(max_workers=3)</span><br><span class="line">executor.map(load_url, URLS)</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><code>Executor.shutdown(wait=True)</code></li>
-</ul>
-<p>this method is used by release system resources. <code>Executor</code> have <code>__enter__</code> and <code>__exit__</code> methods, so it can use <code>with</code>.</p>
-<ol start="2">
-<li>Future</li>
-</ol>
-<p><code>submit</code> method will return a <code>futrue</code> object. <code>future</code> have many methods for shadow task status. <code>Future</code> is created by <code>Executor.submit()</code>.</p>
-<table>
-<thead>
-<tr>
-<th>method</th>
-<th>description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>cancel()</td>
-<td>cancel call, it cannot cancel if running now and return False, otherwise return True</td>
-</tr>
-<tr>
-<td>cancelled()</td>
-<td>check if is it cancel success or false and return True or False</td>
-</tr>
-<tr>
-<td>running()</td>
-<td></td>
-</tr>
-<tr>
-<td>done()</td>
-<td>check if is it call success or fail when running and return True or False</td>
-</tr>
-<tr>
-<td>result(Timeout=None)</td>
-<td>get result, if it’s not finished, it will waitting</td>
-</tr>
-<tr>
-<td>exception(timeout=None)</td>
-<td>get the except</td>
-</tr>
-<tr>
-<td>add_done_callback(fn)</td>
-<td>it will bind fn to future object.</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><code>wait</code></li>
-</ul>
-<p><code>wait</code> method will return a tuple, the tuple include two set, it is <code>completed</code> and <code>uncompleted</code>.<br><code>wait</code> method have 3 arguements <code>FIRST_COMPLETED</code>, <code>FIRST_EXCEPTION</code> and <code>ALL_COMPLETE</code>, the default is <code>ALL_COMPLETED</code>.</p>
-<p>If use default <code>ALL_COMPLETED</code>, the program will blocked untill all tasks completed and then run main thread.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from concurrent.future import ThreadPoolExecutor, wait, as_completed</span><br><span class="line">import requests</span><br><span class="line">URLS = [&apos;http://www.163.com&apos;, &apos;http://www.baidu.com&apos;]</span><br><span class="line">def load_url(url):</span><br><span class="line">	req = requests.get(url)</span><br><span class="line">	print(f&apos;&#123;url&#125; page is &#123;len(req.content)&#125; bytes&apos;)</span><br><span class="line"></span><br><span class="line">executor = ThreadPoolExecutor(max_workers=3)</span><br><span class="line">f_list = []</span><br><span class="line">for url in URLS:</span><br><span class="line">	future = executor.submit(load_url, url)</span><br><span class="line">	f_list.append(future)</span><br><span class="line"></span><br><span class="line">print(wait(f_list))</span><br><span class="line">print(&apos;Main Thread is closed&apos;)</span><br></pre></td></tr></table></figure></p>
-<p>If use <code>FIRST_COMPLETED</code>, the program will closed but not waiting all tasks finished.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from concurrent.future import ThreadPoolExecutor, wait, as_completed</span><br><span class="line">import requests</span><br><span class="line">URLS = [&apos;http://www.163.com&apos;, &apos;http://www.baidu.com&apos;]</span><br><span class="line">def load_url(url):</span><br><span class="line">	req = requests.get(url)</span><br><span class="line">	print(f&apos;&#123;url&#125; page is &#123;len(req.content)&#125; bytes&apos;)</span><br><span class="line"></span><br><span class="line">executor = ThreadPoolExecutor(max_workers=3)</span><br><span class="line">f_list = []</span><br><span class="line">for url in URLS:</span><br><span class="line">	future = executor.submit(load_url, url)</span><br><span class="line">	f_list.append(future)</span><br><span class="line"></span><br><span class="line">print(wait(f_list, return_when=&quot;FIRST_COMPLETED&quot;))</span><br><span class="line">print(&apos;Main Thread is closed&apos;)</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1274,7 +1193,7 @@
   <h3 class="title">Tags</h3>
   <ul class="entry">
   
-    <li><a href="/tags/django/">django</a><small>3</small></li>
+    <li><a href="/tags/django/">django</a><small>4</small></li>
   
     <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
   
