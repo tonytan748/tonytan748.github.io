@@ -70,18 +70,16 @@
 <p><code>django_content_type</code>表存储了用户所提交的所有model名称与model所在的app名称</p>
 <p>其中的<code>model</code>字段为用户定义的模型类的名称，<code>app_label</code>为该模型所在app名称</p>
 <h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>使用的例子，现在有四个model，我们自己创建的Post，Picture和Comment，加上django原生的User。</p>
-<blockquote>
-<p>django原生的User model即用户表</p>
-</blockquote>
-<blockquote>
-<p>Comment为用户提交的评论表</p>
-</blockquote>
-<blockquote>
-<p>Picture为存储图片信息的表</p>
-</blockquote>
-<blockquote>
-<p>Post为存储文章信息的表</p>
-</blockquote>
+<ul>
+<li><p>django原生的User model即用户表</p>
+</li>
+<li><p>Comment为用户提交的评论表</p>
+</li>
+<li><p>Picture为存储图片信息的表</p>
+</li>
+<li><p>Post为存储文章信息的表</p>
+</li>
+</ul>
 <p>场景如下：用户可以对图片或者文章提交评论，那么Comment中首先要存储的是，该评论对应的用户，再就是该评论是针对哪张图片或者哪篇文章的评论，代码如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from django.db import models</span><br><span class="line">from django.contrib.auth.models import User</span><br><span class="line">class Post(models.Model):</span><br><span class="line">    author = models.ForeignKey(User, on_delete=models.CASCADE)</span><br><span class="line">    body = models.TextField(blank=True)</span><br><span class="line">class Picture(models.Model):</span><br><span class="line">    author = models.ForeignKey(User, on_delete=models.CASCADE)</span><br><span class="line">    body = models.TextField(blank=True)</span><br><span class="line">class Comment(models.Model):</span><br><span class="line">    author = models.ForeignKey(to=User, on_delete=models.CASCADE)</span><br><span class="line">    body = models.TextField(blank=True)</span><br><span class="line">    pic = models.ForeignKey(to=Picture, on_delete=models.CASCADE, null=True)</span><br><span class="line">    post = models.ForeignKey(to=Post, on_delete=models.CASCADE, null=True)</span><br></pre></td></tr></table></figure>
 <p>为了建立Comment与Post或者Picture的关系，我们就需要创建外键，如果该Comment与Picture有关联，那么pic字段是有值的，而其余的关联字段为null。这样实现的缺点是，每增加一种被评论的类型，在Comment model中就需要多新增一个外键，扩展性极差。</p>
