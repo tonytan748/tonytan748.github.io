@@ -54,6 +54,236 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-08-12T16:00:00.000Z"><a href="/2014/08/13/git-common-operations-command/">2014-08-13</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/13/git-common-operations-command/">GIT Common Operations Command</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>GIT Common Operations Command</em></p>
+<h3>1) 远程仓库相关命令</h3>
+
+<p>检出仓库：</p>
+<pre>$ git clone git://github.com/jquery/jquery.git</pre>
+
+<p>查看远程仓库：</p>
+<pre>$ git remote -v</pre>
+
+<p>添加远程仓库：</p>
+<pre>$ git remote add [name] [url]</pre>
+
+<p>删除远程仓库：</p>
+<pre>$ git remote rm [name]</pre>
+
+<p>修改远程仓库：</p>
+<pre>$ git remote set-url --push [name] [newUrl]</pre>
+
+<p>拉取远程仓库：</p>
+<pre>$ git pull [remoteName] [localBranchName]</pre>
+
+<p>推送远程仓库：</p>
+<pre>$ git push [remoteName] [localBranchName]</pre>
+
+
+<ul>
+<li>如果想把本地的某个分支test提交到远程仓库，并作为远程仓库的master分支，或者作为另外一个名叫test的分支，如下：<pre>
+$ git push origin test:master         // 提交本地test分支作为远程的master分支
+$ git push origin test:test              // 提交本地test分支作为远程的test分支
+</pre>
+
+
+</li>
+</ul>
+<h3>2）分支(branch)操作相关命令</h3>
+
+<p>查看本地分支：</p>
+<pre>$ git branch</pre>
+
+<p>查看远程分支：</p>
+<pre>$ git branch -r （如果还是看不到就先 git fetch origin 先）</pre>
+
+<p>创建本地分支：</p>
+<pre>$ git branch [name] ----注意新分支创建后不会自动切换为当前分支</pre>
+
+<p>切换分支：</p>
+<pre>$ git checkout [name]</pre>
+
+<p>创建新分支并立即切换到新分支：</p>
+<pre>$ git checkout -b [name]</pre>
+
+<p>直接检出远程分支：</p>
+<pre>$ git checkout -b [name] [remoteName] (如：git checkout -b myNewBranch origin/dragon)</pre>
+
+<p>删除分支：</p>
+<pre>$ git branch -d [name] ---- -d选项只能删除已经参与了合并的分支，对于未有合并的分支是无法删除的。如果想强制删除一个分支，可以使用-D选项</pre>
+
+<p>合并分支：</p>
+<pre>$ git merge [name] ----将名称为[name]的分支与当前分支合并</pre>
+
+<p>合并最后的2个提交：</p>
+<pre>$ git rebase -i HEAD~2 ---- 数字2按需修改即可（如果需提交到远端$ git push -f origin master 慎用！）</pre>
+
+<p>创建远程分支(本地分支push到远程)：</p>
+<pre>$ git push origin [name]</pre>
+
+<p>删除远程分支：</p>
+<pre>$ git push origin :heads/[name] 或 $ git push origin :[name] </pre>
+
+
+<ul>
+<li>创建空的分支：(执行命令之前记得先提交你当前分支的修改，否则会被强制删干净没得后悔)<pre>
+$ git symbolic-ref HEAD refs/heads/[name]
+$ rm .git/index
+$ git clean -fdx
+</pre>
+
+
+</li>
+</ul>
+<h3>3）版本(tag)操作相关命令</h3>
+
+<p>查看版本：</p>
+<pre>$ git tag</pre>
+
+<p>创建版本：</p>
+<pre>$ git tag [name]</pre>
+
+<p>删除版本：</p>
+<pre>$ git tag -d [name]</pre>
+
+<p>查看远程版本：</p>
+<pre>$ git tag -r</pre>
+
+<p>创建远程版本(本地版本push到远程)：</p>
+<pre>$ git push origin [name]</pre>
+
+<p>删除远程版本：</p>
+<pre>$ git push origin :refs/tags/[name]</pre>
+
+<p>合并远程仓库的tag到本地：</p>
+<pre>$ git pull origin --tags</pre>
+
+<p>上传本地tag到远程仓库：</p>
+<pre>$ git push origin --tags</pre>
+
+<p>创建带注释的tag：</p>
+<pre>$ git tag -a [name] -m 'yourMessage'</pre>
+
+
+<h3>4) 子模块(submodule)相关操作命令</h3>
+
+<p>添加子模块：</p>
+<pre>$ git submodule add [url] [path]</pre>
+
+<p>如：</p>
+<pre>$ git submodule add git://github.com/soberh/ui-libs.git src/main/webapp/ui-libs</pre>
+
+<p>初始化子模块：</p>
+<pre>$ git submodule init  ----只在首次检出仓库时运行一次就行</pre>
+
+<p>更新子模块：</p>
+<pre>$ git submodule update ----每次更新或切换分支后都需要运行一下</pre>
+
+<p>删除子模块：（分4步走哦）</p>
+<ul><br><li>1) $ git rm –cached [path]</li><br><li>2) 编辑“.gitmodules”文件，将子模块的相关配置节点删除掉</li><br><li>3) 编辑“ .git/config”文件，将子模块的相关配置节点删除掉</li><br><li>4) 手动删除子模块残留的目录</li><br></ul>
+
+
+<h3>5）忽略一些文件、文件夹不提交</h3>
+
+<p>在仓库根目录下创建名称为“.gitignore”的文件，写入不需要的文件夹名或文件，每个元素占一行即可，如</p>
+<pre>
+target
+bin
+*.db
+</pre>
+
+
+<h3>6）后悔药</h3>
+
+<p>删除当前仓库内未受版本管理的文件：</p>
+<pre>$ git clean -f</pre>
+
+<p>恢复仓库到上一次的提交状态：</p>
+<pre>$ git reset --hard</pre>
+
+<p>回退所有内容到上一个版本：</p>
+<pre>$ git reset HEAD^</pre>
+
+<p>回退a.py这个文件的版本到上一个版本：</p>
+<pre>$ git reset HEAD^ a.py</pre>
+
+<p>回退到某个版本：</p>
+<pre>$ git reset 057d </pre>
+
+<p>将本地的状态回退到和远程的一样：</p>
+<pre>$ git reset –hard origin/master</pre>
+
+<p>向前回退到第3个版本：</p>
+<pre>$ git reset –soft HEAD~3</pre>
+
+<p>修改最后的提交日志：</p>
+<pre>$ git commit --amend</pre>
+
+
+<h3>7）Git一键推送多个远程仓库</h3>
+
+<p>编辑本地仓库的.git/config文件：</p>
+<pre>
+[remote "all"]
+    url = git@github.com:dragon/test.git
+    url = git@gitcafe.com:dragon/test.git
+</pre>
+
+<p>这样，使用git push all即可一键Push到多个远程仓库中。</p>
+<p></p><h3>8）缓存认证信息</h3><p></p>
+<pre>
+$ git config credential.helper cache
+</pre>
+
+
+<p>资料参考：</p>
+<p><a href="http://josephjiang.com/entry.php?id=342" target="_blank" rel="noopener">Git Submodule 的認識與!</a></p>
+<p><a href="http://icyleaf.com/2010/08/03/how-to-keep-public-and-private-versions-of-a-git-submodule-repo-in-sync/" target="_blank" rel="noopener">如何保持在 Git Submodule 代码的开放和私有共存</a></p>
+<p><a href="https://git.wiki.kernel.org/index.php/GitSubmoduleTutorial" target="_blank" rel="noopener">Git Submodule Tutorial</a></p>
+<p><a href="http://blog.ossxp.com/2010/01/425/" target="_blank" rel="noopener">删除 git submodule </a></p>
+<p><a href="http://pages.github.com/" target="_blank" rel="noopener">pages.github.com</a></p>
+<p><a href="http://lfeng.me/2009/07/23/git-remote-branch-access/" target="_blank" rel="noopener">Git获取远程分支</a></p>
+<p><a href="https://github.com/msysgit/msysgit/wiki/Git-for-Windows-Unicode-Support" target="_blank" rel="noopener">Git for Windows Unicode Support</a></p>
+<p><a href="http://my.oschina.net/chinesedragon/blog/81483" target="_blank" rel="noopener">Git一键推送多个远程仓库</a></p>
+<p><a href="http://my.oschina.net/u/198088/blog/114383" target="_blank" rel="noopener">图解Git</a></p>
+<p><a href="http://www.cnblogs.com/wujianlundao/archive/2012/07/30/2615873.html" target="_blank" rel="noopener">使用git合并多个提交</a></p>
+<p><a href="http://zn-moonlight-gmail-com.iteye.com/blog/1217841" target="_blank" rel="noopener">git:多个commit合并提交</a></p>
+<p><a href="http://blog.csdn.net/nebulali/article/details/7682813" target="_blank" rel="noopener">git merge 和git rebase</a></p>
+<p><a href="http://ihower.tw/git/" target="_blank" rel="noopener">版本控制系統 Git 精要</a></p>
+<p><a href="http://www.oschina.net/translate/10-useful-advanced-git-commands" target="_blank" rel="noopener">10 个很有用的高级 Git 命令</a></p>
+<p><a href="http://yuxu9710108.blog.163.com/blog/static/237515342011910113822476/" target="_blank" rel="noopener">git修改历史提交  </a></p>
+<p>说明：Git for Windows 从 1.7.9 版本开始支持使用中文文件、文件夹名称了，结束了跨平台中文乱码的问题。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-08-11T16:00:00.000Z"><a href="/2014/08/12/how-to-set-up-a-samba-file-server-to-use-with-windows-clients/">2014-08-12</a></time>
       
       
@@ -206,6 +436,106 @@ writeable = yes
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-08-11T16:00:00.000Z"><a href="/2014/08/12/how-to-install-google-authenticator-on-linux/">2014-08-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/12/how-to-install-google-authenticator-on-linux/">How to install Google Authenticator on Linux</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Question I want to use Google Authenticator to set up two factor authentication. How can I install Google Authenticator on [insert your Linux distro]?</em></p>
+<p>Question: I want to use Google Authenticator to set up two factor authentication. How can I install Google Authenticator on [insert your Linux distro]?</p>
+<p>Google Authenticator is an application which can generate time-based one-time passcode to be used for two-factor authentication. You can install Google Authenticator on Linux as a pre-built package or by building it from the source.</p>
+<h3>Install Google Authenticator as a Pre-built Package</h3>
+
+<p>For those of you who don’t want to build Google Authenticator, it is available as a pre-built package on several Linux distros. The pre-built package contains Google Authenticator binary and its PAM module.</p>
+<p>To install Google Authenticator on Ubuntu:</p>
+<pre>
+$ sudo apt-get install libpam-google-authenticator
+</pre>
+
+<p>To install Google Authenticator on Fedora:</p>
+<pre>
+$ sudo yum install google-authenticator
+</pre>
+
+<p>To install Google Authenticator on CentOS, first enable EPEL repository, and then run:</p>
+<pre>
+$ sudo yum install google-authenticator
+</pre>
+
+<h3>Compile Google Authenticator on Linux</h3>
+
+<p>First, install prerequisites for building Google Authenticator.</p>
+<p>On Debian, Ubuntu or Linux Mint:</p>
+<pre>
+$ sudo apt-get install wget make gcc libpam0g-dev
+</pre>
+
+<p>On CentOS, Fedora or RHEL:</p>
+<pre>
+$ sudo yum install wget make gcc pam-devel
+</pre>
+
+<p>Then download the source code of Google Authenticator, and compile it as follows.</p>
+<pre>
+$ wget https://google-authenticator.googlecode.com/files/libpam-google-authenticator-1.0-source.tar.bz2 
+$ tar xvfvj libpam-google-authenticator-1.0-source.tar.bz2 
+$ cd libpam-google-authenticator-1.0 
+$ make
+</pre>
+
+<p>If build is successful, you will see pam_google_authenticator.so and google-authenticator created in the directory.</p>
+<p>Finally, go ahead and install Google Authenticator.</p>
+<pre>
+$ sudo make install
+</pre>
+
+<p>For instructions on how to set up two-factor authentication for SSH logins with Google Authenticator, refer to this guideline.</p>
+<h3>Troubleshoot</h3>
+
+<ol>
+<li>I am getting the following error when compiling Google Authenticator.</li>
+</ol>
+<pre>
+fatal error: security/pam_appl.h: No such file or directory
+</pre>
+
+<p>To fix this problem, install the following package.</p>
+<p>On Debian, Ubuntu or Linux Mint:</p>
+<pre>
+$ sudo apt-get install libpam0g-dev
+</pre>
+
+<p>On CentOS, Fedora or RHEL:</p>
+<pre>
+$ sudo yum install pam-devel
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-08-11T16:00:00.000Z"><a href="/2014/08/12/what-are-useful-online-tools-for-linux/">2014-08-12</a></time>
       
       
@@ -305,106 +635,6 @@ writeable = yes
 
 <p>To conclude, there are a lot more websites which deserve to be listed, and this might be a topic for a part two to this post. But this is a good start. It serves as an appetizer to what can be found online as tools for Linux users. If you have any other pages that you would like to share, following this thematic, do so in the comments. And maybe contribute to a sequel to this list.</p>
 
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-08-11T16:00:00.000Z"><a href="/2014/08/12/how-to-install-google-authenticator-on-linux/">2014-08-12</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/08/12/how-to-install-google-authenticator-on-linux/">How to install Google Authenticator on Linux</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>Question I want to use Google Authenticator to set up two factor authentication. How can I install Google Authenticator on [insert your Linux distro]?</em></p>
-<p>Question: I want to use Google Authenticator to set up two factor authentication. How can I install Google Authenticator on [insert your Linux distro]?</p>
-<p>Google Authenticator is an application which can generate time-based one-time passcode to be used for two-factor authentication. You can install Google Authenticator on Linux as a pre-built package or by building it from the source.</p>
-<h3>Install Google Authenticator as a Pre-built Package</h3>
-
-<p>For those of you who don’t want to build Google Authenticator, it is available as a pre-built package on several Linux distros. The pre-built package contains Google Authenticator binary and its PAM module.</p>
-<p>To install Google Authenticator on Ubuntu:</p>
-<pre>
-$ sudo apt-get install libpam-google-authenticator
-</pre>
-
-<p>To install Google Authenticator on Fedora:</p>
-<pre>
-$ sudo yum install google-authenticator
-</pre>
-
-<p>To install Google Authenticator on CentOS, first enable EPEL repository, and then run:</p>
-<pre>
-$ sudo yum install google-authenticator
-</pre>
-
-<h3>Compile Google Authenticator on Linux</h3>
-
-<p>First, install prerequisites for building Google Authenticator.</p>
-<p>On Debian, Ubuntu or Linux Mint:</p>
-<pre>
-$ sudo apt-get install wget make gcc libpam0g-dev
-</pre>
-
-<p>On CentOS, Fedora or RHEL:</p>
-<pre>
-$ sudo yum install wget make gcc pam-devel
-</pre>
-
-<p>Then download the source code of Google Authenticator, and compile it as follows.</p>
-<pre>
-$ wget https://google-authenticator.googlecode.com/files/libpam-google-authenticator-1.0-source.tar.bz2 
-$ tar xvfvj libpam-google-authenticator-1.0-source.tar.bz2 
-$ cd libpam-google-authenticator-1.0 
-$ make
-</pre>
-
-<p>If build is successful, you will see pam_google_authenticator.so and google-authenticator created in the directory.</p>
-<p>Finally, go ahead and install Google Authenticator.</p>
-<pre>
-$ sudo make install
-</pre>
-
-<p>For instructions on how to set up two-factor authentication for SSH logins with Google Authenticator, refer to this guideline.</p>
-<h3>Troubleshoot</h3>
-
-<ol>
-<li>I am getting the following error when compiling Google Authenticator.</li>
-</ol>
-<pre>
-fatal error: security/pam_appl.h: No such file or directory
-</pre>
-
-<p>To fix this problem, install the following package.</p>
-<p>On Debian, Ubuntu or Linux Mint:</p>
-<pre>
-$ sudo apt-get install libpam0g-dev
-</pre>
-
-<p>On CentOS, Fedora or RHEL:</p>
-<pre>
-$ sudo yum install pam-devel
-</pre>
 
       
     </div>
@@ -786,56 +1016,6 @@ hduser@ubuntu:/usr/local/hadoop$
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-07-26T16:00:00.000Z"><a href="/2014/07/27/tkinter-canvas-sample/">2014-07-27</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/07/27/tkinter-canvas-sample/">Tkinter Canvas Sample</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>A sample for tkinter canvas.</em></p>
-<pre>
-import Tkinter
-root = Tkinter.Tk(0
-canvas=Tkinter.Canvas(root,width=600,height=400,bg='white')
-
-canvas.create_text(302,77,text='Use Canvas', fill='gray')
-canvas.create_text(300,75,text='Use Canvas',fill='blue')
-canvas.create_polygon(290,114,316,114,330,130,310,146,284,146,270,130)
-canvas.create_oval(280,120,320,140,fill='white')
-canvas.create_line(250,130,350,130)
-canvas.create_line(300,100,300,160)
-canvas.create_arc(100,200,500,400,start=0,extent=240,fill='pink')
-canvas.create_arc(103,203,500,400,start=241,extent=118,fill='red')
-canvas.pack()
-
-root.mainloop()
-</pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2014-07-26T16:00:00.000Z"><a href="/2014/07/27/a-sample-game-use-pygame/">2014-07-27</a></time>
       
       
@@ -997,45 +1177,34 @@ game.Start()
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-07-12T16:00:00.000Z"><a href="/2014/07/13/beautifulsoup-basic/">2014-07-13</a></time>
+        <time datetime="2014-07-26T16:00:00.000Z"><a href="/2014/07/27/tkinter-canvas-sample/">2014-07-27</a></time>
       
       
   
-    <h1 class="title"><a href="/2014/07/13/beautifulsoup-basic/">BeautifulSoup Basic</a></h1>
+    <h1 class="title"><a href="/2014/07/27/tkinter-canvas-sample/">Tkinter Canvas Sample</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p><em>What is BeautifulSoup? BeautifulSoup is a Python library from <a href="http://www.crummy.com" target="_blank" rel="noopener">www.crummy.com</a> </em></p>
-<p></p><h3>What is BeautifulSoup?</h3><br>BeautifulSoup is a Python library from <a href="http://www.crummy.com" target="_blank" rel="noopener">www.crummy.com</a> <p></p>
-<p></p><h3>What can it do</h3><br>On their website they write “Beautiful Soup parses anything you give it, and does the tree traversal stuff for you. <p></p>
-<p><b>You can tell it to:</b></p>
-<p>“Find all the links”</p>
-<p>“Find all the links of class externalLink”</p>
-<p>“Find all the links whose urls match “foo.com”</p>
-<p>“Find the table heading that’s got bold text, then give me that text.”” </p>
-<p></p><h3>BeautifulSoup Example</h3><br>In this example, we will try and find a link (a tag) in a webpage. <p></p>
-<p>Before we start, we have to import two modules. (BeutifulSoup and urllib2). </p>
-<p>Urlib2 is used to open the URL we want. </p>
-<p>We will use the soup.findAll method to search through the soup object to match fortext and html tags within the page. </p>
+        <p><em>A sample for tkinter canvas.</em></p>
 <pre>
-from BeautifulSoup import BeautifulSoup
-import urllib2
+import Tkinter
+root = Tkinter.Tk(0
+canvas=Tkinter.Canvas(root,width=600,height=400,bg='white')
 
-url = urllib2.urlopen("http://www.python.org")
-content = url.read()
-soup = BeautifulSoup(content)
-links = soup.findAll("a")
+canvas.create_text(302,77,text='Use Canvas', fill='gray')
+canvas.create_text(300,75,text='Use Canvas',fill='blue')
+canvas.create_polygon(290,114,316,114,330,130,310,146,284,146,270,130)
+canvas.create_oval(280,120,320,140,fill='white')
+canvas.create_line(250,130,350,130)
+canvas.create_line(300,100,300,160)
+canvas.create_arc(100,200,500,400,start=0,extent=240,fill='pink')
+canvas.create_arc(103,203,500,400,start=241,extent=118,fill='red')
+canvas.pack()
+
+root.mainloop()
 </pre>
-
-<p>Output</p>
-<p><pre><br>That will print out all the elements in python.org with an “a” tag. </pre></p>
-<p>(The “a” tag defines a hyperlink, which is used to link from one page to another.)<br></p>
-<p></p><h3>BeautifulSoup Example 2</h3><br>To make it a bit more useful, we can specify the URL’s we want to return.  <p></p>
-<p><pre><br>from BeautifulSoup import BeautifulSoup<br>import urllib2<br>import re</pre></p>
-<p>url = urllib2.urlopen(“<a href="http://www.python.org&quot;" target="_blank" rel="noopener">http://www.python.org&quot;</a>)<br>content = url.read()<br>soup = BeautifulSoup(content)<br>for a in soup.findAll(‘a’,href=True):<br>    if re.findall(‘python’, a[‘href’]):<br>        print “Found the URL:”, a[‘href’]<br><br>Further Reading</p>
-<p>I recommend that you head over to <a href="http://www.crummy.com" target="_blank" rel="noopener">http://www.crummy.com</a> to read more about what you can do with this awesome module.</p>
 
       
     </div>
@@ -1074,7 +1243,7 @@ links = soup.findAll("a")
   
     <li><a href="/categories/VIM/">VIM</a><small>2</small></li>
   
-    <li><a href="/categories/django/">django</a><small>8</small></li>
+    <li><a href="/categories/django/">django</a><small>9</small></li>
   
     <li><a href="/categories/jekyll/">jekyll</a><small>2</small></li>
   
@@ -1103,7 +1272,7 @@ links = soup.findAll("a")
   <h3 class="title">Tags</h3>
   <ul class="entry">
   
-    <li><a href="/tags/django/">django</a><small>4</small></li>
+    <li><a href="/tags/django/">django</a><small>5</small></li>
   
     <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
   

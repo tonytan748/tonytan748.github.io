@@ -54,6 +54,90 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-08-26T16:00:00.000Z"><a href="/2015/08/27/Python字符串-元组-列表-字典互转/">2015-08-27</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/08/27/Python字符串-元组-列表-字典互转/">Python 字符串/元组/列表/字典/互转</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Python format character tuple list and dist each other</em></p>
+<pre>
+#-*-coding:utf-8-*- 
+
+#1、字典
+dict = {'name': 'Zara', 'age': 7, 'class': 'First'}
+
+#字典转为字符串，返回：<type 'str'=""> {'age': 7, 'name': 'Zara', 'class': 'First'}
+print type(str(dict)), str(dict)
+
+#字典可以转为元组，返回：('age', 'name', 'class')
+print tuple(dict)
+#字典可以转为元组，返回：(7, 'Zara', 'First')
+print tuple(dict.values())
+
+#字典转为列表，返回：['age', 'name', 'class']
+print list(dict)
+#字典转为列表
+print dict.values
+
+#2、元组
+tup=(1, 2, 3, 4, 5)
+
+#元组转为字符串，返回：(1, 2, 3, 4, 5)
+print tup.__str__()
+
+#元组转为列表，返回：[1, 2, 3, 4, 5]
+print list(tup)
+
+#元组不可以转为字典
+
+#3、列表
+nums=[1, 3, 5, 7, 8, 13, 20];
+
+#列表转为字符串，返回：[1, 3, 5, 7, 8, 13, 20]
+print str(nums)
+
+#列表转为元组，返回：(1, 3, 5, 7, 8, 13, 20)
+print tuple(nums)
+
+#列表不可以转为字典
+
+#4、字符串
+
+#字符串转为元组，返回：(1, 2, 3)
+print tuple(eval("(1,2,3)"))
+#字符串转为列表，返回：[1, 2, 3]
+print list(eval("(1,2,3)"))
+#字符串转为字典，返回：<type 'dict'="">
+print type(eval("{'name':'ljq', 'age':24}"))
+
+</type></type></pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-08-16T16:00:00.000Z"><a href="/2015/08/17/Download-Files-By-Three-Ways/">2015-08-17</a></time>
       
       
@@ -995,107 +1079,6 @@ sudo apt-get install mysqlclient
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-10-17T16:00:00.000Z"><a href="/2014/10/18/command-list-for-view-linux-system-information/">2014-10-18</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/10/18/command-list-for-view-linux-system-information/">Command List for View Linux System Information</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>Command List for View Linux System Information</em></p>
-<p></p><h2>系统</h2><p></p>
-<pre>
-# uname -a                    #查看内核/操作系统/CPU信息
-# head -n 1 /etc/issue        #查看操作系统版本
-# cat /proc/cpuinfo            #查看cpu信息
-# hostname                    #查看计算机名
-# lspci -tv                    #列出所以PCI设备
-# lsusb -tv                    #列出所以USB设备
-# lsmod                        #列出加载的内核模块
-# env                        #查看环境变量
-</pre>
-
-<p></p><h2>资源</h2><p></p>
-<pre>
-# free -m                    #查看内存使用量和交换区使用量
-# df -h                        #查看各分区使用情况
-# du -sh &#60;filepath&#62;    #查看指定目录的大小
-# grep MemTotal /proc/meminfo    #查看内存总量
-# grep MemFree /proc/meminfo    #查看空闲内存量
-# uptime                        #查看系统运行时间　用户数　负载
-# cat /proc/loadavg                #查看系统负载
-</pre>
-
-<p></p><h2>磁盘和分区</h2><p></p>
-<pre>
-# mount | column -t            #查看挂载的分区状态
-# fdisk -l                    #查看所有分区
-# swapon -s                    #查看所有交换分区
-# hdparm -i /dev/hda        #查看磁盘参数(仅适用于IDE设备)
-# dmesg | grep IDE            #查看启动时IDE设备检测状况
-</pre>
-
-<p></p><h2>网络</h2><p></p>
-<pre>
-# ifconfig                    #查看所有网络接口的属性
-# iptables -L                #查看防火墙设置
-# route -n                    #查看路由表
-# netstart -Intp            #查看所有监听端口
-# netstart -antp            #查看所有已经建立的连接
-# netstat -s                #查看网络统计信息
-</pre>
-
-<p></p><h2>进程</h2><p></p>
-<pre>
-# ps -ef                    #查看所有进程
-# top                        #实时显示进程状态
-</pre>
-
-<p></p><h2>用户</h2><p></p>
-<pre>
-# w                            #查看活动用户
-# id &#60;username&#62;        #查看指定用户信息
-# last                        #查看用户登陆日志
-# cut -d: -fl /etc/passwd    #查看系统所有用户
-# cut -d: -fl /etc/group    #查看系统所有组
-# crontab -l                #查看当前用户的计划任务
-</pre>
-
-<p></p><h2>服务</h2><p></p>
-<pre>
-# chkconfig --list            #列出所有系统服务
-# chkconfig --list | grep on    #列出所有启动的系统服务
-</pre>
-
-<p></p><h2>程序</h2><p></p>
-<pre>
-# rpm -qa                    #查看所有安装的软件包
-</pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1118,7 +1101,7 @@ sudo apt-get install mysqlclient
   
     <li><a href="/categories/VIM/">VIM</a><small>2</small></li>
   
-    <li><a href="/categories/django/">django</a><small>8</small></li>
+    <li><a href="/categories/django/">django</a><small>9</small></li>
   
     <li><a href="/categories/jekyll/">jekyll</a><small>2</small></li>
   
@@ -1147,7 +1130,7 @@ sudo apt-get install mysqlclient
   <h3 class="title">Tags</h3>
   <ul class="entry">
   
-    <li><a href="/tags/django/">django</a><small>4</small></li>
+    <li><a href="/tags/django/">django</a><small>5</small></li>
   
     <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
   

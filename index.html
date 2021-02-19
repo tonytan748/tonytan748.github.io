@@ -54,6 +54,76 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2021-02-19T02:22:46.000Z"><a href="/2021/02/19/Django-ContentTypes使用示例/">2021-02-19</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2021/02/19/Django-ContentTypes使用示例/">Django.ContentTypes使用示例</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>转载于<a href="https://blog.csdn.net/qq_29113041/article/details/87285265?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.control&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.control" target="_blank" rel="noopener">这里</a></p>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>Django创建项目后，在settings.py中默认加载了以下几个app：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = [</span><br><span class="line">    &apos;django.contrib.admin&apos;,</span><br><span class="line">    &apos;django.contrib.auth&apos;,</span><br><span class="line">    &apos;django.contrib.contenttypes&apos;,</span><br><span class="line">    &apos;django.contrib.sessions&apos;,</span><br><span class="line">    &apos;django.contrib.messages&apos;,</span><br><span class="line">    &apos;django.contrib.staticfiles&apos;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>其中有个app为<code>django.contrib.contenttypes</code>，在使用了<code>python manage.py makemigrations</code> 和 <code>python manage.py migrate</code>命令后，这个app会在数据库创建表 <code>django_content_type</code></p>
+<p><code>django_content_type</code>表存储了用户所提交的所有model名称与model所在的app名称</p>
+<p>其中的<code>model</code>字段为用户定义的模型类的名称，<code>app_label</code>为该模型所在app名称</p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>使用的例子，现在有四个model，我们自己创建的Post，Picture和Comment，加上django原生的User。</p>
+<blockquote>
+<p>django原生的User model即用户表</p>
+</blockquote>
+<blockquote>
+<p>Comment为用户提交的评论表</p>
+</blockquote>
+<blockquote>
+<p>Picture为存储图片信息的表</p>
+</blockquote>
+<blockquote>
+<p>Post为存储文章信息的表</p>
+</blockquote>
+<p>场景如下：用户可以对图片或者文章提交评论，那么Comment中首先要存储的是，该评论对应的用户，再就是该评论是针对哪张图片或者哪篇文章的评论，代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from django.db import models</span><br><span class="line">from django.contrib.auth.models import User</span><br><span class="line">class Post(models.Model):</span><br><span class="line">    author = models.ForeignKey(User, on_delete=models.CASCADE)</span><br><span class="line">    body = models.TextField(blank=True)</span><br><span class="line">class Picture(models.Model):</span><br><span class="line">    author = models.ForeignKey(User, on_delete=models.CASCADE)</span><br><span class="line">    body = models.TextField(blank=True)</span><br><span class="line">class Comment(models.Model):</span><br><span class="line">    author = models.ForeignKey(to=User, on_delete=models.CASCADE)</span><br><span class="line">    body = models.TextField(blank=True)</span><br><span class="line">    pic = models.ForeignKey(to=Picture, on_delete=models.CASCADE, null=True)</span><br><span class="line">    post = models.ForeignKey(to=Post, on_delete=models.CASCADE, null=True)</span><br></pre></td></tr></table></figure>
+<p>为了建立Comment与Post或者Picture的关系，我们就需要创建外键，如果该Comment与Picture有关联，那么pic字段是有值的，而其余的关联字段为null。这样实现的缺点是，每增加一种被评论的类型，在Comment model中就需要多新增一个外键，扩展性极差。</p>
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><p>如果使用contenttypes就不需要再使用多个Foreignkey，因为在<code>django_content_type</code>表已经存储了app名和model名，所以我们只需要将我们创建的模型与<code>django_content_type</code>表关联起来，然后再存储一个实例 id 即可准确定位到某个app中某个模型的具体实例。代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">from django.db import models</span><br><span class="line">from django.contrib.contenttypes.models import ContentType</span><br><span class="line">from django.contrib.auth.models import User</span><br><span class="line">from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation</span><br><span class="line">class Post(models.Model):</span><br><span class="line">    author = models.ForeignKey(User, on_delete=models.CASCADE)</span><br><span class="line">    body = models.TextField(blank=True)</span><br><span class="line">    comments = GenericRelation(&apos;Comment&apos;)  # 使用GenericRelation可以建立该类与Comment类的反向关联，</span><br><span class="line">                                           # 那么可以通过该类的实例来创建对应的comment</span><br><span class="line">class Picture(models.Model):</span><br><span class="line">    author = models.ForeignKey(User, on_delete=models.CASCADE)</span><br><span class="line">    body = models.TextField(blank=True)</span><br><span class="line">    comments = GenericRelation(&apos;Comment&apos;)</span><br><span class="line">class Comment(models.Model):</span><br><span class="line">    #  user_name = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)</span><br><span class="line">    author = models.ForeignKey(to=User, on_delete=models.CASCADE)</span><br><span class="line">    body = models.TextField(blank=True)</span><br><span class="line">    # step1</span><br><span class="line">    # ForeignKey为外键，即在Comment类中，content_type对应了django_content_type表中的某个对象</span><br><span class="line">    content_type = models.ForeignKey(to=ContentType, on_delete=models.CASCADE)  # 与数据库中的django_content_type表关联起来</span><br><span class="line">    # step2</span><br><span class="line">    object_id = models.PositiveIntegerField()  # 正整数类型，在被关联的表中的实例id，以此来定位具体的实例</span><br><span class="line">    # step3</span><br><span class="line">    content_object = GenericForeignKey()  # 根据content_type和object_id来指向一个模型中的具体实例</span><br></pre></td></tr></table></figure>
+<p>首先看Comment这个模型，与contenttypes相关的就三个字段：<code>content_tpye</code>   <code>object_id</code>    <code>content_object</code></p>
+<p><code>content_type</code>字段为外键，指向ContentType这个模型，也就是上面提到的<code>django_content_type</code>表</p>
+<p><code>object_id</code>为一个整数，存储了实例id，实例id不理解可以看下面的数据表结构分析</p>
+<p><code>content_object</code>为<code>GenericForeignKey</code>类型，主要作用是根据<code>content_type</code>字段和<code>object_id</code>字段来定位某个模型中具体某个实例</p>
+<p>所以实际上在使用<code>GenericForeignKey()</code>函数时需要传入两个参数，即<code>content_type</code>和<code>object_id</code>字段的名字，注意是名字不是value。但是默认在该函数的构造函数中已经赋予了默认值，即<code>content_type</code>和<code>object_id</code>，所以如果我们定义的变量名为这两个，那么我们可以省略该参数。该字段不会存储到数据库中，在查询的时候ORM会用到。</p>
+<p>GenericForeignKey构造函数如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def __init__(self, ct_field=&apos;content_type&apos;, fk_field=&apos;object_id&apos;, for_concrete_model=True):</span><br><span class="line">    self.ct_field = ct_field</span><br><span class="line">    self.fk_field = fk_field</span><br><span class="line">    self.for_concrete_model = for_concrete_model</span><br><span class="line">    self.editable = False</span><br><span class="line">    self.rel = None</span><br><span class="line">    self.column = None</span><br></pre></td></tr></table></figure>
+<p>将模型同步到数据库，并创建几个测试数据，使用manage.py自带的shell可以轻松的创建测试数据。</p>
+<p><code>python manage.py shell</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from app1.models import Post, Picture, Comment  # app1即为你自己所创建的app名</span><br><span class="line">from django.contrib.auth.models import User  # django原生用户模型</span><br><span class="line">user = User.objects.get(username=&apos;admin-x&apos;)</span><br><span class="line">post = Post.objects.create(author=user, body=&apos;admin-x post test&apos;)</span><br><span class="line">picture = Picture.objects.create(author=user, body=&apos;admin-x pic test&apos;)</span><br><span class="line"> </span><br><span class="line">pic = Picture.objects.get(id=1) # 获取id为1的pic对象</span><br><span class="line">c1 = Comment.objects.create(author=user, body=&apos;test&apos;, content_object=pic) # 创建一个评论并与上述的pic对象关联起来</span><br></pre></td></tr></table></figure>
+<p>还可以注意到，在Post和Picture模型中我们定义了<code>comments = GenericRelation(&#39;Comment&#39;)</code></p>
+<p>GenericRelation的作用是建立该model与Comment的反向关联，我们这样就可以通过Post实例或者Picture实例直接查询属于该实例的所有评论，或者创建一个属于该实例的新评论。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pic = Picture.objects.get(id=1) # 获取id为1的pic对象</span><br><span class="line">pic.comments.create(author=user, body=&apos;test02&apos;)  # 创建一个属于pic对象的评论</span><br><span class="line">pic.comments.all()  # 获取属于pic对象的所有评论</span><br></pre></td></tr></table></figure>
+<p>实际上在数据表中，根据<code>content_type_id</code>就可以在<code>django_content_type</code>这个表中定位到哪个app的哪个model，然后根据<code>object_id</code>定位到该model中具体实例。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2021-02-04T06:46:12.000Z"><a href="/2021/02/04/Django-queryset实现按指定字段的值进行排序/">2021-02-04</a></time>
       
       
@@ -1097,53 +1167,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2018-11-22T02:06:53.000Z"><a href="/2018/11/22/Python-group-function-groupby-itertools/">2018-11-22</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2018/11/22/Python-group-function-groupby-itertools/">Python group function (groupby, itertools)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>If the strucutre of data is:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">d1=&#123;&apos;name&apos;:&apos;zhangsan&apos;,&apos;age&apos;:20,&apos;country&apos;:&apos;China&apos;&#125;</span><br><span class="line">d2=&#123;&apos;name&apos;:&apos;wangwu&apos;,&apos;age&apos;:19,&apos;country&apos;:&apos;USA&apos;&#125;</span><br><span class="line">d3=&#123;&apos;name&apos;:&apos;lisi&apos;,&apos;age&apos;:22,&apos;country&apos;:&apos;JP&apos;&#125;</span><br><span class="line">d4=&#123;&apos;name&apos;:&apos;zhaoliu&apos;,&apos;age&apos;:22,&apos;country&apos;:&apos;USA&apos;&#125;</span><br><span class="line">d5=&#123;&apos;name&apos;:&apos;pengqi&apos;,&apos;age&apos;:22,&apos;country&apos;:&apos;USA&apos;&#125;</span><br><span class="line">d6=&#123;&apos;name&apos;:&apos;lijiu&apos;,&apos;age&apos;:22,&apos;country&apos;:&apos;China&apos;&#125;</span><br><span class="line">lst = [d1, d2, d3, d4, d5, d6]</span><br></pre></td></tr></table></figure></p>
-<p>how to group by <code>country</code> item and get the result:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&apos;JP&apos;: [&#123;&apos;country&apos;: &apos;JP&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;lisi&apos;&#125;], &apos;China&apos;: [&#123;&apos;country&apos;: &apos;China&apos;, &apos;age&apos;: 20, &apos;name&apos;: &apos;zhangsan&apos;&#125;, &#123;&apos;country&apos;: &apos;China&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;lijiu&apos;&#125;], &apos;USA&apos;: [&#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 19, &apos;name&apos;: &apos;wangwu&apos;&#125;, &#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;zhaoliu&apos;&#125;, &#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;pengqi&apos;&#125;]&#125;</span><br></pre></td></tr></table></figure></p>
-<p> or<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[(&apos;China&apos;, [&#123;&apos;country&apos;: &apos;China&apos;, &apos;age&apos;: 20, &apos;name&apos;: &apos;zhangsan&apos;&#125;, &#123;&apos;country&apos;: &apos;China&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;lijiu&apos;&#125;]), (&apos;JP&apos;, [&#123;&apos;country&apos;: &apos;JP&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;lisi&apos;&#125;]), (&apos;USA&apos;, [&#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 19, &apos;name&apos;: &apos;wangwu&apos;&#125;, &#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;zhaoliu&apos;&#125;, &#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;pengqi&apos;&#125;])]</span><br></pre></td></tr></table></figure></p>
-<p>the coding is following:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from operator import itemgetter</span><br><span class="line">from itertools import groupby</span><br><span class="line"></span><br><span class="line">lst.sort(key=itemgetter(&apos;country&apos;))</span><br><span class="line">lstg = groupby(lst, itemgetter(&apos;country&apos;))</span><br></pre></td></tr></table></figure></p>
-<p><code>itemgettet(&#39;country&#39;)</code> is same as <code>lambda x: x[&#39;country&#39;]</code></p>
-<p>then we can get what we wanted.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for key, group in lstg:</span><br><span class="line">	for g in group:  # group is a iter</span><br><span class="line">		print(key, g)</span><br></pre></td></tr></table></figure>
-<p>return:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">China &#123;&apos;country&apos;: &apos;China&apos;, &apos;age&apos;: 20, &apos;name&apos;: &apos;zhangsan&apos;&#125;</span><br><span class="line">China &#123;&apos;country&apos;: &apos;China&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;lijiu&apos;&#125;</span><br><span class="line">JP &#123;&apos;country&apos;: &apos;JP&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;lisi&apos;&#125;</span><br><span class="line">USA &#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 19, &apos;name&apos;: &apos;wangwu&apos;&#125;</span><br><span class="line">USA &#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;zhaoliu&apos;&#125;</span><br><span class="line">USA &#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;pengqi&apos;&#125;</span><br></pre></td></tr></table></figure></p>
-<p><code>key</code> is a grouped the key.</p>
-<p>Get the list which include dict the key is country:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[(key, list(group)) for key, group in lstg]</span><br></pre></td></tr></table></figure></p>
-<p>return:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[(&apos;China&apos;, [&#123;&apos;country&apos;: &apos;China&apos;, &apos;age&apos;: 20, &apos;name&apos;: &apos;zhangsan&apos;&#125;, &#123;&apos;country&apos;: &apos;China&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;lijiu&apos;&#125;]), (&apos;JP&apos;, [&#123;&apos;country&apos;: &apos;JP&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;lisi&apos;&#125;]), (&apos;USA&apos;, [&#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 19, &apos;name&apos;: &apos;wangwu&apos;&#125;, &#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;zhaoliu&apos;&#125;, &#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;pengqi&apos;&#125;])]</span><br></pre></td></tr></table></figure></p>
-<p>Get the dict which key is country:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dict([(key, list(group)) for key, group in lstg])</span><br></pre></td></tr></table></figure></p>
-<p>return:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&apos;JP&apos;: [&#123;&apos;country&apos;: &apos;JP&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;lisi&apos;&#125;], &apos;China&apos;: [&#123;&apos;country&apos;: &apos;China&apos;, &apos;age&apos;: 20, &apos;name&apos;: &apos;zhangsan&apos;&#125;, &#123;&apos;country&apos;: &apos;China&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;lijiu&apos;&#125;], &apos;USA&apos;: [&#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 19, &apos;name&apos;: &apos;wangwu&apos;&#125;, &#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;zhaoliu&apos;&#125;, &#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;pengqi&apos;&#125;]&#125;</span><br></pre></td></tr></table></figure></p>
-<p>Get the numbers of every group:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dict([(key, len(list(group))) for key,group in lstg])</span><br></pre></td></tr></table></figure></p>
-<p>return:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&apos;JP&apos;: 1, &apos;China&apos;: 2, &apos;USA&apos;: 3&#125;</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1164,7 +1187,7 @@
   
     <li><a href="/categories/VIM/">VIM</a><small>2</small></li>
   
-    <li><a href="/categories/django/">django</a><small>8</small></li>
+    <li><a href="/categories/django/">django</a><small>9</small></li>
   
     <li><a href="/categories/jekyll/">jekyll</a><small>2</small></li>
   
@@ -1193,7 +1216,7 @@
   <h3 class="title">Tags</h3>
   <ul class="entry">
   
-    <li><a href="/tags/django/">django</a><small>4</small></li>
+    <li><a href="/tags/django/">django</a><small>5</small></li>
   
     <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
   
