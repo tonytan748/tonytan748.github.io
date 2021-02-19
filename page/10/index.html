@@ -54,6 +54,167 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-07-26T16:00:00.000Z"><a href="/2014/07/27/a-sample-game-use-pygame/">2014-07-27</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/27/a-sample-game-use-pygame/">A Sample Game Use Pygame</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>a game by use pygame.</em></p>
+<pre>
+#-*-coding=utf-8-*-
+
+import sys
+import pygame
+import threading
+import random
+
+class Game:
+    def __init__(self):
+        pygame.init()
+        self.screen=pygame.display.set_mode((800,600))
+        pygame.display.set_caption('python game')
+        self.imgae=[]
+        self.imagerect=[]
+
+        self.vs=pygame.image.load('image/vs.gif')
+        self.o=pygame.image.load('image/o.gif')
+        self.p=pygame.image.load('image/p.gif')
+        self.u=pygame.image.load('iamge/o.gif')
+        self.title=pygame.image.load('iamge/title.gif')
+        self.start=pygame.image.load('image/start.gif')
+        self.exit=pygame.image.load('iamge/exit.gif')
+
+        for i in range(3):
+            gif=pygame.image.load('image/' + str(i) + '.gif')
+            self.image.append(gif)
+        for i in range(3):
+            image=self.image[i]
+            rect=image.get_rect()
+            rect.left=200 * (i+1) + rect.left
+            rect.top=400
+            self.imagerect.append(rect)
+
+    def Start(self):
+        self.screen.blit(self.title,(200,100,400,140))
+        self.screen.blit(self.start,(350,300,100,50))
+        self.screen.blit(self.exit,(350,400,100,50))
+        pygame.display.flip()
+        start=1
+        while start:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.isStart() == 0:
+                        start=0
+                    elif self.isStart(0 == 1:
+                        sys.exit()
+                    else:
+                        pass
+        self.run()
+
+    def run(self):
+        self.screen.fill((0,0,0))
+        for i in range(3):
+            self.screen.blit(self.image[i],self.imagerect[i])
+        pygame.display.flip()
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.Quit:
+                    sys.exit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    self.OnMouseButDown()
+                else:
+                    pass
+
+    def isStart(self):
+        pos = pygame.mouse.get_pos()
+        if pos[0] > 350 and pos[0] < 450:
+            if pos[1] > 300 and pos[1] < 350:
+                return 0
+            elif pos[1] > 400 and pos[1] < 450:
+                return 1
+            else:
+                return 2
+        else:
+            return 2
+
+    def OnMouseButDown(self)
+        self.screen.blit(self.vs,(300,150,140,140))
+        pos=pygame.mouse.get_pos()
+        if pos[1] > 400 and pos[1] < 500:
+            if pos[0] > 200 and pos[0] < 340:
+                self.screen.blit(self.image[0],(150,150,140,140))
+                self.isWin(0)
+            elif pos[0] > 400 and pos[0] < 540:
+                self.screen.blit(self.image[1],(150,150,140,140))
+                self.isWin(1)
+            elif pos[0] > 600 and pos[0] < 740:
+                self.screen.blit(self.image[2],(150,150,140,140))
+                self.isWin(2)
+            else:
+                pass
+
+    def isWin(self,value):
+        num=random.randint(0,2)
+        self.screen.blit(self.image[num],(450,150,590,240))
+        pygame.display.flip()
+
+        if num == value:
+            self.screen.blit(self.o,(220,10,140,70))
+            pygame.display.flip()
+        elif num < value:
+            if num == 0:
+                if value == 2:
+                    self.screen.blit(self.u,(220,10,140,70))
+                else:
+                    self.screen.blit(self.p,(220,10,140,70))
+                pygame.display.flip()
+            else:
+                self.screen.blit(self.u,(220,10,140,70))
+                pygame.display.flip()
+        else:
+            if num == 2:
+                if value == 1:
+                    self.screen.blit(self.u,(220,10,140,70))
+                else:
+                    self.screen.blit(self.p,(220,10,140,70))
+                pygame.display.flip()
+            else:
+                self.screen.blit(self.u,(220,10,140,70))
+                pygame.display.flip()
+
+game=Game()
+game.Start()
+
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-07-12T16:00:00.000Z"><a href="/2014/07/13/beautifulsoup-basic/">2014-07-13</a></time>
       
       
@@ -93,6 +254,74 @@ links = soup.findAll("a")
 <p><pre><br>from BeautifulSoup import BeautifulSoup<br>import urllib2<br>import re</pre></p>
 <p>url = urllib2.urlopen(“<a href="http://www.python.org&quot;" target="_blank" rel="noopener">http://www.python.org&quot;</a>)<br>content = url.read()<br>soup = BeautifulSoup(content)<br>for a in soup.findAll(‘a’,href=True):<br>    if re.findall(‘python’, a[‘href’]):<br>        print “Found the URL:”, a[‘href’]<br><br>Further Reading</p>
 <p>I recommend that you head over to <a href="http://www.crummy.com" target="_blank" rel="noopener">http://www.crummy.com</a> to read more about what you can do with this awesome module.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-07-11T16:00:00.000Z"><a href="/2014/07/12/using-telnet-in-python/">2014-07-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/12/using-telnet-in-python/">Using Telnet in Python</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>To make use of Telnet in Python, we can use the telnetlib module. </em></p>
+<p></p><h3>Using Telnet in Python</h3><br>To make use of Telnet in Python, we can use the telnetlib module. <p></p>
+<p>That module provides a Telnet class that implements the Telnet protocol.</p>
+<p>The Telnet module have several methods, in this example I will make use of these:<br>read_until, read_all() and write()</p>
+<p></p><h3>Telnet Script in Python</h3><br>Let’s make a telnet script<p></p>
+<pre>
+import getpass
+import sys
+import telnetlib
+
+HOST = "hostname"
+
+user = raw_input("Enter your remote account: ")
+
+password = getpass.getpass()
+
+tn = telnetlib.Telnet(HOST)
+
+tn.read_until("login: ")
+
+tn.write(user + "\n")
+
+if password:
+    tn.read_until("Password: ")
+    tn.write(password + "\n")
+
+tn.write("ls\n")
+
+tn.write("exit\n")
+
+print tn.read_all()
+
+</pre>
+
+<p>At ActiveState you can find more Python scripts using the telnetlib,<br>for example <a href="http://code.activestate.com/recipes/52228/" target="_blank" rel="noopener">this</a> script.</p>
+<p>For more information about using the Telnet client in Python, please see the<br><a href="http://docs.python.org/2/library/telnetlib.html" target="_blank" rel="noopener">official documentation</a>. </p>
 
       
     </div>
@@ -204,74 +433,6 @@ links = soup.findAll("a")
 <p><br>Python’s telnetlib permits users to easily automate access to telnet servers, even from non-Unix machines.</p>
 <p>As an alternative to the popen() functions, telnetlib is probably a handy technique to have in your sysadmin toolbox.</p>
 <p>Production code will generally be more robust, but this example should be enough to get anyone started in the right direction.</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-07-11T16:00:00.000Z"><a href="/2014/07/12/using-telnet-in-python/">2014-07-12</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/07/12/using-telnet-in-python/">Using Telnet in Python</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>To make use of Telnet in Python, we can use the telnetlib module. </em></p>
-<p></p><h3>Using Telnet in Python</h3><br>To make use of Telnet in Python, we can use the telnetlib module. <p></p>
-<p>That module provides a Telnet class that implements the Telnet protocol.</p>
-<p>The Telnet module have several methods, in this example I will make use of these:<br>read_until, read_all() and write()</p>
-<p></p><h3>Telnet Script in Python</h3><br>Let’s make a telnet script<p></p>
-<pre>
-import getpass
-import sys
-import telnetlib
-
-HOST = "hostname"
-
-user = raw_input("Enter your remote account: ")
-
-password = getpass.getpass()
-
-tn = telnetlib.Telnet(HOST)
-
-tn.read_until("login: ")
-
-tn.write(user + "\n")
-
-if password:
-    tn.read_until("Password: ")
-    tn.write(password + "\n")
-
-tn.write("ls\n")
-
-tn.write("exit\n")
-
-print tn.read_all()
-
-</pre>
-
-<p>At ActiveState you can find more Python scripts using the telnetlib,<br>for example <a href="http://code.activestate.com/recipes/52228/" target="_blank" rel="noopener">this</a> script.</p>
-<p>For more information about using the Telnet client in Python, please see the<br><a href="http://docs.python.org/2/library/telnetlib.html" target="_blank" rel="noopener">official documentation</a>. </p>
 
       
     </div>
@@ -1224,78 +1385,6 @@ Woof!
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-06-28T16:00:00.000Z"><a href="/2014/06/29/jekyll-quick-start/">2014-06-29</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/06/29/jekyll-quick-start/">Jekyll Quick Start</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>How to create github blog, how to install jekyll-bootstrap,run jekyll locally, create a post,create a page,publish,customize</em></p>
-<h1 id="Host-on-GitHub-in-3-minutes"><a href="#Host-on-GitHub-in-3-minutes" class="headerlink" title="Host on GitHub in 3 minutes"></a>Host on GitHub in 3 minutes</h1><p>Make sure to input your GitHub username so the instructions reflect the exact code you need to run to host your blog.</p>
-<h2 id="1-Create-a-New-Repository"><a href="#1-Create-a-New-Repository" class="headerlink" title="1. Create a New Repository"></a>1. Create a New Repository</h2><p>Go to your <a href="https://github.com" target="_blank" rel="noopener">https://github.com</a> and create a new repository named<br><br><strong>USERNAME.github.com</strong></p>
-<h2 id="2-Install-Jekyll-Bootstrap"><a href="#2-Install-Jekyll-Bootstrap" class="headerlink" title="2. Install Jekyll-Bootstrap"></a>2. Install Jekyll-Bootstrap</h2><p>Enter these commands into your terminal in a directory you want your blog to be:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/plusjade/jekyll-bootstrap.git USERNAME.github.com </span><br><span class="line">cd USERNAME.github.com </span><br><span class="line">git remote set-url origin git@github.com:USERNAME/USERNAME.github.com.git </span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
-<h2 id="3-Profit"><a href="#3-Profit" class="headerlink" title="3. Profit"></a>3. Profit</h2><p>After GitHub has a couple minutes to do its magic your blog will be publicly available at <a href="http://USERNAME.github.com" target="_blank" rel="noopener">http://USERNAME.github.com</a></p>
-<h1 id="Already-have-your-blog-on-GitHub"><a href="#Already-have-your-blog-on-GitHub" class="headerlink" title="Already have your blog on GitHub?"></a>Already have your blog on GitHub?</h1><p>I’ll assume you have the Jekyll gem installed on your local machine. Run Jekyll-Bootstrap locally to see what all the fuss is about:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/plusjade/jekyll-bootstrap.git </span><br><span class="line">$ cd jekyll-bootstrap </span><br><span class="line">$ jekyll serve</span><br></pre></td></tr></table></figure>
-<p>See it in action at <a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a>.</p>
-<h2 id="2-Run-Jekyll-Locally"><a href="#2-Run-Jekyll-Locally" class="headerlink" title="2. Run Jekyll Locally"></a>2. Run Jekyll Locally</h2><p>In order to preview your blog locally you’ll need to install the Jekyll ruby gem. Note gem dependencies will also be installed. You don’t have to run a local version but it helps if you want to preview your content before publishing.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gem install jekyll</span><br></pre></td></tr></table></figure>
-<p>If you run into a problem please consult the original Jekyll installation documentation. You can also create a support issue using GitHub Issues.</p>
-<p>Once the gem is installed you can navigate to your Jekyll-Bootstrap directory. If you’ve followed the homepage instructions this will be: USERNAME.github.com. Once in the directory you’ll run jekyll with server support:</p>
-<p><strong>remember to change USERNAME to your GitHub username.</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd USERNAME.github.com  </span><br><span class="line">$ jekyll serve</span><br></pre></td></tr></table></figure>
-<p>Your blog is now available at: <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a>.</p>
-<h2 id="3-Create-a-Post"><a href="#3-Create-a-Post" class="headerlink" title="3. Create a Post"></a>3. Create a Post</h2><p>Create posts easily via rake task:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rake post title=&quot;Hello World&quot;</span><br></pre></td></tr></table></figure>
-<p>The rake task automatically creates a file with properly formatted filename and YAML Front Matter. Make sure to specify your own title. By default, the date is the current date.</p>
-<p>The rake task will never overwrite existing posts unless you tell it to.</p>
-<h2 id="4-Create-a-Page"><a href="#4-Create-a-Page" class="headerlink" title="4. Create a Page"></a>4. Create a Page</h2><p>Create pages easily via rake task:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rake page name=&quot;about.md&quot;</span><br></pre></td></tr></table></figure>
-<p>Create a nested page:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rake page name=&quot;pages/about.md&quot;</span><br></pre></td></tr></table></figure>
-<p>Create a page with a “pretty” path:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rake page name=&quot;pages/about&quot; </span><br><span class="line"># this will create the file: ./pages/about/index.html</span><br></pre></td></tr></table></figure>
-<p>The rake task automatically creates a page file with properly formatted filename and YAML Front Matter as well as includes the Jekyll Bootstrap “setup” file.</p>
-<h2 id="5-Publish"><a href="#5-Publish" class="headerlink" title="5. Publish"></a>5. Publish</h2><p>After you’ve added posts or made changes to your theme or other files, simply commit them to your git repo and push the commits up to GitHub.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git add . </span><br><span class="line">$ git commit -m &quot;Add new content&quot; </span><br><span class="line">$ git push origin master</span><br></pre></td></tr></table></figure>
-<p>A GitHub post-commit hook will automatically deploy your changes to your hosted blog. You will receive a success or failure notice for every commit you make to your blog.</p>
-<h2 id="6-Customize"><a href="#6-Customize" class="headerlink" title="6. Customize"></a>6. Customize</h2><p>Jekyll-Bootstrap can be used as-is as a basic blogging platform. However there are plenty of ways to dig into deeper customization. The following outlines deeper Jekyll-Bootstrap customization techniques:</p>
-<h1 id="Themes"><a href="#Themes" class="headerlink" title="Themes"></a>Themes</h1><p>Jekyll-Bootstrap supports modular theming. Themes can co-exist and be enabled/disabled on demand. Editing, configuring, and creating themes is docummented in the Theming section.</p>
-<h2 id="Blog-Configuration"><a href="#Blog-Configuration" class="headerlink" title="Blog Configuration"></a>Blog Configuration</h2><p>Jekyll and Jekyll-Bootstrap has a simple but powerful Jekyll Configuration System. You can:</p>
-<ul>
-<li>Specify a custom permalink format for blog posts.</li>
-<li>Specify a commenting engine like disqus, intensedebate, livefyre, or custom.</li>
-<li>Specify an analytics engine like google, getclicky, or custom.</li>
-</ul>
-<h2 id="Programming-Interface"><a href="#Programming-Interface" class="headerlink" title="Programming Interface"></a>Programming Interface</h2><p>The API pages document main data-structures and code available for use in Jekyll and Jekyll-Bootstrap. Consult these pages for how and where to use the data and code provided.</p>
-<h2 id="Jekyll-Introduction"><a href="#Jekyll-Introduction" class="headerlink" title="Jekyll Introduction"></a>Jekyll Introduction</h2><p>I highly recommend reading the Jekyll Introduction if you plan to customize your blog. The introduction is meant for core understanding of how and why Jekyll works the way it does. This will provide you with the proper context, knowledge-base, and fundamentals necessary to understand and be efficient in working with Jekyll and Jekyll-Bootstrap.</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1325,6 +1414,8 @@ Woof!
     <li><a href="/categories/kivy/">kivy</a><small>1</small></li>
   
     <li><a href="/categories/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/categories/mysql/">mysql</a><small>1</small></li>
   
     <li><a href="/categories/normal/">normal</a><small>1</small></li>
   
@@ -1356,6 +1447,8 @@ Woof!
     <li><a href="/tags/go/">go</a><small>2</small></li>
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
   
     <li><a href="/tags/python/">python</a><small>14</small></li>
   

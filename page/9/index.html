@@ -54,6 +54,180 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-08-16T16:00:00.000Z"><a href="/2014/08/17/django-pageinator-and-photo-upload/">2014-08-17</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/17/django-pageinator-and-photo-upload/">Django Pageinator and Photo Upload</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>How to set Pageinator and Photo Upload in Django</em></p>
+<h1>Django Pageinator</h1>
+
+<p>home function:</p>
+<pre>
+
+def home(request):
+    if 'account' in request.session:
+        p=Reg.objects.get(account=request.session['account'])
+        sql=Edit.objects.filter(edit_id=p.id)
+        return render(request,'edit/home.html',{'name':request.session['account'],'con':sql})
+
+</pre>
+
+<p>The home.html</p>
+<pre>
+    &#123;% for i in con %&#125;
+        &#60;div class="for"&#62;
+            &#60;p&#62;&#123;&#123;i.title&#125;&#125;&#60;/p&#62;&#60;p&#62;&#123;&#123;i.time&#125;&#125;&#60;/p&#62;
+        &#60;/div&#62;
+    &#123;% endfor %&#125;
+</pre>
+
+
+<p>Set page, use GET to get the database content.</p>
+<p>the page code:</p>
+<pre>
+
+from django.core.paginator import Paginator,EmptyPage,InvildPage
+
+    q=Edit.objects.all().order_by('id')
+    paginator=Paginator(q,1)    #set how many rows in one page, this is set one rows in one page
+    try:
+        page=int(request.GET.get('page',1))
+    except ValueError:
+        page=1
+    try:
+        content=paginator.page(page)
+    except (EmptyPage,InvalidPage):
+        content=paginator.page(paginator.num_pages)
+
+</pre>
+
+<p>About Paginator information:</p>
+<pre>
+
+&#62;&#62;&#62;from django.core.paginator import Paginator
+&#62;&#62;&#62;objects=['12','dfs','tony','jhon','jery','max','heeny']
+&#62;&#62;&#62;p=Paginator(object,2)    #set veery page have 2 rows
+&#62;&#62;&#62;p.count    #how many content
+
+&#62;&#62;&#62;p.num_pages    #how many pages
+
+&#62;&#62;&#62;p.page_range #the page list
+
+&#62;&#62;&#62;page1=p.page(1)    #first page
+&#62;&#62;&#62;page1        #show the 1st page content index list
+
+&#62;&#62;&#62;page1.object_list    #show the 1st page content list
+
+&#62;&#62;&#62;page2=p.page(2)    #2ed page
+&#62;&#62;&#62;page2
+
+&#62;&#62;&#62;page2.number        #return the page number
+
+&#62;&#62;&#62;page2.has_next()    #whether have next page? True or False
+
+&#62;&#62;&#62;page2.has_previous()    #whether have previous page?    True or False
+
+&#62;&#62;&#62;page2.next_page_number()    #the next page number
+
+&#62;&#62;&#62;page2.previous_page_number()    #the previous number
+
+&#62;&#62;&#62;page2.start_index()    #this page 1st line index
+
+&#62;&#62;&#62;page2.end_index()    #this page last line index
+
+&#62;&#62;&#62;p.page(10)        #if the page exists, return error
+
+</pre>
+
+<p>Update html template:</p>
+<pre>
+&#123;% for i in content.object_list %&#125;
+    &#60;div class="for"&#62;
+        &#60;p&#62;&#123;&#123;i.title&#125;&#125;&#60;/p&#62;&#60;p&#62;&#123;&#123;i.time&#125;&#125;&#60;/p&#62;
+    &#60;/div&#62;&#62;
+&#123;% endfor %&#125;
+
+&#123;% if content.has_previous %&#125;
+    &#60;a href="?page=&#123;&#123;content.previous_page_number&#125;&#125;">NEXT&#60;/p&#62;
+&#123;% end if%&#125;
+&#60;span class="current"&#62;
+    current page: &#123;&#123;content.number&#125;&#125; / total pages: &#123;&#123;content.paginator.num_pages&#125;&#125;
+
+
+&#123;% if content.has_next %&#125;
+    &#60;a href="?page=&#123;&#123;content.next_page_number&#125;&#125;"&#62;PREVIOUS&#60;/a&#62;
+&#123;% endif %&#125;
+
+</pre>
+
+
+
+
+<h1>Django Photo Upload</h1>
+
+<p>In index.html add upload part:</p>
+<pre>
+&#60;input type="file" name="files" /&#62;
+</pre>
+
+
+<p>Create forms.py in edit part.</p>
+<pre>
+
+from django import forms
+
+class NewTopicForm(forms.Form):
+    title=forms.CharField(max_length=50,error_message=&#123;'required':'Don\'t empty'&#125;)
+    image=forms.ImageField(required=False)
+
+</pre>
+
+<p>Update “model.py”, add “img” item.</p>
+<pre>
+
+img=models.ImageField(upload_to="templates/pic/",blank=True,null=True)
+
+</pre>
+
+<p>Update “views.py”</p>
+<pre>
+
+if 'files' in request.FILES:
+    image=request.FILES['files']
+else:
+    image=None
+
+</pre>
+
+<p>Then we upload the photo, update “views.py” to save the img path.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-08-12T16:00:00.000Z"><a href="/2014/08/13/git-common-operations-command/">2014-08-13</a></time>
       
       
@@ -657,60 +831,6 @@ $ sudo yum install pam-devel
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-08-09T16:00:00.000Z"><a href="/2014/08/10/python-lambda-reduce/">2014-08-10</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/08/10/python-lambda-reduce/">Python: lambda reduce</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>how to use lambda and reduce in python</em></p>
-<p>lambda:<br>一句话函数：</p>
-<pre>
-    linuxany=lambda x,y: x+y
-</pre>
-#给ff传两个参数，bda定的x+y
-<pre>
-    print linuxany(2,3)  # print 5
-</pre>
-
-<p>reduce内建函数是一个二来将一个数据集合（链表，元组等）中的所有数据进行下列操作：用传给reduce中的函数func()（必须是一个二元操作函数）先对集合中的第1，2个数据进行操作，得到的结果再与第3个数据用func()函数运算，最后得到一个结果。<br>如：<br>先定义一个二元操作函数</p>
-<pre>
-    def linuxany(x,y):
-        return x+y
-        reduce(linuxany,(1,2,3,4,5))
-</pre>
-
-<p>lambda和reduce结合起来使用：</p>
-<pre>
-    print reduce(lambda x,y:x+y,range(10))
-</pre>
-
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2014-08-09T16:00:00.000Z"><a href="/2014/08/10/python-handle-photos/">2014-08-10</a></time>
       
       
@@ -784,6 +904,60 @@ if __name__=="__main__":
     img_url="http://img.****"
     handle_remote_img(img.url)
 </pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-08-09T16:00:00.000Z"><a href="/2014/08/10/python-lambda-reduce/">2014-08-10</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/10/python-lambda-reduce/">Python: lambda reduce</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>how to use lambda and reduce in python</em></p>
+<p>lambda:<br>一句话函数：</p>
+<pre>
+    linuxany=lambda x,y: x+y
+</pre>
+#给ff传两个参数，bda定的x+y
+<pre>
+    print linuxany(2,3)  # print 5
+</pre>
+
+<p>reduce内建函数是一个二来将一个数据集合（链表，元组等）中的所有数据进行下列操作：用传给reduce中的函数func()（必须是一个二元操作函数）先对集合中的第1，2个数据进行操作，得到的结果再与第3个数据用func()函数运算，最后得到一个结果。<br>如：<br>先定义一个二元操作函数</p>
+<pre>
+    def linuxany(x,y):
+        return x+y
+        reduce(linuxany,(1,2,3,4,5))
+</pre>
+
+<p>lambda和reduce结合起来使用：</p>
+<pre>
+    print reduce(lambda x,y:x+y,range(10))
+</pre>
+
 
       
     </div>
@@ -1016,167 +1190,6 @@ hduser@ubuntu:/usr/local/hadoop$
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-07-26T16:00:00.000Z"><a href="/2014/07/27/a-sample-game-use-pygame/">2014-07-27</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/07/27/a-sample-game-use-pygame/">A Sample Game Use Pygame</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>a game by use pygame.</em></p>
-<pre>
-#-*-coding=utf-8-*-
-
-import sys
-import pygame
-import threading
-import random
-
-class Game:
-    def __init__(self):
-        pygame.init()
-        self.screen=pygame.display.set_mode((800,600))
-        pygame.display.set_caption('python game')
-        self.imgae=[]
-        self.imagerect=[]
-
-        self.vs=pygame.image.load('image/vs.gif')
-        self.o=pygame.image.load('image/o.gif')
-        self.p=pygame.image.load('image/p.gif')
-        self.u=pygame.image.load('iamge/o.gif')
-        self.title=pygame.image.load('iamge/title.gif')
-        self.start=pygame.image.load('image/start.gif')
-        self.exit=pygame.image.load('iamge/exit.gif')
-
-        for i in range(3):
-            gif=pygame.image.load('image/' + str(i) + '.gif')
-            self.image.append(gif)
-        for i in range(3):
-            image=self.image[i]
-            rect=image.get_rect()
-            rect.left=200 * (i+1) + rect.left
-            rect.top=400
-            self.imagerect.append(rect)
-
-    def Start(self):
-        self.screen.blit(self.title,(200,100,400,140))
-        self.screen.blit(self.start,(350,300,100,50))
-        self.screen.blit(self.exit,(350,400,100,50))
-        pygame.display.flip()
-        start=1
-        while start:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
-                elif event.type == pygame.MOUSEBUTTONDOWN:
-                    if self.isStart() == 0:
-                        start=0
-                    elif self.isStart(0 == 1:
-                        sys.exit()
-                    else:
-                        pass
-        self.run()
-
-    def run(self):
-        self.screen.fill((0,0,0))
-        for i in range(3):
-            self.screen.blit(self.image[i],self.imagerect[i])
-        pygame.display.flip()
-        while True:
-            for event in pygame.event.get():
-                if event.type == pygame.Quit:
-                    sys.exit()
-                elif event.type == pygame.MOUSEBUTTONDOWN:
-                    self.OnMouseButDown()
-                else:
-                    pass
-
-    def isStart(self):
-        pos = pygame.mouse.get_pos()
-        if pos[0] > 350 and pos[0] < 450:
-            if pos[1] > 300 and pos[1] < 350:
-                return 0
-            elif pos[1] > 400 and pos[1] < 450:
-                return 1
-            else:
-                return 2
-        else:
-            return 2
-
-    def OnMouseButDown(self)
-        self.screen.blit(self.vs,(300,150,140,140))
-        pos=pygame.mouse.get_pos()
-        if pos[1] > 400 and pos[1] < 500:
-            if pos[0] > 200 and pos[0] < 340:
-                self.screen.blit(self.image[0],(150,150,140,140))
-                self.isWin(0)
-            elif pos[0] > 400 and pos[0] < 540:
-                self.screen.blit(self.image[1],(150,150,140,140))
-                self.isWin(1)
-            elif pos[0] > 600 and pos[0] < 740:
-                self.screen.blit(self.image[2],(150,150,140,140))
-                self.isWin(2)
-            else:
-                pass
-
-    def isWin(self,value):
-        num=random.randint(0,2)
-        self.screen.blit(self.image[num],(450,150,590,240))
-        pygame.display.flip()
-
-        if num == value:
-            self.screen.blit(self.o,(220,10,140,70))
-            pygame.display.flip()
-        elif num < value:
-            if num == 0:
-                if value == 2:
-                    self.screen.blit(self.u,(220,10,140,70))
-                else:
-                    self.screen.blit(self.p,(220,10,140,70))
-                pygame.display.flip()
-            else:
-                self.screen.blit(self.u,(220,10,140,70))
-                pygame.display.flip()
-        else:
-            if num == 2:
-                if value == 1:
-                    self.screen.blit(self.u,(220,10,140,70))
-                else:
-                    self.screen.blit(self.p,(220,10,140,70))
-                pygame.display.flip()
-            else:
-                self.screen.blit(self.u,(220,10,140,70))
-                pygame.display.flip()
-
-game=Game()
-game.Start()
-
-</pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2014-07-26T16:00:00.000Z"><a href="/2014/07/27/tkinter-canvas-sample/">2014-07-27</a></time>
       
       
@@ -1251,6 +1264,8 @@ root.mainloop()
   
     <li><a href="/categories/linux/">linux</a><small>11</small></li>
   
+    <li><a href="/categories/mysql/">mysql</a><small>1</small></li>
+  
     <li><a href="/categories/normal/">normal</a><small>1</small></li>
   
     <li><a href="/categories/other/">other</a><small>2</small></li>
@@ -1281,6 +1296,8 @@ root.mainloop()
     <li><a href="/tags/go/">go</a><small>2</small></li>
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
   
     <li><a href="/tags/python/">python</a><small>14</small></li>
   

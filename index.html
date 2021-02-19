@@ -54,6 +54,50 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2021-02-19T02:41:01.000Z"><a href="/2021/02/19/mysql查询近7天，半年，一年数据/">2021-02-19</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2021/02/19/mysql查询近7天，半年，一年数据/">mysql查询近7天，半年，一年数据</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li>近7天数据</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * from oms_order_item_comment </span><br><span class="line">     where comment_time between date_sub(now(),interval 1 week) and now()  -- 七天</span><br></pre></td></tr></table></figure>
+<ul>
+<li>半年数据</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * from oms_order_item_comment </span><br><span class="line">     where comment_time between date_sub(now(),interval 6 month) and now()  -- 半年</span><br></pre></td></tr></table></figure>
+<ul>
+<li>一年数据</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * from oms_order_item_comment </span><br><span class="line">     where comment_time between date_sub(now(),interval 1 year) and now()  -- 一年</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2021-02-19T02:22:46.000Z"><a href="/2021/02/19/Django-ContentTypes使用示例/">2021-02-19</a></time>
       
       
@@ -1074,97 +1118,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2019-04-09T02:26:58.000Z"><a href="/2019/04/09/django2-2-build-website-and-deploy-in-ubuntu-server/">2019-04-09</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/04/09/django2-2-build-website-and-deploy-in-ubuntu-server/">django2.2 build website and deploy in ubuntu server</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h1 id="Crete-virtualenv"><a href="#Crete-virtualenv" class="headerlink" title="Crete virtualenv"></a>Crete virtualenv</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">pip install pipenv</span><br><span class="line"></span><br><span class="line">mkdir website</span><br><span class="line"></span><br><span class="line">cd website</span><br><span class="line"></span><br><span class="line">pipenv shell --python 3.6</span><br><span class="line"></span><br><span class="line">pipenv install django</span><br><span class="line"></span><br><span class="line">pipenv install pymysql</span><br><span class="line"></span><br><span class="line">pipenv install gunicorn</span><br></pre></td></tr></table></figure>
-<p>when running django have some errors. so we have to change django code.</p>
-<ul>
-<li>one<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /home/tonytan/.local/share/virtualenvs/website-skIUga7b/lib/python3.7/site-packages/django/db/backends/mysql/base.py</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>change to notes line 35, 36,</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#if version &lt; (1, 3, 13):</span><br><span class="line">#    raise ImproperlyConfigured(&apos;mysqlclient 1.3.13 or newer is required; you have %s.&apos; % Database.__version__)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>two</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /home/tonytan/.local/share/virtualenvs/website-skIUga7b/lib/python3.7/site-packages/django/db/backends/mysql/operations.py</span><br></pre></td></tr></table></figure>
-<p>in line 146</p>
-<p>change:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">query = query.decode(errors=&apos;replace&apos;)</span><br></pre></td></tr></table></figure></p>
-<p>to<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">query = query.decode(errors=&apos;replace&apos;) if not isinstance(query, str) else query</span><br></pre></td></tr></table></figure></p>
-<h1 id="Create-project"><a href="#Create-project" class="headerlink" title="Create project"></a>Create project</h1><ul>
-<li>create project &amp; app</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">django-admin.py startproject website</span><br><span class="line">cd website</span><br></pre></td></tr></table></figure>
-<ul>
-<li>change mysql package<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim website/__init__.py</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>the path is <code>/website/website/website/__init__.py</code></p>
-<p>add:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import pymysql</span><br><span class="line">pymysql.install_as_MySQLdb()</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>sql migrate</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python manage.py makemigrations</span><br><span class="line">python manage.py migreate</span><br></pre></td></tr></table></figure>
-<ul>
-<li>running test server</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py runserver</span><br></pre></td></tr></table></figure>
-<ul>
-<li>flush sql data</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py flush</span><br></pre></td></tr></table></figure>
-<ul>
-<li>create super user</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py createsuperuser</span><br></pre></td></tr></table></figure>
-<ul>
-<li>import &amp; output data</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python manage.py dumpdata appname &gt; appname.json</span><br><span class="line">python manage.py loaddata appname.json</span><br></pre></td></tr></table></figure>
-<ul>
-<li>create app</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py startapp users</span><br></pre></td></tr></table></figure>
-<p>add app to settings</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim website/settings.py</span><br></pre></td></tr></table></figure>
-<p>in <code>INSTALLED_APPS</code> add <code>&quot;user&quot;,</code></p>
-<p>now you can coding some app in django…</p>
-<h1 id="Deploy"><a href="#Deploy" class="headerlink" title="Deploy"></a>Deploy</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install nginx</span><br><span class="line">sudo pip install supervisor</span><br></pre></td></tr></table></figure>
-<p>set this web nginx config<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/nginx/conf/website.conf</span><br></pre></td></tr></table></figure></p>
-<p>add the following code to <code>website.conf</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        server_name www.xxxx.com;</span><br><span class="line">        server_name 100.000.000.000;</span><br><span class="line">        charset     utf-8;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">                try_files $uri $uri/ =404;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        location /media  &#123;</span><br><span class="line">                alias /path/to/your/static/media;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        location /static/ &#123;</span><br><span class="line">                root /path/to/your/static/main/folder/;   </span><br><span class="line">                #Note: this is static main folder not static folder</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"># this is for api</span><br><span class="line">        location /apis &#123;</span><br><span class="line">                rewrite ^.+apis/?(.*)$ /$1 break;</span><br><span class="line">                proxy_pass http://127.0.0.1:8000;</span><br><span class="line">                proxy_pass_header       Authorization;</span><br><span class="line">                proxy_pass_header       WWW-Authenticate;</span><br><span class="line">                proxy_set_header Host $host;</span><br><span class="line">                proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"># this is for django admin</span><br><span class="line">        location /admin &#123;</span><br><span class="line">                proxy_pass http://127.0.0.1:8000;</span><br><span class="line">                proxy_set_header Host $host;</span><br><span class="line">                proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">                proxy_set_header X-Forwarded-Proto $scheme;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>set this web supervisor config<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/supervisor/conf/website.conf</span><br></pre></td></tr></table></figure></p>
-<p>add the folloing code to ‘website.conf’<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[program: website]</span><br><span class="line">command = /home/tony/.local/share/virtualenvs/website-skIUga7b/bin/gunicorn -w 4 -b 0.0.0.0:8000 website.wsgi:application</span><br><span class="line">directory = /data/website/website</span><br><span class="line">user = root</span><br><span class="line">stdout_logfile = /var/log/supervisor/stdout.log</span><br><span class="line">stderr_logfile = /var/log/supervisor/stderr.log</span><br></pre></td></tr></table></figure></p>
-<p>reload nginx &amp; supervisor<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/ngins reload</span><br><span class="line">sudo nginx -t</span><br><span class="line"></span><br><span class="line">sudo /etc/init.d/supervisor reload</span><br><span class="line">sudo /etc/init.d/supervisor restart</span><br><span class="line">sudo /etc/init.d/supervisor status</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1192,6 +1145,8 @@
     <li><a href="/categories/kivy/">kivy</a><small>1</small></li>
   
     <li><a href="/categories/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/categories/mysql/">mysql</a><small>1</small></li>
   
     <li><a href="/categories/normal/">normal</a><small>1</small></li>
   
@@ -1223,6 +1178,8 @@
     <li><a href="/tags/go/">go</a><small>2</small></li>
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
   
     <li><a href="/tags/python/">python</a><small>14</small></li>
   
