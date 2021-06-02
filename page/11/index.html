@@ -1,0 +1,1130 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Page 11 | Tony Tan</title>
+  <meta name="author" content="Tony Tan">
+  
+  <meta name="description" content="Tony Tan">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Tony Tan">
+
+  
+    <meta property="og:image" content="">
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Tony Tan" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+</html>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Tony Tan</a></h1>
+  <h2><a href="/">a python progrmmer</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-06-29T16:00:00.000Z"><a href="/2014/06/30/object-oriented-programming-in-python/">2014-06-30</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/06/30/object-oriented-programming-in-python/">Object oriented programming in Python</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>In this part of the Python programming tutorial, we will talk about object oriented programming in Python.</em></p>
+<p>There are three widely used programming paradigms there. Procedural programming, functional programming and object-oriented programming. Python supports both procedural and object-oriented programming. There is some limited support for f unctional programming too.</p>
+<p></p><h4>Object-oriented programming (OOP)</h4> is a programming paradigm that uses objects and their interactions to design applications and computer programs. (Wikipedia)<br>There are some basic programming concepts in OOP:<p></p>
+<ul><br><li>Abstraction</li><br><li>Polymorphism</li><br><li>Encapsulation</li><br><li>Inheritance</li><br></ul>
+
+<p>The <b>abstraction</b> is simplifying complex reality by modelling classes appropriate to the problem. The <b>polymorphism</b> is the process of using an operator or function in different ways for different data input. The <b>encapsulation</b> hides the implementation details of a class from other objects. The <b>inheritance</b> is a way to form new classes using classes that have already been defined.</p>
+<p></p><h3>Objects</h3><br>Everything in Python is an object. Objects are basic building blocks of a Python OOP program.<p></p>
+<pre>
+#!/usr/bin/python
+
+# objects.py
+
+import sys
+
+def function(): pass
+
+print type(1)
+print type("")
+print type([])
+print type({})
+print type(())
+print type(object)
+print type(function)
+print type(sys)
+</pre>
+
+<p>In this example we show, that all these entities are in fact objects. The <font color="blue">type()</font> function returns the type of the object specified.</p>
+<pre>
+$ ./objects.py 
+<type 'int'="">
+<type 'str'="">
+<type 'list'="">
+<type 'dict'="">
+<type 'tuple'="">
+<type 'type'="">
+<type 'function'="">
+<type 'module'="">
+</type></type></type></type></type></type></type></type></pre>
+
+<p></p><h3>The class keyword</h3><br>The previous objects were all built-in objects of the Python programming language. The user defined objects are created using the <font color="blue">class</font> keyword. The class is a blueprint that defines a nature of a future object. From classes we construct instances. An <b>instance</b> is a specific object created from a particular class. For example, Huck might be an instance of a Dog class.<p></p>
+<pre>
+#!/usr/bin/python
+
+# first.py
+
+class First:
+   pass
+
+fr = First()
+
+print type(fr)
+print type(First)
+</pre>
+This is our first class. The body of the class is left empty for now. It is a convention to give classes a name that starts with a capital letter.
+<pre>
+fr = First()
+</pre>
+Here we create a new instance of the First class. Or in other words, we instantiate the First class. The fr is a reference to our new object.
+<pre>
+$ ./first.py 
+<type 'instance'="">
+<type 'classobj'="">
+</type></type></pre>
+Here we see that fr is an instance object and First is a class object.
+Inside a class, we can define attributes and methods. An <b>attribute</b> is a characteristic of an object. This can be for example a salary of an employee. A <b>method</b> defines operations that we can perform with our objects. A method might define a cancellation of an account. Technically, attributes are variables and methods are functions defined inside a class.
+
+<h3>Attributes</h3>
+Attributes are characteristics of an object. A special method called <font color="blue">__init__()</font> is used to initialize the attributes of an object.
+<pre>
+#!/usr/bin/python
+
+# initialize.py
+
+class Cat:
+   def __init__(self, name):
+      self.name = name
+
+missy = Cat('Missy')
+lucky = Cat('Lucky')
+
+print missy.name
+print lucky.name
+</pre>
+In this code example, we have a Cat class. The special method <font color="blue">__init__()</font> is called automatically right after the object has been created.
+<pre>
+def __init__(self, name):
+</pre>
+Each method in a class definition begins with a reference to the instance object. It is by convention named self. There is nothing special about the self name. We could name it this, for example. The name is the argument. The value is passed during the class instantiation.
+<pre>
+self.name = name
+</pre>
+Here we pass an attribute to an instance object.
+<pre>
+missy = Cat('Missy')
+lucky = Cat('Lucky')
+</pre>
+Here we instantiate two objects. Missy and Lucky cats. The number of arguments must correspond to the <font color="blue">__init__()</font> method of the class definition. The 'Missy' and 'Lucky' strings become the name parameter of the <font color="blue">__init__()</font> method.
+<pre>
+print missy.name
+print lucky.name
+</pre>
+Here we print the instance variables of two cat objects. Each instance of a class can have their own attributes.
+<pre>
+$ ./initialize.py 
+Missy
+Lucky
+</pre>
+The attributes can be assigned dynamically, not just during initialization. This shows the next example.
+<pre>
+#!/usr/bin/python
+
+# dynamic.py
+
+class Dynamic:
+   pass
+
+d = Dynamic()
+d.name = "Dynamic"
+print d.name
+</pre>
+We define and create an empty Dynamic class.
+<pre>
+d.name = "Dynamic"
+</pre>
+This line of code creates a new name attribute.
+<pre>
+$ ./dynamic.py 
+Dynamic
+</pre>
+
+<p>So far, we have been talking about the instance attributes. In Python there are also so called <b>class object attributes</b>. Class object attributes are same for all instances of a class.</p>
+<pre>
+#!/usr/bin/python
+
+# cat.py
+
+
+class Cat:
+   species = 'mammal'
+
+   def __init__(self, name, age):
+      self.name = name
+      self.age = age
+
+
+missy = Cat('Missy', 3)
+lucky = Cat('Lucky', 5)
+
+print missy.name, missy.age
+print lucky.name, lucky.age
+
+print Cat.species
+print missy.__class__.species
+print lucky.__class__.species
+</pre>
+In our example, we have two cats with specific name and age attributes. Both cats share some characteristics. Missy and Lucky are both mammals. This is reflected in a class level attribute species. The attribute is defined outside any method name in the body of a class.
+<pre>
+print Cat.species
+print missy.__class__.species
+</pre>
+There are two ways, how we can access the class object attributes. Either via the name of the Cat class, or with the help of a special __class__ attribute.
+<pre>
+$ ./cat.py 
+Missy 3
+Lucky 5
+mammal
+mammal
+mammal
+</pre>
+
+<p></p><h3>Methods</h3><br>Methods are functions defined inside the body of a class. They are used to perform operations with the attributes of our objects. Methods are essential in encapsulation concept of the OOP paradigm. For example, we might have a connect() method in our AccessDatabase class. We need not to be informed, how exactly the method connect connects to the database. We only know, that it is used to connect to a database. This is essential in dividing responsibilities in programming. Especially in large applications.<p></p>
+<pre>
+#!/usr/bin/python
+
+# circle.py
+
+class Circle:
+   pi = 3.141592
+
+   def __init__(self, radius=1):
+      self.radius = radius 
+
+   def area(self):
+      return self.radius * self.radius * Circle.pi
+
+   def setRadius(self, radius):
+      self.radius = radius
+
+   def getRadius(self):
+      return self.radius
+
+c = Circle()
+
+c.setRadius(5)
+print c.getRadius()
+print c.area()
+</pre>
+In the code example, we have a Circle class. We define three new methods.
+<pre>
+def area(self):
+    return self.radius * self.radius * Circle.pi
+</pre>
+The area() method returns the area of a circle.
+<pre>
+def setRadius(self, radius):
+    self.radius = radius
+</pre>
+The setRadius() method sets a new value for a radius attribute.
+<pre>
+def getRadius(self):
+    return self.radius
+</pre>
+The getRadius() method returns the current radius.
+<pre>
+c.setRadius(5)
+</pre>
+The method is called on an instance object. The c object is paired with the self parameter of the class definition. The number 5 is paired with the radius parameter.
+<pre>
+$ ./circle.py 
+5
+78.5398
+</pre>
+In Python, we can call methods in two ways. There are bounded and unbounded method calls.
+<pre>
+#!/usr/bin/python
+
+# methods.py
+
+class Methods:
+   def __init__(self):
+      self.name = 'Methods'
+
+   def getName(self):
+      return self.name
+
+
+m = Methods()
+
+print m.getName()
+print Methods.getName(m)
+</pre>
+In this example, we demostrate both method calls.
+<pre>
+print m.getName()
+</pre>
+This is the <b>bounded</b> method call. The Python interpreter automatically pairs the m instance with the self parameter.
+<pre>
+print Methods.getName(m)
+</pre>
+And this is the <b>unbounded</b> method call. The instance object is explicitly given to the getName() method.
+<pre>
+$ ./methods.py 
+Methods
+Methods
+</pre>
+
+<p></p><h3>Inheritance</h3><br>The inheritance is a way to form new classes using classes that have already been defined. The newly formed classes are called <b>derived</b> classes, the classes that we derive from are called base classes. Important benefits of inheritance are code reuse and reduction of complexity of a program. The derived classes (descendants) override or extend the functionality of base classes (ancestors).<p></p>
+<pre>
+#!/usr/bin/python
+
+# inherit.py
+
+
+class Animal:
+   def __init__(self):
+      print "Animal created"
+
+   def whoAmI(self):
+      print "Animal"
+
+   def eat(self):
+      print "Eating"
+
+
+class Dog(Animal):
+   def __init__(self):
+      Animal.__init__(self)
+      print "Dog created"
+
+   def whoAmI(self):
+      print "Dog"
+
+   def bark(self):
+      print "Woof!"
+
+
+d = Dog()
+d.whoAmI()
+d.eat()
+d.bark()
+</pre>
+In this example, we have two classes. Animal and Dog. The animal is the base class, the Dog is the derived class. The derived class inherits the functionality of the base class. It is shown by the eat() method. The derived class modifies existing behaviour of the base class, shown by the whoAmI() method. Finally, the derived class extends the functionality of the base class, by defining a new bark() method.
+<pre>
+class Dog(Animal):
+    def __init__(self):
+       Animal.__init__(self)
+       print "Dog created"
+</pre>
+We put the ancestor classes in round brackets after the name of the descendant class. If the derived class provides it's own <font color="blue">__init__()</font> method, it must explicitly call the base class <font color="blue">__init__()</font> method.
+<pre>
+$ ./inherit.py 
+Animal created
+Dog created
+Dog
+Eating
+Woof!
+</pre>
+
+<p></p><h3>Polymorphism</h3><br>The polymorphism is the process of using an operator or function in different ways for different data input. In practical terms, polymorphism means that if class B inherits from class A, it doesn’t have to inherit everything about class A; it can do some of the things that class A does differently. (wikipedia)<p></p>
+<pre>
+#!/usr/bin/python
+
+# basic.py
+
+
+a = "alfa"
+b = (1, 2, 3, 4)
+c = ['o', 'm', 'e', 'g', 'a']
+
+print a[2]
+print b[1]
+print c[3]
+</pre>
+Python programming language uses polymorphism extensively in built-in types. Here we use the same indexing operator for three different data types.
+<pre>
+$ ./basic.py 
+f
+2
+g
+</pre>
+Polymorphism is most commonly used when dealing with inheritance.
+<pre>
+#!/usr/bin/python
+
+# polymorphism.py
+
+
+class Animal:
+   def __init__(self, name=''):
+      self.name = name
+
+   def talk(self):
+      pass
+
+
+class Cat(Animal):
+   def talk(self):
+      print "Meow!"
+
+
+class Dog(Animal):
+   def talk(self):
+      print "Woof!"
+
+
+a = Animal()
+a.talk()
+
+c = Cat("Missy")
+c.talk()
+
+d = Dog("Rocky")
+d.talk()
+</pre>
+Here we have two species. A dog and a cat. Both are animals. The Dog class and the Cat class inherit the Animal class. They have a talk() method, which gives different output for them.
+<pre>
+$ ./polymorphism.py 
+Meow!
+Woof!
+</pre>
+
+<p></p><h3>Special Methods</h3><br>Classes in Python programming language can implement certain operations with special method names. These methods are not called directly, but by a specific language syntax. This is similar to what is known as <b>operator overloading</b> in C++ or Ruby.<p></p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<h1 id="book-py"><a href="#book-py" class="headerlink" title="book.py"></a>book.py</h1><p>class Book:<br>   def <strong>init</strong>(self, title, author, pages):<br>      print “A book is created”<br>      self.title = title<br>      self.author = author<br>      self.pages = pages</p>
+<p>   def <strong>str</strong>(self):<br>      return “Title:%s , author:%s, pages:%s “ % \<br>              (self.title, self.author, self.pages)</p>
+<p>   def <strong>len</strong>(self):<br>      return self.pages</p>
+<p>   def <strong>del</strong>(self):<br>      print “A book is destroyed”</p>
+<p>book = Book(“Inside Steve’s Brain”, “Leander Kahney”, 304)</p>
+<p>print book<br>print len(book)<br>del book<br><br>In our code example, we have a book class. Here we introduce four special methods. The <font color="blue"><strong>init</strong>()</font>, <font color="blue"><strong>str</strong>()</font>, <font color="blue"><strong>len</strong>()</font> and the <font color="blue"><strong>del</strong>()</font> methods.</p>
+<p><pre><br>book = Book(“Inside Steve’s Brain”, “Leander Kahney”, 304)<br></pre><br>Here we call the <font color="blue"><strong>init</strong>()</font> method. The method creates a new instance of a Book class.</p>
+<p><pre><br>print len(book)<br></pre><br>The <font color="blue">len()</font> function invokes the <font color="blue"><strong>len</strong>()</font> method. In our case, we print the number of pages of our book.</p>
+<p><pre><br>del book<br></pre><br>The del keyword deletes an object. It calls the <font color="blue"><strong>del</strong>()</font> method.<br>In the next example we implement a vector class and demonstrate addition and substraction operations on it.</p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<h1 id="vector-py"><a href="#vector-py" class="headerlink" title="vector.py"></a>vector.py</h1><p>class Vector:</p>
+<p>  def <strong>init</strong>(self, data):<br>    self.data = data</p>
+<p>  def <strong>str</strong>(self):<br>    return repr(self.data)</p>
+<p>  def <strong>add</strong>(self, other):<br>    data = []<br>    for j in range(len(self.data)):<br>      data.append(self.data[j] + other.data[j])<br>    return Vector(data)</p>
+<p>  def <strong>sub</strong>(self, other):<br>    data = []<br>    for j in range(len(self.data)):<br>      data.append(self.data[j] - other.data[j])<br>    return Vector(data)</p>
+<p>x = Vector([1, 2, 3])<br>y = Vector([3, 0, 2])<br>print x + y<br>print y - x<br></p>
+<p><pre><br>def <strong>add</strong>(self, other):<br>    data = []<br>    for j in range(len(self.data)):<br>      data.append(self.data[j] + other.data[j])<br>    return Vector(data)<br></pre><br>Here we implement the addition operation of vectors. The <font color="blue"><strong>add</strong>()</font> method is called, when we add two Vector objects with the + operator. Here we add each member of the respective vectors.</p>
+<p><pre><br>$ ./vector.py<br>[4, 2, 5]<br>[2, -2, -1]<br></pre><br>In this part of the Python tutorial, we have covered object-oriented programming in Python.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-06-28T16:00:00.000Z"><a href="/2014/06/29/karrigell-tutorial/">2014-06-29</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/06/29/karrigell-tutorial/">Karrigell Tutorial</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>This tutorial will explain step by step how to get started with Karrigell, a simple yet full-featured, 100% Python web framework</em></p>
+<p><a name="intro">This tutorial will explain step by step how to get started with <a href="http://karrigell.sourceforge.net" target="_blank" rel="noopener">Karrigell</a>, a simple yet full-featured, 100% Python web framework </a></p>
+<p>The key word for the development of Karrigell is simplicity : </p><br><p><br><ul><br> <li>the package comes with “batteries included” : a web server and a database engine, in less than 1 MB of code<br> </li><li>no configuration : just unzip the package, start the server and go !<br> </li><li>programs are either pure Python, or a mix of Python and HTML <i>a la</i> PHP ; there is no templating syntax, requiring to learn custom tags<br></li></ul><br></p>
+
+<p>People who discover Karrigell are often surprised by this simplicity, and might think of it as a toy, only suited for an introduction and perhaps education on dynamic web servers. In fact, it lets you do the simple things in a simple way : if you want to write the proverbial “Hello, world !” program, all you have to type is </p><br><p><blockquote><code>print “Hello, world !”</code></blockquote></p><br><p>But if you take a look at the documentation you might be surprised to see what the “toy” can do : </p><br><p><br><ul><br>  <li>easy access to HTML forms (that is, with minimum typing)<br> </li><li>inclusion of scripts inside other scripts<br> </li><li>very simple in-memory session management<br> </li><li>basic HTTP authentication<br> </li><li>HTTP redirection<br> </li><li>protection of directories (only accessible to authenticated users)<br> </li><li>a web interface to enter the translation of dynamic pages<br> </li><li>a variety of programming styles, from pure Python with a whole site in one script to PHP-like, one-script-for-each-page style<br> </li><li>inclusion of the Cheetah templating system<br> </li><li>a very fast asynchronous built-in web server<br> </li><li>virtual hosts support<br> </li><li>gzip support<br> </li><li>the ability to run behind Apache or Xitami<br> </li><li>a very clear and complete debugger<br> </li><li>a database management system (a web interface lets you generate the database and its CRUD script)<br></li></ul><br></p><br> and much more…<br><p>For a more complete information, see the <a href="http://karrigell.sourceforge.net/en/front.htm" target="_blank" rel="noopener">documentation</a><br><br><br></p><h2> 1. Getting started</h2><br><p>First, <a href="http://sourceforge.net/project/showfiles.php?group_id=67940" target="_blank" rel="noopener">download</a> the latest version of Karrigell and unzip it. Open a console window and start the built-in server by :</p><br><p> <pre class=" console">&gt;python Karrigell.py </pre> </p><br><p>Use a text editor to save this line of Python code in a file called hello.py, in the directory webapps : </p><br><pre class=" python">print “hello world !” </pre><br><p>Then type <a href="http://localhost/hello.py" target="_blank" rel="noopener">http://localhost/hello.py</a> in your web browser to see the result </p><br><p>By default, Python scripts are rendered as HTML code. If you want to use a plain text format you can set the Content-Type header in your code, like this : </p><br><pre class=" python">RESPONSE[‘Content-Type’] = ‘text/plain’ print “hello world !” </pre><br><p>This example shows how Karrigell works : the scripts are executed in a namespace where the programmer finds all he needs. RESPONSE is one of the names available in this namespace : it is a dictionary holding the HTTP response headers </p>
+
+
+<p></p><h2> 2. HTML forms</h2><p></p>
+<p>Let’s see how you can retrieve the information submitted by an HTML form. Create this HTML piece of code and save it in hello.htm </p>
+
+<pre class=" html">&lt;form action="hello.py"&gt; Say hello to &lt;input name="user"&gt; &lt;input type="submit" value="Ok"&gt; &lt;/form&gt; </pre> 
+
+<p>This page will prompt the user to enter a name, and will submit it to the script hello.py </p><br><p>Here is how you can ask hello.py to print it : </p>
+
+<pre class=" python">print "Hello, " + _user  </pre> 
+
+<p>The namespace built by Karrigell when it receives the data sent by the browser has a variable called _user, a string with the value entered in the field user (note the leading underscore : this is necessary to avoid conflicts with Python keywords or built-in names) </p><p><br></p><p>Alternatively, you could use this syntax : </p>
+
+<pre class=" python">print "Hello, " + QUERY['user'] </pre> 
+
+<p>QUERY is a dictionary with names matching the fields in the submitted form </p>
+
+
+<p></p><h2> 3. Logging and session management</h2> <p></p>
+<p>If you want to identify the user throughout his navigation in the site, for instance to print his name when needed, the easiest technique is session management. Karrigell manages it with another built-in name, a function called Session(), which returns a Python object to which you can set any attribute </p><br><p>Edit your script hello.py : </p><br><pre class=" python"><br>print “Hello, “ + _user Session().user = _user print “””What would you like to order :<br>     &lt;form action=”order.py”&gt;<br>     CD &lt;input type=”radio” name=”type” value=”CD”&gt;<br>     book &lt;input type=”radio” name=”type” value=”book”&gt;<br>     &lt;input type=”submit” value=”Ok”&gt;<br>     &lt;/form&gt;”””<br></pre><br><p>On the second line you have set the attribute user of the session object to the value _user. The session object is specific to a web browser, so that it is guaranteed to remain specific to one user and can be used by the other scripts to identify him </p><br><p>For instance you can use it in order.py : </p><br><pre class=" python">print “Hello %s” %Session().user print “So you want to order a %s” %_type </pre><br><br><br><br><h2> 4. Authentication</h2><br><p>It is a very common task to check that a user is allowed to perform a certain task. For this, the user is asked to enter a login and a password, and the program looks in a database to see if this login/password is valid  </p><br><p>Change the html page to ask for a login and a password instead of the user name : </p><br><pre class=" html"><br>&lt;form action=”check.py”&gt; Login &lt;input name=”login”&gt; &lt;br&gt;Password &lt;input type=”password” name=”password”&gt; &lt;input type=”submit” value=”Ok”&gt; &lt;/form&gt;<br></pre><br><p>Then in the script check.py you would have : </p><br><pre class=" python"><br>def is_valid(login,password):<br>     # replace this with a check in the users database<br>     return login == ‘login’ and password == ‘password’<br>  if is_valid(_login,_password):<br>     Session().login = _login<br>     print “Hello %s &lt;br&gt;” %_login<br>     print “””What would you like to order :<br>         &lt;form action=”order.py”&gt;<br>         CD &lt;input type=”radio” name=”type” value=”CD”&gt;<br>         book &lt;input type=”radio” name=”type” value=”book”&gt;<br>         &lt;input type=”submit” value=”Ok”&gt;<br>         &lt;/form&gt;”””<br>  else:<br>     print “Sorry, you are not allowed to access this page”<br></pre><br><br><p>Since the session object has an attribute called login, in other scripts you can test if the user is valid by testing the existence of this attribute : </p><br><pre class=" python">if hasattr(Session(),’login’):     (show information for authorized users) else:     (show information for unlogged visitors) </pre> <p></p><br><p>Alternatively, you could use the basic HTTP authentication : a popup window prompting for login and password. To </p><br><p>achieve this you have to call another function in the namespace, called Authentication(), like this: </p><br><pre class=" python"><br>def authTest():<br>     (check if AUTH_USER and AUTH_PASSWORD are in the database)<br>  Authentication(authTest,”Authentication test”,\<br>     “Sorry, you are not allowed to access this page”)<br>  print “””What would you like to order :<br>     &lt;form action=”order.py”&gt;<br>     CD &lt;input type=”radio” name=”type” value=”CD”&gt;<br>     book &lt;input type=”radio” name=”type” value=”book”&gt;<br>     &lt;input type=”submit” value=”Ok”&gt;<br>     &lt;/form&gt;”””<br></pre><br><p>Authentication() takes 3 arguments : </p><br><p><br><ul><br> <li> the function to call : this function has no argument, but uses the names AUTH_USER and AUTH_PASSWORD that were entered by the user in the popup window </li><li> the “realm” : a string shown on top of the popup window<br>  </li><li> the message to return if the authentication failed, that is, if the function did not return True<br></li></ul><br></p><br><p>If the authentication succeeds, execution of the script can continue </p>
+
+
+
+<p></p><h2> 5. Karrigell services</h2> <p></p>
+<p>For the moment we have put each script in a different file. For short scripts this can become tedious and difficult to maintain </p><br><p>You can use Karrigell services : Python scripts where each function matches a URL. They must have the extension “ks” </p><br><p>Change the initial HTML page to : </p><br><pre class=" html"> &lt;form action=”home.ks/check”&gt; Login &lt;input name=”login”&gt; &lt;br&gt;Password &lt;input type=”password” name=”password”&gt; &lt;input type=”submit” value=”Ok”&gt; &lt;/form&gt;  </pre><br><p>Then save this in a file called home.ks : </p><br><pre class=" python"><br>def check(login,password):<br>     if _is_valid(login,password):<br>         Session().login = login<br>         print “Hello”,login,”&lt;br&gt;”<br>         print “””What would you like to order :<br>         &lt;form action=”order”&gt;<br>         CD &lt;input type=”radio” name=”Type” value=”CD”&gt;<br>         book &lt;input type=”radio” name=”Type” value=”book”&gt;<br>         &lt;input type=”submit” value=”Ok”&gt;<br>         &lt;/form&gt;”””<br>     else:<br>         print “Sorry, you are not allowed to access this page”<br>def order(Type):<br>     if not hasattr(Session(),”login”):<br>         print “Sorry, you are not allowed to access this page”<br>     else:<br>         print “Ok %s, you want to order a %s” %(Session().login,Type)<br>def _is_valid(login,password):<br>     # replace this with a check in the users database<br>     return login == ‘login’ and password == ‘password’<br></pre><br><p>The “action” in the HTML form is “home.ks/check”. This means that Karrigell will search the function <i>check()</i> in the script home.ks. Since the form has the fields “login” and “password”, the function <b>must</b> also have these names as arguments </p><br><p>In this function, we first test if the login and password are valid. This is done in a “private” function <i>_is_valid()</i> : “private” means that this function can’t be called by a URL (here home.ks/_is_valid). Private functions begin with an underscore  </p><br><p>If the test succeeds, the function writes another form with action = “order”, matching the function <i>order()</i> in the same script. Since the form has a radiobutton field called “Type”, the function <i>order()</i> also has an argument called Type (notice that Type begins with an uppercase letter, to avoid confusion with the Python built-in <i>type</i>) </p>
+
+
+
+<p></p><h2>6. HTMLTags (generate HTML with Python code)</h2> <p></p>
+<p>In the scripts we have written so far, the HTML code is produced by printing strings with the HTML tags inside </p><br><p>If you don’t like this, you can use a module called HTMLTags, which works like this :  </p><br><pre class=" python">from HTMLTags import <em> print HTML(HEAD(TITLE(‘test’))+BODY(‘hello world’)) </em></pre><br><p>This will produce the following HTML code : </p><br><pre class=" html">&lt;HTML&gt; &lt;HEAD&gt; &lt;TITLE&gt;test&lt;/TITLE&gt; &lt;/HEAD&gt; &lt;BODY&gt;hello world&lt;/BODY&gt;  &lt;/HTML&gt; </pre><br><p>You can rewrite the script home.ks like this : </p><br><pre class=" python"><br>from HTMLTags import <br>def check(login,password):<br>     if _is_valid(login,password):<br>         Session().login = login<br>         print “Hello”,login,”&lt;br&gt;”<br>         print “””What would you like to order :”””<br>         print FORM(TEXT(‘CD’)+INPUT(Type=”radio”,name=”Type”,value=”CD”) + TEXT(‘book’)+INPUT(Type=”radio”,name=”Type”,value=”book”) + INPUT(Type=”submit”,value=”ok”), action=”order”)<br>     else:<br>         print “Sorry, you are not allowed to access this page”<br>def order(Type):<br>     if not hasattr(Session(),”login”):<br>         print “Sorry, you are not allowed to access this page”<br>     else:<br>         print “Ok %s, you want to order a %s” %(Session().login,Type)<br>def _is_valid(login,password):<br>     # replace this with a check in the users database<br>     return login == ‘login’ and password == ‘password’<br></pre><br><br><br><br><h2>7. Python Inside HTML (PHP-like style)</h2><br><p>For those who prefer the PHP-like style of code inside special tags, Karrigell provides “Python Inside HTML”. The scripts, with the extension pih, are made of HTML code, and of Python code inside the tags &lt;% and %&gt; </p><br><p>Going back to our first example of a script which receives the user name, we could have written this in a script order.pih :  </p><br><pre class=" html">Hello, &lt;% print _user Session().user = _user %&gt; What would you like to order : &lt;form action=”order.py”&gt; CD &lt;input type=”radio” name=”type” value=”CD”&gt; book &lt;input type=”radio” name=”type” value=”book”&gt; &lt;input type=”submit” value=”Ok”&gt; &lt;/form&gt;  </pre><br><p>There are no strict rules for choosing between Python scripts, Karrigell services and Python Inside HTML. I tend to use </p><br><p><br><ul><br> <li> Python Inside HTML for the pages that are mainly static HTML, with only a few places with dynamic content<br> </li><li> Karrigell services for small applications, where creating a file per page would result in too many 10- or 20-line scripts<br> </li><li> Python scripts for the scripts that do more processing of data than sending outpout to the user (typically, the insertion of a new record in a database)<br></li></ul><br></p>
+
+<p></p><h2>8. Redirection</h2><p></p>
+<p>To perform an HTTP redirection from inside a script, you raise an exception available in the namespace, HTTP_REDIRECTION, with the url as argument : </p><br><p><pre class=" python">raise HTTP_REDIRECTION,”index.html” </pre> </p><br><p>For instance, if you want to enter a new record in a database, here is a simple ks script : </p><br><p><br>    <pre class=" python"><br>    from HTMLTags import *<br>    def index():<br>        print FORM(TEXT(‘login’)+INPUT(name=”login”)+BR()+TEXT(‘password’)+INPUT(name=”password”)+BR()+INPUT(Type=”submit”),action = “insert”)<br>    def insert(login,password):<br>         (… perform insertion in the database here …)<br>         raise HTTP_REDIRECTION,”index”<br>    </pre><br></p><br><p>After the insertion has been performed, the program will ask another entry </p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-06-28T16:00:00.000Z"><a href="/2014/06/29/socket-client-and-server-in-python/">2014-06-29</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/06/29/socket-client-and-server-in-python/">Socket client and server in Python </a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>A sample example for connection server and client use socket in Python</em></p>
+<p>Client.py</p>
+<pre>
+import socket 
+s=socket.socket(socket.AF_INET,socket.SOCK_STREAM) 
+s.connect(('localhost',8081)) 
+s.send('Happy hacking') 
+data=s.recv(1024) 
+s.close() 
+print "Received:" 
+print data
+</pre>
+
+<p>Server.py</p>
+<pre>
+import socket 
+import sys 
+
+#Create a TCP/IP socket to listen on 
+server=socket.socket(socket.AF_INET,socket.SOCK_STREAM)  
+
+#Prevent from "address already in use" upon server restart 
+server.setsockopt(socket.SOL_SOCKET,socket.SO_REUSERADDR,1)  
+#Bind the socket to port 8081 on all interfaces 
+server_address=('localhost',8081) 
+print  'starting up on %s port %s' % server_address 
+server.bind(server_address)  
+
+#Listen for connections 
+server.listen(5)  
+
+#Wait for one incomming connection 
+connection,client_address=server.accept() 
+print 'connection from ', connection.getpeername()  
+
+#Let's receive something 
+data=connection.recv(4096) 
+if data: 
+    print "received ", repr(data)
+     #send it back nicely formatted
+     data=data.rstrip()
+     connection.send('%s\n%s\n%s\n' % ('-'*80,data.center(80),'-'*80))
+     print "Response sent!"
+#close the connection from our side 
+connection.shutdown(socket.SHUT_RD | socket.SHUT_WR) 
+connection.close() 
+print "Connection closed."  
+
+#Aa and stop listening 
+server.close()
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-06-28T16:00:00.000Z"><a href="/2014/06/29/search-google-with-python-tutorial/">2014-06-29</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/06/29/search-google-with-python-tutorial/">Search Google with Python Tutorial</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>How to get the web address in google use Python</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">import urllib </span><br><span class="line">import mechanize  </span><br><span class="line">from bs4 import BeautifulSoup </span><br><span class="line">import re  </span><br><span class="line">def getGoogleLinks(link,depth):  </span><br><span class="line">	br=mechanize.Browser()</span><br><span class="line">	br.set_handler_robots(False)</span><br><span class="line"> 	br.addheaders=[(&apos;User-agent&apos;:&apos;chrome&apos;)]</span><br><span class="line">  	term=link.replace(&quot; &quot;,&quot;+&quot;)</span><br><span class="line"> 	query=&quot;http://www.google.com.sg/search?num=100&amp;q=&quot; + term + &quot;&amp;start=&quot; + depth</span><br><span class="line">  	htmltext=br.open(query).read()</span><br><span class="line"> 	print htmltext</span><br><span class="line">  	soup=BeautifulSoup(htmltext)</span><br><span class="line">  	search=soup.findAll(&apos;div&apos;,attrs=&#123;&apos;id&apos;:&apos;search&apos;&#125;)</span><br><span class="line">  	searchtext=str(search[0])</span><br><span class="line"> 	soup1=BeautifulSoup(searchtext)</span><br><span class="line"> 	list_items=soup1.findAll(&apos;li&apos;)</span><br><span class="line">  	print list_items[0]</span><br><span class="line"> 	regex=&quot;q(?!.*q).*?&amp;amp&quot;</span><br><span class="line"> 	pattern=re.compile(regex)</span><br><span class="line">  	results_array=[]</span><br><span class="line">  	for li in list_items:</span><br><span class="line"> 		soup2=BeautifulSoup(str(li))</span><br><span class="line"> 		links=soup2.findAll(&apos;a&apos;)</span><br><span class="line"> 		prink links</span><br><span class="line"> 		source_link= links[0]</span><br><span class="line"> 		print source_link</span><br><span class="line"> 		source_url=re.findall(pattern,str(source_link))</span><br><span class="line"> 		if source_url and source_url[0].startswith==&quot;http&quot;:</span><br><span class="line"> 			results_array.append(source_url[0].replace(&quot;q=&quot;,&quot;&quot;).replace(&quot;&amp;amp&quot;,&quot;&quot;)) </span><br><span class="line">		return results_array</span><br><span class="line">  </span><br><span class="line">print getGoogleLinks(&apos;cars&apos;,&apos;100&apos;)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-06-28T16:00:00.000Z"><a href="/2014/06/29/jekyll-quick-start/">2014-06-29</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/06/29/jekyll-quick-start/">Jekyll Quick Start</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>How to create github blog, how to install jekyll-bootstrap,run jekyll locally, create a post,create a page,publish,customize</em></p>
+<h1 id="Host-on-GitHub-in-3-minutes"><a href="#Host-on-GitHub-in-3-minutes" class="headerlink" title="Host on GitHub in 3 minutes"></a>Host on GitHub in 3 minutes</h1><p>Make sure to input your GitHub username so the instructions reflect the exact code you need to run to host your blog.</p>
+<h2 id="1-Create-a-New-Repository"><a href="#1-Create-a-New-Repository" class="headerlink" title="1. Create a New Repository"></a>1. Create a New Repository</h2><p>Go to your <a href="https://github.com" target="_blank" rel="noopener">https://github.com</a> and create a new repository named<br><br><strong>USERNAME.github.com</strong></p>
+<h2 id="2-Install-Jekyll-Bootstrap"><a href="#2-Install-Jekyll-Bootstrap" class="headerlink" title="2. Install Jekyll-Bootstrap"></a>2. Install Jekyll-Bootstrap</h2><p>Enter these commands into your terminal in a directory you want your blog to be:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/plusjade/jekyll-bootstrap.git USERNAME.github.com </span><br><span class="line">cd USERNAME.github.com </span><br><span class="line">git remote set-url origin git@github.com:USERNAME/USERNAME.github.com.git </span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
+<h2 id="3-Profit"><a href="#3-Profit" class="headerlink" title="3. Profit"></a>3. Profit</h2><p>After GitHub has a couple minutes to do its magic your blog will be publicly available at <a href="http://USERNAME.github.com" target="_blank" rel="noopener">http://USERNAME.github.com</a></p>
+<h1 id="Already-have-your-blog-on-GitHub"><a href="#Already-have-your-blog-on-GitHub" class="headerlink" title="Already have your blog on GitHub?"></a>Already have your blog on GitHub?</h1><p>I’ll assume you have the Jekyll gem installed on your local machine. Run Jekyll-Bootstrap locally to see what all the fuss is about:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/plusjade/jekyll-bootstrap.git </span><br><span class="line">$ cd jekyll-bootstrap </span><br><span class="line">$ jekyll serve</span><br></pre></td></tr></table></figure>
+<p>See it in action at <a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a>.</p>
+<h2 id="2-Run-Jekyll-Locally"><a href="#2-Run-Jekyll-Locally" class="headerlink" title="2. Run Jekyll Locally"></a>2. Run Jekyll Locally</h2><p>In order to preview your blog locally you’ll need to install the Jekyll ruby gem. Note gem dependencies will also be installed. You don’t have to run a local version but it helps if you want to preview your content before publishing.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gem install jekyll</span><br></pre></td></tr></table></figure>
+<p>If you run into a problem please consult the original Jekyll installation documentation. You can also create a support issue using GitHub Issues.</p>
+<p>Once the gem is installed you can navigate to your Jekyll-Bootstrap directory. If you’ve followed the homepage instructions this will be: USERNAME.github.com. Once in the directory you’ll run jekyll with server support:</p>
+<p><strong>remember to change USERNAME to your GitHub username.</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd USERNAME.github.com  </span><br><span class="line">$ jekyll serve</span><br></pre></td></tr></table></figure>
+<p>Your blog is now available at: <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a>.</p>
+<h2 id="3-Create-a-Post"><a href="#3-Create-a-Post" class="headerlink" title="3. Create a Post"></a>3. Create a Post</h2><p>Create posts easily via rake task:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rake post title=&quot;Hello World&quot;</span><br></pre></td></tr></table></figure>
+<p>The rake task automatically creates a file with properly formatted filename and YAML Front Matter. Make sure to specify your own title. By default, the date is the current date.</p>
+<p>The rake task will never overwrite existing posts unless you tell it to.</p>
+<h2 id="4-Create-a-Page"><a href="#4-Create-a-Page" class="headerlink" title="4. Create a Page"></a>4. Create a Page</h2><p>Create pages easily via rake task:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rake page name=&quot;about.md&quot;</span><br></pre></td></tr></table></figure>
+<p>Create a nested page:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rake page name=&quot;pages/about.md&quot;</span><br></pre></td></tr></table></figure>
+<p>Create a page with a “pretty” path:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rake page name=&quot;pages/about&quot; </span><br><span class="line"># this will create the file: ./pages/about/index.html</span><br></pre></td></tr></table></figure>
+<p>The rake task automatically creates a page file with properly formatted filename and YAML Front Matter as well as includes the Jekyll Bootstrap “setup” file.</p>
+<h2 id="5-Publish"><a href="#5-Publish" class="headerlink" title="5. Publish"></a>5. Publish</h2><p>After you’ve added posts or made changes to your theme or other files, simply commit them to your git repo and push the commits up to GitHub.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git add . </span><br><span class="line">$ git commit -m &quot;Add new content&quot; </span><br><span class="line">$ git push origin master</span><br></pre></td></tr></table></figure>
+<p>A GitHub post-commit hook will automatically deploy your changes to your hosted blog. You will receive a success or failure notice for every commit you make to your blog.</p>
+<h2 id="6-Customize"><a href="#6-Customize" class="headerlink" title="6. Customize"></a>6. Customize</h2><p>Jekyll-Bootstrap can be used as-is as a basic blogging platform. However there are plenty of ways to dig into deeper customization. The following outlines deeper Jekyll-Bootstrap customization techniques:</p>
+<h1 id="Themes"><a href="#Themes" class="headerlink" title="Themes"></a>Themes</h1><p>Jekyll-Bootstrap supports modular theming. Themes can co-exist and be enabled/disabled on demand. Editing, configuring, and creating themes is docummented in the Theming section.</p>
+<h2 id="Blog-Configuration"><a href="#Blog-Configuration" class="headerlink" title="Blog Configuration"></a>Blog Configuration</h2><p>Jekyll and Jekyll-Bootstrap has a simple but powerful Jekyll Configuration System. You can:</p>
+<ul>
+<li>Specify a custom permalink format for blog posts.</li>
+<li>Specify a commenting engine like disqus, intensedebate, livefyre, or custom.</li>
+<li>Specify an analytics engine like google, getclicky, or custom.</li>
+</ul>
+<h2 id="Programming-Interface"><a href="#Programming-Interface" class="headerlink" title="Programming Interface"></a>Programming Interface</h2><p>The API pages document main data-structures and code available for use in Jekyll and Jekyll-Bootstrap. Consult these pages for how and where to use the data and code provided.</p>
+<h2 id="Jekyll-Introduction"><a href="#Jekyll-Introduction" class="headerlink" title="Jekyll Introduction"></a>Jekyll Introduction</h2><p>I highly recommend reading the Jekyll Introduction if you plan to customize your blog. The introduction is meant for core understanding of how and why Jekyll works the way it does. This will provide you with the proper context, knowledge-base, and fundamentals necessary to understand and be efficient in working with Jekyll and Jekyll-Bootstrap.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-06-26T16:00:00.000Z"><a href="/2014/06/27/Python-sqlite3-get-column-name/">2014-06-27</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/06/27/Python-sqlite3-get-column-name/">Python sqlite3 get table column name</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Get the column name use inquiry result:</p>
+<pre>
+import sqlite3
+
+db=sqlite3.connect('data.db')
+cur=db.cursor()
+cur.execute('SELECT * FROM table')
+col_name_list=[i[0] for i in cur.description]
+print col_name_list
+</pre>
+
+<p>Get all column names:</p>
+<pre>
+cur.execute('PRAGMA table_info(table)')
+print cur.fetchall()
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-06-26T16:00:00.000Z"><a href="/2014/06/27/Jekyll-variable-and-jekyll-template-grammar/">2014-06-27</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/06/27/Jekyll-variable-and-jekyll-template-grammar/">Jekyll variable and jekyll template grammar</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li>本文主要讲述Jekyll变量 和 Jekyll模板语法教程相关内容：Jekyll变量和Jekyll模板语法，包括全局变量、Site变量、Page变量和需要注意的内容，其中变解释内容翻译自官方wiki。 *</li>
+</ul>
+<p>Jekyll会遍历你的站点，来寻找需要处理的文件。任何具有 YAML 前置数据的文件都将会被处理，每一个这样的文件，Jekyll都会通过Liquid模板系统使用许多可用的页面变量。下面是一个可用变量的列表。</p>
+<b>Jekyll 目录及一些说明</b>
+
+<p><i>Jekyll 标准目录树</i></p>
+<pre>
+_config.yml   Jekyll的配置文件
+_includes     include 文件所在的文件夹
+_layouts      模版文
+_posts        自己要发
+_sites        预览时产生的文件
+</pre>
+
+<p>Jekyll的安装及配置</p>
+<p>_includes文件夹中所放的文件是最终要<br>_layouts中放的一些模版，模版是用包含page或post内容的。Jekyll的模板使用HTML语法来写，并包含YAML Front Matter。所有的模板都可用Liquid来与网站进行交互。所有的模板都可以使用全局变量site和page,site变量包含该网站所有可以接触得到的内容和元数据(meta-data),page变量包含的是当前渲染的page或post的所有可以接触得到的数据。<br>_post文件夹中放的是自己要发布的post文章。post文件的命名规则为YEAR-MONTH-DATE-title.MARKUP，使用rake post会自动将post文件命名合适。而对于page，所有放在根目录下或不以下划线开头的文件夹中有格式的文件都会被Jekyll处理成page。这里说的有格式是指文件含有YAML Front Matter。所有的post和page都要用markdown或者texile或者HTML语法来写，并可以包含Liquid模版的语法。还要有 YAML Front Matter (Jekyll只处理具有YAML Front Matter的文件)。YAML Front Matter必须放在文件的开头，一对—之间，用户可在这一对—间设置预先定义的变量或用户自己的数据</p>
+<p><b>Jekyll模板全局变量</b></p>
+<table><br><tr><td>变量</td><td>描述</td></tr><br><tr><td>site</td><td>全站的信息+_config.yml文件中的配置选项</td></tr><br><tr><td>page</td><td>这个变量中包含YAML前置数据,另外加上两个额外的变量值:url和content。</td></tr><br><tr><td>content</td><td>在布局模板文件中，这里变量包含了页面的子视图。这个变量将会把渲染后的内容插入到模板文件中。这个变量不能在文章和页面文件中使用。</td></tr><br><tr><td>paginator</td><td>一旦paginate配置选项被设置了，这个变量才能被使用。</td></tr><br></table>
+
+<p><b>Jekyll模板Site变量</b></p>
+<table><br><tr><td>变量</td><td>描述</td></tr><br><tr><td>site.time</td><td>当前的时间(当你运行Jekyll时的时间)</td></tr><br><tr><td>site.posts</td><td>一个按时间逆序的文章列表。</td></tr><br><tr><td>site.related_posts</td><td>如果当前被处理的页面是一个文章文件，那这个变量是一个包含了最多10篇相关文章的列表。默认来说，这些相关文章是低质量但计算快的。为了得到高质量但计算慢的结果，运行Jekyll命令时可以加上–lsi选项。(潜在语意索引)</td></tr><br><tr><td>site.categories.CATEGORY</td><td>所有在CATEGORY分类中的文章列表</td></tr><br><tr><td>site.tags.TAG</td><td>所有拥有TAG标签的文章的列表</td></tr><br><tr><td>site.[CONFIGURATION_DATA]</td><td>截止0.5.2版本，所有在_config.yml中的数据都能够通过site变量调用。举例来说，如果你有一个这样的选项在你的配置文件中:url: <a href="http://higrid.net，那在文章和页面文件中可以这样调用{" target="_blank" rel="noopener">http://higrid.net，那在文章和页面文件中可以这样调用{</a> { site.url } }。Jekyll并不会自动解析修改过的_config.yml文件，你想要启用新的设置选项，你需要重启Jekyll</td></tr><br></table>
+
+<p><b>Jekyll模板Page变量</b></p>
+<table><br><tr><td>变量</td><td>描述</td></tr><br><tr><td>page.content</td><td>页面中未渲染的内容</td></tr><br><tr><td>page.title</td><td>文章的标题</td></tr><br><tr><td>page.url</td><td>除去域名以外的URL，例子:/2013/12/14/higrid-net.html</td></tr><br><tr><td>page.date</td><td>指定每一篇文章的时间，这个选项能够覆盖一篇文章中前置数据设置的时间，它的格式是这样的:YYYY-MM-DD HH:MM:SS</td></tr><br><tr><td>page.id</td><td>每一篇文章的唯一标示符(在RSS中非常有用) 例子：/2008/12/14/higrid-net</td></tr><br><tr><td>page.categories</td><td>这篇文章隶属的分类的一个列表，分类是通过在_post目录中的目录结构推导而来的。举例来说，在路径/work/code/_posts/2008-12-24-closures.textile下的文件，这个变量将会是[work,code]。这个变量也能在YAML前置数据中被指定。</td></tr><br><tr><td>page.tags</td><td>这篇文章的标签的列表。这些数据能够在YAML前置数据中指定</td></tr><br><tr><td>page.next</td><td>按时间序的下一篇文章</td></tr><br><tr><td>page.content</td><td>按时间序的上一篇文章</td></tr><br></table><br>注意:任何你自己指定的自定义前置数据都能够通过page调用。举例来说，如果你在页面的前置数据中设置了custom_css: true，那这个值可以在模板可以这样调用:page.custom_css<br><br><b>Jekyll模板Paginator变量</b><br><table><br><tr><td>变量</td><td>描述</td></tr><br><tr><td>paginator.per_page</td><td>每一个页面上文章的数量</td></tr><br><tr><td>paginator.posts</td><td>当前页面上可用的文章</td></tr><br><tr><td>paginator.total_posts</td><td>所有文章的数量</td></tr><br><tr><td>paginator.total_pages</td><td>所有页面的数量</td></tr><br><tr><td>paginator.page</td><td>当前页面的数量</td></tr><br><tr><td>paginator.previous_page</td><td>前面的页面的数量</td></tr><br><tr><td>paginator.next_page</td><td>接下来的的页面的数量</td></tr><br></table>
+
+<p>Post或Page的创建及发布</p>
+<p><hr></p>
+<p><i>创建Post文章</i></p>
+<pre>
+rake post title="文章标题"
+</pre>
+
+<p>会自动创建一个具有合适文件名和YAML Front Matter的文件(使用时将”文章标题”替换成你要创建的文章的标题)。</p>
+<p><i>创建Page页面</i></p>
+<pre>
+rake page name="页面名称.md"   或者
+rake page name="pages/页面名称.md"
+</pre>
+<i>发布Post或Page</i>
+<pre>
+git add .
+git commit -m '一些说明'
+git push origin master
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-06-25T16:00:00.000Z"><a href="/2014/06/26/How-to-automatically-run-a-script-when-logging-into-Ubuntu-Desktop/">2014-06-26</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/06/26/How-to-automatically-run-a-script-when-logging-into-Ubuntu-Desktop/">How to automatically run a script when logging into Ubuntu Desktop</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li>There are circumstances where you wish to have a script run automatically when you log in to Ubuntu Desktop. Such a script can configure various user-specific or system-wide settings on your Ubuntu system, upon user’s desktop login.  *</li>
+</ul>
+<p>In Linux, there are start-up scripts named ~/.bash_profile, ~/.bashrc, or ~/.profile which get executed when you start a shell. However, in Ubuntu Desktop, such start-up scripts get executed when you open up a terminal window, but NOT when you log in to Ubuntu Desktop GUI. Also, when you open multiple terminal windows, these kinds of start-up scripts are executed as many times, in order to initialize user’s shell environment in terminal windows.<br>If what you want is to run a script at the time of user’s Ubuntu Desktop login, you can follow this guideline.</p>
+<p>Create a XDG configuration file for the start-up script you want to run.</p>
+<aside><pre>$ vi ~/.config/autostart/my_script.desktop</pre></aside>
+
+<pre>
+[Desktop Entry] 
+Type=Application 
+Name=My Script 
+Exec=~/bin/my_custom_script.sh 
+Icon=system-run 
+X-GNOME-Autostart-enabled=true
+</pre>
+
+<p>The above XDG configuration file will set up “user-specific” auto-start. If you want all users to use the same start-up script “system-wide”, create a similar XDG configuration file in the following location instead.</p>
+<aside><pre>$ sudo vi /etc/xdg/autostart/my_script.desktop</pre></aside>
+
+<pre>
+[Desktop Entry] 
+Type=Application 
+Name=My Script 
+Exec=sudo /sbin/my_custom_script.sh 
+Icon=system-run 
+X-GNOME-Autostart-enabled=true
+</pre>
+
+<p>If the start-up script requires sudo access like an above example, you will need to set up password-less sudo.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-06-23T16:00:00.000Z"><a href="/2014/06/24/Set-Samba-in-Ubuntu/">2014-06-24</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/06/24/Set-Samba-in-Ubuntu/">Set Samba in Ubuntu</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Install Samba:</p>
+<pre class="code">sudo apt-get install samba
+sudo apt-get install smbfs</pre>
+
+<p>Setup</p>
+<pre class="code">cd /
+sudo mkdir data
+chmod 777 data</pre>
+
+
+<p>Open file: /etc/samba/smb.conf, search “; security = user”, change to:</p>
+<pre class="code">security = user
+username map = /etc/samba/smbusers</pre>
+
+<p>the same time add the following code in the end:</p>
+<pre class="code">[data]
+comment = data
+path = /data
+public = yes
+writable = true
+valid users  = tony
+create mask = 0775
+force user = tony
+force group = tony
+available = yes
+browseable = yes</pre>
+
+<p>Add user, “tony” is my user, if you want use other username, you can create it:</p>
+<pre class="code">sudo smbpassed -a tony #add "tony", and set password
+sudo vi /etc/samba/sambusers #create "sambausers",and change tony = "tony"</pre>
+
+<p>Test and restart:</p>
+<pre class="code">sudo testparam
+sudo /etc/init.d/samba restart</pre>
+
+<p>Use<br>In Windows system, right click “Computer” -&gt; Map Desk -&gt; Folder,choose the desic name and key in “//ip/data”, click “Yes”, key in password. Now you can look the samba folder.<br>Trouble Shooting</p>
+<pre class="code">unix extensions = no</pre>
+
+<p>this code need add in [blobalthe following code need add in [data]:</p>
+<pre class="code">wide links = yes
+follow symlinks = yes</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-06-21T16:00:00.000Z"><a href="/2014/06/22/Programmin-is-like-writing-a-book/">2014-06-22</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/06/22/Programmin-is-like-writing-a-book/">Progremming is like writing a book</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Pragramming is like writing a book… except if you miss out a single comma, the whole thind make no drmn sense…</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/page/10/" class="alignleft prev">Prev</a>
+  
+  
+    <a href="/page/12/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Github/">Github</a><small>1</small></li>
+  
+    <li><a href="/categories/Karrigell/">Karrigell</a><small>1</small></li>
+  
+    <li><a href="/categories/VIM/">VIM</a><small>2</small></li>
+  
+    <li><a href="/categories/django/">django</a><small>9</small></li>
+  
+    <li><a href="/categories/jekyll/">jekyll</a><small>2</small></li>
+  
+    <li><a href="/categories/kivy/">kivy</a><small>1</small></li>
+  
+    <li><a href="/categories/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/categories/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/normal/">normal</a><small>1</small></li>
+  
+    <li><a href="/categories/other/">other</a><small>2</small></li>
+  
+    <li><a href="/categories/python/">python</a><small>64</small></li>
+  
+    <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/categories/system/">system</a><small>2</small></li>
+  
+    <li><a href="/categories/tornado/">tornado</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/django/">django</a><small>5</small></li>
+  
+    <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
+  
+    <li><a href="/tags/flask/">flask</a><small>1</small></li>
+  
+    <li><a href="/tags/freeswitch/">freeswitch</a><small>1</small></li>
+  
+    <li><a href="/tags/go/">go</a><small>2</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>14</small></li>
+  
+    <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>2</small></li>
+  
+    <li><a href="/tags/tornado/">tornado</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2021 Tony Tan
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

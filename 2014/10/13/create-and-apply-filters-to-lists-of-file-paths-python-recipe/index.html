@@ -1,0 +1,320 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Create and apply filters to lists of file paths -- Python recipe | Tony Tan</title>
+  <meta name="author" content="Tony Tan">
+  
+  <meta name="description" content="Tony Tan">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Create and apply filters to lists of file paths -- Python recipe">
+  <meta property="og:site_name" content="Tony Tan">
+
+  
+    <meta property="og:image" content="">
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Tony Tan" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+</html>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Tony Tan</a></h1>
+  <h2><a href="/">a python progrmmer</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-10-12T16:00:00.000Z"><a href="/2014/10/13/create-and-apply-filters-to-lists-of-file-paths-python-recipe/">2014-10-13</a></time>
+      
+      
+  
+    <h1 class="title">Create and apply filters to lists of file paths -- Python recipe</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Create and apply filters to lists of file paths (Python recipe)</em></p>
+<p>An experiment with filtering lists of files, documentation is written directly into the code.</p>
+<pre>
+"""
+This is a bit of an experiment with a technique of applying filters to lists of
+files.
+
+The base functions are IterFiles which is a simple wrapper around os.walk and
+then Filter which is used to create filter functions.
+
+Whitelist and Blacklist are then examples of filters created using the Filter 
+function as a decorator
+
+As a demonstration of creating filters on the fly, HasMode is then created in 
+the __main__ section
+"""
+
+import os
+import fnmatch
+import time
+
+def IterFiles(folder, **extraWalkArgs):
+    '''
+    A simple wrapper around os.walk that returns file paths.
+    **extraWalkArgs are passed to os.walk if you want to change the defaults 
+    there.
+    '''
+    for root, dirs, files in os.walk(folder, **extraWalkArgs):
+        for fileName in files:
+            yield os.path.join(root, fileName)
+
+def Filter(func):
+    '''
+    This is the filter creator function, you can also use it as a decorator.
+
+    usage: Filter(function, *args **keywordArgs)
+    args and keywordArgs are automatically passed to the function during 
+    iteration.
+
+    The function passed to it must take a valid file path as a first argument
+    example:
+        @Filter
+        def MinSize(file, minsize):
+            return os.path.getsize(file) >= minsize:
+        # Now you have created a filter that can take a list of files and a
+        # minsize argument and apply the minsize condition to the files list
+        # Print files in '.' that are 1MB or larger
+        for file in MinSize(os.listdir('.'), 1024*1024):
+            print file
+    '''
+    def wrapper(files, *a, **kw):
+        for file in files:
+            if func(file, *a, **kw):
+                yield file
+    return wrapper
+
+@Filter
+def Whitelist(file, patterns):
+    for pat in patterns:
+        if fnmatch.fnmatch(file, pat):
+            return True
+    return False
+
+@Filter
+def Blacklist(file, patterns):
+    for pat in patterns:
+        if fnmatch.fnmatch(file, pat):
+            return False
+    return True
+
+if __name__ == '__main__':
+    folder = '.' # folder to process
+
+    # get an iterator of all files under &#60;folder&#62;
+    files = IterFiles(folder)
+    # apply a whitelist to the files iterator
+    wfiles = Whitelist(files, ('*.py', '*.txt'))
+    # apply a blacklist to the whitelisted-files iterator
+    bfiles = Blacklist(wfiles, ('*/__init__.py','*/*test*.py'))
+    print 'whitelist/blacklist test'
+    print bfiles # prints a generator object as we haven't iterated over it yet
+    for file in bfiles: # iterate and print results
+        print '  ', file
+
+    # Filters can also constructed on the fly
+    # the HasMode function constructed here checks the file mode, it filters
+    # out all files that don't have the mode you pass into it.
+    import stat # for permission constants
+    HasMode = Filter(lambda file, mode: os.stat(file).st_mode & mode == mode)
+    print 'files others have read and write access to'
+    mode = stat.S_IROTH|stat.S_IWOTH
+    for file in HasMode(IterFiles(folder), mode):
+        print '  ', file
+    print
+
+    # just to state the obvious, you don't have to use IterFilesInFolder to get
+    # a list of files to feed a filter, just something that is iterable but 
+    # contains actual valid file paths
+    files = os.listdir('.')
+    print 'python files in current dir'
+    for file in Whitelist(files, ('*.py',)):
+        print '  ', file
+    print
+</pre>
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/python/">python</a>
+  </div>
+
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://deenter.com/2014/10/13/create-and-apply-filters-to-lists-of-file-paths-python-recipe/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Github/">Github</a><small>1</small></li>
+  
+    <li><a href="/categories/Karrigell/">Karrigell</a><small>1</small></li>
+  
+    <li><a href="/categories/VIM/">VIM</a><small>2</small></li>
+  
+    <li><a href="/categories/django/">django</a><small>9</small></li>
+  
+    <li><a href="/categories/jekyll/">jekyll</a><small>2</small></li>
+  
+    <li><a href="/categories/kivy/">kivy</a><small>1</small></li>
+  
+    <li><a href="/categories/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/categories/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/normal/">normal</a><small>1</small></li>
+  
+    <li><a href="/categories/other/">other</a><small>2</small></li>
+  
+    <li><a href="/categories/python/">python</a><small>64</small></li>
+  
+    <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/categories/system/">system</a><small>2</small></li>
+  
+    <li><a href="/categories/tornado/">tornado</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/django/">django</a><small>5</small></li>
+  
+    <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
+  
+    <li><a href="/tags/flask/">flask</a><small>1</small></li>
+  
+    <li><a href="/tags/freeswitch/">freeswitch</a><small>1</small></li>
+  
+    <li><a href="/tags/go/">go</a><small>2</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>14</small></li>
+  
+    <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>2</small></li>
+  
+    <li><a href="/tags/tornado/">tornado</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2021 Tony Tan
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

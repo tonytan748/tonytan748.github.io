@@ -1,0 +1,1160 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Tony Tan</title>
+  <meta name="author" content="Tony Tan">
+  
+  <meta name="description" content="Tony Tan">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Tony Tan">
+
+  
+    <meta property="og:image" content="">
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Tony Tan" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+</html>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Tony Tan</a></h1>
+  <h2><a href="/">a python progrmmer</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2021-05-30T08:18:30.000Z"><a href="/2021/05/30/freeswitch在centos中安装/">2021-05-30</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2021/05/30/freeswitch在centos中安装/">freeswitch在centos中安装</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="下载freeswitch包"><a href="#下载freeswitch包" class="headerlink" title="下载freeswitch包"></a>下载freeswitch包</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://freeswitch.org/confluence/display/FREESWITCH/FreeSWITCH+1.10.x+Release+notes</span><br></pre></td></tr></table></figure>
+<p>找到最新安装包<code>for centos</code></p>
+<h2 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y git alsa-lib-devel autoconf automake bison broadvoice-devel bzip2 curl-devel libdb4-devel e2fsprogs-devel erlang flite-devel g722_1-devel gcc-c++ gdbm-devel gnutls-devel ilbc2-devel ldns-devel libcodec2-devel libcurl-devel libedit-devel libidn-devel libjpeg-devel libmemcached-devel libogg-devel libsilk-devel libsndfile-devel libtheora-devel libtiff-devel libtool libuuid-devel libvorbis-devel libxml2-devel lua-devel lzo-devel mongo-c-driver-devel ncurses-devel net-snmp-devel openssl-devel opus-devel pcre-devel perl perl-ExtUtils-Embed pkgconfig portaudio-devel postgresql-devel python-devel python-devel soundtouch-devel speex-devel sqlite-devel unbound-devel unixODBC-devel wget which yasm zlib-devel libshout-devel libmpg123-devel lame-devel</span><br></pre></td></tr></table></figure>
+<h2 id="安装cmake"><a href="#安装cmake" class="headerlink" title="安装cmake"></a>安装cmake</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">yum remove cmake #卸载yum安装的版本，若无安装则忽略</span><br><span class="line">cd /usr/local/src</span><br><span class="line">wget https://cmake.org/files/v3.14/cmake-3.14.0.tar.gz</span><br><span class="line">tar vzxf cmake-3.14.0.tar.gz</span><br><span class="line">cd cmake-3.14.0</span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<h2 id="安装libks"><a href="#安装libks" class="headerlink" title="安装libks"></a>安装libks</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/src</span><br><span class="line">yum install libatomic</span><br><span class="line">git clone https://github.com/signalwire/libks.git</span><br><span class="line">cd libks</span><br><span class="line">cmake .</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<h2 id="安装signalwire-c"><a href="#安装signalwire-c" class="headerlink" title="安装signalwire-c"></a>安装signalwire-c</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/src</span><br><span class="line">git clone https://github.com/signalwire/signalwire-c.git</span><br><span class="line">cd signalwire-c/</span><br><span class="line">cmake .</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line">ln -sf /usr/local/lib64/pkgconfig/signalwire_client.pc /usr/lib64/pkgconfig/signalwire_client.pc</span><br></pre></td></tr></table></figure>
+<h2 id="编译x264"><a href="#编译x264" class="headerlink" title="编译x264"></a>编译x264</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone http://git.videolan.org/git/x264.git</span><br><span class="line">./configure –disable-asm</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<h2 id="编译安装mod-av"><a href="#编译安装mod-av" class="headerlink" title="编译安装mod_av"></a>编译安装mod_av</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">wget http://download1.rpmfusion.org/free/el/updates/7/x86_64/x/x264-libs-0.148-24.20170521gitaaa9aa8.el7.x86_64.rpm</span><br><span class="line">wget http://download1.rpmfusion.org/free/el/updates/7/x86_64/x/x264-devel-0.148-24.20170521gitaaa9aa8.el7.x86_64.rpm</span><br><span class="line">rpm -hiv x264-libs-0.148-24.20170521gitaaa9aa8.el7.x86_64.rpm</span><br><span class="line">rpm -hiv x264-devel-0.148-24.20170521gitaaa9aa8.el7.x86_64.rpm</span><br><span class="line">cd /usr/local/src</span><br><span class="line">git clone https://gitee.com/nwaycn/libav.git</span><br><span class="line">cd libav</span><br><span class="line">./configure --enable-pic --enable-shared  --enable-libx264 --enable-gpl --extra-libs=&quot;-ldl&quot;</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line"></span><br><span class="line">cp /usr/local/lib/pkgconfig/libavcodec.pc    /usr/lib64/pkgconfig/</span><br><span class="line">cp /usr/local/lib/pkgconfig/libavdevice.pc   /usr/lib64/pkgconfig/</span><br><span class="line">cp /usr/local/lib/pkgconfig/libavfilter.pc   /usr/lib64/pkgconfig/</span><br><span class="line">cp /usr/local/lib/pkgconfig/libavformat.pc   /usr/lib64/pkgconfig/</span><br><span class="line">cp /usr/local/lib/pkgconfig/libavresample.pc /usr/lib64/pkgconfig/</span><br><span class="line">cp /usr/local/lib/pkgconfig/libavutil.pc     /usr/lib64/pkgconfig/</span><br><span class="line">cp /usr/local/lib/pkgconfig/libswscale.pc    /usr/lib64/pkgconfig/</span><br><span class="line">ldconfig  #动态链接库管理命令，其目的为了让动态链接库为系统所共享</span><br></pre></td></tr></table></figure>
+<h2 id="安装spandsp"><a href="#安装spandsp" class="headerlink" title="安装spandsp"></a>安装spandsp</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/src/freeswitch-1.10.5.-release</span><br><span class="line">git clone https://github.com/freeswitch/spandsp.git</span><br><span class="line">cd spandsp</span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line">ldconfig</span><br></pre></td></tr></table></figure>
+<h2 id="安装sofia-sip"><a href="#安装sofia-sip" class="headerlink" title="安装sofia-sip"></a>安装sofia-sip</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/src/freeswitch-1.10.5.-release</span><br><span class="line">git clone https://github.com/freeswitch/sofia-sip.git</span><br><span class="line">cd sofia-sip</span><br><span class="line">./bootstrap.sh -j</span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line">ldconfig</span><br></pre></td></tr></table></figure>
+<h2 id="设置包路径"><a href="#设置包路径" class="headerlink" title="设置包路径"></a>设置包路径</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$&#123;PKG_CONFIG_PATH&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="安装编译环境"><a href="#安装编译环境" class="headerlink" title="安装编译环境"></a>安装编译环境</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y http://files.freeswitch.org/freeswitch-release-1-6.noarch.rpm epel-release</span><br></pre></td></tr></table></figure>
+<h2 id="编译Freeswitch"><a href="#编译Freeswitch" class="headerlink" title="编译Freeswitch"></a>编译Freeswitch</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/src/</span><br><span class="line">tar vzxf freeswitch-1.10.5.-release.tar.gz</span><br><span class="line">cd freeswitch-1.10.5.-release</span><br><span class="line">./configure --disable-signalwire</span><br><span class="line"># 如果在configure报错，再重新设置下包路径</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<h2 id="You-must-install-libopus-dev-to-build-mod-opus-Stop-报错"><a href="#You-must-install-libopus-dev-to-build-mod-opus-Stop-报错" class="headerlink" title="You must install libopus-dev to build mod_opus. Stop.报错"></a><code>You must install libopus-dev to build mod_opus. Stop.</code>报错</h2><p>找到codecs目录，直接删除codec_opus子目录。编译成功</p>
+<h2 id="配置freeswitch任何路径启动"><a href="#配置freeswitch任何路径启动" class="headerlink" title="配置freeswitch任何路径启动"></a>配置freeswitch任何路径启动</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ln -sf /usr/local/freeswitch/bin/freeswitch /usr/local/bin/</span><br><span class="line">ln -sf /usr/local/freeswitch/bin/fs_cli /usr/local/bin/</span><br></pre></td></tr></table></figure>
+<h2 id="freeswitch-后台启动"><a href="#freeswitch-后台启动" class="headerlink" title="freeswitch 后台启动"></a>freeswitch 后台启动</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 后台启动命令</span><br><span class="line">freeswitch -nc -rp</span><br><span class="line"> </span><br><span class="line"># 进入命令</span><br><span class="line">fs_cli</span><br><span class="line"> </span><br><span class="line"># 退出命令</span><br><span class="line">/exit </span><br><span class="line">/bye </span><br><span class="line">等等...</span><br><span class="line"> </span><br><span class="line"># fs_cli报错</span><br><span class="line">fs_cli.c:1673 main() Error Connecting [] </span><br><span class="line"># 解决方法</span><br><span class="line">vim /usr/local/freeswitch/conf/autoload_configs/event_socket.conf.xml </span><br><span class="line">&lt;param name=&quot;listen-ip&quot; value=&quot;::&quot;/&gt;  改为 &lt;param name=&quot;listen-ip&quot; value=&quot;0.0.0.0&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="设置fs支持ssl"><a href="#设置fs支持ssl" class="headerlink" title="设置fs支持ssl"></a>设置fs支持ssl</h2><h3 id="宝塔面板设置域名及nginx设置"><a href="#宝塔面板设置域名及nginx设置" class="headerlink" title="宝塔面板设置域名及nginx设置"></a>宝塔面板设置域名及nginx设置</h3><h3 id="设置nginx的ssl"><a href="#设置nginx的ssl" class="headerlink" title="设置nginx的ssl"></a>设置nginx的ssl</h3><h3 id="配置fs"><a href="#配置fs" class="headerlink" title="配置fs"></a>配置fs</h3><ul>
+<li><p>打开<code>conf/vars.conf</code> 设置支持ssl的配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;X-PRE-PROCESS cmd=&quot;set&quot; data=&quot;internal_ssl_enable=true&quot;/&gt; </span><br><span class="line">&lt;X-PRE-PROCESS cmd=&quot;set&quot; data=&quot;external_auth_calls=true&quot;/&gt;</span><br><span class="line">&lt;X-PRE-PROCESS cmd=&quot;set&quot; data=&quot;external_ssl_enable=true&quot;/&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打开<code>conf/sip_profiles/internal.xml</code> 查看ws和wss端口是否已打开</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- for sip over websocket support --&gt;</span><br><span class="line">&lt;param name=&quot;ws-binding&quot;  value=&quot;:5066&quot;/&gt;</span><br><span class="line"> </span><br><span class="line">&lt;!-- for sip over secure websocket support --&gt;</span><br><span class="line">&lt;!-- You need wss.pem in $$&#123;certs_dir&#125; for wss or one will be created for you --&gt;</span><br><span class="line">&lt;param name=&quot;wss-binding&quot; value=&quot;:7443&quot;/&gt;   </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 在底部增加：</span><br><span class="line">&lt;param name=&quot;apply-candidate-acl&quot; value=&quot;121.37.189.177&quot;/&gt;</span><br><span class="line">    &lt;param name=&quot;apply-candidate-acl&quot; value=&quot;rfc1918.auto&quot;/&gt;</span><br><span class="line">    &lt;param name=&quot;apply-candidate-acl&quot; value=&quot;localnet.auto&quot;/&gt;</span><br><span class="line">    &lt;param name=&quot;apply-candidate-acl&quot; value=&quot;lan&quot;/&gt;</span><br><span class="line">    &lt;param name=&quot;apply-candidate-acl&quot; value=&quot;wan&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>打开<code>conf/autoload_configs/acl_conf.xml</code>并配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;list name=&quot;localnet.auto&quot; default=&quot;allow&quot;&gt;</span><br><span class="line">&lt;/list&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>配置fs证书为宝塔设置的证书</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/freeswitch/certs</span><br><span class="line"># 备份fs的原有证书</span><br><span class="line">mv wss.pem wss.pem.bak</span><br><span class="line"></span><br><span class="line">touch wss.pem</span><br><span class="line">cat /etc/xxx/live/xxx.com/fullchain.pem &gt; wss.pem</span><br><span class="line">cat /etc/xxx/live/uxxx.com/privkey.pem &gt; wss.pem</span><br></pre></td></tr></table></figure>
+<h2 id="配置网关"><a href="#配置网关" class="headerlink" title="配置网关"></a>配置网关</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># 新建文件 /usr/local/freeswitch/conf/dialplan/default/00_gw1.xml</span><br><span class="line"></span><br><span class="line">&lt;include&gt;</span><br><span class="line">    &lt;extension name=&quot;call_out3&quot;&gt;</span><br><span class="line">        &lt;condition field=&quot;destination_number&quot; expression=&quot;^10(.*)$&quot;&gt;</span><br><span class="line">            &lt;action application=&quot;set&quot; data=&quot;effective_caller_id_name=200200001&quot;/&gt;</span><br><span class="line">            &lt;action application=&quot;set&quot; data=&quot;effective_caller_id_number=200200001&quot;/&gt;</span><br><span class="line">            &lt;!--&lt;action application=&quot;bridge&quot; data=&quot;sofia/gateway/gw3/$1&quot;/&gt;--&gt;</span><br><span class="line">            &lt;action application=&quot;bridge&quot; data=&quot;sofia/gateway/gw3/cs1$1&quot;/&gt;</span><br><span class="line">        &lt;/condition&gt;</span><br><span class="line">    &lt;/extension&gt;</span><br><span class="line"></span><br><span class="line">&lt;/include&gt;</span><br><span class="line"></span><br><span class="line"># 新建文件 /usr/local/freeswitch/conf/sip_profiles/external/gw1.xml </span><br><span class="line"></span><br><span class="line">&lt;include&gt;</span><br><span class="line">    &lt;gateway name=&quot;gw3&quot;&gt;</span><br><span class="line">    &lt;param name=&quot;realm&quot; value=&quot;121.196.168.81:62019&quot;/&gt;</span><br><span class="line">      &lt;param name=&quot;proxy&quot; value=&quot;121.196.168.81:62019&quot;/&gt;</span><br><span class="line">    &lt;param name=&quot;username&quot; value=&quot;&quot;/&gt;</span><br><span class="line">    &lt;param name=&quot;password&quot; value=&quot;&quot;/&gt;</span><br><span class="line">    &lt;param name=&quot;register&quot; value=&quot;false&quot;/&gt;</span><br><span class="line">    &lt;param name=&quot;caller-id-in-from&quot; value=&quot;true&quot;/&gt;</span><br><span class="line">    &lt;/gateway&gt;</span><br><span class="line">&lt;/include&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="重启fs服务"><a href="#重启fs服务" class="headerlink" title="重启fs服务"></a>重启fs服务</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sofia profile external rescan reloadxml</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2021-02-19T02:41:01.000Z"><a href="/2021/02/19/mysql查询近7天，半年，一年数据/">2021-02-19</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2021/02/19/mysql查询近7天，半年，一年数据/">mysql查询近7天，半年，一年数据</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li>近7天数据</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * from oms_order_item_comment </span><br><span class="line">     where comment_time between date_sub(now(),interval 1 week) and now()  -- 七天</span><br></pre></td></tr></table></figure>
+<ul>
+<li>半年数据</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * from oms_order_item_comment </span><br><span class="line">     where comment_time between date_sub(now(),interval 6 month) and now()  -- 半年</span><br></pre></td></tr></table></figure>
+<ul>
+<li>一年数据</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * from oms_order_item_comment </span><br><span class="line">     where comment_time between date_sub(now(),interval 1 year) and now()  -- 一年</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2021-02-19T02:22:46.000Z"><a href="/2021/02/19/Django-ContentTypes使用示例/">2021-02-19</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2021/02/19/Django-ContentTypes使用示例/">Django.ContentTypes使用示例</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>转载于<a href="https://blog.csdn.net/qq_29113041/article/details/87285265?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.control&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.control" target="_blank" rel="noopener">这里</a></p>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>Django创建项目后，在settings.py中默认加载了以下几个app：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = [</span><br><span class="line">    &apos;django.contrib.admin&apos;,</span><br><span class="line">    &apos;django.contrib.auth&apos;,</span><br><span class="line">    &apos;django.contrib.contenttypes&apos;,</span><br><span class="line">    &apos;django.contrib.sessions&apos;,</span><br><span class="line">    &apos;django.contrib.messages&apos;,</span><br><span class="line">    &apos;django.contrib.staticfiles&apos;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>其中有个app为<code>django.contrib.contenttypes</code>，在使用了<code>python manage.py makemigrations</code> 和 <code>python manage.py migrate</code>命令后，这个app会在数据库创建表 <code>django_content_type</code></p>
+<p><code>django_content_type</code>表存储了用户所提交的所有model名称与model所在的app名称</p>
+<p>其中的<code>model</code>字段为用户定义的模型类的名称，<code>app_label</code>为该模型所在app名称</p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>使用的例子，现在有四个model，我们自己创建的Post，Picture和Comment，加上django原生的User。</p>
+<ul>
+<li><p>django原生的User model即用户表</p>
+</li>
+<li><p>Comment为用户提交的评论表</p>
+</li>
+<li><p>Picture为存储图片信息的表</p>
+</li>
+<li><p>Post为存储文章信息的表</p>
+</li>
+</ul>
+<p>场景如下：用户可以对图片或者文章提交评论，那么Comment中首先要存储的是，该评论对应的用户，再就是该评论是针对哪张图片或者哪篇文章的评论，代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from django.db import models</span><br><span class="line">from django.contrib.auth.models import User</span><br><span class="line">class Post(models.Model):</span><br><span class="line">    author = models.ForeignKey(User, on_delete=models.CASCADE)</span><br><span class="line">    body = models.TextField(blank=True)</span><br><span class="line">class Picture(models.Model):</span><br><span class="line">    author = models.ForeignKey(User, on_delete=models.CASCADE)</span><br><span class="line">    body = models.TextField(blank=True)</span><br><span class="line">class Comment(models.Model):</span><br><span class="line">    author = models.ForeignKey(to=User, on_delete=models.CASCADE)</span><br><span class="line">    body = models.TextField(blank=True)</span><br><span class="line">    pic = models.ForeignKey(to=Picture, on_delete=models.CASCADE, null=True)</span><br><span class="line">    post = models.ForeignKey(to=Post, on_delete=models.CASCADE, null=True)</span><br></pre></td></tr></table></figure>
+<p>为了建立Comment与Post或者Picture的关系，我们就需要创建外键，如果该Comment与Picture有关联，那么pic字段是有值的，而其余的关联字段为null。这样实现的缺点是，每增加一种被评论的类型，在Comment model中就需要多新增一个外键，扩展性极差。</p>
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><p>如果使用contenttypes就不需要再使用多个Foreignkey，因为在<code>django_content_type</code>表已经存储了app名和model名，所以我们只需要将我们创建的模型与<code>django_content_type</code>表关联起来，然后再存储一个实例 id 即可准确定位到某个app中某个模型的具体实例。代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">from django.db import models</span><br><span class="line">from django.contrib.contenttypes.models import ContentType</span><br><span class="line">from django.contrib.auth.models import User</span><br><span class="line">from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation</span><br><span class="line">class Post(models.Model):</span><br><span class="line">    author = models.ForeignKey(User, on_delete=models.CASCADE)</span><br><span class="line">    body = models.TextField(blank=True)</span><br><span class="line">    comments = GenericRelation(&apos;Comment&apos;)  # 使用GenericRelation可以建立该类与Comment类的反向关联，</span><br><span class="line">                                           # 那么可以通过该类的实例来创建对应的comment</span><br><span class="line">class Picture(models.Model):</span><br><span class="line">    author = models.ForeignKey(User, on_delete=models.CASCADE)</span><br><span class="line">    body = models.TextField(blank=True)</span><br><span class="line">    comments = GenericRelation(&apos;Comment&apos;)</span><br><span class="line">class Comment(models.Model):</span><br><span class="line">    #  user_name = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)</span><br><span class="line">    author = models.ForeignKey(to=User, on_delete=models.CASCADE)</span><br><span class="line">    body = models.TextField(blank=True)</span><br><span class="line">    # step1</span><br><span class="line">    # ForeignKey为外键，即在Comment类中，content_type对应了django_content_type表中的某个对象</span><br><span class="line">    content_type = models.ForeignKey(to=ContentType, on_delete=models.CASCADE)  # 与数据库中的django_content_type表关联起来</span><br><span class="line">    # step2</span><br><span class="line">    object_id = models.PositiveIntegerField()  # 正整数类型，在被关联的表中的实例id，以此来定位具体的实例</span><br><span class="line">    # step3</span><br><span class="line">    content_object = GenericForeignKey()  # 根据content_type和object_id来指向一个模型中的具体实例</span><br></pre></td></tr></table></figure>
+<p>首先看Comment这个模型，与contenttypes相关的就三个字段：<code>content_tpye</code>   <code>object_id</code>    <code>content_object</code></p>
+<p><code>content_type</code>字段为外键，指向ContentType这个模型，也就是上面提到的<code>django_content_type</code>表</p>
+<p><code>object_id</code>为一个整数，存储了实例id，实例id不理解可以看下面的数据表结构分析</p>
+<p><code>content_object</code>为<code>GenericForeignKey</code>类型，主要作用是根据<code>content_type</code>字段和<code>object_id</code>字段来定位某个模型中具体某个实例</p>
+<p>所以实际上在使用<code>GenericForeignKey()</code>函数时需要传入两个参数，即<code>content_type</code>和<code>object_id</code>字段的名字，注意是名字不是value。但是默认在该函数的构造函数中已经赋予了默认值，即<code>content_type</code>和<code>object_id</code>，所以如果我们定义的变量名为这两个，那么我们可以省略该参数。该字段不会存储到数据库中，在查询的时候ORM会用到。</p>
+<p>GenericForeignKey构造函数如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def __init__(self, ct_field=&apos;content_type&apos;, fk_field=&apos;object_id&apos;, for_concrete_model=True):</span><br><span class="line">    self.ct_field = ct_field</span><br><span class="line">    self.fk_field = fk_field</span><br><span class="line">    self.for_concrete_model = for_concrete_model</span><br><span class="line">    self.editable = False</span><br><span class="line">    self.rel = None</span><br><span class="line">    self.column = None</span><br></pre></td></tr></table></figure>
+<p>将模型同步到数据库，并创建几个测试数据，使用manage.py自带的shell可以轻松的创建测试数据。</p>
+<p><code>python manage.py shell</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from app1.models import Post, Picture, Comment  # app1即为你自己所创建的app名</span><br><span class="line">from django.contrib.auth.models import User  # django原生用户模型</span><br><span class="line">user = User.objects.get(username=&apos;admin-x&apos;)</span><br><span class="line">post = Post.objects.create(author=user, body=&apos;admin-x post test&apos;)</span><br><span class="line">picture = Picture.objects.create(author=user, body=&apos;admin-x pic test&apos;)</span><br><span class="line"> </span><br><span class="line">pic = Picture.objects.get(id=1) # 获取id为1的pic对象</span><br><span class="line">c1 = Comment.objects.create(author=user, body=&apos;test&apos;, content_object=pic) # 创建一个评论并与上述的pic对象关联起来</span><br></pre></td></tr></table></figure>
+<p>还可以注意到，在Post和Picture模型中我们定义了<code>comments = GenericRelation(&#39;Comment&#39;)</code></p>
+<p>GenericRelation的作用是建立该model与Comment的反向关联，我们这样就可以通过Post实例或者Picture实例直接查询属于该实例的所有评论，或者创建一个属于该实例的新评论。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pic = Picture.objects.get(id=1) # 获取id为1的pic对象</span><br><span class="line">pic.comments.create(author=user, body=&apos;test02&apos;)  # 创建一个属于pic对象的评论</span><br><span class="line">pic.comments.all()  # 获取属于pic对象的所有评论</span><br></pre></td></tr></table></figure>
+<p>实际上在数据表中，根据<code>content_type_id</code>就可以在<code>django_content_type</code>这个表中定位到哪个app的哪个model，然后根据<code>object_id</code>定位到该model中具体实例。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2021-02-04T06:46:12.000Z"><a href="/2021/02/04/Django-queryset实现按指定字段的值进行排序/">2021-02-04</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2021/02/04/Django-queryset实现按指定字段的值进行排序/">[Django]queryset实现按指定字段的值进行排序</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>文章转载于<a href="https://zgljl2012.com/django-querysetshi-xian-an-zhi-ding-zi-duan-de-zhi-jin-xing-pai-xu/" target="_blank" rel="noopener">这里</a></p>
+<p>最近碰到一个需求，要对用户的学历进行排序，也就是按照[‘中专及以下’, ‘高中’, ‘大专’, ‘本科’, ‘硕士’, ‘博士’]的顺序进行排序，这就需要使用Django的ORM实现按指定字段的值进行排序。</p>
+<ol>
+<li>MySQL中的SQL语句的语法：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from user_education where user_id = 1 ORDER BY FIELD(degree, &apos;中专及以下&apos;, &apos;高中&apos;, &apos;大专&apos;, &apos;本科&apos;, &apos;硕士&apos;, &apos;博士&apos;) DESC</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>python代码</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ordering = &apos;FIELD(`degree`, &#123;&#125;)&apos;.format(&apos;,&apos;.join([ &quot;&apos;&#123;&#125;&apos;&quot;.format(i) for i in educations]))</span><br><span class="line">education_last = Education.objects.filter(user_id=user[&apos;id&apos;]).\</span><br><span class="line">								   extra(select=&#123;&apos;ordering&apos;: ordering&#125;, order_by=(&apos;-ordering&apos;,))</span><br></pre></td></tr></table></figure>
+<p>可通过数据库日志看到生成的sql语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT (FIELD(`degree`, &apos;中专及以下&apos;,&apos;高中&apos;,&apos;大专&apos;,&apos;本科&apos;,&apos;硕士&apos;,&apos;博士&apos;)) AS `ordering` FROM `user_education` WHERE `user_education`.`user_id` = 31 ORDER BY `ordering` DESC LIMIT 1</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2021-01-20T06:18:57.000Z"><a href="/2021/01/20/Go安装go-redis依赖被墙问题/">2021-01-20</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2021/01/20/Go安装go-redis依赖被墙问题/">Go安装go-redis依赖被墙问题</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>GO安装go-redis时，报<code>verifying github.com/go-redis/redis@v6.15.9+incompatible: github.com/go-redis/redis@v6.15.9+incompatible: Get https://sum.golang.org/lookup/github.com/go-redis/redis@v6.15.9+incompatible: dial tcp 108.177.125.141:443: i/o timeout</code>错误。</p>
+<p>是由于国内被墙问题导致。</p>
+<p>设置<code>GOPROXY</code>为代理地址后再次安装即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">export GOPROXY=https://goproxy.io</span><br><span class="line">go get -u github.com/go-redis/redis/v8</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 安装完成后可重设下GOPROXY为空</span><br><span class="line">export GOPROXY=</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2021-01-11T05:19:14.000Z"><a href="/2021/01/11/modulesb报错/">2021-01-11</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2021/01/11/modulesb报错/">解决Go中ambiguous import in multiple modules错误</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Gin 中使用gormt将mysql数据库自动生成gorm结构体后：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">go get -u -v github.com/xxjwxc/gormt@master</span><br><span class="line">gormt -H=127.0.0.1 -d=oauth_db -p=qwer -u=root --port=3306</span><br></pre></td></tr></table></figure></p>
+<p>再此运行Gin时会报<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">build command-line-arguments: cannot load github.com/ugorji/go/codec: ambiguous import: found github.com/ugorji/go/codec in multiple modules:</span><br><span class="line">        github.com/ugorji/go v1.1.4 (/Users/tonytan/go/pkg/mod/github.com/ugorji/go@v1.1.4/codec)</span><br><span class="line">        github.com/ugorji/go/codec v0.0.0-20181209151446-772ced7fd4c2 (/Users/tonytan/go/pkg/mod/github.com/ugorji/go/codec@v0.0.0-20181209151446-772ced7fd4c2)</span><br></pre></td></tr></table></figure></p>
+<p>错误.</p>
+<p>报错的字面意思是有一个包多个地方引用但版本不一致。</p>
+<p>网上查询找到解决方法，详见 <a href="https://github.com/ugorji/go/issues/279。" target="_blank" rel="noopener">https://github.com/ugorji/go/issues/279。</a></p>
+<p>1.1.2版本修复了该问题</p>
+<p>这时需要运行以下命令：</p>
+<p>go get <a href="mailto:github.com/ugorji/go@v1.1.2" target="_blank" rel="noopener">github.com/ugorji/go@v1.1.2</a></p>
+<p>已安装了1.1.4，但是还是报错，如果安装1.1.2,则能解决改问题</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2020-12-30T01:45:03.000Z"><a href="/2020/12/30/后台edite页面实现三级联动/">2020-12-30</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2020/12/30/后台edite页面实现三级联动/">后台edite页面实现三级联动</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>在项目中使用Django admin作为后台管理，在店铺表编辑页面需要设置省市区三级联动，查了很多资源，没有发现原生支持的联动方式。 在网上借鉴了别人的写法。</p>
+<p>配置：</p>
+<ul>
+<li><p>Python 3.7</p>
+</li>
+<li><p>Django3.1</p>
+</li>
+</ul>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
+<li><p>在app文件下创建templates文件夹，创建<code>shop_detail.html</code>用于复写店铺编辑页。 文件名字可自定义。</p>
+</li>
+<li><p>在app的admin.py中增加并注册ShopAdmin类，在类中增加<code>change_form_template = &quot;shop_detail.html&quot;</code>，指向的html文件名和1中的一致。</p>
+</li>
+<li><p>从当前python环境中，找到Django包，复制里面的<code>chang_form.html</code>全部内容到前面创建的html中。 该html具体地址为<code>python3.7/site-packages/django/contrib/admin/templates/admin/change_form.html</code>。</p>
+</li>
+<li><p>编辑<code>shop_detail.html</code></p>
+</li>
+</ol>
+<ul>
+<li>将以下ajax请求增加到替换到<code>admin_change_form_document_ready</code>的block中。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&#123;% block admin_change_form_document_ready %&#125;</span><br><span class="line">    &lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">        (function($) &#123;</span><br><span class="line">            $(document).ready(function() &#123;</span><br><span class="line">                $(&apos;.add-another&apos;).click(function(e) &#123;</span><br><span class="line">                    e.preventDefault();</span><br><span class="line">                    var event = $.Event(&apos;django:add-another-related&apos;);</span><br><span class="line">                    $(this).trigger(event);</span><br><span class="line">                    if (!event.isDefaultPrevented()) &#123;</span><br><span class="line">                        showAddAnotherPopup(this);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line"></span><br><span class="line">            &#123;% if adminform and add %&#125;</span><br><span class="line">                $(&apos;form#&#123;&#123; opts.model_name &#125;&#125;_form :input:visible:enabled:first&apos;).focus()</span><br><span class="line">            &#123;% endif %&#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">            $.get(&apos;/common/choose/province/&apos;,function(p_info)&#123;          // 获取省份接口 这里的地址自定义，已实际的接口地址为准</span><br><span class="line">                var province_info = $(&apos;#id_province&apos;).empty().append(&apos;&lt;option value&gt;&apos;+&apos;---------&apos;+&apos;&lt;/option&gt;&apos;);</span><br><span class="line">                // id_province 已实际的省份字段名为准，可在admin页面中查找</span><br><span class="line">                $.each(p_info.p_lists,function(i,province)&#123;</span><br><span class="line">                    province_info.append(&apos;&lt;option value=&quot;&apos;+province.p_id+&apos;&quot;&gt;&apos;+province.p_name+&apos;&lt;/option&gt;&apos;)</span><br><span class="line">                &#125;);</span><br><span class="line"></span><br><span class="line">                $(&apos;#id_province&apos;).change(function()&#123;</span><br><span class="line">                    p_id = $(this).val();</span><br><span class="line">                    $.get(&apos;/common/choose/city/&apos;,&#123;&apos;p_id&apos;:p_id&#125;,function(c_info)&#123;        // 获取城市接口 这里的地址自定义，已实际的接口地址为准</span><br><span class="line">                        var city_info = $(&apos;#id_city&apos;).empty().append(&apos;&lt;option value&gt;&apos;+&apos;---------&apos;+&apos;&lt;/option&gt;&apos;);</span><br><span class="line">                        // id_city 已实际的城市字段名为准，可在admin页面中查找</span><br><span class="line">                        $.each(c_info.c_lists,function(i,city)&#123;</span><br><span class="line">                            city_info.append(&apos;&lt;option value=&quot;&apos;+city.c_id+&apos;&quot;&gt;&apos;+city.c_name+&apos;&lt;/option&gt;&apos;)</span><br><span class="line">                        &#125;)</span><br><span class="line">                    &#125;)</span><br><span class="line">                &#125;);</span><br><span class="line"></span><br><span class="line">                $(&apos;#id_city&apos;).change(function()&#123;</span><br><span class="line">                    c_id = $(this).val();</span><br><span class="line">                    $.get(&apos;/common/choose/area/&apos;,&#123;&quot;c_id&quot;: c_id&#125;,function(a_info)&#123;       // 获取地区接口 这里的地址自定义，已实际的接口地址为准</span><br><span class="line">                        var area_info = $(&apos;#id_district&apos;).empty().append(&apos;&lt;option value&gt;&apos;+&apos;---------&apos;+&apos;&lt;/option&gt;&apos;);</span><br><span class="line">                        // id_district 已实际的地区字段名为准，可在admin页面中查找</span><br><span class="line">                        $.each(a_info.a_lists,function(i,area)&#123;</span><br><span class="line">                            area_info.append(&apos;&lt;option value=&quot;&apos;+area.a_id+&apos;&quot;&gt;&apos;+area.a_name+&apos;&lt;/option&gt;&apos;)</span><br><span class="line">                        &#125;);</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;)(django.jQuery);</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&#123;% endblock %&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>注意里面的省市区字段在page页面中的类名，不确定的话可通过浏览器开发者工具查找。</p>
+</li>
+<li><p>增加省市区调用接口， 我的地区表在<code>common</code>模块中，同时为避免接口地址冲突，增加了 <code>/choose</code>字段。</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">def choose_province(request):</span><br><span class="line">    &quot;&quot;&quot;查询省&quot;&quot;&quot;</span><br><span class="line">    provinces = Area.objects.filter(parent=None)</span><br><span class="line">    p_lists = [&#123;&quot;p_id&quot;: province.id, &quot;p_name&quot;: province.name&#125; for province in provinces]</span><br><span class="line">    p_info = &#123;&quot;p_lists&quot;: p_lists&#125;</span><br><span class="line">    return JsonResponse(p_info, safe=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def choose_city(request):</span><br><span class="line">    &quot;&quot;&quot;查询市&quot;&quot;&quot;</span><br><span class="line">    p_id = request.GET.get(&apos;p_id&apos;)</span><br><span class="line">    print(p_id, &apos;--------&apos;)</span><br><span class="line">    if not p_id:</span><br><span class="line">        return JsonResponse(&#123;&#125;, safe=False)</span><br><span class="line">    citys = Area.objects.filter(parent_id=p_id)</span><br><span class="line">    c_lists = [&#123;&quot;c_id&quot;: city.id, &quot;c_name&quot;: city.name&#125; for city in citys]</span><br><span class="line">    print(c_lists[0:5])</span><br><span class="line">    c_info = &#123;&quot;c_lists&quot;: c_lists&#125;</span><br><span class="line">    return JsonResponse(c_info, safe=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def choose_area(request):</span><br><span class="line">    &quot;&quot;&quot;查询区&quot;&quot;&quot;</span><br><span class="line">    c_id = request.GET.get(&apos;c_id&apos;)</span><br><span class="line">    print(c_id, &apos;=======&apos;)</span><br><span class="line">    if not c_id:</span><br><span class="line">        return JsonResponse(&#123;&#125;, safe=False)</span><br><span class="line">    areas = Area.objects.filter(parent_id=c_id)</span><br><span class="line">    print(areas)</span><br><span class="line">    a_lists = [&#123;&quot;a_id&quot;: area.id, &quot;a_name&quot;: area.name&#125; for area in areas]</span><br><span class="line">    a_info = &#123;&quot;a_lists&quot;: a_lists&#125;</span><br><span class="line">    print(a_info)</span><br><span class="line">    return JsonResponse(a_info, safe=False)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>URL地址设置。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">url(r&apos;^choose/province/$&apos;, views.choose_province),</span><br><span class="line">url(r&apos;^choose/city/$&apos;, views.choose_city),</span><br><span class="line">url(r&apos;^choose/area/$&apos;, views.choose_area),</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Django admin功能比较齐全，以前只是按照文档使用，并没有涉及到修改页面。 通过这个3级联动，也清楚了admin的部分原理。对于一些复杂的页面，可以用自定义的形式来重构页面。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2020-12-18T05:37:49.000Z"><a href="/2020/12/18/装饰器的六种写法/">2020-12-18</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2020/12/18/装饰器的六种写法/">装饰器的六种写法</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>装饰器本质上是一个Python函数，它可以让其他函数在不需要做任何代码变动的前提下增加额外功能，装饰器的返回值也是一个函数对象。</p>
+<p>它经常用于有切面需求的场景，比如：插入日志、性能测试、事务处理、缓存、权限校验等场景。</p>
+<p>装饰器是解决这类问题的绝佳设计，有了装饰器，我们就可以抽离出大量与函数功能本身无关的雷同代码并继续重用。</p>
+<p>装饰器的使用方法很固定</p>
+<ul>
+<li><p>先定义一个装饰器（帽子）</p>
+</li>
+<li><p>再定义你的业务函数或者类（人）</p>
+</li>
+<li><p>最后把这装饰器（帽子）扣在这个函数（人）头上</p>
+</li>
+</ul>
+<p>就像下面这样子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 定义装饰器</span><br><span class="line">def decorator(func):</span><br><span class="line">    def wrapper(*args, **kw):</span><br><span class="line">        return func()</span><br><span class="line">    return wrapper</span><br><span class="line"></span><br><span class="line"># 定义业务函数并进行装饰</span><br><span class="line">@decorator</span><br><span class="line">def function():</span><br><span class="line">    print(&quot;hello, decorator&quot;)</span><br></pre></td></tr></table></figure>
+<p>实际上，装饰器并不是编码必须性，意思就是说，你不使用装饰器完全可以，它的出现，应该是使我们的代码</p>
+<ul>
+<li><p>更加优雅，代码结构更加清晰</p>
+</li>
+<li><p>将实现特定的功能代码封装成装饰器，提高代码复用率，增强代码可读性</p>
+</li>
+</ul>
+<p>接下来，我将以实例讲解，如何编写出各种简单及复杂的装饰器。</p>
+<h1 id="1-普通装饰器"><a href="#1-普通装饰器" class="headerlink" title="1. 普通装饰器"></a>1. 普通装饰器</h1><p>首先咱来写一个最普通的装饰器，它实现的功能是：</p>
+<ul>
+<li><p>在函数执行前，先记录一行日志</p>
+</li>
+<li><p>在函数执行完，再记录一行日志</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># 这是装饰器函数，参数 func 是被装饰的函数</span><br><span class="line">def logger(func):</span><br><span class="line">    def wrapper(*args, **kw):</span><br><span class="line">        print(&apos;我准备开始执行：&#123;&#125; 函数了:&apos;.format(func.__name__))</span><br><span class="line"></span><br><span class="line">        # 真正执行的是这行。</span><br><span class="line">        func(*args, **kw)</span><br><span class="line"></span><br><span class="line">        print(&apos;主人，我执行完啦。&apos;)</span><br><span class="line">    return wrapper</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@logger</span><br><span class="line">def add(x, y):</span><br><span class="line">    print(&apos;&#123;&#125; + &#123;&#125; = &#123;&#125;&apos;.format(x, y, x+y))</span><br><span class="line"></span><br><span class="line">add(200, 50)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; 我准备开始执行：add 函数了:</span><br><span class="line">&gt;&gt;&gt; 200 + 50 = 250</span><br><span class="line">&gt;&gt;&gt; 我执行完啦。</span><br></pre></td></tr></table></figure>
+<h1 id="2-带参数的函数装饰器"><a href="#2-带参数的函数装饰器" class="headerlink" title="2.带参数的函数装饰器"></a>2.带参数的函数装饰器</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">def say_hello(contry):</span><br><span class="line">    def wrapper(func):</span><br><span class="line">        def deco(*args, **kwargs):</span><br><span class="line">            if contry == &quot;china&quot;:</span><br><span class="line">                print(&quot;你好!&quot;)</span><br><span class="line">            elif contry == &quot;america&quot;:</span><br><span class="line">                print(&apos;hello.&apos;)</span><br><span class="line">            else:</span><br><span class="line">                return</span><br><span class="line"></span><br><span class="line">            # 真正执行函数的地方</span><br><span class="line">            func(*args, **kwargs)</span><br><span class="line">        return deco</span><br><span class="line">    return wrapper</span><br><span class="line"></span><br><span class="line"># 小明，中国人</span><br><span class="line">@say_hello(&quot;china&quot;)</span><br><span class="line">def xiaoming():</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line"># jack，美国人</span><br><span class="line">@say_hello(&quot;america&quot;)</span><br><span class="line">def jack():</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">xiaoming()</span><br><span class="line">print(&quot;------------&quot;)</span><br><span class="line">jack()</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; 你好!</span><br><span class="line">&gt;&gt;&gt; ------------</span><br><span class="line">&gt;&gt;&gt; hello.</span><br></pre></td></tr></table></figure>
+<h1 id="3-不带参数的类装饰器"><a href="#3-不带参数的类装饰器" class="headerlink" title="3. 不带参数的类装饰器"></a>3. 不带参数的类装饰器</h1><p>基于类装饰器的实现，必须实现 <code>__call__</code> 和 <code>__init__</code>两个内置函数。</p>
+<ul>
+<li><p><code>__init__</code> ：接收被装饰函数</p>
+</li>
+<li><p><code>__call__</code> ：实现装饰逻辑。</p>
+</li>
+</ul>
+<p>日志打印的例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class logger(object):</span><br><span class="line">    def __init__(self, func):</span><br><span class="line">        self.func = func</span><br><span class="line"></span><br><span class="line">    def __call__(self, *args, **kwargs):</span><br><span class="line">        print(&quot;[INFO]: the function &#123;func&#125;() is running...&quot;\</span><br><span class="line">            .format(func=self.func.__name__))</span><br><span class="line">        return self.func(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">@logger</span><br><span class="line">def say(something):</span><br><span class="line">    print(&quot;say &#123;&#125;!&quot;.format(something))</span><br><span class="line"></span><br><span class="line">say(&quot;hello&quot;)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; [INFO]: the function say() is running...</span><br><span class="line">&gt;&gt;&gt; say hello!</span><br></pre></td></tr></table></figure>
+<h1 id="4-带参数的类装饰器"><a href="#4-带参数的类装饰器" class="headerlink" title="4. 带参数的类装饰器"></a>4. 带参数的类装饰器</h1><p>带参数和不带参数的类装饰器有很大的不同。</p>
+<ul>
+<li><p><code>__init__</code> ：不再接收被装饰函数，而是接收传入参数。</p>
+</li>
+<li><p><code>__call__</code> ：接收被装饰函数，实现装饰逻辑。</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class logger(object):</span><br><span class="line">    def __init__(self, level=&apos;INFO&apos;):</span><br><span class="line">        self.level = level</span><br><span class="line"></span><br><span class="line">    def __call__(self, func): # 接受函数</span><br><span class="line">        def wrapper(*args, **kwargs):</span><br><span class="line">            print(&quot;[&#123;level&#125;]: the function &#123;func&#125;() is running...&quot;\</span><br><span class="line">                .format(level=self.level, func=func.__name__))</span><br><span class="line">            func(*args, **kwargs)</span><br><span class="line">        return wrapper  #返回函数</span><br><span class="line"></span><br><span class="line">@logger(level=&apos;WARNING&apos;)</span><br><span class="line">def say(something):</span><br><span class="line">    print(&quot;say &#123;&#125;!&quot;.format(something))</span><br><span class="line"></span><br><span class="line">say(&quot;hello&quot;)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; [WARNING]: the function say() is running...</span><br><span class="line">&gt;&gt;&gt; say hello!</span><br></pre></td></tr></table></figure>
+<h1 id="5-使用偏函数与类实现装饰器"><a href="#5-使用偏函数与类实现装饰器" class="headerlink" title="5. 使用偏函数与类实现装饰器"></a>5. 使用偏函数与类实现装饰器</h1><p>Python 对某个对象是否能通过装饰器（<code>@decorator</code>）形式使用只有一个要求：<code>decorator</code> 必须是一个“可被调用（<code>callable</code>）”的对象。</p>
+<p>对于这个 <code>callable</code> 对象，我们最熟悉的就是函数了。</p>
+<p>除函数之外，类也可以是 <code>callable</code> 对象，只要实现了<code>__call__</code> 函数（上面几个例子已经接触过了）。</p>
+<p>还有容易被人忽略的偏函数其实也是 <code>callable</code> 对象。</p>
+<p>接下来就来说说，如何使用 类和偏函数结合实现一个与众不同的装饰器。</p>
+<p>示例： <code>DelayFunc</code> 是一个实现了 <code>__call__</code> 的类，<code>delay</code> 返回一个偏函数，在这里 <code>delay</code> 就可以做为一个装饰器。（以下代码摘自 Python工匠：使用装饰器的小技巧）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">import time</span><br><span class="line">import functools</span><br><span class="line"></span><br><span class="line">class DelayFunc:</span><br><span class="line">    def __init__(self,  duration, func):</span><br><span class="line">        self.duration = duration</span><br><span class="line">        self.func = func</span><br><span class="line"></span><br><span class="line">    def __call__(self, *args, **kwargs):</span><br><span class="line">        print(f&apos;Wait for &#123;self.duration&#125; seconds...&apos;)</span><br><span class="line">        time.sleep(self.duration)</span><br><span class="line">        return self.func(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">    def eager_call(self, *args, **kwargs):</span><br><span class="line">        print(&apos;Call without delay&apos;)</span><br><span class="line">        return self.func(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">def delay(duration):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    装饰器：推迟某个函数的执行。</span><br><span class="line">    同时提供 .eager_call 方法立即执行</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    # 此处为了避免定义额外函数，</span><br><span class="line">    # 直接使用 functools.partial 帮助构造 DelayFunc 实例</span><br><span class="line">    return functools.partial(DelayFunc, duration)</span><br><span class="line"></span><br><span class="line"># 使用</span><br><span class="line">@delay(duration=2)</span><br><span class="line">def add(a, b):</span><br><span class="line">    return a+b</span><br><span class="line"></span><br><span class="line"># 执行过程</span><br><span class="line">&gt;&gt;&gt; add    # 可见 add 变成了 Delay 的实例</span><br><span class="line">&lt;__main__.DelayFunc object at 0x107bd0be0&gt;</span><br><span class="line">&gt;&gt;&gt; </span><br><span class="line">&gt;&gt;&gt; add(3,5)  # 直接调用实例，进入 __call__</span><br><span class="line">Wait for 2 seconds...</span><br><span class="line">8</span><br><span class="line">&gt;&gt;&gt; </span><br><span class="line">&gt;&gt;&gt; add.func # 实现实例方法</span><br><span class="line">&lt;function add at 0x107bef1e0&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="6-能装饰类的装饰器"><a href="#6-能装饰类的装饰器" class="headerlink" title="6. 能装饰类的装饰器"></a>6. 能装饰类的装饰器</h1><p>装饰器版的单例写法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">instances = &#123;&#125;</span><br><span class="line"></span><br><span class="line">def singleton(cls):</span><br><span class="line">    def get_instance(*args, **kw):</span><br><span class="line">        cls_name = cls.__name__</span><br><span class="line">        print(&apos;===== 1 ====&apos;)</span><br><span class="line">        if not cls_name in instances:</span><br><span class="line">            print(&apos;===== 2 ====&apos;)</span><br><span class="line">            instance = cls(*args, **kw)</span><br><span class="line">            instances[cls_name] = instance</span><br><span class="line">        return instances[cls_name]</span><br><span class="line">    return get_instance</span><br><span class="line"></span><br><span class="line">@singleton</span><br><span class="line">class User:</span><br><span class="line">    _instance = None</span><br><span class="line">    def __init__(self, name):</span><br><span class="line">        print(&apos;===== 3 ====&apos;)</span><br><span class="line">        self.name = name</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2020-11-09T03:13:21.000Z"><a href="/2020/11/09/How-to-set-up-a-perfect-Python-project/">2020-11-09</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2020/11/09/How-to-set-up-a-perfect-Python-project/">How to set up a perfect Python project</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>This blog is from <a href="https://sourcery.ai/blog/python-best-practices/" target="_blank" rel="noopener">here</a></p>
+<p>When starting a new Python project, it is tempting to just dive in and start coding. Spending a tiny amount of time to setup a project with the best tools will save immense time and lead to a happier coding experience.</p>
+<p>In an ideal world, dependencies would be identical for all developers, code would be perfectly formatted, common errors forbidden and everything would be covered by tests. Additionally, all of these would ensured at each commit.</p>
+<p>In this article I’ll go through how to set up a project that does exactly that. You can either follow along with the steps or jump straight to generating a new project automatically by installing <a href="https://sourcery.ai/blog/python-best-practices/#pipx" target="_blank" rel="noopener">pipx</a> and <a href="https://sourcery.ai/blog/python-best-practices/#pipenv" target="_blank" rel="noopener">pipenv</a> then <a href="https://sourcery.ai/blog/python-best-practices/#pipenv" target="_blank" rel="noopener">generating a new project</a>.</p>
+<p>Let’s create a new project directory:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir best_practices</span><br><span class="line">cd best_practices</span><br></pre></td></tr></table></figure>
+<h1 id="Python-command-line-tools-with-pipx"><a href="#Python-command-line-tools-with-pipx" class="headerlink" title="Python command line tools with pipx"></a>Python command line tools with pipx</h1><p><a href="https://pipxproject.github.io/pipx/" target="_blank" rel="noopener">Pipx</a> is a handy utility that allows quick installation of python command line tools. We’ll be using it to install pipenv and cookiecutter.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python3 -m pip install --user pipx</span><br><span class="line">python3 -m pipx ensurepath</span><br></pre></td></tr></table></figure>
+<h1 id="Dependency-management-with-pipenv"><a href="#Dependency-management-with-pipenv" class="headerlink" title="Dependency management with pipenv"></a>Dependency management with pipenv</h1><blockquote>
+<p><a href="https://github.com/pypa/pipenv" target="_blank" rel="noopener">Pipenv</a> automatically creates and manages a virtualenv for your projects, as well as adding/removing packages from your Pipfile as you install/uninstall packages. It also generates the ever-important Pipfile.lock, which is used to produce deterministic builds.</p>
+</blockquote>
+<p>Knowing that you and your teammates are using the same library versions is a huge confidence boost. Pipenv takes care of this and has gained massive traction in the last year or so.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipx install pipenv</span><br></pre></td></tr></table></figure>
+<h1 id="Code-formatting-with-black-and-isort"><a href="#Code-formatting-with-black-and-isort" class="headerlink" title="Code formatting with black and isort"></a>Code formatting with black and isort</h1><p><a href="https://github.com/psf/black" target="_blank" rel="noopener">Black</a> formats our code:</p>
+<blockquote>
+<p>Black is the uncompromising Python code formatter. By using it, you agree to cede control over minutiae of hand-formatting. In return, Black gives you speed, determinism, and freedom from pycodestyle nagging about formatting. You will save time and mental energy for more important matters.<br>Blackened code looks the same regardless of the project you’re reading. Formatting becomes transparent after a while and you can focus on the content instead.<br>Black makes code review faster by producing the smallest diffs possible.</p>
+</blockquote>
+<p>while <a href="https://github.com/timothycrosley/isort" target="_blank" rel="noopener">isort</a> sorts our imports:</p>
+<blockquote>
+<p>isort your python imports for you so you don’t have to. isort is a Python utility / library to sort imports alphabetically, and automatically separated into sections.</p>
+</blockquote>
+<p>Let’s install them using pipenv as development dependencies so they don’t clutter a deployment:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install black isort --dev</span><br></pre></td></tr></table></figure>
+<p>Black and isort have incompatible default options so we’ll override isort to follow black’s lead. Create a <code>setup.cfg</code> file and add this config:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[isort]</span><br><span class="line">multi_line_output=3</span><br><span class="line">include_trailing_comma=True</span><br><span class="line">force_grid_wrap=0</span><br><span class="line">use_parentheses=True</span><br><span class="line">line_length=88</span><br></pre></td></tr></table></figure>
+<p>We can run these tools with:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pipenv run black</span><br><span class="line">pipenv run isort</span><br></pre></td></tr></table></figure>
+<h1 id="Style-enforcement-with-flake8"><a href="#Style-enforcement-with-flake8" class="headerlink" title="Style enforcement with flake8"></a>Style enforcement with flake8</h1><p>Flake8 ensures our code follows the standard python conventions as defined in PEP8. Install using pipenv:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install flake8 --dev</span><br></pre></td></tr></table></figure>
+<p>Just like isort it needs a little configuration to work well with black. Add this config to <code>setup.cfg</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[flake8]</span><br><span class="line">ignore = E203, E266, E501, W503</span><br><span class="line">max-line-length = 88</span><br><span class="line">max-complexity = 18</span><br><span class="line">select = B,C,E,F,W,T4</span><br></pre></td></tr></table></figure>
+<p>Now we can run flake8 with pipenv run flake8.</p>
+<h1 id="Static-types-with-mypy"><a href="#Static-types-with-mypy" class="headerlink" title="Static types with mypy"></a>Static types with mypy</h1><blockquote>
+<p><a href="http://mypy-lang.org/" target="_blank" rel="noopener">Mypy</a> is an optional static type checker for Python that aims to combine the benefits of dynamic (or “duck”) typing and static typing. Mypy combines the expressive power and convenience of Python with a powerful type system and compile-time type checking. Mypy type checks standard Python programs; run them using any Python VM with basically no runtime overhead.</p>
+</blockquote>
+<p>Having types in Python takes a little getting used to but the benefits are substantial. From the website:</p>
+<ul>
+<li>Static typing can make programs easier to understand and maintain</li>
+<li>Static typing can help you find bugs earlier and with less testing and debugging</li>
+<li>Static typing can help you find difficult-to-find bugs before your code goes into production</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install mypy --dev</span><br></pre></td></tr></table></figure>
+<p>Mypy by default will recursively check all imports for type annotations which leads to errors when libraries do not include these annotations. We need to configure mypy to run only on our code and to ignore any errors for imports without type annotations. We are assuming that our code lives in the best_practices package for the following config. Add this to <code>setup.cfg</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[mypy]</span><br><span class="line">files=best_practices,test</span><br><span class="line">ignore_missing_imports=true</span><br></pre></td></tr></table></figure>
+<p>Now we can run mypy with:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv run mypy</span><br></pre></td></tr></table></figure>
+<p>Here’s a useful <a href="https://mypy.readthedocs.io/en/latest/cheat_sheet_py3.html" target="_blank" rel="noopener">cheat sheet</a> for using it.</p>
+<h1 id="Testing-with-pytest-and-pytest-cov"><a href="#Testing-with-pytest-and-pytest-cov" class="headerlink" title="Testing with pytest and pytest-cov"></a>Testing with pytest and pytest-cov</h1><p>Writing tests with <a href="https://docs.pytest.org/en/latest/" target="_blank" rel="noopener">pytest</a> is incredibly easy and removing any friction to writing tests means we will write more of them!</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install pytest pytest-cov --dev</span><br></pre></td></tr></table></figure>
+<p>Here’s a simple example from the pytest website:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># content of test_sample.py</span><br><span class="line">def inc(x):</span><br><span class="line">    return x + 1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def test_answer():</span><br><span class="line">    assert inc(3) == 5</span><br></pre></td></tr></table></figure>
+<p>To execute it:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ pipenv run pytest</span><br><span class="line">=========================== test session starts ============================</span><br><span class="line">platform linux -- Python 3.x.y, pytest-5.x.y, py-1.x.y, pluggy-0.x.y</span><br><span class="line">cachedir: $PYTHON_PREFIX/.pytest_cache</span><br><span class="line">rootdir: $REGENDOC_TMPDIR</span><br><span class="line">collected 1 item</span><br><span class="line"></span><br><span class="line">test_sample.py F                                                     [100%]</span><br><span class="line"></span><br><span class="line">================================= FAILURES =================================</span><br><span class="line">_______________________________ test_answer ________________________________</span><br><span class="line"></span><br><span class="line">    def test_answer():</span><br><span class="line">&gt;       assert inc(3) == 5</span><br><span class="line">E       assert 4 == 5</span><br><span class="line">E        +  where 4 = inc(3)</span><br><span class="line"></span><br><span class="line">test_sample.py:6: AssertionError</span><br><span class="line">========================= 1 failed in 0.12 seconds =========================</span><br></pre></td></tr></table></figure>
+<p>All our tests should go in the <code>test</code> directory so add this config to <code>setup.cfg</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[tool:pytest]</span><br><span class="line">testpaths=test</span><br></pre></td></tr></table></figure>
+<p>We also want to check how much of our code is covered by tests. Create a new file <code>.coveragerc</code> to only return coverage statistics for our application code, again we are assuming our application code lives in the <code>best_practices</code> module:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[run]</span><br><span class="line">source = best_practices</span><br><span class="line"></span><br><span class="line">[report]</span><br><span class="line">exclude_lines =</span><br><span class="line">    # Have to re-enable the standard pragma</span><br><span class="line">    pragma: no cover</span><br><span class="line"></span><br><span class="line">    # Don&apos;t complain about missing debug-only code:</span><br><span class="line">    def __repr__</span><br><span class="line">    if self\.debug</span><br><span class="line"></span><br><span class="line">    # Don&apos;t complain if tests don&apos;t hit defensive assertion code:</span><br><span class="line">    raise AssertionError</span><br><span class="line">    raise NotImplementedError</span><br><span class="line"></span><br><span class="line">    # Don&apos;t complain if non-runnable code isn&apos;t run:</span><br><span class="line">    if 0:</span><br><span class="line">    if __name__ == .__main__.:</span><br></pre></td></tr></table></figure>
+<p>We can now run our tests and report coverage with</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv run pytest --cov --cov-fail-under=100</span><br></pre></td></tr></table></figure>
+<p>This will fail if our test coverage of the application code is less than 100%.</p>
+<h1 id="Git-hooks-with-pre-commit"><a href="#Git-hooks-with-pre-commit" class="headerlink" title="Git hooks with pre-commit"></a>Git hooks with pre-commit</h1><p>Git hooks allow you to run scripts any time you want to commit or push. This lets us run all of our linting and tests automatically every time we commit/push. <a href="https://pre-commit.com/" target="_blank" rel="noopener">pre‑commit</a> allows easy configuration of these hooks:</p>
+<blockquote>
+<p>Git hook scripts are useful for identifying simple issues before submission to code review. We run our hooks on every commit to automatically point out issues in code such as missing semicolons, trailing whitespace, and debug statements. By pointing these issues out before code review, this allows a code reviewer to focus on the architecture of a change while not wasting time with trivial style nitpicks.</p>
+</blockquote>
+<p>Here we configure all of the above tools to run on any changed python files on committing, and also to run pytest coverage only when pushing as it can be slow. Create a new file <code>.pre-commit-config.yaml</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">repos:</span><br><span class="line">  - repo: local</span><br><span class="line">    hooks:</span><br><span class="line">      - id: isort</span><br><span class="line">        name: isort</span><br><span class="line">        stages: [commit]</span><br><span class="line">        language: system</span><br><span class="line">        entry: pipenv run isort</span><br><span class="line">        types: [python]</span><br><span class="line"></span><br><span class="line">      - id: black</span><br><span class="line">        name: black</span><br><span class="line">        stages: [commit]</span><br><span class="line">        language: system</span><br><span class="line">        entry: pipenv run black</span><br><span class="line">        types: [python]</span><br><span class="line"></span><br><span class="line">      - id: flake8</span><br><span class="line">        name: flake8</span><br><span class="line">        stages: [commit]</span><br><span class="line">        language: system</span><br><span class="line">        entry: pipenv run flake8</span><br><span class="line">        types: [python]</span><br><span class="line">        exclude: setup.py</span><br><span class="line"></span><br><span class="line">      - id: mypy</span><br><span class="line">        name: mypy</span><br><span class="line">        stages: [commit]</span><br><span class="line">        language: system</span><br><span class="line">        entry: pipenv run mypy</span><br><span class="line">        types: [python]</span><br><span class="line">        pass_filenames: false</span><br><span class="line"></span><br><span class="line">      - id: pytest</span><br><span class="line">        name: pytest</span><br><span class="line">        stages: [commit]</span><br><span class="line">        language: system</span><br><span class="line">        entry: pipenv run pytest</span><br><span class="line">        types: [python]</span><br><span class="line"></span><br><span class="line">      - id: pytest-cov</span><br><span class="line">        name: pytest</span><br><span class="line">        stages: [push]</span><br><span class="line">        language: system</span><br><span class="line">        entry: pipenv run pytest --cov --cov-fail-under=100</span><br><span class="line">        types: [python]</span><br><span class="line">        pass_filenames: false</span><br></pre></td></tr></table></figure>
+<p>If you ever need to skip these hooks you can run <code>git commit --no-verify</code> or <code>git push --no-verify</code></p>
+<h1 id="Generate-a-project-using-cookiecutter"><a href="#Generate-a-project-using-cookiecutter" class="headerlink" title="Generate a project using cookiecutter"></a>Generate a project using cookiecutter</h1><p>Now we’ve seen what an ideal project contains, we can turn this into a <a href="https://github.com/sourcery-ai/python-best-practices-cookiecutter" target="_blank" rel="noopener">template</a> to generate a new project with a single command:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipx run cookiecutter gh:sourcery-ai/python-best-practices-cookiecutter</span><br></pre></td></tr></table></figure>
+<p>Fill in the project name and repo name and your project will be generated for you.</p>
+<p>To finish setting up, follow these steps:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># Enter project directory</span><br><span class="line">cd &lt;repo_name&gt;</span><br><span class="line"></span><br><span class="line"># Initialise git repo</span><br><span class="line">git init</span><br><span class="line"></span><br><span class="line"># Install dependencies</span><br><span class="line">pipenv install --dev</span><br><span class="line"></span><br><span class="line"># Setup pre-commit and pre-push hooks</span><br><span class="line">pipenv run pre-commit install -t pre-commit</span><br><span class="line">pipenv run pre-commit install -t pre-push</span><br></pre></td></tr></table></figure>
+<p>The template project contains a very simple Python file and test to try the tools out on. Once you’re happy with the code you can then do your first <code>git commit</code> and all the hooks will be run.</p>
+<h1 id="Editor-Integration"><a href="#Editor-Integration" class="headerlink" title="Editor Integration"></a>Editor Integration</h1><p>While it is great to know that the standard of code on our project will always be maintained at the highest level when committing code, it is somewhat frustrating to find out any issues after we think the code changes have all been done. It is much better to get the issues displayed in real-time.</p>
+<p>Spend some time to make sure these commands are run by your code editor when saving a file. Having instant feedback means you can quickly fixup any minor issues introduced while the code is fresh in the mind.</p>
+<p>Personally I use some excellent Vim plugins to accomplish this:</p>
+<ul>
+<li><a href="https://github.com/dense-analysis/ale" target="_blank" rel="noopener">ale</a> runs flake8 in real-time, and runs black, isort and mypy on file save</li>
+<li><a href="https://github.com/janko/vim-test" target="_blank" rel="noopener">vim-test</a> with <a href="https://github.com/janko/vim-test#projectionist-integration" target="_blank" rel="noopener">projectionist integration</a> runs pytest on file save</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-05-17T02:00:55.000Z"><a href="/2019/05/17/Python-datetime模块介绍及示例/">2019-05-17</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/05/17/Python-datetime模块介绍及示例/">Python datetime模块介绍及示例</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>转载自<a href="https://blog.csdn.net/cmzsteven/article/details/64906245" target="_blank" rel="noopener">这里</a></p>
+<h1 id="datetime模块介绍"><a href="#datetime模块介绍" class="headerlink" title="datetime模块介绍"></a>datetime模块介绍</h1><h2 id="datetime模块中包含如下类："><a href="#datetime模块中包含如下类：" class="headerlink" title="datetime模块中包含如下类："></a>datetime模块中包含如下类：</h2><table>
+<thead>
+<tr>
+<th>类名</th>
+<th>功能说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>date</td>
+<td>日期对象,常用的属性有year, month, day</td>
+</tr>
+<tr>
+<td>time</td>
+<td>时间对象</td>
+</tr>
+<tr>
+<td>datetime</td>
+<td>日期时间对象,常用的属性有hour, minute, second, microsecond</td>
+</tr>
+<tr>
+<td>datetime_CAPI</td>
+<td>日期时间对象C语言接口</td>
+</tr>
+<tr>
+<td>timedelta</td>
+<td>时间间隔，即两个时间点之间的长度</td>
+</tr>
+<tr>
+<td>tzinfo</td>
+<td>时区信息对象</td>
+</tr>
+</tbody>
+</table>
+<h2 id="datetime模块中包含的常量"><a href="#datetime模块中包含的常量" class="headerlink" title="datetime模块中包含的常量"></a>datetime模块中包含的常量</h2><table>
+<thead>
+<tr>
+<th>常量</th>
+<th>功能说明</th>
+<th>用法</th>
+<th>返回值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MAXYEAR</td>
+<td>返回能表示的最大年份</td>
+<td>datetime.MAXYEAR</td>
+<td>9999</td>
+</tr>
+<tr>
+<td>MINYEAR</td>
+<td>返回能表示的最小年份</td>
+<td>datetime.MINYEAR</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<h1 id="date类"><a href="#date类" class="headerlink" title="date类"></a>date类</h1><h2 id="date对象构成"><a href="#date对象构成" class="headerlink" title="date对象构成"></a>date对象构成</h2><ul>
+<li>date对象由year年份、month月份及day日期三部分构成：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">date（year，month，day)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过<code>year</code>, <code>month</code>, <code>day</code>三个数据描述符可以进行访问：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = datetime.date.today()</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">datetime.date(2017, 3, 22)</span><br><span class="line">&gt;&gt;&gt; a.year</span><br><span class="line">2017</span><br><span class="line">&gt;&gt;&gt; a.month</span><br><span class="line">3</span><br><span class="line">&gt;&gt;&gt; a.day</span><br><span class="line">22</span><br></pre></td></tr></table></figure>
+<ul>
+<li>当然，你也可以用<code>__getattribute__(...)</code>方法获得上述值：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a.__getattribute__(&apos;year&apos;)</span><br><span class="line">2017</span><br><span class="line">&gt;&gt;&gt; a.__getattribute__(&apos;month&apos;)</span><br><span class="line">3</span><br><span class="line">&gt;&gt;&gt; a.__getattribute__(&apos;day&apos;)</span><br><span class="line">22</span><br></pre></td></tr></table></figure>
+<h2 id="date对象中包含的方法与属性"><a href="#date对象中包含的方法与属性" class="headerlink" title="date对象中包含的方法与属性"></a>date对象中包含的方法与属性</h2><ul>
+<li>用于日期比较大小的方法</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>方法说明</th>
+<th>用法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>__eq__(…)</code></td>
+<td>等于(x==y)</td>
+<td>`x.<strong>eq</strong>(y)</td>
+<td>`</td>
+</tr>
+<tr>
+<td><code>__ge__(…)</code></td>
+<td>大于等于(x&gt;=y)</td>
+<td><code>x.__ge__(y)</code></td>
+</tr>
+<tr>
+<td><code>__gt__(…)</code></td>
+<td>大于(x&gt;y)</td>
+<td><code>x.__gt__(y)</code></td>
+</tr>
+<tr>
+<td><code>__le__(…)</code></td>
+<td>小于等于(x&lt;=y)</td>
+<td><code>x.__le__(y)</code></td>
+</tr>
+<tr>
+<td><code>__lt__(…)</code></td>
+<td>小于(x</td>
+<td><code>x.__lt__(y)</code></td>
+</tr>
+<tr>
+<td><code>__ne__(…)</code></td>
+<td>不等于(x!=y)</td>
+<td><code>x.__ne__(y)</code></td>
+</tr>
+</tbody>
+</table>
+<p>以上方法的返回值为True\False</p>
+<p>示例如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a=datetime.date(2017,3,1)</span><br><span class="line">&gt;&gt;&gt; b=datetime.date(2017,3,15)</span><br><span class="line">&gt;&gt;&gt; a.__eq__(b)</span><br><span class="line">False</span><br><span class="line">&gt;&gt;&gt; a.__ge__(b)</span><br><span class="line">False</span><br><span class="line">&gt;&gt;&gt; a.__gt__(b)</span><br><span class="line">False</span><br><span class="line">&gt;&gt;&gt; a.__le__(b)</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; a.__lt__(b)</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; a.__ne__(b)</span><br><span class="line">True</span><br></pre></td></tr></table></figure>
+<ul>
+<li>获得二个日期相差多少天</li>
+</ul>
+<p>使用<code>__sub__(...)</code>和<code>__rsub__(...)</code>方法，其实二个方法差不太多，一个是正向操作，一个是反向操作：</p>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>方法说明</th>
+<th>用法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>sub</strong>(…)</td>
+<td>x - y</td>
+<td>x.<strong>sub</strong>(y)</td>
+</tr>
+<tr>
+<td><strong>rsub</strong>(…)</td>
+<td>y - x</td>
+<td>x.<strong>rsub</strong>(y)</td>
+</tr>
+</tbody>
+</table>
+<p>示例如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a</span><br><span class="line">datetime.date(2017, 3, 22)</span><br><span class="line">&gt;&gt;&gt; b</span><br><span class="line">datetime.date(2017, 3, 15)</span><br><span class="line">&gt;&gt;&gt; a.__sub__(b)</span><br><span class="line">datetime.timedelta(7)</span><br><span class="line">&gt;&gt;&gt; a.__rsub__(b)</span><br><span class="line">datetime.timedelta(-7)</span><br></pre></td></tr></table></figure></p>
+<p>计算结果的返回值类型为<code>datetime.timedelta</code>, 如果获得整数类型的结果则按下面的方法操作：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a.__sub__(b).days</span><br><span class="line">7</span><br><span class="line">&gt;&gt;&gt; a.__rsub__(b).days</span><br><span class="line">-7</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>ISO标准化日期</p>
+<p>  如果想要让所使用的日期符合ISO标准，那么使用如下三个方法: </p>
+<ul>
+<li><p><code>isocalendar(...)</code>:返回一个包含三个值的元组，三个值依次为：year年份，week number周数，weekday星期数（周一为1…周日为7)： </p>
+<p>示例如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = datetime.date(2017,3,22)</span><br><span class="line">&gt;&gt;&gt; a.isocalendar()</span><br><span class="line">(2017, 12, 3)</span><br><span class="line">&gt;&gt;&gt; a.isocalendar()[0]</span><br><span class="line">2017</span><br><span class="line">&gt;&gt;&gt; a.isocalendar()[1]</span><br><span class="line">12</span><br><span class="line">&gt;&gt;&gt; a.isocalendar()[2]</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>isoformat(…): 返回符合ISO 8601标准 (YYYY-MM-DD) 的日期字符串； </p>
+<p>示例如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = datetime.date(2017,3,22)</span><br><span class="line">&gt;&gt;&gt; a.isoformat()</span><br><span class="line">&apos;2017-03-22&apos;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>isoweekday(…): 返回符合ISO标准的指定日期所在的星期数（周一为1…周日为7) </p>
+<p>示例如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = datetime.date(2017,3,22)</span><br><span class="line">&gt;&gt;&gt; a.isoweekday()</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>与isoweekday(…)相似的还有一个weekday(…)方法，只不过是weekday(…)方法返回的周一为 0, 周日为 6 </p>
+<p>示例如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = datetime.date(2017,3,22)</span><br><span class="line">&gt;&gt;&gt; a.weekday()</span><br><span class="line">2</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>其他方法与属性</p>
+<ul>
+<li><p><code>timetuple(...)</code>:该方法为了兼容<code>time.localtime(...)</code>返回一个类型为<code>time.struct_time</code>的数组，但有关时间的部分元素值为0：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = datetime.date(2017,3,22)</span><br><span class="line">&gt;&gt;&gt; a.timetuple()</span><br><span class="line">time.struct_time(tm_year=2017, tm_mon=3, tm_mday=22, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=2, tm_yday=81, tm_isdst=-1)</span><br><span class="line">&gt;&gt;&gt; a.timetuple().tm_year</span><br><span class="line">2017</span><br><span class="line">&gt;&gt;&gt; a.timetuple().tm_mon</span><br><span class="line">3</span><br><span class="line">&gt;&gt;&gt; a.timetuple().tm_mday</span><br><span class="line">22</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>toordinal(...)</code>： 返回公元公历开始到现在的天数。公元1年1月1日为1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = datetime.date(2017,3,22)</span><br><span class="line">&gt;&gt;&gt; a.toordinal()</span><br><span class="line">736410</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>replace(...)</code>：返回一个替换指定日期字段的新date对象。参数3个可选参数，分别为year,month,day。注意替换是产生新对象，不影响原date对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = datetime.date(2017,3,22)</span><br><span class="line">&gt;&gt;&gt; b = a.replace(2017,2,28)</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">datetime.date(2017, 3, 22)</span><br><span class="line">&gt;&gt;&gt; b</span><br><span class="line">datetime.date(2017, 2, 28)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>resolution</code>：date对象表示日期的最小单位。这里是天。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; datetime.date.resolution</span><br><span class="line">datetime.timedelta(1)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>fromordinal(...)</code>：将Gregorian日历时间转换为date对象；Gregorian Calendar ：一种日历表示方法，类似于我国的农历，西方国家使用比较多。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = datetime.date(2017,3,22)</span><br><span class="line">&gt;&gt;&gt; b = a.toordinal()</span><br><span class="line">&gt;&gt;&gt; datetime.date.fromordinal(b)</span><br><span class="line">datetime.date(2017, 3, 22)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>fromtimestamp(...)</code>：根据给定的时间戮，返回一个date对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; time.time()</span><br><span class="line">1490165087.2242179</span><br><span class="line">&gt;&gt;&gt; datetime.date.fromtimestamp(time.time())</span><br><span class="line">datetime.date(2017, 3, 22)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>today(...)</code>：返回当前日期</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; datetime.date.today()</span><br><span class="line">datetime.date(2017, 3, 22)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>max</code>： date类能表示的最大的年、月、日的数值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; datetime.date.max</span><br><span class="line">datetime.date(9999, 12, 31)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>min</code>： date类能表示的最小的年、月、日的数值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; datetime.date.min</span><br><span class="line">datetime.date(1, 1, 1)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="日期的字符串输出"><a href="#日期的字符串输出" class="headerlink" title="日期的字符串输出"></a>日期的字符串输出</h2><ul>
+<li><p>如果你想将日期对象转化为字符串对象的话，可以用到<code>__format__(...)</code>方法以指定格式进行日期输出：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = datetime.date(2017,3,22)</span><br><span class="line">&gt;&gt;&gt; a.__format__(&apos;%Y-%m-%d&apos;)</span><br><span class="line">&apos;2017-03-22&apos;</span><br><span class="line">&gt;&gt;&gt; a.__format__(&apos;%Y/%m/%d&apos;)</span><br><span class="line">&apos;2017/03/22&apos;</span><br><span class="line">&gt;&gt;&gt; a.__format__(&apos;%y/%m/%d&apos;)</span><br><span class="line">&apos;17/03/22&apos;</span><br><span class="line">&gt;&gt;&gt; a.__format__(&apos;%D&apos;)</span><br><span class="line">&apos;03/22/17&apos;</span><br></pre></td></tr></table></figure>
+<p>  与此方法等价的方法为strftime(…)</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a.strftime(&quot;%Y%m%d&quot;)</span><br><span class="line">&apos;20170322&apos;</span><br></pre></td></tr></table></figure>
+<p>  关于格式化字符串的相关内容，请查阅本文最后的：附录：python中时间日期格式化符号</p>
+</li>
+<li><p>如果只是相简单的获得日期的字符串，则使用<code>__str__(...)</code></p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a.__str__()</span><br><span class="line">&apos;2017-03-22&apos;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果想要获得ctime样式的格式请使用<code>ctime(...)</code>:</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a.ctime()</span><br><span class="line">&apos;Wed Mar 22 00:00:00 2017&apos;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="time类"><a href="#time类" class="headerlink" title="time类"></a>time类</h1><h2 id="time类的数据构成"><a href="#time类的数据构成" class="headerlink" title="time类的数据构成"></a>time类的数据构成</h2><p>time类由hour小时、minute分钟、second秒、microsecond毫秒和tzinfo五部分组成<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">time([hour[, minute[, second[, microsecond[, tzinfo]]]]])</span><br></pre></td></tr></table></figure></p>
+<p>相应的，time类中就有上述五个变量来存储应该的值：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = datetime.time(12,20,59,899)</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">datetime.time(12, 20, 59, 899)</span><br><span class="line">&gt;&gt;&gt; a.hour</span><br><span class="line">12</span><br><span class="line">&gt;&gt;&gt; a.minute</span><br><span class="line">20</span><br><span class="line">&gt;&gt;&gt; a.second</span><br><span class="line">59</span><br><span class="line">&gt;&gt;&gt; a.microsecond</span><br><span class="line">899</span><br><span class="line">&gt;&gt;&gt; a.tzinfo</span><br></pre></td></tr></table></figure></p>
+<p>与date类一样，time类也包含<strong>getattribute</strong>(…)方法可以读取相关属性：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a.__getattribute__(&apos;hour&apos;)</span><br><span class="line">12</span><br><span class="line">&gt;&gt;&gt; a.__getattribute__(&apos;minute&apos;)</span><br><span class="line">20</span><br><span class="line">&gt;&gt;&gt; a.__getattribute__(&apos;second&apos;)</span><br><span class="line">59</span><br></pre></td></tr></table></figure></p>
+<h2 id="time类中的方法和属性"><a href="#time类中的方法和属性" class="headerlink" title="time类中的方法和属性"></a>time类中的方法和属性</h2><ul>
+<li><p>比较时间大小<br>相关方法包括：<code>__eq__(...)</code>, <code>__ge__(...)</code>, <code>__gt__(...)</code>, <code>__le__(...)</code>, <code>__lt__(...)</code>， <code>__ne__(...)</code><br>这里的方法与date类中定义的方法大同小异，使用方法与一样，这里就不过多介绍了，示例如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = datetime.time(12,20,59,899)</span><br><span class="line">&gt;&gt;&gt; b = datetime.time(11,20,59,889)</span><br><span class="line">&gt;&gt;&gt; a.__eq__(b)</span><br><span class="line">False</span><br><span class="line">&gt;&gt;&gt; a.__ne__(b)</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; a.__ge__(b)</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; a.__gt__(b)</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; a.__le__(b)</span><br><span class="line">False</span><br><span class="line">&gt;&gt;&gt; a.__lt__(b)</span><br><span class="line">False</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>__nonzero__(...)</code><br>判断时间对象是否非零，返回值为True/False:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = datetime.time(12,20,59,899)</span><br><span class="line">&gt;&gt;&gt; a.__nonzero__()</span><br><span class="line">True</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其他属性</p>
+<ul>
+<li><p>max：最大的时间表示数值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; datetime.time.max</span><br><span class="line">datetime.time(23, 59, 59, 999999)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>min：最小的时间表示数值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; datetime.time.min</span><br><span class="line">datetime.time(0, 0)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>resolution：时间间隔单位为分钟</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; datetime.time.resolution</span><br><span class="line">datetime.timedelta(0, 0, 1)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="时间的字符串输出"><a href="#时间的字符串输出" class="headerlink" title="时间的字符串输出"></a>时间的字符串输出</h2><ul>
+<li><p>如果你想将时间对象转化为字符串对象的话，可以用到<code>__format__(...)</code>方法以指定格式进行时间输出：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = datetime.time(12,20,59,899)</span><br><span class="line">a.`__format__`(&apos;%H:%M:%S&apos;)</span><br><span class="line">&apos;12:20:59&apos;</span><br></pre></td></tr></table></figure>
+<p>  与此方法等价的方法为<code>strftime(...)</code></p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = datetime.time(12,20,59,899)</span><br><span class="line">a.strftime(&apos;%H:%M:%S&apos;)</span><br><span class="line">&apos;12:20:59&apos;</span><br></pre></td></tr></table></figure>
+<p>  关于格式化字符串的相关内容，请查阅本文最后的：附录：python中时间日期格式化符号 </p>
+</li>
+<li><p>ISO标准输出<br>  如果要使输出的时间字符符合ISO标准，请使用isoformat(…):</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = datetime.time(12,20,59,899)</span><br><span class="line">a.isoformat()</span><br><span class="line">&apos;12:20:59.000899&apos;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果只是相简单的获得时间的字符串，则使用<code>__str__(...)</code></p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = datetime.time(12,20,59,899)</span><br><span class="line">a.__str__()</span><br><span class="line">&apos;12:20:59.000899&apos;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="datetime类"><a href="#datetime类" class="headerlink" title="datetime类"></a>datetime类</h1><h2 id="datetime类的数据构成"><a href="#datetime类的数据构成" class="headerlink" title="datetime类的数据构成"></a>datetime类的数据构成</h2><p>datetime类其实是可以看做是date类和time类的合体，其大部分的方法和属性都继承于这二个类，相关的操作方法请参阅，本文上面关于二个类的介绍。其数据构成也是由这二个类所有的属性所组成的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">datetime(year, month, day[, hour[, minute[, second[, microsecond[,tzinfo]]]]])</span><br></pre></td></tr></table></figure></p>
+<h2 id="专属于datetime的方法和属性"><a href="#专属于datetime的方法和属性" class="headerlink" title="专属于datetime的方法和属性"></a>专属于datetime的方法和属性</h2><ul>
+<li><p><code>date(…)</code>：返回datetime对象的日期部分：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = datetime.datetime.now()</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">datetime.datetime(2017, 3, 22, 16, 9, 33, 494248)</span><br><span class="line">&gt;&gt;&gt; a.date()</span><br><span class="line">datetime.date(2017, 3, 22)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>time(…)</code>：返回datetime对象的时间部分：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = datetime.datetime.now()</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">datetime.datetime(2017, 3, 22, 16, 9, 33, 494248)</span><br><span class="line">&gt;&gt;&gt; a.time()</span><br><span class="line">datetime.time(16, 9, 33, 494248)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>utctimetuple(…)</code>：返回UTC时间元组：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = datetime.datetime.now()</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">datetime.datetime(2017, 3, 22, 16, 9, 33, 494248)</span><br><span class="line">&gt;&gt;&gt; a.utctimetuple()</span><br><span class="line">time.struct_time(tm_year=2017, tm_mon=3, tm_mday=22, tm_hour=16, tm_min=9, tm_sec=33, tm_wday=2, tm_yday=81, tm_isdst=0)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>combine(…)</code>：将一个date对象和一个time对象合并生成一个datetime对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = datetime.datetime.now()</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">datetime.datetime(2017, 3, 22, 16, 9, 33, 494248)</span><br><span class="line">&gt;&gt;&gt;datetime.datetime.combine(a.date(),a.time())</span><br><span class="line">datetime.datetime(2017, 3, 22, 16, 9, 33, 494248)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>now(…)</code>：返回当前日期时间的datetime对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = datetime.datetime.now()</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">datetime.datetime(2017, 3, 22, 16, 9, 33,</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>utcnow(…)</code>:返回当前日期时间的UTC datetime对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = datetime.datetime.utcnow()</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">datetime.datetime(2017, 3, 22, 8, 26, 54, 935242)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>strptime(…)</code>：根据string, format 2个参数，返回一个对应的datetime对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; datetime.datetime.strptime(&apos;2017-3-22 15:25&apos;,&apos;%Y-%m-%d %H:%M&apos;)</span><br><span class="line">datetime.datetime(2017, 3, 22, 15, 25)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>utcfromtimestamp(…)</code>:UTC时间戳的datetime对象，时间戳值为<code>time.time()</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; datetime.datetime.utcfromtimestamp(time.time())</span><br><span class="line">datetime.datetime(2017, 3, 22, 8, 29, 7, 654272)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="timedelta类"><a href="#timedelta类" class="headerlink" title="timedelta类"></a>timedelta类</h1><p>timedelta类是用来计算二个datetime对象的差值的。<br>此类中包含如下属性：<br>1、days:天数<br>2、microseconds：微秒数(&gt;=0 并且 &lt;1秒）<br>3、seconds：秒数(&gt;=0 并且 &lt;1天）</p>
+<h1 id="日期计算实操"><a href="#日期计算实操" class="headerlink" title="日期计算实操"></a>日期计算实操</h1><ul>
+<li><p>获取当前日期时间：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; now = datetime.datetime.now()</span><br><span class="line">&gt;&gt;&gt; now</span><br><span class="line">datetime.datetime(2017, 3, 22, 16, 55, 49, 148233)</span><br><span class="line">&gt;&gt;&gt; today = datetime.date.today()</span><br><span class="line">&gt;&gt;&gt; today</span><br><span class="line">datetime.date(2017, 3, 22)</span><br><span class="line">&gt;&gt;&gt; now.date()</span><br><span class="line">datetime.date(2017, 3, 22)</span><br><span class="line">&gt;&gt;&gt; now.time()</span><br><span class="line">datetime.time(16, 55, 49, 148233)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取上个月第一天和最后一天的日期：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; today = datetime.date.today()</span><br><span class="line">&gt;&gt;&gt; today</span><br><span class="line">datetime.date(2017, 3, 22)</span><br><span class="line">&gt;&gt;&gt; mlast_day = datetime.date(today.year, today.month, 1) - datetime.timedelta(1)</span><br><span class="line">&gt;&gt;&gt; mlast_day</span><br><span class="line">datetime.date(2017, 2, 28)</span><br><span class="line">&gt;&gt;&gt; mfirst_day = datetime.date(mlast_day.year, mlast_day.month, 1)</span><br><span class="line">&gt;&gt;&gt; mfirst_day</span><br><span class="line">datetime.date(2017, 2, 1)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取时间差<br>时间差单位为秒</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; start_time = datetime.datetime.now()</span><br><span class="line">&gt;&gt;&gt; end_time = datetime.datetime.now()</span><br><span class="line">&gt;&gt;&gt; (end_time - start_time).seconds</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>差值不只是可以查看相差多少秒，还可以查看天(days), 秒(seconds), 微秒(microseconds).</p>
+<ul>
+<li>计算当前时间向后8个小时的时间<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; d1 = datetime.datetime.now()</span><br><span class="line">&gt;&gt;&gt; d2 = d1 + datetime.timedelta(hours = 8)</span><br><span class="line">&gt;&gt;&gt; d2</span><br><span class="line">datetime.datetime(2017, 3, 23, 1, 10, 37, 182240)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>可以计算: 天(days), 小时(hours), 分钟(minutes), 秒(seconds), 微秒(microseconds).</p>
+<ul>
+<li><p>计算上周一和周日的日期</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">today = datetime.date.today()</span><br><span class="line">&gt;&gt;&gt; today</span><br><span class="line">datetime.date(2017, 3, 23)</span><br><span class="line">&gt;&gt;&gt; today_weekday = today.isoweekday()</span><br><span class="line">&gt;&gt;&gt; last_sunday = today - datetime.timedelta(days=today_weekday)</span><br><span class="line">&gt;&gt;&gt; last_monday = last_sunday - datetime.timedelta(days=6)</span><br><span class="line">&gt;&gt;&gt; last_sunday</span><br><span class="line">datetime.date(2017, 3, 19)</span><br><span class="line">&gt;&gt;&gt; last_monday</span><br><span class="line">datetime.date(2017, 3, 13)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>计算指定日期当月最后一天的日期和本月天数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; date = datetime.date(2017,12,20)</span><br><span class="line">&gt;&gt;&gt; def eomonth(date_object):</span><br><span class="line">...     if date_object.month == 12:</span><br><span class="line">...         next_month_first_date = datetime.date(date_object.year+1,1,1)</span><br><span class="line">...     else:</span><br><span class="line">...         next_month_first_date = datetime.date(date_object.year, date_object.month+1, 1)</span><br><span class="line">...     return next_month_first_date - datetime.timedelta(1)</span><br><span class="line">...</span><br><span class="line">&gt;&gt;&gt; eomonth(date)</span><br><span class="line">datetime.date(2017, 12, 31)</span><br><span class="line">&gt;&gt;&gt; eomonth(date).day</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>计算指定日期下个月当天的日期<br>这里要调用上一项中的函数<code>eomonth(...)</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; date = datetime.date(2017,12,20)                                            </span><br><span class="line">&gt;&gt;&gt; def edate(date_object):                                                     </span><br><span class="line">...     if date_object.month == 12:                          </span><br><span class="line">...         next_month_date = datetime.date(date_object.year+1, 1,date_object.day)</span><br><span class="line">...     else:</span><br><span class="line">...         next_month_first_day = datetime.date(date_object.year,date_object.month+1,1)</span><br><span class="line">...         if date_object.day &gt; eomonth(last_month_first_day).day:</span><br><span class="line">...             next_month_date = datetime.date(date_object.year,date_object.month+1,eomonth(last_month_first_day).day)</span><br><span class="line">...         else:</span><br><span class="line">...             next_month_date = datetime.date(date_object.year, date_object.month+1, date_object.day)</span><br><span class="line">...     return next_month_date</span><br><span class="line">...</span><br><span class="line">&gt;&gt;&gt; edate(date)</span><br><span class="line">datetime.date(2018, 1, 20)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获得本周一至今天的时间段并获得上周对应同一时间段</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; today = datetime.date.today()</span><br><span class="line">&gt;&gt;&gt; this_monday = today - datetime.timedelta(today.isoweekday()-1)</span><br><span class="line">&gt;&gt;&gt; last_monday = this_monday - datetime.timedelta(7)</span><br><span class="line">&gt;&gt;&gt; last_weekday = today -datetime.timedelta(7)</span><br><span class="line">&gt;&gt;&gt; this_monday</span><br><span class="line">datetime.date(2017, 3, 20)</span><br><span class="line">&gt;&gt;&gt; today</span><br><span class="line">datetime.date(2017, 3, 23)</span><br><span class="line">&gt;&gt;&gt; last_monday</span><br><span class="line">datetime.date(2017, 3, 13)</span><br><span class="line">&gt;&gt;&gt; last_weekday</span><br><span class="line">datetime.date(2017, 3, 16)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="附录：python中时间日期格式化符号："><a href="#附录：python中时间日期格式化符号：" class="headerlink" title="附录：python中时间日期格式化符号："></a>附录：python中时间日期格式化符号：</h1><table>
+<thead>
+<tr>
+<th>符号</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%y</td>
+<td>两位数的年份表示（00-99）</td>
+</tr>
+<tr>
+<td>%Y</td>
+<td>四位数的年份表示（000-9999）</td>
+</tr>
+<tr>
+<td>%m</td>
+<td>月份（01-12）</td>
+</tr>
+<tr>
+<td>%d</td>
+<td>月内中的一天（0-31）</td>
+</tr>
+<tr>
+<td>%H</td>
+<td>24小时制小时数（0-23）</td>
+</tr>
+<tr>
+<td>%I</td>
+<td>12小时制小时数（01-12）</td>
+</tr>
+<tr>
+<td>%M</td>
+<td>分钟数（00=59）</td>
+</tr>
+<tr>
+<td>%S</td>
+<td>秒（00-59）</td>
+</tr>
+<tr>
+<td>%a</td>
+<td>本地简化星期名称</td>
+</tr>
+<tr>
+<td>%A</td>
+<td>本地完整星期名称</td>
+</tr>
+<tr>
+<td>%b</td>
+<td>本地简化的月份名称</td>
+</tr>
+<tr>
+<td>%B</td>
+<td>本地完整的月份名称</td>
+</tr>
+<tr>
+<td>%c</td>
+<td>本地相应的日期表示和时间表示</td>
+</tr>
+<tr>
+<td>%j</td>
+<td>年内的一天（001-366）</td>
+</tr>
+<tr>
+<td>%p</td>
+<td>本地A.M.或P.M.的等价符</td>
+</tr>
+<tr>
+<td>%U</td>
+<td>一年中的星期数（00-53）星期天为星期的开始</td>
+</tr>
+<tr>
+<td>%w</td>
+<td>星期（0-6），星期天为星期的开始</td>
+</tr>
+<tr>
+<td>%W</td>
+<td>一年中的星期数（00-53）星期一为星期的开始</td>
+</tr>
+<tr>
+<td>%x</td>
+<td>本地相应的日期表示</td>
+</tr>
+<tr>
+<td>%X</td>
+<td>本地相应的时间表示</td>
+</tr>
+<tr>
+<td>%Z</td>
+<td>当前时区的名称</td>
+</tr>
+<tr>
+<td>%%</td>
+<td>%号本身</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+  
+    <a href="/page/2/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Github/">Github</a><small>1</small></li>
+  
+    <li><a href="/categories/Karrigell/">Karrigell</a><small>1</small></li>
+  
+    <li><a href="/categories/VIM/">VIM</a><small>2</small></li>
+  
+    <li><a href="/categories/django/">django</a><small>9</small></li>
+  
+    <li><a href="/categories/jekyll/">jekyll</a><small>2</small></li>
+  
+    <li><a href="/categories/kivy/">kivy</a><small>1</small></li>
+  
+    <li><a href="/categories/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/categories/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/normal/">normal</a><small>1</small></li>
+  
+    <li><a href="/categories/other/">other</a><small>2</small></li>
+  
+    <li><a href="/categories/python/">python</a><small>64</small></li>
+  
+    <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/categories/system/">system</a><small>2</small></li>
+  
+    <li><a href="/categories/tornado/">tornado</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/django/">django</a><small>5</small></li>
+  
+    <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
+  
+    <li><a href="/tags/flask/">flask</a><small>1</small></li>
+  
+    <li><a href="/tags/freeswitch/">freeswitch</a><small>1</small></li>
+  
+    <li><a href="/tags/go/">go</a><small>2</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>14</small></li>
+  
+    <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>2</small></li>
+  
+    <li><a href="/tags/tornado/">tornado</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2021 Tony Tan
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

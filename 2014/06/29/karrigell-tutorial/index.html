@@ -1,0 +1,255 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Karrigell Tutorial | Tony Tan</title>
+  <meta name="author" content="Tony Tan">
+  
+  <meta name="description" content="Tony Tan">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Karrigell Tutorial">
+  <meta property="og:site_name" content="Tony Tan">
+
+  
+    <meta property="og:image" content="">
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Tony Tan" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+</html>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Tony Tan</a></h1>
+  <h2><a href="/">a python progrmmer</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-06-28T16:00:00.000Z"><a href="/2014/06/29/karrigell-tutorial/">2014-06-29</a></time>
+      
+      
+  
+    <h1 class="title">Karrigell Tutorial</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>This tutorial will explain step by step how to get started with Karrigell, a simple yet full-featured, 100% Python web framework</em></p>
+<p><a name="intro">This tutorial will explain step by step how to get started with <a href="http://karrigell.sourceforge.net" target="_blank" rel="noopener">Karrigell</a>, a simple yet full-featured, 100% Python web framework </a></p>
+<p>The key word for the development of Karrigell is simplicity : </p><br><p><br><ul><br> <li>the package comes with “batteries included” : a web server and a database engine, in less than 1 MB of code<br> </li><li>no configuration : just unzip the package, start the server and go !<br> </li><li>programs are either pure Python, or a mix of Python and HTML <i>a la</i> PHP ; there is no templating syntax, requiring to learn custom tags<br></li></ul><br></p>
+
+<p>People who discover Karrigell are often surprised by this simplicity, and might think of it as a toy, only suited for an introduction and perhaps education on dynamic web servers. In fact, it lets you do the simple things in a simple way : if you want to write the proverbial “Hello, world !” program, all you have to type is </p><br><p><blockquote><code>print “Hello, world !”</code></blockquote></p><br><p>But if you take a look at the documentation you might be surprised to see what the “toy” can do : </p><br><p><br><ul><br>  <li>easy access to HTML forms (that is, with minimum typing)<br> </li><li>inclusion of scripts inside other scripts<br> </li><li>very simple in-memory session management<br> </li><li>basic HTTP authentication<br> </li><li>HTTP redirection<br> </li><li>protection of directories (only accessible to authenticated users)<br> </li><li>a web interface to enter the translation of dynamic pages<br> </li><li>a variety of programming styles, from pure Python with a whole site in one script to PHP-like, one-script-for-each-page style<br> </li><li>inclusion of the Cheetah templating system<br> </li><li>a very fast asynchronous built-in web server<br> </li><li>virtual hosts support<br> </li><li>gzip support<br> </li><li>the ability to run behind Apache or Xitami<br> </li><li>a very clear and complete debugger<br> </li><li>a database management system (a web interface lets you generate the database and its CRUD script)<br></li></ul><br></p><br> and much more…<br><p>For a more complete information, see the <a href="http://karrigell.sourceforge.net/en/front.htm" target="_blank" rel="noopener">documentation</a><br><br><br></p><h2> 1. Getting started</h2><br><p>First, <a href="http://sourceforge.net/project/showfiles.php?group_id=67940" target="_blank" rel="noopener">download</a> the latest version of Karrigell and unzip it. Open a console window and start the built-in server by :</p><br><p> <pre class=" console">&gt;python Karrigell.py </pre> </p><br><p>Use a text editor to save this line of Python code in a file called hello.py, in the directory webapps : </p><br><pre class=" python">print “hello world !” </pre><br><p>Then type <a href="http://localhost/hello.py" target="_blank" rel="noopener">http://localhost/hello.py</a> in your web browser to see the result </p><br><p>By default, Python scripts are rendered as HTML code. If you want to use a plain text format you can set the Content-Type header in your code, like this : </p><br><pre class=" python">RESPONSE[‘Content-Type’] = ‘text/plain’ print “hello world !” </pre><br><p>This example shows how Karrigell works : the scripts are executed in a namespace where the programmer finds all he needs. RESPONSE is one of the names available in this namespace : it is a dictionary holding the HTTP response headers </p>
+
+
+<p></p><h2> 2. HTML forms</h2><p></p>
+<p>Let’s see how you can retrieve the information submitted by an HTML form. Create this HTML piece of code and save it in hello.htm </p>
+
+<pre class=" html">&lt;form action="hello.py"&gt; Say hello to &lt;input name="user"&gt; &lt;input type="submit" value="Ok"&gt; &lt;/form&gt; </pre> 
+
+<p>This page will prompt the user to enter a name, and will submit it to the script hello.py </p><br><p>Here is how you can ask hello.py to print it : </p>
+
+<pre class=" python">print "Hello, " + _user  </pre> 
+
+<p>The namespace built by Karrigell when it receives the data sent by the browser has a variable called _user, a string with the value entered in the field user (note the leading underscore : this is necessary to avoid conflicts with Python keywords or built-in names) </p><p><br></p><p>Alternatively, you could use this syntax : </p>
+
+<pre class=" python">print "Hello, " + QUERY['user'] </pre> 
+
+<p>QUERY is a dictionary with names matching the fields in the submitted form </p>
+
+
+<p></p><h2> 3. Logging and session management</h2> <p></p>
+<p>If you want to identify the user throughout his navigation in the site, for instance to print his name when needed, the easiest technique is session management. Karrigell manages it with another built-in name, a function called Session(), which returns a Python object to which you can set any attribute </p><br><p>Edit your script hello.py : </p><br><pre class=" python"><br>print “Hello, “ + _user Session().user = _user print “””What would you like to order :<br>     &lt;form action=”order.py”&gt;<br>     CD &lt;input type=”radio” name=”type” value=”CD”&gt;<br>     book &lt;input type=”radio” name=”type” value=”book”&gt;<br>     &lt;input type=”submit” value=”Ok”&gt;<br>     &lt;/form&gt;”””<br></pre><br><p>On the second line you have set the attribute user of the session object to the value _user. The session object is specific to a web browser, so that it is guaranteed to remain specific to one user and can be used by the other scripts to identify him </p><br><p>For instance you can use it in order.py : </p><br><pre class=" python">print “Hello %s” %Session().user print “So you want to order a %s” %_type </pre><br><br><br><br><h2> 4. Authentication</h2><br><p>It is a very common task to check that a user is allowed to perform a certain task. For this, the user is asked to enter a login and a password, and the program looks in a database to see if this login/password is valid  </p><br><p>Change the html page to ask for a login and a password instead of the user name : </p><br><pre class=" html"><br>&lt;form action=”check.py”&gt; Login &lt;input name=”login”&gt; &lt;br&gt;Password &lt;input type=”password” name=”password”&gt; &lt;input type=”submit” value=”Ok”&gt; &lt;/form&gt;<br></pre><br><p>Then in the script check.py you would have : </p><br><pre class=" python"><br>def is_valid(login,password):<br>     # replace this with a check in the users database<br>     return login == ‘login’ and password == ‘password’<br>  if is_valid(_login,_password):<br>     Session().login = _login<br>     print “Hello %s &lt;br&gt;” %_login<br>     print “””What would you like to order :<br>         &lt;form action=”order.py”&gt;<br>         CD &lt;input type=”radio” name=”type” value=”CD”&gt;<br>         book &lt;input type=”radio” name=”type” value=”book”&gt;<br>         &lt;input type=”submit” value=”Ok”&gt;<br>         &lt;/form&gt;”””<br>  else:<br>     print “Sorry, you are not allowed to access this page”<br></pre><br><br><p>Since the session object has an attribute called login, in other scripts you can test if the user is valid by testing the existence of this attribute : </p><br><pre class=" python">if hasattr(Session(),’login’):     (show information for authorized users) else:     (show information for unlogged visitors) </pre> <p></p><br><p>Alternatively, you could use the basic HTTP authentication : a popup window prompting for login and password. To </p><br><p>achieve this you have to call another function in the namespace, called Authentication(), like this: </p><br><pre class=" python"><br>def authTest():<br>     (check if AUTH_USER and AUTH_PASSWORD are in the database)<br>  Authentication(authTest,”Authentication test”,\<br>     “Sorry, you are not allowed to access this page”)<br>  print “””What would you like to order :<br>     &lt;form action=”order.py”&gt;<br>     CD &lt;input type=”radio” name=”type” value=”CD”&gt;<br>     book &lt;input type=”radio” name=”type” value=”book”&gt;<br>     &lt;input type=”submit” value=”Ok”&gt;<br>     &lt;/form&gt;”””<br></pre><br><p>Authentication() takes 3 arguments : </p><br><p><br><ul><br> <li> the function to call : this function has no argument, but uses the names AUTH_USER and AUTH_PASSWORD that were entered by the user in the popup window </li><li> the “realm” : a string shown on top of the popup window<br>  </li><li> the message to return if the authentication failed, that is, if the function did not return True<br></li></ul><br></p><br><p>If the authentication succeeds, execution of the script can continue </p>
+
+
+
+<p></p><h2> 5. Karrigell services</h2> <p></p>
+<p>For the moment we have put each script in a different file. For short scripts this can become tedious and difficult to maintain </p><br><p>You can use Karrigell services : Python scripts where each function matches a URL. They must have the extension “ks” </p><br><p>Change the initial HTML page to : </p><br><pre class=" html"> &lt;form action=”home.ks/check”&gt; Login &lt;input name=”login”&gt; &lt;br&gt;Password &lt;input type=”password” name=”password”&gt; &lt;input type=”submit” value=”Ok”&gt; &lt;/form&gt;  </pre><br><p>Then save this in a file called home.ks : </p><br><pre class=" python"><br>def check(login,password):<br>     if _is_valid(login,password):<br>         Session().login = login<br>         print “Hello”,login,”&lt;br&gt;”<br>         print “””What would you like to order :<br>         &lt;form action=”order”&gt;<br>         CD &lt;input type=”radio” name=”Type” value=”CD”&gt;<br>         book &lt;input type=”radio” name=”Type” value=”book”&gt;<br>         &lt;input type=”submit” value=”Ok”&gt;<br>         &lt;/form&gt;”””<br>     else:<br>         print “Sorry, you are not allowed to access this page”<br>def order(Type):<br>     if not hasattr(Session(),”login”):<br>         print “Sorry, you are not allowed to access this page”<br>     else:<br>         print “Ok %s, you want to order a %s” %(Session().login,Type)<br>def _is_valid(login,password):<br>     # replace this with a check in the users database<br>     return login == ‘login’ and password == ‘password’<br></pre><br><p>The “action” in the HTML form is “home.ks/check”. This means that Karrigell will search the function <i>check()</i> in the script home.ks. Since the form has the fields “login” and “password”, the function <b>must</b> also have these names as arguments </p><br><p>In this function, we first test if the login and password are valid. This is done in a “private” function <i>_is_valid()</i> : “private” means that this function can’t be called by a URL (here home.ks/_is_valid). Private functions begin with an underscore  </p><br><p>If the test succeeds, the function writes another form with action = “order”, matching the function <i>order()</i> in the same script. Since the form has a radiobutton field called “Type”, the function <i>order()</i> also has an argument called Type (notice that Type begins with an uppercase letter, to avoid confusion with the Python built-in <i>type</i>) </p>
+
+
+
+<p></p><h2>6. HTMLTags (generate HTML with Python code)</h2> <p></p>
+<p>In the scripts we have written so far, the HTML code is produced by printing strings with the HTML tags inside </p><br><p>If you don’t like this, you can use a module called HTMLTags, which works like this :  </p><br><pre class=" python">from HTMLTags import <em> print HTML(HEAD(TITLE(‘test’))+BODY(‘hello world’)) </em></pre><br><p>This will produce the following HTML code : </p><br><pre class=" html">&lt;HTML&gt; &lt;HEAD&gt; &lt;TITLE&gt;test&lt;/TITLE&gt; &lt;/HEAD&gt; &lt;BODY&gt;hello world&lt;/BODY&gt;  &lt;/HTML&gt; </pre><br><p>You can rewrite the script home.ks like this : </p><br><pre class=" python"><br>from HTMLTags import <br>def check(login,password):<br>     if _is_valid(login,password):<br>         Session().login = login<br>         print “Hello”,login,”&lt;br&gt;”<br>         print “””What would you like to order :”””<br>         print FORM(TEXT(‘CD’)+INPUT(Type=”radio”,name=”Type”,value=”CD”) + TEXT(‘book’)+INPUT(Type=”radio”,name=”Type”,value=”book”) + INPUT(Type=”submit”,value=”ok”), action=”order”)<br>     else:<br>         print “Sorry, you are not allowed to access this page”<br>def order(Type):<br>     if not hasattr(Session(),”login”):<br>         print “Sorry, you are not allowed to access this page”<br>     else:<br>         print “Ok %s, you want to order a %s” %(Session().login,Type)<br>def _is_valid(login,password):<br>     # replace this with a check in the users database<br>     return login == ‘login’ and password == ‘password’<br></pre><br><br><br><br><h2>7. Python Inside HTML (PHP-like style)</h2><br><p>For those who prefer the PHP-like style of code inside special tags, Karrigell provides “Python Inside HTML”. The scripts, with the extension pih, are made of HTML code, and of Python code inside the tags &lt;% and %&gt; </p><br><p>Going back to our first example of a script which receives the user name, we could have written this in a script order.pih :  </p><br><pre class=" html">Hello, &lt;% print _user Session().user = _user %&gt; What would you like to order : &lt;form action=”order.py”&gt; CD &lt;input type=”radio” name=”type” value=”CD”&gt; book &lt;input type=”radio” name=”type” value=”book”&gt; &lt;input type=”submit” value=”Ok”&gt; &lt;/form&gt;  </pre><br><p>There are no strict rules for choosing between Python scripts, Karrigell services and Python Inside HTML. I tend to use </p><br><p><br><ul><br> <li> Python Inside HTML for the pages that are mainly static HTML, with only a few places with dynamic content<br> </li><li> Karrigell services for small applications, where creating a file per page would result in too many 10- or 20-line scripts<br> </li><li> Python scripts for the scripts that do more processing of data than sending outpout to the user (typically, the insertion of a new record in a database)<br></li></ul><br></p>
+
+<p></p><h2>8. Redirection</h2><p></p>
+<p>To perform an HTTP redirection from inside a script, you raise an exception available in the namespace, HTTP_REDIRECTION, with the url as argument : </p><br><p><pre class=" python">raise HTTP_REDIRECTION,”index.html” </pre> </p><br><p>For instance, if you want to enter a new record in a database, here is a simple ks script : </p><br><p><br>    <pre class=" python"><br>    from HTMLTags import *<br>    def index():<br>        print FORM(TEXT(‘login’)+INPUT(name=”login”)+BR()+TEXT(‘password’)+INPUT(name=”password”)+BR()+INPUT(Type=”submit”),action = “insert”)<br>    def insert(login,password):<br>         (… perform insertion in the database here …)<br>         raise HTTP_REDIRECTION,”index”<br>    </pre><br></p><br><p>After the insertion has been performed, the program will ask another entry </p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Karrigell/">Karrigell</a>
+  </div>
+
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://deenter.com/2014/06/29/karrigell-tutorial/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Github/">Github</a><small>1</small></li>
+  
+    <li><a href="/categories/Karrigell/">Karrigell</a><small>1</small></li>
+  
+    <li><a href="/categories/VIM/">VIM</a><small>2</small></li>
+  
+    <li><a href="/categories/django/">django</a><small>9</small></li>
+  
+    <li><a href="/categories/jekyll/">jekyll</a><small>2</small></li>
+  
+    <li><a href="/categories/kivy/">kivy</a><small>1</small></li>
+  
+    <li><a href="/categories/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/categories/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/normal/">normal</a><small>1</small></li>
+  
+    <li><a href="/categories/other/">other</a><small>2</small></li>
+  
+    <li><a href="/categories/python/">python</a><small>64</small></li>
+  
+    <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/categories/system/">system</a><small>2</small></li>
+  
+    <li><a href="/categories/tornado/">tornado</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/django/">django</a><small>5</small></li>
+  
+    <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
+  
+    <li><a href="/tags/flask/">flask</a><small>1</small></li>
+  
+    <li><a href="/tags/freeswitch/">freeswitch</a><small>1</small></li>
+  
+    <li><a href="/tags/go/">go</a><small>2</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>14</small></li>
+  
+    <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>2</small></li>
+  
+    <li><a href="/tags/tornado/">tornado</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2021 Tony Tan
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

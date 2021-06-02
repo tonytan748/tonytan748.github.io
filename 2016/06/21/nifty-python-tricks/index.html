@@ -1,0 +1,262 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Nifty Python Tricks | Tony Tan</title>
+  <meta name="author" content="Tony Tan">
+  
+  <meta name="description" content="Tony Tan">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Nifty Python Tricks">
+  <meta property="og:site_name" content="Tony Tan">
+
+  
+    <meta property="og:image" content="">
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Tony Tan" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+</html>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Tony Tan</a></h1>
+  <h2><a href="/">a python progrmmer</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-06-20T16:00:00.000Z"><a href="/2016/06/21/nifty-python-tricks/">2016-06-21</a></time>
+      
+      
+  
+    <h1 class="title">Nifty Python Tricks</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Some Python Useful Ways</em></p>
+<p>This Blog tracsfer from (here)[<a href="https://pythontips.com/2015/04/19/nifty-python-tricks/]" target="_blank" rel="noopener">https://pythontips.com/2015/04/19/nifty-python-tricks/]</a></p>
+<h3 id="Enumerate"><a href="#Enumerate" class="headerlink" title="Enumerate"></a>Enumerate</h3><p>Instead of doing:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">i = 0</span><br><span class="line">for item in iterable:</span><br><span class="line">    print i, item</span><br><span class="line">    i += 1</span><br></pre></td></tr></table></figure>
+<p>We can do:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for i, item in enumerate(iterable):</span><br><span class="line">    print i, item</span><br></pre></td></tr></table></figure>
+<p>Enumerate can also take a second argument, Here is an example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; list(enumerate(&apos;abc&apos;))</span><br><span class="line">[(0,&apos;a&apos;),(1,&apos;b&apos;),(2,&apos;c&apos;)]</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; list(enumerate(&apos;abc&apos;, 1))</span><br><span class="line">[(1,&apos;a&apos;),(2,&apos;b&apos;),(3,&apos;c&apos;)]</span><br></pre></td></tr></table></figure>
+<h3 id="Dict-Set-comprehensions"><a href="#Dict-Set-comprehensions" class="headerlink" title="Dict/Set comprehensions"></a>Dict/Set comprehensions</h3><p>You might know about list comprehensions but you might not be aware of dict/set comprehensions. They are simple to use and just as effective. Here is an example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">my_dict = &#123;i: i * i for i in xrange(100)&#125;</span><br><span class="line">my_set = &#123;i * 15 for i in xrange(100)&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Forcing-float-divsion"><a href="#Forcing-float-divsion" class="headerlink" title="Forcing float divsion:"></a>Forcing float divsion:</h3><p>If we divide whole numbers Python gives us the result as a whole number even if the result was a float. In order to circumvent this issue we have to do something like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result  = 1.0 / 2</span><br></pre></td></tr></table></figure>
+<p>But there is another way to solve this problem which even I wasn’t aware of. You can do:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from __futhure__ import division</span><br><span class="line"></span><br><span class="line">result = 1/2</span><br></pre></td></tr></table></figure>
+<p>Now you don’t need to append .0 in order to get an accurate answer.</p>
+<p>Do note that this trick is for Pyhton 2 only, In Python 3 there is no need to do the import as it handles this case by default.</p>
+<h3 id="Simple-Server"><a href="#Simple-Server" class="headerlink" title="Simple Server"></a>Simple Server</h3><p>Do you want to quickly and easily share files from a directory? You can simple do:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># python 2</span><br><span class="line">python -m SimpleHTTPServer localhost:8080</span><br><span class="line"></span><br><span class="line"># python 3</span><br><span class="line">python3 -m http.server localhost:8080</span><br></pre></td></tr></table></figure>
+<p>This would start up a server.</p>
+<h3 id="Evaluating-Python-expressions"><a href="#Evaluating-Python-expressions" class="headerlink" title="Evaluating Python expressions"></a>Evaluating Python expressions</h3><p>We all know about <code>eval</code> but do we all know about <code>literal_eval</code>? Perhaps not. You can do:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import ast</span><br><span class="line"></span><br><span class="line">my_list = ast.literal_eval(expr)</span><br></pre></td></tr></table></figure>
+<p>Instead of:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">expr = &quot;[1,2,3]&quot;</span><br><span class="line">my_list = eval(expr)</span><br></pre></td></tr></table></figure>
+<p>I am sure that it’s something new for most of us but it has been a part of Python for a long time.</p>
+<h3 id="Profiling-a-script"><a href="#Profiling-a-script" class="headerlink" title="Profiling a script"></a>Profiling a script</h3><p>You can easily profile a script by runnung it like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m cProfile my_script.py</span><br></pre></td></tr></table></figure>
+<h3 id="Object-introspection"><a href="#Object-introspection" class="headerlink" title="Object introspection"></a>Object introspection</h3><p>You can inspect objects in Python by using <code>dir()</code>. Here is a simple example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; foo = [1,2,3,4]</span><br><span class="line">&gt;&gt;&gt; dir(foo)</span><br><span class="line">[&apos;__add__&apos;, &apos;__class__&apos;, &apos;__contains__&apos;, </span><br><span class="line">&apos;__delattr__&apos;, &apos;__delitem__&apos;, &apos;__delslice__&apos;, ... , </span><br><span class="line">&apos;extend&apos;, &apos;index&apos;, &apos;insert&apos;, &apos;pop&apos;, &apos;remove&apos;, </span><br><span class="line">&apos;reverse&apos;, &apos;sort&apos;]</span><br></pre></td></tr></table></figure>
+<h3 id="Debugging-script"><a href="#Debugging-script" class="headerlink" title="Debugging script"></a>Debugging script</h3><p>You can easily set breakpoints in your script using the <code>pdb</code> module. Here is an example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import pdb</span><br><span class="line"></span><br><span class="line">pdb.set_trace()</span><br></pre></td></tr></table></figure>
+<p>You can write <code>pdb.set_trace()</code> anywhere in your script and it will set a breakpoint there. Super convenient. You should also read more about pdb as it has a couple of other hidden gems as welll.</p>
+<h3 id="Simplify-if-constructs"><a href="#Simplify-if-constructs" class="headerlink" title="Simplify if constructs"></a>Simplify if constructs</h3><p>If you have to check for serveral values you can easily do:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if n in [1,2,3,4]:</span><br></pre></td></tr></table></figure>
+<p>instead of:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if n == 1 or n == 2 or n == 3:</span><br></pre></td></tr></table></figure>
+<h3 id="Reversing-a-list-string"><a href="#Reversing-a-list-string" class="headerlink" title="Reversing a list/string"></a>Reversing a list/string</h3><p>You can quickly reverse a list by using:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = [1,2,3,4]</span><br><span class="line">&gt;&gt;&gt; a[::-1]</span><br><span class="line">[4,3,2,1]</span><br><span class="line"></span><br><span class="line">a.reverse()</span><br></pre></td></tr></table></figure>
+<p>and the same can be applied to a string as well:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; foo = &apos;abcd&apos;</span><br><span class="line">&gt;&gt;&gt; foo[::-1]</span><br><span class="line">&apos;dcba&apos;</span><br></pre></td></tr></table></figure>
+<h3 id="Pretty-print"><a href="#Pretty-print" class="headerlink" title="Pretty print"></a>Pretty print</h3><p>You can print dicts and lists in a beautiful way by doing:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">form pprint import pprint</span><br><span class="line">pprint(my_dict)</span><br></pre></td></tr></table></figure>
+<p>This is more effective on dicts. Moreover, if you want to pretty print json quickly from a file then you can simple do:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat file.json | python -m json.tools</span><br></pre></td></tr></table></figure>
+<h3 id="Ternary-Operators"><a href="#Ternary-Operators" class="headerlink" title="Ternary Operators"></a>Ternary Operators</h3><p>Ternary operators are shortcut for an if-else statement, and are also known as a conditional operators. Here are some example whick you can use to make your code compact and more beautiful.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[on_true] if [expression] else [on_false]</span><br><span class="line">x, y = 50, 25</span><br><span class="line">samle = x if s &lt; y else y</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/python/">python</a>
+  </div>
+
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://deenter.com/2016/06/21/nifty-python-tricks/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Github/">Github</a><small>1</small></li>
+  
+    <li><a href="/categories/Karrigell/">Karrigell</a><small>1</small></li>
+  
+    <li><a href="/categories/VIM/">VIM</a><small>2</small></li>
+  
+    <li><a href="/categories/django/">django</a><small>9</small></li>
+  
+    <li><a href="/categories/jekyll/">jekyll</a><small>2</small></li>
+  
+    <li><a href="/categories/kivy/">kivy</a><small>1</small></li>
+  
+    <li><a href="/categories/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/categories/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/normal/">normal</a><small>1</small></li>
+  
+    <li><a href="/categories/other/">other</a><small>2</small></li>
+  
+    <li><a href="/categories/python/">python</a><small>64</small></li>
+  
+    <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/categories/system/">system</a><small>2</small></li>
+  
+    <li><a href="/categories/tornado/">tornado</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/django/">django</a><small>5</small></li>
+  
+    <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
+  
+    <li><a href="/tags/flask/">flask</a><small>1</small></li>
+  
+    <li><a href="/tags/freeswitch/">freeswitch</a><small>1</small></li>
+  
+    <li><a href="/tags/go/">go</a><small>2</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>14</small></li>
+  
+    <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>2</small></li>
+  
+    <li><a href="/tags/tornado/">tornado</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2021 Tony Tan
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,895 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Page 2 | Tony Tan</title>
+  <meta name="author" content="Tony Tan">
+  
+  <meta name="description" content="Tony Tan">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Tony Tan">
+
+  
+    <meta property="og:image" content="">
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Tony Tan" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+</html>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Tony Tan</a></h1>
+  <h2><a href="/">a python progrmmer</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-04-15T08:47:57.000Z"><a href="/2019/04/15/python-calendar/">2019-04-15</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/04/15/python-calendar/">python calendar</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="Calendar"><a href="#Calendar" class="headerlink" title="Calendar"></a>Calendar</h1><ul>
+<li><p>setfirstweekday(firstweekday)  指定一周的第一天,0是星期一,… 6为星期日</p>
+</li>
+<li><p>firstweekday()：返回一周的第一天，0是星期一，…，6为星期日</p>
+</li>
+<li><p>isleap(year)：判断指定是否是闰年，闰年为True，平年为False</p>
+</li>
+<li><p>leapdays(y1, y2)：返回y1与y2年份之间的闰年数量，y1与y2皆为年份。包括起始年，不包括结束年</p>
+</li>
+<li><p>weekday(year, month, day)：获取指定日期为星期几</p>
+</li>
+<li><p>weekheader(n)：返回包含星期的英文缩写，n表示英文缩写所占的宽度</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import calendar</span><br><span class="line">print(calendar.weekheader(4))</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; Mon  Tue  Wed  Thu  Fri  Sat  Sun</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>monthrange(year, month)：返回一个由一个月第一个天的星期与当前月的天数组成的元组</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import calendar</span><br><span class="line">print(2018, 8) </span><br><span class="line">    </span><br><span class="line">&gt;&gt;&gt; (2, 31)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>monthcalendar(year, month)：返回一个月中天数列表(不是当前月份的天数为0)，按周划分，为一个二维数组。包括月份开始那周的所有日期和月份结束那周的所有日期</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import calendar</span><br><span class="line"></span><br><span class="line">calendar.setfirstweekday(firstweekday=6)</span><br><span class="line">print(calendar.monthcalendar(2018, 8))</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;[[0, 0, 0, 1, 2, 3, 4], [5, 6, 7, 8, 9, 10, 11], [12, 13, 14, 15, 16, 17, 18], [19, 20, 21, 22, 23, 24, 25], [26, 27, 28, 29, 30, 31, 0]]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>prmonth(theyear, themonth, w=0, l=0)：打印一个月的日历，theyear指定年份，themonth指定月份，w每个单元格宽度，默认0，内部已做处理，最小宽度为2，l每列换l行，默认为0，内部已做处理，至少换行1行</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import calendar</span><br><span class="line"></span><br><span class="line">calendar.setfirstweekday(firstweekday=6)</span><br><span class="line">calendar.prmonth(2018, 8)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;    August 2018</span><br><span class="line">Su Mo Tu We Th Fr Sa</span><br><span class="line">        1  2  3  4</span><br><span class="line">5  6  7  8  9 10 11</span><br><span class="line">12 13 14 15 16 17 18</span><br><span class="line">19 20 21 22 23 24 25</span><br><span class="line">26 27 28 29 30 31</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>month(theyear, themonth, w=0, l=0)：返回一个月的日历的多行文本字符串。theyear指定年份，themonth指定月份，w每个单元格宽度，默认0，内部已做处理，最小宽度为2，l每列换l行，默认为0，内部已做处理，至少换行1行</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import calendar</span><br><span class="line"></span><br><span class="line">calendar.setfirstweekday(firstweekday=6)</span><br><span class="line">print(calendar.month(2018, 8))</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;    August 2018</span><br><span class="line">Su Mo Tu We Th Fr Sa</span><br><span class="line">        1  2  3  4</span><br><span class="line">5  6  7  8  9 10 11</span><br><span class="line">12 13 14 15 16 17 18</span><br><span class="line">19 20 21 22 23 24 25</span><br><span class="line">26 27 28 29 30 31</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>prcal(year, w=0, l=0, c=6, m=3)：打印一年的日历，w每个单元格宽度，默认0，内部已做处理，最小宽度为2，l每列换l行，默认为0，内部已做处理，至少换行1行，c表示月与月之间的间隔宽度，默认为6，内部已做处理，最小宽度为2，m表示将12个月分为m列</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import calendar</span><br><span class="line"></span><br><span class="line">calendar.setfirstweekday(firstweekday=6)</span><br><span class="line">calendar.prcal(2018, m=4)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;                                            2018</span><br><span class="line"></span><br><span class="line">    January                   February                   March                     April</span><br><span class="line">Su Mo Tu We Th Fr Sa      Su Mo Tu We Th Fr Sa      Su Mo Tu We Th Fr Sa      Su Mo Tu We Th Fr Sa</span><br><span class="line">    1  2  3  4  5  6                   1  2  3                   1  2  3       1  2  3  4  5  6  7</span><br><span class="line">7  8  9 10 11 12 13       4  5  6  7  8  9 10       4  5  6  7  8  9 10       8  9 10 11 12 13 14</span><br><span class="line">14 15 16 17 18 19 20      11 12 13 14 15 16 17      11 12 13 14 15 16 17      15 16 17 18 19 20 21</span><br><span class="line">21 22 23 24 25 26 27      18 19 20 21 22 23 24      18 19 20 21 22 23 24      22 23 24 25 26 27 28</span><br><span class="line">28 29 30 31               25 26 27 28               25 26 27 28 29 30 31      29 30</span><br><span class="line"></span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>calendar(year, w=2, l=1, c=6, m=3)：以多行字符串形式返回一年的日历，w每个单元格宽度，默认2，内部已做处理，最小宽度为2，l每列换l行，默认为1，内部已做处理，至少换行1行，c表示月与月之间的间隔宽度，默认为6，内部已做处理，最小宽度为2，m表示将12个月分为m列</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import calendar</span><br><span class="line"></span><br><span class="line">calendar.setfirstweekday(firstweekday=6)</span><br><span class="line">print(calendar.calendar(2018, m=4))</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;                                               2018</span><br><span class="line"></span><br><span class="line">    January                   February                   March                     April</span><br><span class="line">Su Mo Tu We Th Fr Sa      Su Mo Tu We Th Fr Sa      Su Mo Tu We Th Fr Sa      Su Mo Tu We Th Fr Sa</span><br><span class="line">    1  2  3  4  5  6                   1  2  3                   1  2  3       1  2  3  4  5  6  7</span><br><span class="line">7  8  9 10 11 12 13       4  5  6  7  8  9 10       4  5  6  7  8  9 10       8  9 10 11 12 13 14</span><br><span class="line">14 15 16 17 18 19 20      11 12 13 14 15 16 17      11 12 13 14 15 16 17      15 16 17 18 19 20 21</span><br><span class="line">21 22 23 24 25 26 27      18 19 20 21 22 23 24      18 19 20 21 22 23 24      22 23 24 25 26 27 28</span><br><span class="line">28 29 30 31               25 26 27 28               25 26 27 28 29 30 31      29 30</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="calendar-Calendar-firstweekday-0-类"><a href="#calendar-Calendar-firstweekday-0-类" class="headerlink" title="calendar.Calendar(firstweekday=0)类"></a>calendar.Calendar(firstweekday=0)类</h1><p>firstweekday为一个整数，指定一周的第一天，0是星期一(默认)，6为星期日</p>
+<ul>
+<li><p>iterweekdays()：获取一周的数字的迭代器，迭代器的第一个值与firstweekday的值相同</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from calendar import Calendar</span><br><span class="line"></span><br><span class="line">c = Calendar()</span><br><span class="line">print(list(c.iterweekdays()))</span><br><span class="line">&gt;&gt;&gt;[0, 1, 2, 3, 4, 5, 6]   # 代表星期一至星期日，0为星期一，即一周的第一天</span><br><span class="line"></span><br><span class="line">c = Calendar(firstweekday=6)</span><br><span class="line">print(list(c.iterweekdays()))       </span><br><span class="line">&gt;&gt;&gt;[6, 0, 1, 2, 3, 4, 5]    # 代表星期日至星期六，6为星期日，即一周的第一天</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>itermonthdates(year, month)：获取一个月日期的迭代器，此迭代器会返回指定月份的所有日期，包括月份开始那周的所有日期和月份结束那周的所有日期</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from calendar import Calendar</span><br><span class="line"></span><br><span class="line">c = Calendar(firstweekday=6)</span><br><span class="line">for item in c.itermonthdates(2018, 8):</span><br><span class="line">    print(item)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;2018-07-29</span><br><span class="line">2018-07-30</span><br><span class="line">2018-07-31</span><br><span class="line">2018-08-01</span><br><span class="line">...</span><br><span class="line">2018-08-31</span><br><span class="line">2018-09-01</span><br></pre></td></tr></table></figure>
+<p>  备注:</p>
+<pre><code>1. 这里的日期为datatime.date类型
+2. 请将星期天设置为一周的第一天，否则将无法直观显示其作用
+</code></pre></li>
+<li><p>itermonthdays(year, month)：返回一个月天数的迭代器(不是当前月份的天数为0)，此迭代器将返回指定月份的日期数字，包括月份开始那周的所有日期和月份结束那周的所有日期</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from calendar import Calendar</span><br><span class="line"></span><br><span class="line">c = Calendar(firstweekday=6)</span><br><span class="line">for item in c.itermonthdays(2018, 8):</span><br><span class="line">    print(item)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;0</span><br><span class="line">0</span><br><span class="line">0</span><br><span class="line">1</span><br><span class="line">...</span><br><span class="line">31</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>itermonthdays2(year, month)：返回一个月天数与星期的迭代器(不是当前月份的天数为0)，此迭代器将返回指定月份的日期数字与星期几所代表的数字组成的元组，包括月份开始那周的所有日期和月份结束那周的所有日期</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from calendar import Calendar</span><br><span class="line"></span><br><span class="line">c = Calendar(firstweekday=6)</span><br><span class="line">for item in c.itermonthdays2(2018, 8):</span><br><span class="line">    print(item)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;(0, 6)</span><br><span class="line">(0, 0)</span><br><span class="line">(0, 1)</span><br><span class="line">(1, 2)</span><br><span class="line">...</span><br><span class="line">(31, 4)</span><br><span class="line">(0, 5)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>monthdatescalendar(year, month)：返回一个月日期列表，按周划分，为一个二维数组。包括月份开始那周的所有日期和月份结束那周的所有日期</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from calendar import Calendar</span><br><span class="line"></span><br><span class="line">c = Calendar(firstweekday=6)</span><br><span class="line">for item in c.monthdatescalendar(2018, 8):</span><br><span class="line">    print(item)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;[datetime.date(2018, 7, 29), datetime.date(2018, 7, 30), datetime.date(2018, 7, 31), datetime.date(2018, 8, 1), datetime.date(2018, 8, 2), datetime.date(2018, 8, 3), datetime.date(2018, 8, 4)]</span><br><span class="line">[datetime.date(2018, 8, 5), datetime.date(2018, 8, 6), datetime.date(2018, 8, 7), datetime.date(2018, 8, 8), datetime.date(2018, 8, 9), datetime.date(2018, 8, 10), datetime.date(2018, 8, 11)]</span><br><span class="line">[datetime.date(2018, 8, 12), datetime.date(2018, 8, 13), datetime.date(2018, 8, 14), datetime.date(2018, 8, 15), datetime.date(2018, 8, 16), datetime.date(2018, 8, 17), datetime.date(2018, 8, 18)]</span><br><span class="line">[datetime.date(2018, 8, 19), datetime.date(2018, 8, 20), datetime.date(2018, 8, 21), datetime.date(2018, 8, 22), datetime.date(2018, 8, 23), datetime.date(2018, 8, 24), datetime.date(2018, 8, 25)]</span><br><span class="line">[datetime.date(2018, 8, 26), datetime.date(2018, 8, 27), datetime.date(2018, 8, 28), datetime.date(2018, 8, 29), datetime.date(2018, 8, 30), datetime.date(2018, 8, 31), datetime.date(2018, 9, 1)]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>monthdayscalendar(year, month)：返回一个月中天数列表(不是当前月份的天数为0)，按周划分，为一个二维数组。包括月份开始那周的所有日期和月份结束那周的所有日期</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from calendar import Calendar</span><br><span class="line"></span><br><span class="line">c = Calendar(firstweekday=6)</span><br><span class="line">for item in c.monthdayscalendar(2018, 8):</span><br><span class="line">    print(item)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;[0, 0, 0, 1, 2, 3, 4]</span><br><span class="line">[5, 6, 7, 8, 9, 10, 11]</span><br><span class="line">[12, 13, 14, 15, 16, 17, 18]</span><br><span class="line">[19, 20, 21, 22, 23, 24, 25]</span><br><span class="line">[26, 27, 28, 29, 30, 31, 0]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>monthdays2calendar(year, month)：返回一个月中天数与星期的列表(不是当前月份的天数为0)，按周划分，为一个二维数组。包括月份开始那周的所有日期和月份结束那周的所有日期</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from calendar import Calendar</span><br><span class="line"></span><br><span class="line">c = Calendar(firstweekday=6)</span><br><span class="line">for item in c.monthdays2calendar(2018, 8):</span><br><span class="line">    print(item)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;[(0, 6), (0, 0), (0, 1), (1, 2), (2, 3), (3, 4), (4, 5)]</span><br><span class="line">[(5, 6), (6, 0), (7, 1), (8, 2), (9, 3), (10, 4), (11, 5)]</span><br><span class="line">[(12, 6), (13, 0), (14, 1), (15, 2), (16, 3), (17, 4), (18, 5)]</span><br><span class="line">[(19, 6), (20, 0), (21, 1), (22, 2), (23, 3), (24, 4), (25, 5)]</span><br><span class="line">[(26, 6), (27, 0), (28, 1), (29, 2), (30, 3), (31, 4), (0, 5)]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>yeardatescalendar(year, width=3)：返回一年中所有的日期，为一个4维数组。width表示将一年中12个月份进行划分，每width个月为一份，每一份包含各个月份，每个月份包含周，每周包含日期信息。包括月份开始那周的所有日期和月份结束那周的所有日期</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from calendar import Calendar</span><br><span class="line"></span><br><span class="line">c = Calendar(firstweekday=6)</span><br><span class="line">for item in c.yeardatescalendar(2018, 3):</span><br><span class="line">    print(item)</span><br><span class="line">&gt;&gt;&gt;[[[datetime.date(2017, 12, 31), datetime.date(2018, 1, 1), datetime.date(2018, 1, 2),...]]]</span><br><span class="line">[[[datetime.date(2018, 4, 1), datetime.date(2018, 4, 2), datetime.date(2018, 4, 3),...]]]</span><br><span class="line">[[[datetime.date(2018, 7, 1), datetime.date(2018, 7, 2), datetime.date(2018, 7, 3),...]]]</span><br><span class="line">[[[datetime.date(2018, 9, 30), datetime.date(2018, 10, 1), datetime.date(2018, 10, 2),...]]]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>yeardayscalendar(year, width=3)：返回一年中每个月的天数，为一个4维数组。width表示将一年中12个月份进行划分，每width个月为一份；每一份包含各个月份，每个月份包含周，每周包含天数信息(不是当前月份的天数为0)。包括月份开始那周的所有日期和月份结束那周的所有日期</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from calendar import Calendar</span><br><span class="line"></span><br><span class="line">c = Calendar(firstweekday=6)</span><br><span class="line">for item in c.yeardayscalendar(2018, 3):</span><br><span class="line">    print(item)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;[[[0, 1, 2, 3, 4, 5, 6], [7, 8, 9, 10, 11, 12, 13], [14, 15, 16, 17, 18, 19, 20], ...]]]</span><br><span class="line">[[[1, 2, 3, 4, 5, 6, 7], [8, 9, 10, 11, 12, 13, 14], [15, 16, 17, 18, 19, 20, 21], ...]]]</span><br><span class="line">[[[1, 2, 3, 4, 5, 6, 7], [8, 9, 10, 11, 12, 13, 14], [15, 16, 17, 18, 19, 20, 21], ...]]]</span><br><span class="line">[[[0, 1, 2, 3, 4, 5, 6], [7, 8, 9, 10, 11, 12, 13], [14, 15, 16, 17, 18, 19, 20], ...]]]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>yeardays2calendar(year, width=3)：返回一年中农每个月的天数与星期的元组，为一个4维的元组列表。width表示将一年中12个月份进行划分，每width个月为一份；每一份包含各个月份，每个月份包含周，每周包含天数与星期的元组信息(不是当前月份的天数为0)。包括月份开始那周的所有日期和月份结束那周的所有日期</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from calendar import Calendar</span><br><span class="line"></span><br><span class="line">c = Calendar(firstweekday=6)</span><br><span class="line">for item in c.yeardays2calendar(2018, 3):</span><br><span class="line">    print(item)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;[[[(0, 6), (1, 0), (2, 1), (3, 2), (4, 3), (5, 4), (6, 5)], [(7, 6), (8, 0), ...]]]</span><br><span class="line">[[[(1, 6), (2, 0), (3, 1), (4, 2), (5, 3), (6, 4), (7, 5)], [(8, 6), (9, 0), ...]]]</span><br><span class="line">[[[(1, 6), (2, 0), (3, 1), (4, 2), (5, 3), (6, 4), (7, 5)], [(8, 6), (9, 0), ...]]]</span><br><span class="line">[[[(0, 6), (1, 0), (2, 1), (3, 2), (4, 3), (5, 4), (6, 5)], [(7, 6), (8, 0), ...]]]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="calendar-TextCalendar-firstweekday-0"><a href="#calendar-TextCalendar-firstweekday-0" class="headerlink" title="calendar.TextCalendar(firstweekday=0)"></a>calendar.TextCalendar(firstweekday=0)</h1><pre><code>Calendar子类，firstweekday为一个整数，指定一周的第一天，0是星期一(默认)，6为星期日
+</code></pre><ul>
+<li><p>formatmonth(theyear, themonth, w=0, l=0)：以多行字符串形式返回一个月的日历。theyear指定年，themonth指定月，w每个单元格宽度，默认0，内部已做处理，最小宽度为2，l每列换l行，默认为0，内部已做处理，至少换行1行</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from calendar import TextCalendar</span><br><span class="line"></span><br><span class="line">c = TextCalendar(firstweekday=6)</span><br><span class="line">print(c.formatmonth(2018, 8))</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;    August 2018</span><br><span class="line">Su Mo Tu We Th Fr Sa</span><br><span class="line">        1  2  3  4</span><br><span class="line">5  6  7  8  9 10 11</span><br><span class="line">12 13 14 15 16 17 18</span><br><span class="line">19 20 21 22 23 24 25</span><br><span class="line">26 27 28 29 30 31</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>prmonth(theyear, themonth, w=0, l=0)：打印formatmonth(theyear, themonth, w=0, l=0)的结果，无返回值</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from calendar import TextCalenadr</span><br><span class="line"></span><br><span class="line">c = TextCalendar(firstweekday=6)</span><br><span class="line">c.prmonth(2018, 8)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;    August 2018</span><br><span class="line">Su Mo Tu We Th Fr Sa</span><br><span class="line">        1  2  3  4</span><br><span class="line">5  6  7  8  9 10 11</span><br><span class="line">12 13 14 15 16 17 18</span><br><span class="line">19 20 21 22 23 24 25</span><br><span class="line">26 27 28 29 30 31</span><br></pre></td></tr></table></figure>
+<p>  因为无返回值，所以返回的结果为None</p>
+</li>
+<li><p>formatyear(theyear, w=2, l=1, c=6, m=3)：以多行字符串形式返回一年的日历，w每个单元格宽度，默认0，内部已做处理，最小宽度为2，l每列换l行，默认为0，内部已做处理，至少换行1行，c月与月之间的间隔宽度，默认为6，内部已做处理，最小宽度为2，m表示将12个月分为m列</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from calendar import TextCalendar</span><br><span class="line"></span><br><span class="line">c = TextCalendar(firstweekday=6)</span><br><span class="line">print(c.format(2018, m=4))</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;                                       2018</span><br><span class="line"></span><br><span class="line">    January                   February                   March                     April</span><br><span class="line">Su Mo Tu We Th Fr Sa      Su Mo Tu We Th Fr Sa      Su Mo Tu We Th Fr Sa      Su Mo Tu We Th Fr Sa</span><br><span class="line">    1  2  3  4  5  6                   1  2  3                   1  2  3       1  2  3  4  5  6  7</span><br><span class="line">7  8  9 10 11 12 13       4  5  6  7  8  9 10       4  5  6  7  8  9 10       8  9 10 11 12 13 14</span><br><span class="line">14 15 16 17 18 19 20      11 12 13 14 15 16 17      11 12 13 14 15 16 17      15 16 17 18 19 20 21</span><br><span class="line">21 22 23 24 25 26 27      18 19 20 21 22 23 24      18 19 20 21 22 23 24      22 23 24 25 26 27 28</span><br><span class="line">28 29 30 31               25 26 27 28               25 26 27 28 29 30 31      29 30</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>pryear(theyear, w=2, l=1, c=6, m=3)：将formatyear(theyear, w=2, l=1, c=6, m=3)的结果作为返回</p>
+</li>
+</ul>
+<h1 id="calendar-HTMLCalendar-firstweekday-0"><a href="#calendar-HTMLCalendar-firstweekday-0" class="headerlink" title="calendar.HTMLCalendar(firstweekday=0)"></a>calendar.HTMLCalendar(firstweekday=0)</h1><pre><code>Calendar的子类，firstweekday为一个整数，指定一周的第一天，0是星期一(默认)，6为星期日
+</code></pre><ul>
+<li><p>formatmonth(theyear, themonth, withyear=Ture)：返回一个月日历的html内容，withyear是否显示年份，默认为True，即显示年份</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from calendar import HTMLCalendar</span><br><span class="line"></span><br><span class="line">c = HTMLCalendar(firstweekday=6)</span><br><span class="line">print(c.formatmonth(2018, 8, withyear=False))</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; class=&quot;month&quot;&gt;</span><br><span class="line">&lt;tr&gt;&lt;th colspan=&quot;7&quot; class=&quot;month&quot;&gt;August&lt;/th&gt;&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;&lt;th class=&quot;sun&quot;&gt;Sun&lt;/th&gt;&lt;th class=&quot;mon&quot;&gt;Mon&lt;/th&gt;&lt;th class=&quot;tue&quot;&gt;Tue&lt;/th&gt;&lt;th class=&quot;wed&quot;&gt;Wed&lt;/th&gt;&lt;th class=&quot;thu&quot;&gt;Thu&lt;/th&gt;&lt;th class=&quot;fri&quot;&gt;Fri&lt;/th&gt;&lt;th class=&quot;sat&quot;&gt;Sat&lt;/th&gt;&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;&lt;td class=&quot;noday&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td class=&quot;noday&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td class=&quot;noday&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td class=&quot;wed&quot;&gt;1&lt;/td&gt;&lt;td class=&quot;thu&quot;&gt;2&lt;/td&gt;&lt;td class=&quot;fri&quot;&gt;3&lt;/td&gt;&lt;td class=&quot;sat&quot;&gt;4&lt;/td&gt;&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;&lt;td class=&quot;sun&quot;&gt;5&lt;/td&gt;&lt;td class=&quot;mon&quot;&gt;6&lt;/td&gt;&lt;td class=&quot;tue&quot;&gt;7&lt;/td&gt;&lt;td class=&quot;wed&quot;&gt;8&lt;/td&gt;&lt;td class=&quot;thu&quot;&gt;9&lt;/td&gt;&lt;td class=&quot;fri&quot;&gt;10&lt;/td&gt;&lt;td class=&quot;sat&quot;&gt;11&lt;/td&gt;&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;&lt;td class=&quot;sun&quot;&gt;12&lt;/td&gt;&lt;td class=&quot;mon&quot;&gt;13&lt;/td&gt;&lt;td class=&quot;tue&quot;&gt;14&lt;/td&gt;&lt;td class=&quot;wed&quot;&gt;15&lt;/td&gt;&lt;td class=&quot;thu&quot;&gt;16&lt;/td&gt;&lt;td class=&quot;fri&quot;&gt;17&lt;/td&gt;&lt;td class=&quot;sat&quot;&gt;18&lt;/td&gt;&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;&lt;td class=&quot;sun&quot;&gt;19&lt;/td&gt;&lt;td class=&quot;mon&quot;&gt;20&lt;/td&gt;&lt;td class=&quot;tue&quot;&gt;21&lt;/td&gt;&lt;td class=&quot;wed&quot;&gt;22&lt;/td&gt;&lt;td class=&quot;thu&quot;&gt;23&lt;/td&gt;&lt;td class=&quot;fri&quot;&gt;24&lt;/td&gt;&lt;td class=&quot;sat&quot;&gt;25&lt;/td&gt;&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;&lt;td class=&quot;sun&quot;&gt;26&lt;/td&gt;&lt;td class=&quot;mon&quot;&gt;27&lt;/td&gt;&lt;td class=&quot;tue&quot;&gt;28&lt;/td&gt;&lt;td class=&quot;wed&quot;&gt;29&lt;/td&gt;&lt;td class=&quot;thu&quot;&gt;30&lt;/td&gt;&lt;td class=&quot;fri&quot;&gt;31&lt;/td&gt;&lt;td class=&quot;noday&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span><br><span class="line">&lt;/table&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>formatyear(theyear, width=3)：返回一年日历的html内容，width表示将12个月分为width列</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from calendar import HTMLCalendar</span><br><span class="line"></span><br><span class="line">c = HTMLCalendar(firstweekday=6)</span><br><span class="line">print(c.formatyear(2018, width=4))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>formatyearpage(theyear, width=3, css=’calendar.css’, encoding=None)：返回一年日历的html内容，width表示将12个月分为width列，css可自定义css样式，encoding编码方式</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from calendar import HTMLCalendar</span><br><span class="line"></span><br><span class="line">c = HTMLCalendar(firstweekday=6)</span><br><span class="line">print(c.formatyearpage(2018, width=4))</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-04-09T02:26:58.000Z"><a href="/2019/04/09/django2-2-build-website-and-deploy-in-ubuntu-server/">2019-04-09</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/04/09/django2-2-build-website-and-deploy-in-ubuntu-server/">django2.2 build website and deploy in ubuntu server</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="Crete-virtualenv"><a href="#Crete-virtualenv" class="headerlink" title="Crete virtualenv"></a>Crete virtualenv</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">pip install pipenv</span><br><span class="line"></span><br><span class="line">mkdir website</span><br><span class="line"></span><br><span class="line">cd website</span><br><span class="line"></span><br><span class="line">pipenv shell --python 3.6</span><br><span class="line"></span><br><span class="line">pipenv install django</span><br><span class="line"></span><br><span class="line">pipenv install pymysql</span><br><span class="line"></span><br><span class="line">pipenv install gunicorn</span><br></pre></td></tr></table></figure>
+<p>when running django have some errors. so we have to change django code.</p>
+<ul>
+<li>one<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /home/tonytan/.local/share/virtualenvs/website-skIUga7b/lib/python3.7/site-packages/django/db/backends/mysql/base.py</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>change to notes line 35, 36,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#if version &lt; (1, 3, 13):</span><br><span class="line">#    raise ImproperlyConfigured(&apos;mysqlclient 1.3.13 or newer is required; you have %s.&apos; % Database.__version__)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>two</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /home/tonytan/.local/share/virtualenvs/website-skIUga7b/lib/python3.7/site-packages/django/db/backends/mysql/operations.py</span><br></pre></td></tr></table></figure>
+<p>in line 146</p>
+<p>change:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">query = query.decode(errors=&apos;replace&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>to<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">query = query.decode(errors=&apos;replace&apos;) if not isinstance(query, str) else query</span><br></pre></td></tr></table></figure></p>
+<h1 id="Create-project"><a href="#Create-project" class="headerlink" title="Create project"></a>Create project</h1><ul>
+<li>create project &amp; app</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">django-admin.py startproject website</span><br><span class="line">cd website</span><br></pre></td></tr></table></figure>
+<ul>
+<li>change mysql package<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim website/__init__.py</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>the path is <code>/website/website/website/__init__.py</code></p>
+<p>add:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import pymysql</span><br><span class="line">pymysql.install_as_MySQLdb()</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>sql migrate</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python manage.py makemigrations</span><br><span class="line">python manage.py migreate</span><br></pre></td></tr></table></figure>
+<ul>
+<li>running test server</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py runserver</span><br></pre></td></tr></table></figure>
+<ul>
+<li>flush sql data</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py flush</span><br></pre></td></tr></table></figure>
+<ul>
+<li>create super user</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py createsuperuser</span><br></pre></td></tr></table></figure>
+<ul>
+<li>import &amp; output data</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python manage.py dumpdata appname &gt; appname.json</span><br><span class="line">python manage.py loaddata appname.json</span><br></pre></td></tr></table></figure>
+<ul>
+<li>create app</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py startapp users</span><br></pre></td></tr></table></figure>
+<p>add app to settings</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim website/settings.py</span><br></pre></td></tr></table></figure>
+<p>in <code>INSTALLED_APPS</code> add <code>&quot;user&quot;,</code></p>
+<p>now you can coding some app in django…</p>
+<h1 id="Deploy"><a href="#Deploy" class="headerlink" title="Deploy"></a>Deploy</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install nginx</span><br><span class="line">sudo pip install supervisor</span><br></pre></td></tr></table></figure>
+<p>set this web nginx config<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/nginx/conf/website.conf</span><br></pre></td></tr></table></figure></p>
+<p>add the following code to <code>website.conf</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        server_name www.xxxx.com;</span><br><span class="line">        server_name 100.000.000.000;</span><br><span class="line">        charset     utf-8;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">                try_files $uri $uri/ =404;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        location /media  &#123;</span><br><span class="line">                alias /path/to/your/static/media;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        location /static/ &#123;</span><br><span class="line">                root /path/to/your/static/main/folder/;   </span><br><span class="line">                #Note: this is static main folder not static folder</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"># this is for api</span><br><span class="line">        location /apis &#123;</span><br><span class="line">                rewrite ^.+apis/?(.*)$ /$1 break;</span><br><span class="line">                proxy_pass http://127.0.0.1:8000;</span><br><span class="line">                proxy_pass_header       Authorization;</span><br><span class="line">                proxy_pass_header       WWW-Authenticate;</span><br><span class="line">                proxy_set_header Host $host;</span><br><span class="line">                proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"># this is for django admin</span><br><span class="line">        location /admin &#123;</span><br><span class="line">                proxy_pass http://127.0.0.1:8000;</span><br><span class="line">                proxy_set_header Host $host;</span><br><span class="line">                proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">                proxy_set_header X-Forwarded-Proto $scheme;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>set this web supervisor config<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/supervisor/conf/website.conf</span><br></pre></td></tr></table></figure></p>
+<p>add the folloing code to ‘website.conf’<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[program: website]</span><br><span class="line">command = /home/tony/.local/share/virtualenvs/website-skIUga7b/bin/gunicorn -w 4 -b 0.0.0.0:8000 website.wsgi:application</span><br><span class="line">directory = /data/website/website</span><br><span class="line">user = root</span><br><span class="line">stdout_logfile = /var/log/supervisor/stdout.log</span><br><span class="line">stderr_logfile = /var/log/supervisor/stderr.log</span><br></pre></td></tr></table></figure></p>
+<p>reload nginx &amp; supervisor<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/ngins reload</span><br><span class="line">sudo nginx -t</span><br><span class="line"></span><br><span class="line">sudo /etc/init.d/supervisor reload</span><br><span class="line">sudo /etc/init.d/supervisor restart</span><br><span class="line">sudo /etc/init.d/supervisor status</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2018-11-22T02:06:53.000Z"><a href="/2018/11/22/Python-group-function-groupby-itertools/">2018-11-22</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2018/11/22/Python-group-function-groupby-itertools/">Python group function (groupby, itertools)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>If the strucutre of data is:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">d1=&#123;&apos;name&apos;:&apos;zhangsan&apos;,&apos;age&apos;:20,&apos;country&apos;:&apos;China&apos;&#125;</span><br><span class="line">d2=&#123;&apos;name&apos;:&apos;wangwu&apos;,&apos;age&apos;:19,&apos;country&apos;:&apos;USA&apos;&#125;</span><br><span class="line">d3=&#123;&apos;name&apos;:&apos;lisi&apos;,&apos;age&apos;:22,&apos;country&apos;:&apos;JP&apos;&#125;</span><br><span class="line">d4=&#123;&apos;name&apos;:&apos;zhaoliu&apos;,&apos;age&apos;:22,&apos;country&apos;:&apos;USA&apos;&#125;</span><br><span class="line">d5=&#123;&apos;name&apos;:&apos;pengqi&apos;,&apos;age&apos;:22,&apos;country&apos;:&apos;USA&apos;&#125;</span><br><span class="line">d6=&#123;&apos;name&apos;:&apos;lijiu&apos;,&apos;age&apos;:22,&apos;country&apos;:&apos;China&apos;&#125;</span><br><span class="line">lst = [d1, d2, d3, d4, d5, d6]</span><br></pre></td></tr></table></figure></p>
+<p>how to group by <code>country</code> item and get the result:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&apos;JP&apos;: [&#123;&apos;country&apos;: &apos;JP&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;lisi&apos;&#125;], &apos;China&apos;: [&#123;&apos;country&apos;: &apos;China&apos;, &apos;age&apos;: 20, &apos;name&apos;: &apos;zhangsan&apos;&#125;, &#123;&apos;country&apos;: &apos;China&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;lijiu&apos;&#125;], &apos;USA&apos;: [&#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 19, &apos;name&apos;: &apos;wangwu&apos;&#125;, &#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;zhaoliu&apos;&#125;, &#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;pengqi&apos;&#125;]&#125;</span><br></pre></td></tr></table></figure></p>
+<p> or<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[(&apos;China&apos;, [&#123;&apos;country&apos;: &apos;China&apos;, &apos;age&apos;: 20, &apos;name&apos;: &apos;zhangsan&apos;&#125;, &#123;&apos;country&apos;: &apos;China&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;lijiu&apos;&#125;]), (&apos;JP&apos;, [&#123;&apos;country&apos;: &apos;JP&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;lisi&apos;&#125;]), (&apos;USA&apos;, [&#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 19, &apos;name&apos;: &apos;wangwu&apos;&#125;, &#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;zhaoliu&apos;&#125;, &#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;pengqi&apos;&#125;])]</span><br></pre></td></tr></table></figure></p>
+<p>the coding is following:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from operator import itemgetter</span><br><span class="line">from itertools import groupby</span><br><span class="line"></span><br><span class="line">lst.sort(key=itemgetter(&apos;country&apos;))</span><br><span class="line">lstg = groupby(lst, itemgetter(&apos;country&apos;))</span><br></pre></td></tr></table></figure></p>
+<p><code>itemgettet(&#39;country&#39;)</code> is same as <code>lambda x: x[&#39;country&#39;]</code></p>
+<p>then we can get what we wanted.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for key, group in lstg:</span><br><span class="line">	for g in group:  # group is a iter</span><br><span class="line">		print(key, g)</span><br></pre></td></tr></table></figure>
+<p>return:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">China &#123;&apos;country&apos;: &apos;China&apos;, &apos;age&apos;: 20, &apos;name&apos;: &apos;zhangsan&apos;&#125;</span><br><span class="line">China &#123;&apos;country&apos;: &apos;China&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;lijiu&apos;&#125;</span><br><span class="line">JP &#123;&apos;country&apos;: &apos;JP&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;lisi&apos;&#125;</span><br><span class="line">USA &#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 19, &apos;name&apos;: &apos;wangwu&apos;&#125;</span><br><span class="line">USA &#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;zhaoliu&apos;&#125;</span><br><span class="line">USA &#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;pengqi&apos;&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>key</code> is a grouped the key.</p>
+<p>Get the list which include dict the key is country:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[(key, list(group)) for key, group in lstg]</span><br></pre></td></tr></table></figure></p>
+<p>return:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[(&apos;China&apos;, [&#123;&apos;country&apos;: &apos;China&apos;, &apos;age&apos;: 20, &apos;name&apos;: &apos;zhangsan&apos;&#125;, &#123;&apos;country&apos;: &apos;China&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;lijiu&apos;&#125;]), (&apos;JP&apos;, [&#123;&apos;country&apos;: &apos;JP&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;lisi&apos;&#125;]), (&apos;USA&apos;, [&#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 19, &apos;name&apos;: &apos;wangwu&apos;&#125;, &#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;zhaoliu&apos;&#125;, &#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;pengqi&apos;&#125;])]</span><br></pre></td></tr></table></figure></p>
+<p>Get the dict which key is country:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dict([(key, list(group)) for key, group in lstg])</span><br></pre></td></tr></table></figure></p>
+<p>return:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&apos;JP&apos;: [&#123;&apos;country&apos;: &apos;JP&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;lisi&apos;&#125;], &apos;China&apos;: [&#123;&apos;country&apos;: &apos;China&apos;, &apos;age&apos;: 20, &apos;name&apos;: &apos;zhangsan&apos;&#125;, &#123;&apos;country&apos;: &apos;China&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;lijiu&apos;&#125;], &apos;USA&apos;: [&#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 19, &apos;name&apos;: &apos;wangwu&apos;&#125;, &#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;zhaoliu&apos;&#125;, &#123;&apos;country&apos;: &apos;USA&apos;, &apos;age&apos;: 22, &apos;name&apos;: &apos;pengqi&apos;&#125;]&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Get the numbers of every group:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dict([(key, len(list(group))) for key,group in lstg])</span><br></pre></td></tr></table></figure></p>
+<p>return:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&apos;JP&apos;: 1, &apos;China&apos;: 2, &apos;USA&apos;: 3&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2018-11-17T06:03:15.000Z"><a href="/2018/11/17/Flask-application-run-threads-in-the-background/">2018-11-17</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2018/11/17/Flask-application-run-threads-in-the-background/">Flask application run threads in the background</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Example is following:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">from flask import Flask</span><br><span class="line">from time import sleep</span><br><span class="line">from concurrent.futures import ThreadPoolExecutor</span><br><span class="line"></span><br><span class="line">executor = ThreadPoolExecutor(2)</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line">@app.route(&apos;/jobs&apos;)</span><br><span class="line">def run_jobs():</span><br><span class="line">	executor.submit(some_long_task1)</span><br><span class="line">	executor.submit(some_long_task2, &apos;hello&apos;, 123)</span><br><span class="line">	return &apos;Two jobs was launched in background!&apos;</span><br><span class="line"></span><br><span class="line">def some_long_task1():</span><br><span class="line">	print(&apos;Task #1 started&apos;)</span><br><span class="line">	sleep(10)</span><br><span class="line">	print(&apos;Task #1 is done&apos;)</span><br><span class="line"></span><br><span class="line">def some_long_task2(arg1, arg2):</span><br><span class="line">	print(&apos;Task #2 started&apos;)</span><br><span class="line">	sleep(5)</span><br><span class="line">	print(&apos;Task #2 is done&apos;)</span><br><span class="line"></span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">	app.run()</span><br></pre></td></tr></table></figure>
+<p><code>concurrent.futures</code> is introduced from python3.2, and provied higher abstract than <code>threading</code> and <code>multiprocessing</code>, it’s include two class <code>ThreadPoolExecutor</code> and <code>ProcessPoolExecutor</code>.</p>
+<p>for more information you can view in <a href="https://docs.python.org/3/library/concurrent.futures.html#module-concurrent.futures" target="_blank" rel="noopener">python docuemnts for concurrent.furtures</a></p>
+<ol>
+<li>Executor</li>
+</ol>
+<p>Executor is a base module, this is a abstract class, the subclass is <code>ThreadPoolExecutor</code> and <code>ProcessPoolExecutor</code> which is to be used create thred pool and process pool.</p>
+<p>the methods is following:</p>
+<ul>
+<li><code>Executor.submit(fn, *args, **kwargs)</code></li>
+</ul>
+<p>example is:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">with ThreadPoolExecutor(max_workers=2) as executor:</span><br><span class="line">	future = executor.submit(pow, 22, 123)</span><br><span class="line">	print(futrue.result())</span><br></pre></td></tr></table></figure></p>
+<p>we use <code>submit</code> method join a <code>task</code> in tread pool, <code>submit</code> return a <code>Future</code> object. and the <code>future.result()</code> is use <code>result</code> method get the result.<br>it will wainting untill the method is finished.<br>we use <code>with</code> for auto call ‘shutdown’ method otherwise we have to wait some release code.</p>
+<ul>
+<li><code>Executor.map(fn, *args, **kwargs)</code></li>
+</ul>
+<p>the <code>map</code> method is same with python map method. but it can set out time by arguement. <code>timeout</code> is int or float. if method overtime, will <code>raise TimeoutError</code>. it will no time out if it’s not set <code>timeout</code>.</p>
+<table>
+<thead>
+<tr>
+<th>arguement</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>func</td>
+<td>the method</td>
+</tr>
+<tr>
+<td>iterables</td>
+<td>iter object</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>timeout setting</td>
+</tr>
+</tbody>
+</table>
+<p>example is:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">form concurrent.futures import ThreadPoolExecutor</span><br><span class="line">import requests</span><br><span class="line">URLS = [&quot;http://www.163.com&quot;, &quot;https://www.baidu.com&quot;, &quot;https://github.com&quot;]</span><br><span class="line"></span><br><span class="line">def load_url(url):</span><br><span class="line">	req = requests.get(url)</span><br><span class="line">	print(f&quot;&#123;url&#125; page is &#123;len(req.content)&#125; bytes&quot;)</span><br><span class="line"></span><br><span class="line">executor = ThreadPoolExecutor(max_workers=3)</span><br><span class="line">executor.map(load_url, URLS)</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>Executor.shutdown(wait=True)</code></li>
+</ul>
+<p>this method is used by release system resources. <code>Executor</code> have <code>__enter__</code> and <code>__exit__</code> methods, so it can use <code>with</code>.</p>
+<ol start="2">
+<li>Future</li>
+</ol>
+<p><code>submit</code> method will return a <code>futrue</code> object. <code>future</code> have many methods for shadow task status. <code>Future</code> is created by <code>Executor.submit()</code>.</p>
+<table>
+<thead>
+<tr>
+<th>method</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cancel()</td>
+<td>cancel call, it cannot cancel if running now and return False, otherwise return True</td>
+</tr>
+<tr>
+<td>cancelled()</td>
+<td>check if is it cancel success or false and return True or False</td>
+</tr>
+<tr>
+<td>running()</td>
+<td></td>
+</tr>
+<tr>
+<td>done()</td>
+<td>check if is it call success or fail when running and return True or False</td>
+</tr>
+<tr>
+<td>result(Timeout=None)</td>
+<td>get result, if it’s not finished, it will waitting</td>
+</tr>
+<tr>
+<td>exception(timeout=None)</td>
+<td>get the except</td>
+</tr>
+<tr>
+<td>add_done_callback(fn)</td>
+<td>it will bind fn to future object.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>wait</code></li>
+</ul>
+<p><code>wait</code> method will return a tuple, the tuple include two set, it is <code>completed</code> and <code>uncompleted</code>.<br><code>wait</code> method have 3 arguements <code>FIRST_COMPLETED</code>, <code>FIRST_EXCEPTION</code> and <code>ALL_COMPLETE</code>, the default is <code>ALL_COMPLETED</code>.</p>
+<p>If use default <code>ALL_COMPLETED</code>, the program will blocked untill all tasks completed and then run main thread.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from concurrent.future import ThreadPoolExecutor, wait, as_completed</span><br><span class="line">import requests</span><br><span class="line">URLS = [&apos;http://www.163.com&apos;, &apos;http://www.baidu.com&apos;]</span><br><span class="line">def load_url(url):</span><br><span class="line">	req = requests.get(url)</span><br><span class="line">	print(f&apos;&#123;url&#125; page is &#123;len(req.content)&#125; bytes&apos;)</span><br><span class="line"></span><br><span class="line">executor = ThreadPoolExecutor(max_workers=3)</span><br><span class="line">f_list = []</span><br><span class="line">for url in URLS:</span><br><span class="line">	future = executor.submit(load_url, url)</span><br><span class="line">	f_list.append(future)</span><br><span class="line"></span><br><span class="line">print(wait(f_list))</span><br><span class="line">print(&apos;Main Thread is closed&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>If use <code>FIRST_COMPLETED</code>, the program will closed but not waiting all tasks finished.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from concurrent.future import ThreadPoolExecutor, wait, as_completed</span><br><span class="line">import requests</span><br><span class="line">URLS = [&apos;http://www.163.com&apos;, &apos;http://www.baidu.com&apos;]</span><br><span class="line">def load_url(url):</span><br><span class="line">	req = requests.get(url)</span><br><span class="line">	print(f&apos;&#123;url&#125; page is &#123;len(req.content)&#125; bytes&apos;)</span><br><span class="line"></span><br><span class="line">executor = ThreadPoolExecutor(max_workers=3)</span><br><span class="line">f_list = []</span><br><span class="line">for url in URLS:</span><br><span class="line">	future = executor.submit(load_url, url)</span><br><span class="line">	f_list.append(future)</span><br><span class="line"></span><br><span class="line">print(wait(f_list, return_when=&quot;FIRST_COMPLETED&quot;))</span><br><span class="line">print(&apos;Main Thread is closed&apos;)</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2018-11-06T01:02:37.000Z"><a href="/2018/11/06/how-to-change-between-in-string-and-bytes-in-pyhton/">2018-11-06</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2018/11/06/how-to-change-between-in-string-and-bytes-in-pyhton/">how to change between in string and bytes in pyhton</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">x = &apos;abc&apos;</span><br><span class="line"></span><br><span class="line"># string to bytes</span><br><span class="line"></span><br><span class="line">b = bytes(x, encoding=&apos;utf-8&apos;)</span><br><span class="line"></span><br><span class="line">#butes to str</span><br><span class="line"></span><br><span class="line">s = str(b, encoding=&apos;utf-8&apos;)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2018-11-06T00:57:26.000Z"><a href="/2018/11/06/How-to-resoved-can-not-usw-Tab-in-Ubuntu-terminal/">2018-11-06</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2018/11/06/How-to-resoved-can-not-usw-Tab-in-Ubuntu-terminal/">How to resoved can not usw &#39;Tab&#39; in Ubuntu terminal</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ol>
+<li>Check current shell:</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># echo $SHELL</span><br><span class="line"></span><br><span class="line">/bin/sh</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>Change shell to <code>/bin/bash</code>:</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># usermod -s /bin/bash &lt;username&gt;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="_post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2018-06-12T15:22:33.000Z"><a href="/2018/06/12/Enhance-your-Python-with-an-interactive-shell/">2018-06-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2018/06/12/Enhance-your-Python-with-an-interactive-shell/">Enhance your Python with an interactive shell</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Original source is <a href="https://fedoramagazine.org/enhance-python-interactive-shell/" target="_blank" rel="noopener">here</a></p>
+<p>The Python programming language has become one of the most popular languages used in IT. One reason for this success is it can be used to solve a variety of problems. From web development to data science, machine learning to task automation, the Python ecosystem is rich in popular frameworks and libraries. This article presents some useful Python shells available in the Fedora packages collection to make development easier.</p>
+<h2 id="Python-Shell"><a href="#Python-Shell" class="headerlink" title="Python Shell"></a>Python Shell</h2><p>The Python Shell lets you use the interpreter in an interactive mode. It’s very useful to test code or try a new library. In Fedora you can invoke the default shell by typing python3 in a terminal session. Some more advanced and enhanced shells are available to Fedora, though.</p>
+<h2 id="IPython"><a href="#IPython" class="headerlink" title="IPython"></a>IPython</h2><p>IPython provides many useful enhancements to the Python shell. Examples include tab completion, object introspection, system shell access and command history retrieval.  Many of these features are also used by the Jupyter Notebook , since it uses IPython underneath.</p>
+<h3 id="Install-and-run-IPython"><a href="#Install-and-run-IPython" class="headerlink" title="Install and run IPython"></a>Install and run IPython</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dnf install ipython3</span><br><span class="line">ipython3</span><br></pre></td></tr></table></figure>
+<p>Using tab completion prompts you with possible choices. This features comes in handy when you use an unfamiliar library.</p>
+<p>If you need more information, use the documentation by typing the ? command. For more details, you can use the ?? command.</p>
+<p>Another cool feature is the ability to execute a system shell command using the ! character. The result of the command can then be referenced in the IPython shell.</p>
+<p>A comprehensive list of IPython features is available in the official documentation.</p>
+<h2 id="bpython"><a href="#bpython" class="headerlink" title="bpython"></a>bpython</h2><p>bpython doesn’t do as much as  IPython, but nonetheless it provides a useful set of features in a simple and lightweight package. Among other features, bpython provides:</p>
+<ul>
+<li>In-line syntax highlighting</li>
+<li>Autocomplete with suggestions as you type</li>
+<li>Expected parameter list</li>
+<li>Ability to send or save code to a pastebin service or file</li>
+</ul>
+<h3 id="Install-and-run-bpython"><a href="#Install-and-run-bpython" class="headerlink" title="Install and run bpython"></a>Install and run bpython</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dnf install bpython3</span><br><span class="line">bpython3</span><br></pre></td></tr></table></figure>
+<p>As you type, bpython offers you choices to autocomplete your code.</p>
+<p>When you call a function or method, the expected parameters and the docstring are automatically displayed.</p>
+<p>Another neat feature is the ability to open the current bpython session in an external editor (Vim by default) using the function key F7. This is very useful when testing more complex programs.</p>
+<p>For more details about configuration and features, consult the bpython documentation.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Using an enhanced Python shell is a good way to increase productivity. It gives you enhanced features to write a quick prototype or try out a new library. Are you using an enhanced Python shell? Feel free to mention it in the comment section below.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-09-09T14:14:16.000Z"><a href="/2017/09/09/Mocks-and-monkeypatching-in-python/">2017-09-09</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/09/09/Mocks-and-monkeypatching-in-python/">Mocks and monkeypatching in python</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Translate from <a href="https://krzysztofzuraw.com/blog/2016/mocks-monkeypatching-in-python.html" target="_blank" rel="noopener">krzysztofzuraw</a></p>
+<p>First of all, what I want to accomplish here is to give you basic examples of how to mock data using two tools: mock and pytest monkeypatch.</p>
+<h1 id="Why-bother-mocking"><a href="#Why-bother-mocking" class="headerlink" title="Why bother mocking?"></a>Why bother mocking?</h1><p>Some of the parts of our application may have dependencies for other libraries or objects. To isolate behaviour of our parts we need to substitue external dependencies. Here comes the mocking. We mock external API to have certain behaviours such as proper return values that we previously defined.</p>
+<h1 id="Mocking-function"><a href="#Mocking-function" class="headerlink" title="Mocking function"></a>Mocking function</h1><p>Let’s say we have module called <strong>function.py</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def square(value):</span><br><span class="line">    return value ** 2</span><br><span class="line"></span><br><span class="line">def cube(value):</span><br><span class="line">    return value ** 3</span><br><span class="line"></span><br><span class="line">def main(value):</span><br><span class="line">    return square(value) + cube(value)</span><br></pre></td></tr></table></figure>
+<p>Then let’s look how these functions are mocked using <strong>mock</strong> library:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">1  try:</span><br><span class="line">2      import mock</span><br><span class="line">3  except ImportError:</span><br><span class="line">4      from unittest import mock</span><br><span class="line">5 </span><br><span class="line">6  import unittest</span><br><span class="line">7 </span><br><span class="line">8  from function import square, main</span><br><span class="line">9 </span><br><span class="line">10</span><br><span class="line">11 class TestNotMockedFunction(unittest.TestCase):</span><br><span class="line">12     @mock.patch(&apos;__main__.square&apos;, return_value=1)</span><br><span class="line">13     def test_function(self, mocked_square):</span><br><span class="line">14         # because you need to patch in exact place where function that has to be mocked is called</span><br><span class="line">15         self.assertEquals(square(5), 1)</span><br><span class="line">16        </span><br><span class="line">17     @mock.patch(&apos;function.square&apos;)</span><br><span class="line">18     @mock.patch(&apos;function.cube&apos;)</span><br><span class="line">19     def test_main_function(self, mocked_square, mocked_cube):</span><br><span class="line">20         # underling function are mocks so calling main(5) will return mock</span><br><span class="line">21         mocked_square.return_value = 1</span><br><span class="line">22         mocked_cube.return_value = 0</span><br><span class="line">23         self.assertEquals(main(5), 1)</span><br><span class="line">24         mocked_square.assert_called_once_with(5)</span><br><span class="line">25         mocked_cube.assert_called_once_with(5)</span><br><span class="line">26</span><br><span class="line">27 if __name__ == &apos;__main__&apos;:</span><br><span class="line">28     unittest.main()</span><br></pre></td></tr></table></figure>
+<p>What is happening here? Lines 1-4 are for making this code compatible between python 2 and 3. In python 3 mock is part of standard library whereas in python 2 you need to install by <strong>pip install mock</strong>.</p>
+<p>In line 13 I patched the <code>square</code> function. But you have to remember to patch it in the same place you use it. For instance, I’m calling <code>square(5)</code> in test itself so I need to patch it in <code>__main__</code>. This is the case if I’m running this by <code>python tests/test_function.py</code>. If I’m using pytest for that I need to patch it like <code>test_function.square</code>.</p>
+<p>In lines 17-18, I patch <code>square</code> and <code>cube</code> functions in their module because they are used in <code>main</code> function. The last two asserts come from mock library and are for making sure that mock was called with proper values.</p>
+<p>The same can be accomplished using <code>mokeypatching</code> for py.test:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from function import square, main</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def test_function(monkeypatch):</span><br><span class="line">    monkeypatch.setattr(&quot;test_function_pytest.square&quot;, lambda x: 1)</span><br><span class="line">    assert square(5) == 1</span><br><span class="line"></span><br><span class="line">def test_main_function(monkeypatch):</span><br><span class="line">    monkeypatch.setattr(&apos;function.square&apos;, lambda x: 1)</span><br><span class="line">    monkeypatch.setattr(&apos;function.cube&apos;, lambda x: 0)</span><br><span class="line">    assert main(5) == 1</span><br></pre></td></tr></table></figure>
+<p>As you can see I’m using <code>monkeypatch.setattr</code> for setting up return value for given functions. I’m still need to monkeypatch it in proper place: <code>test_function_pytest</code> and <code>function</code>.</p>
+<h1 id="Mocking-classes"><a href="#Mocking-classes" class="headerlink" title="Mocking classes"></a>Mocking classes</h1><p>I have module called <code>square</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import math</span><br><span class="line"></span><br><span class="line">class Square(object):</span><br><span class="line">    def __init__(radius):</span><br><span class="line">         self.radius = radius</span><br><span class="line"></span><br><span class="line">    def calculate_area(self):</span><br><span class="line">         return math.sqrt(self.radius) * math.pi</span><br></pre></td></tr></table></figure>
+<p>And mocks using standard lib:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">1  try:</span><br><span class="line">2      import mock</span><br><span class="line">3  except ImportError:</span><br><span class="line">4      from unittest import mock</span><br><span class="line">5 </span><br><span class="line">6  import unittest</span><br><span class="line">7  </span><br><span class="line">8  from square import Square</span><br><span class="line">9  </span><br><span class="line">10  </span><br><span class="line">11 class TestClass(unittest.TestCase):</span><br><span class="line">12 </span><br><span class="line">13     @mock.patch(&apos;__main__.Square&apos;) # depends in witch from is run</span><br><span class="line">14     def test_mocking_instance(self, mocked_instance):</span><br><span class="line">15         mocked_instance = mocked_instance.return_value</span><br><span class="line">16         mocked_instance.calculate_area.return_value = 1</span><br><span class="line">17         sq = Square(100)</span><br><span class="line">18         self.assertEquals(sq.calculate_area(), 1)</span><br><span class="line">19 </span><br><span class="line">20 </span><br><span class="line">21     def test_mocking_classes(self):</span><br><span class="line">22         sq = Square</span><br><span class="line">23         sq.calculate_area = mock.MagicMock(return_value=1)</span><br><span class="line">24         self.assertEquals(sq.calculate_area(), 1)</span><br><span class="line">25 </span><br><span class="line">26     @mock.patch.object(Square, &apos;calculate_area&apos;)</span><br><span class="line">27     def test_mocking_class_methods(self, mocked_method):</span><br><span class="line">28         mocked_method.return_value = 20</span><br><span class="line">29         self.assertEquals(Square.calculate_area(), 20)</span><br><span class="line">30 </span><br><span class="line">31 if __name__ == &apos;__main__&apos;:</span><br><span class="line">32     unittest.main()</span><br></pre></td></tr></table></figure>
+<p>At line 13 I patch class <code>Square</code> (again be aware if you run this test using pytest or standard way). Lines 15 and 16 presents mocking instance; at first <code>mocked_instance</code> is mock object which by default returns another mock and to these <code>mock.calculate_area</code> I add <code>return_value</code> 1. In line 23 I’m using <code>MagicMock</code> which is normal mock class except it also retrieves magic methods from given object. Lastly I use <code>patch.object</code> to mock method in <code>Square</code> class.</p>
+<p>The same using pytest:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">try:</span><br><span class="line">    from mock import MagicMock</span><br><span class="line">except ImportError:</span><br><span class="line">   from unittest.mock import MagicMock</span><br><span class="line"></span><br><span class="line">from square import Square</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def test_mocking_class_methods(monkeypatch):</span><br><span class="line">    monkeypatch.setattr(&apos;test_class_pytest.Square.calculate_area&apos;, lambda: 1)</span><br><span class="line">    assert Square.calculate_area() ==  1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def test_mocking_classes(monkeypatch):</span><br><span class="line">    monkeypatch.setattr(&apos;test_class_pytest.Square&apos;, MagicMock(Square))</span><br><span class="line">    sq = Square</span><br><span class="line">    sq.calculate_area.return_value = 1</span><br><span class="line">    assert sq.calculate_area() ==  1</span><br></pre></td></tr></table></figure>
+<p>The issue here is with <code>test_mocking_class_methods</code> which works well in python 3 but not in python 2. Right now I don’t have clear answer to this so if you can help I appreciate this!</p>
+<p>All examples can be found under this <a href="https://github.com/krzysztofzuraw/personal-blog-projects/tree/master/blog_mocks" target="_blank" rel="noopener">repo</a>.</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References:"></a>References:</h1><ol>
+<li><a href="http://stackoverflow.com/questions/2665812/what-is-mocking" target="_blank" rel="noopener">What is mocking</a>.</li>
+<li><a href="http://manishamde.github.io/blog/2013/10/06/mocking-python-with-kung-fu-panda/#mock_classes" target="_blank" rel="noopener">Mocking Python With Kung Fu Panda</a>.</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-08-19T00:15:44.000Z"><a href="/2017/08/19/Nevwe-Write-For-Loops-Again/">2017-08-19</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/08/19/Nevwe-Write-For-Loops-Again/">Nevwe Write For-Loops Again</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Translate from <a href="https://dev.to/dawranliou/never-write-for-loops-again" target="_blank" rel="noopener">Randy Daw-Ran Liou </a></p>
+<p>This is a challenge. I challenge you to avoid writing for-loops in every scenario. Also, I challenge you to find the scenarios that are so freaking hard to write anything else but a for-loop. Please share your findings. I’d like to hear about them.</p>
+<p>It’s been a while since I started exploring the amazing language features in Python. At the beginning, it’s just a challenge I gave myself to practice using more language features instead of those I learned from other programming language. And things are just getting more fun! Not only the code become shorter and cleaner, but also code looks more structured and disciplined. I’ll get into those benefits more in this article.</p>
+<p>But first, let’s take a step back and see what’s the intuition behind writing a for-loop:<br>1.To go through a sequence to extract out some information<br>2.To generate another sequence out of the current sequence<br>3.This is my second nature to write for-loops because I’m a programmer</p>
+<p>Fortunately, there are already great tools that are built into Python to help you accomplish the goals! All you need is to shift your mind and look at the things in a different angle.</p>
+<h2 id="What-you-gain-by-not-writing-for-loops-everywhere"><a href="#What-you-gain-by-not-writing-for-loops-everywhere" class="headerlink" title="What you gain by not writing for-loops everywhere"></a>What you gain by not writing for-loops everywhere</h2><p>1.Fewer lines of code<br>2.Better code readability<br>3.Leave indentation for managing context only</p>
+<p>Let’s see the code skeleton below:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 1</span><br><span class="line">with ...:</span><br><span class="line">    for ...:</span><br><span class="line">        if ...:</span><br><span class="line">            try:</span><br><span class="line">            except:</span><br><span class="line">        else:</span><br></pre></td></tr></table></figure></p>
+<p>In this example, we are dealing with multiple layers of code. THIS IS HARD TO READ. The problem I found in this code is that it is mixing the <strong>administrative</strong> logic (the <code>with</code>, <code>try-except</code>) with the <strong>business logic</strong> (the <code>for</code>, <code>if</code>) by giving them the indentation ubiquitously. If you are disciplined about using indentation only for administrative logic, your core business logic would stand out immediately.</p>
+<blockquote>
+<p>“Flat is better than nested” - The Zen of Python</p>
+</blockquote>
+<h2 id="Tools-you-can-use-to-avoid-using-for-loops"><a href="#Tools-you-can-use-to-avoid-using-for-loops" class="headerlink" title="Tools you can use to avoid using for-loops"></a>Tools you can use to avoid using for-loops</h2><h3 id="1-List-Comprehension-Generator-Expression"><a href="#1-List-Comprehension-Generator-Expression" class="headerlink" title="1.List Comprehension / Generator Expression"></a>1.List Comprehension / Generator Expression</h3><p>Let’s see a simple example. Basically you want to compile a sequence based on another existing sequence:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">result = []</span><br><span class="line">for item in item_list:</span><br><span class="line">    new_item = do_something_with(item)</span><br><span class="line">    result.append(item)</span><br></pre></td></tr></table></figure></p>
+<p>You can use <code>map</code> if you love MapReduce, or, Python has List Comprehension:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result = [do_something_with(item) for item in item_list]</span><br></pre></td></tr></table></figure></p>
+<p>Similarly, if you wish to get a iterator only, you can use Generator Expression with almost the same syntax. (How can you not love the consistency in Python?)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result = (do_something_with(item) for item in item_list)</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-Functions"><a href="#2-Functions" class="headerlink" title="2. Functions"></a>2. Functions</h3><p>Thinking in a higher-order, more functional programming way, if you want to map a sequence to another, simply call the <code>map</code> function. (Be my guest to use list comprehension here instead.)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">doubled_list = map(lambda x: x * 2, old_list)</span><br></pre></td></tr></table></figure>
+<p>If you want to reduce a sequence into a single, use <code>reduce</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from functools import reduce</span><br><span class="line">summation = reduce(lambda x, y: x + y, numbers)</span><br></pre></td></tr></table></figure>
+<p>Also, lots of Python’s builtin functions consumes iterables:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = list(range(10))</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span><br><span class="line">&gt;&gt;&gt; all(a)</span><br><span class="line">False</span><br><span class="line">&gt;&gt;&gt; any(a)</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; max(a)</span><br><span class="line">9</span><br><span class="line">&gt;&gt;&gt; min(a)</span><br><span class="line">0</span><br><span class="line">&gt;&gt;&gt; list(filter(bool, a))</span><br><span class="line">[1, 2, 3, 4, 5, 6, 7, 8, 9]</span><br><span class="line">&gt;&gt;&gt; set(a)</span><br><span class="line">&#123;0, 1, 2, 3, 4, 5, 6, 7, 8, 9&#125;</span><br><span class="line">&gt;&gt;&gt; dict(zip(a,a))</span><br><span class="line">&#123;0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9&#125;</span><br><span class="line">&gt;&gt;&gt; sorted(a, reverse=True)</span><br><span class="line">[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]</span><br><span class="line">&gt;&gt;&gt; str(a)</span><br><span class="line">&apos;[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]&apos;</span><br><span class="line">&gt;&gt;&gt; sum(a)</span><br><span class="line">45</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-Extract-Functions-or-Generators"><a href="#3-Extract-Functions-or-Generators" class="headerlink" title="3. Extract Functions or Generators"></a>3. Extract Functions or Generators</h3><p>The above two methods are great to deal with simpler logic. How about more complex logic? As a programmer, we write functions to abstract out the difficult things. Same idea applies here. If you are writing this:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">results = []</span><br><span class="line">for item in item_list:</span><br><span class="line">    # setups</span><br><span class="line">    # condition</span><br><span class="line">    # processing</span><br><span class="line">    # calculation</span><br><span class="line">    results.append(result)</span><br></pre></td></tr></table></figure></p>
+<p>Apparently you are giving too much responsibility to a single code block. Instead, I propose you do:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def process_item(item):</span><br><span class="line">    # setups</span><br><span class="line">    # condition</span><br><span class="line">    # processing</span><br><span class="line">    # calculation</span><br><span class="line">    return result</span><br><span class="line"></span><br><span class="line">results = [process_item(item) for item in item_list]</span><br></pre></td></tr></table></figure></p>
+<p>How about nested for-loops?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">results = []</span><br><span class="line">for i in range(10):</span><br><span class="line">    for j in range(i):</span><br><span class="line">        results.append((i, j))</span><br></pre></td></tr></table></figure></p>
+<p>List Comprehension got your back:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">results = [(i, j)</span><br><span class="line">           for i in range(10)</span><br><span class="line">           for j in range(i)]</span><br></pre></td></tr></table></figure></p>
+<p>How about if you have some internal state in the code block to<br>keep?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># finding the max prior to the current item</span><br><span class="line">a = [3, 4, 6, 2, 1, 9, 0, 7, 5, 8]</span><br><span class="line">results = []</span><br><span class="line">current_max = 0</span><br><span class="line">for i in a:</span><br><span class="line">    current_max = max(i, current_max)</span><br><span class="line">    results.append(current_max)</span><br><span class="line"></span><br><span class="line"># results = [3, 4, 6, 6, 6, 9, 9, 9, 9, 9]</span><br></pre></td></tr></table></figure></p>
+<p>Let’s extract a generator to achieve this:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def max_generator(numbers):</span><br><span class="line">    current_max = 0</span><br><span class="line">    for i in numbers:</span><br><span class="line">        current_max = max(i, current_max)</span><br><span class="line">        yield current_max</span><br><span class="line"></span><br><span class="line">a = [3, 4, 6, 2, 1, 9, 0, 7, 5, 8]</span><br><span class="line">results = list(max_generator(a))</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>“Oh wait, you just used a for-loop in the generator function. That’s cheating!”</p>
+</blockquote>
+<p>Fine, smart ass, let’s try the following.</p>
+<h3 id="4-Don’t-write-it-yourself-itertools-got-you-covered"><a href="#4-Don’t-write-it-yourself-itertools-got-you-covered" class="headerlink" title="4. Don’t write it yourself. itertools got you covered"></a>4. Don’t write it yourself. <code>itertools</code> got you covered</h3><p>This module is simply brilliant. I believe this module covers 80% of the cases that you makes you want to write for-loops. For example, the last example can be rewritten to:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from itertools import accumulate</span><br><span class="line">a = [3, 4, 6, 2, 1, 9, 0, 7, 5, 8]</span><br><span class="line">resutls = list(accumulate(a, max))</span><br></pre></td></tr></table></figure></p>
+<p>Also, if you are iterating on combinatoric sequnces, there are <code>product()</code>, <code>permutations()</code>, <code>combinations()</code> to use.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>1.You don’t need to write for-loops in most scenarios<br>2.You should avoid writing for-loops, so you have better code readability</p>
+<h2 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h2><p>1.Look at your code again. Spot any places that you wrote a for-loop previously by intuition. Think again and see if it make sense to re-write it without using for-loop.<br>2.Share your cases that are hard to code without using for-loops</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-06-08T07:47:04.000Z"><a href="/2017/06/08/High-Concurrency-Web-System-In-Ecommerce-Website-Seckill-And-Falsh-Sale/">2017-06-08</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/06/08/High-Concurrency-Web-System-In-Ecommerce-Website-Seckill-And-Falsh-Sale/">High Concurrency Web System In Ecommerce Website Seckill And Falsh Sale</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><a href="http://www.csdn.net/article/1970-01-01/2822858" target="_blank" rel="noopener">http://www.csdn.net/article/1970-01-01/2822858</a></p>
+<!-- toc -->
+<p>电商的秒杀和抢购，对我们来说，都不是一个陌生的东西。然而，从技术的角度来说，这对于Web系统是一个巨大的考验。当一个Web系统，在一秒钟内收到数以万计甚至更多请求时，系统的优化和稳定至关重要。这次我们会关注秒杀和抢购的技术实现和优化，同时，从技术层面揭开，为什么我们总是不容易抢到火车票的原因？ </p>
+<h1 id="大规模并发带来的挑战"><a href="#大规模并发带来的挑战" class="headerlink" title="大规模并发带来的挑战"></a>大规模并发带来的挑战</h1><p>在过去的工作中，我曾经面对过5w每秒的高并发秒杀功能，在这个过程中，整个Web系统遇到了很多的问题和挑战。如果Web系统不做针对性的优化，会轻而易举地陷入到异常状态。我们现在一起来讨论下，优化的思路和方法哈。 </p>
+<h2 id="请求接口的合理设计"><a href="#请求接口的合理设计" class="headerlink" title="请求接口的合理设计"></a>请求接口的合理设计</h2><p>一个秒杀或者抢购页面，通常分为2个部分，一个是静态的HTML等内容，另一个就是参与秒杀的Web后台请求接口。</p>
+<p>通常静态HTML等内容，是通过CDN的部署，一般压力不大，核心瓶颈实际上在后台请求接口上。这个后端接口，必须能够支持高并发请求，同时，非常重要的一点，必须尽可能“快”，在最短的时间里返回用户的请求结果。为了实现尽可能快这一点，接口的后端存储使用内存级别的操作会更好一点。仍然直接面向MySQL之类的存储是不合适的，如果有这种复杂业务的需求，都建议采用异步写入。</p>
+<p><img src="./547821ba53d6d_middle.jpg" alt="用户请求"></p>
+<p>当然，也有一些秒杀和抢购采用“滞后反馈”，就是说秒杀当下不知道结果，一段时间后才可以从页面中看到用户是否秒杀成功。但是，这种属于“偷懒”行为，同时给用户的体验也不好，容易被用户认为是“暗箱操作”。</p>
+<h2 id="高并发的挑战：一定要“快”"><a href="#高并发的挑战：一定要“快”" class="headerlink" title="高并发的挑战：一定要“快”"></a>高并发的挑战：一定要“快”</h2><p>我们通常衡量一个Web系统的吞吐率的指标是QPS（Query Per Second，每秒处理请求数），解决每秒数万次的高并发场景，这个指标非常关键。举个例子，我们假设处理一个业务请求平均响应时间为100ms，同时，系统内有20台Apache的Web服务器，配置MaxClients为500个（表示Apache的最大连接数目）。</p>
+<p>那么，我们的Web系统的理论峰值QPS为（理想化的计算方式）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">20*500/0.1 = 100000 （10万QPS）</span><br></pre></td></tr></table></figure></p>
+<p>咦？我们的系统似乎很强大，1秒钟可以处理完10万的请求，5w/s的秒杀似乎是“纸老虎”哈。实际情况，当然没有这么理想。在高并发的实际场景下，机器都处于高负载的状态，在这个时候平均响应时间会被大大增加。</p>
+<p>就Web服务器而言，Apache打开了越多的连接进程，CPU需要处理的上下文切换也越多，额外增加了CPU的消耗，然后就直接导致平均响应时间增加。因此上述的MaxClient数目，要根据CPU、内存等硬件因素综合考虑，绝对不是越多越好。可以通过Apache自带的abench来测试一下，取一个合适的值。然后，我们选择内存操作级别的存储的Redis，在高并发的状态下，存储的响应时间至关重要。网络带宽虽然也是一个因素，不过，这种请求数据包一般比较小，一般很少成为请求的瓶颈。负载均衡成为系统瓶颈的情况比较少，在这里不做讨论哈。</p>
+<p>那么问题来了，假设我们的系统，在5w/s的高并发状态下，平均响应时间从100ms变为250ms（实际情况，甚至更多）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">20*500/0.25 = 40000 （4万QPS）</span><br></pre></td></tr></table></figure></p>
+<p>于是，我们的系统剩下了4w的QPS，面对5w每秒的请求，中间相差了1w。</p>
+<p>然后，这才是真正的恶梦开始。举个例子，高速路口，1秒钟来5部车，每秒通过5部车，高速路口运作正常。突然，这个路口1秒钟只能通过4部车，车流量仍然依旧，结果必定出现大塞车。（5条车道忽然变成4条车道的感觉）</p>
+<p>同理，某一个秒内，<code>20*500</code>个可用连接进程都在满负荷工作中，却仍然有1万个新来请求，没有连接进程可用，系统陷入到异常状态也是预期之内。</p>
+<p><img src="./547821ee2d1ee_middle.jpg" alt="连接进程"></p>
+<p>其实在正常的非高并发的业务场景中，也有类似的情况出现，某个业务请求接口出现问题，响应时间极慢，将整个Web请求响应时间拉得很长，逐渐将Web服务器的可用连接数占满，其他正常的业务请求，无连接进程可用。</p>
+<p>更可怕的问题是，是用户的行为特点，系统越是不可用，用户的点击越频繁，恶性循环最终导致“雪崩”（其中一台Web机器挂了，导致流量分散到其他正常工作的机器上，再导致正常的机器也挂，然后恶性循环），将整个Web系统拖垮。</p>
+<h2 id="重启与过载保护"><a href="#重启与过载保护" class="headerlink" title="重启与过载保护"></a>重启与过载保护</h2><p>如果系统发生“雪崩”，贸然重启服务，是无法解决问题的。最常见的现象是，启动起来后，立刻挂掉。这个时候，最好在入口层将流量拒绝，然后再将重启。如果是redis/memcache这种服务也挂了，重启的时候需要注意“预热”，并且很可能需要比较长的时间。</p>
+<p>秒杀和抢购的场景，流量往往是超乎我们系统的准备和想象的。这个时候，过载保护是必要的。如果检测到系统满负载状态，拒绝请求也是一种保护措施。在前端设置过滤是最简单的方式，但是，这种做法是被用户“千夫所指”的行为。更合适一点的是，将过载保护设置在CGI入口层，快速将客户的直接请求返回。</p>
+<h1 id="作弊的手段：进攻与防守"><a href="#作弊的手段：进攻与防守" class="headerlink" title="作弊的手段：进攻与防守"></a>作弊的手段：进攻与防守</h1><p>秒杀和抢购收到了“海量”的请求，实际上里面的水分是很大的。不少用户，为了“抢“到商品，会使用“刷票工具”等类型的辅助工具，帮助他们发送尽可能多的请求到服务器。还有一部分高级用户，制作强大的自动请求脚本。这种做法的理由也很简单，就是在参与秒杀和抢购的请求中，自己的请求数目占比越多，成功的概率越高。</p>
+<p>这些都是属于“作弊的手段”，不过，有“进攻”就有“防守”，这是一场没有硝烟的战斗哈。</p>
+<h2 id="同一个账号，一次性发出多个请求"><a href="#同一个账号，一次性发出多个请求" class="headerlink" title="同一个账号，一次性发出多个请求"></a>同一个账号，一次性发出多个请求</h2><p>部分用户通过浏览器的插件或者其他工具，在秒杀开始的时间里，以自己的账号，一次发送上百甚至更多的请求。实际上，这样的用户破坏了秒杀和抢购的公平性。</p>
+<p>这种请求在某些没有做数据安全处理的系统里，也可能造成另外一种破坏，导致某些判断条件被绕过。例如一个简单的领取逻辑，先判断用户是否有参与记录，如果没有则领取成功，最后写入到参与记录中。这是个非常简单的逻辑，但是，在高并发的场景下，存在深深的漏洞。多个并发请求通过负载均衡服务器，分配到内网的多台Web服务器，它们首先向存储发送查询请求，然后，在某个请求成功写入参与记录的时间差内，其他的请求获查询到的结果都是“没有参与记录”。这里，就存在逻辑判断被绕过的风险。</p>
+<p><img src="./5478221b71722_middle.jpg" alt="一个帐号多个请求"></p>
+<p><strong>应对方案：</strong></p>
+<p>在程序入口处，一个账号只允许接受1个请求，其他请求过滤。不仅解决了同一个账号，发送N个请求的问题，还保证了后续的逻辑流程的安全。实现方案，可以通过Redis这种内存缓存服务，写入一个标志位（只允许1个请求写成功，结合watch的乐观锁的特性），成功写入的则可以继续参加。</p>
+<p><img src="./547822508a00b_middle.jpg" alt="一个帐号一个请求"></p>
+<p>或者，自己实现一个服务，将同一个账号的请求放入一个队列中，处理完一个，再处理下一个。</p>
+<h2 id="多个账号，一次性发送多个请求"><a href="#多个账号，一次性发送多个请求" class="headerlink" title="多个账号，一次性发送多个请求"></a>多个账号，一次性发送多个请求</h2><p>很多公司的账号注册功能，在发展早期几乎是没有限制的，很容易就可以注册很多个账号。因此，也导致了出现了一些特殊的工作室，通过编写自动注册脚本，积累了一大批“僵尸账号”，数量庞大，几万甚至几十万的账号不等，专门做各种刷的行为（这就是微博中的“僵尸粉“的来源）。举个例子，例如微博中有转发抽奖的活动，如果我们使用几万个“僵尸号”去混进去转发，这样就可以大大提升我们中奖的概率。</p>
+<p>这种账号，使用在秒杀和抢购里，也是同一个道理。例如，iPhone官网的抢购，火车票黄牛党。</p>
+<p><img src="547822740404f_middle.jpg" alt="多个帐号多次请求"></p>
+<p><strong>应对方案：</strong></p>
+<p>这种场景，可以通过检测指定机器IP请求频率就可以解决，如果发现某个IP请求频率很高，可以给它弹出一个验证码或者直接禁止它的请求：</p>
+<ul>
+<li>弹出验证码，最核心的追求，就是分辨出真实用户。因此，大家可能经常发现，网站弹出的验证码，有些是“鬼神乱舞”的样子，有时让我们根本无法看清。他们这样做的原因，其实也是为了让验证码的图片不被轻易识别，因为强大的“自动脚本”可以通过图片识别里面的字符，然后让脚本自动填写验证码。实际上，有一些非常创新的验证码，效果会比较好，例如给你一个简单问题让你回答，或者让你完成某些简单操作（例如百度贴吧的验证码）。</li>
+<li>直接禁止IP，实际上是有些粗暴的，因为有些真实用户的网络场景恰好是同一出口IP的，可能会有“误伤“。但是这一个做法简单高效，根据实际场景使用可以获得很好的效果。</li>
+</ul>
+<h2 id="多个账号，不同IP发送不同请求"><a href="#多个账号，不同IP发送不同请求" class="headerlink" title="多个账号，不同IP发送不同请求"></a>多个账号，不同IP发送不同请求</h2><p>所谓道高一尺，魔高一丈。有进攻，就会有防守，永不休止。这些“工作室”，发现你对单机IP请求频率有控制之后，他们也针对这种场景，想出了他们的“新进攻方案”，就是不断改变IP。</p>
+<p><img src="./5478229f6aa52_middle.jpg" alt="多个帐号不同ip多个请求"></p>
+<p>有同学会好奇，这些随机IP服务怎么来的。有一些是某些机构自己占据一批独立IP，然后做成一个随机代理IP的服务，有偿提供给这些“工作室”使用。还有一些更为黑暗一点的，就是通过木马黑掉普通用户的电脑，这个木马也不破坏用户电脑的正常运作，只做一件事情，就是转发IP包，普通用户的电脑被变成了IP代理出口。通过这种做法，黑客就拿到了大量的独立IP，然后搭建为随机IP服务，就是为了挣钱。</p>
+<p><strong>应对方案：</strong></p>
+<p>说实话，这种场景下的请求，和真实用户的行为，已经基本相同了，想做分辨很困难。再做进一步的限制很容易“误伤“真实用户，这个时候，通常只能通过设置业务门槛高来限制这种请求了，或者通过账号行为的”数据挖掘“来提前清理掉它们。</p>
+<p>僵尸账号也还是有一些共同特征的，例如账号很可能属于同一个号码段甚至是连号的，活跃度不高，等级低，资料不全等等。根据这些特点，适当设置参与门槛，例如限制参与秒杀的账号等级。通过这些业务手段，也是可以过滤掉一些僵尸号。</p>
+<h2 id="火车票的抢购"><a href="#火车票的抢购" class="headerlink" title="火车票的抢购"></a>火车票的抢购</h2><p>看到这里，同学们是否明白你为什么抢不到火车票？如果你只是老老实实地去抢票，真的很难。通过多账号的方式，火车票的黄牛将很多车票的名额占据，部分强大的黄牛，在处理验证码方面，更是“技高一筹“。</p>
+<p>高级的黄牛刷票时，在识别验证码的时候使用真实的人，中间搭建一个展示验证码图片的中转软件服务，真人浏览图片并填写下真实验证码，返回给中转软件。对于这种方式，验证码的保护限制作用被废除了，目前也没有很好的解决方案。</p>
+<p><img src="./547822ce2f038.jpg" alt="验证码中转"></p>
+<p>因为火车票是根据身份证实名制的，这里还有一个火车票的转让操作方式。大致的操作方式，是先用买家的身份证开启一个抢票工具，持续发送请求，黄牛账号选择退票，然后黄牛买家成功通过自己的身份证购票成功。当一列车厢没有票了的时候，是没有很多人盯着看的，况且黄牛们的抢票工具也很强大，即使让我们看见有退票，我们也不一定能抢得过他们哈。 </p>
+<p><img src="./547822fbe13a0.jpg" alt="黄牛退票流程"></p>
+<p>最终，黄牛顺利将火车票转移到买家的身份证下。</p>
+<p><strong>解决方案：</strong></p>
+<p>并没有很好的解决方案，唯一可以动心思的也许是对账号数据进行“数据挖掘”，这些黄牛账号也是有一些共同特征的，例如经常抢票和退票，节假日异常活跃等等。将它们分析出来，再做进一步处理和甄别。</p>
+<h1 id="高并发下的数据安全"><a href="#高并发下的数据安全" class="headerlink" title="高并发下的数据安全"></a>高并发下的数据安全</h1><p>我们知道在多线程写入同一个文件的时候，会存现“线程安全”的问题（多个线程同时运行同一段代码，如果每次运行结果和单线程运行的结果是一样的，结果和预期相同，就是线程安全的）。如果是MySQL数据库，可以使用它自带的锁机制很好的解决问题，但是，在大规模并发的场景中，是不推荐使用MySQL的。秒杀和抢购的场景中，还有另外一个问题，就是“超发”，如果在这方面控制不慎，会产生发送过多的情况。我们也曾经听说过，某些电商搞抢购活动，买家成功拍下后，商家却不承认订单有效，拒绝发货。这里的问题，也许并不一定是商家奸诈，而是系统技术层面存在超发风险导致的。</p>
+<h2 id="超发的原因"><a href="#超发的原因" class="headerlink" title="超发的原因"></a>超发的原因</h2><p>假设某个抢购场景中，我们一共只有100个商品，在最后一刻，我们已经消耗了99个商品，仅剩最后一个。这个时候，系统发来多个并发请求，这批请求读取到的商品余量都是99个，然后都通过了这一个余量判断，最终导致超发。（同文章前面说的场景）</p>
+<p><img src="./54782328bb155_middle.jpg" alt="超发"></p>
+<p>在上面的这个图中，就导致了并发用户B也“抢购成功”，多让一个人获得了商品。这种场景，在高并发的情况下非常容易出现。</p>
+<h2 id="悲观锁思路"><a href="#悲观锁思路" class="headerlink" title="悲观锁思路"></a>悲观锁思路</h2><p>解决线程安全的思路很多，可以从“悲观锁”的方向开始讨论。</p>
+<p>悲观锁，也就是在修改数据的时候，采用锁定状态，排斥外部请求的修改。遇到加锁的状态，就必须等待。</p>
+<p><img src="./5478234d530bf_middle.jpg" alt="悲观锁"></p>
+<p>虽然上述的方案的确解决了线程安全的问题，但是，别忘记，我们的场景是“高并发”。也就是说，会很多这样的修改请求，每个请求都需要等待“锁”，某些线程可能永远都没有机会抢到这个“锁”，这种请求就会死在那里。同时，这种请求会很多，瞬间增大系统的平均响应时间，结果是可用连接数被耗尽，系统陷入异常。</p>
+<h2 id="FIFO队列思路"><a href="#FIFO队列思路" class="headerlink" title="FIFO队列思路"></a>FIFO队列思路</h2><p>那好，那么我们稍微修改一下上面的场景，我们直接将请求放入队列中的，采用FIFO（First Input First Output，先进先出），这样的话，我们就不会导致某些请求永远获取不到锁。看到这里，是不是有点强行将多线程变成单线程的感觉哈。</p>
+<p><img src="./547823786991a_middle.jpg" alt="FIFO队列"></p>
+<p>然后，我们现在解决了锁的问题，全部请求采用“先进先出”的队列方式来处理。那么新的问题来了，高并发的场景下，因为请求很多，很可能一瞬间将队列内存“撑爆”，然后系统又陷入到了异常状态。或者设计一个极大的内存队列，也是一种方案，但是，系统处理完一个队列内请求的速度根本无法和疯狂涌入队列中的数目相比。也就是说，队列内的请求会越积累越多，最终Web系统平均响应时候还是会大幅下降，系统还是陷入异常。</p>
+<h2 id="乐观锁思路"><a href="#乐观锁思路" class="headerlink" title="乐观锁思路"></a>乐观锁思路</h2><p>这个时候，我们就可以讨论一下“乐观锁”的思路了。乐观锁，是相对于“悲观锁”采用更为宽松的加锁机制，大都是采用带版本号（Version）更新。实现就是，这个数据所有请求都有资格去修改，但会获得一个该数据的版本号，只有版本号符合的才能更新成功，其他的返回抢购失败。这样的话，我们就不需要考虑队列的问题，不过，它会增大CPU的计算开销。但是，综合来说，这是一个比较好的解决方案。</p>
+<p><img src="./547823d8e0db8_middle.jpg" alt="乐观锁"></p>
+<p>有很多软件和服务都“乐观锁”功能的支持，例如Redis中的watch就是其中之一。通过这个实现，我们保证了数据的安全。</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>互联网正在高速发展，使用互联网服务的用户越多，高并发的场景也变得越来越多。电商秒杀和抢购，是两个比较典型的互联网高并发场景。虽然我们解决问题的具体技术方案可能千差万别，但是遇到的挑战却是相似的，因此解决问题的思路也异曲同工。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/" class="alignleft prev">Prev</a>
+  
+  
+    <a href="/page/3/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Github/">Github</a><small>1</small></li>
+  
+    <li><a href="/categories/Karrigell/">Karrigell</a><small>1</small></li>
+  
+    <li><a href="/categories/VIM/">VIM</a><small>2</small></li>
+  
+    <li><a href="/categories/django/">django</a><small>9</small></li>
+  
+    <li><a href="/categories/jekyll/">jekyll</a><small>2</small></li>
+  
+    <li><a href="/categories/kivy/">kivy</a><small>1</small></li>
+  
+    <li><a href="/categories/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/categories/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/normal/">normal</a><small>1</small></li>
+  
+    <li><a href="/categories/other/">other</a><small>2</small></li>
+  
+    <li><a href="/categories/python/">python</a><small>64</small></li>
+  
+    <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/categories/system/">system</a><small>2</small></li>
+  
+    <li><a href="/categories/tornado/">tornado</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/django/">django</a><small>5</small></li>
+  
+    <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
+  
+    <li><a href="/tags/flask/">flask</a><small>1</small></li>
+  
+    <li><a href="/tags/freeswitch/">freeswitch</a><small>1</small></li>
+  
+    <li><a href="/tags/go/">go</a><small>2</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>14</small></li>
+  
+    <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>2</small></li>
+  
+    <li><a href="/tags/tornado/">tornado</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2021 Tony Tan
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

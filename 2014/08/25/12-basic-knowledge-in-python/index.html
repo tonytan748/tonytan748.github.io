@@ -1,0 +1,387 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>12 Basic Knowledge in Python | Tony Tan</title>
+  <meta name="author" content="Tony Tan">
+  
+  <meta name="description" content="Tony Tan">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="12 Basic Knowledge in Python">
+  <meta property="og:site_name" content="Tony Tan">
+
+  
+    <meta property="og:image" content="">
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Tony Tan" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+</html>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Tony Tan</a></h1>
+  <h2><a href="/">a python progrmmer</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-08-24T16:00:00.000Z"><a href="/2014/08/25/12-basic-knowledge-in-python/">2014-08-25</a></time>
+      
+      
+  
+    <h1 class="title">12 Basic Knowledge in Python</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Python编程中常用的12种基础知识总结：正则表达式替换，遍历目录方法，列表按列排序、去重，字典排序，字典、列表、字符串互转，时间对象操作，命令行参数解析(getopt)，print 格式化输出，进制转换，Python调用系统命令或者脚本，Python 读写文件</em></p>
+<h2>1、正则表达式替换</h2>
+
+<p><br><br>目标: 将字符串line中的 overview.gif 替换成其他字符串</p>
+<p><br></p>
+<pre>
+>>> line = '&#60;IMG ALIGN="middle" SRC=\'#\'" /span&#62;
+>>> mo=re.compile(r'(?&#60;=SRC=)"([\w+\.]+)"',re.I)  
+
+>>> mo.sub(r'"\1****"',line)  
+'&#60;IMG ALIGN="middle" SRC=\'#\'" /span&#62;
+
+>>> mo.sub(r'replace_str_\1',line)  
+'&#60;IMG ALIGN="middle" replace_str_overview.gif BORDER="0" ALT=""&#62;'&#60; /span&#62;
+
+>>> mo.sub(r'"testetstset"',line)  
+'&#60;IMG ALIGN="middle" SRC=\'#\'" /span&#62;
+</pre>
+
+<p><br><br>注意: 其中 \1 是匹配到的数据，可以通过这样的方式直接引用<br><br><br><br></p>
+<h2>2、遍历目录方法</h2>
+
+<p><br><br>在某些时候，我们需要遍历某个目录找出特定的文件列表，可以通过os.walk方法来遍历，非常方便<br><br></p>
+<p><pre><br>import os<br>fileList = []<br>rootdir = “/data”<br>for root, subFolders, files in os.walk(rootdir):<br>if ‘.svn’ in subFolders: subFolders.remove(‘.svn’)  # 排除特定目录<br>for file in files:<br>  if file.find(“.t2t”) != -1:# 查找特定扩展名的文件<br>      file_dir_path = os.path.join(root,file)<br>      fileList.append(file_dir_path)  </pre></p>
+<p>print fileList<br><br><br><br><br></p>
+<h2>3、列表按列排序(list sort)</h2>
+
+<p><br><br>如果列表的每个元素都是一个元组(tuple),我们要根据元组的某列来排序的化，可参考如下方法<br><br></p>
+<p>下面例子我们是根据元组的第2列和第3列数据来排序的,而且是倒序(reverse=True)</p>
+<p><br></p>
+<p><pre></pre></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>a = [(‘2011-03-17’, ‘2.26’, 6429600, ‘0.0’), (‘2011-03-16’, ‘2.26’, 12036900, ‘-3.0’),<br> (‘2011-03-15’, ‘2.33’, 15615500,’-19.1’)]<br>print a[0][0]<br>2011-03-17<br>b = sorted(a, key=lambda result: result[1],reverse=True)<br>print b<br>[(‘2011-03-15’, ‘2.33’, 15615500, ‘-19.1’), (‘2011-03-17’, ‘2.26’, 6429600, ‘0.0’),<br>(‘2011-03-16’, ‘2.26’, 12036900, ‘-3.0’)]<br>c = sorted(a, key=lambda result: result[2],reverse=True)<br>print c<br>[(‘2011-03-15’, ‘2.33’, 15615500, ‘-19.1’), (‘2011-03-16’, ‘2.26’, 12036900, ‘-3.0’),<br>(‘2011-03-17’, ‘2.26’, 6429600, ‘0.0’)]<br><br><br><br><br></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2>4、列表去重(list uniq)</h2>
+
+<p><br><br>有时候需要将list中重复的元素删除，就要使用如下方法</p>
+<p><br></p>
+<p><pre></pre></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>lst= [(1,’sss’),(2,’fsdf’),(1,’sss’),(3,’fd’)]<br>set(lst)<br>set([(2, ‘fsdf’), (3, ‘fd’), (1, ‘sss’)])</p>
+<p>lst = [1, 1, 3, 4, 4, 5, 6, 7, 6]<br>set(lst)<br>set([1, 3, 4, 5, 6, 7])<br><br><br><br><br></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2>5、字典排序(dict sort)</h2>
+
+<p><br><br>一般来说，我们都是根据字典的key来进行排序，但是我们如果想根据字典的value值来排序，就使用如下方法</p>
+<p><br></p>
+<p><pre></pre></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from operator import itemgetter<br>aa = &#123;”a”:”1”,”sss”:”2”,”ffdf”:’5’,”ffff2”:’3’&#125;<br>sort_aa = sorted(aa.items(),key=itemgetter(1))<br>sort_aa<br>[(‘a’, ‘1’), (‘sss’, ‘2’), (‘ffff2’, ‘3’), (‘ffdf’, ‘5’)]<br><br><br></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>从上面的运行结果看到，按照字典的value值进行排序的</p>
+<p><br><br><br></p>
+<h2>6、字典,列表,字符串互转</h2>
+
+<p><br><br>以下是生成数据库连接字符串,从字典转换到字符串<br><br></p>
+<p><pre></pre></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>params = &#123;”server”:”mpilgrim”, “database”:”master”, “uid”:”sa”, “pwd”:”secret”&#125;<br>[“%s=%s” % (k, v) for k, v in params.items()]<br>[‘server=mpilgrim’, ‘uid=sa’, ‘database=master’, ‘pwd=secret’]<br>“;”.join([“%s=%s” % (k, v) for k, v in params.items()])<br>‘server=mpilgrim;uid=sa;database=master;pwd=secret’<br><br><br></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>下面的例子 是将字符串转化为字典<br><br></p>
+<p><pre></pre></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>a = ‘server=mpilgrim;uid=sa;database=master;pwd=secret’<br>aa = &#123;&#125;<br>for i in a.split(‘;’):aa[i.split(‘=’,1)[0]] = i.split(‘=’,1)[1]<br>…<br>aa<br>&#123;’pwd’: ‘secret’, ‘database’: ‘master’, ‘uid’: ‘sa’, ‘server’: ‘mpilgrim’&#125;<br><br><br><br><br></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2>7、时间对象操作</h2>
+
+<p><br></p>
+<p><pre><br>将时间对象转换成字符串</pre></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>import datetime<br>datetime.datetime.now().strftime(“%Y-%m-%d %H:%M”)<br>  ‘2011-01-20 14:05’</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>时间大小比较</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>import time<br>t1 = time.strptime(‘2011-01-20 14:05’,”%Y-%m-%d %H:%M”)<br>t2 = time.strptime(‘2011-01-20 16:05’,”%Y-%m-%d %H:%M”)<br>t1 &#62; t2<br>  False<br>t1 &#60; t2<br>  True</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>时间差值计算,计算8小时前的时间</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>datetime.datetime.now().strftime(“%Y-%m-%d %H:%M”)<br>  ‘2011-01-20 15:02’<br>(datetime.datetime.now() - datetime.timedelta(hours=8)).strftime(“%Y-%m-%d %H:%M”)<br>  ‘2011-01-20 07:03’</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>将字符串转换成时间对象</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>endtime=datetime.datetime.strptime(‘20100701’,”%Y%m%d”)<br>type(endtime)<br>  &#60;type ‘datetime.datetime’&#62;<br>print endtime<br>  2010-07-01 00:00:00</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>将从 1970-01-01 00:00:00 UTC 到现在的秒数，格式化输出   </p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>import time<br>a = 1302153828<br>time.strftime(“%Y-%m-%d %H:%M:%S”,time.localtime(a))<br>  ‘2011-04-07 13:23:48’<br><br><br><br><br></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2>8、命令行参数解析(getopt)</h2>
+
+<p><br><br>通常在编写一些日运维脚本时，需要根据不同的条件，输入不同的命令行选项来实现不同的功能 在Python中提供了getopt模块很好的实现了命令行参数的解析,下面距离说明。请看如下程序:</p>
+<p><br></p>
+<p><pre></pre></p>
+<p>#!/usr/bin/env python</p>
+<h1 id="coding-utf-8"><a href="#coding-utf-8" class="headerlink" title="-- coding: utf-8 --"></a>-<em>- coding: utf-8 -</em>-</h1><p>import sys,os,getopt<br>def usage():<br>    print ‘’’<br>    Usage: analyse_stock.py [options…]<br>    Options:<br>    -e : Exchange Name<br>    -c : User-Defined Category Name<br>    -f : Read stock info from file and save to db<br>    -d : delete from db by stock code<br>    -n : stock name<br>    -s : stock code<br>    -h : this help info<br>    test.py -s haha -n “HA Ha”<br>    ‘’’</p>
+<p>try:<br>    opts, args = getopt.getopt(sys.argv[1:],’he:c:f:d:n:s:’)<br>except getopt.GetoptError:<br>    usage()<br>    sys.exit()<br>if len(opts) == 0:<br>    usage()<br>    sys.exit()  </p>
+<p>for opt, arg in opts:<br>    if opt in (‘-h’, ‘–help’):<br>        usage()<br>        sys.exit()<br>    elif opt == ‘-d’:<br>        print “del stock %s” % arg<br>    elif opt == ‘-f’:<br>        print “read file %s” % arg<br>    elif opt == ‘-c’:<br>        print “user-defined %s “ % arg<br>    elif opt == ‘-e’:<br>        print “Exchange Name %s” % arg<br>    elif opt == ‘-s’:<br>        print “Stock code %s” % arg<br>    elif opt == ‘-n’:<br>        print “Stock name %s” % arg  </p>
+<p>sys.exit()<br><br><br><br><br></p>
+<h2>9、print 格式化输出</h2>
+
+<p><br></p>
+<p></p><h4>9.1、格式化输出字符串</h4><br><br><p></p>
+<p><pre><br>截取字符串输出,下面例子将只输出字符串的前3个字母</pre></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>str=”abcdefg”<br>print “%.3s” % str<br>  abc<br>按固定宽度输出，不足使用空格补全,下面例子输出宽度为10<br>str=”abcdefg”<br>print “%10s” % str<br>     abcdefg<br>截取字符串，按照固定宽度输出<br>str=”abcdefg”<br>print “%10.3s” % str<br>         abc<br>浮点类型数据位数保留<br>import fpformat<br>a= 0.0030000000005<br>b=fpformat.fix(a,6)<br>print b<br>  0.003000<br>对浮点数四舍五入,主要使用到round函数<br>from decimal import <em><br>a =”2.26”<br>b =”2.29”<br>c = Decimal(a) - Decimal(b)<br>print c<br>  -0.03<br>c / Decimal(a) </em> 100<br>  Decimal(‘-1.327433628318584070796460177’)<br>Decimal(str(round(c / Decimal(a) * 100, 2)))<br>  Decimal(‘-1.33’)<br><br><br></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p></p><h4>9.2、进制转换</h4><br><br><p></p>
+<p>有些时候需要作不同进制转换，可以参考下面的例子(%x 十六进制,%d 十进制,%o 八进制)</p>
+<p><br></p>
+<p><pre></pre></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>num = 10<br>print “Hex = %x,Dec = %d,Oct = %o” %(num,num,num)<br>  Hex = a,Dec = 10,Oct = 12<br><br><br><br><br></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2>10、Python调用系统命令或者脚本</h2><br><br><br><br><pre><br>使用 os.system() 调用系统命令 , 程序中无法获得到输出和返回值<br>&gt;&gt;&gt; import os<br>&gt;&gt;&gt; os.system(‘ls -l /proc/cpuinfo’)<br>&gt;&gt;&gt; os.system(“ls -l /proc/cpuinfo”)<br>  -r–r–r– 1 root root 0  3月 29 16:53 /proc/cpuinfo<br>  0<br><br>使用 os.popen() 调用系统命令, 程序中可以获得命令输出，但是不能得到执行的返回值<br>&gt;&gt;&gt; out = os.popen(“ls -l /proc/cpuinfo”)<br>&gt;&gt;&gt; print out.read()<br>  -r–r–r– 1 root root 0  3月 29 16:59 /proc/cpuinfo<br><br>使用 commands.getstatusoutput() 调用系统命令, 程序中可以获得命令输出和执行的返回值<br>&gt;&gt;&gt; import commands<br>&gt;&gt;&gt; commands.getstatusoutput(‘ls /bin/ls’)<br>  (0, ‘/bin/ls’)<br></pre><br><br><br><br><br><br><br><h2>11、Python 捕获用户 Ctrl+C ,Ctrl+D 事件</h2>
+
+<p><br><br>有些时候，需要在程序中捕获用户键盘事件，比如ctrl+c退出，这样可以更好的安全退出程序<br><br></p>
+<p><pre><br>try:<br>    do_some_func()<br>except KeyboardInterrupt:<br>    print “User Press Ctrl+C,Exit”<br>except EOFError:<br>    print “User Press Ctrl+D,Exit”<br></pre><br><br><br><br></p>
+<p></p><h2>12、Python 读写文件</h2><br><br><p></p>
+<p><pre><br>一次性读入文件到列表，速度较快，适用文件比较小的情况下<br>track_file = “track_stock.conf”<br>fd = open(track_file)<br>content_list = fd.readlines()<br>fd.close()<br>for line in content_list:<br>    print line  </pre></p>
+<p>逐行读入，速度较慢,适用没有足够内存读取整个文件(文件太大)<br>fd = open(file_path)<br>fd.seek(0)<br>title = fd.readline()<br>keyword = fd.readline()<br>uuid = fd.readline()<br>fd.close()  </p>
+<p>写文件 write 与 writelines 的区别   </p>
+<p>Fd.write(str) : 把str写到文件中，write()并不会在str后加上一个换行符<br>Fd.writelines(content) : 把content的内容全部写到文件中,原样写入，不会在每行后面加上任何东西<br><br><br></p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/python/">python</a>
+  </div>
+
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://deenter.com/2014/08/25/12-basic-knowledge-in-python/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Github/">Github</a><small>1</small></li>
+  
+    <li><a href="/categories/Karrigell/">Karrigell</a><small>1</small></li>
+  
+    <li><a href="/categories/VIM/">VIM</a><small>2</small></li>
+  
+    <li><a href="/categories/django/">django</a><small>9</small></li>
+  
+    <li><a href="/categories/jekyll/">jekyll</a><small>2</small></li>
+  
+    <li><a href="/categories/kivy/">kivy</a><small>1</small></li>
+  
+    <li><a href="/categories/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/categories/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/normal/">normal</a><small>1</small></li>
+  
+    <li><a href="/categories/other/">other</a><small>2</small></li>
+  
+    <li><a href="/categories/python/">python</a><small>64</small></li>
+  
+    <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/categories/system/">system</a><small>2</small></li>
+  
+    <li><a href="/categories/tornado/">tornado</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/django/">django</a><small>5</small></li>
+  
+    <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
+  
+    <li><a href="/tags/flask/">flask</a><small>1</small></li>
+  
+    <li><a href="/tags/freeswitch/">freeswitch</a><small>1</small></li>
+  
+    <li><a href="/tags/go/">go</a><small>2</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>14</small></li>
+  
+    <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>2</small></li>
+  
+    <li><a href="/tags/tornado/">tornado</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2021 Tony Tan
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

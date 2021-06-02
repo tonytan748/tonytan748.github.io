@@ -1,0 +1,414 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>IPython Notebook Introduction 1 | Tony Tan</title>
+  <meta name="author" content="Tony Tan">
+  
+  <meta name="description" content="Tony Tan">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="IPython Notebook Introduction 1">
+  <meta property="og:site_name" content="Tony Tan">
+
+  
+    <meta property="og:image" content="">
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Tony Tan" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+</html>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Tony Tan</a></h1>
+  <h2><a href="/">a python progrmmer</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-09T16:00:00.000Z"><a href="/2016/05/10/ipython-notebook-introduction-1/">2016-05-10</a></time>
+      
+      
+  
+    <h1 class="title">IPython Notebook Introduction 1</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>This article will introduce some base usage for ipython notebook.</em></p>
+<p>IPython Notebook使用浏览器作为界面，向后台的IPython服务器发送请求，并显示结果。在浏览器的界面中使用单元(Cell)保存各种信息。Cell有多种类型，经常使用的有表示格式化文本的Markdown单元，和表示代码的Code单元。</p>
+<p>每个代码单元都有一个输出区域，在Code单元中输入代码，按 Shift-Enter 将运行此代码，代码中最后一个表达式的值将输出区域显示。如果希望屏蔽输出，可以在最后一条语句之后添加一个分号：”;”。此外，代码中还可以使用print语句在输出区域中显示信息。</p>
+<p>在Markdown单元中还可以直接使用Html和Javascript</p>
+<h2 id="数学公式"><a href="#数学公式" class="headerlink" title="数学公式"></a>数学公式</h2><p>在Markdown单元中可以使用LaTeX表示数学公式，例如\sqrt{x^2+y^2}。数学公式的显示使用MathJax，缺省情况下，MathJax从网络上下载，如果希望离线使用它，需要在IPython Notebook中输入如下代码，把MathJax安装到本地磁盘中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from IPython.external.mathjax import install_mathjax</span><br><span class="line">install_mathjax()</span><br></pre></td></tr></table></figure>
+<p>Code单元的输出也可以显示为数学公式，例如在单元中输入如下代码，将显示为数学公式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from IPython.display import Latex</span><br><span class="line">Latex(r&quot;$\sqrt&#123;x^2+y^2&#125;$&quot;)</span><br></pre></td></tr></table></figure></p>
+<p>\sqrt{x^2+y^2}</p>
+<p>SymPy的表达式也可以显示为LaTex，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">%load_ext sympyprinting</span><br><span class="line">from sympy import *</span><br><span class="line">x, y = symbols(&quot;x,y&quot;)</span><br><span class="line">sqrt(x**2+y**2)</span><br></pre></td></tr></table></figure></p>
+<p>\sqrt{x^{2} + y^{2}}</p>
+<p>以%开头的为IPython的命令(Magic Command)，这里通过%load_ext命令载入sympyprinting扩展插件，载入此插件之后，所有的SymPy表达式都显示为数学公式。</p>
+<h2 id="各种显示"><a href="#各种显示" class="headerlink" title="各种显示"></a>各种显示</h2><p>IPython.display模块中提供了许多显示Python返回值的类，例如下面的代码用Image类显示”python.png”图片，缺省路径为Notebook文件所在的目录：</p>
+<pre>
+from IPython.display import Image
+Image(filename="python.png")
+</pre>
+
+
+<p>Image还可以用来显示表示图像的字符串。例如下面的代码通过cv2的imencode()将NumPy数组转换为一个表示PNG图像数据的数组，然后将此数组转换为字符串之后通过Image()将显示为图像：</p>
+<pre>
+import cv2
+import numpy as np
+from IPython.display import Image
+img = np.random.randint(0,255,(250,250,3))
+cv2.blur(img, (11,11), img)
+r, dat = cv2.imencode(".png",img)
+Image(dat.tostring())
+</pre>
+
+
+<p>此外，还可以通过HTML和Javascript将Python代码的输出显示为Html，或者作为Javascript运行。</p>
+<pre>
+from IPython.display import Javascript
+Javascript("alert('ok')")
+</pre>
+
+
+<p>将在浏览器中运行Javascript代码。</p>
+<h2 id="Magic命令"><a href="#Magic命令" class="headerlink" title="Magic命令"></a>Magic命令</h2><p>IPython中Magic命令有两种执行方式，以%开始的命令被称为行命令，它只对单行有效，以%%开头的为单元命令，它放在单元的第一行，对整个单元有效。例如timeit命令可以快速测试代码的执行效率，它可以作为行命令或者单元命令。</p>
+<pre>
+%timeit 1 + 1
+%timeit 1.0 + 1.0
+%timeit "1" + "1"
+</pre>
+
+
+<pre>
+10000000 loops, best of 3: 52 ns per loop
+10000000 loops, best of 3: 53.4 ns per loop
+10000000 loops, best of 3: 50.9 ns per loop
+</pre>
+
+
+<pre>
+%%timeit
+s = 0
+for i in xrange(100):
+    s += i
+</pre>
+
+
+<pre>
+100000 loops, best of 3: 11 us per loop
+</pre>
+
+
+<p>每个Magic命令都可以指定参数，可以输入timeit?查看其帮助文档。下面让我们看看一些常用的Magic命令。</p>
+<p><strong>%pylab</strong>命令将载入numpy和pylab，并且将这两个模块中的名字载入到全局名字空间中。缺省参数时，它使用matplotlib的缺省界面库显示图表，如果带inline参数则将图表作为图像插入到Notebook中。使用界面库显示图像时可以使用交互工具，而将图表直接插入到Notebook中则有利于编写文档。</p>
+<p>下面的例子，plot和random是从pylab和numpy中载入的。</p>
+<pre>
+%pylab inline
+plot(random.randn(100));
+</pre>
+
+
+<pre>
+Welcome to pylab, a matplotlib-based Python environment [backend: module://IPython.zmq.pylab.backend_inline].
+For more information, type 'help(pylab)'.
+</pre>
+
+
+<p><strong>%load</strong>可以从文件或者网址载入代码到一个新的单元中，例如下面载入某个matplotlib的示例程序，并执行：</p>
+<pre>
+%load http://matplotlib.org/mpl_examples/pylab_examples/histogram_demo.py
+</pre>
+
+
+<pre>
+\#!/usr/bin/env python
+import numpy as np
+import matplotlib.mlab as mlab
+import matplotlib.pyplot as plt
+
+mu, sigma = 100, 15
+x = mu + sigma*np.random.randn(10000)
+
+\# the histogram of the data
+n, bins, patches = plt.hist(x, 50, normed=1, facecolor='green', alpha=0.75)
+
+\# add a 'best fit' line
+y = mlab.normpdf( bins, mu, sigma)
+l = plt.plot(bins, y, 'r--', linewidth=1)
+
+plt.xlabel('Smarts')
+plt.ylabel('Probability')
+plt.title(r'$\mathrm{Histogram\ of\ IQ:}\ \mu=100,\ \sigma=15$')
+plt.axis([40, 160, 0, 0.03])
+plt.grid(True)
+
+plt.show()
+</pre>
+
+
+<p><strong>%prun</strong>用于代码的执行性能分析，可以作为行命令和单元命令使用。下面的程序分析numpy.linalg.det()的性能：</p>
+<pre>
+%%prun
+for i in xrange(100):
+    linalg.det(random.rand(10,10))
+</pre>
+
+
+<p>其输出如下：</p>
+<pre>
+3402 function calls in 0.096 seconds
+
+Ordered by: internal time
+
+ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+   100    0.032    0.000    0.091    0.001 linalg.py:1560(slogdet)
+   300    0.022    0.000    0.022    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+   200    0.011    0.000    0.012    0.000 numeric.py:167(asarray)
+   100    0.006    0.000    0.006    0.000 linalg.py:84(_realType)
+   100    0.005    0.000    0.005    0.000 linalg.py:151(_assertRank2)
+   ...
+</pre>
+
+
+<p><strong>%load_ext</strong>载入IPython的扩展模块，通过它可以载入更多的Magic命令。下面我们载入cythonmagic模块，并使用%%cython命令编译一个高效的频率统计函数count()。</p>
+<pre>
+%load_ext cythonmagic
+</pre>
+
+
+<h2 id="测试Cython代码"><a href="#测试Cython代码" class="headerlink" title="测试Cython代码"></a>测试Cython代码</h2><p>Cython的代码基本和Python的代码类似，但是可以使用类型声明，Cython可以使用这些类型声明产生更高效的C语言代码，并编译成Python的扩展模块。使用%%cython命令简化了编译扩展模块的过程，它会自动创建C语言程序，编译并载入。由于扩展模块无法卸载，因此IPython采用的策略是每次编译不同的代码都会产生一个全新的扩展模块。方便我们不退出Python环境即可运行新的代码。</p>
+<pre>
+\%%cython
+def count(list data):
+    cdef:
+    dict result = {}
+    int i, length = len(data)
+    object item
+
+    for i in range(length):
+    item = data[i]
+    if item in result:
+        (<list> result[item]).append(i)
+    else:
+        result[item] = return result
+    return result
+</list></pre>
+
+
+<p>下面是count()的Python版本。</p>
+<pre>
+from collections import defaultdict
+def countpy(data):
+    result = defaultdict(list)
+    for i,item in enumerate(data):
+    result[item].append(i)
+    return result
+</pre>
+
+
+<p>先测试二者的结果是否相同：</p>
+<pre>
+import random
+data = [random.randint(0,100) for _ in xrange(10000)]
+count(data) == countpy(data)
+</pre>
+
+
+<pre>
+True
+</pre>
+
+
+<p>然后测试它们的执行速度，可以看出Cython版本比Python的要快2倍多。在这个测试中，Cython程序也同样使用列表和字典等对象，但是由于可以直接调用Python的C API，因此Cython版本的效率能提高几倍。如果只是单纯的数值运算，Cython能将程序提升到与C语言相近的速度。</p>
+<pre>
+\%timeit countpy(data)
+\%timeit count(data)
+</pre>
+
+
+<pre>
+100 loops, best of 3: 4.52 ms per loop
+1000 loops, best of 3: 1.8 ms per loop
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/python/">python</a>
+  </div>
+
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://deenter.com/2016/05/10/ipython-notebook-introduction-1/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Github/">Github</a><small>1</small></li>
+  
+    <li><a href="/categories/Karrigell/">Karrigell</a><small>1</small></li>
+  
+    <li><a href="/categories/VIM/">VIM</a><small>2</small></li>
+  
+    <li><a href="/categories/django/">django</a><small>9</small></li>
+  
+    <li><a href="/categories/jekyll/">jekyll</a><small>2</small></li>
+  
+    <li><a href="/categories/kivy/">kivy</a><small>1</small></li>
+  
+    <li><a href="/categories/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/categories/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/normal/">normal</a><small>1</small></li>
+  
+    <li><a href="/categories/other/">other</a><small>2</small></li>
+  
+    <li><a href="/categories/python/">python</a><small>64</small></li>
+  
+    <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/categories/system/">system</a><small>2</small></li>
+  
+    <li><a href="/categories/tornado/">tornado</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/django/">django</a><small>5</small></li>
+  
+    <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
+  
+    <li><a href="/tags/flask/">flask</a><small>1</small></li>
+  
+    <li><a href="/tags/freeswitch/">freeswitch</a><small>1</small></li>
+  
+    <li><a href="/tags/go/">go</a><small>2</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>14</small></li>
+  
+    <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>2</small></li>
+  
+    <li><a href="/tags/tornado/">tornado</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2021 Tony Tan
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

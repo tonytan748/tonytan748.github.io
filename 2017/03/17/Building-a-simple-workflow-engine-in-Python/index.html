@@ -1,0 +1,242 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Building a simple workflow engine in Python | Tony Tan</title>
+  <meta name="author" content="Tony Tan">
+  
+  <meta name="description" content="Tony Tan">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Building a simple workflow engine in Python">
+  <meta property="og:site_name" content="Tony Tan">
+
+  
+    <meta property="og:image" content="">
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Tony Tan" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+</html>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Tony Tan</a></h1>
+  <h2><a href="/">a python progrmmer</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-17T15:45:02.000Z"><a href="/2017/03/17/Building-a-simple-workflow-engine-in-Python/">2017-03-17</a></time>
+      
+      
+  
+    <h1 class="title">Building a simple workflow engine in Python</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>this blog translate from <a href="http://supercoderz.in/building-a-simple-workflow-engine-in-python/" target="_blank" rel="noopener">http://supercoderz.in/building-a-simple-workflow-engine-in-python/</a></em></p>
+<p>In my last post I described how a workflow engine works and the various key parts of a workflow engine. In this post I will show you how to build  simple workflow engine in Python. This will be built in Python using the django framework.</p>
+<p>Read on to find out more - It would be recommended to get an overview of django framework if you plan to download the code and try this out. I will not be going into the details of how to setup django and the internals.</p>
+<h2 id="The-basic-idea"><a href="#The-basic-idea" class="headerlink" title="The basic idea"></a>The basic idea</h2><p>The idea of this post is to show a simple workflow engine. We will build a workflow engine that can take a process and a set of tasks associated with the process in a given sequence and execute the tasks. The tasks can be code tasks which have a piece of Python code that would be executed, or manual tasks which would require someone to approve the task.<br>The work of creating the tasks and storing them somewhere in a DB will be handled by django. django is a web development framework for Python that makes building web applications very easy. The django admin application which comes bundled with the framework make it very trivial to create simple CRUD web pages for databases.</p>
+<p>The workflow engine that takes tasks and either executes them or queues them for approval is written as a django custom function so that it can be easily invoked with access to all the database models.</p>
+<p>Starting a new process and approving a task - since this a demo application to show how the workflow engine works, I did not build a UI for these tasks. These are also built as custom django commands. But you can easily build some sort of a simple django page for these with very less effort.</p>
+<p>The code for this can be accessed from - <a href="http://krishna.lifeandit.com" target="_blank" rel="noopener">http://krishna.lifeandit.com</a></p>
+<h2 id="The-Models"><a href="#The-Models" class="headerlink" title="The Models"></a>The Models</h2><p>Any workflow engine has a DB model to maintain the relationships between the processes, tasks and the various states. We will have three main entities - Process, Task and TaskTransitions. TaskTransitions will be responsible for maintaining the relationship between a task and the process that it is part of. This will also contain details about where the task occurs in that process  in the form of a sequence number.</p>
+<p>Apart from this, there will be two tables to maintain a list of running processes and a list of tasks waiting for approval.</p>
+<p>These models are defined as shown below</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">from django.db import models</span><br><span class="line"></span><br><span class="line">class Process(models.Model):</span><br><span class="line">    name = models.CharField(max_length=200)</span><br><span class="line"></span><br><span class="line">    def __str__(self):</span><br><span class="line">        return self.name</span><br><span class="line"></span><br><span class="line">class Task(models.Model):</span><br><span class="line">    name=models.CharField(max_length=200)</span><br><span class="line">    manual=models.BooleanField()</span><br><span class="line">    parent=models.ForeignKey(Process)</span><br><span class="line">    code=models.CharField(max_length=2000)</span><br><span class="line">    approver=models.CharField(max_length=200)</span><br><span class="line"></span><br><span class="line">    def __str__(self):</span><br><span class="line">        return self.name</span><br><span class="line"></span><br><span class="line">class TaskTransitions(models.Model):</span><br><span class="line">    process=models.ForeignKey(Process)</span><br><span class="line">    task=models.ForeignKey(Task)</span><br><span class="line">    sequence=models.IntegerField()</span><br><span class="line"></span><br><span class="line">    def __str__(self):</span><br><span class="line">        return self.process.name + str(self.sequence)</span><br><span class="line"></span><br><span class="line">class RunningProcesses(models.Model):</span><br><span class="line">    process=models.ForeignKey(Process)</span><br><span class="line">    state=models.CharField(max_length=200)</span><br><span class="line">    step=models.IntegerField()</span><br><span class="line"></span><br><span class="line">class WaitingForApproval(models.Model):</span><br><span class="line">    process=models.ForeignKey(Process)</span><br><span class="line">    task=models.ForeignKey(Task)</span><br><span class="line">    rpid=models.IntegerField()</span><br></pre></td></tr></table></figure>
+<p>Once these models are defines, you can easily create tasks in the django admin page. If you are downloading the code for this, then please edit the djnago settings.py file and point to a database of your choice. Then run ‘python manage.py syncdb’ to create all the tables and ‘python manage.py runserver’ to start the server. You can browse to the django admin page at <a href="http://localhost:8000/admin" target="_blank" rel="noopener">http://localhost:8000/admin</a> and login with the user ID that you created while doing syncdb. You should be able to create some process, tasks and define the relationships between them.</p>
+<h2 id="The-Engine"><a href="#The-Engine" class="headerlink" title="The Engine"></a>The Engine</h2><p>The workflow engine needs to have three parts, one to create a running instance of a process, one to approve a task and one to actually run through the processes and execute them. We will build these using django models to easily access the database.</p>
+<p>For creating a running instance of a process definition, we just need to make an entry in the running processes table. This can be done very easily as shown here</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from django.core.management.base import BaseCommand, CommandError</span><br><span class="line">from krlshna.workflow.models import *</span><br><span class="line"></span><br><span class="line">class Command(BaseCommand):</span><br><span class="line">    args = &apos;&lt;process name&gt;&lt;process name&gt;...&apos;</span><br><span class="line">    help = &apos;Start the specified processes&apos;</span><br><span class="line"></span><br><span class="line">    def handler(self, *args, **kwargs):</span><br><span class="line">        for process_name in args:</span><br><span class="line">            p = Process.objects.get(name=process_name)</span><br><span class="line">            r = RunningProcesses(process=p, state=&apos;READY&apos;, step=0)</span><br><span class="line">            r.save()</span><br></pre></td></tr></table></figure>
+<p>On similar lines, approving the tasks can be done as follows - note that here the code approves all instances of that task in the process - there is no ability to approve on a per process instance basis - this can be built on top easily.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">from django.core.management.base import BaseCommand, CommandError</span><br><span class="line">from krishna.workflow.models import *</span><br><span class="line"></span><br><span class="line">class Command(BaseCommand):</span><br><span class="line">    args = &apos;&lt;process name&gt;&lt;task name&gt;&apos;</span><br><span class="line">    help = &apos;Approve the given task in the specified process&apos;</span><br><span class="line"></span><br><span class="line">    def handle(self, *args, **kwargs):</span><br><span class="line">        process_name = args[0]</span><br><span class="line">        task_name = args[1]</span><br><span class="line">        p = Process.objects.get(name=process_name)</span><br><span class="line">        t = Task.objects.get(name=task_name)</span><br><span class="line">        approvals = WaitingForApproval.objects.filter(process=p, task=t)</span><br><span class="line">        for approval in approvals:</span><br><span class="line">            approval.task.approved = True</span><br><span class="line">            approval.task.save()</span><br><span class="line">            rp = RunningProcesses.objects.get(id=approval.rpid)</span><br><span class="line">            rp.state = &apos;READY&apos;</span><br><span class="line">            rp.step = rp.step + 1</span><br><span class="line">            rp.save()</span><br><span class="line">            approval.delete()</span><br></pre></td></tr></table></figure>
+<p>The workflow engine itself has a very simple mandate - look for all entries in the running process table with state as READY - these are either newly inserted instances or executing processes. Take the process name and the current step from here and get the corresponding task. If this task is a code task then execute it and increment the step number in the running process table. Manual tasks are added to another table and the state of the process instance is set to WAITING. Once approved, the state will be set to READY and the step number incremented.  This entire flow runs in a loop with a 10 second sleep between each run. In each run, it executes one step from any given process.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">from django.core.management.base import BaseCommand, CommandError</span><br><span class="line">from krishna.workflow.models import *</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">class Command(BaseCommand):</span><br><span class="line">    args = &apos;No arguments&apos;</span><br><span class="line">    help = &apos;Start the workflow engine so that it can run the processes&apos;</span><br><span class="line"></span><br><span class="line">    def handle(self, *args, **kwargs):</span><br><span class="line">        while True:</span><br><span class="line">            rprocesses = RunningProcesses.objects.filter(state=&apos;READY&apos;)</span><br><span class="line">            for rprocess in rprocesses:</span><br><span class="line">                try:</span><br><span class="line">                    p = rprocess.process</span><br><span class="line">                    seq = rprocess.step</span><br><span class="line">                    tr = TaskTransitions.objects.get(process=p.sequence=seq)</span><br><span class="line">                    t = tr.task</span><br><span class="line">                    if t.manual:</span><br><span class="line">                        w = WaitingForApprove(process=p, task=t, rpid=rprocess.id)</span><br><span class="line">                        w.save()</span><br><span class="line">                        rprocess.state = &apos;WAITING&apos;</span><br><span class="line">                        rprocess.save()</span><br><span class="line">                    else:</span><br><span class="line">                        res = eval(t.code)</span><br><span class="line">                        print(&apos;Result of &#123;&#125; task &#123;&#125; is &#123;&#125;&apos;.format(p.name, t.name, res))</span><br><span class="line">                        rprocess.step = rprocess.step + 1</span><br><span class="line">                        rprocess.save()</span><br><span class="line">                except:</span><br><span class="line">                    pass</span><br><span class="line">            time.sleep(10)</span><br></pre></td></tr></table></figure>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>This code illustrates a very simple workflow - this cannot be used in a real life scenario without adding more states, more easy ways to define processes, start process or approve processes from a UI. Also this would need to support some sort of a process definition standard like BPEL and derieve the processes and tasks from that. But this is a good exercise to prove the basics.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/python/">python</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/python/">python</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://deenter.com/2017/03/17/Building-a-simple-workflow-engine-in-Python/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Github/">Github</a><small>1</small></li>
+  
+    <li><a href="/categories/Karrigell/">Karrigell</a><small>1</small></li>
+  
+    <li><a href="/categories/VIM/">VIM</a><small>2</small></li>
+  
+    <li><a href="/categories/django/">django</a><small>9</small></li>
+  
+    <li><a href="/categories/jekyll/">jekyll</a><small>2</small></li>
+  
+    <li><a href="/categories/kivy/">kivy</a><small>1</small></li>
+  
+    <li><a href="/categories/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/categories/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/normal/">normal</a><small>1</small></li>
+  
+    <li><a href="/categories/other/">other</a><small>2</small></li>
+  
+    <li><a href="/categories/python/">python</a><small>64</small></li>
+  
+    <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/categories/system/">system</a><small>2</small></li>
+  
+    <li><a href="/categories/tornado/">tornado</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/django/">django</a><small>5</small></li>
+  
+    <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
+  
+    <li><a href="/tags/flask/">flask</a><small>1</small></li>
+  
+    <li><a href="/tags/freeswitch/">freeswitch</a><small>1</small></li>
+  
+    <li><a href="/tags/go/">go</a><small>2</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>14</small></li>
+  
+    <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>2</small></li>
+  
+    <li><a href="/tags/tornado/">tornado</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2021 Tony Tan
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

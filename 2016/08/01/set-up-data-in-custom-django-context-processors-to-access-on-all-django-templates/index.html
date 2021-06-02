@@ -1,0 +1,231 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Set up data in custom Django context processors to access on all Django templates | Tony Tan</title>
+  <meta name="author" content="Tony Tan">
+  
+  <meta name="description" content="Tony Tan">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Set up data in custom Django context processors to access on all Django templates">
+  <meta property="og:site_name" content="Tony Tan">
+
+  
+    <meta property="og:image" content="">
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Tony Tan" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+</html>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Tony Tan</a></h1>
+  <h2><a href="/">a python progrmmer</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-07-31T16:00:00.000Z"><a href="/2016/08/01/set-up-data-in-custom-django-context-processors-to-access-on-all-django-templates/">2016-08-01</a></time>
+      
+      
+  
+    <h1 class="title">Set up data in custom Django context processors to access on all Django templates</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h1><p>You want to set up data to become available on all Django templates, without having to set up the data individually on Django view methods.</p>
+<h1 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h1><p>Create a custom Django context processor method. Add the custom Django context processor method to the <code>context_processors</code> variable in <code>OPTIONS</code> of the TEMPLATES variable of a project’s <code>settings.py</code> file. Use standard Django template syntax to gain access to the data exposed by the custom Django context processor method.</p>
+<h1 id="How-it-works"><a href="#How-it-works" class="headerlink" title="How it works"></a>How it works</h1><p>Unlike data set up in Django view methods or url extra options where data is only available on individual Django templates, custom Django context processor methods allow you to set up data for access on all Django project templates.</p>
+<p>A custom Django context processor method is just like a regular Python method with an HttpRequest object argument that returns a dictionary. Where the returning dictionary keys represent template references and the values data objects (e.g. strings, lists, dictionaries) to be exposed on the template. Listing 1 illustrates a custom Django context processor method.</p>
+<p>Listing 1 - Custom Django context processor method</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">onsale</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="comment"># Create fixed data structures to pass to template</span></span><br><span class="line">    <span class="comment"># data could equally come from database queries</span></span><br><span class="line">    <span class="comment"># web services or social APIs</span></span><br><span class="line">    sale_items = &#123;<span class="string">'Monday'</span>:<span class="string">'Mocha 2x1'</span>,<span class="string">'Tuesday'</span>:<span class="string">'Latte 2x1'</span>&#125;</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">'SALE_ITEMS'</span>: sale_items&#125;</span><br></pre></td></tr></table></figure>
+<p>As you can see in listing 1, the <code>onsale</code> method in listing 1 has a <code>request</code> argument – which is the HttpRequest object – and returns a dictionary. The dictionary in this case has a single key called <code>SALE_ITEMS</code> and a value which is a hard-coded dictionary. However, just as you could set up any type of data from a Django view method to pass to a template, a custom Django context processor method can also access any data you wish to be made available to a template.</p>
+<p>The custom context processor method can be placed inside any project file or directory. The location and naming conventions are of little importance, because Django detects context processors through the <code>context_processors</code> variable in <code>OPTIONS</code> of the <code>TEMPLATES</code> variable of a project’s <code>settings.py</code> file. To keep things organized I’ll place the method in listing 1 inside a file called <code>processors.py</code> in the <code>stores</code> app sub-directory.</p>
+<p>Once you save the custom context processor method, you have to configure Django to locate it. Listing 2 shows the <code>context_processors</code> variable to activate the custom context processor method.</p>
+<p>Listing 2 - Django template context processor definitions in <code>context_processors</code> in OPTIONS of TEMPLATES</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'OPTIONS'</span>: &#123;</span><br><span class="line">            <span class="string">'context_processors'</span>: [</span><br><span class="line">                <span class="string">'coffeehouse.stores.processors.onsale'</span>,</span><br><span class="line">                <span class="string">'django.template.context_processors.debug'</span>,</span><br><span class="line">                <span class="string">'django.template.context_processors.request'</span>,</span><br><span class="line">                <span class="string">'django.contrib.auth.context_processors.auth'</span>,</span><br><span class="line">                <span class="string">'django.contrib.messages.context_processors.messages'</span>,</span><br><span class="line">            ],</span><br><span class="line">	 &#125;</span><br></pre></td></tr></table></figure>
+<p>In listing 2 you can see the <code>coffeehouse.stores.processors.onsale</code> declaration in the <code>context_processors</code> list. The first part <code>coffeehouse.stores</code> represents the package.app name, <code>processors</code> is the file that contains the custom context processor (i.e. <code>processors.py</code> inside the <code>stores</code> app) and <code>onsale</code> is the actual method that contains the custom context processor logic.</p>
+<p>The remaining values specified in the <code>context_processors</code> list are Django’s default context processors. These last context processors expose general purpose application data to all templates.</p>
+<p>Once you declare the <code>context_processors</code> illustrated in listing 2 on you project’s <code>settings.py</code> file, the custom dictionary with the SALE_ITEMS key in listing 1 becomes available to all Django templates.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/django/">django</a>
+  </div>
+
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://deenter.com/2016/08/01/set-up-data-in-custom-django-context-processors-to-access-on-all-django-templates/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Github/">Github</a><small>1</small></li>
+  
+    <li><a href="/categories/Karrigell/">Karrigell</a><small>1</small></li>
+  
+    <li><a href="/categories/VIM/">VIM</a><small>2</small></li>
+  
+    <li><a href="/categories/django/">django</a><small>9</small></li>
+  
+    <li><a href="/categories/jekyll/">jekyll</a><small>2</small></li>
+  
+    <li><a href="/categories/kivy/">kivy</a><small>1</small></li>
+  
+    <li><a href="/categories/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/categories/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/normal/">normal</a><small>1</small></li>
+  
+    <li><a href="/categories/other/">other</a><small>2</small></li>
+  
+    <li><a href="/categories/python/">python</a><small>64</small></li>
+  
+    <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/categories/system/">system</a><small>2</small></li>
+  
+    <li><a href="/categories/tornado/">tornado</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/django/">django</a><small>5</small></li>
+  
+    <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
+  
+    <li><a href="/tags/flask/">flask</a><small>1</small></li>
+  
+    <li><a href="/tags/freeswitch/">freeswitch</a><small>1</small></li>
+  
+    <li><a href="/tags/go/">go</a><small>2</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>14</small></li>
+  
+    <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>2</small></li>
+  
+    <li><a href="/tags/tornado/">tornado</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2021 Tony Tan
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
