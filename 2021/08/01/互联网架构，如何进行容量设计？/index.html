@@ -1,0 +1,278 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>互联网架构，如何进行容量设计？ | Tony Tan</title>
+  <meta name="author" content="Tony Tan">
+  
+  <meta name="description" content="Tony Tan">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="互联网架构，如何进行容量设计？">
+  <meta property="og:site_name" content="Tony Tan">
+
+  
+    <meta property="og:image" content="">
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Tony Tan" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+</html>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Tony Tan</a></h1>
+  <h2><a href="/">a python progrmmer</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2021-08-01T11:11:06.000Z"><a href="/2021/08/01/互联网架构，如何进行容量设计？/">2021-08-01</a></time>
+      
+      
+  
+    <h1 class="title">互联网架构，如何进行容量设计？</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>文章转载自<a href="https://mp.weixin.qq.com/s?__biz=MjM5ODYxMDA5OQ==&amp;mid=2651959542&amp;idx=1&amp;sn=2494bbea9a855e0e1c3ccd6d2562a600&amp;scene=0#rd" target="_blank" rel="noopener">这里</a></p>
+<h2 id="一，需求缘起"><a href="#一，需求缘起" class="headerlink" title="一，需求缘起"></a>一，需求缘起</h2><p>互联网公司，这样的场景是否似曾相识：</p>
+<p>场景一：pm要做一个很大的运营活动，技术老大杀过来，问了两个问题：</p>
+<p>（1）机器能抗住么？</p>
+<p>（2）如果扛不住，需要加多少台机器？</p>
+<p>场景二：系统设计阶段，技术老大杀过来，又问了两个问题：</p>
+<p>（1）数据库需要分库么？</p>
+<p>（2）如果需要分库，需要分几个库？</p>
+<p>技术上来说，这些都是系统容量预估的问题，容量设计是架构师必备的技能之一。常见的容量评估包括数据量、并发量、带宽、CPU/MEM/DISK等，今天分享的内容，就以【并发量】为例，看看如何回答好这两个问题。</p>
+<h2 id="二，容量评估的步骤与方法"><a href="#二，容量评估的步骤与方法" class="headerlink" title="二，容量评估的步骤与方法"></a>二，容量评估的步骤与方法</h2><p>【步骤一：评估总访问量】</p>
+<p>如何知道总访问量？对于一个运营活动的访问量评估，或者一个系统上线后PV的评估，有什么好的方法？</p>
+<p>答案是：询问业务方，询问运营同学，询问产品同学，看对运营活动或者产品上线后的预期是什么。</p>
+<p>举例：58要做一个APP-push的运营活动，计划在30分钟内完成5000w用户的push推送，预计push消息点击率10%，求push落地页系统的总访问量？</p>
+<p>回答：<code>5000w*10% = 500w</code></p>
+<p>【步骤二：评估平均访问量QPS】</p>
+<p>如何知道平均访问量QPS？</p>
+<p>答案是：有了总量，除以总时间即可，如果按照天评估，一天按照4w秒计算。</p>
+<p>举例1：push落地页系统30分钟的总访问量是500w，求平均访问量QPS</p>
+<p>回答：<code>500w/(30*60) = 2778，大概3000QPS</code></p>
+<p>举例2：主站首页估计日均pv 8000w，求平均访问QPS</p>
+<p>回答：一天按照4w秒算，8000w/4w=2000，大概2000QPS</p>
+<p>提问：为什么一天按照4w秒计算？</p>
+<p>回答：一天共<code>24小时*60分钟*60秒=8w秒</code>，一般假设所有请求都发生在白天，所以一般来说一天只按照4w秒评估</p>
+<p>【步骤三：评估高峰QPS】</p>
+<p>系统容量规划时，不能只考虑平均QPS，而是要抗住高峰的QPS，如何知道高峰QPS呢？</p>
+<p>答案是：根据业务特性，通过业务访问曲线评估</p>
+<p>举例：日均QPS为2000，业务访问趋势图如下图，求峰值QPS预估？</p>
+<p><img src="http://mmbiz.qpic.cn/mmbiz_png/YrezxckhYOxczfXmIbibeElVSyejm94IVGW27GbsibXTG7r3jicMoMnZhl3gXLtbyYZSQ2A1aRuHawUGgPgZeib50g/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片"></p>
+<p>回答：从图中可以看出，峰值QPS大概是均值QPS的2.5倍，日均QPS为2000，于是评估出峰值QPS为5000。</p>
+<p>说明：有一些业务例如“秒杀业务”比较难画出业务访问趋势图，这类业务的容量评估不在此列。</p>
+<p>【步骤四：评估系统、单机极限QPS】</p>
+<p>如何评估一个业务，一个服务单机能的极限QPS呢？</p>
+<p>答案是：压力测试</p>
+<p>在一个服务上线前，一般来说是需要进行压力测试的（很多创业型公司，业务迭代很快的系统可能没有这一步，那就悲剧了），以APP-push运营活动落地页为例（日均QPS2000，峰值QPS5000），这个系统的架构可能是这样的：</p>
+<p><img src="http://mmbiz.qpic.cn/mmbiz_png/YrezxckhYOxczfXmIbibeElVSyejm94IVg2icic0NINcKROXhl3DULNmiboVH4z43wyyQ2IFyEWic43KDFgPcbUoS7Q/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片2"></p>
+<p>1）访问端是APP</p>
+<p>2）运营活动H5落地页是一个web站点</p>
+<p>3）H5落地页由缓存cache、数据库db中的数据拼装而成</p>
+<p>通过压力测试发现，web层是瓶颈，tomcat压测单机只能抗住1200的QPS（一般来说，1%的流量到数据库，数据库500QPS还是能轻松抗住的，cache的话QPS能抗住，需要评估cache的带宽，假设不是瓶颈），我们就得到了web单机极限的QPS是1200。一般来说，线上系统是不会跑满到极限的，打个8折，单机线上允许跑到QPS1000。</p>
+<p>【步骤五：根据线上冗余度回答两个问题】</p>
+<p>好了，上述步骤1-4已经得到了峰值QPS是5000，单机QPS是1000，假设线上部署了2台服务，就能自信自如的回答技术老大提出的问题了：</p>
+<p>（1）机器能抗住么？ -&gt; 峰值5000，单机1000，线上2台，扛不住</p>
+<p>（2）如果扛不住，需要加多少台机器？ -&gt; 需要额外3台，提前预留1台更好，给4台更稳</p>
+<p>除了并发量的容量预估，数据量、带宽、CPU/MEM/DISK等评估亦可遵循类似的步骤。</p>
+<h2 id="三，总结"><a href="#三，总结" class="headerlink" title="三，总结"></a>三，总结</h2><p>互联网架构设计如何进行容量评估：</p>
+<p>【步骤一：评估总访问量】 -&gt; 询问业务、产品、运营</p>
+<p>【步骤二：评估平均访问量QPS】-&gt; 除以时间，一天算4w秒</p>
+<p>【步骤三：评估高峰QPS】 -&gt; 根据业务曲线图来</p>
+<p>【步骤四：评估系统、单机极限QPS】 -&gt; 压测很重要</p>
+<p>【步骤五：根据线上冗余度回答两个问题】 -&gt; 估计冗余度与线上冗余度差值</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/other/">other</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/other/">other</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://deenter.com/2021/08/01/互联网架构，如何进行容量设计？/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Github/">Github</a><small>1</small></li>
+  
+    <li><a href="/categories/Karrigell/">Karrigell</a><small>1</small></li>
+  
+    <li><a href="/categories/VIM/">VIM</a><small>2</small></li>
+  
+    <li><a href="/categories/django/">django</a><small>11</small></li>
+  
+    <li><a href="/categories/freeswitch/">freeswitch</a><small>1</small></li>
+  
+    <li><a href="/categories/go/">go</a><small>1</small></li>
+  
+    <li><a href="/categories/jekyll/">jekyll</a><small>2</small></li>
+  
+    <li><a href="/categories/kivy/">kivy</a><small>1</small></li>
+  
+    <li><a href="/categories/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/categories/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/normal/">normal</a><small>1</small></li>
+  
+    <li><a href="/categories/other/">other</a><small>4</small></li>
+  
+    <li><a href="/categories/python/">python</a><small>67</small></li>
+  
+    <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/categories/system/">system</a><small>2</small></li>
+  
+    <li><a href="/categories/tornado/">tornado</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/django/">django</a><small>5</small></li>
+  
+    <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
+  
+    <li><a href="/tags/flask/">flask</a><small>1</small></li>
+  
+    <li><a href="/tags/freeswitch/">freeswitch</a><small>1</small></li>
+  
+    <li><a href="/tags/go/">go</a><small>2</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/other/">other</a><small>2</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>14</small></li>
+  
+    <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>2</small></li>
+  
+    <li><a href="/tags/tornado/">tornado</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2021 Tony Tan
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

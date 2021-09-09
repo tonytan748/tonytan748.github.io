@@ -93,6 +93,88 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2021-08-01T11:11:06.000Z"><a href="/2021/08/01/互联网架构，如何进行容量设计？/">2021-08-01</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2021/08/01/互联网架构，如何进行容量设计？/">互联网架构，如何进行容量设计？</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>文章转载自<a href="https://mp.weixin.qq.com/s?__biz=MjM5ODYxMDA5OQ==&amp;mid=2651959542&amp;idx=1&amp;sn=2494bbea9a855e0e1c3ccd6d2562a600&amp;scene=0#rd" target="_blank" rel="noopener">这里</a></p>
+<h2 id="一，需求缘起"><a href="#一，需求缘起" class="headerlink" title="一，需求缘起"></a>一，需求缘起</h2><p>互联网公司，这样的场景是否似曾相识：</p>
+<p>场景一：pm要做一个很大的运营活动，技术老大杀过来，问了两个问题：</p>
+<p>（1）机器能抗住么？</p>
+<p>（2）如果扛不住，需要加多少台机器？</p>
+<p>场景二：系统设计阶段，技术老大杀过来，又问了两个问题：</p>
+<p>（1）数据库需要分库么？</p>
+<p>（2）如果需要分库，需要分几个库？</p>
+<p>技术上来说，这些都是系统容量预估的问题，容量设计是架构师必备的技能之一。常见的容量评估包括数据量、并发量、带宽、CPU/MEM/DISK等，今天分享的内容，就以【并发量】为例，看看如何回答好这两个问题。</p>
+<h2 id="二，容量评估的步骤与方法"><a href="#二，容量评估的步骤与方法" class="headerlink" title="二，容量评估的步骤与方法"></a>二，容量评估的步骤与方法</h2><p>【步骤一：评估总访问量】</p>
+<p>如何知道总访问量？对于一个运营活动的访问量评估，或者一个系统上线后PV的评估，有什么好的方法？</p>
+<p>答案是：询问业务方，询问运营同学，询问产品同学，看对运营活动或者产品上线后的预期是什么。</p>
+<p>举例：58要做一个APP-push的运营活动，计划在30分钟内完成5000w用户的push推送，预计push消息点击率10%，求push落地页系统的总访问量？</p>
+<p>回答：<code>5000w*10% = 500w</code></p>
+<p>【步骤二：评估平均访问量QPS】</p>
+<p>如何知道平均访问量QPS？</p>
+<p>答案是：有了总量，除以总时间即可，如果按照天评估，一天按照4w秒计算。</p>
+<p>举例1：push落地页系统30分钟的总访问量是500w，求平均访问量QPS</p>
+<p>回答：<code>500w/(30*60) = 2778，大概3000QPS</code></p>
+<p>举例2：主站首页估计日均pv 8000w，求平均访问QPS</p>
+<p>回答：一天按照4w秒算，8000w/4w=2000，大概2000QPS</p>
+<p>提问：为什么一天按照4w秒计算？</p>
+<p>回答：一天共<code>24小时*60分钟*60秒=8w秒</code>，一般假设所有请求都发生在白天，所以一般来说一天只按照4w秒评估</p>
+<p>【步骤三：评估高峰QPS】</p>
+<p>系统容量规划时，不能只考虑平均QPS，而是要抗住高峰的QPS，如何知道高峰QPS呢？</p>
+<p>答案是：根据业务特性，通过业务访问曲线评估</p>
+<p>举例：日均QPS为2000，业务访问趋势图如下图，求峰值QPS预估？</p>
+<p><img src="http://mmbiz.qpic.cn/mmbiz_png/YrezxckhYOxczfXmIbibeElVSyejm94IVGW27GbsibXTG7r3jicMoMnZhl3gXLtbyYZSQ2A1aRuHawUGgPgZeib50g/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片"></p>
+<p>回答：从图中可以看出，峰值QPS大概是均值QPS的2.5倍，日均QPS为2000，于是评估出峰值QPS为5000。</p>
+<p>说明：有一些业务例如“秒杀业务”比较难画出业务访问趋势图，这类业务的容量评估不在此列。</p>
+<p>【步骤四：评估系统、单机极限QPS】</p>
+<p>如何评估一个业务，一个服务单机能的极限QPS呢？</p>
+<p>答案是：压力测试</p>
+<p>在一个服务上线前，一般来说是需要进行压力测试的（很多创业型公司，业务迭代很快的系统可能没有这一步，那就悲剧了），以APP-push运营活动落地页为例（日均QPS2000，峰值QPS5000），这个系统的架构可能是这样的：</p>
+<p><img src="http://mmbiz.qpic.cn/mmbiz_png/YrezxckhYOxczfXmIbibeElVSyejm94IVg2icic0NINcKROXhl3DULNmiboVH4z43wyyQ2IFyEWic43KDFgPcbUoS7Q/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片2"></p>
+<p>1）访问端是APP</p>
+<p>2）运营活动H5落地页是一个web站点</p>
+<p>3）H5落地页由缓存cache、数据库db中的数据拼装而成</p>
+<p>通过压力测试发现，web层是瓶颈，tomcat压测单机只能抗住1200的QPS（一般来说，1%的流量到数据库，数据库500QPS还是能轻松抗住的，cache的话QPS能抗住，需要评估cache的带宽，假设不是瓶颈），我们就得到了web单机极限的QPS是1200。一般来说，线上系统是不会跑满到极限的，打个8折，单机线上允许跑到QPS1000。</p>
+<p>【步骤五：根据线上冗余度回答两个问题】</p>
+<p>好了，上述步骤1-4已经得到了峰值QPS是5000，单机QPS是1000，假设线上部署了2台服务，就能自信自如的回答技术老大提出的问题了：</p>
+<p>（1）机器能抗住么？ -&gt; 峰值5000，单机1000，线上2台，扛不住</p>
+<p>（2）如果扛不住，需要加多少台机器？ -&gt; 需要额外3台，提前预留1台更好，给4台更稳</p>
+<p>除了并发量的容量预估，数据量、带宽、CPU/MEM/DISK等评估亦可遵循类似的步骤。</p>
+<h2 id="三，总结"><a href="#三，总结" class="headerlink" title="三，总结"></a>三，总结</h2><p>互联网架构设计如何进行容量评估：</p>
+<p>【步骤一：评估总访问量】 -&gt; 询问业务、产品、运营</p>
+<p>【步骤二：评估平均访问量QPS】-&gt; 除以时间，一天算4w秒</p>
+<p>【步骤三：评估高峰QPS】 -&gt; 根据业务曲线图来</p>
+<p>【步骤四：评估系统、单机极限QPS】 -&gt; 压测很重要</p>
+<p>【步骤五：根据线上冗余度回答两个问题】 -&gt; 估计冗余度与线上冗余度差值</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2021-05-30T08:18:30.000Z"><a href="/2021/05/30/freeswitch在centos中安装/">2021-05-30</a></time>
       
       
@@ -546,118 +628,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2020-11-09T03:13:21.000Z"><a href="/2020/11/09/How-to-set-up-a-perfect-Python-project/">2020-11-09</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2020/11/09/How-to-set-up-a-perfect-Python-project/">How to set up a perfect Python project</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>This blog is from <a href="https://sourcery.ai/blog/python-best-practices/" target="_blank" rel="noopener">here</a></p>
-<p>When starting a new Python project, it is tempting to just dive in and start coding. Spending a tiny amount of time to setup a project with the best tools will save immense time and lead to a happier coding experience.</p>
-<p>In an ideal world, dependencies would be identical for all developers, code would be perfectly formatted, common errors forbidden and everything would be covered by tests. Additionally, all of these would ensured at each commit.</p>
-<p>In this article I’ll go through how to set up a project that does exactly that. You can either follow along with the steps or jump straight to generating a new project automatically by installing <a href="https://sourcery.ai/blog/python-best-practices/#pipx" target="_blank" rel="noopener">pipx</a> and <a href="https://sourcery.ai/blog/python-best-practices/#pipenv" target="_blank" rel="noopener">pipenv</a> then <a href="https://sourcery.ai/blog/python-best-practices/#pipenv" target="_blank" rel="noopener">generating a new project</a>.</p>
-<p>Let’s create a new project directory:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir best_practices</span><br><span class="line">cd best_practices</span><br></pre></td></tr></table></figure>
-<h1 id="Python-command-line-tools-with-pipx"><a href="#Python-command-line-tools-with-pipx" class="headerlink" title="Python command line tools with pipx"></a>Python command line tools with pipx</h1><p><a href="https://pipxproject.github.io/pipx/" target="_blank" rel="noopener">Pipx</a> is a handy utility that allows quick installation of python command line tools. We’ll be using it to install pipenv and cookiecutter.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python3 -m pip install --user pipx</span><br><span class="line">python3 -m pipx ensurepath</span><br></pre></td></tr></table></figure>
-<h1 id="Dependency-management-with-pipenv"><a href="#Dependency-management-with-pipenv" class="headerlink" title="Dependency management with pipenv"></a>Dependency management with pipenv</h1><blockquote>
-<p><a href="https://github.com/pypa/pipenv" target="_blank" rel="noopener">Pipenv</a> automatically creates and manages a virtualenv for your projects, as well as adding/removing packages from your Pipfile as you install/uninstall packages. It also generates the ever-important Pipfile.lock, which is used to produce deterministic builds.</p>
-</blockquote>
-<p>Knowing that you and your teammates are using the same library versions is a huge confidence boost. Pipenv takes care of this and has gained massive traction in the last year or so.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipx install pipenv</span><br></pre></td></tr></table></figure>
-<h1 id="Code-formatting-with-black-and-isort"><a href="#Code-formatting-with-black-and-isort" class="headerlink" title="Code formatting with black and isort"></a>Code formatting with black and isort</h1><p><a href="https://github.com/psf/black" target="_blank" rel="noopener">Black</a> formats our code:</p>
-<blockquote>
-<p>Black is the uncompromising Python code formatter. By using it, you agree to cede control over minutiae of hand-formatting. In return, Black gives you speed, determinism, and freedom from pycodestyle nagging about formatting. You will save time and mental energy for more important matters.<br>Blackened code looks the same regardless of the project you’re reading. Formatting becomes transparent after a while and you can focus on the content instead.<br>Black makes code review faster by producing the smallest diffs possible.</p>
-</blockquote>
-<p>while <a href="https://github.com/timothycrosley/isort" target="_blank" rel="noopener">isort</a> sorts our imports:</p>
-<blockquote>
-<p>isort your python imports for you so you don’t have to. isort is a Python utility / library to sort imports alphabetically, and automatically separated into sections.</p>
-</blockquote>
-<p>Let’s install them using pipenv as development dependencies so they don’t clutter a deployment:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install black isort --dev</span><br></pre></td></tr></table></figure>
-<p>Black and isort have incompatible default options so we’ll override isort to follow black’s lead. Create a <code>setup.cfg</code> file and add this config:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[isort]</span><br><span class="line">multi_line_output=3</span><br><span class="line">include_trailing_comma=True</span><br><span class="line">force_grid_wrap=0</span><br><span class="line">use_parentheses=True</span><br><span class="line">line_length=88</span><br></pre></td></tr></table></figure>
-<p>We can run these tools with:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pipenv run black</span><br><span class="line">pipenv run isort</span><br></pre></td></tr></table></figure>
-<h1 id="Style-enforcement-with-flake8"><a href="#Style-enforcement-with-flake8" class="headerlink" title="Style enforcement with flake8"></a>Style enforcement with flake8</h1><p>Flake8 ensures our code follows the standard python conventions as defined in PEP8. Install using pipenv:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install flake8 --dev</span><br></pre></td></tr></table></figure>
-<p>Just like isort it needs a little configuration to work well with black. Add this config to <code>setup.cfg</code>:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[flake8]</span><br><span class="line">ignore = E203, E266, E501, W503</span><br><span class="line">max-line-length = 88</span><br><span class="line">max-complexity = 18</span><br><span class="line">select = B,C,E,F,W,T4</span><br></pre></td></tr></table></figure>
-<p>Now we can run flake8 with pipenv run flake8.</p>
-<h1 id="Static-types-with-mypy"><a href="#Static-types-with-mypy" class="headerlink" title="Static types with mypy"></a>Static types with mypy</h1><blockquote>
-<p><a href="http://mypy-lang.org/" target="_blank" rel="noopener">Mypy</a> is an optional static type checker for Python that aims to combine the benefits of dynamic (or “duck”) typing and static typing. Mypy combines the expressive power and convenience of Python with a powerful type system and compile-time type checking. Mypy type checks standard Python programs; run them using any Python VM with basically no runtime overhead.</p>
-</blockquote>
-<p>Having types in Python takes a little getting used to but the benefits are substantial. From the website:</p>
-<ul>
-<li>Static typing can make programs easier to understand and maintain</li>
-<li>Static typing can help you find bugs earlier and with less testing and debugging</li>
-<li>Static typing can help you find difficult-to-find bugs before your code goes into production</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install mypy --dev</span><br></pre></td></tr></table></figure>
-<p>Mypy by default will recursively check all imports for type annotations which leads to errors when libraries do not include these annotations. We need to configure mypy to run only on our code and to ignore any errors for imports without type annotations. We are assuming that our code lives in the best_practices package for the following config. Add this to <code>setup.cfg</code>:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[mypy]</span><br><span class="line">files=best_practices,test</span><br><span class="line">ignore_missing_imports=true</span><br></pre></td></tr></table></figure>
-<p>Now we can run mypy with:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv run mypy</span><br></pre></td></tr></table></figure>
-<p>Here’s a useful <a href="https://mypy.readthedocs.io/en/latest/cheat_sheet_py3.html" target="_blank" rel="noopener">cheat sheet</a> for using it.</p>
-<h1 id="Testing-with-pytest-and-pytest-cov"><a href="#Testing-with-pytest-and-pytest-cov" class="headerlink" title="Testing with pytest and pytest-cov"></a>Testing with pytest and pytest-cov</h1><p>Writing tests with <a href="https://docs.pytest.org/en/latest/" target="_blank" rel="noopener">pytest</a> is incredibly easy and removing any friction to writing tests means we will write more of them!</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install pytest pytest-cov --dev</span><br></pre></td></tr></table></figure>
-<p>Here’s a simple example from the pytest website:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># content of test_sample.py</span><br><span class="line">def inc(x):</span><br><span class="line">    return x + 1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def test_answer():</span><br><span class="line">    assert inc(3) == 5</span><br></pre></td></tr></table></figure>
-<p>To execute it:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ pipenv run pytest</span><br><span class="line">=========================== test session starts ============================</span><br><span class="line">platform linux -- Python 3.x.y, pytest-5.x.y, py-1.x.y, pluggy-0.x.y</span><br><span class="line">cachedir: $PYTHON_PREFIX/.pytest_cache</span><br><span class="line">rootdir: $REGENDOC_TMPDIR</span><br><span class="line">collected 1 item</span><br><span class="line"></span><br><span class="line">test_sample.py F                                                     [100%]</span><br><span class="line"></span><br><span class="line">================================= FAILURES =================================</span><br><span class="line">_______________________________ test_answer ________________________________</span><br><span class="line"></span><br><span class="line">    def test_answer():</span><br><span class="line">&gt;       assert inc(3) == 5</span><br><span class="line">E       assert 4 == 5</span><br><span class="line">E        +  where 4 = inc(3)</span><br><span class="line"></span><br><span class="line">test_sample.py:6: AssertionError</span><br><span class="line">========================= 1 failed in 0.12 seconds =========================</span><br></pre></td></tr></table></figure>
-<p>All our tests should go in the <code>test</code> directory so add this config to <code>setup.cfg</code>:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[tool:pytest]</span><br><span class="line">testpaths=test</span><br></pre></td></tr></table></figure>
-<p>We also want to check how much of our code is covered by tests. Create a new file <code>.coveragerc</code> to only return coverage statistics for our application code, again we are assuming our application code lives in the <code>best_practices</code> module:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[run]</span><br><span class="line">source = best_practices</span><br><span class="line"></span><br><span class="line">[report]</span><br><span class="line">exclude_lines =</span><br><span class="line">    # Have to re-enable the standard pragma</span><br><span class="line">    pragma: no cover</span><br><span class="line"></span><br><span class="line">    # Don&apos;t complain about missing debug-only code:</span><br><span class="line">    def __repr__</span><br><span class="line">    if self\.debug</span><br><span class="line"></span><br><span class="line">    # Don&apos;t complain if tests don&apos;t hit defensive assertion code:</span><br><span class="line">    raise AssertionError</span><br><span class="line">    raise NotImplementedError</span><br><span class="line"></span><br><span class="line">    # Don&apos;t complain if non-runnable code isn&apos;t run:</span><br><span class="line">    if 0:</span><br><span class="line">    if __name__ == .__main__.:</span><br></pre></td></tr></table></figure>
-<p>We can now run our tests and report coverage with</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv run pytest --cov --cov-fail-under=100</span><br></pre></td></tr></table></figure>
-<p>This will fail if our test coverage of the application code is less than 100%.</p>
-<h1 id="Git-hooks-with-pre-commit"><a href="#Git-hooks-with-pre-commit" class="headerlink" title="Git hooks with pre-commit"></a>Git hooks with pre-commit</h1><p>Git hooks allow you to run scripts any time you want to commit or push. This lets us run all of our linting and tests automatically every time we commit/push. <a href="https://pre-commit.com/" target="_blank" rel="noopener">pre‑commit</a> allows easy configuration of these hooks:</p>
-<blockquote>
-<p>Git hook scripts are useful for identifying simple issues before submission to code review. We run our hooks on every commit to automatically point out issues in code such as missing semicolons, trailing whitespace, and debug statements. By pointing these issues out before code review, this allows a code reviewer to focus on the architecture of a change while not wasting time with trivial style nitpicks.</p>
-</blockquote>
-<p>Here we configure all of the above tools to run on any changed python files on committing, and also to run pytest coverage only when pushing as it can be slow. Create a new file <code>.pre-commit-config.yaml</code>:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">repos:</span><br><span class="line">  - repo: local</span><br><span class="line">    hooks:</span><br><span class="line">      - id: isort</span><br><span class="line">        name: isort</span><br><span class="line">        stages: [commit]</span><br><span class="line">        language: system</span><br><span class="line">        entry: pipenv run isort</span><br><span class="line">        types: [python]</span><br><span class="line"></span><br><span class="line">      - id: black</span><br><span class="line">        name: black</span><br><span class="line">        stages: [commit]</span><br><span class="line">        language: system</span><br><span class="line">        entry: pipenv run black</span><br><span class="line">        types: [python]</span><br><span class="line"></span><br><span class="line">      - id: flake8</span><br><span class="line">        name: flake8</span><br><span class="line">        stages: [commit]</span><br><span class="line">        language: system</span><br><span class="line">        entry: pipenv run flake8</span><br><span class="line">        types: [python]</span><br><span class="line">        exclude: setup.py</span><br><span class="line"></span><br><span class="line">      - id: mypy</span><br><span class="line">        name: mypy</span><br><span class="line">        stages: [commit]</span><br><span class="line">        language: system</span><br><span class="line">        entry: pipenv run mypy</span><br><span class="line">        types: [python]</span><br><span class="line">        pass_filenames: false</span><br><span class="line"></span><br><span class="line">      - id: pytest</span><br><span class="line">        name: pytest</span><br><span class="line">        stages: [commit]</span><br><span class="line">        language: system</span><br><span class="line">        entry: pipenv run pytest</span><br><span class="line">        types: [python]</span><br><span class="line"></span><br><span class="line">      - id: pytest-cov</span><br><span class="line">        name: pytest</span><br><span class="line">        stages: [push]</span><br><span class="line">        language: system</span><br><span class="line">        entry: pipenv run pytest --cov --cov-fail-under=100</span><br><span class="line">        types: [python]</span><br><span class="line">        pass_filenames: false</span><br></pre></td></tr></table></figure>
-<p>If you ever need to skip these hooks you can run <code>git commit --no-verify</code> or <code>git push --no-verify</code></p>
-<h1 id="Generate-a-project-using-cookiecutter"><a href="#Generate-a-project-using-cookiecutter" class="headerlink" title="Generate a project using cookiecutter"></a>Generate a project using cookiecutter</h1><p>Now we’ve seen what an ideal project contains, we can turn this into a <a href="https://github.com/sourcery-ai/python-best-practices-cookiecutter" target="_blank" rel="noopener">template</a> to generate a new project with a single command:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipx run cookiecutter gh:sourcery-ai/python-best-practices-cookiecutter</span><br></pre></td></tr></table></figure>
-<p>Fill in the project name and repo name and your project will be generated for you.</p>
-<p>To finish setting up, follow these steps:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># Enter project directory</span><br><span class="line">cd &lt;repo_name&gt;</span><br><span class="line"></span><br><span class="line"># Initialise git repo</span><br><span class="line">git init</span><br><span class="line"></span><br><span class="line"># Install dependencies</span><br><span class="line">pipenv install --dev</span><br><span class="line"></span><br><span class="line"># Setup pre-commit and pre-push hooks</span><br><span class="line">pipenv run pre-commit install -t pre-commit</span><br><span class="line">pipenv run pre-commit install -t pre-push</span><br></pre></td></tr></table></figure>
-<p>The template project contains a very simple Python file and test to try the tools out on. Once you’re happy with the code you can then do your first <code>git commit</code> and all the hooks will be run.</p>
-<h1 id="Editor-Integration"><a href="#Editor-Integration" class="headerlink" title="Editor Integration"></a>Editor Integration</h1><p>While it is great to know that the standard of code on our project will always be maintained at the highest level when committing code, it is somewhat frustrating to find out any issues after we think the code changes have all been done. It is much better to get the issues displayed in real-time.</p>
-<p>Spend some time to make sure these commands are run by your code editor when saving a file. Having instant feedback means you can quickly fixup any minor issues introduced while the code is fresh in the mind.</p>
-<p>Personally I use some excellent Vim plugins to accomplish this:</p>
-<ul>
-<li><a href="https://github.com/dense-analysis/ale" target="_blank" rel="noopener">ale</a> runs flake8 in real-time, and runs black, isort and mypy on file save</li>
-<li><a href="https://github.com/janko/vim-test" target="_blank" rel="noopener">vim-test</a> with <a href="https://github.com/janko/vim-test#projectionist-integration" target="_blank" rel="noopener">projectionist integration</a> runs pytest on file save</li>
-</ul>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -694,7 +664,7 @@
   
     <li><a href="/categories/normal/">normal</a><small>1</small></li>
   
-    <li><a href="/categories/other/">other</a><small>3</small></li>
+    <li><a href="/categories/other/">other</a><small>4</small></li>
   
     <li><a href="/categories/python/">python</a><small>67</small></li>
   
@@ -727,7 +697,7 @@
   
     <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
   
-    <li><a href="/tags/other/">other</a><small>1</small></li>
+    <li><a href="/tags/other/">other</a><small>2</small></li>
   
     <li><a href="/tags/python/">python</a><small>14</small></li>
   

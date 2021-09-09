@@ -54,6 +54,46 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-05-31T16:00:00.000Z"><a href="/2016/06/01/python-module-fileinput/">2016-06-01</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/06/01/python-module-fileinput/">Python module: fileinput</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Loop many files in a folder and read them by line</em></p>
+<p>I just make a example to explane how to use fileinput.</p>
+<p><code>fileinput</code> is use to loop some format files in  a folder, and read it by lines.</p>
+<p>The other ways also can to do this task. but fileinput is better. the old wany is use glob get all files then use <code>open(filename)</code> read it , then read it one by one line. or use <code>os.walk</code> to do it.</p>
+<p>BUt <code>fileinput</code> is very sample to finish this task.</p>
+<p>The example is following:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import fileinput</span><br><span class="line">from glob import glob</span><br><span class="line"></span><br><span class="line">for line in fileinput.input(glob(r&apos;d:/*.txt&apos;)):</span><br><span class="line">    print &quot;&#123;&#125; filename: &#123;&#125; lineno: &#123;&#125; linelength: &#123;&#125;&quot;.format(fileinput.lineno(),fileinput.filename(),fileinput.filelineno(),line.strip(&apos;/n&apos;))</span><br><span class="line"></span><br><span class="line">fileinput.close()</span><br></pre></td></tr></table></figure>
+<p>Note: afrer finished the read files. it must use <code>fileinput.close()</code> to close this internal object.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-05-20T16:00:00.000Z"><a href="/2016/05/21/install-kernel46-in-ubuntu-1504/">2016-05-21</a></time>
       
       
@@ -1343,59 +1383,6 @@ with open('json/globe_volcanoes.json', 'w') as f:
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-02-09T16:00:00.000Z"><a href="/2016/02/10/use-cron--crontab-to-run-schedule-tasks/">2016-02-10</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/02/10/use-cron--crontab-to-run-schedule-tasks/">Use Cron &amp; Crontab to run schedule tasks</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>In Ubuntu use Cron and Crontab to Run Schedule Tasks</em></p>
-<h3 id="Open-Close-Restart-Cron-in-Ubuntu"><a href="#Open-Close-Restart-Cron-in-Ubuntu" class="headerlink" title="Open/Close/Restart Cron in Ubuntu"></a>Open/Close/Restart Cron in Ubuntu</h3><p>Config file usurally is /etc/init.d/cron</p>
-<p>Start: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/cron start</span><br></pre></td></tr></table></figure>
-<p>Close:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/cron stop</span><br></pre></td></tr></table></figure>
-<p>Restart:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/cron restart</span><br><span class="line">sudo service cron restart</span><br></pre></td></tr></table></figure>
-<p>Reload config:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/cron reload</span><br></pre></td></tr></table></figure>
-<h3 id="Create-a-cron-task"><a href="#Create-a-cron-task" class="headerlink" title="Create a cron task"></a>Create a cron task</h3><p>Normally we use “crontab -u username -e” to add new task in the cron config file.</p>
-<p>If edit the exists task, the same command.</p>
-<h5 id="running-command-line"><a href="#running-command-line" class="headerlink" title="running command line"></a>running command line</h5><p>example to write “hello world” to /home/tonytan/helloworld.txt every 5 seconds.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*/5 * * * * echo &quot;hello world&quot; &gt;&gt; /home/tonytan/helloworld.txt</span><br></pre></td></tr></table></figure>
-<h5 id="use-shell-file"><a href="#use-shell-file" class="headerlink" title="use shell file"></a>use shell file</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*/5 * * * * /home/tonytan/helloworld.sh</span><br></pre></td></tr></table></figure>
-<p>Write the following codes into /home/tonytan/helloworld.sh</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">cd /home/tonytan/</span><br><span class="line">echo &quot;hello world&quot; &gt;&gt; helloworld.txt</span><br></pre></td></tr></table></figure>
-<p>Note: after edit the config file everytime must restart cron, unless unuseable.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo service cron restart</span><br><span class="line">sudo service cron status    #look the cron status</span><br><span class="line">crontab -l    #look the cron</span><br><span class="line">crontab -e    #edit cron</span><br></pre></td></tr></table></figure>
-<p>Attached is the normally example in cron config:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">every 5 sec run task:</span><br><span class="line">*/5 * * * * ?</span><br><span class="line"></span><br><span class="line">every 1 min run task:</span><br><span class="line">0 */1 * * * ?</span><br><span class="line"></span><br><span class="line">everyday 23:00 run task:</span><br><span class="line">0 0 23 * * ?</span><br><span class="line"></span><br><span class="line">everyday 1:00 run task:</span><br><span class="line">0 0 1 * * ?</span><br><span class="line"></span><br><span class="line">every month first day 1:00 run task:</span><br><span class="line">0 0 1 1 * ?</span><br><span class="line"></span><br><span class="line">every month last day 23:00 run task:</span><br><span class="line">0 0 23 L * ?</span><br><span class="line"></span><br><span class="line">every Sunday 1:00 run task:</span><br><span class="line">0 0 1 ? * L</span><br><span class="line"></span><br><span class="line">in 26min,29min,33min run task:</span><br><span class="line">0 26,29,33 * * * ?</span><br><span class="line"></span><br><span class="line">every day 0:00,13:00,18:00,21:00 run task:</span><br><span class="line">0 0 0,13,18,21 * * ?</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1434,7 +1421,7 @@ with open('json/globe_volcanoes.json', 'w') as f:
   
     <li><a href="/categories/normal/">normal</a><small>1</small></li>
   
-    <li><a href="/categories/other/">other</a><small>3</small></li>
+    <li><a href="/categories/other/">other</a><small>4</small></li>
   
     <li><a href="/categories/python/">python</a><small>67</small></li>
   
@@ -1467,7 +1454,7 @@ with open('json/globe_volcanoes.json', 'w') as f:
   
     <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
   
-    <li><a href="/tags/other/">other</a><small>1</small></li>
+    <li><a href="/tags/other/">other</a><small>2</small></li>
   
     <li><a href="/tags/python/">python</a><small>14</small></li>
   

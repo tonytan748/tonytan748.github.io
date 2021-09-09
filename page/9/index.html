@@ -54,6 +54,203 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-08-22T16:00:00.000Z"><a href="/2014/08/23/lean-djangos-10-precautions/">2014-08-23</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/23/lean-djangos-10-precautions/">Lean Django&#39;s 10 Precautions</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Here note summarize the ten points that can help you better lean Django,reduce errors and avoid detours,it is worth a look.</em></p>
+<p>Here note summarize the ten points that can help you better lean Django,reduce errors and avoid detours,it is worth a look.</p>
+<h3>1.Don’t include project’s name in reference code.</h3>
+
+<p>If you create a project’s name “project”, include a application’s name “app”, it’s no good like this.</p>
+<pre>
+from project.app.models import Author
+</pre>
+
+<p>the disadvantages is the project and application are tight coupling. cannot reuse application. it’s very difficulty to change new project.</p>
+<p>So it’s the way for recommended.</p>
+<pre>
+from app.models import Author
+</pre>
+
+<p>In addition, it’s need set the project path in the “PYTHONPATH”.</p>
+<h3>2.Don’t hardcoed “MEDIA_ROOT” and “TEMPLATE_DIRS”</h3>
+
+<p>Don’t use the following code in the “settings.py”:</p>
+<pre>
+TEMPLATE_DIRS=("/home/html/project/templates",)
+MEDIA_ROOT="/home/html/project/appmedia/"
+</pre>
+
+<p>The problems will coming when you deployed to the production environment.</p>
+<p>this way is recommended.</p>
+<pre>
+SITE_ROOT=os.path.realpath(os.path.dirname(__file__))
+MEDIA_ROOR=os.path.join(SITE_ROOT,'appmedia')
+TEMPLATE_DIRS=(os.path.join(SITE_ROOT,'templates'),)
+</pre>
+
+<p>you also can use <b>abspath</b>, you can find the different with <b>realpath</b> in <a href="http://rob.cogit8.org/blog/2009/May/05/django-and-relativity-updated/" target="_blank" rel="noopener">http://rob.cogit8.org/blog/2009/May/05/django-and-relativity-updated/</a></p>
+<h3>3.Don’t hearcoded static file in tempaltes.</h3>
+
+<p>Don’t use the following ways when use CSS, Javascript or images in templates.</p>
+<pre>
+
+&#60;link rel="stylesheet" type="text/css" hef="/appmedia/amazing.css" /&#62;
+&#60;script type="text/javascript" src="/appmedia/jquery.min.js"&#62;&#60;/script&#62;
+
+</pre>
+
+<p>if you move to another server, you must manual change the address one by one.</p>
+<p>so it’s good way to use <b>&#123;&#123; MEDIA_URL &#125;&#125;</b></p>
+<pre>
+
+&#60;link rel="stylesheet" type="text/css" href="&#123;&#123; MEDIA_URL &#125;&#125;amazing.css" /&#62;
+&#60;script type="text/javascript" src="&#123;&#123;MEDIA_URL&#125;&#125;jquery.min.js"&#62;&#60;/script&#62;
+</pre>
+
+<p>Use <b>“RequestContext”</b> to get the template context.</p>
+<pre>
+return render_to_response("app/template.html",&#123;'var':'foo'&#125;,context_instance=RequestContext(request))
+</pre>
+
+<p>you also can get current user information from “RequestContext”.</p>
+<h3>4.Don’t write normal logic in “views.py”</h3>
+
+<p>Write normal logic in views, it’s bad for reuse code.<br>it’s commended put in <b>models</b> or create a <b>helper</b> model.<br>Yes. if you get the Author from models, you can put the code in to view for get Author list.</p>
+<h3>5.Don’t forget change DEBUG to False when release.</h3>
+
+
+<p>One Way:</p>
+<pre>
+import socket
+
+if socket.gethostname() == 'productionserver.com'
+    DEBUG=False
+else:
+    DEBUG=True
+</pre>
+
+<p>Another Way:</p>
+<pre>
+#File Name: settings_debuy.py
+#the setting information include test models
+#Use "python manage.py runserver settings=settings_debug.py" to run project.
+
+from settings import *
+DEBUG=True
+
+#you also setting more variables which used in testing.
+</pre>
+
+
+
+<h3>6.Loading one time template tag.</h3>
+
+<p>Normally, we loading template tags in templates.</p>
+<pre>
+&#123;% load template_tags %&#125;
+</pre>
+We must write the same code in pages everytime to load tempalte tag.
+
+So the following code is very cool!
+<pre>
+from django import template
+template.add_to_builtins('app.templatetags.custom_tag_module')
+</pre>
+It's only put the code in the modules which is loading when project start running. i.e. settings.py, urls.py, models.py etc..
+
+the above code can loading custom tag modules or filters when start running project. They can be used in template. 
+
+
+
+<h3>7.The rational allocation and use URL.</h3>
+
+Don't put all url settings in one "urls.py".
+It's better set the URL in app's urls.py.
+
+the static file path don't use hard-coded. url also don't use hard-coded. otherwise you must change so many when you change one url. it's better to use url function.
+
+In /project/askalumini/urls.py, define the name for each url, it can help us to effectively deal with the view url, templates and models, rather than hard-coded. 
+
+To ensure that the name of the only, please follow the url named &#60;appname&#62; / &#60;somelabel&#62; idiom.
+
+For example, in views.py have the code.
+<pre>
+HttpResponseRedirect("/askalumini/questions/54")
+</pre>
+
+<p>please change to:</p>
+<pre>
+from django.core.urlresolvers import reverse
+HttpResponseRedirect(reverse('askquestiondisploy',kwargs=&#123;'questionno':q.id&#125;))
+</pre>
+
+<p>Use models.permalink decorator in the model used to format url:</p>
+<pre>
+@models.permalink
+def get_absolute_url(self):
+    return ('profileur12',(),&#123;'userid':self.user.id&#125;)
+</pre>
+
+<p>Url tag instead of using hard-coded in the template:</p>
+<pre>
+&#123;% url askquestiondisploy 345%&#125;
+&#60;a href="&#123;% url askquestiondisploy 345 %&#125;"&#62;Ask Question&#60;/a&#62;
+</pre>
+
+
+
+<h3>8.Debugging.</h3>
+
+<p>Debugging usually with some third-party tools to get more runtime information.<br>You can use <b>django-debug-toolbar</b> to see debugging information.</p>
+<p>Another tool is <b>Werkzeug debugger</b>, it can open the python shell on the wrong page, allows you to more easily track the error message</p>
+<p>There <b>pdb</b>, a powerful debugging tool: <a href="http://ericholscher.com/blog/2008/aug/31/using-pdb-python-debugger-django-debugging-series-/" target="_blank" rel="noopener">http://ericholscher.com/blog/2008/aug/31/using-pdb-python-debugger-django-debugging-series-/</a></p>
+<h3>9.Learn Pinax.</h3>
+
+<p>Django biggest advantage is code reuse, DRY, <b>pinax</b> is such a platform that contains a lot of code can be used directly, for example openid, email verification, and so on. Please visit: http: //pinaxproject.com/</p>
+<h3>10.Learn some useful third-party applications.</h3>
+
+<h5>1) Database Upgrade Tool</h5>
+
+<p>What’s Database upgrade tool? you use “syncdb”, after one year, you changed models, do you want contunue to run “syncdb”? or “ALTER TABLE”..?</p>
+<p><b>South</b> is a stronger solution, but you must to learning how to use: <a href="http://south.aeracode.org/" target="_blank" rel="noopener">http://south.aeracode.org/</a></p>
+<h5>2) Templates System</h5>
+
+<p><b>Jinja</b> is a complete system of third-party template, you can replace the default template system, which offers many superior characteristics.</p>
+<h5>3) Third-party applications</h5>
+
+<p><b>django command extensions</b> provide a lot of useful command-line functions:<br><b>shell_plus</b> load all django model</p>
+<p><b>runserver_plus</b> integrated debugging tools Werkzeug</p>
+<p>Generation model diagram, you can show it to your boss</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-08-20T16:00:00.000Z"><a href="/2014/08/21/how-to-use-args-and-kwargs-in-python/">2014-08-21</a></time>
       
       
@@ -138,66 +335,6 @@ arg1: 1
 arg2: two
 arg3: 3
 </pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-08-16T16:00:00.000Z"><a href="/2014/08/17/use-frabic-in-update-github/">2014-08-17</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/08/17/use-frabic-in-update-github/">Use Frabic in update Github</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>Fabic is used for automating deployment of your application.</em></p>
-<p>Fabric is used for automating deployment of your application.</p>
-<p>Install:</p>
-<pre>
-    $ pip install fabric
-</pre>
-
-<p>Create the fabfile:</p>
-<pre>
-    $ touch fabfile.py
-</pre>
-
-<p>Then add the following code:</p>
-<pre>
-from fabric.api import local
-
-def deploy():
-    local('git add .')
-    comment=raw_input('please type in commit:')
-    local('git commit -m "%s"' % comment)
-    local('git push origin master')
-</pre>
-
-<p>Run:</p>
-<pre>
-$ fab deploy
-</pre>
-
 
       
     </div>
@@ -372,6 +509,66 @@ else:
 </pre>
 
 <p>Then we upload the photo, update “views.py” to save the img path.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-08-16T16:00:00.000Z"><a href="/2014/08/17/use-frabic-in-update-github/">2014-08-17</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/17/use-frabic-in-update-github/">Use Frabic in update Github</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Fabic is used for automating deployment of your application.</em></p>
+<p>Fabric is used for automating deployment of your application.</p>
+<p>Install:</p>
+<pre>
+    $ pip install fabric
+</pre>
+
+<p>Create the fabfile:</p>
+<pre>
+    $ touch fabfile.py
+</pre>
+
+<p>Then add the following code:</p>
+<pre>
+from fabric.api import local
+
+def deploy():
+    local('git add .')
+    comment=raw_input('please type in commit:')
+    local('git commit -m "%s"' % comment)
+    local('git push origin master')
+</pre>
+
+<p>Run:</p>
+<pre>
+$ fab deploy
+</pre>
+
 
       
     </div>
@@ -624,6 +821,227 @@ $ git config credential.helper cache
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-08-11T16:00:00.000Z"><a href="/2014/08/12/what-are-useful-online-tools-for-linux/">2014-08-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/12/what-are-useful-online-tools-for-linux/">What are useful online tools for Linux</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>As you know, GNU Linux is much more than just an OS. There is literally a whole sphere on the Internet dedicated to the penguin OS.</em></p>
+<p>As you know, GNU Linux is much more than just an OS. There is literally a whole sphere on the Internet dedicated to the penguin OS. If you read this post, you are probably inclined towards reading about Linux online. Among all the pages that you can find on the subject, there are a couple of websites that every Linux adventurer should have in his bookmarks. These websites are more than just tutorials or reviews. They are real tools that you can access from anywhere and share with everyone. So today I shall propose you a non-exhaustive list of sixteen websites that should be in your bookmarks. Some of them can also be useful for Windows or Mac users: that’s the extent of their reach.</p>
+<h3>1. <a href="ExplainShell.com">ExplainShell.com</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3841/14517716647_3b6a1a564d_z.jpg"></p>
+<p>If you are interested in Linux command line, you should use this website. If you are not interested in Linux command line, you should use it even more as it will explain in detail how a command works. This could prevent you from launching a command detrimental to your computer, and is a good way to learn with a great interface.</p>
+<h3>2. <a href="BashrcGenerator.com">BashrcGenerator.com</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3900/14703872782_033e5acdb8_z.jpg"></p>
+<p>If you want to begin with Linux command line, or if you want to quickly get a customized shell prompt but not sure how, this website will generate for you PS1 prompt code to place your .bashrc file in your home directory. You can drag and drop the elements that you would like to see in your prompt, like your username and the current time, and the website will write the code for you. It’s easy and very readable. Definitely a must for the lazy.</p>
+<h3>3. <a href="Vim-adventures.com">Vim-adventures.com</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3838/14681149696_0c533fd6de_z.jpg"></p>
+<p>I only recently discovered this website, but it already sucked in many hours of my life. In short: a RPG game with Vim commands. Move your character in the isometric levels with the ‘h,j,k,l’ keys, gain new commands/abilities, collect keys, and learn how to use Vim proficiently very quickly.</p>
+<h3>4. <a href="Try.Github.com">Try Github</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3874/14517499739_0452848d68_z.jpg"></p>
+<p>The pitch is simple: learn Git in 15 minutes. This website simulates a console, and walks you though the steps of collaborative editing. The interface is very stylish and the intention is worthy. The only downside is for the Git allergic. But it is definitely a good skill to have, and a good place to learn it.</p>
+<h3>5. <a href="Shortcutfoo.com">Shortcutfoo.com</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3906/14517499799_f142ea37cb_z.jpg"></p>
+<p>Another shortcut database, shortcutfoo is a bit more standard in its way to present its content to the user, but definitely more straight-forward than funny mini-games. The shortcuts of several programs are available and grouped by categories. As it might not be super complete for software like Vim, which is completely reliant on shortcuts, it is perfect for giving a quick tip or a general overview.</p>
+<h3>6. <a href="#">GitHub Free Programming Books</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3867/14517499989_408a28d8be_z.jpg"></p>
+<p>As you might guess from the URL, this is a collection of free online books about programming, written collaboratively using Git. The content is awesome and the authors deserve to be praised for such work. It might not be the easiest read at first, but it is one of the most instructive for sure. We can only hope that the movement will keep growing.</p>
+
+
+<h3>7. <a href="Collabedit.com">Collabedit.com</a></h3>
+
+<p><img src="https://farm3.staticflickr.com/2940/14681150086_2d169d67f9_z.jpg"></p>
+<p>If you ever plan on giving a phone interview, you should check out collabedit beforehand. It allows you to create a document, select the programming language that you want to write in, and then share that document via the URL. The people opening the link will be able to freely interact in real time with the text, allowing you to judge their programming skills or just exchange snippets. It even comes with the proper syntax highlighting and a chat widget. In other words, it is the instant-Google Document of programmers.</p>
+
+
+<h3>8. <a href="Cpp.sh">Cpp.sh</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3840/14700981001_af3ac40b65_z.jpg"></p>
+<p>This is one of those websites that extend beyond just Linux, but it is so useful that it deserves its place here. In short, an online development environment for C++. Just write your code in your navigator and run it. As a bonus, you get an auto-indentation feature, Ctrl+Z, and the possibility to share the URL with your buddy. This is just one of those crazy things that you can do from a simple browser.</p>
+
+
+<h3>9. <a href="Copy.sh">Copy.sh</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3883/14517479870_da521931eb_z.jpg"></p>
+<p>In continuation with crazy things that you can do from your browser, copy.sh lets you run a virtual machine online. Just that. It gained fame relatively recently, but the idea is just insane. From the navigator you can select among the defaults virtual images to run, or upload your own iso file. The code for that feat has been shared on GitHub. Just amazing.</p>
+
+
+<h3>10. <a href="Commandlinefu.com">Commandlinefu.com</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3887/14517495938_ca3b831ca9_z.jpg"></p>
+<p>We all keep a big snippet of command-line “gems” on our computer. commandlinefu’s goal is to release those snippets to the world. As a collaborative database, it resembles the Wikipedia of the command line. Everyone is free to register and post their favorite command on the website for everyone else to see. You will then be able to access that knowledge from everywhere and share it with everyone. If you are interested in mastering the shell, commandlinefu also proposes great features like random commands and a news feed to learn something new every day.</p>
+
+
+<h3>11. <a href="Alias.sh">Alias.sh</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3868/14701762124_a7b3547aca_z.jpg"></p>
+<p>Another collaborative database, alias.sh (I love the URL) is a bit like commandlinefu but for shell aliases. You can share and discover useful aliases which will make your CLI experience so much better. I personally like the alias to get the dimensions of a picture.  </p><br><pre><br>1 function dim(){ sips $1 -g pixelWidth -g pixelHeight }<br></pre><br><p>All the seconds you save with alias.sh probably accumulate with time, and turn to years by the end of your life.</p>
+
+
+<h3>12. <a href="Distrowatch.com">Distrowatch.com</a></h3>
+
+<p><img src="https://farm3.staticflickr.com/2910/14681149996_50a45bff78_z.jpg"></p>
+<p>Who does not know Distrowatch? Besides giving a precise ranking of Linux distributions based on their website popularity, Distrowatch is also a very useful database. Whether you are looking for a new distribution to try, or just curious, it presents an exhaustive account of every Linux you can find, with information like which default desktop environment it uses, or package system, or its default applications. And all the versions, and with easily accessible download links. In a word, the Linux database.</p>
+
+
+<h3>13. <a href="Linuxmanpages.com">Linuxmanpages.com</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3911/14704165765_8e30cb3d3f_z.jpg"></p>
+<p>Everything is in the URL: access the manual pages for popular commands from anywhere. Not really sure if this would actually be useful for Linux users as you can access that from your actual terminal, but the intent is remarkable.</p>
+
+
+<h3>14. <a href="AwesomeCow.com">AwesomeCow.com</a></h3>
+
+<p><img src="https://farm6.staticflickr.com/5558/14704165965_02b10ee293_z.jpg"></p>
+<p>This is maybe a bit less hardcore Linux, but definitely useful to some. Awesomecow is a search engine for finding alternatives to Windows software on Linux. It can be helpful for anyone migrating to the penguin, or nostalgic of a Windows program. I see this as a strength, showing that Linux can compete with the professional spheres when it comes sot software quality. Or at least try to.</p>
+
+
+<h3>15. <a href="PenguSpy.com">PenguSpy.com</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3904/14517495728_f6877e8e3b_z.jpg"></p>
+<p>Before Steam started to show up on Linux, gaming was probably one of the penguin’s weakness. But the website penguspy made the effort of fighting that weakness by collecting all Linux compatible games in a database with a sexy interface. Games can be sorted by categories, release dates, ratings, etc. I really hope that websites like this are not going to disappear because of Steam as it remains one of my favorites of this list.</p>
+
+
+<h3>16. <a href="http://lxr.free-electrons.com/" target="_blank" rel="noopener">Linux Cross Reference by Free Electrons</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3913/14712049464_6b666e2cfa_z.jpg"></p>
+<p>Finally, for all the experts and the curious, lxr is the anagram from Linux Cross Reference, and allows us to interactively view the Linux Kernel code online. The navigation is made easy via identifiers, and you can compare the different versions of the files with a standard diff markup. The interface is sober and straight-forward, and this is just a website that perfectly illustrates the concept of open source.</p>
+
+<p>To conclude, there are a lot more websites which deserve to be listed, and this might be a topic for a part two to this post. But this is a good start. It serves as an appetizer to what can be found online as tools for Linux users. If you have any other pages that you would like to share, following this thematic, do so in the comments. And maybe contribute to a sequel to this list.</p>
+
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-08-11T16:00:00.000Z"><a href="/2014/08/12/how-to-install-google-authenticator-on-linux/">2014-08-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/12/how-to-install-google-authenticator-on-linux/">How to install Google Authenticator on Linux</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Question I want to use Google Authenticator to set up two factor authentication. How can I install Google Authenticator on [insert your Linux distro]?</em></p>
+<p>Question: I want to use Google Authenticator to set up two factor authentication. How can I install Google Authenticator on [insert your Linux distro]?</p>
+<p>Google Authenticator is an application which can generate time-based one-time passcode to be used for two-factor authentication. You can install Google Authenticator on Linux as a pre-built package or by building it from the source.</p>
+<h3>Install Google Authenticator as a Pre-built Package</h3>
+
+<p>For those of you who don’t want to build Google Authenticator, it is available as a pre-built package on several Linux distros. The pre-built package contains Google Authenticator binary and its PAM module.</p>
+<p>To install Google Authenticator on Ubuntu:</p>
+<pre>
+$ sudo apt-get install libpam-google-authenticator
+</pre>
+
+<p>To install Google Authenticator on Fedora:</p>
+<pre>
+$ sudo yum install google-authenticator
+</pre>
+
+<p>To install Google Authenticator on CentOS, first enable EPEL repository, and then run:</p>
+<pre>
+$ sudo yum install google-authenticator
+</pre>
+
+<h3>Compile Google Authenticator on Linux</h3>
+
+<p>First, install prerequisites for building Google Authenticator.</p>
+<p>On Debian, Ubuntu or Linux Mint:</p>
+<pre>
+$ sudo apt-get install wget make gcc libpam0g-dev
+</pre>
+
+<p>On CentOS, Fedora or RHEL:</p>
+<pre>
+$ sudo yum install wget make gcc pam-devel
+</pre>
+
+<p>Then download the source code of Google Authenticator, and compile it as follows.</p>
+<pre>
+$ wget https://google-authenticator.googlecode.com/files/libpam-google-authenticator-1.0-source.tar.bz2 
+$ tar xvfvj libpam-google-authenticator-1.0-source.tar.bz2 
+$ cd libpam-google-authenticator-1.0 
+$ make
+</pre>
+
+<p>If build is successful, you will see pam_google_authenticator.so and google-authenticator created in the directory.</p>
+<p>Finally, go ahead and install Google Authenticator.</p>
+<pre>
+$ sudo make install
+</pre>
+
+<p>For instructions on how to set up two-factor authentication for SSH logins with Google Authenticator, refer to this guideline.</p>
+<h3>Troubleshoot</h3>
+
+<ol>
+<li>I am getting the following error when compiling Google Authenticator.</li>
+</ol>
+<pre>
+fatal error: security/pam_appl.h: No such file or directory
+</pre>
+
+<p>To fix this problem, install the following package.</p>
+<p>On Debian, Ubuntu or Linux Mint:</p>
+<pre>
+$ sudo apt-get install libpam0g-dev
+</pre>
+
+<p>On CentOS, Fedora or RHEL:</p>
+<pre>
+$ sudo yum install pam-devel
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-08-11T16:00:00.000Z"><a href="/2014/08/12/how-to-set-up-a-samba-file-server-to-use-with-windows-clients/">2014-08-12</a></time>
       
       
@@ -776,204 +1194,37 @@ writeable = yes
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-08-11T16:00:00.000Z"><a href="/2014/08/12/how-to-install-google-authenticator-on-linux/">2014-08-12</a></time>
+        <time datetime="2014-08-09T16:00:00.000Z"><a href="/2014/08/10/python-lambda-reduce/">2014-08-10</a></time>
       
       
   
-    <h1 class="title"><a href="/2014/08/12/how-to-install-google-authenticator-on-linux/">How to install Google Authenticator on Linux</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>Question I want to use Google Authenticator to set up two factor authentication. How can I install Google Authenticator on [insert your Linux distro]?</em></p>
-<p>Question: I want to use Google Authenticator to set up two factor authentication. How can I install Google Authenticator on [insert your Linux distro]?</p>
-<p>Google Authenticator is an application which can generate time-based one-time passcode to be used for two-factor authentication. You can install Google Authenticator on Linux as a pre-built package or by building it from the source.</p>
-<h3>Install Google Authenticator as a Pre-built Package</h3>
-
-<p>For those of you who don’t want to build Google Authenticator, it is available as a pre-built package on several Linux distros. The pre-built package contains Google Authenticator binary and its PAM module.</p>
-<p>To install Google Authenticator on Ubuntu:</p>
-<pre>
-$ sudo apt-get install libpam-google-authenticator
-</pre>
-
-<p>To install Google Authenticator on Fedora:</p>
-<pre>
-$ sudo yum install google-authenticator
-</pre>
-
-<p>To install Google Authenticator on CentOS, first enable EPEL repository, and then run:</p>
-<pre>
-$ sudo yum install google-authenticator
-</pre>
-
-<h3>Compile Google Authenticator on Linux</h3>
-
-<p>First, install prerequisites for building Google Authenticator.</p>
-<p>On Debian, Ubuntu or Linux Mint:</p>
-<pre>
-$ sudo apt-get install wget make gcc libpam0g-dev
-</pre>
-
-<p>On CentOS, Fedora or RHEL:</p>
-<pre>
-$ sudo yum install wget make gcc pam-devel
-</pre>
-
-<p>Then download the source code of Google Authenticator, and compile it as follows.</p>
-<pre>
-$ wget https://google-authenticator.googlecode.com/files/libpam-google-authenticator-1.0-source.tar.bz2 
-$ tar xvfvj libpam-google-authenticator-1.0-source.tar.bz2 
-$ cd libpam-google-authenticator-1.0 
-$ make
-</pre>
-
-<p>If build is successful, you will see pam_google_authenticator.so and google-authenticator created in the directory.</p>
-<p>Finally, go ahead and install Google Authenticator.</p>
-<pre>
-$ sudo make install
-</pre>
-
-<p>For instructions on how to set up two-factor authentication for SSH logins with Google Authenticator, refer to this guideline.</p>
-<h3>Troubleshoot</h3>
-
-<ol>
-<li>I am getting the following error when compiling Google Authenticator.</li>
-</ol>
-<pre>
-fatal error: security/pam_appl.h: No such file or directory
-</pre>
-
-<p>To fix this problem, install the following package.</p>
-<p>On Debian, Ubuntu or Linux Mint:</p>
-<pre>
-$ sudo apt-get install libpam0g-dev
-</pre>
-
-<p>On CentOS, Fedora or RHEL:</p>
-<pre>
-$ sudo yum install pam-devel
-</pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-08-11T16:00:00.000Z"><a href="/2014/08/12/what-are-useful-online-tools-for-linux/">2014-08-12</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/08/12/what-are-useful-online-tools-for-linux/">What are useful online tools for Linux</a></h1>
+    <h1 class="title"><a href="/2014/08/10/python-lambda-reduce/">Python: lambda reduce</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p><em>As you know, GNU Linux is much more than just an OS. There is literally a whole sphere on the Internet dedicated to the penguin OS.</em></p>
-<p>As you know, GNU Linux is much more than just an OS. There is literally a whole sphere on the Internet dedicated to the penguin OS. If you read this post, you are probably inclined towards reading about Linux online. Among all the pages that you can find on the subject, there are a couple of websites that every Linux adventurer should have in his bookmarks. These websites are more than just tutorials or reviews. They are real tools that you can access from anywhere and share with everyone. So today I shall propose you a non-exhaustive list of sixteen websites that should be in your bookmarks. Some of them can also be useful for Windows or Mac users: that’s the extent of their reach.</p>
-<h3>1. <a href="ExplainShell.com">ExplainShell.com</a></h3>
+        <p><em>how to use lambda and reduce in python</em></p>
+<p>lambda:<br>一句话函数：</p>
+<pre>
+    linuxany=lambda x,y: x+y
+</pre>
+#给ff传两个参数，bda定的x+y
+<pre>
+    print linuxany(2,3)  # print 5
+</pre>
 
-<p><img src="https://farm4.staticflickr.com/3841/14517716647_3b6a1a564d_z.jpg"></p>
-<p>If you are interested in Linux command line, you should use this website. If you are not interested in Linux command line, you should use it even more as it will explain in detail how a command works. This could prevent you from launching a command detrimental to your computer, and is a good way to learn with a great interface.</p>
-<h3>2. <a href="BashrcGenerator.com">BashrcGenerator.com</a></h3>
+<p>reduce内建函数是一个二来将一个数据集合（链表，元组等）中的所有数据进行下列操作：用传给reduce中的函数func()（必须是一个二元操作函数）先对集合中的第1，2个数据进行操作，得到的结果再与第3个数据用func()函数运算，最后得到一个结果。<br>如：<br>先定义一个二元操作函数</p>
+<pre>
+    def linuxany(x,y):
+        return x+y
+        reduce(linuxany,(1,2,3,4,5))
+</pre>
 
-<p><img src="https://farm4.staticflickr.com/3900/14703872782_033e5acdb8_z.jpg"></p>
-<p>If you want to begin with Linux command line, or if you want to quickly get a customized shell prompt but not sure how, this website will generate for you PS1 prompt code to place your .bashrc file in your home directory. You can drag and drop the elements that you would like to see in your prompt, like your username and the current time, and the website will write the code for you. It’s easy and very readable. Definitely a must for the lazy.</p>
-<h3>3. <a href="Vim-adventures.com">Vim-adventures.com</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3838/14681149696_0c533fd6de_z.jpg"></p>
-<p>I only recently discovered this website, but it already sucked in many hours of my life. In short: a RPG game with Vim commands. Move your character in the isometric levels with the ‘h,j,k,l’ keys, gain new commands/abilities, collect keys, and learn how to use Vim proficiently very quickly.</p>
-<h3>4. <a href="Try.Github.com">Try Github</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3874/14517499739_0452848d68_z.jpg"></p>
-<p>The pitch is simple: learn Git in 15 minutes. This website simulates a console, and walks you though the steps of collaborative editing. The interface is very stylish and the intention is worthy. The only downside is for the Git allergic. But it is definitely a good skill to have, and a good place to learn it.</p>
-<h3>5. <a href="Shortcutfoo.com">Shortcutfoo.com</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3906/14517499799_f142ea37cb_z.jpg"></p>
-<p>Another shortcut database, shortcutfoo is a bit more standard in its way to present its content to the user, but definitely more straight-forward than funny mini-games. The shortcuts of several programs are available and grouped by categories. As it might not be super complete for software like Vim, which is completely reliant on shortcuts, it is perfect for giving a quick tip or a general overview.</p>
-<h3>6. <a href="#">GitHub Free Programming Books</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3867/14517499989_408a28d8be_z.jpg"></p>
-<p>As you might guess from the URL, this is a collection of free online books about programming, written collaboratively using Git. The content is awesome and the authors deserve to be praised for such work. It might not be the easiest read at first, but it is one of the most instructive for sure. We can only hope that the movement will keep growing.</p>
-
-
-<h3>7. <a href="Collabedit.com">Collabedit.com</a></h3>
-
-<p><img src="https://farm3.staticflickr.com/2940/14681150086_2d169d67f9_z.jpg"></p>
-<p>If you ever plan on giving a phone interview, you should check out collabedit beforehand. It allows you to create a document, select the programming language that you want to write in, and then share that document via the URL. The people opening the link will be able to freely interact in real time with the text, allowing you to judge their programming skills or just exchange snippets. It even comes with the proper syntax highlighting and a chat widget. In other words, it is the instant-Google Document of programmers.</p>
-
-
-<h3>8. <a href="Cpp.sh">Cpp.sh</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3840/14700981001_af3ac40b65_z.jpg"></p>
-<p>This is one of those websites that extend beyond just Linux, but it is so useful that it deserves its place here. In short, an online development environment for C++. Just write your code in your navigator and run it. As a bonus, you get an auto-indentation feature, Ctrl+Z, and the possibility to share the URL with your buddy. This is just one of those crazy things that you can do from a simple browser.</p>
-
-
-<h3>9. <a href="Copy.sh">Copy.sh</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3883/14517479870_da521931eb_z.jpg"></p>
-<p>In continuation with crazy things that you can do from your browser, copy.sh lets you run a virtual machine online. Just that. It gained fame relatively recently, but the idea is just insane. From the navigator you can select among the defaults virtual images to run, or upload your own iso file. The code for that feat has been shared on GitHub. Just amazing.</p>
-
-
-<h3>10. <a href="Commandlinefu.com">Commandlinefu.com</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3887/14517495938_ca3b831ca9_z.jpg"></p>
-<p>We all keep a big snippet of command-line “gems” on our computer. commandlinefu’s goal is to release those snippets to the world. As a collaborative database, it resembles the Wikipedia of the command line. Everyone is free to register and post their favorite command on the website for everyone else to see. You will then be able to access that knowledge from everywhere and share it with everyone. If you are interested in mastering the shell, commandlinefu also proposes great features like random commands and a news feed to learn something new every day.</p>
-
-
-<h3>11. <a href="Alias.sh">Alias.sh</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3868/14701762124_a7b3547aca_z.jpg"></p>
-<p>Another collaborative database, alias.sh (I love the URL) is a bit like commandlinefu but for shell aliases. You can share and discover useful aliases which will make your CLI experience so much better. I personally like the alias to get the dimensions of a picture.  </p><br><pre><br>1 function dim(){ sips $1 -g pixelWidth -g pixelHeight }<br></pre><br><p>All the seconds you save with alias.sh probably accumulate with time, and turn to years by the end of your life.</p>
-
-
-<h3>12. <a href="Distrowatch.com">Distrowatch.com</a></h3>
-
-<p><img src="https://farm3.staticflickr.com/2910/14681149996_50a45bff78_z.jpg"></p>
-<p>Who does not know Distrowatch? Besides giving a precise ranking of Linux distributions based on their website popularity, Distrowatch is also a very useful database. Whether you are looking for a new distribution to try, or just curious, it presents an exhaustive account of every Linux you can find, with information like which default desktop environment it uses, or package system, or its default applications. And all the versions, and with easily accessible download links. In a word, the Linux database.</p>
-
-
-<h3>13. <a href="Linuxmanpages.com">Linuxmanpages.com</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3911/14704165765_8e30cb3d3f_z.jpg"></p>
-<p>Everything is in the URL: access the manual pages for popular commands from anywhere. Not really sure if this would actually be useful for Linux users as you can access that from your actual terminal, but the intent is remarkable.</p>
-
-
-<h3>14. <a href="AwesomeCow.com">AwesomeCow.com</a></h3>
-
-<p><img src="https://farm6.staticflickr.com/5558/14704165965_02b10ee293_z.jpg"></p>
-<p>This is maybe a bit less hardcore Linux, but definitely useful to some. Awesomecow is a search engine for finding alternatives to Windows software on Linux. It can be helpful for anyone migrating to the penguin, or nostalgic of a Windows program. I see this as a strength, showing that Linux can compete with the professional spheres when it comes sot software quality. Or at least try to.</p>
-
-
-<h3>15. <a href="PenguSpy.com">PenguSpy.com</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3904/14517495728_f6877e8e3b_z.jpg"></p>
-<p>Before Steam started to show up on Linux, gaming was probably one of the penguin’s weakness. But the website penguspy made the effort of fighting that weakness by collecting all Linux compatible games in a database with a sexy interface. Games can be sorted by categories, release dates, ratings, etc. I really hope that websites like this are not going to disappear because of Steam as it remains one of my favorites of this list.</p>
-
-
-<h3>16. <a href="http://lxr.free-electrons.com/" target="_blank" rel="noopener">Linux Cross Reference by Free Electrons</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3913/14712049464_6b666e2cfa_z.jpg"></p>
-<p>Finally, for all the experts and the curious, lxr is the anagram from Linux Cross Reference, and allows us to interactively view the Linux Kernel code online. The navigation is made easy via identifiers, and you can compare the different versions of the files with a standard diff markup. The interface is sober and straight-forward, and this is just a website that perfectly illustrates the concept of open source.</p>
-
-<p>To conclude, there are a lot more websites which deserve to be listed, and this might be a topic for a part two to this post. But this is a good start. It serves as an appetizer to what can be found online as tools for Linux users. If you have any other pages that you would like to share, following this thematic, do so in the comments. And maybe contribute to a sequel to this list.</p>
+<p>lambda和reduce结合起来使用：</p>
+<pre>
+    print reduce(lambda x,y:x+y,range(10))
+</pre>
 
 
       
@@ -1086,136 +1337,6 @@ if __name__=="__main__":
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-08-09T16:00:00.000Z"><a href="/2014/08/10/python-lambda-reduce/">2014-08-10</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/08/10/python-lambda-reduce/">Python: lambda reduce</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>how to use lambda and reduce in python</em></p>
-<p>lambda:<br>一句话函数：</p>
-<pre>
-    linuxany=lambda x,y: x+y
-</pre>
-#给ff传两个参数，bda定的x+y
-<pre>
-    print linuxany(2,3)  # print 5
-</pre>
-
-<p>reduce内建函数是一个二来将一个数据集合（链表，元组等）中的所有数据进行下列操作：用传给reduce中的函数func()（必须是一个二元操作函数）先对集合中的第1，2个数据进行操作，得到的结果再与第3个数据用func()函数运算，最后得到一个结果。<br>如：<br>先定义一个二元操作函数</p>
-<pre>
-    def linuxany(x,y):
-        return x+y
-        reduce(linuxany,(1,2,3,4,5))
-</pre>
-
-<p>lambda和reduce结合起来使用：</p>
-<pre>
-    print reduce(lambda x,y:x+y,range(10))
-</pre>
-
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-08-03T16:00:00.000Z"><a href="/2014/08/04/read--open-a-csv-file--randomly-select-an-entry/">2014-08-04</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/08/04/read--open-a-csv-file--randomly-select-an-entry/">Read &amp; Open a CSV File &amp; Randomly Select an Entry</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>Read &amp; Open a CSV File &amp; Randomly Select an Entry</em></p>
-<p>This is following the <a href="https://www.youtube.com/watch?v=NUVblHTElTk&amp;index=3&amp;list=PLEsfXFp6DpzR6FatOy4RtoXfu4PeYO_RL" target="_blank" rel="noopener">https://www.youtube.com/watch?v=NUVblHTElTk&amp;index=3&amp;list=PLEsfXFp6DpzR6FatOy4RtoXfu4PeYO_RL</a>.</p>
-<pre>
-
-#-*-coding=utf-8-*- 
-import os
-import random
-import csv
-import string
-
-def get_file_path(filename):
-    currentdirpath=os.getcwd()
-    file_path=os.path.join(os.getcwd(),filename)
-    return file_path
-
-path=get_file_path('choice.csv')
-
-def get_random_string():
-    rnstring=''
-    for i in range(0,4)
-         rnstring += random.choice(string.ascii_letters)
-     return rnstring
-
-def read_csv(filepath):
-    emails={}
-     i=0
-    with open(filepath,'rU') as csvfile:
-         reader = csv.reader(csvfile)
-         for row in reader:
-             if not 'Email Address' in row:
-                 email, domain = row[0].split('@')
-                 fake_email=email[:4] + get_random_string() + "@" + domain
-                 emails[i] = fake_email
-                 i += 1
-     return emails
-
-def get_winner():
-     emails=read_csv(path)
-     ran_num=random.randint(0,len(emails)-1)
-     winner=emails[ran_num]
-     print winner,ran_num
-get_winner()
-
-</pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1254,7 +1375,7 @@ get_winner()
   
     <li><a href="/categories/normal/">normal</a><small>1</small></li>
   
-    <li><a href="/categories/other/">other</a><small>3</small></li>
+    <li><a href="/categories/other/">other</a><small>4</small></li>
   
     <li><a href="/categories/python/">python</a><small>67</small></li>
   
@@ -1287,7 +1408,7 @@ get_winner()
   
     <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
   
-    <li><a href="/tags/other/">other</a><small>1</small></li>
+    <li><a href="/tags/other/">other</a><small>2</small></li>
   
     <li><a href="/tags/python/">python</a><small>14</small></li>
   

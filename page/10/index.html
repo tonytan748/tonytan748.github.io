@@ -54,6 +54,82 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-08-03T16:00:00.000Z"><a href="/2014/08/04/read--open-a-csv-file--randomly-select-an-entry/">2014-08-04</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/04/read--open-a-csv-file--randomly-select-an-entry/">Read &amp; Open a CSV File &amp; Randomly Select an Entry</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Read &amp; Open a CSV File &amp; Randomly Select an Entry</em></p>
+<p>This is following the <a href="https://www.youtube.com/watch?v=NUVblHTElTk&amp;index=3&amp;list=PLEsfXFp6DpzR6FatOy4RtoXfu4PeYO_RL" target="_blank" rel="noopener">https://www.youtube.com/watch?v=NUVblHTElTk&amp;index=3&amp;list=PLEsfXFp6DpzR6FatOy4RtoXfu4PeYO_RL</a>.</p>
+<pre>
+
+#-*-coding=utf-8-*- 
+import os
+import random
+import csv
+import string
+
+def get_file_path(filename):
+    currentdirpath=os.getcwd()
+    file_path=os.path.join(os.getcwd(),filename)
+    return file_path
+
+path=get_file_path('choice.csv')
+
+def get_random_string():
+    rnstring=''
+    for i in range(0,4)
+         rnstring += random.choice(string.ascii_letters)
+     return rnstring
+
+def read_csv(filepath):
+    emails={}
+     i=0
+    with open(filepath,'rU') as csvfile:
+         reader = csv.reader(csvfile)
+         for row in reader:
+             if not 'Email Address' in row:
+                 email, domain = row[0].split('@')
+                 fake_email=email[:4] + get_random_string() + "@" + domain
+                 emails[i] = fake_email
+                 i += 1
+     return emails
+
+def get_winner():
+     emails=read_csv(path)
+     ran_num=random.randint(0,len(emails)-1)
+     winner=emails[ran_num]
+     print winner,ran_num
+get_winner()
+
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-07-27T16:00:00.000Z"><a href="/2014/07/28/hadoop-pusehon--hwritedoop-sap-reduce/">2014-07-28</a></time>
       
       
@@ -460,6 +536,48 @@ links = soup.findAll("a")
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-07-11T16:00:00.000Z"><a href="/2014/07/12/urllib2---user-agent/">2014-07-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/12/urllib2---user-agent/">Urllib2   User Agent</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>This post will show how to add headers to a HTTP request.</em></p>
+<p><pre><br>This post will show how to add headers to a HTTP request.</pre></p>
+<p>By default urllib2 identifies itself as Python-urllib/2.7 : GET / HTTP/1.1” 200<br>151 “-“ “Python-urllib/2.7”</p>
+<p>That can sometimes be confusing for certain sites. With the user_agent header in<br>Python, it’s possible to alter that and specify any identity you like.<br></p>
+<p><pre><br>The example below, use the Mozilla 5.10 as a User Agent, and that is also what<br>will show up in the web server log file.<br></pre></p>
+<p><pre><br>import urllib2</pre></p>
+<p>req = urllib2.Request(‘<a href="http://192.168.1.2/&#39;" target="_blank" rel="noopener">http://192.168.1.2/&#39;</a>)</p>
+<p>req.add_header(‘User-agent’, ‘Mozilla 5.10’)</p>
+<p>res = urllib2.urlopen(req)</p>
+<p>html = res.read()<br><br>This is what will show up in the log file.<br>“GET / HTTP/1.1” 200 151 “-“ “Mozilla 5.10”</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-07-11T16:00:00.000Z"><a href="/2014/07/12/using-telnet-in-python/">2014-07-12</a></time>
       
       
@@ -506,48 +624,6 @@ print tn.read_all()
 
 <p>At ActiveState you can find more Python scripts using the telnetlib,<br>for example <a href="http://code.activestate.com/recipes/52228/" target="_blank" rel="noopener">this</a> script.</p>
 <p>For more information about using the Telnet client in Python, please see the<br><a href="http://docs.python.org/2/library/telnetlib.html" target="_blank" rel="noopener">official documentation</a>. </p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-07-11T16:00:00.000Z"><a href="/2014/07/12/urllib2---user-agent/">2014-07-12</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/07/12/urllib2---user-agent/">Urllib2   User Agent</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>This post will show how to add headers to a HTTP request.</em></p>
-<p><pre><br>This post will show how to add headers to a HTTP request.</pre></p>
-<p>By default urllib2 identifies itself as Python-urllib/2.7 : GET / HTTP/1.1” 200<br>151 “-“ “Python-urllib/2.7”</p>
-<p>That can sometimes be confusing for certain sites. With the user_agent header in<br>Python, it’s possible to alter that and specify any identity you like.<br></p>
-<p><pre><br>The example below, use the Mozilla 5.10 as a User Agent, and that is also what<br>will show up in the web server log file.<br></pre></p>
-<p><pre><br>import urllib2</pre></p>
-<p>req = urllib2.Request(‘<a href="http://192.168.1.2/&#39;" target="_blank" rel="noopener">http://192.168.1.2/&#39;</a>)</p>
-<p>req.add_header(‘User-agent’, ‘Mozilla 5.10’)</p>
-<p>res = urllib2.urlopen(req)</p>
-<p>html = res.read()<br><br>This is what will show up in the log file.<br>“GET / HTTP/1.1” 200 151 “-“ “Mozilla 5.10”</p>
 
       
     </div>
@@ -617,135 +693,6 @@ print tn.read_all()
 <p><br>Python’s telnetlib permits users to easily automate access to telnet servers, even from non-Unix machines.</p>
 <p>As an alternative to the popen() functions, telnetlib is probably a handy technique to have in your sysadmin toolbox.</p>
 <p>Production code will generally be more robust, but this example should be enough to get anyone started in the right direction.</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-07-02T16:00:00.000Z"><a href="/2014/07/03/make-your-life-easier-with-virtualenvwrapper/">2014-07-03</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/07/03/make-your-life-easier-with-virtualenvwrapper/">Make your life easier with Virtualenvwrapper</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>When you do a lot of Python programming, you can make a mess of your system with Pip. Different apps need different requirements. One app needs version 1.2 of a package and another one needs 1.5. And then… you’re in trouble.</em></p>
-<p>When you want to know what packages have been installed by Pip, use this:</p>
-<pre>
-$ pip freeze
-</pre>
-
-<p>The result can be a very long list.</p>
-<p>For every project, whether it’s a simple application or a giant Django project, I create a new virtual environment with virtualenv. An easy way to do this is by using virtualenvwrapper.</p>
-<p></p><h3>Getting started with Virtualenv wrapper</h3><p></p>
-<pre>
-$ sudo pip install virtualenvwrapper
-</pre>
-There are some advanced settings which you can find in the manual.
-
-When installed, let's make a new environment called "testground".
-<pre>
-$ mkvirtualenv testground
-</pre>
-If your virtualenvwrapper is working well, you should see something like this:
-<pre>
-New python executable in testground/bin/python
-Installing Setuptools.........done.
-Installing Pip..............done.
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/predeactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/postdeactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/preactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/postactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/get_env_details
-
-(testground)yourname@yoursystem:~$ 
-</pre>
-
-<p>Take a look at the last line, which now says (testground) before the prompt. Your virtual environment is there, and your are in it.</p>
-<p>Now, do a pip freeze, it can result in something like this:</p>
-<pre>
-$ pip freeze
-argparse==1.2.1
-wsgiref==0.1.2
-</pre>
-
-<p>That list can be a lot shorter than the one outside the environment.</p>
-<p>You can now install something that only effects this environment. Let’s try Pillow, version 2.2.2.</p>
-<pre>
-$ pip install Pillow==2.2.2
-</pre>
-It will now try to install Pillow, when finished, do another pip fip freeze, and see if it's installed
-
-<h3>Switchting between virtualenvs</h3>
-Let's create another environment:
-<pre>
-$ mkvirtualenv coolapp
-</pre>
-once it's finished, it should have been activated automatically:
-<pre>
-...................done.
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/predeactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/postdeactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/preactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/postactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/get_env_details
-(coolapp)yourname@yoursystem:~$ 
-</pre>
-Now, let's switch to fist the virtualenv we made by the magic word "workon":
-<pre>
-$ workon testground
-(testground)yourname@yoursystem:~$ 
-</pre>
-There you go, it's as simpel as that
-
-<h3>No site packages</h3>
-Like with vitualenv, you can tell virtualenvwapper not to use the systems sitepackages with --no-site-packages:
-<pre>
-$ mkvirtualenv anotherenv --no-site-packages
-</pre>
-<h3>Remove a virtual environment</h3>
-It's very easy to get rid of a virtual env by using rmvirtualenv:
-<pre>
-$ rmvirtualenv coolapp
-
-Removing coolapp...
-</pre>
-
-<p></p><h3>List all virtualenvs</h3><p></p>
-<pre>
-$lsvirtualenv
-</pre>
-
-<p></p><h3>List your sitepackages</h3><p></p>
-<pre>
-$ lssitepackages
-
-#can result in this:
-easy_install.py   Pillow-2.2.2-py2.7.egg-info  pkg_resources.pyc
-easy_install.pyc  pip                          setuptools
-_markerlib        pip-1.4.1-py2.7.egg-info     setuptools-0.9.8-py2.7.egg-info
-PIL               pkg_resources.py
-</pre>
 
       
     </div>
@@ -940,27 +887,112 @@ for param in os.environ.keys():
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-07-01T16:00:00.000Z"><a href="/2014/07/02/how-to-use-date-and-time-in-python/">2014-07-02</a></time>
+        <time datetime="2014-07-02T16:00:00.000Z"><a href="/2014/07/03/make-your-life-easier-with-virtualenvwrapper/">2014-07-03</a></time>
       
       
   
-    <h1 class="title"><a href="/2014/07/02/how-to-use-date-and-time-in-python/">How to use Date and Time in Python</a></h1>
+    <h1 class="title"><a href="/2014/07/03/make-your-life-easier-with-virtualenvwrapper/">Make your life easier with Virtualenvwrapper</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p><em>This post will show some examples using Pythons datetime and time modules.</em></p>
-<p></p><h3>Date and Time Example</h3><p></p>
-<p>Let’s see what we can do with the datetime and time modules in Python</p><br><pre><br>import time<br>import datetime<br><br>print “Time in seconds since the epoch: %s” %time.time()<br>print “Current date and time: “ , datetime.datetime.now()<br>print “Or like this: “ ,datetime.datetime.now().strftime(“%y-%m-%d-%H-%M”)<br><br><br>print “Current year: “, datetime.date.today().strftime(“%Y”)<br>print “Month of year: “, datetime.date.today().strftime(“%B”)<br>print “Week number of the year: “, datetime.date.today().strftime(“%W”)<br>print “Weekday of the week: “, datetime.date.today().strftime(“%w”)<br>print “Day of year: “, datetime.date.today().strftime(“%j”)<br>print “Day of the month : “, datetime.date.today().strftime(“%d”)<br>print “Day of week: “, datetime.date.today().strftime(“%A”)<br></pre><br><br><h3>Output</h3><br>That will print out something like this:<br><p><br>Time in seconds since the epoch:     1349271346.46<br>Current date and time:          2012-10-03 15:35:46.461491<br>Or like this:                 12-10-03-15-35<br>Current year:                  2012<br>Month of year:              October<br>Week number of the year:          40<br>Weekday of the week:              3<br>Day of year:                  277<br>Day of the month :              03<br>Day of week:                  Wednesday<br></p>
-
-<p>Getting the weekday of a certain date (your pet’s birthday).</p>
+        <p><em>When you do a lot of Python programming, you can make a mess of your system with Pip. Different apps need different requirements. One app needs version 1.2 of a package and another one needs 1.5. And then… you’re in trouble.</em></p>
+<p>When you want to know what packages have been installed by Pip, use this:</p>
 <pre>
-import datetime
+$ pip freeze
+</pre>
 
-mydate = datetime.date(1943,3, 13)  #year, month, day
-print(mydate.strftime("%A"))
+<p>The result can be a very long list.</p>
+<p>For every project, whether it’s a simple application or a giant Django project, I create a new virtual environment with virtualenv. An easy way to do this is by using virtualenvwrapper.</p>
+<p></p><h3>Getting started with Virtualenv wrapper</h3><p></p>
+<pre>
+$ sudo pip install virtualenvwrapper
+</pre>
+There are some advanced settings which you can find in the manual.
 
+When installed, let's make a new environment called "testground".
+<pre>
+$ mkvirtualenv testground
+</pre>
+If your virtualenvwrapper is working well, you should see something like this:
+<pre>
+New python executable in testground/bin/python
+Installing Setuptools.........done.
+Installing Pip..............done.
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/predeactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/postdeactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/preactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/postactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/get_env_details
+
+(testground)yourname@yoursystem:~$ 
+</pre>
+
+<p>Take a look at the last line, which now says (testground) before the prompt. Your virtual environment is there, and your are in it.</p>
+<p>Now, do a pip freeze, it can result in something like this:</p>
+<pre>
+$ pip freeze
+argparse==1.2.1
+wsgiref==0.1.2
+</pre>
+
+<p>That list can be a lot shorter than the one outside the environment.</p>
+<p>You can now install something that only effects this environment. Let’s try Pillow, version 2.2.2.</p>
+<pre>
+$ pip install Pillow==2.2.2
+</pre>
+It will now try to install Pillow, when finished, do another pip fip freeze, and see if it's installed
+
+<h3>Switchting between virtualenvs</h3>
+Let's create another environment:
+<pre>
+$ mkvirtualenv coolapp
+</pre>
+once it's finished, it should have been activated automatically:
+<pre>
+...................done.
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/predeactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/postdeactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/preactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/postactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/get_env_details
+(coolapp)yourname@yoursystem:~$ 
+</pre>
+Now, let's switch to fist the virtualenv we made by the magic word "workon":
+<pre>
+$ workon testground
+(testground)yourname@yoursystem:~$ 
+</pre>
+There you go, it's as simpel as that
+
+<h3>No site packages</h3>
+Like with vitualenv, you can tell virtualenvwapper not to use the systems sitepackages with --no-site-packages:
+<pre>
+$ mkvirtualenv anotherenv --no-site-packages
+</pre>
+<h3>Remove a virtual environment</h3>
+It's very easy to get rid of a virtual env by using rmvirtualenv:
+<pre>
+$ rmvirtualenv coolapp
+
+Removing coolapp...
+</pre>
+
+<p></p><h3>List all virtualenvs</h3><p></p>
+<pre>
+$lsvirtualenv
+</pre>
+
+<p></p><h3>List your sitepackages</h3><p></p>
+<pre>
+$ lssitepackages
+
+#can result in this:
+easy_install.py   Pillow-2.2.2-py2.7.egg-info  pkg_resources.pyc
+easy_install.pyc  pip                          setuptools
+_markerlib        pip-1.4.1-py2.7.egg-info     setuptools-0.9.8-py2.7.egg-info
+PIL               pkg_resources.py
 </pre>
 
       
@@ -1016,7 +1048,7 @@ print(mydate.strftime("%A"))
   
     <li><a href="/categories/normal/">normal</a><small>1</small></li>
   
-    <li><a href="/categories/other/">other</a><small>3</small></li>
+    <li><a href="/categories/other/">other</a><small>4</small></li>
   
     <li><a href="/categories/python/">python</a><small>67</small></li>
   
@@ -1049,7 +1081,7 @@ print(mydate.strftime("%A"))
   
     <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
   
-    <li><a href="/tags/other/">other</a><small>1</small></li>
+    <li><a href="/tags/other/">other</a><small>2</small></li>
   
     <li><a href="/tags/python/">python</a><small>14</small></li>
   

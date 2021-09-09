@@ -175,6 +175,148 @@ Example:  %s -c "echo $HOME" %s
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-09-22T16:00:00.000Z"><a href="/2014/09/23/how-to-use-pyhton-to-generate-source-file-of-2-ways/">2014-09-23</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/09/23/how-to-use-pyhton-to-generate-source-file-of-2-ways/">How to use Pyhton to generate source file of 2 ways</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>How to use Pyhton to generate source file of 2 ways</em></p>
+<p>利用Python的字符串处理模块，开发人员可以编写脚本用来生成那些格式相同的C、C++、JAVA源程序、头文件和测试文件，从而避免大量的重复工作。本文概述两种利用Python string类生成java源代码的方法。</p>
+<h4><b>String Template</b></h4>
+
+<p>Template是一个好东西，可以将字符串的格式固定下来，重复利用。Template也可以让开发人员可以分别考虑字符串的格式和其内容了，无形中减轻了开发人员的压力。Template属于string中的一个类，有两个重要的方法：substitute和safe_substitute。替换时使用substitute()，若未能提供模板所需的全部参数值时会发生异常。使用safe_substitute() 则会替换存在的字典值,保留未存在的替换符号。要使用的话可用以下方式调用：</p>
+<pre>
+from string import Template
+</pre>
+
+<p>Template有个特殊标示符$,它具有以下的规则：</p>
+<p>（1）主要实现方式为$xxx,其中xxx是满足python命名规则的字符串，即不能以数字开头、不能为关键字等；</p>
+<p>（2）如果$xxx需要和其他字符串接触时，用{}将xxx包裹起来；</p>
+<p>开发人员通过编写template文件，并通过Template方法创建模板、substitute方法替换字符串即可快捷的生成所需的文件。编写template文件时一定要注意“$”的使用，因为Python会将以“$”开头的字符串理解成需要替换的变量。</p>
+<h4><b>replace</b></h4>
+
+<pre>
+str.replace(old,new[,max])
+</pre>
+
+<p>Python replace() 方法把字符串中的 old（旧字符串） 替换成 new(新字符串)，如果指定第三个参数max，则替换不超过 max 次。</p>
+<p>模板文件tenplate.java</p>
+<pre>
+/**
+* created since ${now}
+*/
+package com.alipay.mspcore.common.dal.ibatis;
+import java.util.Date;
+import junit.framework.Assert;
+import com.alipay.mspcore.common.dal.daointerface.${testObject}DAO;
+import com.alipay.mspcore.common.dal.dataobject.${testObject};
+import com.alipay.sofa.runtime.test.AnnotatedAutowireSofaTestCase;
+import com.iwallet.biz.common.util.money.Money;
+/**
+* @author ${author}
+* @version ${version}: MBIM_Service${testObject}_Device.java, ${now} ${author}
+*/
+public class Ibatis${testObject}DAOTester extends AnnotatedAutowireSofaTestCase {
+    @Override
+    public String[] getConfigurationLocations() {
+        return new String[] { "META-INF/spring/common-dal-db.xml",
+            "META-INF/spring/mobilespcore-common-dal-dao.xml",
+            "META-INF/spring/common-dal.xml" };
+    }
+    @Override
+    public String[] getResourceFilterNames() {
+        return new String[] { "META-INF/spring/common-dal-db.xml" };
+    }
+    @Override
+    public String[] getWebServiceConfigurationLocations() {
+        return new String[] {};
+    }
+    private ${testObject}DAO get${testObject}DAO() {
+        ${testObject}DAO dao = (${testObject}DAO) this.getBean("${testObjVarName}DAO", ${testObject}DAO.class, null);
+        return dao;
+    }
+    public void test${testObject}DAO() {
+        ${testObject}DAO configDAO = get${testObject}DAO();
+        Assert.assertNotNull(configDAO);
+    }
+    public void test() {
+        ${testObject}DO ${testObjVarName}DO = new ${testObject}DO();
+        ${testObjVarName}DO.setGmtCreate(new Date());
+        ${testObjVarName}DO.setGmtModified(new Date());
+        ${testObjVarName}DO.setId(10000);
+        ${testObject}DAO ${testObjVarName}DAO = get${testObject}DAO();
+        long result = ${testObjVarName}DAO.insert(${testObjVarName}DO);
+        Assert.assertTrue(result > 0);
+    }
+}
+</pre>
+
+<p>Python代码</p>
+<pre>
+import os
+import datetime
+from string import Template
+
+tplFilePath="D:\\template.java"
+path="D:\\code_gen"
+testObjectList=['Basic_connect','Sms','Phonebook']
+
+for testObj in testObjectList:
+    testObjVarName=testObj[0].lower() + testObj[1:]
+    filename="MBIM_Service_" + testObj + '_device.java'
+author='Aye'
+version='0.1'
+now=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+tplFile=open(tplFilePath)
+gFile=open(pathfilename,'w')
+
+lines=[]
+tmp=Template(tplFile.read())
+lines.append(tmp.substitute(author=author,now=now,version=version))
+gFile.weitelines(lines)
+
+tplFile.close()
+gFile.close()
+print 'generate %s over.~~' % (path+filename)
+
+</pre>
+
+<p>运行结果</p>
+<pre>
+generate D:\Project\Python\code_gen\MBIM_Service_Basic_connect_device.java over. ~ ~
+generate D:\Project\Python\code_gen\MBIM_Service_Sms_device.java over. ~ ~
+generate D:\Project\Python\code_gen\MBIM_Service_Phonebook_device.java over. ~ ~
+</pre>
+
+
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-09-15T16:00:00.000Z"><a href="/2014/09/16/how-to-set-lightness-in-ubuntu1404/">2014-09-16</a></time>
       
       
@@ -731,6 +873,39 @@ echo 550 > /sys/class/backlight/intel_backlight/brightness
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-08-25T16:00:00.000Z"><a href="/2014/08/26/making-love-out-of-nothing-at-all/">2014-08-26</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/26/making-love-out-of-nothing-at-all/">Air Supply ----- Making love Out of nothing at all </a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="Air-Supply-Making-love-Out-of-nothing-at-all"><a href="#Air-Supply-Making-love-Out-of-nothing-at-all" class="headerlink" title="Air Supply - Making love Out of nothing at all"></a>Air Supply - Making love Out of nothing at all</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">I know just how to whisper</span><br><span class="line">And I know just how to cry</span><br><span class="line"></span><br><span class="line">I know just where to find the answers</span><br><span class="line">And I know just how to lie</span><br><span class="line"></span><br><span class="line">I know just how to fake it</span><br><span class="line">And I know just how to scheme</span><br><span class="line"></span><br><span class="line">I know just when to face the truth</span><br><span class="line">And then I know just when to dream</span><br><span class="line"></span><br><span class="line">And I know just where to touch you</span><br><span class="line">And I know just what to prove</span><br><span class="line">I know when to pull you closer</span><br><span class="line">And I know when to let you loose</span><br><span class="line"></span><br><span class="line">And I know the night is fading</span><br><span class="line">And I know the time&apos;s gonna fly</span><br><span class="line">And I&apos;m never gonna tell you</span><br><span class="line">Everything I gotta tell you</span><br><span class="line">But I know I gotta give it a try</span><br><span class="line"></span><br><span class="line">And I know the roads to rich</span><br><span class="line">And I know the ways to fame</span><br><span class="line">I know all the rules</span><br><span class="line">And I know how to break &apos;em</span><br><span class="line">And I always know the name of the game</span><br><span class="line"></span><br><span class="line">But I don&apos;t know how to leave you</span><br><span class="line">And I&apos;ll never let you fall</span><br><span class="line">And I don&apos;t know how you do it</span><br><span class="line">Making love out of nothing at all</span><br><span class="line"></span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line"></span><br><span class="line">Everytime I see you all the rays of the sun</span><br><span class="line">Are streaming through the waves in your hair</span><br><span class="line"></span><br><span class="line">And every star in the sky is taking aim at you eyes</span><br><span class="line">Like a spotlight</span><br><span class="line"></span><br><span class="line">The beating of you heart is a drum and it&apos;s lost</span><br><span class="line">And it&apos;s looking for a rhythm like you</span><br><span class="line"></span><br><span class="line">You can take the darkness from the pit of night</span><br><span class="line">And turn into a beacom burning endlessly bright</span><br><span class="line"></span><br><span class="line">I&apos;ve gotta follow it cause everything I know</span><br><span class="line">Well it&apos;s nothong till I give it to you</span><br><span class="line"></span><br><span class="line">I can make the runner stumble</span><br><span class="line">I can make the final block</span><br><span class="line">And I can make every tackle at the sound of the whistle</span><br><span class="line">I can make all the stadiums rock</span><br><span class="line"></span><br><span class="line">I can make tonight forever</span><br><span class="line">Or I can make it disappear by the dawn</span><br><span class="line">I can make you every promise that has ever been made</span><br><span class="line">I can make all your deamons be gone</span><br><span class="line"></span><br><span class="line">But I&apos;m never gonna make it withour you</span><br><span class="line">Do you really want to see me crawl</span><br><span class="line">And I&apos;m never gonna make it like you do</span><br><span class="line">Making love out of nothing at all</span><br><span class="line"></span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line"></span><br><span class="line">... ...</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-08-25T16:00:00.000Z"><a href="/2014/08/26/how-to-use-python-yield/">2014-08-26</a></time>
       
       
@@ -757,39 +932,6 @@ echo 550 > /sys/class/backlight/intel_backlight/brightness
 <p>a=perm(‘abc’)<br>for b in a:<br>    print b<br>    break<br>print ‘=’*20<br>for b in a:<br>    print b<br><br><br><br>结果如下：</p>
 <p><pre><br>102 pvopf006 ~/test&gt; ./generator.py</pre></p>
 <h2 id="abc"><a href="#abc" class="headerlink" title="abc"></a>abc</h2><p>acb<br>bac<br>bca<br>cab<br>cba<br><br><br><br>可以看到，在第一个循环break后，生成器没有继续执行，而第二个循环接着第一个循环执行</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-08-25T16:00:00.000Z"><a href="/2014/08/26/making-love-out-of-nothing-at-all/">2014-08-26</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/08/26/making-love-out-of-nothing-at-all/">Air Supply ----- Making love Out of nothing at all </a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h1 id="Air-Supply-Making-love-Out-of-nothing-at-all"><a href="#Air-Supply-Making-love-Out-of-nothing-at-all" class="headerlink" title="Air Supply - Making love Out of nothing at all"></a>Air Supply - Making love Out of nothing at all</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">I know just how to whisper</span><br><span class="line">And I know just how to cry</span><br><span class="line"></span><br><span class="line">I know just where to find the answers</span><br><span class="line">And I know just how to lie</span><br><span class="line"></span><br><span class="line">I know just how to fake it</span><br><span class="line">And I know just how to scheme</span><br><span class="line"></span><br><span class="line">I know just when to face the truth</span><br><span class="line">And then I know just when to dream</span><br><span class="line"></span><br><span class="line">And I know just where to touch you</span><br><span class="line">And I know just what to prove</span><br><span class="line">I know when to pull you closer</span><br><span class="line">And I know when to let you loose</span><br><span class="line"></span><br><span class="line">And I know the night is fading</span><br><span class="line">And I know the time&apos;s gonna fly</span><br><span class="line">And I&apos;m never gonna tell you</span><br><span class="line">Everything I gotta tell you</span><br><span class="line">But I know I gotta give it a try</span><br><span class="line"></span><br><span class="line">And I know the roads to rich</span><br><span class="line">And I know the ways to fame</span><br><span class="line">I know all the rules</span><br><span class="line">And I know how to break &apos;em</span><br><span class="line">And I always know the name of the game</span><br><span class="line"></span><br><span class="line">But I don&apos;t know how to leave you</span><br><span class="line">And I&apos;ll never let you fall</span><br><span class="line">And I don&apos;t know how you do it</span><br><span class="line">Making love out of nothing at all</span><br><span class="line"></span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line"></span><br><span class="line">Everytime I see you all the rays of the sun</span><br><span class="line">Are streaming through the waves in your hair</span><br><span class="line"></span><br><span class="line">And every star in the sky is taking aim at you eyes</span><br><span class="line">Like a spotlight</span><br><span class="line"></span><br><span class="line">The beating of you heart is a drum and it&apos;s lost</span><br><span class="line">And it&apos;s looking for a rhythm like you</span><br><span class="line"></span><br><span class="line">You can take the darkness from the pit of night</span><br><span class="line">And turn into a beacom burning endlessly bright</span><br><span class="line"></span><br><span class="line">I&apos;ve gotta follow it cause everything I know</span><br><span class="line">Well it&apos;s nothong till I give it to you</span><br><span class="line"></span><br><span class="line">I can make the runner stumble</span><br><span class="line">I can make the final block</span><br><span class="line">And I can make every tackle at the sound of the whistle</span><br><span class="line">I can make all the stadiums rock</span><br><span class="line"></span><br><span class="line">I can make tonight forever</span><br><span class="line">Or I can make it disappear by the dawn</span><br><span class="line">I can make you every promise that has ever been made</span><br><span class="line">I can make all your deamons be gone</span><br><span class="line"></span><br><span class="line">But I&apos;m never gonna make it withour you</span><br><span class="line">Do you really want to see me crawl</span><br><span class="line">And I&apos;m never gonna make it like you do</span><br><span class="line">Making love out of nothing at all</span><br><span class="line"></span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line"></span><br><span class="line">... ...</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -1008,203 +1150,6 @@ echo 550 > /sys/class/backlight/intel_backlight/brightness
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-08-22T16:00:00.000Z"><a href="/2014/08/23/lean-djangos-10-precautions/">2014-08-23</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/08/23/lean-djangos-10-precautions/">Lean Django&#39;s 10 Precautions</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>Here note summarize the ten points that can help you better lean Django,reduce errors and avoid detours,it is worth a look.</em></p>
-<p>Here note summarize the ten points that can help you better lean Django,reduce errors and avoid detours,it is worth a look.</p>
-<h3>1.Don’t include project’s name in reference code.</h3>
-
-<p>If you create a project’s name “project”, include a application’s name “app”, it’s no good like this.</p>
-<pre>
-from project.app.models import Author
-</pre>
-
-<p>the disadvantages is the project and application are tight coupling. cannot reuse application. it’s very difficulty to change new project.</p>
-<p>So it’s the way for recommended.</p>
-<pre>
-from app.models import Author
-</pre>
-
-<p>In addition, it’s need set the project path in the “PYTHONPATH”.</p>
-<h3>2.Don’t hardcoed “MEDIA_ROOT” and “TEMPLATE_DIRS”</h3>
-
-<p>Don’t use the following code in the “settings.py”:</p>
-<pre>
-TEMPLATE_DIRS=("/home/html/project/templates",)
-MEDIA_ROOT="/home/html/project/appmedia/"
-</pre>
-
-<p>The problems will coming when you deployed to the production environment.</p>
-<p>this way is recommended.</p>
-<pre>
-SITE_ROOT=os.path.realpath(os.path.dirname(__file__))
-MEDIA_ROOR=os.path.join(SITE_ROOT,'appmedia')
-TEMPLATE_DIRS=(os.path.join(SITE_ROOT,'templates'),)
-</pre>
-
-<p>you also can use <b>abspath</b>, you can find the different with <b>realpath</b> in <a href="http://rob.cogit8.org/blog/2009/May/05/django-and-relativity-updated/" target="_blank" rel="noopener">http://rob.cogit8.org/blog/2009/May/05/django-and-relativity-updated/</a></p>
-<h3>3.Don’t hearcoded static file in tempaltes.</h3>
-
-<p>Don’t use the following ways when use CSS, Javascript or images in templates.</p>
-<pre>
-
-&#60;link rel="stylesheet" type="text/css" hef="/appmedia/amazing.css" /&#62;
-&#60;script type="text/javascript" src="/appmedia/jquery.min.js"&#62;&#60;/script&#62;
-
-</pre>
-
-<p>if you move to another server, you must manual change the address one by one.</p>
-<p>so it’s good way to use <b>&#123;&#123; MEDIA_URL &#125;&#125;</b></p>
-<pre>
-
-&#60;link rel="stylesheet" type="text/css" href="&#123;&#123; MEDIA_URL &#125;&#125;amazing.css" /&#62;
-&#60;script type="text/javascript" src="&#123;&#123;MEDIA_URL&#125;&#125;jquery.min.js"&#62;&#60;/script&#62;
-</pre>
-
-<p>Use <b>“RequestContext”</b> to get the template context.</p>
-<pre>
-return render_to_response("app/template.html",&#123;'var':'foo'&#125;,context_instance=RequestContext(request))
-</pre>
-
-<p>you also can get current user information from “RequestContext”.</p>
-<h3>4.Don’t write normal logic in “views.py”</h3>
-
-<p>Write normal logic in views, it’s bad for reuse code.<br>it’s commended put in <b>models</b> or create a <b>helper</b> model.<br>Yes. if you get the Author from models, you can put the code in to view for get Author list.</p>
-<h3>5.Don’t forget change DEBUG to False when release.</h3>
-
-
-<p>One Way:</p>
-<pre>
-import socket
-
-if socket.gethostname() == 'productionserver.com'
-    DEBUG=False
-else:
-    DEBUG=True
-</pre>
-
-<p>Another Way:</p>
-<pre>
-#File Name: settings_debuy.py
-#the setting information include test models
-#Use "python manage.py runserver settings=settings_debug.py" to run project.
-
-from settings import *
-DEBUG=True
-
-#you also setting more variables which used in testing.
-</pre>
-
-
-
-<h3>6.Loading one time template tag.</h3>
-
-<p>Normally, we loading template tags in templates.</p>
-<pre>
-&#123;% load template_tags %&#125;
-</pre>
-We must write the same code in pages everytime to load tempalte tag.
-
-So the following code is very cool!
-<pre>
-from django import template
-template.add_to_builtins('app.templatetags.custom_tag_module')
-</pre>
-It's only put the code in the modules which is loading when project start running. i.e. settings.py, urls.py, models.py etc..
-
-the above code can loading custom tag modules or filters when start running project. They can be used in template. 
-
-
-
-<h3>7.The rational allocation and use URL.</h3>
-
-Don't put all url settings in one "urls.py".
-It's better set the URL in app's urls.py.
-
-the static file path don't use hard-coded. url also don't use hard-coded. otherwise you must change so many when you change one url. it's better to use url function.
-
-In /project/askalumini/urls.py, define the name for each url, it can help us to effectively deal with the view url, templates and models, rather than hard-coded. 
-
-To ensure that the name of the only, please follow the url named &#60;appname&#62; / &#60;somelabel&#62; idiom.
-
-For example, in views.py have the code.
-<pre>
-HttpResponseRedirect("/askalumini/questions/54")
-</pre>
-
-<p>please change to:</p>
-<pre>
-from django.core.urlresolvers import reverse
-HttpResponseRedirect(reverse('askquestiondisploy',kwargs=&#123;'questionno':q.id&#125;))
-</pre>
-
-<p>Use models.permalink decorator in the model used to format url:</p>
-<pre>
-@models.permalink
-def get_absolute_url(self):
-    return ('profileur12',(),&#123;'userid':self.user.id&#125;)
-</pre>
-
-<p>Url tag instead of using hard-coded in the template:</p>
-<pre>
-&#123;% url askquestiondisploy 345%&#125;
-&#60;a href="&#123;% url askquestiondisploy 345 %&#125;"&#62;Ask Question&#60;/a&#62;
-</pre>
-
-
-
-<h3>8.Debugging.</h3>
-
-<p>Debugging usually with some third-party tools to get more runtime information.<br>You can use <b>django-debug-toolbar</b> to see debugging information.</p>
-<p>Another tool is <b>Werkzeug debugger</b>, it can open the python shell on the wrong page, allows you to more easily track the error message</p>
-<p>There <b>pdb</b>, a powerful debugging tool: <a href="http://ericholscher.com/blog/2008/aug/31/using-pdb-python-debugger-django-debugging-series-/" target="_blank" rel="noopener">http://ericholscher.com/blog/2008/aug/31/using-pdb-python-debugger-django-debugging-series-/</a></p>
-<h3>9.Learn Pinax.</h3>
-
-<p>Django biggest advantage is code reuse, DRY, <b>pinax</b> is such a platform that contains a lot of code can be used directly, for example openid, email verification, and so on. Please visit: http: //pinaxproject.com/</p>
-<h3>10.Learn some useful third-party applications.</h3>
-
-<h5>1) Database Upgrade Tool</h5>
-
-<p>What’s Database upgrade tool? you use “syncdb”, after one year, you changed models, do you want contunue to run “syncdb”? or “ALTER TABLE”..?</p>
-<p><b>South</b> is a stronger solution, but you must to learning how to use: <a href="http://south.aeracode.org/" target="_blank" rel="noopener">http://south.aeracode.org/</a></p>
-<h5>2) Templates System</h5>
-
-<p><b>Jinja</b> is a complete system of third-party template, you can replace the default template system, which offers many superior characteristics.</p>
-<h5>3) Third-party applications</h5>
-
-<p><b>django command extensions</b> provide a lot of useful command-line functions:<br><b>shell_plus</b> load all django model</p>
-<p><b>runserver_plus</b> integrated debugging tools Werkzeug</p>
-<p>Generation model diagram, you can show it to your boss</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1243,7 +1188,7 @@ def get_absolute_url(self):
   
     <li><a href="/categories/normal/">normal</a><small>1</small></li>
   
-    <li><a href="/categories/other/">other</a><small>3</small></li>
+    <li><a href="/categories/other/">other</a><small>4</small></li>
   
     <li><a href="/categories/python/">python</a><small>67</small></li>
   
@@ -1276,7 +1221,7 @@ def get_absolute_url(self):
   
     <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
   
-    <li><a href="/tags/other/">other</a><small>1</small></li>
+    <li><a href="/tags/other/">other</a><small>2</small></li>
   
     <li><a href="/tags/python/">python</a><small>14</small></li>
   
