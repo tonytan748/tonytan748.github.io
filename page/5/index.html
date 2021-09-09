@@ -54,6 +54,61 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-05-20T16:00:00.000Z"><a href="/2016/05/21/install-kernel46-in-ubuntu-1504/">2016-05-21</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/21/install-kernel46-in-ubuntu-1504/">Install Kernel4.6 in Ubuntu 15.04</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>How to upgrade Ubuntu Kernel to 4.6</em></p>
+<p>This blog transfer from <a href="http://www.ostechnix.com/install-linux-kernel-4-6-centos-7-ubuntu-16-04/" target="_blank" rel="noopener">here</a></p>
+<p>Check the current Linux kernel version with command:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname -r</span><br></pre></td></tr></table></figure>
+<p>Now, we will install <strong>Linux Kernel 4.6</strong>. You can download the latest kernel from the following link.</p>
+<p><a href="http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.6-yakkety/" target="_blank" rel="noopener">Download Linux Kernel 4.6</a></p>
+<p>For 64 bit Ubuntu systems:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.6-yakkety/linux-headers-4.6.0-040600_4.6.0-040600.201605151930_all.deb</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.6-yakkety/linux-headers-4.6.0-040600-generic_4.6.0-040600.201605151930_amd64.deb</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.6-yakkety/linux-image-4.6.0-040600-generic_4.6.0-040600.201605151930_amd64.deb</span><br></pre></td></tr></table></figure>
+<p>For 32 bit Ubuntu systems:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.6-yakkety/linux-headers-4.6.0-040600_4.6.0-040600.201605151930_all.deb</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.6-yakkety/linux-headers-4.6.0-040600-generic_4.6.0-040600.201605151930_i386.deb</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.6-yakkety/linux-image-4.6.0-040600-generic_4.6.0-040600.201605151930_i386.deb</span><br></pre></td></tr></table></figure>
+<p>Then install Kernel 4.6 using command:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -i *.deb</span><br></pre></td></tr></table></figure>
+<p>Finally, update the Grub boot loader with command:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo update-grub</span><br></pre></td></tr></table></figure>
+<p>If you’re using BURG boot loader,then run:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo update-burg</span><br></pre></td></tr></table></figure>
+<p>Reboot your system and log in to the newly installed Kernel.</p>
+<p>Check if new Kernel has been installed with command:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unmae -r</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-05-13T16:00:00.000Z"><a href="/2016/05/14/a-few-things-to-remember-while-coding-in-python/">2016-05-14</a></time>
       
       
@@ -1341,107 +1396,6 @@ with open('json/globe_volcanoes.json', 'w') as f:
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-01-24T16:00:00.000Z"><a href="/2016/01/25/how-to-install-celery-on-django-and-create-a-periodic-task/">2016-01-25</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/01/25/how-to-install-celery-on-django-and-create-a-periodic-task/">How to install Celery on Django and create a periodic task</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>How to install Celery on Django and create a periodic task</em></p>
-<p>Celery 3.1.19 and Django 1.8.7.<br>This post explains how to set up Celery with Django, using RabbitMQ as a message broker.</p>
-<p>It also explains how to create a Periodic Task.</p>
-<h3 id="The-Broker-RabbitMQ"><a href="#The-Broker-RabbitMQ" class="headerlink" title="The Broker RabbitMQ"></a>The Broker RabbitMQ</h3><p>First, we need to choose what is called a Message Broker, required by Celery in order to send and receive messages. Here we will use RabbitMQ, which is feature-complete, stable, durable and easy to install.<br>Moreover, it is the default broker so is does not require additional configuration.</p>
-<p>Check out how to install it for your particular system here. If you are using Ubuntu you can install it by following:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install rabbitmq</span><br></pre></td></tr></table></figure>
-<p>The RabbitMQ server scripts are installed into /usr/local/sbin. This is not automatically added to your path, so open or edit a .bash_profile in your home folder and the following line.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=$PATH:/usr/local/sbin</span><br></pre></td></tr></table></figure>
-<p>The server can then be statted with</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo rabbitmqctl stop</span><br></pre></td></tr></table></figure>
-<p>You can find a detailed description on how to use RabbitMQ with Celery here.</p>
-<p>After installing RabbitMQ we need to create a RabbitMQ user, a virtual host and allow that user to access the virtaul host. We also start the server before that:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo rabbitmq-server -detached</span><br><span class="line">$ sudo rabbitmqctl add_user myuser mypassword</span><br><span class="line">$ sudo rabbitmqctl add_host myvhost</span><br><span class="line">$ sudo rabbitmqctl set_permissions -p myvhost myuser &quot;.*&quot; &quot;.*&quot; &quot;.*&quot;</span><br></pre></td></tr></table></figure>
-<p>Then, open your Django project settings.py file and configure RabbitMQ by adding the lines:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BROKER_URL = &quot;amqp://myuser:mypassword@localhost:5672/myvhost&quot;</span><br></pre></td></tr></table></figure>
-<p>This tells celery, where your broker (your queue) is located. Here, we are running Celery at the same machine as RabbitMQ and using the localhost to find it.</p>
-<h3 id="Celery"><a href="#Celery" class="headerlink" title="Celery"></a>Celery</h3><p>Celery is on the Python Package Index(PyPi), and can be easily installed with pip or easy_install.</p>
-<p>Remember to active first your virtual environment(if you want to install Virtualenv to create a virtual enviroment check this post).</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install celery</span><br></pre></td></tr></table></figure>
-<p>Next, add this package to your requirements.txt file. so that both the production environment and the development environment on your local machine will use it. Recall that you can check the packages used by the current environment with</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip freeze</span><br></pre></td></tr></table></figure>
-<p>You will see that you have installed celery, pytz, billard, kombu, anyjson and amqp. Write them all on you requirements file. You can also write them directly by using</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip freeze &gt; requirements.txt</span><br></pre></td></tr></table></figure>
-<p>Now, we need to create a Celery instance, called a Celery app. Create a file at the same level of your settings.py file:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ touch myprojectfolder/myproject/celery.py</span><br></pre></td></tr></table></figure>
-<p>And write the following code:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">from celery import Celery</span><br><span class="line">from django.conf import settings</span><br><span class="line"></span><br><span class="line">os.environ.setdefault(&apos;DJANGO_SETTINGS_MODULE&apos;,&apos;myproject.settings&apos;)</span><br><span class="line"></span><br><span class="line">app = Celery(&apos;myproject&apos;)</span><br><span class="line">app.config_fron_object(&apos;django.conf:settings&apos;)</span><br><span class="line"></span><br><span class="line">app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)</span><br></pre></td></tr></table></figure>
-<p>Then, to ensure that the app is loaded when Django starts, you need to import this app in the <strong>init</strong>.py file.</p>
-<p>Open the <strong>init</strong>.py file that is at the same level than the settings.py and celery.py file and write:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from .celery import app as celery_app</span><br></pre></td></tr></table></figure>
-<p>Moreover, for security purposes, you should specigy a list of accepted content-types in the settings.py file.</p>
-<p>In this case, we will set json as our content type:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CELERY_ACCEPT_CONTENT = [&apos;json&apos;]</span><br></pre></td></tr></table></figure>
-<p>Theb we need to specify the task serializer accodingly:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CELERY_TASK_SERIALIZER = &apos;json&apos;</span><br><span class="line">CELERY_RESULT_SERIALZIER = &apos;json&apos;</span><br></pre></td></tr></table></figure>
-<p>Finally, we can specify the time zone we are in:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CELERY_TIMEZONE = &apos;Asia/Shanghai&apos;</span><br></pre></td></tr></table></figure>
-<p>Note: In Celery 3.0+ the setting CELERY_ENABLE_UTC is enabled default (it is set to True). This setting, if enabled, makes the dates and times in messages to be converted to use the UTC timezone.</p>
-<h3 id="Django-celery"><a href="#Django-celery" class="headerlink" title="Django-celery"></a>Django-celery</h3><p>If you want to store task results in the Django database, you will have to install the django-celery packags.</p>
-<p>This package defines a result backend to keep track of the state of the tasks. To install it user:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install django-celery</span><br></pre></td></tr></table></figure>
-<p>remember to include it in your requirements file, Then add it to your installed apps in your settings file:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS(</span><br><span class="line">	...,</span><br><span class="line">	&apos;djangocelery&apos;,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p>Next we need to create the corresponding database tables of this app, which can be done with:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python manage.py migrate djcelery</span><br></pre></td></tr></table></figure>
-<p>As we have indicated Celery to use our settings.py file, we can configure Celery to use the django-celery backend by adding this line into the settings.py file:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CELERY_RESULT_BACKED = &apos;djcelery.backends.database:DatabaseBackend&apos;</span><br><span class="line">CELERYBEAT_SCHEDULER = &apos;djcelery.schedulers.DatabaseScheduler&apos;</span><br></pre></td></tr></table></figure>
-<h3 id="Create-a-Periodic-Task"><a href="#Create-a-Periodic-Task" class="headerlink" title="Create a Periodic Task"></a>Create a Periodic Task</h3><p>One thing you might want to use in your project is a Scraper, for example, whick is an aplication that runs periodicaly at night to update some data for your web site.</p>
-<p>Choose or create an application in your django project to include the Scraper. Then, create and edit the file myapp/utils/scrapers.py (note: you must have an empty <strong>init</strong>.py file inside the utils folder). The scrapers.py file must contain a function that performs that performs your desired operations, like accessing an API and modifying your database.</p>
-<p>In this example, we just write:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def scraper_example(a,b):</span><br><span class="line">	return a + b</span><br></pre></td></tr></table></figure>
-<p>Then, create the file myapp/tasks.py and edit it:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from celery.task.schedules import crontab</span><br><span class="line">from celery.decorators import peeriodic_task</span><br><span class="line">from myapp.utils import scrapers</span><br><span class="line">from celery.utils.log import get_task_logger</span><br><span class="line">from datetime import datetime</span><br><span class="line"></span><br><span class="line">logger = get_task_logger(__name__)</span><br><span class="line"></span><br><span class="line">@periodic_task(run_every=(crontab(hour=&apos;*&apos;, minute=&apos;*&apos;, day_of_week=&apos;*&apos;)))</span><br><span class="line">def scraper_example():</span><br><span class="line">	logger.info(&quot;Start task&quot;)</span><br><span class="line">	now = datetime.now()</span><br><span class="line">	result = scrapers.scraper_example(now.day,now.minute)</span><br><span class="line">	logger.info(&quot;Task finished: result = %i&quot; % result)</span><br></pre></td></tr></table></figure>
-<p>Here we have created a periodic task that will run every minute, and that writes into the logger two messages indicating the beginning and the end of the task, and calls our scraper function.</p>
-<h3 id="Run-it"><a href="#Run-it" class="headerlink" title="Run it"></a>Run it</h3><p>Now we created the periodic task, but how we can run it? First start your RabbitMQ server:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo rabbitmq-server -detached</span><br></pre></td></tr></table></figure>
-<p>Next start a Celery worker</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python manage.py celeryd --verbosity=2 --loglevel=DEBUG</span><br></pre></td></tr></table></figure>
-<p>If the installtion is correct, you should see at the top of the text displayed something like</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">transport: amqp://myuser@localhost:5673/myvhost</span><br><span class="line">results: djcelery.backends.database:DatabaseBackend</span><br></pre></td></tr></table></figure>
-<p>And a list of the application tasks:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[tasks]</span><br><span class="line">  . celery.backend_cleanup</span><br><span class="line">  . ......etc</span><br><span class="line">  . myapp.tasks.scraper_example</span><br></pre></td></tr></table></figure>
-<p>Next open a new tab and start celerybeat, which will send the registered tasks periodically to RabbitMQ:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python manage.py celerybeat --verbosity=2 --loglevel=DEBUG</span><br></pre></td></tr></table></figure>
-<p>If you go back to the Celery woeker tab, you will see the results of your tasks.</p>
-<p>And finally. open another tab and start your django development server:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python manage.py runserver</span><br></pre></td></tr></table></figure>
-<p>Note: Beat needs to store the last run times of the tasks in a local database file, which by default is celerybeat-schedule.db and it’s placed at the same level of your manage.py file. If you are using GIT as version control, you should include this file into your gitignore file.</p>
-<p>That’s all.</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1464,7 +1418,11 @@ with open('json/globe_volcanoes.json', 'w') as f:
   
     <li><a href="/categories/VIM/">VIM</a><small>2</small></li>
   
-    <li><a href="/categories/django/">django</a><small>9</small></li>
+    <li><a href="/categories/django/">django</a><small>11</small></li>
+  
+    <li><a href="/categories/freeswitch/">freeswitch</a><small>1</small></li>
+  
+    <li><a href="/categories/go/">go</a><small>1</small></li>
   
     <li><a href="/categories/jekyll/">jekyll</a><small>2</small></li>
   
@@ -1476,9 +1434,9 @@ with open('json/globe_volcanoes.json', 'w') as f:
   
     <li><a href="/categories/normal/">normal</a><small>1</small></li>
   
-    <li><a href="/categories/other/">other</a><small>2</small></li>
+    <li><a href="/categories/other/">other</a><small>3</small></li>
   
-    <li><a href="/categories/python/">python</a><small>64</small></li>
+    <li><a href="/categories/python/">python</a><small>67</small></li>
   
     <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   
@@ -1508,6 +1466,8 @@ with open('json/globe_volcanoes.json', 'w') as f:
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   
     <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/other/">other</a><small>1</small></li>
   
     <li><a href="/tags/python/">python</a><small>14</small></li>
   

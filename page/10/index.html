@@ -54,33 +54,117 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-07-26T16:00:00.000Z"><a href="/2014/07/27/tkinter-canvas-sample/">2014-07-27</a></time>
+        <time datetime="2014-07-27T16:00:00.000Z"><a href="/2014/07/28/hadoop-pusehon--hwritedoop-sap-reduce/">2014-07-28</a></time>
       
       
   
-    <h1 class="title"><a href="/2014/07/27/tkinter-canvas-sample/">Tkinter Canvas Sample</a></h1>
+    <h1 class="title"><a href="/2014/07/28/hadoop-pusehon--hwritedoop-sap-reduce/">hadoop用純 python 寫 hadoop 的 map reduce 程式</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p><em>A sample for tkinter canvas.</em></p>
+        <p><em>hadoop用純 python 寫 hadoop 的 map reduce 程式</em></p>
+<p>好繞口的標題:)。hadoop 是 java 寫成的，但是並不是只能用 java 才能在 hadoop 裡面執行程式。但是第一個的觀念要有的是，程式的執行環境，就是在 java VM 裡面。所以，在 hadoop 文件裡介紹的 python 程式，要執行的時候，是用 jython 轉成 java jar，然後交由 hadoop framework 來執行。所以，以此類推，任何語言有能力轉成 java jar 的，應該都可以寫出程式讓 hadoop framework 執行。</p>
+<p>回頭講 python。用慣 python 的人，應該是不太習慣 jython 的(我就是)。這兩個的確有些差別，讓我無法適應(ironpython 也是)。所以，Noll 先生就介紹了如何用純 python 在 hadoop framework 執行。</p>
+<p>他所利用的是，hadoop 的一個 Streaming API 收發串流資料的能力，且 hadoop 可存取 stdin 及 stdout 。因此把它們當做通道，把 hadoop framework 與 python 執行期結合起來。所以，接下來要注意的是，mapper.py、reducer.py 是放在本機環境，而資料是放在 hadoop 環境裡。稍不注意放錯位置就會無法執行。</p>
+<p>準備環境：</p>
+<ul><br>    <li>hadoop 環境，照之前的文章，</li><br>    <li>準備以下的程式<br>    <ul><br>        <li>mapper.py 放在 /home/hduser/mapper.py (記得 chmod +x)</li><br><pre><br>#!/usr/bin/env python<br>import sys<br># input comes from STDIN (standard input)<br>for line in sys.stdin:<br>    # remove leading and trailing whitespace<br>    line = line.strip()<br>    # split the line into words<br>    words = line.split()<br>    # increase counters<br>    for word in words:<br>        # write the results to STDOUT (standard output);<br>        # what we output here will be the input for the<br>        # Reduce step, i.e. the input for reducer.py<br>        #<br>        # tab-delimited; the trivial word count is 1<br>    print ‘%s\t%s’ % (word, 1)<br></pre><br>        <li>reducer.py 放在 /home/hduser/reducer.py (記得 chmod +x)</li><br><pre><br>#!/usr/bin/env python<br>from operator import itemgetter<br>import sys<br>current_word = None<br>current_count = 0<br>word = None<br># input comes from STDIN<br>for line in sys.stdin:<br>    # remove leading and trailing whitespace<br>    line = line.strip()<br>    # parse the input we got from mapper.py<br>    word, count = line.split(‘\t’, 1)<br>    # convert count (currently a string) to int<br>    try:<br>        count = int(count)<br>    except ValueError:<br>        # count was not a number, so silently<br>        # ignore/discard this line<br>        continue<br>    # this IF-switch only works because Hadoop sorts map output<br>    # by key (here: word) before it is passed to the reducer<br>    if current_word == word:<br>        current_count += count<br>    else:<br>        if current_word:<br>            # write result to STDOUT<br>            print ‘%s\t%s’ % (current_word, current_count)<br>        current_count = count<br>        current_word = word<br># do not forget to output the last word if needed!<br>if current_word == word:<br>      print ‘%s\t%s’ % (current_word, current_count)<br></pre><br>    </ul>
+
+<p></p></li></ul><p></p>
+<p>Noll 先生還很好心地建議，利用一點小手法測試一下 mapper.py 及 reducer.py，免得執行完不如預期，牽拖別人。</p>
 <pre>
-import Tkinter
-root = Tkinter.Tk(0
-canvas=Tkinter.Canvas(root,width=600,height=400,bg='white')
 
-canvas.create_text(302,77,text='Use Canvas', fill='gray')
-canvas.create_text(300,75,text='Use Canvas',fill='blue')
-canvas.create_polygon(290,114,316,114,330,130,310,146,284,146,270,130)
-canvas.create_oval(280,120,320,140,fill='white')
-canvas.create_line(250,130,350,130)
-canvas.create_line(300,100,300,160)
-canvas.create_arc(100,200,500,400,start=0,extent=240,fill='pink')
-canvas.create_arc(103,203,500,400,start=241,extent=118,fill='red')
-canvas.pack()
+# very basic test  hduser@ubuntu:~$ echo "foo foo quux labs foo bar quux" | /home/hduser/mapper.py  
+foo     1  
+foo     1  
+quux    1  
+labs    1  
+foo     1  
+bar     1  
+quux    1 
+hduser@ubuntu:~$ echo "foo foo quux labs foo bar quux" | /home/hduser/mapper.py | sort -k1,1 | /home/hduser/reducer.py  
+bar     1  
+foo     3  
+labs    1  
+quux    2 
+# using one of the ebooks as example input  
+# (see below on where to get the ebooks)  
+hduser@ubuntu:~$ cat /tmp/gutenberg/20417-8.txt | /home/hduser/mapper.py  
+The     1  
+Project 1  
+Gutenberg       1  
+EBook   1  
+of      1  
+[...]  
+(you get the idea)
+</pre>
 
-root.mainloop()
+<p>好了，程式就這麼簡單。接下來要試著讓它跑。要準備材料。跟之前測試的一樣，到 Project Gutenberg 下載三本書，要下載文字版，UTF-8 編碼的檔案。(Plain Text UTF-8)</p>
+<p>The Outline of Science, Vol. 1 (of 4) by J. Arthur Thomson<br>The Notebooks of Leonardo Da Vinci<br>Ulysses by James Joyce</p>
+<p>把文字檔放到 /tmp/gutenberg 目錄去。<br>然後，要把這三個檔案，放到 HDFS 去(也就是 Hadoop 環境的檔案區)</p>
+<pre>
+hduser@ubuntu:/usr/local/hadoop$ bin/hadoop dfs -copyFromLocal /tmp/gutenberg /user/hduser/gutenberg  
+hduser@ubuntu:/usr/local/hadoop$ bin/hadoop dfs -ls  
+Found 1 items  
+drwxr-xr-x   - hduser supergroup          0 2010-05-08 17:40 /user/hduser/gutenberg  
+hduser@ubuntu:/usr/local/hadoop$ bin/hadoop dfs -ls /user/hduser/gutenberg  
+Found 3 items  
+-rw-r--r--   3 hduser supergroup     674566 2011-03-10 11:38 /user/hduser/gutenberg/pg20417.txt  
+-rw-r--r--   3 hduser supergroup    1573112 2011-03-10 11:38 /user/hduser/gutenberg/pg4300.txt  -
+-rw-r--r--   3 hduser supergroup    1423801 2011-03-10 11:38 /user/hduser/gutenberg/pg5000.txt  
+hduser@ubuntu:/usr/local/hadoop$
+
+</pre>
+
+<p>然後，就是執行 mapreduce job 的時候，只有一行指令，當然參數很多，不要換行！</p>
+<pre>
+hduser@ubuntu:/usr/local/hadoop$ bin/hadoop jar contrib/streaming/hadoop-*streaming*.jar 
+-file /home/hduser/mapper.py    -mapper /home/hduser/mapper.py  -file /home/hduser/reducer.py   -reducer /home/hduser/reducer.py -input /user/hduser/gutenberg/* -output /user/hduser/gutenberg-output
+
+</pre>
+
+<p>執行完的結果會放在，執行範例如下：</p>
+<pre>
+hduser@ubuntu:/usr/local/hadoop$ bin/hadoop jar contrib/streaming/hadoop-*streaming*.jar -mapper /home/hduser/mapper.py -reducer /home/hduser/reducer.py -input /user/hduser/gutenberg/* -output /user/hduser/gutenberg-output  
+additionalConfSpec_:null  
+null=@@@userJobConfProps_.get(stream.shipped.hadoopstreaming  
+packageJobJar: [/app/hadoop/tmp/hadoop-unjar54543/]  
+[] /tmp/streamjob54544.jar tmpDir=null  
+[...] INFO mapred.FileInputFormat: Total input paths to process : 7  
+[...] INFO streaming.StreamJob: getLocalDirs(): [/app/hadoop/tmp/mapred/local]  
+[...] INFO streaming.StreamJob: Running job: job_200803031615_0021  
+[...]  
+[...] INFO streaming.StreamJob:  map 0%  reduce 0%  
+[...] INFO streaming.StreamJob:  map 43%  reduce 0%  
+[...] INFO streaming.StreamJob:  map 86%  reduce 0%  
+[...] INFO streaming.StreamJob:  map 100%  reduce 0%  
+[...] INFO streaming.StreamJob:  map 100%  reduce 33%  
+[...] INFO streaming.StreamJob:  map 100%  reduce 70%  
+[...] INFO streaming.StreamJob:  map 100%  reduce 77%  
+[...] INFO streaming.StreamJob:  map 100%  reduce 100%  
+[...] INFO streaming.StreamJob: Job complete: job_200803031615_0021  
+[...] INFO streaming.StreamJob: Output: /user/hduser/gutenberg-output  hduser@ubuntu:/usr/local/hadoop$
+</pre>
+
+<p>執行完的結果在 HDFS 的 /user/hduser/gutenberg-output，用指令看一下結果的內容</p>
+<pre>
+hduser@ubuntu:/usr/local/hadoop$ bin/hadoop dfs -ls /user/hduser/gutenberg-output  
+Found 1 items  
+/user/hduser/gutenberg-output/part-00000     &lt;r 1&gt;   903193  2007-09-21 13:00  
+hduser@ubuntu:/usr/local/hadoop$  
+hduser@ubuntu:/usr/local/hadoop$ bin/hadoop dfs -cat /user/hduser/gutenberg-output/part-00000  
+"(Lo)cra"       1  
+"1490   1  
+"1498," 1  
+"35"    1  
+"40,"   1  
+"A      2  
+"AS-IS".        2  
+"A_     1  
+"Absoluti       1  
+[...]  
+hduser@ubuntu:/usr/local/hadoop$
 </pre>
 
       
@@ -265,6 +349,56 @@ game.Start()
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-07-26T16:00:00.000Z"><a href="/2014/07/27/tkinter-canvas-sample/">2014-07-27</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/27/tkinter-canvas-sample/">Tkinter Canvas Sample</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>A sample for tkinter canvas.</em></p>
+<pre>
+import Tkinter
+root = Tkinter.Tk(0
+canvas=Tkinter.Canvas(root,width=600,height=400,bg='white')
+
+canvas.create_text(302,77,text='Use Canvas', fill='gray')
+canvas.create_text(300,75,text='Use Canvas',fill='blue')
+canvas.create_polygon(290,114,316,114,330,130,310,146,284,146,270,130)
+canvas.create_oval(280,120,320,140,fill='white')
+canvas.create_line(250,130,350,130)
+canvas.create_line(300,100,300,160)
+canvas.create_arc(100,200,500,400,start=0,extent=240,fill='pink')
+canvas.create_arc(103,203,500,400,start=241,extent=118,fill='red')
+canvas.pack()
+
+root.mainloop()
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-07-12T16:00:00.000Z"><a href="/2014/07/13/beautifulsoup-basic/">2014-07-13</a></time>
       
       
@@ -304,75 +438,6 @@ links = soup.findAll("a")
 <p><pre><br>from BeautifulSoup import BeautifulSoup<br>import urllib2<br>import re</pre></p>
 <p>url = urllib2.urlopen(“<a href="http://www.python.org&quot;" target="_blank" rel="noopener">http://www.python.org&quot;</a>)<br>content = url.read()<br>soup = BeautifulSoup(content)<br>for a in soup.findAll(‘a’,href=True):<br>    if re.findall(‘python’, a[‘href’]):<br>        print “Found the URL:”, a[‘href’]<br><br>Further Reading</p>
 <p>I recommend that you head over to <a href="http://www.crummy.com" target="_blank" rel="noopener">http://www.crummy.com</a> to read more about what you can do with this awesome module.</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-07-11T16:00:00.000Z"><a href="/2014/07/12/remote-control-with-telnetlib-python-recipe/">2014-07-12</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/07/12/remote-control-with-telnetlib-python-recipe/">Remote control with telnetlib (Python recipe)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>Remote control with telnetlib (Python recipe)</em></p>
-<p>Send commands to one or more logins using Python’s standard telnetlib module.</p>
-<p><pre></pre></p>
-<h1 id="auto-telnet-py-remote-control-via-telnet"><a href="#auto-telnet-py-remote-control-via-telnet" class="headerlink" title="auto_telnet.py - remote control via telnet"></a>auto_telnet.py - remote control via telnet</h1><p>import os, sys, string, telnetlib<br>from getpass import getpass</p>
-<p>class AutoTelnet:<br>    def <strong>init</strong>(self, user_list, cmd_list, **kw):<br>        self.host = kw.get(‘host’, ‘localhost’)<br>        self.timeout = kw.get(‘timeout’, 600)<br>        self.command_prompt = kw.get(‘command_prompt’, “$ “)<br>        self.passwd = {}<br>        for user in user_list:<br>            self.passwd[user] = getpass(“Enter user ‘%s’ password: “ % user)<br>        self.telnet = telnetlib.Telnet()<br>        for user in user_list:<br>            self.telnet.open(self.host)<br>            ok = self.action(user, cmd_list)<br>            if not ok:<br>                print “Unable to process:”, user<br>            self.telnet.close()</p>
-<pre><code>def action(self, user, cmd_list):
-    t = self.telnet
-    t.write(&quot;\n&quot;)
-    login_prompt = &quot;login: &quot;
-    response = t.read_until(login_prompt, 5)
-    if string.count(response, login_prompt):
-        print response
-    else:
-        return 0
-    password_prompt = &quot;Password:&quot;
-    t.write(&quot;%s\n&quot; % user)
-    response = t.read_until(password_prompt, 3)
-    if string.count(response, password_prompt):
-        print response
-    else:
-        return 0
-    t.write(&quot;%s\n&quot; % self.passwd[user])
-    response = t.read_until(self.command_prompt, 5)
-    if not string.count(response, self.command_prompt):
-        return 0
-    for cmd in cmd_list:
-        t.write(&quot;%s\n&quot; % cmd)
-        response = t.read_until(self.command_prompt, self.timeout)
-        if not string.count(response, self.command_prompt):
-            return 0
-        print response
-    return 1
-</code></pre><p>if <strong>name</strong> == ‘<strong>main</strong>‘:<br>    basename = os.path.splitext(os.path.basename(sys.argv[0]))[0]<br>    logname = os.environ.get(“LOGNAME”, os.environ.get(“USERNAME”))<br>    host = ‘localhost’<br>    import getopt<br>    optlist, user_list = getopt.getopt(sys.argv[1:], ‘c:f:h:’)<br>    usage = “””<br>usage: %s [-h host] [-f cmdfile] [-c “command”] user1 user2 …<br>    -c  command<br>    -f  command file<br>    -h  host  (default: ‘%s’)</p>
-<p>Example:  %s -c “echo $HOME” %s<br>“”” % (basename, host, basename, logname)<br>    if len(sys.argv) &lt; 2:<br>        print usage<br>        sys.exit(1)<br>    cmd_list = []<br>    for (opt, optarg) in optlist:<br>        if opt == ‘-f’:<br>            for r in open(optarg).readlines():<br>                if string.rstrip(r):<br>                    cmd_list.append(r)<br>        elif opt == ‘-c’:<br>            command = optarg<br>            if command[0] == ‘“‘ and command[-1] == ‘“‘:<br>                command = command[1:-1]<br>            cmd_list.append(command)<br>        elif opt == ‘-h’:<br>            host = optarg<br>    autoTelnet = AutoTelnet(user_list, cmd_list, host=host)</p>
-<p><br>Python’s telnetlib permits users to easily automate access to telnet servers, even from non-Unix machines.</p>
-<p>As an alternative to the popen() functions, telnetlib is probably a handy technique to have in your sysadmin toolbox.</p>
-<p>Production code will generally be more robust, but this example should be enough to get anyone started in the right direction.</p>
 
       
     </div>
@@ -483,6 +548,204 @@ print tn.read_all()
 <p>req.add_header(‘User-agent’, ‘Mozilla 5.10’)</p>
 <p>res = urllib2.urlopen(req)</p>
 <p>html = res.read()<br><br>This is what will show up in the log file.<br>“GET / HTTP/1.1” 200 151 “-“ “Mozilla 5.10”</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-07-11T16:00:00.000Z"><a href="/2014/07/12/remote-control-with-telnetlib-python-recipe/">2014-07-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/12/remote-control-with-telnetlib-python-recipe/">Remote control with telnetlib (Python recipe)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Remote control with telnetlib (Python recipe)</em></p>
+<p>Send commands to one or more logins using Python’s standard telnetlib module.</p>
+<p><pre></pre></p>
+<h1 id="auto-telnet-py-remote-control-via-telnet"><a href="#auto-telnet-py-remote-control-via-telnet" class="headerlink" title="auto_telnet.py - remote control via telnet"></a>auto_telnet.py - remote control via telnet</h1><p>import os, sys, string, telnetlib<br>from getpass import getpass</p>
+<p>class AutoTelnet:<br>    def <strong>init</strong>(self, user_list, cmd_list, **kw):<br>        self.host = kw.get(‘host’, ‘localhost’)<br>        self.timeout = kw.get(‘timeout’, 600)<br>        self.command_prompt = kw.get(‘command_prompt’, “$ “)<br>        self.passwd = {}<br>        for user in user_list:<br>            self.passwd[user] = getpass(“Enter user ‘%s’ password: “ % user)<br>        self.telnet = telnetlib.Telnet()<br>        for user in user_list:<br>            self.telnet.open(self.host)<br>            ok = self.action(user, cmd_list)<br>            if not ok:<br>                print “Unable to process:”, user<br>            self.telnet.close()</p>
+<pre><code>def action(self, user, cmd_list):
+    t = self.telnet
+    t.write(&quot;\n&quot;)
+    login_prompt = &quot;login: &quot;
+    response = t.read_until(login_prompt, 5)
+    if string.count(response, login_prompt):
+        print response
+    else:
+        return 0
+    password_prompt = &quot;Password:&quot;
+    t.write(&quot;%s\n&quot; % user)
+    response = t.read_until(password_prompt, 3)
+    if string.count(response, password_prompt):
+        print response
+    else:
+        return 0
+    t.write(&quot;%s\n&quot; % self.passwd[user])
+    response = t.read_until(self.command_prompt, 5)
+    if not string.count(response, self.command_prompt):
+        return 0
+    for cmd in cmd_list:
+        t.write(&quot;%s\n&quot; % cmd)
+        response = t.read_until(self.command_prompt, self.timeout)
+        if not string.count(response, self.command_prompt):
+            return 0
+        print response
+    return 1
+</code></pre><p>if <strong>name</strong> == ‘<strong>main</strong>‘:<br>    basename = os.path.splitext(os.path.basename(sys.argv[0]))[0]<br>    logname = os.environ.get(“LOGNAME”, os.environ.get(“USERNAME”))<br>    host = ‘localhost’<br>    import getopt<br>    optlist, user_list = getopt.getopt(sys.argv[1:], ‘c:f:h:’)<br>    usage = “””<br>usage: %s [-h host] [-f cmdfile] [-c “command”] user1 user2 …<br>    -c  command<br>    -f  command file<br>    -h  host  (default: ‘%s’)</p>
+<p>Example:  %s -c “echo $HOME” %s<br>“”” % (basename, host, basename, logname)<br>    if len(sys.argv) &lt; 2:<br>        print usage<br>        sys.exit(1)<br>    cmd_list = []<br>    for (opt, optarg) in optlist:<br>        if opt == ‘-f’:<br>            for r in open(optarg).readlines():<br>                if string.rstrip(r):<br>                    cmd_list.append(r)<br>        elif opt == ‘-c’:<br>            command = optarg<br>            if command[0] == ‘“‘ and command[-1] == ‘“‘:<br>                command = command[1:-1]<br>            cmd_list.append(command)<br>        elif opt == ‘-h’:<br>            host = optarg<br>    autoTelnet = AutoTelnet(user_list, cmd_list, host=host)</p>
+<p><br>Python’s telnetlib permits users to easily automate access to telnet servers, even from non-Unix machines.</p>
+<p>As an alternative to the popen() functions, telnetlib is probably a handy technique to have in your sysadmin toolbox.</p>
+<p>Production code will generally be more robust, but this example should be enough to get anyone started in the right direction.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-07-02T16:00:00.000Z"><a href="/2014/07/03/make-your-life-easier-with-virtualenvwrapper/">2014-07-03</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/03/make-your-life-easier-with-virtualenvwrapper/">Make your life easier with Virtualenvwrapper</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>When you do a lot of Python programming, you can make a mess of your system with Pip. Different apps need different requirements. One app needs version 1.2 of a package and another one needs 1.5. And then… you’re in trouble.</em></p>
+<p>When you want to know what packages have been installed by Pip, use this:</p>
+<pre>
+$ pip freeze
+</pre>
+
+<p>The result can be a very long list.</p>
+<p>For every project, whether it’s a simple application or a giant Django project, I create a new virtual environment with virtualenv. An easy way to do this is by using virtualenvwrapper.</p>
+<p></p><h3>Getting started with Virtualenv wrapper</h3><p></p>
+<pre>
+$ sudo pip install virtualenvwrapper
+</pre>
+There are some advanced settings which you can find in the manual.
+
+When installed, let's make a new environment called "testground".
+<pre>
+$ mkvirtualenv testground
+</pre>
+If your virtualenvwrapper is working well, you should see something like this:
+<pre>
+New python executable in testground/bin/python
+Installing Setuptools.........done.
+Installing Pip..............done.
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/predeactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/postdeactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/preactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/postactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/get_env_details
+
+(testground)yourname@yoursystem:~$ 
+</pre>
+
+<p>Take a look at the last line, which now says (testground) before the prompt. Your virtual environment is there, and your are in it.</p>
+<p>Now, do a pip freeze, it can result in something like this:</p>
+<pre>
+$ pip freeze
+argparse==1.2.1
+wsgiref==0.1.2
+</pre>
+
+<p>That list can be a lot shorter than the one outside the environment.</p>
+<p>You can now install something that only effects this environment. Let’s try Pillow, version 2.2.2.</p>
+<pre>
+$ pip install Pillow==2.2.2
+</pre>
+It will now try to install Pillow, when finished, do another pip fip freeze, and see if it's installed
+
+<h3>Switchting between virtualenvs</h3>
+Let's create another environment:
+<pre>
+$ mkvirtualenv coolapp
+</pre>
+once it's finished, it should have been activated automatically:
+<pre>
+...................done.
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/predeactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/postdeactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/preactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/postactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/get_env_details
+(coolapp)yourname@yoursystem:~$ 
+</pre>
+Now, let's switch to fist the virtualenv we made by the magic word "workon":
+<pre>
+$ workon testground
+(testground)yourname@yoursystem:~$ 
+</pre>
+There you go, it's as simpel as that
+
+<h3>No site packages</h3>
+Like with vitualenv, you can tell virtualenvwapper not to use the systems sitepackages with --no-site-packages:
+<pre>
+$ mkvirtualenv anotherenv --no-site-packages
+</pre>
+<h3>Remove a virtual environment</h3>
+It's very easy to get rid of a virtual env by using rmvirtualenv:
+<pre>
+$ rmvirtualenv coolapp
+
+Removing coolapp...
+</pre>
+
+<p></p><h3>List all virtualenvs</h3><p></p>
+<pre>
+$lsvirtualenv
+</pre>
+
+<p></p><h3>List your sitepackages</h3><p></p>
+<pre>
+$ lssitepackages
+
+#can result in this:
+easy_install.py   Pillow-2.2.2-py2.7.egg-info  pkg_resources.pyc
+easy_install.pyc  pip                          setuptools
+_markerlib        pip-1.4.1-py2.7.egg-info     setuptools-0.9.8-py2.7.egg-info
+PIL               pkg_resources.py
+</pre>
 
       
     </div>
@@ -677,135 +940,6 @@ for param in os.environ.keys():
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-07-02T16:00:00.000Z"><a href="/2014/07/03/make-your-life-easier-with-virtualenvwrapper/">2014-07-03</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/07/03/make-your-life-easier-with-virtualenvwrapper/">Make your life easier with Virtualenvwrapper</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>When you do a lot of Python programming, you can make a mess of your system with Pip. Different apps need different requirements. One app needs version 1.2 of a package and another one needs 1.5. And then… you’re in trouble.</em></p>
-<p>When you want to know what packages have been installed by Pip, use this:</p>
-<pre>
-$ pip freeze
-</pre>
-
-<p>The result can be a very long list.</p>
-<p>For every project, whether it’s a simple application or a giant Django project, I create a new virtual environment with virtualenv. An easy way to do this is by using virtualenvwrapper.</p>
-<p></p><h3>Getting started with Virtualenv wrapper</h3><p></p>
-<pre>
-$ sudo pip install virtualenvwrapper
-</pre>
-There are some advanced settings which you can find in the manual.
-
-When installed, let's make a new environment called "testground".
-<pre>
-$ mkvirtualenv testground
-</pre>
-If your virtualenvwrapper is working well, you should see something like this:
-<pre>
-New python executable in testground/bin/python
-Installing Setuptools.........done.
-Installing Pip..............done.
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/predeactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/postdeactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/preactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/postactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/get_env_details
-
-(testground)yourname@yoursystem:~$ 
-</pre>
-
-<p>Take a look at the last line, which now says (testground) before the prompt. Your virtual environment is there, and your are in it.</p>
-<p>Now, do a pip freeze, it can result in something like this:</p>
-<pre>
-$ pip freeze
-argparse==1.2.1
-wsgiref==0.1.2
-</pre>
-
-<p>That list can be a lot shorter than the one outside the environment.</p>
-<p>You can now install something that only effects this environment. Let’s try Pillow, version 2.2.2.</p>
-<pre>
-$ pip install Pillow==2.2.2
-</pre>
-It will now try to install Pillow, when finished, do another pip fip freeze, and see if it's installed
-
-<h3>Switchting between virtualenvs</h3>
-Let's create another environment:
-<pre>
-$ mkvirtualenv coolapp
-</pre>
-once it's finished, it should have been activated automatically:
-<pre>
-...................done.
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/predeactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/postdeactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/preactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/postactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/get_env_details
-(coolapp)yourname@yoursystem:~$ 
-</pre>
-Now, let's switch to fist the virtualenv we made by the magic word "workon":
-<pre>
-$ workon testground
-(testground)yourname@yoursystem:~$ 
-</pre>
-There you go, it's as simpel as that
-
-<h3>No site packages</h3>
-Like with vitualenv, you can tell virtualenvwapper not to use the systems sitepackages with --no-site-packages:
-<pre>
-$ mkvirtualenv anotherenv --no-site-packages
-</pre>
-<h3>Remove a virtual environment</h3>
-It's very easy to get rid of a virtual env by using rmvirtualenv:
-<pre>
-$ rmvirtualenv coolapp
-
-Removing coolapp...
-</pre>
-
-<p></p><h3>List all virtualenvs</h3><p></p>
-<pre>
-$lsvirtualenv
-</pre>
-
-<p></p><h3>List your sitepackages</h3><p></p>
-<pre>
-$ lssitepackages
-
-#can result in this:
-easy_install.py   Pillow-2.2.2-py2.7.egg-info  pkg_resources.pyc
-easy_install.pyc  pip                          setuptools
-_markerlib        pip-1.4.1-py2.7.egg-info     setuptools-0.9.8-py2.7.egg-info
-PIL               pkg_resources.py
-</pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2014-07-01T16:00:00.000Z"><a href="/2014/07/02/how-to-use-date-and-time-in-python/">2014-07-02</a></time>
       
       
@@ -844,172 +978,6 @@ print(mydate.strftime("%A"))
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-06-30T16:00:00.000Z"><a href="/2014/07/01/models-in-python/">2014-07-01</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/07/01/models-in-python/">Models in Python</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>In this part of the Python programming tutorial, we will talk about Python modules.</em></p>
-<p>A <b>module</b> is a file in which we have Python code. The modules in Python have the .py extension.<br>There are several ways to manage Python code:</p>
-<p><ul></ul></p>
-<p><li>functions</li></p>
-<p><li>classes</li></p>
-<p><li>modules</li></p>
-<p><li>packages</li><br><br>Python modules are used to organize Python code. For example, database related code is placed inside a database module, security code in a security module etc. Smaller Python scripts can have one module. But larger programs are split into several modules. Modules are grouped together to form packages.</p>
-<p></p><h3>Module names</h3><br>A module name is the file name with the .py extension. When we have a file called empty.py, empty is the module name. The <strong>name</strong> is a variable that holds the name of the module being referenced. The current module, the module being executed (called also the main module) has a special name: ‘<strong>main</strong>‘. With this name it can be referenced from the Python code.<p></p>
-<p>We have two files. empty.py and modulename.py. The second module is the main module, which is executed. It imports the first module. Modules are imported using the import keyword.</p>
-<p><pre><br>$ cat empty.py<br>“””<br>An empty module<br>“””<br></pre><br>This is empty.py module.</p>
-<p><pre></pre></p>
-<p>#!/usr/bin/python</p>
-<p>import empty<br>import sys</p>
-<p>print <strong>name</strong><br>print empty.<strong>name</strong><br>print sys.<strong>name</strong><br><br>In this code example we import two modules. One built-in module (sys) and one custom module (empty). We print the names of modules to the console.</p>
-<p><pre><br>$ ./modulename.py<br><strong>main</strong><br>empty<br>sys<br></pre><br>The name of the module, which is being executed is always ‘<strong>main</strong>‘. Other modules are named after the file name. Modules can be imported into other modules using the import keyword.</p>
-<p></p><h3>Locating modules</h3><br>When a module is imported the interpreter first searches for a built-in module with that name. If not found, it then searches in a list of directories given by the variable sys.path. The sys.path is a list of strings that specifies the search path for modules. It consists of the current working directory, directory names specified in the <b>PYTHONPATH</b> environment variable plus some additional installation dependent directories. If the module is not found, an ImportError is raised.<p></p>
-<p><pre></pre></p>
-<p>#!/usr/bin/python</p>
-<p>import sys<br>import textwrap</p>
-<p>sp = sorted(sys.path)<br>dnames = ‘, ‘.join(sp)</p>
-<p>print textwrap.fill(dnames)<br><br>The script prints all directories from sys.path variable.</p>
-<p><pre><br>import textwrap<br></pre><br>The textwrap module is used for easy formatting of paragraphs.</p>
-<p><pre><br>sp = sorted(sys.path)<br></pre><br>We retrieve a list of directories from the sys.path variable and sort them.</p>
-<p><pre><br>dnames = ‘, ‘.join(sp)<br></pre><br>We make a string out of the list.</p>
-<p><pre><br>$ ./syspath.py<br>/home/janbodnar/programming/python/modules,<br>/usr/lib/pymodules/python2.7, /usr/lib/python2.7, /usr/lib/python2.7<br>/dist-packages, /usr/lib/python2.7/dist-packages/PIL,<br>…<br></pre><br>Sample output.</p>
-<p></p><h3>The import keyword</h3><br>The import keyword can be used in several ways.<p></p>
-<p><pre><br>from module import *<br></pre><br>This construct will import all Python definitions into the namespace of another module. There is one exception. Objects beginning with underscore character _ are not imported. They are expected to be used only internally by the module being imported. This way of importing modules is not recommended.</p>
-<p><pre></pre></p>
-<p>#!/usr/bin/python</p>
-<p>from math import *</p>
-<p>print cos(3)<br>print pi<br><br>This import construct has imported all definitions from the built-in math module. We can call the math funtcions directly, without referencing the math module.</p>
-<p><pre><br>$ ./everything.py<br>-0.9899924966<br>3.14159265359<br></pre><br>The use of this import construct may result in namespace pollution. We may have several objects of the same name and their definitions can be overriden.</p>
-<p><pre></pre></p>
-<p>#!/usr/bin/python</p>
-<p>from math import  *</p>
-<p>pi = 3.14</p>
-<p>print cos(3)<br>print pi<br><br>The example will print 3.14 to the console. Which may not be, what we wanted. The namespace pollution may become critical in larger projects.</p>
-<p>The following example will show definitions, that are not being imported using this import construct.</p>
-<p><pre></pre></p>
-<p>#!/usr/bin/python</p>
-<p>“””<br>names is a test module<br>“””</p>
-<p>_version = 1.0</p>
-<p>names = [“Paul”, “Frank”, “Jessica”, “Thomas”, “Katherine”]</p>
-<p>def show_names():<br>   for i in names:<br>      print i</p>
-<p>def _show_version():<br>   print _version<br><br>This is the names.py module.</p>
-<p><pre></pre></p>
-<p>#!/usr/bin/python</p>
-<p>from names import *</p>
-<p>print locals()</p>
-<p>show_names()<br><br>The _version variable and the _show_version() function are not imported into the private.py module. We don’t see them in the namespace. The locals() function give us all the definitions available in the private module.</p>
-<p><pre><br>$ ./private.py<br>{‘<strong>builtins</strong>‘: <module '__builtin__'="" (built-in)="">, ‘<strong>file</strong>‘: ‘./private.py’,<br>‘show_names’: <function show_names="" at="" 0xb7dd233c="">,<br>‘names’: [‘Paul’, ‘Frank’, ‘Jessica’, ‘Thomas’, ‘Katherine’],<br> ‘<strong>name</strong>‘: ‘<strong>main</strong>‘, ‘<strong>doc</strong>‘: None}<br>Paul<br>Frank<br>Jessica<br>Thomas<br>Katherine<br></function></module></pre></p>
-<p><hr></p>
-<p><pre><br>from module import fun, var<br></pre><br>This import construct imports only specific objects from a module. This way we import only definitions that we need.</p>
-<p><pre></pre></p>
-<p>#!/usr/bin/python</p>
-<p>from math import sin, pi</p>
-<p>print sin(3)<br>print pi<br><br>We import two objects from the math module. There is no way, how we could reference other definitions like e.g. a cos function.</p>
-<p><pre></pre></p>
-<p>#!/usr/bin/python</p>
-<p>from names import _version, _show_version</p>
-<p>print _version<br>_show_version()<br><br>We could also import definitions beginning with an underscore. But this is a bad practice.</p>
-<p><pre><br>$ ./imnames.py<br>1.0<br>1.0<br></pre></p>
-<p><hr></p>
-<p><pre><br>import module<br></pre><br>The last construct is most widely used. It prevents the namespace pollution and enables to access all definitios from a module.</p>
-<p><pre></pre></p>
-<p>#!/usr/bin/python</p>
-<p>import math</p>
-<p>pi = 3.14</p>
-<p>print math.cos(3)<br>print math.pi<br>print math.sin(3)<br>print pi<br><br>In this case, we reference the definitions via the module name. As we can see, we are able to use both pi variables. Our definition and the one from the math module.</p>
-<p><pre><br>$ ./widely.py<br>-0.9899924966<br>3.14159265359<br>0.14112000806<br>3.14<br></pre></p>
-<p><pre></pre></p>
-<p>#!/usr/bin/python</p>
-<h1 id="importas-py"><a href="#importas-py" class="headerlink" title="importas.py"></a>importas.py</h1><p>import math as m</p>
-<p>print m.pi<br>print m.cos(3)<br><br>We can change the name through which we can reference the module. To do this, we use the as keyword.</p>
-<p><pre><br>$ ./importas.py<br>3.14159265359<br>-0.9899924966<br></pre></p>
-<p><hr><br>An ImportError is raised, if a module cannot be imported.</p>
-<p><pre></pre></p>
-<p>#!/usr/bin/python</p>
-<p>try:<br>    import empty2<br>except ImportError, e:<br>    print ‘Failed to import:’, e<br><br>We have not created an empty2 module. Therefore an exception is raised.</p>
-<p><pre><br>$ ./importerror.py<br>Failed to import: No module named empty2<br></pre><br>Output.</p>
-<p></p><h3>Executing modules</h3><br>Modules can be imported into other modules or they can be also executed. Module authors often create a testing suite to test the module. Only if the module is executed as a script, the <strong>name</strong> attribute equals to <strong>main</strong>.<br>We will demonstrate this on a fibonacci module. Fibonacci numbers is a sequence of numbers, where each is the sum of its two immediate predecessors.<p></p>
-<p><pre></pre></p>
-<blockquote>
-<p>   #!/usr/bin/python</p>
-<p>   “””<br>   A module containing the fibonacci<br>   function.<br>   “””</p>
-<p>   def fib(n):<br>       a, b = 0, 1<br>       while b &lt; n:<br>           print b,<br>           (a, b) = (b, a + b)</p>
-<h1 id="testing"><a href="#testing" class="headerlink" title="testing"></a>testing</h1><p>   if <strong>name</strong> == ‘<strong>main</strong>‘:<br>      fib(500)<br><br>The module can be normally imported as usual. The module can be also executed.</p>
-</blockquote>
-<p><pre><br>$ ./fibonacci.py<br>1 1 2 3 5 8 13 21 34 55 89 144 233 377<br></pre><br>If we do import the fibonacci module, the test is not executed automatically.</p>
-<p><pre></pre></p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>import fibonacci as fib<br>fib.fib(500)<br>1 1 2 3 5 8 13 21 34 55 89 144 233 377<br><br>The fibonacci module is imported and the fib() function is executed.</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<p></p><h3>The dir() function</h3><br>The built-in dir() function gives a sorted list of strings containing the names defined by a module.<p></p>
-<p><pre></pre></p>
-<p>#!/usr/bin/python</p>
-<p>“””<br>This is dirfun module<br>“””</p>
-<p>import math, sys</p>
-<p>version = 1.0</p>
-<p>names = [“Paul”, “Frank”, “Jessica”, “Thomas”, “Katherine”]</p>
-<p>def show_names():</p>
-<p>   for i in names:<br>      print i</p>
-<p>print dir(sys.modules[‘<strong>main</strong>‘])<br><br>In this module, we import two system modules. We define a variable, a list and a function.</p>
-<p><pre><br>print dir(sys.modules[‘<strong>main</strong>‘])<br></pre><br>The dir() function returns all the names available in the current namespace of the module. ‘<strong>main</strong>‘ is the name of the current module. The sys.modules is a dictionary that maps module names to modules which have already been loaded.</p>
-<p><pre><br>$ ./dirfun.py<br>[‘<strong>builtins</strong>‘, ‘<strong>doc</strong>‘, ‘<strong>file</strong>‘, ‘<strong>name</strong>‘, ‘<strong>package</strong>‘, ‘math’,<br>‘names’, ‘show_names’, ‘sys’, ‘version’]<br></pre><br>We can see some built-in names like ‘<strong>file</strong>‘ or ‘<strong>name</strong>‘ and all the others, that we have defined.</p>
-<p></p><h3>The globals() function</h3><br>The globals() function returns a dictionary that represents the current global namespace. It is a dictionary of global names and their values. It is the dictionary of the current module.<p></p>
-<p><pre></pre></p>
-<p>#!/usr/bin/python</p>
-<p>import sys<br>import textwrap</p>
-<p>version = 1.0</p>
-<p>def myfun():<br>    pass</p>
-<p>gl = globals()<br>gnames = ‘, ‘.join(gl)</p>
-<p>print textwrap.fill(gnames)<br><br>We use the globals() function to print all the global names of the current module.</p>
-<p><pre><br>$ ./globalsfun.py<br><strong>builtins</strong>, <strong>file</strong>, textwrap, <strong>package</strong>, sys, myfun, version,<br><strong>name</strong>, gl, <strong>doc</strong><br></pre><br>These are the global names of the current module.</p>
-<p></p><h3>The <strong>module</strong> attribute</h3><br>The <strong>module</strong> class attribute has the name of the module in which the class is defined.<p></p>
-<p><pre><br>“””<br>module animals<br>“””</pre></p>
-<p>class Cat:<br>  pass</p>
-<p>class Dog:<br>  pass<br><br>This are the contents of the animals.py file. We have two classes.</p>
-<p><pre></pre></p>
-<p>#!/usr/bin/python</p>
-<p>from animals import Cat</p>
-<p>class Being:<br>    pass</p>
-<p>b = Being()<br>print b.<strong>module</strong></p>
-<p>c = Cat()<br>print c.<strong>module</strong><br><br>In this code we use the <strong>module</strong> attribute.</p>
-<p><pre><br>from animals import Cat<br></pre><br>From the animals module, we import the Cat class.</p>
-<p><pre><br>class Being:<br>    pass<br></pre><br>In the current module, we define a class Being.</p>
-<p><pre><br>b = Being()<br>print b.<strong>module</strong><br></pre><br>An instance of the Being class is created. We print the name of its module.</p>
-<p><pre><br>c = Cat()<br>print c.<strong>module</strong><br></pre><br>We create an object from the Cat class. We also print the module, where it was defined.</p>
-<p><pre><br>$ ./mclass.py<br><strong>main</strong><br>animals<br></pre><br>The current module’s name is <strong>main</strong>. And the Cat’s module name is animals.</p>
-<p>This chapter was about modules in Python.</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1032,7 +1000,11 @@ print(mydate.strftime("%A"))
   
     <li><a href="/categories/VIM/">VIM</a><small>2</small></li>
   
-    <li><a href="/categories/django/">django</a><small>9</small></li>
+    <li><a href="/categories/django/">django</a><small>11</small></li>
+  
+    <li><a href="/categories/freeswitch/">freeswitch</a><small>1</small></li>
+  
+    <li><a href="/categories/go/">go</a><small>1</small></li>
   
     <li><a href="/categories/jekyll/">jekyll</a><small>2</small></li>
   
@@ -1044,9 +1016,9 @@ print(mydate.strftime("%A"))
   
     <li><a href="/categories/normal/">normal</a><small>1</small></li>
   
-    <li><a href="/categories/other/">other</a><small>2</small></li>
+    <li><a href="/categories/other/">other</a><small>3</small></li>
   
-    <li><a href="/categories/python/">python</a><small>64</small></li>
+    <li><a href="/categories/python/">python</a><small>67</small></li>
   
     <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   
@@ -1076,6 +1048,8 @@ print(mydate.strftime("%A"))
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   
     <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/other/">other</a><small>1</small></li>
   
     <li><a href="/tags/python/">python</a><small>14</small></li>
   

@@ -54,6 +54,127 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-09-22T16:00:00.000Z"><a href="/2014/09/23/remote-control-with-telnetlib-python-recipe/">2014-09-23</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/09/23/remote-control-with-telnetlib-python-recipe/">Remote control with telnetlib (Python recipe)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Remote control with telnetlib (Python recipe)</em></p>
+<pre>
+
+# auto_telnet.py - remote control via telnet
+import os, sys, string, telnetlib
+from getpass import getpass
+
+class AutoTelnet:
+    def __init__(self, user_list, cmd_list, **kw):
+        self.host = kw.get('host', 'localhost')
+        self.timeout = kw.get('timeout', 600)
+        self.command_prompt = kw.get('command_prompt', "$ ")
+        self.passwd = {}
+        for user in user_list:
+            self.passwd[user] = getpass("Enter user '%s' password: " % user)
+        self.telnet = telnetlib.Telnet()
+        for user in user_list:
+            self.telnet.open(self.host)
+            ok = self.action(user, cmd_list)
+            if not ok:
+                print "Unable to process:", user
+            self.telnet.close()
+
+    def action(self, user, cmd_list):
+        t = self.telnet
+        t.write("\n")
+        login_prompt = "login: "
+        response = t.read_until(login_prompt, 5)
+        if string.count(response, login_prompt):
+            print response
+        else:
+            return 0
+        password_prompt = "Password:"
+        t.write("%s\n" % user)
+        response = t.read_until(password_prompt, 3)
+        if string.count(response, password_prompt):
+            print response
+        else:
+            return 0
+        t.write("%s\n" % self.passwd[user])
+        response = t.read_until(self.command_prompt, 5)
+        if not string.count(response, self.command_prompt):
+            return 0
+        for cmd in cmd_list:
+            t.write("%s\n" % cmd)
+            response = t.read_until(self.command_prompt, self.timeout)
+            if not string.count(response, self.command_prompt):
+                return 0
+            print response
+        return 1
+
+if __name__ == '__main__':
+    basename = os.path.splitext(os.path.basename(sys.argv[0]))[0]
+    logname = os.environ.get("LOGNAME", os.environ.get("USERNAME"))
+    host = 'localhost'
+    import getopt
+    optlist, user_list = getopt.getopt(sys.argv[1:], 'c:f:h:')
+    usage = """
+usage: %s [-h host] [-f cmdfile] [-c "command"] user1 user2 ...
+    -c  command
+    -f  command file
+    -h  host  (default: '%s')
+
+Example:  %s -c "echo $HOME" %s
+""" % (basename, host, basename, logname)
+    if len(sys.argv) &#60; 2:
+        print usage
+        sys.exit(1)
+    cmd_list = []
+    for (opt, optarg) in optlist:
+        if opt == '-f':
+            for r in open(optarg).readlines():
+                if string.rstrip(r):
+                    cmd_list.append(r)
+        elif opt == '-c':
+            command = optarg
+            if command[0] == '"' and command[-1] == '"':
+                command = command[1:-1]
+            cmd_list.append(command)
+        elif opt == '-h':
+            host = optarg
+    autoTelnet = AutoTelnet(user_list, cmd_list, host=host)
+
+</pre>
+
+<p>Python’s telnetlib permits users to easily automate access to telnet servers, even from non-Unix machines.</p>
+<p>As an alternative to the popen() functions, telnetlib is probably a handy technique to have in your sysadmin toolbox.</p>
+<p>Production code will generally be more robust, but this example should be enough to get anyone started in the right direction.</p>
+<p>this title is come from <a href="http://code.activestate.com/recipes/52228/" target="_blank" rel="noopener">http://code.activestate.com/recipes/52228/</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-09-15T16:00:00.000Z"><a href="/2014/09/16/how-to-set-lightness-in-ubuntu1404/">2014-09-16</a></time>
       
       
@@ -1084,112 +1205,6 @@ def get_absolute_url(self):
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-08-20T16:00:00.000Z"><a href="/2014/08/21/how-to-use-args-and-kwargs-in-python/">2014-08-21</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/08/21/how-to-use-args-and-kwargs-in-python/">How to use args and kwargs in Python</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>How to use variable length argument lists in Python.</em></p>
-<p></p><p>The special syntax, <em>args and **kwargs in function definitions is used to pass a variable number of arguments to a function. The single asterisk form (</em>args) is used to pass a non-keyworded, variable-length argument list, and the double asterisk form is used to pass a keyworded, variable-length argument list. Here is an example of how to use the non-keyworded form. This example passes one formal (positional) argument, and two more variable length arguments.</p><p></p>
-<pre>
-def test_var_args(farg, *args):
-    print "formal arg:", farg
-    for arg in args:
-        print "another arg:", arg
-
-test_var_args(1, "two", 3)
-</pre>
-
-<p>Results:</p>
-<pre>
-formal arg: 1
-another arg: two
-another arg: 3
-</pre>
-
-<p>Here is an example of how to use the keyworded form. Again, one formal argument and two keyworded variable arguments are passed.</p>
-<pre>
-def test_var_kwargs(farg, **kwargs):
-    print "formal arg:", farg
-    for key in kwargs:
-        print "another keyword arg: %s: %s" % (key, kwargs[key])
-
-test_var_kwargs(farg=1, myarg2="two", myarg3=3)
-</pre>
-
-<p>Results:</p>
-<pre>
-formal arg: 1
-another keyword arg: myarg2: two
-another keyword arg: myarg3: 3
-</pre>
-
-
-<h3>Using *args and **kwargs when calling a function</h3>
-
-<p>This special syntax can be used, not only in function definitions, but also when calling a function.</p>
-<pre>
-def test_var_args_call(arg1, arg2, arg3):
-    print "arg1:", arg1
-    print "arg2:", arg2
-    print "arg3:", arg3
-
-args = ("two", 3)
-test_var_args_call(1, *args)
-</pre>
-
-<p>Results:</p>
-<pre>
-arg1: 1
-arg2: two
-arg3: 3
-</pre>
-
-
-<p>Here is an example using the keyworded form when calling a function:</p>
-<pre>
-def test_var_args_call(arg1, arg2, arg3):
-    print "arg1:", arg1
-    print "arg2:", arg2
-    print "arg3:", arg3
-
-kwargs = {"arg3": 3, "arg2": "two"}
-test_var_args_call(1, **kwargs)
-</pre>
-
-<p>Results:</p>
-<pre>
-arg1: 1
-arg2: two
-arg3: 3
-</pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1212,7 +1227,11 @@ arg3: 3
   
     <li><a href="/categories/VIM/">VIM</a><small>2</small></li>
   
-    <li><a href="/categories/django/">django</a><small>9</small></li>
+    <li><a href="/categories/django/">django</a><small>11</small></li>
+  
+    <li><a href="/categories/freeswitch/">freeswitch</a><small>1</small></li>
+  
+    <li><a href="/categories/go/">go</a><small>1</small></li>
   
     <li><a href="/categories/jekyll/">jekyll</a><small>2</small></li>
   
@@ -1224,9 +1243,9 @@ arg3: 3
   
     <li><a href="/categories/normal/">normal</a><small>1</small></li>
   
-    <li><a href="/categories/other/">other</a><small>2</small></li>
+    <li><a href="/categories/other/">other</a><small>3</small></li>
   
-    <li><a href="/categories/python/">python</a><small>64</small></li>
+    <li><a href="/categories/python/">python</a><small>67</small></li>
   
     <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   
@@ -1256,6 +1275,8 @@ arg3: 3
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   
     <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/other/">other</a><small>1</small></li>
   
     <li><a href="/tags/python/">python</a><small>14</small></li>
   

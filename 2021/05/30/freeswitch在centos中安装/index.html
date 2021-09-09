@@ -97,12 +97,22 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/freeswitch/certs</span><br><span class="line"># 备份fs的原有证书</span><br><span class="line">mv wss.pem wss.pem.bak</span><br><span class="line"></span><br><span class="line">touch wss.pem</span><br><span class="line">cat /etc/xxx/live/xxx.com/fullchain.pem &gt; wss.pem</span><br><span class="line">cat /etc/xxx/live/uxxx.com/privkey.pem &gt; wss.pem</span><br></pre></td></tr></table></figure>
 <h2 id="配置网关"><a href="#配置网关" class="headerlink" title="配置网关"></a>配置网关</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># 新建文件 /usr/local/freeswitch/conf/dialplan/default/00_gw1.xml</span><br><span class="line"></span><br><span class="line">&lt;include&gt;</span><br><span class="line">    &lt;extension name=&quot;call_out3&quot;&gt;</span><br><span class="line">        &lt;condition field=&quot;destination_number&quot; expression=&quot;^10(.*)$&quot;&gt;</span><br><span class="line">            &lt;action application=&quot;set&quot; data=&quot;effective_caller_id_name=200200001&quot;/&gt;</span><br><span class="line">            &lt;action application=&quot;set&quot; data=&quot;effective_caller_id_number=200200001&quot;/&gt;</span><br><span class="line">            &lt;!--&lt;action application=&quot;bridge&quot; data=&quot;sofia/gateway/gw3/$1&quot;/&gt;--&gt;</span><br><span class="line">            &lt;action application=&quot;bridge&quot; data=&quot;sofia/gateway/gw3/cs1$1&quot;/&gt;</span><br><span class="line">        &lt;/condition&gt;</span><br><span class="line">    &lt;/extension&gt;</span><br><span class="line"></span><br><span class="line">&lt;/include&gt;</span><br><span class="line"></span><br><span class="line"># 新建文件 /usr/local/freeswitch/conf/sip_profiles/external/gw1.xml </span><br><span class="line"></span><br><span class="line">&lt;include&gt;</span><br><span class="line">    &lt;gateway name=&quot;gw3&quot;&gt;</span><br><span class="line">    &lt;param name=&quot;realm&quot; value=&quot;121.196.168.81:62019&quot;/&gt;</span><br><span class="line">      &lt;param name=&quot;proxy&quot; value=&quot;121.196.168.81:62019&quot;/&gt;</span><br><span class="line">    &lt;param name=&quot;username&quot; value=&quot;&quot;/&gt;</span><br><span class="line">    &lt;param name=&quot;password&quot; value=&quot;&quot;/&gt;</span><br><span class="line">    &lt;param name=&quot;register&quot; value=&quot;false&quot;/&gt;</span><br><span class="line">    &lt;param name=&quot;caller-id-in-from&quot; value=&quot;true&quot;/&gt;</span><br><span class="line">    &lt;/gateway&gt;</span><br><span class="line">&lt;/include&gt;</span><br></pre></td></tr></table></figure>
 <h2 id="重启fs服务"><a href="#重启fs服务" class="headerlink" title="重启fs服务"></a>重启fs服务</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sofia profile external rescan reloadxml</span><br></pre></td></tr></table></figure>
+<h2 id="拨号测试"><a href="#拨号测试" class="headerlink" title="拨号测试"></a>拨号测试</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">originate &#123;effective_caller_id_numer=200200001&#125;sofia/internal/xxx15180347840@x.x.x.x:5060 &amp;bridge(user/1001)</span><br><span class="line"></span><br><span class="line"># xxx 为呼叫前缀</span><br></pre></td></tr></table></figure>
+<p>originate <a href="mailto:{effective_caller_id_numer=846374233}sofia/internal/18757131514@112.74.104.148" target="_blank" rel="noopener">{effective_caller_id_numer=846374233}sofia/internal/18757131514@112.74.104.148</a>:7060 &amp;bridge(user/1000)</p>
+<p>originate {auto_answer=true,<a href="mailto:effective_caller_id_numer=846374233}sofia/external/18757131514@112.74.104.148" target="_blank" rel="noopener">effective_caller_id_numer=846374233}sofia/external/18757131514@112.74.104.148</a>:7060 &amp;bridge({instant_ringback=true,<a href="mailto:effective_caller_id_numer=846374233}sofia/external/15058371889@112.74.104.148" target="_blank" rel="noopener">effective_caller_id_numer=846374233}sofia/external/15058371889@112.74.104.148</a>:7060)</p>
+<h2 id="查看已注册的坐席"><a href="#查看已注册的坐席" class="headerlink" title="查看已注册的坐席"></a>查看已注册的坐席</h2><p>bgapi originate {ringback=/usr/local/freeswitch/sounds/229.wav,ignore_early_media=true,effective_caller_id_numer=846374233}sofia/gateway/gw2/18757131514 ‘&amp;lua(call.lua 360 15058371889 846374233)</p>
+<p>平安车险 小蒋<br>4558.00<br>200万+座位险41万/坐</p>
 
       
     </div>
     <footer>
       
         
+  
+  <div class="categories">
+    <a href="/categories/freeswitch/">freeswitch</a>
+  </div>
+
         
   
   <div class="tags">
@@ -167,7 +177,11 @@
   
     <li><a href="/categories/VIM/">VIM</a><small>2</small></li>
   
-    <li><a href="/categories/django/">django</a><small>9</small></li>
+    <li><a href="/categories/django/">django</a><small>11</small></li>
+  
+    <li><a href="/categories/freeswitch/">freeswitch</a><small>1</small></li>
+  
+    <li><a href="/categories/go/">go</a><small>1</small></li>
   
     <li><a href="/categories/jekyll/">jekyll</a><small>2</small></li>
   
@@ -179,9 +193,9 @@
   
     <li><a href="/categories/normal/">normal</a><small>1</small></li>
   
-    <li><a href="/categories/other/">other</a><small>2</small></li>
+    <li><a href="/categories/other/">other</a><small>3</small></li>
   
-    <li><a href="/categories/python/">python</a><small>64</small></li>
+    <li><a href="/categories/python/">python</a><small>67</small></li>
   
     <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   
@@ -211,6 +225,8 @@
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   
     <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/other/">other</a><small>1</small></li>
   
     <li><a href="/tags/python/">python</a><small>14</small></li>
   

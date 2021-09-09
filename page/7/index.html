@@ -54,25 +54,47 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-10-18T16:00:00.000Z"><a href="/2014/10/19/Set-Mysql-In-Python34-Virtualenv/">2014-10-19</a></time>
+        <time datetime="2014-11-10T16:00:00.000Z"><a href="/2014/11/11/export-excel-in-django17/">2014-11-11</a></time>
       
       
   
-    <h1 class="title"><a href="/2014/10/19/Set-Mysql-In-Python34-Virtualenv/">Set Mysql In Python34 Virtualenv</a></h1>
+    <h1 class="title"><a href="/2014/11/11/export-excel-in-django17/">Export Excel in Django1.7</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p><em>Set mysql in python34 virtualenv</em></p>
-<p>Normally if you install mysql in ubuntu python34 virtualenv, use</p>
-<pre class="code">sudo apt-get install mysqlclient</pre>
-
-<p>so it’s better use the follow install</p>
-<pre class="code">
-sudo apt-get install python3-dev libmysqlclient-dev
-sudo apt-get install mysqlclient
+        <p><em>How to export Excel from Database in Django 1.7</em></p>
+<ol>
+<li>Install xlwt</li>
+</ol>
+<pre>
+pip install xlwt
 </pre>
+
+<ol start="2">
+<li><p>Create Database Item</p>
+</li>
+<li><p>Export Excel in Views</p>
+<pre>
+def export_item_list(request):
+ wb=xlwt.Workbook(uncoding="utf-8")
+ sheet=wb.add_sheet("ITEMS")
+ sheet.write(0,0,"code")
+ sheet.write(0,1,"name")
+
+ row=1
+ for item in Item.objects.all():
+     sheet.write(row,0,item.code)
+     sheet.write(row,1,item.name)
+     row=row+1
+ response=HttpResponse(content_type="application/vnd.ms-excel")
+ response['Content-Description']="attachment;filename=EXCEL_NAME.xls"
+ wb.save(response)
+ return response
+</pre>
+</li>
+</ol>
 
       
     </div>
@@ -112,6 +134,47 @@ sudo apt-get install mysqlclient
 <p><pre><br>a.replace(‘word’,’python’)<br></pre><br>输出的结果是hello python</p>
 <p>2用正则表达式来完成替换:</p>
 <p><pre><br>import re<br>strinfo = re.compile(‘word’)<br>b = strinfo.sub(‘python’,a)<br>print b<br></pre><br>输出的结果也是hello python</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-10-18T16:00:00.000Z"><a href="/2014/10/19/Set-Mysql-In-Python34-Virtualenv/">2014-10-19</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/10/19/Set-Mysql-In-Python34-Virtualenv/">Set Mysql In Python34 Virtualenv</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Set mysql in python34 virtualenv</em></p>
+<p>Normally if you install mysql in ubuntu python34 virtualenv, use</p>
+<pre class="code">sudo apt-get install mysqlclient</pre>
+
+<p>so it’s better use the follow install</p>
+<pre class="code">
+sudo apt-get install python3-dev libmysqlclient-dev
+sudo apt-get install mysqlclient
+</pre>
 
       
     </div>
@@ -354,6 +417,133 @@ sudo apt-get install mysqlclient
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-10-12T16:00:00.000Z"><a href="/2014/10/13/dajngo-episode-3-introduction-to-south-migrations/">2014-10-13</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/10/13/dajngo-episode-3-introduction-to-south-migrations/">Dajngo Episode 3 Introduction to South Migrations</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Introduction to South Migrations</em></p>
+<p>Install SOUTH:</p>
+<pre>
+pip install South
+</pre>
+
+<pre>
+vim settings.py
+</pre>
+In "INSTALLED_APP"
+Add
+<pre>
+'south',
+</pre>
+
+<pre>
+python manage.py syncdb
+</pre>
+Create a new app.
+<pre>
+python manage.py startapp page
+</pre>
+Add 'page' to project.
+<pre>
+vim settings.py
+</pre>
+
+<pre>
+'page',
+</pre>
+In page part, edit models.
+<pre>
+vim page/models.py
+</pre>
+
+<pre>
+from django.db import models
+class Page(models.Model):
+    title=models.CharField(max_length=200)
+    slug=models.SlugField(max_length=200)
+    body=models.TextField()
+</pre>
+
+<pre>
+python manage.py schemamigration page --initial
+</pre>
+
+<pre>
+python manage.py migrate page
+</pre>
+
+<p>Update models.</p>
+<pre>
+vim page/models.py
+</pre>
+
+<pre>
+from datetime import datetime
+
+pub_date=models.DateTimeField(default=datetime.now())
+</pre>
+
+<pre>
+python manage.py schemamigration page --auto
+</pre>
+
+<pre>
+python manage.py migrate page
+</pre>
+
+<p>In another app “post”,</p>
+<pre>
+python manage.py convert_to_south post
+</pre>
+
+<pre>
+vim post/models.py
+</pre>
+
+<pre>
+from datetime import datetime
+pub_date=models.DateTimeField(default=datetime.now())
+</pre>
+
+<pre>
+python manage.py schemamigration post --auto
+</pre>
+
+<pre>
+python manage.py migrate post
+</pre>
+
+<pre>
+python manage.py migrate post 0001 --fake
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-10-12T16:00:00.000Z"><a href="/2014/10/13/create-and-apply-filters-to-lists-of-file-paths-python-recipe/">2014-10-13</a></time>
       
       
@@ -489,110 +679,57 @@ if __name__ == '__main__':
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-10-12T16:00:00.000Z"><a href="/2014/10/13/dajngo-episode-3-introduction-to-south-migrations/">2014-10-13</a></time>
+        <time datetime="2014-10-02T16:00:00.000Z"><a href="/2014/10/03/django-episode-4-deploying-django-to-heroku/">2014-10-03</a></time>
       
       
   
-    <h1 class="title"><a href="/2014/10/13/dajngo-episode-3-introduction-to-south-migrations/">Dajngo Episode 3 Introduction to South Migrations</a></h1>
+    <h1 class="title"><a href="/2014/10/03/django-episode-4-deploying-django-to-heroku/">Django Episode 4 Deploying Django to Heroku</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p><em>Introduction to South Migrations</em></p>
-<p>Install SOUTH:</p>
+        <p><em>Deploying Django to Heroku</em></p>
 <pre>
-pip install South
+ls blog
 </pre>
 
 <pre>
-vim settings.py
-</pre>
-In "INSTALLED_APP"
-Add
-<pre>
-'south',
+vim requirements.txt
 </pre>
 
 <pre>
-python manage.py syncdb
-</pre>
-Create a new app.
-<pre>
-python manage.py startapp page
-</pre>
-Add 'page' to project.
-<pre>
-vim settings.py
+Django &#60;=1.*.*
+South
+psycopg2=2.4.2
 </pre>
 
 <pre>
-'page',
-</pre>
-In page part, edit models.
-<pre>
-vim page/models.py
+pip install -r requirements.txt
 </pre>
 
 <pre>
-from django.db import models
-class Page(models.Model):
-    title=models.CharField(max_length=200)
-    slug=models.SlugField(max_length=200)
-    body=models.TextField()
+gir commit -am "change requirements"
 </pre>
 
 <pre>
-python manage.py schemamigration page --initial
+heroku create --stack cedor
 </pre>
 
 <pre>
-python manage.py migrate page
-</pre>
-
-<p>Update models.</p>
-<pre>
-vim page/models.py
+git push heroku master
 </pre>
 
 <pre>
-from datetime import datetime
-
-pub_date=models.DateTimeField(default=datetime.now())
+heroku run python blog/manage.py syncdb
 </pre>
 
 <pre>
-python manage.py schemamigration page --auto
+heroku run python blog/manage.py migrate
 </pre>
 
 <pre>
-python manage.py migrate page
-</pre>
-
-<p>In another app “post”,</p>
-<pre>
-python manage.py convert_to_south post
-</pre>
-
-<pre>
-vim post/models.py
-</pre>
-
-<pre>
-from datetime import datetime
-pub_date=models.DateTimeField(default=datetime.now())
-</pre>
-
-<pre>
-python manage.py schemamigration post --auto
-</pre>
-
-<pre>
-python manage.py migrate post
-</pre>
-
-<pre>
-python manage.py migrate post 0001 --fake
+heroku open
 </pre>
 
       
@@ -670,80 +807,6 @@ python manage.py runserver
 
 <pre>
 localhose:8000/rss/main
-</pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-10-02T16:00:00.000Z"><a href="/2014/10/03/django-episode-4-deploying-django-to-heroku/">2014-10-03</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/10/03/django-episode-4-deploying-django-to-heroku/">Django Episode 4 Deploying Django to Heroku</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>Deploying Django to Heroku</em></p>
-<pre>
-ls blog
-</pre>
-
-<pre>
-vim requirements.txt
-</pre>
-
-<pre>
-Django &#60;=1.*.*
-South
-psycopg2=2.4.2
-</pre>
-
-<pre>
-pip install -r requirements.txt
-</pre>
-
-<pre>
-gir commit -am "change requirements"
-</pre>
-
-<pre>
-heroku create --stack cedor
-</pre>
-
-<pre>
-git push heroku master
-</pre>
-
-<pre>
-heroku run python blog/manage.py syncdb
-</pre>
-
-<pre>
-heroku run python blog/manage.py migrate
-</pre>
-
-<pre>
-heroku open
 </pre>
 
       
@@ -903,127 +966,6 @@ generate D:\Project\Python\code_gen\MBIM_Service_Phonebook_device.java over. ~ ~
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-09-22T16:00:00.000Z"><a href="/2014/09/23/remote-control-with-telnetlib-python-recipe/">2014-09-23</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/09/23/remote-control-with-telnetlib-python-recipe/">Remote control with telnetlib (Python recipe)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>Remote control with telnetlib (Python recipe)</em></p>
-<pre>
-
-# auto_telnet.py - remote control via telnet
-import os, sys, string, telnetlib
-from getpass import getpass
-
-class AutoTelnet:
-    def __init__(self, user_list, cmd_list, **kw):
-        self.host = kw.get('host', 'localhost')
-        self.timeout = kw.get('timeout', 600)
-        self.command_prompt = kw.get('command_prompt', "$ ")
-        self.passwd = {}
-        for user in user_list:
-            self.passwd[user] = getpass("Enter user '%s' password: " % user)
-        self.telnet = telnetlib.Telnet()
-        for user in user_list:
-            self.telnet.open(self.host)
-            ok = self.action(user, cmd_list)
-            if not ok:
-                print "Unable to process:", user
-            self.telnet.close()
-
-    def action(self, user, cmd_list):
-        t = self.telnet
-        t.write("\n")
-        login_prompt = "login: "
-        response = t.read_until(login_prompt, 5)
-        if string.count(response, login_prompt):
-            print response
-        else:
-            return 0
-        password_prompt = "Password:"
-        t.write("%s\n" % user)
-        response = t.read_until(password_prompt, 3)
-        if string.count(response, password_prompt):
-            print response
-        else:
-            return 0
-        t.write("%s\n" % self.passwd[user])
-        response = t.read_until(self.command_prompt, 5)
-        if not string.count(response, self.command_prompt):
-            return 0
-        for cmd in cmd_list:
-            t.write("%s\n" % cmd)
-            response = t.read_until(self.command_prompt, self.timeout)
-            if not string.count(response, self.command_prompt):
-                return 0
-            print response
-        return 1
-
-if __name__ == '__main__':
-    basename = os.path.splitext(os.path.basename(sys.argv[0]))[0]
-    logname = os.environ.get("LOGNAME", os.environ.get("USERNAME"))
-    host = 'localhost'
-    import getopt
-    optlist, user_list = getopt.getopt(sys.argv[1:], 'c:f:h:')
-    usage = """
-usage: %s [-h host] [-f cmdfile] [-c "command"] user1 user2 ...
-    -c  command
-    -f  command file
-    -h  host  (default: '%s')
-
-Example:  %s -c "echo $HOME" %s
-""" % (basename, host, basename, logname)
-    if len(sys.argv) &#60; 2:
-        print usage
-        sys.exit(1)
-    cmd_list = []
-    for (opt, optarg) in optlist:
-        if opt == '-f':
-            for r in open(optarg).readlines():
-                if string.rstrip(r):
-                    cmd_list.append(r)
-        elif opt == '-c':
-            command = optarg
-            if command[0] == '"' and command[-1] == '"':
-                command = command[1:-1]
-            cmd_list.append(command)
-        elif opt == '-h':
-            host = optarg
-    autoTelnet = AutoTelnet(user_list, cmd_list, host=host)
-
-</pre>
-
-<p>Python’s telnetlib permits users to easily automate access to telnet servers, even from non-Unix machines.</p>
-<p>As an alternative to the popen() functions, telnetlib is probably a handy technique to have in your sysadmin toolbox.</p>
-<p>Production code will generally be more robust, but this example should be enough to get anyone started in the right direction.</p>
-<p>this title is come from <a href="http://code.activestate.com/recipes/52228/" target="_blank" rel="noopener">http://code.activestate.com/recipes/52228/</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1046,7 +988,11 @@ Example:  %s -c "echo $HOME" %s
   
     <li><a href="/categories/VIM/">VIM</a><small>2</small></li>
   
-    <li><a href="/categories/django/">django</a><small>9</small></li>
+    <li><a href="/categories/django/">django</a><small>11</small></li>
+  
+    <li><a href="/categories/freeswitch/">freeswitch</a><small>1</small></li>
+  
+    <li><a href="/categories/go/">go</a><small>1</small></li>
   
     <li><a href="/categories/jekyll/">jekyll</a><small>2</small></li>
   
@@ -1058,9 +1004,9 @@ Example:  %s -c "echo $HOME" %s
   
     <li><a href="/categories/normal/">normal</a><small>1</small></li>
   
-    <li><a href="/categories/other/">other</a><small>2</small></li>
+    <li><a href="/categories/other/">other</a><small>3</small></li>
   
-    <li><a href="/categories/python/">python</a><small>64</small></li>
+    <li><a href="/categories/python/">python</a><small>67</small></li>
   
     <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   
@@ -1090,6 +1036,8 @@ Example:  %s -c "echo $HOME" %s
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   
     <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/other/">other</a><small>1</small></li>
   
     <li><a href="/tags/python/">python</a><small>14</small></li>
   
