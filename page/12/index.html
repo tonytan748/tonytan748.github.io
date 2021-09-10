@@ -54,6 +54,67 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-06-25T16:00:00.000Z"><a href="/2014/06/26/How-to-automatically-run-a-script-when-logging-into-Ubuntu-Desktop/">2014-06-26</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/06/26/How-to-automatically-run-a-script-when-logging-into-Ubuntu-Desktop/">How to automatically run a script when logging into Ubuntu Desktop</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li>There are circumstances where you wish to have a script run automatically when you log in to Ubuntu Desktop. Such a script can configure various user-specific or system-wide settings on your Ubuntu system, upon user’s desktop login.  *</li>
+</ul>
+<p>In Linux, there are start-up scripts named ~/.bash_profile, ~/.bashrc, or ~/.profile which get executed when you start a shell. However, in Ubuntu Desktop, such start-up scripts get executed when you open up a terminal window, but NOT when you log in to Ubuntu Desktop GUI. Also, when you open multiple terminal windows, these kinds of start-up scripts are executed as many times, in order to initialize user’s shell environment in terminal windows.<br>If what you want is to run a script at the time of user’s Ubuntu Desktop login, you can follow this guideline.</p>
+<p>Create a XDG configuration file for the start-up script you want to run.</p>
+<aside><pre>$ vi ~/.config/autostart/my_script.desktop</pre></aside>
+
+<pre>
+[Desktop Entry] 
+Type=Application 
+Name=My Script 
+Exec=~/bin/my_custom_script.sh 
+Icon=system-run 
+X-GNOME-Autostart-enabled=true
+</pre>
+
+<p>The above XDG configuration file will set up “user-specific” auto-start. If you want all users to use the same start-up script “system-wide”, create a similar XDG configuration file in the following location instead.</p>
+<aside><pre>$ sudo vi /etc/xdg/autostart/my_script.desktop</pre></aside>
+
+<pre>
+[Desktop Entry] 
+Type=Application 
+Name=My Script 
+Exec=sudo /sbin/my_custom_script.sh 
+Icon=system-run 
+X-GNOME-Autostart-enabled=true
+</pre>
+
+<p>If the start-up script requires sudo access like an above example, you will need to set up password-less sudo.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-06-23T16:00:00.000Z"><a href="/2014/06/24/Set-Samba-in-Ubuntu/">2014-06-24</a></time>
       
       
@@ -228,7 +289,7 @@ follow symlinks = yes</pre>
   
     <li><a href="/categories/other/">other</a><small>4</small></li>
   
-    <li><a href="/categories/python/">python</a><small>67</small></li>
+    <li><a href="/categories/python/">python</a><small>68</small></li>
   
     <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   
@@ -261,7 +322,7 @@ follow symlinks = yes</pre>
   
     <li><a href="/tags/other/">other</a><small>2</small></li>
   
-    <li><a href="/tags/python/">python</a><small>14</small></li>
+    <li><a href="/tags/python/">python</a><small>15</small></li>
   
     <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   

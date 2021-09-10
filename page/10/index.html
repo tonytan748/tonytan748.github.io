@@ -54,6 +54,60 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-08-09T16:00:00.000Z"><a href="/2014/08/10/python-lambda-reduce/">2014-08-10</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/10/python-lambda-reduce/">Python: lambda reduce</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>how to use lambda and reduce in python</em></p>
+<p>lambda:<br>一句话函数：</p>
+<pre>
+    linuxany=lambda x,y: x+y
+</pre>
+#给ff传两个参数，bda定的x+y
+<pre>
+    print linuxany(2,3)  # print 5
+</pre>
+
+<p>reduce内建函数是一个二来将一个数据集合（链表，元组等）中的所有数据进行下列操作：用传给reduce中的函数func()（必须是一个二元操作函数）先对集合中的第1，2个数据进行操作，得到的结果再与第3个数据用func()函数运算，最后得到一个结果。<br>如：<br>先定义一个二元操作函数</p>
+<pre>
+    def linuxany(x,y):
+        return x+y
+        reduce(linuxany,(1,2,3,4,5))
+</pre>
+
+<p>lambda和reduce结合起来使用：</p>
+<pre>
+    print reduce(lambda x,y:x+y,range(10))
+</pre>
+
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-08-03T16:00:00.000Z"><a href="/2014/08/04/read--open-a-csv-file--randomly-select-an-entry/">2014-08-04</a></time>
       
       
@@ -264,6 +318,56 @@ hduser@ubuntu:/usr/local/hadoop$
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-07-26T16:00:00.000Z"><a href="/2014/07/27/tkinter-canvas-sample/">2014-07-27</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/27/tkinter-canvas-sample/">Tkinter Canvas Sample</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>A sample for tkinter canvas.</em></p>
+<pre>
+import Tkinter
+root = Tkinter.Tk(0
+canvas=Tkinter.Canvas(root,width=600,height=400,bg='white')
+
+canvas.create_text(302,77,text='Use Canvas', fill='gray')
+canvas.create_text(300,75,text='Use Canvas',fill='blue')
+canvas.create_polygon(290,114,316,114,330,130,310,146,284,146,270,130)
+canvas.create_oval(280,120,320,140,fill='white')
+canvas.create_line(250,130,350,130)
+canvas.create_line(300,100,300,160)
+canvas.create_arc(100,200,500,400,start=0,extent=240,fill='pink')
+canvas.create_arc(103,203,500,400,start=241,extent=118,fill='red')
+canvas.pack()
+
+root.mainloop()
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-07-26T16:00:00.000Z"><a href="/2014/07/27/a-sample-game-use-pygame/">2014-07-27</a></time>
       
       
@@ -425,56 +529,6 @@ game.Start()
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-07-26T16:00:00.000Z"><a href="/2014/07/27/tkinter-canvas-sample/">2014-07-27</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/07/27/tkinter-canvas-sample/">Tkinter Canvas Sample</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>A sample for tkinter canvas.</em></p>
-<pre>
-import Tkinter
-root = Tkinter.Tk(0
-canvas=Tkinter.Canvas(root,width=600,height=400,bg='white')
-
-canvas.create_text(302,77,text='Use Canvas', fill='gray')
-canvas.create_text(300,75,text='Use Canvas',fill='blue')
-canvas.create_polygon(290,114,316,114,330,130,310,146,284,146,270,130)
-canvas.create_oval(280,120,320,140,fill='white')
-canvas.create_line(250,130,350,130)
-canvas.create_line(300,100,300,160)
-canvas.create_arc(100,200,500,400,start=0,extent=240,fill='pink')
-canvas.create_arc(103,203,500,400,start=241,extent=118,fill='red')
-canvas.pack()
-
-root.mainloop()
-</pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2014-07-12T16:00:00.000Z"><a href="/2014/07/13/beautifulsoup-basic/">2014-07-13</a></time>
       
       
@@ -578,74 +632,6 @@ links = soup.findAll("a")
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-07-11T16:00:00.000Z"><a href="/2014/07/12/using-telnet-in-python/">2014-07-12</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/07/12/using-telnet-in-python/">Using Telnet in Python</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>To make use of Telnet in Python, we can use the telnetlib module. </em></p>
-<p></p><h3>Using Telnet in Python</h3><br>To make use of Telnet in Python, we can use the telnetlib module. <p></p>
-<p>That module provides a Telnet class that implements the Telnet protocol.</p>
-<p>The Telnet module have several methods, in this example I will make use of these:<br>read_until, read_all() and write()</p>
-<p></p><h3>Telnet Script in Python</h3><br>Let’s make a telnet script<p></p>
-<pre>
-import getpass
-import sys
-import telnetlib
-
-HOST = "hostname"
-
-user = raw_input("Enter your remote account: ")
-
-password = getpass.getpass()
-
-tn = telnetlib.Telnet(HOST)
-
-tn.read_until("login: ")
-
-tn.write(user + "\n")
-
-if password:
-    tn.read_until("Password: ")
-    tn.write(password + "\n")
-
-tn.write("ls\n")
-
-tn.write("exit\n")
-
-print tn.read_all()
-
-</pre>
-
-<p>At ActiveState you can find more Python scripts using the telnetlib,<br>for example <a href="http://code.activestate.com/recipes/52228/" target="_blank" rel="noopener">this</a> script.</p>
-<p>For more information about using the Telnet client in Python, please see the<br><a href="http://docs.python.org/2/library/telnetlib.html" target="_blank" rel="noopener">official documentation</a>. </p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2014-07-11T16:00:00.000Z"><a href="/2014/07/12/remote-control-with-telnetlib-python-recipe/">2014-07-12</a></time>
       
       
@@ -693,6 +679,74 @@ print tn.read_all()
 <p><br>Python’s telnetlib permits users to easily automate access to telnet servers, even from non-Unix machines.</p>
 <p>As an alternative to the popen() functions, telnetlib is probably a handy technique to have in your sysadmin toolbox.</p>
 <p>Production code will generally be more robust, but this example should be enough to get anyone started in the right direction.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-07-11T16:00:00.000Z"><a href="/2014/07/12/using-telnet-in-python/">2014-07-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/12/using-telnet-in-python/">Using Telnet in Python</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>To make use of Telnet in Python, we can use the telnetlib module. </em></p>
+<p></p><h3>Using Telnet in Python</h3><br>To make use of Telnet in Python, we can use the telnetlib module. <p></p>
+<p>That module provides a Telnet class that implements the Telnet protocol.</p>
+<p>The Telnet module have several methods, in this example I will make use of these:<br>read_until, read_all() and write()</p>
+<p></p><h3>Telnet Script in Python</h3><br>Let’s make a telnet script<p></p>
+<pre>
+import getpass
+import sys
+import telnetlib
+
+HOST = "hostname"
+
+user = raw_input("Enter your remote account: ")
+
+password = getpass.getpass()
+
+tn = telnetlib.Telnet(HOST)
+
+tn.read_until("login: ")
+
+tn.write(user + "\n")
+
+if password:
+    tn.read_until("Password: ")
+    tn.write(password + "\n")
+
+tn.write("ls\n")
+
+tn.write("exit\n")
+
+print tn.read_all()
+
+</pre>
+
+<p>At ActiveState you can find more Python scripts using the telnetlib,<br>for example <a href="http://code.activestate.com/recipes/52228/" target="_blank" rel="noopener">this</a> script.</p>
+<p>For more information about using the Telnet client in Python, please see the<br><a href="http://docs.python.org/2/library/telnetlib.html" target="_blank" rel="noopener">official documentation</a>. </p>
 
       
     </div>
@@ -881,135 +935,6 @@ for param in os.environ.keys():
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-07-02T16:00:00.000Z"><a href="/2014/07/03/make-your-life-easier-with-virtualenvwrapper/">2014-07-03</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/07/03/make-your-life-easier-with-virtualenvwrapper/">Make your life easier with Virtualenvwrapper</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>When you do a lot of Python programming, you can make a mess of your system with Pip. Different apps need different requirements. One app needs version 1.2 of a package and another one needs 1.5. And then… you’re in trouble.</em></p>
-<p>When you want to know what packages have been installed by Pip, use this:</p>
-<pre>
-$ pip freeze
-</pre>
-
-<p>The result can be a very long list.</p>
-<p>For every project, whether it’s a simple application or a giant Django project, I create a new virtual environment with virtualenv. An easy way to do this is by using virtualenvwrapper.</p>
-<p></p><h3>Getting started with Virtualenv wrapper</h3><p></p>
-<pre>
-$ sudo pip install virtualenvwrapper
-</pre>
-There are some advanced settings which you can find in the manual.
-
-When installed, let's make a new environment called "testground".
-<pre>
-$ mkvirtualenv testground
-</pre>
-If your virtualenvwrapper is working well, you should see something like this:
-<pre>
-New python executable in testground/bin/python
-Installing Setuptools.........done.
-Installing Pip..............done.
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/predeactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/postdeactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/preactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/postactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/get_env_details
-
-(testground)yourname@yoursystem:~$ 
-</pre>
-
-<p>Take a look at the last line, which now says (testground) before the prompt. Your virtual environment is there, and your are in it.</p>
-<p>Now, do a pip freeze, it can result in something like this:</p>
-<pre>
-$ pip freeze
-argparse==1.2.1
-wsgiref==0.1.2
-</pre>
-
-<p>That list can be a lot shorter than the one outside the environment.</p>
-<p>You can now install something that only effects this environment. Let’s try Pillow, version 2.2.2.</p>
-<pre>
-$ pip install Pillow==2.2.2
-</pre>
-It will now try to install Pillow, when finished, do another pip fip freeze, and see if it's installed
-
-<h3>Switchting between virtualenvs</h3>
-Let's create another environment:
-<pre>
-$ mkvirtualenv coolapp
-</pre>
-once it's finished, it should have been activated automatically:
-<pre>
-...................done.
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/predeactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/postdeactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/preactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/postactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/get_env_details
-(coolapp)yourname@yoursystem:~$ 
-</pre>
-Now, let's switch to fist the virtualenv we made by the magic word "workon":
-<pre>
-$ workon testground
-(testground)yourname@yoursystem:~$ 
-</pre>
-There you go, it's as simpel as that
-
-<h3>No site packages</h3>
-Like with vitualenv, you can tell virtualenvwapper not to use the systems sitepackages with --no-site-packages:
-<pre>
-$ mkvirtualenv anotherenv --no-site-packages
-</pre>
-<h3>Remove a virtual environment</h3>
-It's very easy to get rid of a virtual env by using rmvirtualenv:
-<pre>
-$ rmvirtualenv coolapp
-
-Removing coolapp...
-</pre>
-
-<p></p><h3>List all virtualenvs</h3><p></p>
-<pre>
-$lsvirtualenv
-</pre>
-
-<p></p><h3>List your sitepackages</h3><p></p>
-<pre>
-$ lssitepackages
-
-#can result in this:
-easy_install.py   Pillow-2.2.2-py2.7.egg-info  pkg_resources.pyc
-easy_install.pyc  pip                          setuptools
-_markerlib        pip-1.4.1-py2.7.egg-info     setuptools-0.9.8-py2.7.egg-info
-PIL               pkg_resources.py
-</pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1050,7 +975,7 @@ PIL               pkg_resources.py
   
     <li><a href="/categories/other/">other</a><small>4</small></li>
   
-    <li><a href="/categories/python/">python</a><small>67</small></li>
+    <li><a href="/categories/python/">python</a><small>68</small></li>
   
     <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   
@@ -1083,7 +1008,7 @@ PIL               pkg_resources.py
   
     <li><a href="/tags/other/">other</a><small>2</small></li>
   
-    <li><a href="/tags/python/">python</a><small>14</small></li>
+    <li><a href="/tags/python/">python</a><small>15</small></li>
   
     <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   

@@ -54,6 +54,208 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-08-24T16:00:00.000Z"><a href="/2014/08/25/12-basic-knowledge-in-python/">2014-08-25</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/25/12-basic-knowledge-in-python/">12 Basic Knowledge in Python</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Python编程中常用的12种基础知识总结：正则表达式替换，遍历目录方法，列表按列排序、去重，字典排序，字典、列表、字符串互转，时间对象操作，命令行参数解析(getopt)，print 格式化输出，进制转换，Python调用系统命令或者脚本，Python 读写文件</em></p>
+<h2>1、正则表达式替换</h2>
+
+<p><br><br>目标: 将字符串line中的 overview.gif 替换成其他字符串</p>
+<p><br></p>
+<pre>
+>>> line = '&#60;IMG ALIGN="middle" SRC=\'#\'" /span&#62;
+>>> mo=re.compile(r'(?&#60;=SRC=)"([\w+\.]+)"',re.I)  
+
+>>> mo.sub(r'"\1****"',line)  
+'&#60;IMG ALIGN="middle" SRC=\'#\'" /span&#62;
+
+>>> mo.sub(r'replace_str_\1',line)  
+'&#60;IMG ALIGN="middle" replace_str_overview.gif BORDER="0" ALT=""&#62;'&#60; /span&#62;
+
+>>> mo.sub(r'"testetstset"',line)  
+'&#60;IMG ALIGN="middle" SRC=\'#\'" /span&#62;
+</pre>
+
+<p><br><br>注意: 其中 \1 是匹配到的数据，可以通过这样的方式直接引用<br><br><br><br></p>
+<h2>2、遍历目录方法</h2>
+
+<p><br><br>在某些时候，我们需要遍历某个目录找出特定的文件列表，可以通过os.walk方法来遍历，非常方便<br><br></p>
+<p><pre><br>import os<br>fileList = []<br>rootdir = “/data”<br>for root, subFolders, files in os.walk(rootdir):<br>if ‘.svn’ in subFolders: subFolders.remove(‘.svn’)  # 排除特定目录<br>for file in files:<br>  if file.find(“.t2t”) != -1:# 查找特定扩展名的文件<br>      file_dir_path = os.path.join(root,file)<br>      fileList.append(file_dir_path)  </pre></p>
+<p>print fileList<br><br><br><br><br></p>
+<h2>3、列表按列排序(list sort)</h2>
+
+<p><br><br>如果列表的每个元素都是一个元组(tuple),我们要根据元组的某列来排序的化，可参考如下方法<br><br></p>
+<p>下面例子我们是根据元组的第2列和第3列数据来排序的,而且是倒序(reverse=True)</p>
+<p><br></p>
+<p><pre></pre></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>a = [(‘2011-03-17’, ‘2.26’, 6429600, ‘0.0’), (‘2011-03-16’, ‘2.26’, 12036900, ‘-3.0’),<br> (‘2011-03-15’, ‘2.33’, 15615500,’-19.1’)]<br>print a[0][0]<br>2011-03-17<br>b = sorted(a, key=lambda result: result[1],reverse=True)<br>print b<br>[(‘2011-03-15’, ‘2.33’, 15615500, ‘-19.1’), (‘2011-03-17’, ‘2.26’, 6429600, ‘0.0’),<br>(‘2011-03-16’, ‘2.26’, 12036900, ‘-3.0’)]<br>c = sorted(a, key=lambda result: result[2],reverse=True)<br>print c<br>[(‘2011-03-15’, ‘2.33’, 15615500, ‘-19.1’), (‘2011-03-16’, ‘2.26’, 12036900, ‘-3.0’),<br>(‘2011-03-17’, ‘2.26’, 6429600, ‘0.0’)]<br><br><br><br><br></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2>4、列表去重(list uniq)</h2>
+
+<p><br><br>有时候需要将list中重复的元素删除，就要使用如下方法</p>
+<p><br></p>
+<p><pre></pre></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>lst= [(1,’sss’),(2,’fsdf’),(1,’sss’),(3,’fd’)]<br>set(lst)<br>set([(2, ‘fsdf’), (3, ‘fd’), (1, ‘sss’)])</p>
+<p>lst = [1, 1, 3, 4, 4, 5, 6, 7, 6]<br>set(lst)<br>set([1, 3, 4, 5, 6, 7])<br><br><br><br><br></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2>5、字典排序(dict sort)</h2>
+
+<p><br><br>一般来说，我们都是根据字典的key来进行排序，但是我们如果想根据字典的value值来排序，就使用如下方法</p>
+<p><br></p>
+<p><pre></pre></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from operator import itemgetter<br>aa = &#123;”a”:”1”,”sss”:”2”,”ffdf”:’5’,”ffff2”:’3’&#125;<br>sort_aa = sorted(aa.items(),key=itemgetter(1))<br>sort_aa<br>[(‘a’, ‘1’), (‘sss’, ‘2’), (‘ffff2’, ‘3’), (‘ffdf’, ‘5’)]<br><br><br></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>从上面的运行结果看到，按照字典的value值进行排序的</p>
+<p><br><br><br></p>
+<h2>6、字典,列表,字符串互转</h2>
+
+<p><br><br>以下是生成数据库连接字符串,从字典转换到字符串<br><br></p>
+<p><pre></pre></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>params = &#123;”server”:”mpilgrim”, “database”:”master”, “uid”:”sa”, “pwd”:”secret”&#125;<br>[“%s=%s” % (k, v) for k, v in params.items()]<br>[‘server=mpilgrim’, ‘uid=sa’, ‘database=master’, ‘pwd=secret’]<br>“;”.join([“%s=%s” % (k, v) for k, v in params.items()])<br>‘server=mpilgrim;uid=sa;database=master;pwd=secret’<br><br><br></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>下面的例子 是将字符串转化为字典<br><br></p>
+<p><pre></pre></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>a = ‘server=mpilgrim;uid=sa;database=master;pwd=secret’<br>aa = &#123;&#125;<br>for i in a.split(‘;’):aa[i.split(‘=’,1)[0]] = i.split(‘=’,1)[1]<br>…<br>aa<br>&#123;’pwd’: ‘secret’, ‘database’: ‘master’, ‘uid’: ‘sa’, ‘server’: ‘mpilgrim’&#125;<br><br><br><br><br></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2>7、时间对象操作</h2>
+
+<p><br></p>
+<p><pre><br>将时间对象转换成字符串</pre></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>import datetime<br>datetime.datetime.now().strftime(“%Y-%m-%d %H:%M”)<br>  ‘2011-01-20 14:05’</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>时间大小比较</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>import time<br>t1 = time.strptime(‘2011-01-20 14:05’,”%Y-%m-%d %H:%M”)<br>t2 = time.strptime(‘2011-01-20 16:05’,”%Y-%m-%d %H:%M”)<br>t1 &#62; t2<br>  False<br>t1 &#60; t2<br>  True</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>时间差值计算,计算8小时前的时间</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>datetime.datetime.now().strftime(“%Y-%m-%d %H:%M”)<br>  ‘2011-01-20 15:02’<br>(datetime.datetime.now() - datetime.timedelta(hours=8)).strftime(“%Y-%m-%d %H:%M”)<br>  ‘2011-01-20 07:03’</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>将字符串转换成时间对象</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>endtime=datetime.datetime.strptime(‘20100701’,”%Y%m%d”)<br>type(endtime)<br>  &#60;type ‘datetime.datetime’&#62;<br>print endtime<br>  2010-07-01 00:00:00</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>将从 1970-01-01 00:00:00 UTC 到现在的秒数，格式化输出   </p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>import time<br>a = 1302153828<br>time.strftime(“%Y-%m-%d %H:%M:%S”,time.localtime(a))<br>  ‘2011-04-07 13:23:48’<br><br><br><br><br></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2>8、命令行参数解析(getopt)</h2>
+
+<p><br><br>通常在编写一些日运维脚本时，需要根据不同的条件，输入不同的命令行选项来实现不同的功能 在Python中提供了getopt模块很好的实现了命令行参数的解析,下面距离说明。请看如下程序:</p>
+<p><br></p>
+<p><pre></pre></p>
+<p>#!/usr/bin/env python</p>
+<h1 id="coding-utf-8"><a href="#coding-utf-8" class="headerlink" title="-- coding: utf-8 --"></a>-<em>- coding: utf-8 -</em>-</h1><p>import sys,os,getopt<br>def usage():<br>    print ‘’’<br>    Usage: analyse_stock.py [options…]<br>    Options:<br>    -e : Exchange Name<br>    -c : User-Defined Category Name<br>    -f : Read stock info from file and save to db<br>    -d : delete from db by stock code<br>    -n : stock name<br>    -s : stock code<br>    -h : this help info<br>    test.py -s haha -n “HA Ha”<br>    ‘’’</p>
+<p>try:<br>    opts, args = getopt.getopt(sys.argv[1:],’he:c:f:d:n:s:’)<br>except getopt.GetoptError:<br>    usage()<br>    sys.exit()<br>if len(opts) == 0:<br>    usage()<br>    sys.exit()  </p>
+<p>for opt, arg in opts:<br>    if opt in (‘-h’, ‘–help’):<br>        usage()<br>        sys.exit()<br>    elif opt == ‘-d’:<br>        print “del stock %s” % arg<br>    elif opt == ‘-f’:<br>        print “read file %s” % arg<br>    elif opt == ‘-c’:<br>        print “user-defined %s “ % arg<br>    elif opt == ‘-e’:<br>        print “Exchange Name %s” % arg<br>    elif opt == ‘-s’:<br>        print “Stock code %s” % arg<br>    elif opt == ‘-n’:<br>        print “Stock name %s” % arg  </p>
+<p>sys.exit()<br><br><br><br><br></p>
+<h2>9、print 格式化输出</h2>
+
+<p><br></p>
+<p></p><h4>9.1、格式化输出字符串</h4><br><br><p></p>
+<p><pre><br>截取字符串输出,下面例子将只输出字符串的前3个字母</pre></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>str=”abcdefg”<br>print “%.3s” % str<br>  abc<br>按固定宽度输出，不足使用空格补全,下面例子输出宽度为10<br>str=”abcdefg”<br>print “%10s” % str<br>     abcdefg<br>截取字符串，按照固定宽度输出<br>str=”abcdefg”<br>print “%10.3s” % str<br>         abc<br>浮点类型数据位数保留<br>import fpformat<br>a= 0.0030000000005<br>b=fpformat.fix(a,6)<br>print b<br>  0.003000<br>对浮点数四舍五入,主要使用到round函数<br>from decimal import <em><br>a =”2.26”<br>b =”2.29”<br>c = Decimal(a) - Decimal(b)<br>print c<br>  -0.03<br>c / Decimal(a) </em> 100<br>  Decimal(‘-1.327433628318584070796460177’)<br>Decimal(str(round(c / Decimal(a) * 100, 2)))<br>  Decimal(‘-1.33’)<br><br><br></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p></p><h4>9.2、进制转换</h4><br><br><p></p>
+<p>有些时候需要作不同进制转换，可以参考下面的例子(%x 十六进制,%d 十进制,%o 八进制)</p>
+<p><br></p>
+<p><pre></pre></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>num = 10<br>print “Hex = %x,Dec = %d,Oct = %o” %(num,num,num)<br>  Hex = a,Dec = 10,Oct = 12<br><br><br><br><br></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2>10、Python调用系统命令或者脚本</h2><br><br><br><br><pre><br>使用 os.system() 调用系统命令 , 程序中无法获得到输出和返回值<br>&gt;&gt;&gt; import os<br>&gt;&gt;&gt; os.system(‘ls -l /proc/cpuinfo’)<br>&gt;&gt;&gt; os.system(“ls -l /proc/cpuinfo”)<br>  -r–r–r– 1 root root 0  3月 29 16:53 /proc/cpuinfo<br>  0<br><br>使用 os.popen() 调用系统命令, 程序中可以获得命令输出，但是不能得到执行的返回值<br>&gt;&gt;&gt; out = os.popen(“ls -l /proc/cpuinfo”)<br>&gt;&gt;&gt; print out.read()<br>  -r–r–r– 1 root root 0  3月 29 16:59 /proc/cpuinfo<br><br>使用 commands.getstatusoutput() 调用系统命令, 程序中可以获得命令输出和执行的返回值<br>&gt;&gt;&gt; import commands<br>&gt;&gt;&gt; commands.getstatusoutput(‘ls /bin/ls’)<br>  (0, ‘/bin/ls’)<br></pre><br><br><br><br><br><br><br><h2>11、Python 捕获用户 Ctrl+C ,Ctrl+D 事件</h2>
+
+<p><br><br>有些时候，需要在程序中捕获用户键盘事件，比如ctrl+c退出，这样可以更好的安全退出程序<br><br></p>
+<p><pre><br>try:<br>    do_some_func()<br>except KeyboardInterrupt:<br>    print “User Press Ctrl+C,Exit”<br>except EOFError:<br>    print “User Press Ctrl+D,Exit”<br></pre><br><br><br><br></p>
+<p></p><h2>12、Python 读写文件</h2><br><br><p></p>
+<p><pre><br>一次性读入文件到列表，速度较快，适用文件比较小的情况下<br>track_file = “track_stock.conf”<br>fd = open(track_file)<br>content_list = fd.readlines()<br>fd.close()<br>for line in content_list:<br>    print line  </pre></p>
+<p>逐行读入，速度较慢,适用没有足够内存读取整个文件(文件太大)<br>fd = open(file_path)<br>fd.seek(0)<br>title = fd.readline()<br>keyword = fd.readline()<br>uuid = fd.readline()<br>fd.close()  </p>
+<p>写文件 write 与 writelines 的区别   </p>
+<p>Fd.write(str) : 把str写到文件中，write()并不会在str后加上一个换行符<br>Fd.writelines(content) : 把content的内容全部写到文件中,原样写入，不会在每行后面加上任何东西<br><br><br></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-08-22T16:00:00.000Z"><a href="/2014/08/23/lean-djangos-10-precautions/">2014-08-23</a></time>
       
       
@@ -357,6 +559,66 @@ arg3: 3
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-08-16T16:00:00.000Z"><a href="/2014/08/17/use-frabic-in-update-github/">2014-08-17</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/17/use-frabic-in-update-github/">Use Frabic in update Github</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Fabic is used for automating deployment of your application.</em></p>
+<p>Fabric is used for automating deployment of your application.</p>
+<p>Install:</p>
+<pre>
+    $ pip install fabric
+</pre>
+
+<p>Create the fabfile:</p>
+<pre>
+    $ touch fabfile.py
+</pre>
+
+<p>Then add the following code:</p>
+<pre>
+from fabric.api import local
+
+def deploy():
+    local('git add .')
+    comment=raw_input('please type in commit:')
+    local('git commit -m "%s"' % comment)
+    local('git push origin master')
+</pre>
+
+<p>Run:</p>
+<pre>
+$ fab deploy
+</pre>
+
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-08-16T16:00:00.000Z"><a href="/2014/08/17/django-pageinator-and-photo-upload/">2014-08-17</a></time>
       
       
@@ -509,66 +771,6 @@ else:
 </pre>
 
 <p>Then we upload the photo, update “views.py” to save the img path.</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-08-16T16:00:00.000Z"><a href="/2014/08/17/use-frabic-in-update-github/">2014-08-17</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/08/17/use-frabic-in-update-github/">Use Frabic in update Github</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>Fabic is used for automating deployment of your application.</em></p>
-<p>Fabric is used for automating deployment of your application.</p>
-<p>Install:</p>
-<pre>
-    $ pip install fabric
-</pre>
-
-<p>Create the fabfile:</p>
-<pre>
-    $ touch fabfile.py
-</pre>
-
-<p>Then add the following code:</p>
-<pre>
-from fabric.api import local
-
-def deploy():
-    local('git add .')
-    comment=raw_input('please type in commit:')
-    local('git commit -m "%s"' % comment)
-    local('git push origin master')
-</pre>
-
-<p>Run:</p>
-<pre>
-$ fab deploy
-</pre>
-
 
       
     </div>
@@ -799,127 +1001,6 @@ $ git config credential.helper cache
 <p><a href="http://www.oschina.net/translate/10-useful-advanced-git-commands" target="_blank" rel="noopener">10 个很有用的高级 Git 命令</a></p>
 <p><a href="http://yuxu9710108.blog.163.com/blog/static/237515342011910113822476/" target="_blank" rel="noopener">git修改历史提交  </a></p>
 <p>说明：Git for Windows 从 1.7.9 版本开始支持使用中文文件、文件夹名称了，结束了跨平台中文乱码的问题。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-08-11T16:00:00.000Z"><a href="/2014/08/12/what-are-useful-online-tools-for-linux/">2014-08-12</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/08/12/what-are-useful-online-tools-for-linux/">What are useful online tools for Linux</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>As you know, GNU Linux is much more than just an OS. There is literally a whole sphere on the Internet dedicated to the penguin OS.</em></p>
-<p>As you know, GNU Linux is much more than just an OS. There is literally a whole sphere on the Internet dedicated to the penguin OS. If you read this post, you are probably inclined towards reading about Linux online. Among all the pages that you can find on the subject, there are a couple of websites that every Linux adventurer should have in his bookmarks. These websites are more than just tutorials or reviews. They are real tools that you can access from anywhere and share with everyone. So today I shall propose you a non-exhaustive list of sixteen websites that should be in your bookmarks. Some of them can also be useful for Windows or Mac users: that’s the extent of their reach.</p>
-<h3>1. <a href="ExplainShell.com">ExplainShell.com</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3841/14517716647_3b6a1a564d_z.jpg"></p>
-<p>If you are interested in Linux command line, you should use this website. If you are not interested in Linux command line, you should use it even more as it will explain in detail how a command works. This could prevent you from launching a command detrimental to your computer, and is a good way to learn with a great interface.</p>
-<h3>2. <a href="BashrcGenerator.com">BashrcGenerator.com</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3900/14703872782_033e5acdb8_z.jpg"></p>
-<p>If you want to begin with Linux command line, or if you want to quickly get a customized shell prompt but not sure how, this website will generate for you PS1 prompt code to place your .bashrc file in your home directory. You can drag and drop the elements that you would like to see in your prompt, like your username and the current time, and the website will write the code for you. It’s easy and very readable. Definitely a must for the lazy.</p>
-<h3>3. <a href="Vim-adventures.com">Vim-adventures.com</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3838/14681149696_0c533fd6de_z.jpg"></p>
-<p>I only recently discovered this website, but it already sucked in many hours of my life. In short: a RPG game with Vim commands. Move your character in the isometric levels with the ‘h,j,k,l’ keys, gain new commands/abilities, collect keys, and learn how to use Vim proficiently very quickly.</p>
-<h3>4. <a href="Try.Github.com">Try Github</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3874/14517499739_0452848d68_z.jpg"></p>
-<p>The pitch is simple: learn Git in 15 minutes. This website simulates a console, and walks you though the steps of collaborative editing. The interface is very stylish and the intention is worthy. The only downside is for the Git allergic. But it is definitely a good skill to have, and a good place to learn it.</p>
-<h3>5. <a href="Shortcutfoo.com">Shortcutfoo.com</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3906/14517499799_f142ea37cb_z.jpg"></p>
-<p>Another shortcut database, shortcutfoo is a bit more standard in its way to present its content to the user, but definitely more straight-forward than funny mini-games. The shortcuts of several programs are available and grouped by categories. As it might not be super complete for software like Vim, which is completely reliant on shortcuts, it is perfect for giving a quick tip or a general overview.</p>
-<h3>6. <a href="#">GitHub Free Programming Books</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3867/14517499989_408a28d8be_z.jpg"></p>
-<p>As you might guess from the URL, this is a collection of free online books about programming, written collaboratively using Git. The content is awesome and the authors deserve to be praised for such work. It might not be the easiest read at first, but it is one of the most instructive for sure. We can only hope that the movement will keep growing.</p>
-
-
-<h3>7. <a href="Collabedit.com">Collabedit.com</a></h3>
-
-<p><img src="https://farm3.staticflickr.com/2940/14681150086_2d169d67f9_z.jpg"></p>
-<p>If you ever plan on giving a phone interview, you should check out collabedit beforehand. It allows you to create a document, select the programming language that you want to write in, and then share that document via the URL. The people opening the link will be able to freely interact in real time with the text, allowing you to judge their programming skills or just exchange snippets. It even comes with the proper syntax highlighting and a chat widget. In other words, it is the instant-Google Document of programmers.</p>
-
-
-<h3>8. <a href="Cpp.sh">Cpp.sh</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3840/14700981001_af3ac40b65_z.jpg"></p>
-<p>This is one of those websites that extend beyond just Linux, but it is so useful that it deserves its place here. In short, an online development environment for C++. Just write your code in your navigator and run it. As a bonus, you get an auto-indentation feature, Ctrl+Z, and the possibility to share the URL with your buddy. This is just one of those crazy things that you can do from a simple browser.</p>
-
-
-<h3>9. <a href="Copy.sh">Copy.sh</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3883/14517479870_da521931eb_z.jpg"></p>
-<p>In continuation with crazy things that you can do from your browser, copy.sh lets you run a virtual machine online. Just that. It gained fame relatively recently, but the idea is just insane. From the navigator you can select among the defaults virtual images to run, or upload your own iso file. The code for that feat has been shared on GitHub. Just amazing.</p>
-
-
-<h3>10. <a href="Commandlinefu.com">Commandlinefu.com</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3887/14517495938_ca3b831ca9_z.jpg"></p>
-<p>We all keep a big snippet of command-line “gems” on our computer. commandlinefu’s goal is to release those snippets to the world. As a collaborative database, it resembles the Wikipedia of the command line. Everyone is free to register and post their favorite command on the website for everyone else to see. You will then be able to access that knowledge from everywhere and share it with everyone. If you are interested in mastering the shell, commandlinefu also proposes great features like random commands and a news feed to learn something new every day.</p>
-
-
-<h3>11. <a href="Alias.sh">Alias.sh</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3868/14701762124_a7b3547aca_z.jpg"></p>
-<p>Another collaborative database, alias.sh (I love the URL) is a bit like commandlinefu but for shell aliases. You can share and discover useful aliases which will make your CLI experience so much better. I personally like the alias to get the dimensions of a picture.  </p><br><pre><br>1 function dim(){ sips $1 -g pixelWidth -g pixelHeight }<br></pre><br><p>All the seconds you save with alias.sh probably accumulate with time, and turn to years by the end of your life.</p>
-
-
-<h3>12. <a href="Distrowatch.com">Distrowatch.com</a></h3>
-
-<p><img src="https://farm3.staticflickr.com/2910/14681149996_50a45bff78_z.jpg"></p>
-<p>Who does not know Distrowatch? Besides giving a precise ranking of Linux distributions based on their website popularity, Distrowatch is also a very useful database. Whether you are looking for a new distribution to try, or just curious, it presents an exhaustive account of every Linux you can find, with information like which default desktop environment it uses, or package system, or its default applications. And all the versions, and with easily accessible download links. In a word, the Linux database.</p>
-
-
-<h3>13. <a href="Linuxmanpages.com">Linuxmanpages.com</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3911/14704165765_8e30cb3d3f_z.jpg"></p>
-<p>Everything is in the URL: access the manual pages for popular commands from anywhere. Not really sure if this would actually be useful for Linux users as you can access that from your actual terminal, but the intent is remarkable.</p>
-
-
-<h3>14. <a href="AwesomeCow.com">AwesomeCow.com</a></h3>
-
-<p><img src="https://farm6.staticflickr.com/5558/14704165965_02b10ee293_z.jpg"></p>
-<p>This is maybe a bit less hardcore Linux, but definitely useful to some. Awesomecow is a search engine for finding alternatives to Windows software on Linux. It can be helpful for anyone migrating to the penguin, or nostalgic of a Windows program. I see this as a strength, showing that Linux can compete with the professional spheres when it comes sot software quality. Or at least try to.</p>
-
-
-<h3>15. <a href="PenguSpy.com">PenguSpy.com</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3904/14517495728_f6877e8e3b_z.jpg"></p>
-<p>Before Steam started to show up on Linux, gaming was probably one of the penguin’s weakness. But the website penguspy made the effort of fighting that weakness by collecting all Linux compatible games in a database with a sexy interface. Games can be sorted by categories, release dates, ratings, etc. I really hope that websites like this are not going to disappear because of Steam as it remains one of my favorites of this list.</p>
-
-
-<h3>16. <a href="http://lxr.free-electrons.com/" target="_blank" rel="noopener">Linux Cross Reference by Free Electrons</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3913/14712049464_6b666e2cfa_z.jpg"></p>
-<p>Finally, for all the experts and the curious, lxr is the anagram from Linux Cross Reference, and allows us to interactively view the Linux Kernel code online. The navigation is made easy via identifiers, and you can compare the different versions of the files with a standard diff markup. The interface is sober and straight-forward, and this is just a website that perfectly illustrates the concept of open source.</p>
-
-<p>To conclude, there are a lot more websites which deserve to be listed, and this might be a topic for a part two to this post. But this is a good start. It serves as an appetizer to what can be found online as tools for Linux users. If you have any other pages that you would like to share, following this thematic, do so in the comments. And maybe contribute to a sequel to this list.</p>
-
 
       
     </div>
@@ -1194,37 +1275,104 @@ writeable = yes
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-08-09T16:00:00.000Z"><a href="/2014/08/10/python-lambda-reduce/">2014-08-10</a></time>
+        <time datetime="2014-08-11T16:00:00.000Z"><a href="/2014/08/12/what-are-useful-online-tools-for-linux/">2014-08-12</a></time>
       
       
   
-    <h1 class="title"><a href="/2014/08/10/python-lambda-reduce/">Python: lambda reduce</a></h1>
+    <h1 class="title"><a href="/2014/08/12/what-are-useful-online-tools-for-linux/">What are useful online tools for Linux</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p><em>how to use lambda and reduce in python</em></p>
-<p>lambda:<br>一句话函数：</p>
-<pre>
-    linuxany=lambda x,y: x+y
-</pre>
-#给ff传两个参数，bda定的x+y
-<pre>
-    print linuxany(2,3)  # print 5
-</pre>
+        <p><em>As you know, GNU Linux is much more than just an OS. There is literally a whole sphere on the Internet dedicated to the penguin OS.</em></p>
+<p>As you know, GNU Linux is much more than just an OS. There is literally a whole sphere on the Internet dedicated to the penguin OS. If you read this post, you are probably inclined towards reading about Linux online. Among all the pages that you can find on the subject, there are a couple of websites that every Linux adventurer should have in his bookmarks. These websites are more than just tutorials or reviews. They are real tools that you can access from anywhere and share with everyone. So today I shall propose you a non-exhaustive list of sixteen websites that should be in your bookmarks. Some of them can also be useful for Windows or Mac users: that’s the extent of their reach.</p>
+<h3>1. <a href="ExplainShell.com">ExplainShell.com</a></h3>
 
-<p>reduce内建函数是一个二来将一个数据集合（链表，元组等）中的所有数据进行下列操作：用传给reduce中的函数func()（必须是一个二元操作函数）先对集合中的第1，2个数据进行操作，得到的结果再与第3个数据用func()函数运算，最后得到一个结果。<br>如：<br>先定义一个二元操作函数</p>
-<pre>
-    def linuxany(x,y):
-        return x+y
-        reduce(linuxany,(1,2,3,4,5))
-</pre>
+<p><img src="https://farm4.staticflickr.com/3841/14517716647_3b6a1a564d_z.jpg"></p>
+<p>If you are interested in Linux command line, you should use this website. If you are not interested in Linux command line, you should use it even more as it will explain in detail how a command works. This could prevent you from launching a command detrimental to your computer, and is a good way to learn with a great interface.</p>
+<h3>2. <a href="BashrcGenerator.com">BashrcGenerator.com</a></h3>
 
-<p>lambda和reduce结合起来使用：</p>
-<pre>
-    print reduce(lambda x,y:x+y,range(10))
-</pre>
+<p><img src="https://farm4.staticflickr.com/3900/14703872782_033e5acdb8_z.jpg"></p>
+<p>If you want to begin with Linux command line, or if you want to quickly get a customized shell prompt but not sure how, this website will generate for you PS1 prompt code to place your .bashrc file in your home directory. You can drag and drop the elements that you would like to see in your prompt, like your username and the current time, and the website will write the code for you. It’s easy and very readable. Definitely a must for the lazy.</p>
+<h3>3. <a href="Vim-adventures.com">Vim-adventures.com</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3838/14681149696_0c533fd6de_z.jpg"></p>
+<p>I only recently discovered this website, but it already sucked in many hours of my life. In short: a RPG game with Vim commands. Move your character in the isometric levels with the ‘h,j,k,l’ keys, gain new commands/abilities, collect keys, and learn how to use Vim proficiently very quickly.</p>
+<h3>4. <a href="Try.Github.com">Try Github</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3874/14517499739_0452848d68_z.jpg"></p>
+<p>The pitch is simple: learn Git in 15 minutes. This website simulates a console, and walks you though the steps of collaborative editing. The interface is very stylish and the intention is worthy. The only downside is for the Git allergic. But it is definitely a good skill to have, and a good place to learn it.</p>
+<h3>5. <a href="Shortcutfoo.com">Shortcutfoo.com</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3906/14517499799_f142ea37cb_z.jpg"></p>
+<p>Another shortcut database, shortcutfoo is a bit more standard in its way to present its content to the user, but definitely more straight-forward than funny mini-games. The shortcuts of several programs are available and grouped by categories. As it might not be super complete for software like Vim, which is completely reliant on shortcuts, it is perfect for giving a quick tip or a general overview.</p>
+<h3>6. <a href="#">GitHub Free Programming Books</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3867/14517499989_408a28d8be_z.jpg"></p>
+<p>As you might guess from the URL, this is a collection of free online books about programming, written collaboratively using Git. The content is awesome and the authors deserve to be praised for such work. It might not be the easiest read at first, but it is one of the most instructive for sure. We can only hope that the movement will keep growing.</p>
+
+
+<h3>7. <a href="Collabedit.com">Collabedit.com</a></h3>
+
+<p><img src="https://farm3.staticflickr.com/2940/14681150086_2d169d67f9_z.jpg"></p>
+<p>If you ever plan on giving a phone interview, you should check out collabedit beforehand. It allows you to create a document, select the programming language that you want to write in, and then share that document via the URL. The people opening the link will be able to freely interact in real time with the text, allowing you to judge their programming skills or just exchange snippets. It even comes with the proper syntax highlighting and a chat widget. In other words, it is the instant-Google Document of programmers.</p>
+
+
+<h3>8. <a href="Cpp.sh">Cpp.sh</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3840/14700981001_af3ac40b65_z.jpg"></p>
+<p>This is one of those websites that extend beyond just Linux, but it is so useful that it deserves its place here. In short, an online development environment for C++. Just write your code in your navigator and run it. As a bonus, you get an auto-indentation feature, Ctrl+Z, and the possibility to share the URL with your buddy. This is just one of those crazy things that you can do from a simple browser.</p>
+
+
+<h3>9. <a href="Copy.sh">Copy.sh</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3883/14517479870_da521931eb_z.jpg"></p>
+<p>In continuation with crazy things that you can do from your browser, copy.sh lets you run a virtual machine online. Just that. It gained fame relatively recently, but the idea is just insane. From the navigator you can select among the defaults virtual images to run, or upload your own iso file. The code for that feat has been shared on GitHub. Just amazing.</p>
+
+
+<h3>10. <a href="Commandlinefu.com">Commandlinefu.com</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3887/14517495938_ca3b831ca9_z.jpg"></p>
+<p>We all keep a big snippet of command-line “gems” on our computer. commandlinefu’s goal is to release those snippets to the world. As a collaborative database, it resembles the Wikipedia of the command line. Everyone is free to register and post their favorite command on the website for everyone else to see. You will then be able to access that knowledge from everywhere and share it with everyone. If you are interested in mastering the shell, commandlinefu also proposes great features like random commands and a news feed to learn something new every day.</p>
+
+
+<h3>11. <a href="Alias.sh">Alias.sh</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3868/14701762124_a7b3547aca_z.jpg"></p>
+<p>Another collaborative database, alias.sh (I love the URL) is a bit like commandlinefu but for shell aliases. You can share and discover useful aliases which will make your CLI experience so much better. I personally like the alias to get the dimensions of a picture.  </p><br><pre><br>1 function dim(){ sips $1 -g pixelWidth -g pixelHeight }<br></pre><br><p>All the seconds you save with alias.sh probably accumulate with time, and turn to years by the end of your life.</p>
+
+
+<h3>12. <a href="Distrowatch.com">Distrowatch.com</a></h3>
+
+<p><img src="https://farm3.staticflickr.com/2910/14681149996_50a45bff78_z.jpg"></p>
+<p>Who does not know Distrowatch? Besides giving a precise ranking of Linux distributions based on their website popularity, Distrowatch is also a very useful database. Whether you are looking for a new distribution to try, or just curious, it presents an exhaustive account of every Linux you can find, with information like which default desktop environment it uses, or package system, or its default applications. And all the versions, and with easily accessible download links. In a word, the Linux database.</p>
+
+
+<h3>13. <a href="Linuxmanpages.com">Linuxmanpages.com</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3911/14704165765_8e30cb3d3f_z.jpg"></p>
+<p>Everything is in the URL: access the manual pages for popular commands from anywhere. Not really sure if this would actually be useful for Linux users as you can access that from your actual terminal, but the intent is remarkable.</p>
+
+
+<h3>14. <a href="AwesomeCow.com">AwesomeCow.com</a></h3>
+
+<p><img src="https://farm6.staticflickr.com/5558/14704165965_02b10ee293_z.jpg"></p>
+<p>This is maybe a bit less hardcore Linux, but definitely useful to some. Awesomecow is a search engine for finding alternatives to Windows software on Linux. It can be helpful for anyone migrating to the penguin, or nostalgic of a Windows program. I see this as a strength, showing that Linux can compete with the professional spheres when it comes sot software quality. Or at least try to.</p>
+
+
+<h3>15. <a href="PenguSpy.com">PenguSpy.com</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3904/14517495728_f6877e8e3b_z.jpg"></p>
+<p>Before Steam started to show up on Linux, gaming was probably one of the penguin’s weakness. But the website penguspy made the effort of fighting that weakness by collecting all Linux compatible games in a database with a sexy interface. Games can be sorted by categories, release dates, ratings, etc. I really hope that websites like this are not going to disappear because of Steam as it remains one of my favorites of this list.</p>
+
+
+<h3>16. <a href="http://lxr.free-electrons.com/" target="_blank" rel="noopener">Linux Cross Reference by Free Electrons</a></h3>
+
+<p><img src="https://farm4.staticflickr.com/3913/14712049464_6b666e2cfa_z.jpg"></p>
+<p>Finally, for all the experts and the curious, lxr is the anagram from Linux Cross Reference, and allows us to interactively view the Linux Kernel code online. The navigation is made easy via identifiers, and you can compare the different versions of the files with a standard diff markup. The interface is sober and straight-forward, and this is just a website that perfectly illustrates the concept of open source.</p>
+
+<p>To conclude, there are a lot more websites which deserve to be listed, and this might be a topic for a part two to this post. But this is a good start. It serves as an appetizer to what can be found online as tools for Linux users. If you have any other pages that you would like to share, following this thematic, do so in the comments. And maybe contribute to a sequel to this list.</p>
 
 
       
@@ -1377,7 +1525,7 @@ if __name__=="__main__":
   
     <li><a href="/categories/other/">other</a><small>4</small></li>
   
-    <li><a href="/categories/python/">python</a><small>67</small></li>
+    <li><a href="/categories/python/">python</a><small>68</small></li>
   
     <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   
@@ -1410,7 +1558,7 @@ if __name__=="__main__":
   
     <li><a href="/tags/other/">other</a><small>2</small></li>
   
-    <li><a href="/tags/python/">python</a><small>14</small></li>
+    <li><a href="/tags/python/">python</a><small>15</small></li>
   
     <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   

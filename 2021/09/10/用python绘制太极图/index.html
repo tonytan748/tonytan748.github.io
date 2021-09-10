@@ -3,7 +3,7 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>Python字符串替换的2种方法 | Tony Tan</title>
+  <title>用python绘制太极图 | Tony Tan</title>
   <meta name="author" content="Tony Tan">
   
   <meta name="description" content="Tony Tan">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="Python字符串替换的2种方法">
+  <meta property="og:title" content="用python绘制太极图">
   <meta property="og:site_name" content="Tony Tan">
 
   
@@ -53,23 +53,19 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-10-18T16:00:00.000Z"><a href="/2014/10/19/Python字符串替换的2种方法/">2014-10-19</a></time>
+        <time datetime="2021-09-10T03:13:18.000Z"><a href="/2021/09/10/用python绘制太极图/">2021-09-10</a></time>
       
       
   
-    <h1 class="title">Python字符串替换的2种方法</h1>
+    <h1 class="title">用python绘制太极图</h1>
   
 
     </header>
     <div class="entry">
       
-        <p><em>Two ways replace character in Python</em></p>
-<p>python 字符串替换 是python 操作字符串的时候经常会碰到的问题，这里简单介绍下字符串替换方法。<br>python 字符串替换可以用2种方法实现:<br>1是用字符串本身的方法。<br>2用正则来替换字符串</p>
-<p>下面用个例子来实验下：<br>a = ‘hello word’<br>把a字符串里的word替换为python</p>
-<p>1用字符串本身的replace方法</p>
-<p><pre><br>a.replace(‘word’,’python’)<br></pre><br>输出的结果是hello python</p>
-<p>2用正则表达式来完成替换:</p>
-<p><pre><br>import re<br>strinfo = re.compile(‘word’)<br>b = strinfo.sub(‘python’,a)<br>print b<br></pre><br>输出的结果也是hello python</p>
+        <p>不多说，直接上代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">import turtle as t</span><br><span class="line"></span><br><span class="line">t.setup(800, 800, 0, 0)</span><br><span class="line">t.pensize(1.5)</span><br><span class="line">t.pu()</span><br><span class="line">t.goto(0,-300)</span><br><span class="line">t.pd()</span><br><span class="line"></span><br><span class="line">t.fillcolor(&quot;black&quot;)</span><br><span class="line">t.begin_fill()</span><br><span class="line">t.circle(300, -180)</span><br><span class="line">t.circle(150, -180)</span><br><span class="line">t.circle(150, -180)</span><br><span class="line">t.end_fill()</span><br><span class="line"></span><br><span class="line">t.circle(-300, -180)</span><br><span class="line"></span><br><span class="line">t.fillcolor(&quot;white&quot;)</span><br><span class="line">t.begin_fill()</span><br><span class="line">t.pu()</span><br><span class="line">t.goto(0, 120)</span><br><span class="line">t.pd()</span><br><span class="line">t.circle(37.5)</span><br><span class="line">t.end_fill()</span><br><span class="line"></span><br><span class="line">t.fillcolor(&quot;black&quot;)</span><br><span class="line">t.begin_fill()</span><br><span class="line">t.pu()</span><br><span class="line">t.goto(0, -120)</span><br><span class="line">t.pd()</span><br><span class="line">t.circle(-37.5)</span><br><span class="line">t.end_fill()</span><br></pre></td></tr></table></figure>
+<p>主要是运用turtle插件，研究下，自己结婚的时候不会被难住了。</p>
 
       
     </div>
@@ -82,6 +78,11 @@
   </div>
 
         
+  
+  <div class="tags">
+    <a href="/tags/python/">python</a>
+  </div>
+
         
   <div class="addthis addthis_toolbox addthis_default_style">
     
@@ -122,7 +123,7 @@
   }(document, 'script', 'facebook-jssdk'));
 </script>
 
-<div class="fb-comments" data-href="http://deenter.com/2014/10/19/Python字符串替换的2种方法/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+<div class="fb-comments" data-href="http://deenter.com/2021/09/10/用python绘制太极图/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
       
   
 </section>
