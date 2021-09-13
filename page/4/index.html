@@ -54,6 +54,39 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2017-03-19T14:26:01.000Z"><a href="/2017/03/19/Creating-a-multiprocessing-Downloader-App/">2017-03-19</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/03/19/Creating-a-multiprocessing-Downloader-App/">Creating a multiprocessing Downloader App</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">import multiprocessing</span><br><span class="line">import os</span><br><span class="line">import requests</span><br><span class="line"></span><br><span class="line">class MultiProcDownloader(object):</span><br><span class="line">    def __init__(self, urls):</span><br><span class="line">        self.urls = urls</span><br><span class="line"></span><br><span class="line">    def run(self):</span><br><span class="line">        jobs = []</span><br><span class="line">        for url in self.urls:</span><br><span class="line">            process = multiprocessing.Process(target=self.worker, args=(url,))</span><br><span class="line">            jobs.append(process)</span><br><span class="line">            process.start()</span><br><span class="line">        for job in jobs:</span><br><span class="line">            job.join()</span><br><span class="line"></span><br><span class="line">    def worker(self, url):</span><br><span class="line">        fname = os.path.basename(url)</span><br><span class="line">        msg = &apos;Starting download of %s&apos;%fname</span><br><span class="line">        print(msg, multiprocessing.current_process().name)</span><br><span class="line">        r = requests.get(url)</span><br><span class="line">        with open(fname, &apos;wb&apos;) as f:</span><br><span class="line">            f.write(r.content)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">    urls = [&quot;http://www.irs.gov/pub/irs-pdf/f1040.pdf&quot;,</span><br><span class="line">            &quot;http://www.irs.gov/pub/irs-pdf/f1040a.pdf&quot;,</span><br><span class="line">            &quot;http://www.irs.gov/pub/irs-pdf/f1040ez.pdf&quot;,</span><br><span class="line">            &quot;http://www.irs.gov/pub/irs-pdf/f1040es.pdf&quot;,</span><br><span class="line">            &quot;http://www.irs.gov/pub/irs-pdf/f1040sb.pdf&quot;]</span><br><span class="line">    downloader = MultiProcDownloader(urls)</span><br><span class="line">    downloader.run()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2017-03-17T18:31:45.000Z"><a href="/2017/03/18/Python-201-A-multiprocessing-tutorial/">2017-03-18</a></time>
       
       
@@ -843,79 +876,6 @@ Shhh this is top secret spy stuff!
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-06-25T16:00:00.000Z"><a href="/2016/06/26/prtfect-single-code-for-python/">2016-06-26</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/06/26/prtfect-single-code-for-python/">Prtfect Single Code for Python</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>some coding for python which one line to finish a common</em></p>
-<ul>
-<li>Product 2 for every element in list</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print map(lambda x:x*2, range(1,11))</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Sum of all elements in list</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print sum(range(1,1001))</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Check if there are some world in a string</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wordlist = [&quot;scala&quot;, &quot;akka&quot;, &quot;play framework&quot;, &quot;sbt&quot;, &quot;typesafe&quot;]</span><br><span class="line">tweet = &quot;This is an example tweet talking about scala and sbt.&quot;</span><br><span class="line"></span><br><span class="line">print map(lambda x: x in tweet.split(), wordlist)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Read file</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print open(&apos;ten_one_lines.py&apos;).readlines()</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Happy Birthday</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print map(lambda x: &quot;Happy Birthday to &quot; + (&quot;you&quot; if x!=2 else &quot;dear Name&quot;), range(4))</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Filter nums in list</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print reduce(lambda (a,b),c: (a+[c],b) if c &gt; 60 else (a,b+[c]), [49, 58, 76, 82, 88. 90], ([], []))</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Obtin XML web service data and analysis</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from xml.dom.minidom import parse, parseString</span><br><span class="line">import urllib2</span><br><span class="line"></span><br><span class="line">print parse(urllib2.urlopen(&apos;http://search.twitter.com/..&apos;)).toprettyxml(encoding=&quot;utf-8&quot;)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Find the max and min data in list</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print min([14,35,-1,46,38])</span><br><span class="line">print max([14,35,-1,46,38])</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Milti processing</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import multiprocessing</span><br><span class="line">import math</span><br><span class="line"></span><br><span class="line">print list(mulriprocessing.Pool(pricesses=4).map(math.exp, range(1, 11)))</span><br></pre></td></tr></table></figure>
-<ul>
-<li>“Sieve of Eratosthenes” algorithm</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">n = 50</span><br><span class="line">print sorted(set(range(2, n+1)).difference(set((p * f) for p in range(2, int(n**0.5) + 2) for f in range(2, (n/p)+1))))</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -938,7 +898,7 @@ Shhh this is top secret spy stuff!
   
     <li><a href="/categories/VIM/">VIM</a><small>2</small></li>
   
-    <li><a href="/categories/django/">django</a><small>11</small></li>
+    <li><a href="/categories/django/">django</a><small>12</small></li>
   
     <li><a href="/categories/freeswitch/">freeswitch</a><small>1</small></li>
   
@@ -973,7 +933,7 @@ Shhh this is top secret spy stuff!
   <h3 class="title">Tags</h3>
   <ul class="entry">
   
-    <li><a href="/tags/django/">django</a><small>5</small></li>
+    <li><a href="/tags/django/">django</a><small>6</small></li>
   
     <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
   

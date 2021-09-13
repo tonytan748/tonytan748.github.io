@@ -128,6 +128,83 @@ heroku open
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-10-02T16:00:00.000Z"><a href="/2014/10/03/django-episode-5-rss-with-the-syndication-framework/">2014-10-03</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/10/03/django-episode-5-rss-with-the-syndication-framework/">Django Episode 5 RSS With the Syndication Framework</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>RSS With the Syndication Framework</em></p>
+<p>Create feed.py</p>
+<pre>
+vim post/feed.py
+</pre>
+
+<pre>
+from django.contrib.syndication.views import Feed
+from post.models import *
+
+class LastestPostFeed(Feed):
+    title="my blog"
+    link="http://www.xxxxx.com"
+    description="my blog about something"
+
+    def items(self):
+        return Post.objects.all().order_by('-id')[:10]
+
+    def item_title(self,item):
+        return item.title
+
+    def item_description(self,item):
+        return item.body
+
+    def item_link(self,item):
+        return 'http://example.com/%s' % item.slug
+</pre>
+
+<pre>
+vim urls.py
+</pre>
+
+<pre>
+from post.feeds import LastestPostFeed
+
+url(r'^rss/mian',LastestPostFeed()),
+</pre>
+
+<pre>
+python manage.py runserver
+</pre>
+
+<pre>
+localhose:8000/rss/main
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-09-22T16:00:00.000Z"><a href="/2014/09/23/how-to-use-pyhton-to-generate-source-file-of-2-ways/">2014-09-23</a></time>
       
       
@@ -947,54 +1024,6 @@ echo 550 > /sys/class/backlight/intel_backlight/brightness
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-08-25T16:00:00.000Z"><a href="/2014/08/26/how-to-use-python-yield/">2014-08-26</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/08/26/how-to-use-python-yield/">How To Use Python yield</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>a sample example to understand and use yield</em></p>
-<p></p><h2>yield 用法说明</h2><br><br><p></p>
-<p>yield 简单来说就是一个<b>生成器</b>,<b>生成器</b>是这样一个函数，它记住上一次返回时在函数体中的位置。对生成器函数的第二次(n次)调用跳转至该函数中间，而上次调用的所有局部变量都保持不变。</p>
-<p><br></p>
-<ul><br>    <li>生成器是一个函数，函数的所有参数都会保留</li><br>    <li>第二次调用此函数时使用的参数是前一次保留下的</li><br>    <li>生成器还记住了它在流控制构造</li><br></ul>
-
-
-<p></p><h2>yield 运行机制</h2><br><br><p></p>
-<p>当生成器要一个数时，生成器会执行，直至出现yield语句，生成器返回yield参数，之后生成器停止继续执行。<br>当需要下一个数时，生成器从上次的状态开始执行，直至出现yield语句，返回参数，停止。如此反复。<br><br></p>
-<p></p><h2>例子：</h2><br><br><p></p>
-<p><pre></pre></p>
-<p>#生成全排列<br>def perm(items,n=None):<br>    if n is None:<br>        n=len(items)<br>    for i in range(len(items)):<br>        v=items[i:i+1]<br>        if n ==1:<br>            yield v<br>        else:<br>            rest=items[:i] + items[i+1]<br>            for p in perm(rest,n-1):<br>                yield v + p</p>
-<p>#生成组合<br>def comb(items,n=None):<br>    if n is None:<br>        n=len(items)<br>    for i in range(len(items)):<br>        v=items[i:i+1]<br>        if n==1:<br>            yield v<br>        else:<br>            rest=items[i+1:]<br>            for c in comb(rest,n-1):<br>                yield v+c</p>
-<p>a=perm(‘abc’)<br>for b in a:<br>    print b<br>    break<br>print ‘=’*20<br>for b in a:<br>    print b<br><br><br><br>结果如下：</p>
-<p><pre><br>102 pvopf006 ~/test&gt; ./generator.py</pre></p>
-<h2 id="abc"><a href="#abc" class="headerlink" title="abc"></a>abc</h2><p>acb<br>bac<br>bca<br>cab<br>cba<br><br><br><br>可以看到，在第一个循环break后，生成器没有继续执行，而第二个循环接着第一个循环执行</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2014-08-25T16:00:00.000Z"><a href="/2014/08/26/making-love-out-of-nothing-at-all/">2014-08-26</a></time>
       
       
@@ -1044,7 +1073,7 @@ echo 550 > /sys/class/backlight/intel_backlight/brightness
   
     <li><a href="/categories/VIM/">VIM</a><small>2</small></li>
   
-    <li><a href="/categories/django/">django</a><small>11</small></li>
+    <li><a href="/categories/django/">django</a><small>12</small></li>
   
     <li><a href="/categories/freeswitch/">freeswitch</a><small>1</small></li>
   
@@ -1079,7 +1108,7 @@ echo 550 > /sys/class/backlight/intel_backlight/brightness
   <h3 class="title">Tags</h3>
   <ul class="entry">
   
-    <li><a href="/tags/django/">django</a><small>5</small></li>
+    <li><a href="/tags/django/">django</a><small>6</small></li>
   
     <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
   

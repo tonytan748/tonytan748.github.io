@@ -54,6 +54,54 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-08-25T16:00:00.000Z"><a href="/2014/08/26/how-to-use-python-yield/">2014-08-26</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/26/how-to-use-python-yield/">How To Use Python yield</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>a sample example to understand and use yield</em></p>
+<p></p><h2>yield 用法说明</h2><br><br><p></p>
+<p>yield 简单来说就是一个<b>生成器</b>,<b>生成器</b>是这样一个函数，它记住上一次返回时在函数体中的位置。对生成器函数的第二次(n次)调用跳转至该函数中间，而上次调用的所有局部变量都保持不变。</p>
+<p><br></p>
+<ul><br>    <li>生成器是一个函数，函数的所有参数都会保留</li><br>    <li>第二次调用此函数时使用的参数是前一次保留下的</li><br>    <li>生成器还记住了它在流控制构造</li><br></ul>
+
+
+<p></p><h2>yield 运行机制</h2><br><br><p></p>
+<p>当生成器要一个数时，生成器会执行，直至出现yield语句，生成器返回yield参数，之后生成器停止继续执行。<br>当需要下一个数时，生成器从上次的状态开始执行，直至出现yield语句，返回参数，停止。如此反复。<br><br></p>
+<p></p><h2>例子：</h2><br><br><p></p>
+<p><pre></pre></p>
+<p>#生成全排列<br>def perm(items,n=None):<br>    if n is None:<br>        n=len(items)<br>    for i in range(len(items)):<br>        v=items[i:i+1]<br>        if n ==1:<br>            yield v<br>        else:<br>            rest=items[:i] + items[i+1]<br>            for p in perm(rest,n-1):<br>                yield v + p</p>
+<p>#生成组合<br>def comb(items,n=None):<br>    if n is None:<br>        n=len(items)<br>    for i in range(len(items)):<br>        v=items[i:i+1]<br>        if n==1:<br>            yield v<br>        else:<br>            rest=items[i+1:]<br>            for c in comb(rest,n-1):<br>                yield v+c</p>
+<p>a=perm(‘abc’)<br>for b in a:<br>    print b<br>    break<br>print ‘=’*20<br>for b in a:<br>    print b<br><br><br><br>结果如下：</p>
+<p><pre><br>102 pvopf006 ~/test&gt; ./generator.py</pre></p>
+<h2 id="abc"><a href="#abc" class="headerlink" title="abc"></a>abc</h2><p>acb<br>bac<br>bca<br>cab<br>cba<br><br><br><br>可以看到，在第一个循环break后，生成器没有继续执行，而第二个循环接着第一个循环执行</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-08-24T16:00:00.000Z"><a href="/2014/08/25/12-basic-knowledge-in-python/">2014-08-25</a></time>
       
       
@@ -559,66 +607,6 @@ arg3: 3
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-08-16T16:00:00.000Z"><a href="/2014/08/17/use-frabic-in-update-github/">2014-08-17</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/08/17/use-frabic-in-update-github/">Use Frabic in update Github</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>Fabic is used for automating deployment of your application.</em></p>
-<p>Fabric is used for automating deployment of your application.</p>
-<p>Install:</p>
-<pre>
-    $ pip install fabric
-</pre>
-
-<p>Create the fabfile:</p>
-<pre>
-    $ touch fabfile.py
-</pre>
-
-<p>Then add the following code:</p>
-<pre>
-from fabric.api import local
-
-def deploy():
-    local('git add .')
-    comment=raw_input('please type in commit:')
-    local('git commit -m "%s"' % comment)
-    local('git push origin master')
-</pre>
-
-<p>Run:</p>
-<pre>
-$ fab deploy
-</pre>
-
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2014-08-16T16:00:00.000Z"><a href="/2014/08/17/django-pageinator-and-photo-upload/">2014-08-17</a></time>
       
       
@@ -771,6 +759,66 @@ else:
 </pre>
 
 <p>Then we upload the photo, update “views.py” to save the img path.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-08-16T16:00:00.000Z"><a href="/2014/08/17/use-frabic-in-update-github/">2014-08-17</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/17/use-frabic-in-update-github/">Use Frabic in update Github</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Fabic is used for automating deployment of your application.</em></p>
+<p>Fabric is used for automating deployment of your application.</p>
+<p>Install:</p>
+<pre>
+    $ pip install fabric
+</pre>
+
+<p>Create the fabfile:</p>
+<pre>
+    $ touch fabfile.py
+</pre>
+
+<p>Then add the following code:</p>
+<pre>
+from fabric.api import local
+
+def deploy():
+    local('git add .')
+    comment=raw_input('please type in commit:')
+    local('git commit -m "%s"' % comment)
+    local('git push origin master')
+</pre>
+
+<p>Run:</p>
+<pre>
+$ fab deploy
+</pre>
+
 
       
     </div>
@@ -1390,101 +1438,6 @@ writeable = yes
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-08-09T16:00:00.000Z"><a href="/2014/08/10/python-handle-photos/">2014-08-10</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/08/10/python-handle-photos/">Python: handle photos</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>Some ways to handle photos in Python</em></p>
-<pre>
-
-#coding=utf-8
-import Image
-import urllib2
-import StringIO
-impoert os
-
-#change photo size
-def resize_img(img_path):
-    try:
-        img=Image.open(img_path)
-        (width,height)=img.size
-        new_width=200
-        new_height=height*new_width/width
-        out=img.resize((new_width,new_height),Image.ANTIALIAS)
-        ext=os.path.splitext(img_path)[1]
-        new_file_name='%s%s' % ('small',ext)
-        out.save(new_file,quality=95)
-    except Exception,e:
-        print e
-
-</pre>
-
-<pre>
-#change photo type
-def change_img_type(img_path):
-    try:
-        img=Image.open(img_path)
-        img.save('new_type.png')
-    except Exception,e:
-        print e
-
-</pre>
-
-<pre>
-
-#deal with photo from remote
-def handle_remote_img(img_url):
-    try:
-        request=urllib2.Request(img_url)
-        img_data=urllib2.urlopen(request).read()
-        img_buffer=StringIO.StringIO(img_data)
-        img=Image.dopen(img_buffer)
-        img.save('remote.jpg')
-        (width,height)=img.size
-        out=img.resize((200,height*200/width),Image.ANTIALITS)
-        out.save('remote_small.jpg')
-    except Exception,e:
-        print e
-
-</pre>
-
-<pre>
-
-if __name__=="__main__":
-    img_path='linuxany.jpg'
-    resize_img(img_path)
-    change_img_type(img_path)
-    img_url="http://img.****"
-    handle_remote_img(img.url)
-</pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1507,7 +1460,7 @@ if __name__=="__main__":
   
     <li><a href="/categories/VIM/">VIM</a><small>2</small></li>
   
-    <li><a href="/categories/django/">django</a><small>11</small></li>
+    <li><a href="/categories/django/">django</a><small>12</small></li>
   
     <li><a href="/categories/freeswitch/">freeswitch</a><small>1</small></li>
   
@@ -1542,7 +1495,7 @@ if __name__=="__main__":
   <h3 class="title">Tags</h3>
   <ul class="entry">
   
-    <li><a href="/tags/django/">django</a><small>5</small></li>
+    <li><a href="/tags/django/">django</a><small>6</small></li>
   
     <li><a href="/tags/django-celery/">django-celery</a><small>1</small></li>
   
