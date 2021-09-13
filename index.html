@@ -135,18 +135,12 @@
 <p>Why not <code>django-q</code>? It is actively maintained. And targeted for Django. And offers a lot of features. But by the looks of it, it offered many features I was not going to be using. At the cost of being less lightweight than <code>Huey</code>.</p>
 <p>The above does not mean <code>dramatiq</code> or <code>django-q</code> are not great packages. Far from it. I have them in mind in case the use case changes.</p>
 <h2 id="Huey"><a href="#Huey" class="headerlink" title="Huey"></a>Huey</h2><p><a href="https://huey.readthedocs.io/en/latest/django.html" target="_blank" rel="noopener">Huey’s Django integration</a> provides:</p>
-<blockquote>
-<p>Configuration of huey via the Django settings module.</p>
-</blockquote>
-<blockquote>
-<p>Running the consumer as a Django management command.</p>
-</blockquote>
-<blockquote>
-<p>Auto-discovery of tasks.py modules to simplify task importing.</p>
-</blockquote>
-<blockquote>
-<p>Properly manage database connections.</p>
-</blockquote>
+<ul>
+<li>Configuration of huey via the Django settings module.</li>
+<li>Running the consumer as a Django management command.</li>
+<li>Auto-discovery of tasks.py modules to simplify task importing.</li>
+<li>Properly manage database connections.</li>
+</ul>
 <p>Sweet.</p>
 <h3 id="Code-changes"><a href="#Code-changes" class="headerlink" title="Code changes"></a>Code changes</h3><p>Installed <code>huey</code>? The <a href="https://huey.readthedocs.io/en/latest/django.html#setting-things-up" target="_blank" rel="noopener">Setting Things Up</a> section in Huey’s Django integration guide covers what you need to do from then on.</p>
 <p>Instead of importing the <code>task</code> or <code>periodic_task</code> decorators from the main Huey package, import from <code>huey.contrib.djhuey</code>:</p>

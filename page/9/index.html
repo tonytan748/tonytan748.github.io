@@ -54,32 +54,17 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-08-25T16:00:00.000Z"><a href="/2014/08/26/how-to-use-python-yield/">2014-08-26</a></time>
+        <time datetime="2014-08-25T16:00:00.000Z"><a href="/2014/08/26/making-love-out-of-nothing-at-all/">2014-08-26</a></time>
       
       
   
-    <h1 class="title"><a href="/2014/08/26/how-to-use-python-yield/">How To Use Python yield</a></h1>
+    <h1 class="title"><a href="/2014/08/26/making-love-out-of-nothing-at-all/">Air Supply ----- Making love Out of nothing at all </a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p><em>a sample example to understand and use yield</em></p>
-<p></p><h2>yield 用法说明</h2><br><br><p></p>
-<p>yield 简单来说就是一个<b>生成器</b>,<b>生成器</b>是这样一个函数，它记住上一次返回时在函数体中的位置。对生成器函数的第二次(n次)调用跳转至该函数中间，而上次调用的所有局部变量都保持不变。</p>
-<p><br></p>
-<ul><br>    <li>生成器是一个函数，函数的所有参数都会保留</li><br>    <li>第二次调用此函数时使用的参数是前一次保留下的</li><br>    <li>生成器还记住了它在流控制构造</li><br></ul>
-
-
-<p></p><h2>yield 运行机制</h2><br><br><p></p>
-<p>当生成器要一个数时，生成器会执行，直至出现yield语句，生成器返回yield参数，之后生成器停止继续执行。<br>当需要下一个数时，生成器从上次的状态开始执行，直至出现yield语句，返回参数，停止。如此反复。<br><br></p>
-<p></p><h2>例子：</h2><br><br><p></p>
-<p><pre></pre></p>
-<p>#生成全排列<br>def perm(items,n=None):<br>    if n is None:<br>        n=len(items)<br>    for i in range(len(items)):<br>        v=items[i:i+1]<br>        if n ==1:<br>            yield v<br>        else:<br>            rest=items[:i] + items[i+1]<br>            for p in perm(rest,n-1):<br>                yield v + p</p>
-<p>#生成组合<br>def comb(items,n=None):<br>    if n is None:<br>        n=len(items)<br>    for i in range(len(items)):<br>        v=items[i:i+1]<br>        if n==1:<br>            yield v<br>        else:<br>            rest=items[i+1:]<br>            for c in comb(rest,n-1):<br>                yield v+c</p>
-<p>a=perm(‘abc’)<br>for b in a:<br>    print b<br>    break<br>print ‘=’*20<br>for b in a:<br>    print b<br><br><br><br>结果如下：</p>
-<p><pre><br>102 pvopf006 ~/test&gt; ./generator.py</pre></p>
-<h2 id="abc"><a href="#abc" class="headerlink" title="abc"></a>abc</h2><p>acb<br>bac<br>bca<br>cab<br>cba<br><br><br><br>可以看到，在第一个循环break后，生成器没有继续执行，而第二个循环接着第一个循环执行</p>
+        <h1 id="Air-Supply-Making-love-Out-of-nothing-at-all"><a href="#Air-Supply-Making-love-Out-of-nothing-at-all" class="headerlink" title="Air Supply - Making love Out of nothing at all"></a>Air Supply - Making love Out of nothing at all</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">I know just how to whisper</span><br><span class="line">And I know just how to cry</span><br><span class="line"></span><br><span class="line">I know just where to find the answers</span><br><span class="line">And I know just how to lie</span><br><span class="line"></span><br><span class="line">I know just how to fake it</span><br><span class="line">And I know just how to scheme</span><br><span class="line"></span><br><span class="line">I know just when to face the truth</span><br><span class="line">And then I know just when to dream</span><br><span class="line"></span><br><span class="line">And I know just where to touch you</span><br><span class="line">And I know just what to prove</span><br><span class="line">I know when to pull you closer</span><br><span class="line">And I know when to let you loose</span><br><span class="line"></span><br><span class="line">And I know the night is fading</span><br><span class="line">And I know the time&apos;s gonna fly</span><br><span class="line">And I&apos;m never gonna tell you</span><br><span class="line">Everything I gotta tell you</span><br><span class="line">But I know I gotta give it a try</span><br><span class="line"></span><br><span class="line">And I know the roads to rich</span><br><span class="line">And I know the ways to fame</span><br><span class="line">I know all the rules</span><br><span class="line">And I know how to break &apos;em</span><br><span class="line">And I always know the name of the game</span><br><span class="line"></span><br><span class="line">But I don&apos;t know how to leave you</span><br><span class="line">And I&apos;ll never let you fall</span><br><span class="line">And I don&apos;t know how you do it</span><br><span class="line">Making love out of nothing at all</span><br><span class="line"></span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line"></span><br><span class="line">Everytime I see you all the rays of the sun</span><br><span class="line">Are streaming through the waves in your hair</span><br><span class="line"></span><br><span class="line">And every star in the sky is taking aim at you eyes</span><br><span class="line">Like a spotlight</span><br><span class="line"></span><br><span class="line">The beating of you heart is a drum and it&apos;s lost</span><br><span class="line">And it&apos;s looking for a rhythm like you</span><br><span class="line"></span><br><span class="line">You can take the darkness from the pit of night</span><br><span class="line">And turn into a beacom burning endlessly bright</span><br><span class="line"></span><br><span class="line">I&apos;ve gotta follow it cause everything I know</span><br><span class="line">Well it&apos;s nothong till I give it to you</span><br><span class="line"></span><br><span class="line">I can make the runner stumble</span><br><span class="line">I can make the final block</span><br><span class="line">And I can make every tackle at the sound of the whistle</span><br><span class="line">I can make all the stadiums rock</span><br><span class="line"></span><br><span class="line">I can make tonight forever</span><br><span class="line">Or I can make it disappear by the dawn</span><br><span class="line">I can make you every promise that has ever been made</span><br><span class="line">I can make all your deamons be gone</span><br><span class="line"></span><br><span class="line">But I&apos;m never gonna make it withour you</span><br><span class="line">Do you really want to see me crawl</span><br><span class="line">And I&apos;m never gonna make it like you do</span><br><span class="line">Making love out of nothing at all</span><br><span class="line"></span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line">Making love, out of nothing at all</span><br><span class="line"></span><br><span class="line">... ...</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -607,6 +592,66 @@ arg3: 3
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-08-16T16:00:00.000Z"><a href="/2014/08/17/use-frabic-in-update-github/">2014-08-17</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/17/use-frabic-in-update-github/">Use Frabic in update Github</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Fabic is used for automating deployment of your application.</em></p>
+<p>Fabric is used for automating deployment of your application.</p>
+<p>Install:</p>
+<pre>
+    $ pip install fabric
+</pre>
+
+<p>Create the fabfile:</p>
+<pre>
+    $ touch fabfile.py
+</pre>
+
+<p>Then add the following code:</p>
+<pre>
+from fabric.api import local
+
+def deploy():
+    local('git add .')
+    comment=raw_input('please type in commit:')
+    local('git commit -m "%s"' % comment)
+    local('git push origin master')
+</pre>
+
+<p>Run:</p>
+<pre>
+$ fab deploy
+</pre>
+
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-08-16T16:00:00.000Z"><a href="/2014/08/17/django-pageinator-and-photo-upload/">2014-08-17</a></time>
       
       
@@ -759,66 +804,6 @@ else:
 </pre>
 
 <p>Then we upload the photo, update “views.py” to save the img path.</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-08-16T16:00:00.000Z"><a href="/2014/08/17/use-frabic-in-update-github/">2014-08-17</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/08/17/use-frabic-in-update-github/">Use Frabic in update Github</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>Fabic is used for automating deployment of your application.</em></p>
-<p>Fabric is used for automating deployment of your application.</p>
-<p>Install:</p>
-<pre>
-    $ pip install fabric
-</pre>
-
-<p>Create the fabfile:</p>
-<pre>
-    $ touch fabfile.py
-</pre>
-
-<p>Then add the following code:</p>
-<pre>
-from fabric.api import local
-
-def deploy():
-    local('git add .')
-    comment=raw_input('please type in commit:')
-    local('git commit -m "%s"' % comment)
-    local('git push origin master')
-</pre>
-
-<p>Run:</p>
-<pre>
-$ fab deploy
-</pre>
-
 
       
     </div>
@@ -1049,106 +1034,6 @@ $ git config credential.helper cache
 <p><a href="http://www.oschina.net/translate/10-useful-advanced-git-commands" target="_blank" rel="noopener">10 个很有用的高级 Git 命令</a></p>
 <p><a href="http://yuxu9710108.blog.163.com/blog/static/237515342011910113822476/" target="_blank" rel="noopener">git修改历史提交  </a></p>
 <p>说明：Git for Windows 从 1.7.9 版本开始支持使用中文文件、文件夹名称了，结束了跨平台中文乱码的问题。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-08-11T16:00:00.000Z"><a href="/2014/08/12/how-to-install-google-authenticator-on-linux/">2014-08-12</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/08/12/how-to-install-google-authenticator-on-linux/">How to install Google Authenticator on Linux</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>Question I want to use Google Authenticator to set up two factor authentication. How can I install Google Authenticator on [insert your Linux distro]?</em></p>
-<p>Question: I want to use Google Authenticator to set up two factor authentication. How can I install Google Authenticator on [insert your Linux distro]?</p>
-<p>Google Authenticator is an application which can generate time-based one-time passcode to be used for two-factor authentication. You can install Google Authenticator on Linux as a pre-built package or by building it from the source.</p>
-<h3>Install Google Authenticator as a Pre-built Package</h3>
-
-<p>For those of you who don’t want to build Google Authenticator, it is available as a pre-built package on several Linux distros. The pre-built package contains Google Authenticator binary and its PAM module.</p>
-<p>To install Google Authenticator on Ubuntu:</p>
-<pre>
-$ sudo apt-get install libpam-google-authenticator
-</pre>
-
-<p>To install Google Authenticator on Fedora:</p>
-<pre>
-$ sudo yum install google-authenticator
-</pre>
-
-<p>To install Google Authenticator on CentOS, first enable EPEL repository, and then run:</p>
-<pre>
-$ sudo yum install google-authenticator
-</pre>
-
-<h3>Compile Google Authenticator on Linux</h3>
-
-<p>First, install prerequisites for building Google Authenticator.</p>
-<p>On Debian, Ubuntu or Linux Mint:</p>
-<pre>
-$ sudo apt-get install wget make gcc libpam0g-dev
-</pre>
-
-<p>On CentOS, Fedora or RHEL:</p>
-<pre>
-$ sudo yum install wget make gcc pam-devel
-</pre>
-
-<p>Then download the source code of Google Authenticator, and compile it as follows.</p>
-<pre>
-$ wget https://google-authenticator.googlecode.com/files/libpam-google-authenticator-1.0-source.tar.bz2 
-$ tar xvfvj libpam-google-authenticator-1.0-source.tar.bz2 
-$ cd libpam-google-authenticator-1.0 
-$ make
-</pre>
-
-<p>If build is successful, you will see pam_google_authenticator.so and google-authenticator created in the directory.</p>
-<p>Finally, go ahead and install Google Authenticator.</p>
-<pre>
-$ sudo make install
-</pre>
-
-<p>For instructions on how to set up two-factor authentication for SSH logins with Google Authenticator, refer to this guideline.</p>
-<h3>Troubleshoot</h3>
-
-<ol>
-<li>I am getting the following error when compiling Google Authenticator.</li>
-</ol>
-<pre>
-fatal error: security/pam_appl.h: No such file or directory
-</pre>
-
-<p>To fix this problem, install the following package.</p>
-<p>On Debian, Ubuntu or Linux Mint:</p>
-<pre>
-$ sudo apt-get install libpam0g-dev
-</pre>
-
-<p>On CentOS, Fedora or RHEL:</p>
-<pre>
-$ sudo yum install pam-devel
-</pre>
 
       
     </div>
@@ -1422,6 +1307,106 @@ writeable = yes
 
 <p>To conclude, there are a lot more websites which deserve to be listed, and this might be a topic for a part two to this post. But this is a good start. It serves as an appetizer to what can be found online as tools for Linux users. If you have any other pages that you would like to share, following this thematic, do so in the comments. And maybe contribute to a sequel to this list.</p>
 
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-08-11T16:00:00.000Z"><a href="/2014/08/12/how-to-install-google-authenticator-on-linux/">2014-08-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/12/how-to-install-google-authenticator-on-linux/">How to install Google Authenticator on Linux</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Question I want to use Google Authenticator to set up two factor authentication. How can I install Google Authenticator on [insert your Linux distro]?</em></p>
+<p>Question: I want to use Google Authenticator to set up two factor authentication. How can I install Google Authenticator on [insert your Linux distro]?</p>
+<p>Google Authenticator is an application which can generate time-based one-time passcode to be used for two-factor authentication. You can install Google Authenticator on Linux as a pre-built package or by building it from the source.</p>
+<h3>Install Google Authenticator as a Pre-built Package</h3>
+
+<p>For those of you who don’t want to build Google Authenticator, it is available as a pre-built package on several Linux distros. The pre-built package contains Google Authenticator binary and its PAM module.</p>
+<p>To install Google Authenticator on Ubuntu:</p>
+<pre>
+$ sudo apt-get install libpam-google-authenticator
+</pre>
+
+<p>To install Google Authenticator on Fedora:</p>
+<pre>
+$ sudo yum install google-authenticator
+</pre>
+
+<p>To install Google Authenticator on CentOS, first enable EPEL repository, and then run:</p>
+<pre>
+$ sudo yum install google-authenticator
+</pre>
+
+<h3>Compile Google Authenticator on Linux</h3>
+
+<p>First, install prerequisites for building Google Authenticator.</p>
+<p>On Debian, Ubuntu or Linux Mint:</p>
+<pre>
+$ sudo apt-get install wget make gcc libpam0g-dev
+</pre>
+
+<p>On CentOS, Fedora or RHEL:</p>
+<pre>
+$ sudo yum install wget make gcc pam-devel
+</pre>
+
+<p>Then download the source code of Google Authenticator, and compile it as follows.</p>
+<pre>
+$ wget https://google-authenticator.googlecode.com/files/libpam-google-authenticator-1.0-source.tar.bz2 
+$ tar xvfvj libpam-google-authenticator-1.0-source.tar.bz2 
+$ cd libpam-google-authenticator-1.0 
+$ make
+</pre>
+
+<p>If build is successful, you will see pam_google_authenticator.so and google-authenticator created in the directory.</p>
+<p>Finally, go ahead and install Google Authenticator.</p>
+<pre>
+$ sudo make install
+</pre>
+
+<p>For instructions on how to set up two-factor authentication for SSH logins with Google Authenticator, refer to this guideline.</p>
+<h3>Troubleshoot</h3>
+
+<ol>
+<li>I am getting the following error when compiling Google Authenticator.</li>
+</ol>
+<pre>
+fatal error: security/pam_appl.h: No such file or directory
+</pre>
+
+<p>To fix this problem, install the following package.</p>
+<p>On Debian, Ubuntu or Linux Mint:</p>
+<pre>
+$ sudo apt-get install libpam0g-dev
+</pre>
+
+<p>On CentOS, Fedora or RHEL:</p>
+<pre>
+$ sudo yum install pam-devel
+</pre>
 
       
     </div>
