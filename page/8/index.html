@@ -54,6 +54,133 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-10-12T16:00:00.000Z"><a href="/2014/10/13/dajngo-episode-3-introduction-to-south-migrations/">2014-10-13</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/10/13/dajngo-episode-3-introduction-to-south-migrations/">Dajngo Episode 3 Introduction to South Migrations</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Introduction to South Migrations</em></p>
+<p>Install SOUTH:</p>
+<pre>
+pip install South
+</pre>
+
+<pre>
+vim settings.py
+</pre>
+In "INSTALLED_APP"
+Add
+<pre>
+'south',
+</pre>
+
+<pre>
+python manage.py syncdb
+</pre>
+Create a new app.
+<pre>
+python manage.py startapp page
+</pre>
+Add 'page' to project.
+<pre>
+vim settings.py
+</pre>
+
+<pre>
+'page',
+</pre>
+In page part, edit models.
+<pre>
+vim page/models.py
+</pre>
+
+<pre>
+from django.db import models
+class Page(models.Model):
+    title=models.CharField(max_length=200)
+    slug=models.SlugField(max_length=200)
+    body=models.TextField()
+</pre>
+
+<pre>
+python manage.py schemamigration page --initial
+</pre>
+
+<pre>
+python manage.py migrate page
+</pre>
+
+<p>Update models.</p>
+<pre>
+vim page/models.py
+</pre>
+
+<pre>
+from datetime import datetime
+
+pub_date=models.DateTimeField(default=datetime.now())
+</pre>
+
+<pre>
+python manage.py schemamigration page --auto
+</pre>
+
+<pre>
+python manage.py migrate page
+</pre>
+
+<p>In another app “post”,</p>
+<pre>
+python manage.py convert_to_south post
+</pre>
+
+<pre>
+vim post/models.py
+</pre>
+
+<pre>
+from datetime import datetime
+pub_date=models.DateTimeField(default=datetime.now())
+</pre>
+
+<pre>
+python manage.py schemamigration post --auto
+</pre>
+
+<pre>
+python manage.py migrate post
+</pre>
+
+<pre>
+python manage.py migrate post 0001 --fake
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-10-02T16:00:00.000Z"><a href="/2014/10/03/django-episode-5-rss-with-the-syndication-framework/">2014-10-03</a></time>
       
       
@@ -205,6 +332,127 @@ heroku open
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-09-22T16:00:00.000Z"><a href="/2014/09/23/remote-control-with-telnetlib-python-recipe/">2014-09-23</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/09/23/remote-control-with-telnetlib-python-recipe/">Remote control with telnetlib (Python recipe)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>Remote control with telnetlib (Python recipe)</em></p>
+<pre>
+
+# auto_telnet.py - remote control via telnet
+import os, sys, string, telnetlib
+from getpass import getpass
+
+class AutoTelnet:
+    def __init__(self, user_list, cmd_list, **kw):
+        self.host = kw.get('host', 'localhost')
+        self.timeout = kw.get('timeout', 600)
+        self.command_prompt = kw.get('command_prompt', "$ ")
+        self.passwd = {}
+        for user in user_list:
+            self.passwd[user] = getpass("Enter user '%s' password: " % user)
+        self.telnet = telnetlib.Telnet()
+        for user in user_list:
+            self.telnet.open(self.host)
+            ok = self.action(user, cmd_list)
+            if not ok:
+                print "Unable to process:", user
+            self.telnet.close()
+
+    def action(self, user, cmd_list):
+        t = self.telnet
+        t.write("\n")
+        login_prompt = "login: "
+        response = t.read_until(login_prompt, 5)
+        if string.count(response, login_prompt):
+            print response
+        else:
+            return 0
+        password_prompt = "Password:"
+        t.write("%s\n" % user)
+        response = t.read_until(password_prompt, 3)
+        if string.count(response, password_prompt):
+            print response
+        else:
+            return 0
+        t.write("%s\n" % self.passwd[user])
+        response = t.read_until(self.command_prompt, 5)
+        if not string.count(response, self.command_prompt):
+            return 0
+        for cmd in cmd_list:
+            t.write("%s\n" % cmd)
+            response = t.read_until(self.command_prompt, self.timeout)
+            if not string.count(response, self.command_prompt):
+                return 0
+            print response
+        return 1
+
+if __name__ == '__main__':
+    basename = os.path.splitext(os.path.basename(sys.argv[0]))[0]
+    logname = os.environ.get("LOGNAME", os.environ.get("USERNAME"))
+    host = 'localhost'
+    import getopt
+    optlist, user_list = getopt.getopt(sys.argv[1:], 'c:f:h:')
+    usage = """
+usage: %s [-h host] [-f cmdfile] [-c "command"] user1 user2 ...
+    -c  command
+    -f  command file
+    -h  host  (default: '%s')
+
+Example:  %s -c "echo $HOME" %s
+""" % (basename, host, basename, logname)
+    if len(sys.argv) &#60; 2:
+        print usage
+        sys.exit(1)
+    cmd_list = []
+    for (opt, optarg) in optlist:
+        if opt == '-f':
+            for r in open(optarg).readlines():
+                if string.rstrip(r):
+                    cmd_list.append(r)
+        elif opt == '-c':
+            command = optarg
+            if command[0] == '"' and command[-1] == '"':
+                command = command[1:-1]
+            cmd_list.append(command)
+        elif opt == '-h':
+            host = optarg
+    autoTelnet = AutoTelnet(user_list, cmd_list, host=host)
+
+</pre>
+
+<p>Python’s telnetlib permits users to easily automate access to telnet servers, even from non-Unix machines.</p>
+<p>As an alternative to the popen() functions, telnetlib is probably a handy technique to have in your sysadmin toolbox.</p>
+<p>Production code will generally be more robust, but this example should be enough to get anyone started in the right direction.</p>
+<p>this title is come from <a href="http://code.activestate.com/recipes/52228/" target="_blank" rel="noopener">http://code.activestate.com/recipes/52228/</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-09-22T16:00:00.000Z"><a href="/2014/09/23/how-to-use-pyhton-to-generate-source-file-of-2-ways/">2014-09-23</a></time>
       
       
@@ -325,127 +573,6 @@ generate D:\Project\Python\code_gen\MBIM_Service_Phonebook_device.java over. ~ ~
 </pre>
 
 
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-09-22T16:00:00.000Z"><a href="/2014/09/23/remote-control-with-telnetlib-python-recipe/">2014-09-23</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/09/23/remote-control-with-telnetlib-python-recipe/">Remote control with telnetlib (Python recipe)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>Remote control with telnetlib (Python recipe)</em></p>
-<pre>
-
-# auto_telnet.py - remote control via telnet
-import os, sys, string, telnetlib
-from getpass import getpass
-
-class AutoTelnet:
-    def __init__(self, user_list, cmd_list, **kw):
-        self.host = kw.get('host', 'localhost')
-        self.timeout = kw.get('timeout', 600)
-        self.command_prompt = kw.get('command_prompt', "$ ")
-        self.passwd = {}
-        for user in user_list:
-            self.passwd[user] = getpass("Enter user '%s' password: " % user)
-        self.telnet = telnetlib.Telnet()
-        for user in user_list:
-            self.telnet.open(self.host)
-            ok = self.action(user, cmd_list)
-            if not ok:
-                print "Unable to process:", user
-            self.telnet.close()
-
-    def action(self, user, cmd_list):
-        t = self.telnet
-        t.write("\n")
-        login_prompt = "login: "
-        response = t.read_until(login_prompt, 5)
-        if string.count(response, login_prompt):
-            print response
-        else:
-            return 0
-        password_prompt = "Password:"
-        t.write("%s\n" % user)
-        response = t.read_until(password_prompt, 3)
-        if string.count(response, password_prompt):
-            print response
-        else:
-            return 0
-        t.write("%s\n" % self.passwd[user])
-        response = t.read_until(self.command_prompt, 5)
-        if not string.count(response, self.command_prompt):
-            return 0
-        for cmd in cmd_list:
-            t.write("%s\n" % cmd)
-            response = t.read_until(self.command_prompt, self.timeout)
-            if not string.count(response, self.command_prompt):
-                return 0
-            print response
-        return 1
-
-if __name__ == '__main__':
-    basename = os.path.splitext(os.path.basename(sys.argv[0]))[0]
-    logname = os.environ.get("LOGNAME", os.environ.get("USERNAME"))
-    host = 'localhost'
-    import getopt
-    optlist, user_list = getopt.getopt(sys.argv[1:], 'c:f:h:')
-    usage = """
-usage: %s [-h host] [-f cmdfile] [-c "command"] user1 user2 ...
-    -c  command
-    -f  command file
-    -h  host  (default: '%s')
-
-Example:  %s -c "echo $HOME" %s
-""" % (basename, host, basename, logname)
-    if len(sys.argv) &#60; 2:
-        print usage
-        sys.exit(1)
-    cmd_list = []
-    for (opt, optarg) in optlist:
-        if opt == '-f':
-            for r in open(optarg).readlines():
-                if string.rstrip(r):
-                    cmd_list.append(r)
-        elif opt == '-c':
-            command = optarg
-            if command[0] == '"' and command[-1] == '"':
-                command = command[1:-1]
-            cmd_list.append(command)
-        elif opt == '-h':
-            host = optarg
-    autoTelnet = AutoTelnet(user_list, cmd_list, host=host)
-
-</pre>
-
-<p>Python’s telnetlib permits users to easily automate access to telnet servers, even from non-Unix machines.</p>
-<p>As an alternative to the popen() functions, telnetlib is probably a handy technique to have in your sysadmin toolbox.</p>
-<p>Production code will generally be more robust, but this example should be enough to get anyone started in the right direction.</p>
-<p>this title is come from <a href="http://code.activestate.com/recipes/52228/" target="_blank" rel="noopener">http://code.activestate.com/recipes/52228/</a></p>
 
       
     </div>
@@ -1018,54 +1145,6 @@ echo 550 > /sys/class/backlight/intel_backlight/brightness
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-08-25T16:00:00.000Z"><a href="/2014/08/26/how-to-use-python-yield/">2014-08-26</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/08/26/how-to-use-python-yield/">How To Use Python yield</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>a sample example to understand and use yield</em></p>
-<p></p><h2>yield 用法说明</h2><br><br><p></p>
-<p>yield 简单来说就是一个<b>生成器</b>,<b>生成器</b>是这样一个函数，它记住上一次返回时在函数体中的位置。对生成器函数的第二次(n次)调用跳转至该函数中间，而上次调用的所有局部变量都保持不变。</p>
-<p><br></p>
-<ul><br>    <li>生成器是一个函数，函数的所有参数都会保留</li><br>    <li>第二次调用此函数时使用的参数是前一次保留下的</li><br>    <li>生成器还记住了它在流控制构造</li><br></ul>
-
-
-<p></p><h2>yield 运行机制</h2><br><br><p></p>
-<p>当生成器要一个数时，生成器会执行，直至出现yield语句，生成器返回yield参数，之后生成器停止继续执行。<br>当需要下一个数时，生成器从上次的状态开始执行，直至出现yield语句，返回参数，停止。如此反复。<br><br></p>
-<p></p><h2>例子：</h2><br><br><p></p>
-<p><pre></pre></p>
-<p>#生成全排列<br>def perm(items,n=None):<br>    if n is None:<br>        n=len(items)<br>    for i in range(len(items)):<br>        v=items[i:i+1]<br>        if n ==1:<br>            yield v<br>        else:<br>            rest=items[:i] + items[i+1]<br>            for p in perm(rest,n-1):<br>                yield v + p</p>
-<p>#生成组合<br>def comb(items,n=None):<br>    if n is None:<br>        n=len(items)<br>    for i in range(len(items)):<br>        v=items[i:i+1]<br>        if n==1:<br>            yield v<br>        else:<br>            rest=items[i+1:]<br>            for c in comb(rest,n-1):<br>                yield v+c</p>
-<p>a=perm(‘abc’)<br>for b in a:<br>    print b<br>    break<br>print ‘=’*20<br>for b in a:<br>    print b<br><br><br><br>结果如下：</p>
-<p><pre><br>102 pvopf006 ~/test&gt; ./generator.py</pre></p>
-<h2 id="abc"><a href="#abc" class="headerlink" title="abc"></a>abc</h2><p>acb<br>bac<br>bca<br>cab<br>cba<br><br><br><br>可以看到，在第一个循环break后，生成器没有继续执行，而第二个循环接着第一个循环执行</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1106,7 +1185,7 @@ echo 550 > /sys/class/backlight/intel_backlight/brightness
   
     <li><a href="/categories/other/">other</a><small>4</small></li>
   
-    <li><a href="/categories/python/">python</a><small>68</small></li>
+    <li><a href="/categories/python/">python</a><small>69</small></li>
   
     <li><a href="/categories/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   
@@ -1139,7 +1218,7 @@ echo 550 > /sys/class/backlight/intel_backlight/brightness
   
     <li><a href="/tags/other/">other</a><small>2</small></li>
   
-    <li><a href="/tags/python/">python</a><small>15</small></li>
+    <li><a href="/tags/python/">python</a><small>16</small></li>
   
     <li><a href="/tags/sqlalchemy/">sqlalchemy</a><small>1</small></li>
   
