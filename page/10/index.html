@@ -54,105 +54,136 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-08-11T16:00:00.000Z"><a href="/2014/08/12/what-are-useful-online-tools-for-linux/">2014-08-12</a></time>
+        <time datetime="2014-08-11T16:00:00.000Z"><a href="/2014/08/12/how-to-set-up-a-samba-file-server-to-use-with-windows-clients/">2014-08-12</a></time>
       
       
   
-    <h1 class="title"><a href="/2014/08/12/what-are-useful-online-tools-for-linux/">What are useful online tools for Linux</a></h1>
+    <h1 class="title"><a href="/2014/08/12/how-to-set-up-a-samba-file-server-to-use-with-windows-clients/">How to set up a Samba file server to use with Windows clients</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p><em>As you know, GNU Linux is much more than just an OS. There is literally a whole sphere on the Internet dedicated to the penguin OS.</em></p>
-<p>As you know, GNU Linux is much more than just an OS. There is literally a whole sphere on the Internet dedicated to the penguin OS. If you read this post, you are probably inclined towards reading about Linux online. Among all the pages that you can find on the subject, there are a couple of websites that every Linux adventurer should have in his bookmarks. These websites are more than just tutorials or reviews. They are real tools that you can access from anywhere and share with everyone. So today I shall propose you a non-exhaustive list of sixteen websites that should be in your bookmarks. Some of them can also be useful for Windows or Mac users: that’s the extent of their reach.</p>
-<h3>1. <a href="ExplainShell.com">ExplainShell.com</a></h3>
+        <p><em>According to the Samba project web site, Samba is an open source/free software suite that provides seamless file and print services to SMB/CIFS clients.</em></p>
+<p>According to the Samba project web site, Samba is an open source/free software suite that provides seamless file and print services to SMB/CIFS clients. Unlike other implementations of the SMB/CIFS networking protocol (such as LM Server for HP-UX, LAN Server for OS/2, or VisionFS), Samba (along with its source code) is freely available (at no cost to the end user), and allows for interoperability between Linux/Unix servers and Windows/Unix/Linux clients.</p>
+<p>For these reasons, Samba is the preferred solution for a file server in networks where different operating systems (other than Linux) coexist - the most common setup being the case of multiple Microsoft Windows clients accessing a Linux server where Samba is installed, which is the situation we are going to deal with in this article.</p>
+<p>Please note that on the other hand, if our network consists of only Unix-based clients (such as Linux, AIX, or Solaris, to name a few examples), we can consider using NFS (although Samba is still an option in this case), which has greater reported speeds.</p>
+<h3>Installing Samba in Debian and CentOS</h3>
 
-<p><img src="https://farm4.staticflickr.com/3841/14517716647_3b6a1a564d_z.jpg"></p>
-<p>If you are interested in Linux command line, you should use this website. If you are not interested in Linux command line, you should use it even more as it will explain in detail how a command works. This could prevent you from launching a command detrimental to your computer, and is a good way to learn with a great interface.</p>
-<h3>2. <a href="BashrcGenerator.com">BashrcGenerator.com</a></h3>
+<p>Before we proceed with the installation, we can use our operating system’s package management system to look for information about Samba:</p>
+<p>On Debian:</p>
+<pre>
+# aptitude show samba
+</pre>
 
-<p><img src="https://farm4.staticflickr.com/3900/14703872782_033e5acdb8_z.jpg"></p>
-<p>If you want to begin with Linux command line, or if you want to quickly get a customized shell prompt but not sure how, this website will generate for you PS1 prompt code to place your .bashrc file in your home directory. You can drag and drop the elements that you would like to see in your prompt, like your username and the current time, and the website will write the code for you. It’s easy and very readable. Definitely a must for the lazy.</p>
-<h3>3. <a href="Vim-adventures.com">Vim-adventures.com</a></h3>
+<p>On CentOS:</p>
+<pre>
+# yum info samba
+</pre>
 
-<p><img src="https://farm4.staticflickr.com/3838/14681149696_0c533fd6de_z.jpg"></p>
-<p>I only recently discovered this website, but it already sucked in many hours of my life. In short: a RPG game with Vim commands. Move your character in the isometric levels with the ‘h,j,k,l’ keys, gain new commands/abilities, collect keys, and learn how to use Vim proficiently very quickly.</p>
-<h3>4. <a href="Try.Github.com">Try Github</a></h3>
+<p>In the following screenshot we can see the output of ‘aptitude show samba’ (‘yum info samba’ yields similar results):</p>
+<p><img src="https://farm4.staticflickr.com/3868/14837993244_0fa525eb35_z.jpg"></p>
+<p>Now let’s install Samba (the screenshot below corresponds to the installation on a Debian 7 [Wheezy] server):</p>
+<p>On Debian:</p>
+<pre>
+# aptitude install samba
+</pre>
 
-<p><img src="https://farm4.staticflickr.com/3874/14517499739_0452848d68_z.jpg"></p>
-<p>The pitch is simple: learn Git in 15 minutes. This website simulates a console, and walks you though the steps of collaborative editing. The interface is very stylish and the intention is worthy. The only downside is for the Git allergic. But it is definitely a good skill to have, and a good place to learn it.</p>
-<h3>5. <a href="Shortcutfoo.com">Shortcutfoo.com</a></h3>
+<p>On CentOS:</p>
+<pre>
+# yum install samba
+</pre>
 
-<p><img src="https://farm4.staticflickr.com/3906/14517499799_f142ea37cb_z.jpg"></p>
-<p>Another shortcut database, shortcutfoo is a bit more standard in its way to present its content to the user, but definitely more straight-forward than funny mini-games. The shortcuts of several programs are available and grouped by categories. As it might not be super complete for software like Vim, which is completely reliant on shortcuts, it is perfect for giving a quick tip or a general overview.</p>
-<h3>6. <a href="#">GitHub Free Programming Books</a></h3>
+<h3>Adding Users to Samba</h3>
 
-<p><img src="https://farm4.staticflickr.com/3867/14517499989_408a28d8be_z.jpg"></p>
-<p>As you might guess from the URL, this is a collection of free online books about programming, written collaboratively using Git. The content is awesome and the authors deserve to be praised for such work. It might not be the easiest read at first, but it is one of the most instructive for sure. We can only hope that the movement will keep growing.</p>
+<p>For versions earlier than 4.x, a local Unix account is required for adding users to Samba:</p>
+<pre>
+# adduser username
+</pre>
 
+<p><img src="https://farm6.staticflickr.com/5574/14837266181_fed68bddf2_o.png"></p>
+<p>Next, we need to add the user to Samba using the smbpasswd command with the ‘-a’ option, which specifies that the username following should be added to the local smbpasswd file. We will be prompted to enter a password (which does not necessarily have to be the same as the password of the local Unix account):</p>
+<pre>
+# smbpassword -a username
+</pre>
 
-<h3>7. <a href="Collabedit.com">Collabedit.com</a></h3>
+<p><img src="https://farm6.staticflickr.com/5555/14653711099_578f8613ca.jpg"></p>
+<p>Finally, we will give access to user xmodulo to a directory within our system that will be used as a Samba share for him (and other users as well, if needed). This is done by opening the /etc/samba/smb.conf file with a text editor (such as Vim), navigating to the end of the file, and creating a section (enclose name between square brackets) with a descriptive name, such as [xmodulo]:</p>
+<pre>
+# SAMBA SHARE 
+[xmodulo] 
+path = /home/xmodulo 
+available = yes 
+valid users = xmodulo 
+read only = no 
+browseable = yes 
+public = yes 
+writeable = yes
+</pre>
 
-<p><img src="https://farm3.staticflickr.com/2940/14681150086_2d169d67f9_z.jpg"></p>
-<p>If you ever plan on giving a phone interview, you should check out collabedit beforehand. It allows you to create a document, select the programming language that you want to write in, and then share that document via the URL. The people opening the link will be able to freely interact in real time with the text, allowing you to judge their programming skills or just exchange snippets. It even comes with the proper syntax highlighting and a chat widget. In other words, it is the instant-Google Document of programmers.</p>
+<p>We must now restart Samba and -just in case- check the smb.conf file for syntax errors with the testparm command:</p>
+<pre>
+# service samba restart 
+# testparm
+</pre>
 
+<p><img src="https://farm6.staticflickr.com/5589/14653655390_becb4f4981_z.jpg"></p>
+<p>If there are any errors, they will be reported when testparm ends.</p>
+<h3>Mapping the Samba Share as a Network Drive on a Windows 7 PC</h3>
 
-<h3>8. <a href="Cpp.sh">Cpp.sh</a></h3>
+<p>Right click on Computer, and select “Map network drive”:</p>
+<p><img src="https://farm6.staticflickr.com/5571/14837993154_981b73ea92.jpg"></p>
+<p>Type the IP address of the machine where Samba is installed, followed by the name of the share (this is the name that is enclosed between single brackets in the smb.conf file), and make sure that the “Connect using different credentials” checkbox is checked:</p>
+<p><img src="https://farm4.staticflickr.com/3881/14839997172_d67ec98933_o.png"></p>
+<p>Enter the username and password that were set with ‘smbpasswd -a’ earlier:</p>
+<p><img src="https://farm6.staticflickr.com/5563/14653711029_ddfea53bd6_o.png"></p>
+<p>Go to Computer and check if the network drive has been added correctly:</p>
+<p><img src="https://farm6.staticflickr.com/5584/14837993124_c664728039_o.png"></p>
+<p>As a test, let’s create a pdf file from the man page of Samba, and save it in the /home/xmodulo directory:</p>
+<p><img src="https://farm6.staticflickr.com/5593/14860219723_e8380f0d0f_o.png"></p>
+<p>Next, we can verify that the file is accessible from Windows:</p>
+<p><img src="https://farm4.staticflickr.com/3869/14817386696_74a12dfdcd_o.png"></p>
+<p>And we can open it using our default pdf reader:</p>
+<p><img src="https://farm6.staticflickr.com/5584/14653655350_8a243b1493_z.jpg"></p>
+<p>Finally, let’s see if we can save a file from Windows in our newly mapped network drive. We will open the change.log file that lists the features of Notepad++:</p>
+<p><img src="https://farm6.staticflickr.com/5565/14817386676_18c1d7bc60_o.png"></p>
+<p>and try to save it in Z:\ as a plain text file (.txt extension); then let’s see if the file is visible in Linux:</p>
+<p><img src="https://farm4.staticflickr.com/3841/14817386656_fb09a95a65_o.png"></p>
+<h3>Enabling quotas</h3>
 
-<p><img src="https://farm4.staticflickr.com/3840/14700981001_af3ac40b65_z.jpg"></p>
-<p>This is one of those websites that extend beyond just Linux, but it is so useful that it deserves its place here. In short, an online development environment for C++. Just write your code in your navigator and run it. As a bonus, you get an auto-indentation feature, Ctrl+Z, and the possibility to share the URL with your buddy. This is just one of those crazy things that you can do from a simple browser.</p>
+<p>As a first step, we need to verify whether the current kernel has been compiled with quota support:</p>
+<pre>
+# cat /boot/config-$(uname -r) | grep -i config_quota
+</pre>
 
+<p><img src="https://farm4.staticflickr.com/3867/14837993054_081dc9b0dc_z.jpg"></p>
+<p>Each file system has up to five types of quota limits that can be enforced on it: user soft limit, user hard limit, group soft limit, group hard limit, and grace time.</p>
+<p>We will now enable quotas for the /home file system by adding the usrquota and grpquota mount options to the existing defaults option in the line that corresponds to the /home filesystem in the /etc/fstab file, and we will remount the file system in order to apply the changes:</p>
+<p><img src="https://farm6.staticflickr.com/5561/14653806067_b8b0dc2333_z.jpg"></p>
+<p>Next, we need to create two files that will serve as the databases for user and group quotas: <b>aquota.user</b> and <b>aquota.group</b>, respectively, in <b>/home</b>. Then, we will generate the table of current disk usage per file system with quotas enabled:</p>
+<pre>
+# quotacheck -cug /home 
+# quotacheck -avugm
+</pre>
 
-<h3>9. <a href="Copy.sh">Copy.sh</a></h3>
+<p><img src="https://farm6.staticflickr.com/5584/14837265971_654e8f3bc0_o.png"></p>
+<p>Even though we have enabled quotas for the /home file system, we have not yet set any limits for any user or group. Check for quota information for existing user/group:</p>
+<pre>
+# quota -u username 
+# quota -g groupname
+</pre>
 
-<p><img src="https://farm4.staticflickr.com/3883/14517479870_da521931eb_z.jpg"></p>
-<p>In continuation with crazy things that you can do from your browser, copy.sh lets you run a virtual machine online. Just that. It gained fame relatively recently, but the idea is just insane. From the navigator you can select among the defaults virtual images to run, or upload your own iso file. The code for that feat has been shared on GitHub. Just amazing.</p>
+<p><img src="https://farm6.staticflickr.com/5582/14653735848_8de88d69c4_o.png"></p>
+<p>Finally, the last couple of steps consist of assigning the quotas per user and / or group with the quotatool command (note that this task can also be performed by using edquota, but quotatool is more straightforward and less error-prone).</p>
+<p>To set the soft limits to 4 MB and the hard limit to 5 MB for the user called xmodulo, and 10 MB / 15 MB for the xmodulo group:</p>
+<pre>
+# quotatool -u xmodulo -bq 4M -l '5 Mb' /home 
+# quotatool -g xmodulo -bq 10M -l '15 Mb' /home
+</pre>
 
-
-<h3>10. <a href="Commandlinefu.com">Commandlinefu.com</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3887/14517495938_ca3b831ca9_z.jpg"></p>
-<p>We all keep a big snippet of command-line “gems” on our computer. commandlinefu’s goal is to release those snippets to the world. As a collaborative database, it resembles the Wikipedia of the command line. Everyone is free to register and post their favorite command on the website for everyone else to see. You will then be able to access that knowledge from everywhere and share it with everyone. If you are interested in mastering the shell, commandlinefu also proposes great features like random commands and a news feed to learn something new every day.</p>
-
-
-<h3>11. <a href="Alias.sh">Alias.sh</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3868/14701762124_a7b3547aca_z.jpg"></p>
-<p>Another collaborative database, alias.sh (I love the URL) is a bit like commandlinefu but for shell aliases. You can share and discover useful aliases which will make your CLI experience so much better. I personally like the alias to get the dimensions of a picture.  </p><br><pre><br>1 function dim(){ sips $1 -g pixelWidth -g pixelHeight }<br></pre><br><p>All the seconds you save with alias.sh probably accumulate with time, and turn to years by the end of your life.</p>
-
-
-<h3>12. <a href="Distrowatch.com">Distrowatch.com</a></h3>
-
-<p><img src="https://farm3.staticflickr.com/2910/14681149996_50a45bff78_z.jpg"></p>
-<p>Who does not know Distrowatch? Besides giving a precise ranking of Linux distributions based on their website popularity, Distrowatch is also a very useful database. Whether you are looking for a new distribution to try, or just curious, it presents an exhaustive account of every Linux you can find, with information like which default desktop environment it uses, or package system, or its default applications. And all the versions, and with easily accessible download links. In a word, the Linux database.</p>
-
-
-<h3>13. <a href="Linuxmanpages.com">Linuxmanpages.com</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3911/14704165765_8e30cb3d3f_z.jpg"></p>
-<p>Everything is in the URL: access the manual pages for popular commands from anywhere. Not really sure if this would actually be useful for Linux users as you can access that from your actual terminal, but the intent is remarkable.</p>
-
-
-<h3>14. <a href="AwesomeCow.com">AwesomeCow.com</a></h3>
-
-<p><img src="https://farm6.staticflickr.com/5558/14704165965_02b10ee293_z.jpg"></p>
-<p>This is maybe a bit less hardcore Linux, but definitely useful to some. Awesomecow is a search engine for finding alternatives to Windows software on Linux. It can be helpful for anyone migrating to the penguin, or nostalgic of a Windows program. I see this as a strength, showing that Linux can compete with the professional spheres when it comes sot software quality. Or at least try to.</p>
-
-
-<h3>15. <a href="PenguSpy.com">PenguSpy.com</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3904/14517495728_f6877e8e3b_z.jpg"></p>
-<p>Before Steam started to show up on Linux, gaming was probably one of the penguin’s weakness. But the website penguspy made the effort of fighting that weakness by collecting all Linux compatible games in a database with a sexy interface. Games can be sorted by categories, release dates, ratings, etc. I really hope that websites like this are not going to disappear because of Steam as it remains one of my favorites of this list.</p>
-
-
-<h3>16. <a href="http://lxr.free-electrons.com/" target="_blank" rel="noopener">Linux Cross Reference by Free Electrons</a></h3>
-
-<p><img src="https://farm4.staticflickr.com/3913/14712049464_6b666e2cfa_z.jpg"></p>
-<p>Finally, for all the experts and the curious, lxr is the anagram from Linux Cross Reference, and allows us to interactively view the Linux Kernel code online. The navigation is made easy via identifiers, and you can compare the different versions of the files with a standard diff markup. The interface is sober and straight-forward, and this is just a website that perfectly illustrates the concept of open source.</p>
-
-<p>To conclude, there are a lot more websites which deserve to be listed, and this might be a topic for a part two to this post. But this is a good start. It serves as an appetizer to what can be found online as tools for Linux users. If you have any other pages that you would like to share, following this thematic, do so in the comments. And maybe contribute to a sequel to this list.</p>
-
+<p><img src="https://farm4.staticflickr.com/3888/14653806037_5438b5034e_z.jpg"></p>
+<p>And we can see the results in Windows 7 (3.98 MB free of 4.00 MB):</p>
+<p><img src="https://farm4.staticflickr.com/3919/14653805967_c2b1551869_o.png"></p>
 
       
     </div>

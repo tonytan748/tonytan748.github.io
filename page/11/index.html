@@ -123,135 +123,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-07-02T16:00:00.000Z"><a href="/2014/07/03/make-your-life-easier-with-virtualenvwrapper/">2014-07-03</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/07/03/make-your-life-easier-with-virtualenvwrapper/">Make your life easier with Virtualenvwrapper</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>When you do a lot of Python programming, you can make a mess of your system with Pip. Different apps need different requirements. One app needs version 1.2 of a package and another one needs 1.5. And then… you’re in trouble.</em></p>
-<p>When you want to know what packages have been installed by Pip, use this:</p>
-<pre>
-$ pip freeze
-</pre>
-
-<p>The result can be a very long list.</p>
-<p>For every project, whether it’s a simple application or a giant Django project, I create a new virtual environment with virtualenv. An easy way to do this is by using virtualenvwrapper.</p>
-<p></p><h3>Getting started with Virtualenv wrapper</h3><p></p>
-<pre>
-$ sudo pip install virtualenvwrapper
-</pre>
-There are some advanced settings which you can find in the manual.
-
-When installed, let's make a new environment called "testground".
-<pre>
-$ mkvirtualenv testground
-</pre>
-If your virtualenvwrapper is working well, you should see something like this:
-<pre>
-New python executable in testground/bin/python
-Installing Setuptools.........done.
-Installing Pip..............done.
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/predeactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/postdeactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/preactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/postactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/get_env_details
-
-(testground)yourname@yoursystem:~$ 
-</pre>
-
-<p>Take a look at the last line, which now says (testground) before the prompt. Your virtual environment is there, and your are in it.</p>
-<p>Now, do a pip freeze, it can result in something like this:</p>
-<pre>
-$ pip freeze
-argparse==1.2.1
-wsgiref==0.1.2
-</pre>
-
-<p>That list can be a lot shorter than the one outside the environment.</p>
-<p>You can now install something that only effects this environment. Let’s try Pillow, version 2.2.2.</p>
-<pre>
-$ pip install Pillow==2.2.2
-</pre>
-It will now try to install Pillow, when finished, do another pip fip freeze, and see if it's installed
-
-<h3>Switchting between virtualenvs</h3>
-Let's create another environment:
-<pre>
-$ mkvirtualenv coolapp
-</pre>
-once it's finished, it should have been activated automatically:
-<pre>
-...................done.
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/predeactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/postdeactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/preactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/postactivate
-virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/get_env_details
-(coolapp)yourname@yoursystem:~$ 
-</pre>
-Now, let's switch to fist the virtualenv we made by the magic word "workon":
-<pre>
-$ workon testground
-(testground)yourname@yoursystem:~$ 
-</pre>
-There you go, it's as simpel as that
-
-<h3>No site packages</h3>
-Like with vitualenv, you can tell virtualenvwapper not to use the systems sitepackages with --no-site-packages:
-<pre>
-$ mkvirtualenv anotherenv --no-site-packages
-</pre>
-<h3>Remove a virtual environment</h3>
-It's very easy to get rid of a virtual env by using rmvirtualenv:
-<pre>
-$ rmvirtualenv coolapp
-
-Removing coolapp...
-</pre>
-
-<p></p><h3>List all virtualenvs</h3><p></p>
-<pre>
-$lsvirtualenv
-</pre>
-
-<p></p><h3>List your sitepackages</h3><p></p>
-<pre>
-$ lssitepackages
-
-#can result in this:
-easy_install.py   Pillow-2.2.2-py2.7.egg-info  pkg_resources.pyc
-easy_install.pyc  pip                          setuptools
-_markerlib        pip-1.4.1-py2.7.egg-info     setuptools-0.9.8-py2.7.egg-info
-PIL               pkg_resources.py
-</pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2014-07-02T16:00:00.000Z"><a href="/2014/07/03/python-cgi-programming/">2014-07-03</a></time>
       
       
@@ -402,6 +273,135 @@ for param in os.environ.keys():
   print "<b>%20s</b>: %s<\br>" % (param, os.environ[param])
 </\br></\br></pre>
 
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-07-02T16:00:00.000Z"><a href="/2014/07/03/make-your-life-easier-with-virtualenvwrapper/">2014-07-03</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/03/make-your-life-easier-with-virtualenvwrapper/">Make your life easier with Virtualenvwrapper</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>When you do a lot of Python programming, you can make a mess of your system with Pip. Different apps need different requirements. One app needs version 1.2 of a package and another one needs 1.5. And then… you’re in trouble.</em></p>
+<p>When you want to know what packages have been installed by Pip, use this:</p>
+<pre>
+$ pip freeze
+</pre>
+
+<p>The result can be a very long list.</p>
+<p>For every project, whether it’s a simple application or a giant Django project, I create a new virtual environment with virtualenv. An easy way to do this is by using virtualenvwrapper.</p>
+<p></p><h3>Getting started with Virtualenv wrapper</h3><p></p>
+<pre>
+$ sudo pip install virtualenvwrapper
+</pre>
+There are some advanced settings which you can find in the manual.
+
+When installed, let's make a new environment called "testground".
+<pre>
+$ mkvirtualenv testground
+</pre>
+If your virtualenvwrapper is working well, you should see something like this:
+<pre>
+New python executable in testground/bin/python
+Installing Setuptools.........done.
+Installing Pip..............done.
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/predeactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/postdeactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/preactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/postactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/testground/bin/get_env_details
+
+(testground)yourname@yoursystem:~$ 
+</pre>
+
+<p>Take a look at the last line, which now says (testground) before the prompt. Your virtual environment is there, and your are in it.</p>
+<p>Now, do a pip freeze, it can result in something like this:</p>
+<pre>
+$ pip freeze
+argparse==1.2.1
+wsgiref==0.1.2
+</pre>
+
+<p>That list can be a lot shorter than the one outside the environment.</p>
+<p>You can now install something that only effects this environment. Let’s try Pillow, version 2.2.2.</p>
+<pre>
+$ pip install Pillow==2.2.2
+</pre>
+It will now try to install Pillow, when finished, do another pip fip freeze, and see if it's installed
+
+<h3>Switchting between virtualenvs</h3>
+Let's create another environment:
+<pre>
+$ mkvirtualenv coolapp
+</pre>
+once it's finished, it should have been activated automatically:
+<pre>
+...................done.
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/predeactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/postdeactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/preactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/postactivate
+virtualenvwrapper.user_scripts creating /home/yourname/.virtualenvs/coolapp/bin/get_env_details
+(coolapp)yourname@yoursystem:~$ 
+</pre>
+Now, let's switch to fist the virtualenv we made by the magic word "workon":
+<pre>
+$ workon testground
+(testground)yourname@yoursystem:~$ 
+</pre>
+There you go, it's as simpel as that
+
+<h3>No site packages</h3>
+Like with vitualenv, you can tell virtualenvwapper not to use the systems sitepackages with --no-site-packages:
+<pre>
+$ mkvirtualenv anotherenv --no-site-packages
+</pre>
+<h3>Remove a virtual environment</h3>
+It's very easy to get rid of a virtual env by using rmvirtualenv:
+<pre>
+$ rmvirtualenv coolapp
+
+Removing coolapp...
+</pre>
+
+<p></p><h3>List all virtualenvs</h3><p></p>
+<pre>
+$lsvirtualenv
+</pre>
+
+<p></p><h3>List your sitepackages</h3><p></p>
+<pre>
+$ lssitepackages
+
+#can result in this:
+easy_install.py   Pillow-2.2.2-py2.7.egg-info  pkg_resources.pyc
+easy_install.pyc  pip                          setuptools
+_markerlib        pip-1.4.1-py2.7.egg-info     setuptools-0.9.8-py2.7.egg-info
+PIL               pkg_resources.py
+</pre>
 
       
     </div>
@@ -1059,6 +1059,89 @@ Woof!
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-06-28T16:00:00.000Z"><a href="/2014/06/29/socket-client-and-server-in-python/">2014-06-29</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/06/29/socket-client-and-server-in-python/">Socket client and server in Python </a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>A sample example for connection server and client use socket in Python</em></p>
+<p>Client.py</p>
+<pre>
+import socket 
+s=socket.socket(socket.AF_INET,socket.SOCK_STREAM) 
+s.connect(('localhost',8081)) 
+s.send('Happy hacking') 
+data=s.recv(1024) 
+s.close() 
+print "Received:" 
+print data
+</pre>
+
+<p>Server.py</p>
+<pre>
+import socket 
+import sys 
+
+#Create a TCP/IP socket to listen on 
+server=socket.socket(socket.AF_INET,socket.SOCK_STREAM)  
+
+#Prevent from "address already in use" upon server restart 
+server.setsockopt(socket.SOL_SOCKET,socket.SO_REUSERADDR,1)  
+#Bind the socket to port 8081 on all interfaces 
+server_address=('localhost',8081) 
+print  'starting up on %s port %s' % server_address 
+server.bind(server_address)  
+
+#Listen for connections 
+server.listen(5)  
+
+#Wait for one incomming connection 
+connection,client_address=server.accept() 
+print 'connection from ', connection.getpeername()  
+
+#Let's receive something 
+data=connection.recv(4096) 
+if data: 
+    print "received ", repr(data)
+     #send it back nicely formatted
+     data=data.rstrip()
+     connection.send('%s\n%s\n%s\n' % ('-'*80,data.center(80),'-'*80))
+     print "Response sent!"
+#close the connection from our side 
+connection.shutdown(socket.SHUT_RD | socket.SHUT_WR) 
+connection.close() 
+print "Connection closed."  
+
+#Aa and stop listening 
+server.close()
+</pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-06-28T16:00:00.000Z"><a href="/2014/06/29/karrigell-tutorial/">2014-06-29</a></time>
       
       
@@ -1213,89 +1296,6 @@ Woof!
 </ul>
 <h2 id="Programming-Interface"><a href="#Programming-Interface" class="headerlink" title="Programming Interface"></a>Programming Interface</h2><p>The API pages document main data-structures and code available for use in Jekyll and Jekyll-Bootstrap. Consult these pages for how and where to use the data and code provided.</p>
 <h2 id="Jekyll-Introduction"><a href="#Jekyll-Introduction" class="headerlink" title="Jekyll Introduction"></a>Jekyll Introduction</h2><p>I highly recommend reading the Jekyll Introduction if you plan to customize your blog. The introduction is meant for core understanding of how and why Jekyll works the way it does. This will provide you with the proper context, knowledge-base, and fundamentals necessary to understand and be efficient in working with Jekyll and Jekyll-Bootstrap.</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-06-28T16:00:00.000Z"><a href="/2014/06/29/socket-client-and-server-in-python/">2014-06-29</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/06/29/socket-client-and-server-in-python/">Socket client and server in Python </a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><em>A sample example for connection server and client use socket in Python</em></p>
-<p>Client.py</p>
-<pre>
-import socket 
-s=socket.socket(socket.AF_INET,socket.SOCK_STREAM) 
-s.connect(('localhost',8081)) 
-s.send('Happy hacking') 
-data=s.recv(1024) 
-s.close() 
-print "Received:" 
-print data
-</pre>
-
-<p>Server.py</p>
-<pre>
-import socket 
-import sys 
-
-#Create a TCP/IP socket to listen on 
-server=socket.socket(socket.AF_INET,socket.SOCK_STREAM)  
-
-#Prevent from "address already in use" upon server restart 
-server.setsockopt(socket.SOL_SOCKET,socket.SO_REUSERADDR,1)  
-#Bind the socket to port 8081 on all interfaces 
-server_address=('localhost',8081) 
-print  'starting up on %s port %s' % server_address 
-server.bind(server_address)  
-
-#Listen for connections 
-server.listen(5)  
-
-#Wait for one incomming connection 
-connection,client_address=server.accept() 
-print 'connection from ', connection.getpeername()  
-
-#Let's receive something 
-data=connection.recv(4096) 
-if data: 
-    print "received ", repr(data)
-     #send it back nicely formatted
-     data=data.rstrip()
-     connection.send('%s\n%s\n%s\n' % ('-'*80,data.center(80),'-'*80))
-     print "Response sent!"
-#close the connection from our side 
-connection.shutdown(socket.SHUT_RD | socket.SHUT_WR) 
-connection.close() 
-print "Connection closed."  
-
-#Aa and stop listening 
-server.close()
-</pre>
 
       
     </div>

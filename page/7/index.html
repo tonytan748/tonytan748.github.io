@@ -759,25 +759,23 @@ def export_item_list(request):
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-10-18T16:00:00.000Z"><a href="/2014/10/19/Set-Mysql-In-Python34-Virtualenv/">2014-10-19</a></time>
+        <time datetime="2014-10-18T16:00:00.000Z"><a href="/2014/10/19/Python字符串替换的2种方法/">2014-10-19</a></time>
       
       
   
-    <h1 class="title"><a href="/2014/10/19/Set-Mysql-In-Python34-Virtualenv/">Set Mysql In Python34 Virtualenv</a></h1>
+    <h1 class="title"><a href="/2014/10/19/Python字符串替换的2种方法/">Python字符串替换的2种方法</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p><em>Set mysql in python34 virtualenv</em></p>
-<p>Normally if you install mysql in ubuntu python34 virtualenv, use</p>
-<pre class="code">sudo apt-get install mysqlclient</pre>
-
-<p>so it’s better use the follow install</p>
-<pre class="code">
-sudo apt-get install python3-dev libmysqlclient-dev
-sudo apt-get install mysqlclient
-</pre>
+        <p><em>Two ways replace character in Python</em></p>
+<p>python 字符串替换 是python 操作字符串的时候经常会碰到的问题，这里简单介绍下字符串替换方法。<br>python 字符串替换可以用2种方法实现:<br>1是用字符串本身的方法。<br>2用正则来替换字符串</p>
+<p>下面用个例子来实验下：<br>a = ‘hello word’<br>把a字符串里的word替换为python</p>
+<p>1用字符串本身的replace方法</p>
+<p><pre><br>a.replace(‘word’,’python’)<br></pre><br>输出的结果是hello python</p>
+<p>2用正则表达式来完成替换:</p>
+<p><pre><br>import re<br>strinfo = re.compile(‘word’)<br>b = strinfo.sub(‘python’,a)<br>print b<br></pre><br>输出的结果也是hello python</p>
 
       
     </div>
@@ -800,23 +798,25 @@ sudo apt-get install mysqlclient
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-10-18T16:00:00.000Z"><a href="/2014/10/19/Python字符串替换的2种方法/">2014-10-19</a></time>
+        <time datetime="2014-10-18T16:00:00.000Z"><a href="/2014/10/19/Set-Mysql-In-Python34-Virtualenv/">2014-10-19</a></time>
       
       
   
-    <h1 class="title"><a href="/2014/10/19/Python字符串替换的2种方法/">Python字符串替换的2种方法</a></h1>
+    <h1 class="title"><a href="/2014/10/19/Set-Mysql-In-Python34-Virtualenv/">Set Mysql In Python34 Virtualenv</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p><em>Two ways replace character in Python</em></p>
-<p>python 字符串替换 是python 操作字符串的时候经常会碰到的问题，这里简单介绍下字符串替换方法。<br>python 字符串替换可以用2种方法实现:<br>1是用字符串本身的方法。<br>2用正则来替换字符串</p>
-<p>下面用个例子来实验下：<br>a = ‘hello word’<br>把a字符串里的word替换为python</p>
-<p>1用字符串本身的replace方法</p>
-<p><pre><br>a.replace(‘word’,’python’)<br></pre><br>输出的结果是hello python</p>
-<p>2用正则表达式来完成替换:</p>
-<p><pre><br>import re<br>strinfo = re.compile(‘word’)<br>b = strinfo.sub(‘python’,a)<br>print b<br></pre><br>输出的结果也是hello python</p>
+        <p><em>Set mysql in python34 virtualenv</em></p>
+<p>Normally if you install mysql in ubuntu python34 virtualenv, use</p>
+<pre class="code">sudo apt-get install mysqlclient</pre>
+
+<p>so it’s better use the follow install</p>
+<pre class="code">
+sudo apt-get install python3-dev libmysqlclient-dev
+sudo apt-get install mysqlclient
+</pre>
 
       
     </div>
