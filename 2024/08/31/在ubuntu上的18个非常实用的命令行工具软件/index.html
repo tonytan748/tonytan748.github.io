@@ -1,0 +1,467 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="ubuntu,">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>在ubuntu上的18个非常实用的命令行工具软件 [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        在ubuntu上的18个非常实用的命令行工具软件
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2024-08-31T05:56:34.000Z">
+        2024-08-31
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/">ubuntu</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <h2 id="find-在文件系统中查找所需的文件"><a href="#find-在文件系统中查找所需的文件" class="headerlink" title="find - 在文件系统中查找所需的文件"></a><code>find</code> - 在文件系统中查找所需的文件</h2><ul>
+<li><p>在当前目录及其子目录下查找 C 语言的源程序：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find . -name *.c</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 /var 目录及其子目录下查找文件大小大于 100kb 的日志文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo find /var -name <span class="string">"*.log"</span> -size +100k</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在当前目录及其子目录下查找大于 2M 的临时文件，如果其所属用户不是 developer，则将其删除：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find . -name <span class="string">"*tmp"</span> -size +2M ! -user developer -<span class="built_in">exec</span> rm &#123;&#125; \;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>要求在删除文件前确认：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find . -name <span class="string">"*tmp"</span> -size +2M ! -user developer -ok rm &#123;&#125; \;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="grep-在文件中查找字符串"><a href="#grep-在文件中查找字符串" class="headerlink" title="grep - 在文件中查找字符串"></a><code>grep</code> - 在文件中查找字符串</h2><ul>
+<li><p>在当前目录下的文本文件中，查找含有 “hello” 字符串的文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ grep <span class="string">"hello"</span> *.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在当前目录及其子目录下的所有文件中，查找含有 “hello” 字符串的文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ grep -r <span class="string">"hello"</span> ./</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在当前目录及其子目录下的 C 语言源代码文件中，查找含有 “hello” 字符串的文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ grep -r <span class="string">"hello"</span> ./ --include=<span class="string">"*.c"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用正则表达式查找文件中的字符串:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ grep -r <span class="string">"uid-[0-9]*"</span> ./ --include=<span class="string">"*.c"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="cut-打印文件中指定的字段-列"><a href="#cut-打印文件中指定的字段-列" class="headerlink" title="cut - 打印文件中指定的字段(列)"></a><code>cut</code> - 打印文件中指定的字段(列)</h2><ul>
+<li><p>打印文件 /etc/fstab 文件中每行的前 12 个字符</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cut -c1-12 /etc/fstab</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打印文件 /etc/passwd 中第 1、6、7 字段的内容，字段分隔符为 “:”</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cut -d: -f1,6,7 /etc/passwd</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="bc-命令行上的计算器"><a href="#bc-命令行上的计算器" class="headerlink" title="bc - 命令行上的计算器"></a><code>bc</code> - 命令行上的计算器</h2><ul>
+<li><p>这是一个命令行下的交互式计算器，可以使用变量，还可以使用数学函数，quit 命令退出交互；</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ bc -l</span><br><span class="line">bc 1.07.1</span><br><span class="line">Copyright 1991-1994, 1997, 1998, 2000, 2004, 2006, 2008, 2012-2017 Free Software Foundation, Inc.</span><br><span class="line">This is free software with ABSOLUTELY NO WARRANTY.</span><br><span class="line">For details <span class="built_in">type</span> `warranty<span class="string">'. </span></span><br><span class="line"><span class="string">102+240*3.5</span></span><br><span class="line"><span class="string">942.0</span></span><br><span class="line"><span class="string">a=102</span></span><br><span class="line"><span class="string">b=240</span></span><br><span class="line"><span class="string">c=3.5</span></span><br><span class="line"><span class="string">a+b*c</span></span><br><span class="line"><span class="string">942.0</span></span><br><span class="line"><span class="string">b/c</span></span><br><span class="line"><span class="string">68.57142857142857142857</span></span><br><span class="line"><span class="string">sqrt(a)</span></span><br><span class="line"><span class="string">10.09950493836207795336</span></span><br><span class="line"><span class="string">quit</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>也可以在脚本中使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ x=100</span><br><span class="line">$ y=20</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"<span class="variable">$x</span>/<span class="variable">$y</span>"</span> | bc -l</span><br><span class="line">5.00000000000000000000</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"<span class="variable">$x</span>/<span class="variable">$y</span>"</span> | bc</span><br><span class="line">5</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="comm-比较两个已排序的文件"><a href="#comm-比较两个已排序的文件" class="headerlink" title="comm - 比较两个已排序的文件"></a><code>comm</code> - 比较两个已排序的文件</h2><ul>
+<li><p>为了演示这个命令，先制作两个简单的文本文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> -e <span class="string">"avi\ndani\nrina\nzina"</span>&gt;student1</span><br><span class="line">$ <span class="built_in">echo</span> -e <span class="string">"avi\ndina\nmeni\nzina"</span>&gt;student2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用 <code>comm</code> 比较这两个文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ cat student1</span><br><span class="line">avi</span><br><span class="line">dani</span><br><span class="line">rina</span><br><span class="line">zina</span><br><span class="line">$ cat student2</span><br><span class="line">avi</span><br><span class="line">dina</span><br><span class="line">meni</span><br><span class="line">zina</span><br><span class="line">$ comm student1 student2</span><br><span class="line">                avi</span><br><span class="line">dani</span><br><span class="line">        dina</span><br><span class="line">        meni</span><br><span class="line">rina</span><br><span class="line">                zina</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>第 1 列是第 1 个文件的内容，第 2 列是第 2 个文件内容，第 3 列是两个文件中相同的内容；</p>
+</li>
+</ul>
+<h2 id="diff-逐行比较两个文件"><a href="#diff-逐行比较两个文件" class="headerlink" title="diff - 逐行比较两个文件"></a><code>diff</code> - 逐行比较两个文件</h2><ul>
+<li><p>使用上面使用过的文件 student1 和 student2 进行比较：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ diff student1 student2</span><br><span class="line">2,3c2,3</span><br><span class="line">&lt; dani</span><br><span class="line">&lt; rina</span><br><span class="line">---</span><br><span class="line">&gt; dina</span><br><span class="line">&gt; meni</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其中 2,3c2,3 的含义是：将第 1 个文件中的第 2、3 行改为第 2 个文件的第 2、3 行，两个文件就一样了；</p>
+</li>
+</ul>
+<h2 id="df-文件系统的磁盘空间使用情况"><a href="#df-文件系统的磁盘空间使用情况" class="headerlink" title="df - 文件系统的磁盘空间使用情况"></a><code>df</code> - 文件系统的磁盘空间使用情况</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ df</span><br><span class="line">Filesystem     1K-blocks    Used Available Use% Mounted on</span><br><span class="line">udev              211908       0    211908   0% /dev</span><br><span class="line">tmpfs              48496     712     47784   2% /run</span><br><span class="line">/dev/vda1        6105676 4262704   1522648  74% /</span><br><span class="line">tmpfs             242468       0    242468   0% /dev/shm</span><br><span class="line">tmpfs               5120       0      5120   0% /run/lock</span><br><span class="line">tmpfs             242468       0    242468   0% /sys/fs/cgroup</span><br><span class="line">tmpfs              48492       0     48492   0% /run/user/1000</span><br></pre></td></tr></table></figure>
+<h2 id="du-估算文件系统的磁盘使用情况"><a href="#du-估算文件系统的磁盘使用情况" class="headerlink" title="du - 估算文件系统的磁盘使用情况"></a><code>du</code> - 估算文件系统的磁盘使用情况</h2><ul>
+<li><p>使用这个命令通常都要加上参数 -h，这样显示的结果才比较清楚：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ du -h</span><br><span class="line">4.0K    ./.config/procps</span><br><span class="line">8.0K    ./.config</span><br><span class="line">28K     ./.mitmproxy</span><br><span class="line">4.0K    ./.cache</span><br><span class="line">22M     ./frp</span><br><span class="line">51M     .</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可以不显示子目录，仅显示汇总结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ du -h -s</span><br><span class="line">51M     .</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>还可以指定子目录的深度，比如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ du -h -d 1</span><br><span class="line">8.0K    ./.config</span><br><span class="line">28K	    ./.mitmproxy</span><br><span class="line">4.0K    ./.cache</span><br><span class="line">22M     ./frp</span><br><span class="line">51M     .</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>与前面的 du -h 相比，这次没有显示目录 ./.config/procps，这是因为 -d 1 指定了目录深度只有 1 层。</p>
+</li>
+</ul>
+<h2 id="file-查看文件类型"><a href="#file-查看文件类型" class="headerlink" title="file - 查看文件类型"></a><code>file</code> - 查看文件类型</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ file mytest.c</span><br><span class="line">mytest.c: C <span class="built_in">source</span>, ASCII text, with CRLF line terminators</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ file /bin/cp</span><br><span class="line">/bin/cp: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=421e1abd8faf1cb290df755a558377c5d7def3b1, <span class="keyword">for</span> GNU/Linux 3.2.0, stripped</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ file /lib64/ld-linux-x86-64.so.2</span><br><span class="line">/lib64/ld-linux-x86-64.so.2: symbolic link to /lib/x86_64-linux-gnu/ld-2.31.so</span><br></pre></td></tr></table></figure>
+<h2 id="fold-打印文件内容时，在指定宽度位置添加”换行”"><a href="#fold-打印文件内容时，在指定宽度位置添加”换行”" class="headerlink" title="fold - 打印文件内容时，在指定宽度位置添加”换行”"></a><code>fold</code> - 打印文件内容时，在指定宽度位置添加”换行”</h2><ul>
+<li><p>为演示 fold 命令，先制作一个文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">"id-2093384 id-8984773 id-8725536 id-9828835 id-6455351 id-9873773 "</span>&gt;data1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行下面命令看一下打印效果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ cat data1</span><br><span class="line">id-2093384 id-8984773 id-8725536 id-9828835 id-6455351 id-9873773 </span><br><span class="line">$ fold -w 11 data1</span><br><span class="line">id-2093384 </span><br><span class="line">id-8984773 </span><br><span class="line">id-8725536 </span><br><span class="line">id-9828835 </span><br><span class="line">id-6455351 </span><br><span class="line">id-9873773</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="head-tail-显示文件的第一行-最后一行"><a href="#head-tail-显示文件的第一行-最后一行" class="headerlink" title="head/tail - 显示文件的第一行/最后一行"></a><code>head/tail</code> - 显示文件的第一行/最后一行</h2><ul>
+<li><p>显示 /etc/passwd 文件的最前面的 2 行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ head -2 /etc/passwd</span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示 /etc/passwd 文件的最后 2 行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ tail -2 /etc/passwd</span><br><span class="line">snap_daemon:x:584788:584788::/nonexistent:/usr/bin/<span class="literal">false</span></span><br><span class="line">glances:x:128:135::/var/lib/glances:/usr/sbin/nologin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示 /etc/passwd 文件的前 50 个字符：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ head -c 50 /etc/passwd</span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">daemon:x:1:1:daemo$</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="join-将两个具有公共字段的文件合并在一起"><a href="#join-将两个具有公共字段的文件合并在一起" class="headerlink" title="join - 将两个具有公共字段的文件合并在一起"></a><code>join</code> - 将两个具有公共字段的文件合并在一起</h2><ul>
+<li><p>为了演示 join 命令，先制作 2 个文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> -e <span class="string">"avi haifa\ndani aco\nrina tel aviv\nzina ny"</span>&gt;s1</span><br><span class="line">$ <span class="built_in">echo</span> -e <span class="string">"avi 1002\ndani 2000\nrina 3000\nzina 4255"</span>&gt;s2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示这两个文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ cat s1</span><br><span class="line">avi haifa</span><br><span class="line">dani aco</span><br><span class="line">rina tel aviv</span><br><span class="line">zina ny</span><br><span class="line">$ cat s2</span><br><span class="line">avi 1002</span><br><span class="line">dani 2000</span><br><span class="line">rina 3000</span><br><span class="line">zina 4255</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可以看到这两个文件的第一列是一样的，这就是这两个文件的公共字段，这样的文件就可以使用 join 合并：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ join -j1 1 -j2 1 s1 s2</span><br><span class="line">avi haifa 1002</span><br><span class="line">dani aco 2000</span><br><span class="line">rina tel aviv 3000</span><br><span class="line">zina ny 4255</span><br><span class="line">``` </span><br><span class="line">* 其中 -j1 1 表示第一个文件的第一个字段，-j2 1 表示第二个文件的第一个字段。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## `od` - 以各种不同的格式显示文件</span></span><br><span class="line">* 先制作一个文件</span><br><span class="line">```bash</span><br><span class="line">$ <span class="built_in">echo</span> -e <span class="string">"hello"</span>&gt;a1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>正常显示文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cat a1</span><br><span class="line">hello</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用 od 按八进制和字符显示文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ od -bc a1</span><br><span class="line">0000000 150 145 154 154 157 012</span><br><span class="line">          h   e   l   l   o  \n</span><br><span class="line">0000006</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>按 16 进制字和字符显示文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ od -xc a1</span><br><span class="line">0000000    6568    6c6c    0a6f</span><br><span class="line">          h   e   l   l   o  \n</span><br><span class="line">0000006</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>按 16 进制字节和字符显示文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ od -t x1c a1</span><br><span class="line">0000000  68  65  6c  6c  6f  0a</span><br><span class="line">          h   e   l   l   o  \n</span><br><span class="line">0000006</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="paste-合并文件行"><a href="#paste-合并文件行" class="headerlink" title="paste - 合并文件行"></a>paste - 合并文件行</h2><ul>
+<li><p>制作一个新文件 s3</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> -e <span class="string">"20003 france\n09388 uk\n20019 italy\n98377 spain"</span>&gt;s3</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用 paste 命令将前面用过的文件 s2 和 s3 文件合并</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ cat s2</span><br><span class="line">avi 1002</span><br><span class="line">dani 2000</span><br><span class="line">rina 3000</span><br><span class="line">zina 4255</span><br><span class="line">$ cat s3</span><br><span class="line">20003 france</span><br><span class="line">09388 uk</span><br><span class="line">20019 italy</span><br><span class="line">98377 spain</span><br><span class="line">$ paste s2 s3</span><br><span class="line">avi 1002	20003 france</span><br><span class="line">dani 2000	09388 uk</span><br><span class="line">rina 3000	20019 italy</span><br><span class="line">zina 4255	98377 spain</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="sort-对文件进行排序"><a href="#sort-对文件进行排序" class="headerlink" title="sort - 对文件进行排序"></a>sort - 对文件进行排序</h2><ul>
+<li>使用 s3 文件演示 sort 的作用：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ cat s3</span><br><span class="line">20003 france</span><br><span class="line">09388 uk</span><br><span class="line">20019 italy</span><br><span class="line">98377 spain</span><br><span class="line">$ sort s3</span><br><span class="line">09388 uk</span><br><span class="line">20003 france</span><br><span class="line">20019 italy</span><br><span class="line">98377 spain</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="uniq-从一个已排序的文件中删除重复的行"><a href="#uniq-从一个已排序的文件中删除重复的行" class="headerlink" title="uniq - 从一个已排序的文件中删除重复的行"></a><code>uniq</code> - 从一个已排序的文件中删除重复的行</h2><ul>
+<li>以前面用过的 s2 文件演示 uniq 命令<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> -e <span class="string">"dani 2000\nrina 3000"</span>&gt;&gt;s2</span><br><span class="line">$ cat s2</span><br><span class="line">avi 1002</span><br><span class="line">dani 2000</span><br><span class="line">rina 3000</span><br><span class="line">zina 4255</span><br><span class="line">dani 2000</span><br><span class="line">rina 3000</span><br><span class="line">$ sort s2&gt;s4</span><br><span class="line">$ cat s4</span><br><span class="line">avi 1002</span><br><span class="line">dani 2000</span><br><span class="line">dani 2000</span><br><span class="line">rina 3000</span><br><span class="line">rina 3000</span><br><span class="line">zina 4255</span><br><span class="line">$ uniq s4</span><br><span class="line">avi 1002</span><br><span class="line">dani 2000</span><br><span class="line">rina 3000</span><br><span class="line">zina 4255</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="split-将文件分割为多个部分"><a href="#split-将文件分割为多个部分" class="headerlink" title="split - 将文件分割为多个部分"></a><code>split</code> - 将文件分割为多个部分</h2><ul>
+<li>以 s2 文件为例，下面 split 命令的意思是：将 s2 文件按照 2 行一个文件分割为若干个文件，新文件名称以 gen_ 开头<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ cat s2</span><br><span class="line">avi 1002</span><br><span class="line">dani 2000</span><br><span class="line">rina 3000</span><br><span class="line">zina 4255</span><br><span class="line">dani 2000</span><br><span class="line">rina 3000</span><br><span class="line">$ split -2 s2 gen_</span><br><span class="line">$ cat gen_aa</span><br><span class="line">avi 1002</span><br><span class="line">dani 2000</span><br><span class="line">$ cat gen_ab</span><br><span class="line">rina 3000</span><br><span class="line">zina 4255</span><br><span class="line">$ cat gen_ac</span><br><span class="line">dani 2000</span><br><span class="line">rina 3000</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="wc-打印文件中的字符数、单词数和行数"><a href="#wc-打印文件中的字符数、单词数和行数" class="headerlink" title="wc - 打印文件中的字符数、单词数和行数"></a><code>wc</code> - 打印文件中的字符数、单词数和行数</h2><ul>
+<li><p>默认情况下，打印出文件的行数、单词数和字符数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ wc /etc/passwd</span><br><span class="line">  51   90 3070 /etc/passwd</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其中：51 是文件行数，90 是文件中的单词数，3070 是该文件的字符数；</p>
+</li>
+<li><p>可以使用参数 -l 表示行数，-w 表示单词数，-c 表示字符数；</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ wc -l /etc/passwd</span><br><span class="line">51 /etc/passwd</span><br><span class="line">$ wc -c /etc/passwd</span><br><span class="line">3070 /etc/passwd</span><br><span class="line">$ wc -w /etc/passwd</span><br><span class="line">90 /etc/passwd</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>还可以这样用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ps aux | wc -l</span><br><span class="line">381</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>表示 ps aux 这个命令的输出有 381 行。</p>
+</li>
+</ul>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#find-在文件系统中查找所需的文件"><span class="toc-text">find - 在文件系统中查找所需的文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#grep-在文件中查找字符串"><span class="toc-text">grep - 在文件中查找字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cut-打印文件中指定的字段-列"><span class="toc-text">cut - 打印文件中指定的字段(列)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bc-命令行上的计算器"><span class="toc-text">bc - 命令行上的计算器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#comm-比较两个已排序的文件"><span class="toc-text">comm - 比较两个已排序的文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#diff-逐行比较两个文件"><span class="toc-text">diff - 逐行比较两个文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#df-文件系统的磁盘空间使用情况"><span class="toc-text">df - 文件系统的磁盘空间使用情况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#du-估算文件系统的磁盘使用情况"><span class="toc-text">du - 估算文件系统的磁盘使用情况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#file-查看文件类型"><span class="toc-text">file - 查看文件类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fold-打印文件内容时，在指定宽度位置添加”换行”"><span class="toc-text">fold - 打印文件内容时，在指定宽度位置添加”换行”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#head-tail-显示文件的第一行-最后一行"><span class="toc-text">head/tail - 显示文件的第一行/最后一行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#join-将两个具有公共字段的文件合并在一起"><span class="toc-text">join - 将两个具有公共字段的文件合并在一起</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#paste-合并文件行"><span class="toc-text">paste - 合并文件行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sort-对文件进行排序"><span class="toc-text">sort - 对文件进行排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#uniq-从一个已排序的文件中删除重复的行"><span class="toc-text">uniq - 从一个已排序的文件中删除重复的行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#split-将文件分割为多个部分"><span class="toc-text">split - 将文件分割为多个部分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#wc-打印文件中的字符数、单词数和行数"><span class="toc-text">wc - 打印文件中的字符数、单词数和行数</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2024/08/20/什么是动态规划？在Python中如何利用动态规划解决实际问题？/" rel="next" title="什么是动态规划？在Python中如何利用动态规划解决实际问题？">
+          什么是动态规划？在Python中如何利用动态规划解决实际问题？
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2024/08/31/在ubuntu上的18个非常实用的命令行工具软件/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

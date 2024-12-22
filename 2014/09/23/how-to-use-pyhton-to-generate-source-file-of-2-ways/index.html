@@ -1,0 +1,427 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="Tony Tan">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>How to use Pyhton to generate source file of 2 ways [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        How to use Pyhton to generate source file of 2 ways
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2014-09-22T16:00:00.000Z">
+        2014-09-23
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p><em>How to use Pyhton to generate source file of 2 ways</em></p>
+<p>利用Python的字符串处理模块，开发人员可以编写脚本用来生成那些格式相同的C、C++、JAVA源程序、头文件和测试文件，从而避免大量的重复工作。本文概述两种利用Python string类生成java源代码的方法。</p>
+<h4><b>String Template</b></h4>
+
+<p>Template是一个好东西，可以将字符串的格式固定下来，重复利用。Template也可以让开发人员可以分别考虑字符串的格式和其内容了，无形中减轻了开发人员的压力。Template属于string中的一个类，有两个重要的方法：substitute和safe_substitute。替换时使用substitute()，若未能提供模板所需的全部参数值时会发生异常。使用safe_substitute() 则会替换存在的字典值,保留未存在的替换符号。要使用的话可用以下方式调用：</p>
+<pre>
+from string import Template
+</pre>
+
+<p>Template有个特殊标示符$,它具有以下的规则：</p>
+<p>（1）主要实现方式为$xxx,其中xxx是满足python命名规则的字符串，即不能以数字开头、不能为关键字等；</p>
+<p>（2）如果$xxx需要和其他字符串接触时，用{}将xxx包裹起来；</p>
+<p>开发人员通过编写template文件，并通过Template方法创建模板、substitute方法替换字符串即可快捷的生成所需的文件。编写template文件时一定要注意“$”的使用，因为Python会将以“$”开头的字符串理解成需要替换的变量。</p>
+<h4><b>replace</b></h4>
+
+<pre>
+str.replace(old,new[,max])
+</pre>
+
+<p>Python replace() 方法把字符串中的 old（旧字符串） 替换成 new(新字符串)，如果指定第三个参数max，则替换不超过 max 次。</p>
+<p>模板文件tenplate.java</p>
+<pre>
+/**
+* created since ${now}
+*/
+package com.alipay.mspcore.common.dal.ibatis;
+import java.util.Date;
+import junit.framework.Assert;
+import com.alipay.mspcore.common.dal.daointerface.${testObject}DAO;
+import com.alipay.mspcore.common.dal.dataobject.${testObject};
+import com.alipay.sofa.runtime.test.AnnotatedAutowireSofaTestCase;
+import com.iwallet.biz.common.util.money.Money;
+/**
+* @author ${author}
+* @version ${version}: MBIM_Service${testObject}_Device.java, ${now} ${author}
+*/
+public class Ibatis${testObject}DAOTester extends AnnotatedAutowireSofaTestCase {
+    @Override
+    public String[] getConfigurationLocations() {
+        return new String[] { "META-INF/spring/common-dal-db.xml",
+            "META-INF/spring/mobilespcore-common-dal-dao.xml",
+            "META-INF/spring/common-dal.xml" };
+    }
+    @Override
+    public String[] getResourceFilterNames() {
+        return new String[] { "META-INF/spring/common-dal-db.xml" };
+    }
+    @Override
+    public String[] getWebServiceConfigurationLocations() {
+        return new String[] {};
+    }
+    private ${testObject}DAO get${testObject}DAO() {
+        ${testObject}DAO dao = (${testObject}DAO) this.getBean("${testObjVarName}DAO", ${testObject}DAO.class, null);
+        return dao;
+    }
+    public void test${testObject}DAO() {
+        ${testObject}DAO configDAO = get${testObject}DAO();
+        Assert.assertNotNull(configDAO);
+    }
+    public void test() {
+        ${testObject}DO ${testObjVarName}DO = new ${testObject}DO();
+        ${testObjVarName}DO.setGmtCreate(new Date());
+        ${testObjVarName}DO.setGmtModified(new Date());
+        ${testObjVarName}DO.setId(10000);
+        ${testObject}DAO ${testObjVarName}DAO = get${testObject}DAO();
+        long result = ${testObjVarName}DAO.insert(${testObjVarName}DO);
+        Assert.assertTrue(result > 0);
+    }
+}
+</pre>
+
+<p>Python代码</p>
+<pre>
+import os
+import datetime
+from string import Template
+
+tplFilePath="D:\\template.java"
+path="D:\\code_gen"
+testObjectList=['Basic_connect','Sms','Phonebook']
+
+for testObj in testObjectList:
+    testObjVarName=testObj[0].lower() + testObj[1:]
+    filename="MBIM_Service_" + testObj + '_device.java'
+author='Aye'
+version='0.1'
+now=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+tplFile=open(tplFilePath)
+gFile=open(pathfilename,'w')
+
+lines=[]
+tmp=Template(tplFile.read())
+lines.append(tmp.substitute(author=author,now=now,version=version))
+gFile.weitelines(lines)
+
+tplFile.close()
+gFile.close()
+print 'generate %s over.~~' % (path+filename)
+
+</pre>
+
+<p>运行结果</p>
+<pre>
+generate D:\Project\Python\code_gen\MBIM_Service_Basic_connect_device.java over. ~ ~
+generate D:\Project\Python\code_gen\MBIM_Service_Sms_device.java over. ~ ~
+generate D:\Project\Python\code_gen\MBIM_Service_Phonebook_device.java over. ~ ~
+</pre>
+
+
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">String Template</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">replace</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2014/09/23/remote-control-with-telnetlib-python-recipe/" rel="next" title="Remote control with telnetlib (Python recipe)">
+          Remote control with telnetlib (Python recipe)
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2014/10/03/django-episode-5-rss-with-the-syndication-framework/" rel="prev" title="Django Episode 5 RSS With the Syndication Framework">
+            Django Episode 5 RSS With the Syndication Framework
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2014/09/23/how-to-use-pyhton-to-generate-source-file-of-2-ways/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

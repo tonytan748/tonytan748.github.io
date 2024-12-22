@@ -1,0 +1,545 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="Tony Tan">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>2 Articles for VIM Skills [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        2 Articles for VIM Skills
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2014-08-31T16:00:00.000Z">
+        2014-09-01
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p><em>here are 2 articles for how to use VIM skills.</em></p>
+<h1>First Article</h1>
+
+<p>本文一般情况下用&#60;C-字母&#62;（里边的字母一般大小写无所谓,除非特别注明）表示按住ctrl同时按下相关字母，命令前加一个i表示在插入模式下用这个命令</p>
+<p></p><h4>1. 选定文字 / 拷贝粘贴</h4><br><p></p>
+<pre>
+v为可视模式,可以选定多行。选定多行之后，可以用yy或者dd等等进行拷贝和剪切。
+p 是粘贴
+y 和d 可以直接拷贝或者剪切选定的内容
+yw是拷贝一个单词
+如果要复制整行的最简单办法就是V,y,p 就行了
+v是可以选定一行任意个字符的,V是行选定的,一次一整行，然后通过向下或向上移动光标而选定多行。
+对于v选定的,拷贝后就是这么多,选多少就拷贝多少,而V选定的,粘贴的话会自动换到下一行
+&#60;C-V&#62; 命令模式下,也是块选定,不过是列块选定
+</pre><br>
+
+<h4>2. 折叠代码</h4>
+<br>
+<pre>
+可以zf进行折叠, 用zo打开折叠,也可以方向键向右打开折叠,zc 关闭折叠(只要在被折叠的块中的任一个语句就行)
+</pre><br>
+
+<h4>3. 缩进代码</h4>
+<br>
+<pre>
+&#60;是左缩进, >是右缩进
+按v选定后按=就是自动格式化代码,自动缩进,内部的递归的缩进都做到了
+行左移&#60;&#60;，行右移&#62;&#62;，该命令用于调整源码缩进格式简便快速。
+</pre><br>
+
+<h4>4. 移动光标</h4>
+<br>
+<pre>
+%是从大括号的开始移动到大括号的结束位置
+:后边加行号就是跳到这一行
+&#60;C-O> 光标返回到以前的位置。相当于光标移动的“撤销”
+&#60;C-I> 光标返回到后来的位置。相当于光标移动的“恢复”
+</pre><br>
+
+<h4>5. 多文件编辑 / 缓冲区命令</h4>
+<br>
+<pre>
+vim下每一个打开的文件对应一个缓冲区（buffer）。
+多文件编辑会有两种情形，一种是在进入 vim 前所用的参数就是多个文件（这种情形称为 argument list）。另一种情形是进入 vim 后另外再开其它的文件（称为 buffer list）。不过都可以统称为buffer。
+</pre><br>
+
+<h5>5.1 打开文件</h5><br>
+<pre>
+vi flname1 flname2… flnameN
+将多个文件调入缓冲，是 argument list。
+:e filename
+这是在进入 vim 后，在不离开 vim 的情形下再开其它文件，只要您要编辑的档案是在目前目录，Tab 补全键还是可以使用。是buffer list。
+注意：:e 或者:new 或者:split 后边可以跟目录,这样就可以在目录下慢慢找要打开的文件了
+</pre><br>
+
+<h5>5.2 缓冲区跳转</h5><br>
+<pre>
+:n 编辑下一个文件。
+:2n 编辑下二个文件。
+:N 编辑前一个文件。注意，这种用法只能用于 argument list 的情形。
+:rew 回到首文件
+:args 查看当前编辑缓冲文件状态
+:e# 或 Ctrl-^ 编辑前一个档案，用于两文件互相编辑时相当好用。这种用法不管是 argument list 或buffer list 档案间皆可使用。 使用Ctrl－^ 命令更便捷，但如终端类型不正确该功能将无效。
+用:ls来显示缓冲区中的文件，编号后边有#的代表是前一个文件，可以通过:e#来进入，有%a的代表是当前文件，什么也没有的可以通过:bn来进入，这里的n代表文件编号。
+:b文件名或编号 移至该文件。
+在 :ls 中就会出示各文件的编号，这个编号在未离开 vim 前是不会变的。这个指令 elvis 也是可以使用。当然 :e#编号 也是可以的，这样的用法则是所有 vi clone 都通用了。
+在 buffers 中，减号 – 表示这个 buffer 并未载入，不过，不必担心，载入相当快速的。加号 + 表示这个 buffer 已经修改过了。
+:bn   buffer next。这里的n代表字母n
+:bl   buffer last。
+    以上两个指令 elvis 不适用。
+如果您是使用 vim 的 GUI，那就在菜单上就会有 Buffers 这个选项，可以很容易的知道及移动各buffer 间。
+</pre><br>
+
+<h5>5.3 移除缓冲区</h5><br>
+<pre>
+:bd(elete)   
+    buffer 在未离开 vim 前是不会移除的，可使用这个指令移除。其实移除它干什么呢？vim是您在叫用时才会载入的，因此这些 buffers 并不是像 cache 一般要占内存的。
+</pre><br>
+
+<h5>5.4 重新编辑</h5><br>
+<pre>
+放弃一修改过的文件，重新编辑。
+(1)使用命令 :q!强行退出后再vi flname重新进入。
+(2)使用命令 :e!强行重编辑更便捷。这样也是会打开文件，但会放弃目前编辑文件的改变，否则如果文件已有变动，vim 预设是不让您随便离开的。:e! 后不接什么的话，代表舍弃一切修改，重新载入编辑中文件。
+</pre><br>
+
+<h5>5.5 其他命令</h5><br>
+<pre>
+:files 或 :buffers 或 :ls 会列出目前 buffer 中的所有文件。
+在 elvis 中可使用 :b 来叫出 buffers。
+:f 或 Ctrl-g 显示目前编辑的文件名、是否经过修改及目前光标所在之位置。
+:f 文件名 改变编辑中的文件名。(file)
+:r 文件名 在光标所在处插入一个文件的内容。(read)
+:35 r 文件名 将文件插入至 35 行之后。
+gf 这是 vim 的特殊打开文件的方法，会打开光标所在处的 word 为名的文件，当然，这个文件要在当前目录内，否则会创建新文件。
+</pre><br>
+
+<h4>6. 查找命令</h4><br>
+<pre>
+用/查找单词后,n可以跳到下一个,N则是上一个,:nohls可以取消高亮
+查找时,:set ignorecase”项让VIM忽略大小写，“:set noignorecase” 来关闭这项功能。
+</pre><br>
+
+<h4>7. 修改文字</h4><br>
+<pre>
+cw:删除一个单词并进入插入模式,cc:删除一行并进入插入模式。
+r:然后输入的字母将替换当前字母并保持命令模式,R则是不停的替换(一个挨着一个)。
+0到行首,$到行尾。
+</pre><br>
+
+<h4>8. 函数间跳转</h4><br>
+<pre>
+ctrl+]和ctrl+T分别是查找函数的定义和返回,好像需要ctag的支持
+&#60;C-W&#62; i 跳转到光标所指标识符的定义行,是打开一个新的小窗口显示,记住要加个i,最好是找自己项目下的文件,否则找库函数的话还不如man.
+大写 K 看光标所指标识符的 man 帮助页
+</pre><br>
+
+<h4>9. 窗口命令</h4><br>
+
+<pre>
+&#60;C-W&#62; = ctrl+w
+:split 文件名 同时在一个页面显示多个文件的内容,类似多窗口,用&#60;C-W&#62;&#60;C-W&#62;切换当前窗口
+&#60;C-W&#62; f 切分显示光标在处的文件名，VIM 会在 path 中搜索该文件名，比如常用它打开 #include 语句中的文件
+&#60;C-W&#62; _ 当同时打开几个文件时，按 &#60;C-W&#62;_ 使当前窗口最大化
+用Ctrl-W命令指定光标移动：
+    Ctrl-W + 扩大窗口
+    Ctrl-W – 缩小窗口
+    Ctrl-W h 移动到窗口左边
+    Ctrl-W j 移动到窗口下边
+    Ctrl-W k 移动到窗口上边
+    Ctrl-W l 移动到窗口右边
+等于是&#60;C-W&#62;按下后,松开键盘,再按下一个命令就可以了.
+如果要关闭分割窗口可以用:close，剩下只有一个窗口的话就不能关了。
+多窗口是split，像用e打开多个文件是将文件放在缓冲区中。
+</pre><br>
+
+<h4>10. 自动完成</h4><br>
+
+<pre>
+i&#60;C-P&#62; 向上搜索，补全一个词
+i&#60;C-N&#62; 向下搜索，补全一个词
+i&#60;C-X&#62;&#60;C-L&#62; 补全一行。
+比如你写过一行 for (int i = 0; i &#60; 100; i++)，你想再写一模一样的一行，只要输入 for&#60;C-X&#62;&#60;C-L&#62;即可。如果补全出来的不是你想要的那一行，你可以按 &#60;C-P&#62; 或 &#60;C-N&#62; 选择上一个或下一个匹配行i&#60;C-X&#62;&#60;C-F&#62; 在文件系统中搜索，补全一个文件名
+如果按 &#60;C-P&#62; 或 &#60;C-N&#62; 补全一个词，在当前文件中没有找到匹配，VIM 将搜索 #include 语句中的文件，而文件的位置将在 path 中搜索。
+i&#60;C-Y&#62; 把上一行对应列的字符抄下来
+i&#60;C-E&#62; 把下一行对应列的字符抄上来,这两个都可以一直按下去,到了行尾自己会停的.
+</pre><br>
+
+<h4>11. 注释整块内容</h4><br>
+
+注释块的方法:
+<pre>
+&#60;C-V&#62; 选定要注释掉-的行 I   //   Esc
+I之后输入的东西就是插入到选定的行前边的,直至Esc.
+要去掉注释的办法:&#60;C-V&#62;选定注释符//,然后d
+列块选定后I是在前边都插入,A是在后边都插入
+&#60;C-V&#62;是按列块模式的选定,&#60;shift-V&#62;是行选定, v是普通选定
+</pre><br>
+
+
+<h4>12. 代码折叠</h4><br>
+<pre>
+在vimrc中添加：set fmd=indent保存。
+打开以前编辑过的代码文件，可以看到代码全部折叠了起来，控制模式下z+i，可以切换折叠与展开状态。
+移动光标到被这点的行上，z+o,z+c可以打开与折叠。→也可以打开光标下的折叠行。
+其他折叠指令：
+zo
+    將游標所在處的折疊打開。open。
+zc
+    將游標所在處已打開的內容再度折疊起來。close。
+zr
+    將全文的所有折疊依層次通通打開。reduce。
+zm
+    將全文已打開的折疊依層次通通再折疊起來。more。
+zR
+    作用和 zr 同，但會打開含巢狀折疊（折疊中又還有折疊）的所有折疊。
+zM
+    作用和 zm 同，但對於巢狀折疊亦有作用。
+zi
+    這是個切換，是折疊與不折疊指令間的切換。
+zn
+    打開全文的所有折疊。fold none。
+zN
+    這是 zn 的相對指令，回復所有的折疊。
+</pre><br>
+
+<h4>13. 其他命令</h4><br>
+
+<pre>
+u可以撤销上一步操作, ctrl+r可以恢复
+i&#60;C-O&#62;命令执行一个普通模式的命令，执行完毕后回到插入模式，不用多次Esc
+i&#60;C-V&#62;后续字符 输入特殊的 ASCII 字符或键。
+. 在光标当前位置处重复上一次操作
+:!命令行 执行一条外部命令
+</pre>
+
+
+<p></p><h1>Second Article</h1><br><br><br>说明:<br><br>以下的例子中 xxx 表示在命令模式下输入 xxx 并回车<br><br>以下的例子中 :xxx 表示在扩展模式下输入 xxx 并回车<br><br>小括号中的命令表示相关命令.<br><br>在编辑模式或可视模式下输入的命令会另外注明.<br><p></p>
+<p></p><h4>1. 查找</h4><p></p>
+<p><pre><br>   /xxx(?xxx)       表示在整篇文档中搜索匹配xxx的字符串, / 表示向下查找, ? 表示<br>                   向上查找.其中xxx可以是正规表达式,关于正规式就不多说了.<br>                   一般来说是区分大小写的, 要想不区分大小写, 那得先输入<br>                   :set ignorecase<br>                   查找到以后, 再输入 n 查找下一个匹配处, 输入 N 反方向查找.<br>   <em>(#)             当光标停留在某个单词上时, 输入这条命令表示查找与该单词匹配的<br>                   下(上)一个单词. 同样, 再输入 n 查找下一个匹配处, 输入 N 反方<br>                   向查找.<br>   g</em>(g#)           此命令与上条命令相似, 只不过它不完全匹配光标所在处的单词, 而<br>                   是匹配包含该单词的所有字符串.<br>   gd               本命令查找与光标所在单词相匹配的单词, 并将光标停留在文档的非<br>                   注释段中第一次出现这个单词的地方.<br>   %                本命令查找与光标所在处相匹配的反括号, 包括 () [] {}<br>   f(F)x            本命令表示在光标所在行进行查找, 查找光标右(左)方第一个x字符.<br>                   找到后:<br>                   输入 ; 表示继续往下找<br>                   输入 , 表示反方向查找<br></pre><br></p>
+<p></p><h4>2. 快速移动光标</h4><br><p></p>
+<p><pre><br>    在 vi 中, 移动光标和编辑是两件事, 正因为区分开来, 所以可以很方便的进行光标定<br>位和编辑. 因此能更快一点移动光标是很有用的.<br>   w(e)             移动光标到下一个单词.<br>   b                移动光标到上一个单词.<br>   0                移动光标到本行最开头.<br>   ^                移动光标到本行最开头的字符处.<br>   $                移动光标到本行结尾处.<br>   H                移动光标到屏幕的首行.<br>   M                移动光标到屏幕的中间一行.<br>   L                移动光标到屏幕的尾行.<br>   gg               移动光标到文档首行.<br>   G                移动光标到文档尾行.<br>   c-f              (即 ctrl 键与 f 键一同按下) 本命令即 page down.<br>   c-b              (即 ctrl 键与 b 键一同按下, 后同) 本命令即 page up.<br>   ‘’               此命令相当有用, 它移动光标到上一个标记处, 比如用 gd, * 等查<br>                   找到某个单词后, 再输入此命令则回到上次停留的位置.<br>   ‘.               此命令相当好使, 它移动光标到上一次的修改行.<br>   `.               此命令相当强大, 它移动光标到上一次的修改点.<br></pre><br></p>
+<p></p><h4>3. 拷贝, 删除与粘贴</h4><br><p></p>
+<p><pre><br>    在 vi 中 y 表示拷贝, d 表示删除, p 表示粘贴. 其中拷贝与删除是与光标移动命令<br>结合的, 看几个例子就能够明白了.<br>   yw               表示拷贝从当前光标到光标所在单词结尾的内容.<br>   dw               表示删除从当前光标到光标所在单词结尾的内容.<br>   y0               表示拷贝从当前光标到光标所在行首的内容.<br>   d0               表示删除从当前光标到光标所在行首的内容.<br>   y$               表示拷贝从当前光标到光标所在行尾的内容.<br>   d$               表示删除从当前光标到光标所在行尾的内容.<br>   yfa              表示拷贝从当前光标到光标后面的第一个a字符之间的内容.<br>   dfa              表示删除从当前光标到光标后面的第一个a字符之间的内容.<br>   特殊地:<br>   yy               表示拷贝光标所在行.<br>   dd               表示删除光标所在行.<br>   D                表示删除从当前光标到光标所在行尾的内容.<br>   关于拷贝, 删除和粘贴的复杂用法与寄存器有关, 可以自行查询.<br></pre><br></p>
+<p></p><h4>4. 数字与命令</h4><br><p></p>
+<p><pre><br>    在 vi 中数字与命令结合往往表示重复进行此命令, 若在扩展模式的开头出现则表示行<br>号定位. 如:<br>   5fx              表示查找光标后第 5 个 x 字符.<br>   5w(e)            移动光标到下五个单词.<br>   5yy              表示拷贝光标以下 5 行.<br>   5dd              表示删除光标以下 5 行.<br>   y2fa             表示拷贝从当前光标到光标后面的第二个a字符之间的内容.<br>   :12,24y          表示拷贝第12行到第24行之间的内容.<br>   :12,y            表示拷贝第12行到光标所在行之间的内容.<br>   :,24y            表示拷贝光标所在行到第24行之间的内容. 删除类似.<br></pre><br></p>
+<p></p><h4>5. 快速输入字符</h4><br><p></p>
+<p><pre><br>    在 vi 中, 不要求你输入每一个字符, 可以有很多种方法快速输入一些字符.<br>    使用 linux/unix 的同学一定有一个经验, 在命令行下输入命令时敲入头几个字符再按<br>TAB 系统就会自动将剩下的字符补齐, 假如有多个匹配则会打印出来. 这就是著名的命令<br>补齐(其实windows中也有文件名补齐功能). vi 中有许多的字符串补齐命令, 非常方便.<br>   c-p(c-n)         在编辑模式中, 输入几个字符后再输入此命令则 vi 开始向上(下)搜<br>                   索开头与其匹配的单词并补齐, 不断输入此命令则循环查找. 此命令<br>                   会在所有在这个 vim 程序中打开的文件中进行匹配.<br>   c-x-l            在编辑模式中, 此命令快速补齐整行内容, 但是仅在本窗口中出现的<br>                   文档中进行匹配.<br>   c-x-f            在编辑模式中, 这个命令表示补齐文件名. 如输入:<br>                   /usr/local/tom 后再输入此命令则它会自动匹配出:<br>                   /usr/local/tomcat/<br>   abbr             即缩写. 这是一个宏操作, 可以在编辑模式中用一个缩写代替另一个<br>                   字符串. 比如编写java文件的常常输入 System.out.println, 这很<br>                   是麻烦, 所以应该用缩写来减少敲字. 可以这么做:<br>                   :abbr sprt System.out.println<br>                   以后在输入sprt后再输入其他非字母符号, 它就会自动扩展为System.<br>                   out.println<br></pre><br>                </p>
+<p></p><h4>6. 替换</h4><br><p></p>
+<p><pre><br>    替换是 vi 的强项, 因为可以用正规表达式来匹配字符串.以下提供几个例子.<br>   :s/aa/bb/g       将光标所在行出现的所有包含 aa 的字符串中的 aa 替换为 bb<br>   :s/\/bb/g   将光标所在行出现的所有 aa 替换为 bb, 仅替换 aa 这个单词<br>   :%s/aa/bb/g      将文档中出现的所有包含 aa 的字符串中的 aa 替换为 bb<br>   :12,23s/aa/bb/g 将从12行到23行中出现的所有包含 aa 的字符串中的 aa 替换为 bb<br>   :12,23s/^/#/     将从12行到23行的行首加入 # 字符<br>   :%s= <em>$==        将所有行尾多余的空格删除<br>   :g/^\s</em>$/d        将所有不包含字符(空格也不包含)的空行删除.<br></pre><br>   </p>
+<p></p><h4>7. 多文件编辑</h4><br><p></p>
+<p><pre><br>    在一个 vim 程序中打开很多文件进行编辑是挺方便的.<br>   :sp(:vsp) 文件名     vim 将分割出一个横(纵)向窗口, 并在该窗口中打开新文件.<br>                       从 vim6.0 开始, 文件名可以是一个目录的名称, 这样, vim 会<br>                       把该目录打开并显示文件列表, 在文件名上按回车则在本窗口打<br>                       开该文件, 若输入 O 则在新窗口中打开该文件, 输入 ? 可以看<br>                       到帮助信息.<br>   :e 文件名            vim 将在原窗口中打开新的文件, 若旧文件编辑过, 会要求保存.<br>   c-w-w                vim 分割了好几个窗口怎么办? 输入此命令可以将光标循环定位<br>                       到各个窗口之中.<br>   :ls                  此命令查看本 vim 程序已经打开了多少个文件, 在屏幕的最下方<br>                       会显示出如下数据:<br>                       1    %a       “usevim.html”          行 162<br>                       2    #        “xxxxxx.html”          行 0<br>                       其中:<br>                       1                表示打开的文件序号, 这个序号很有用处.<br>                       %a               表示文件代号, % 表示当前编辑的文件,</pre></p>
+<pre><code>                # 表示上次编辑的文件
+&quot;usevim.html&quot;    表示文件名.
+行 162           表示光标位置.
+</code></pre><p>   :b 序号(代号)        此命令将指定序号(代号)的文件在本窗口打开, 其中的序号(代号)<br>                       就是用 :ls 命令看到的.<br>   :set diff            此命令用于比较两个文件, 可以用<br>                       :vsp filename<br>                       命令打开另一个文件, 然后在每个文件窗口中输入此命令,就能看<br>                       到效果了.<br><br>                       </p>
+<p></p><h4>8. 宏替换</h4><br><p></p>
+<p><pre><br>    vi 不仅可以用 abbr 来替换文字, 也可以进行命令的宏定义. 有些命令输起来很费劲,<br>因此我把它们定义到 - 上, 这样就很方便了.这些配置可以预先写到 ~/.vimrc<br>(windows 下为 $VIM/_vimrc) 中, 写进去的时候不用写前面的冒号.<br>   :nmap  :nohls               取消被搜索字串的高亮<br>   :nmap  w                   命令模式下转移光标到不同窗口<br>   :imap                  输入模式下运行<br>   :nmap  :%s= *$==           删除所有行尾多余的空格.<br>   :imap                同上<br>   :java 中: (注, 这里为什么说 java 中, 因为以下定义对其他文件格式不起作用, 下文<br>             会说到如何实现这一点)<br>   :nmap  :comp javac:mak -d . %<br>        此命令用 javac 编译 java 文件, 它会自动将光标定位到出错点. 不过这需要定<br>        义一个 javac.vim 文件在 $VIM/compiler 下, 在 javac.vim 里面只有两行字:<br>           setlocal makeprg=javac<br>           setlocal errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#<br>   :nmap  :comp ant:mak<br>        此命令用 ant 编译 java 文件, 它会自动将光标定位到出错点. 一般来说, 安装<br>        vim 后已经有了compiler/ant.vim文件, 因此这个命令可以直接使用. 但是需要<br>        在当前目录下有 build.xml 文件, 当然还必须安装 ant 才行.<br>   :nmap  :cl                  此命令用于查看所有的编译错误.<br>   :imap<br>   :nmap  :cc                  此命令用于查看当前的编译错误.<br>   :imap<br>   :nmap  :cn                  此命令用于跳到下一个出错位置.<br>   :imap<br>   :nmap  :cp                  此命令用于跳到上一个出错位置.<br>   :imap<br>   :nmap  :JavaBrowser<br>        此命令用于在窗口左部分割出一个新窗口, 里面的内容是 java 的资源树, 包括<br>        本文件中出现的类, 类的成员变量及成员方法, 就好像 JCreator 表现的那样.<br>        在这个窗口中输入 ? 会看到帮助. 嘿嘿, 很好用, 不过需要 ctags 支持.<br>   :imap<br></pre><br>   </p>
+<p></p><h4>9. TAB</h4><br><p></p>
+<p><pre><br>    TAB 就是制表符, 单独拿出来做一节是因为这个东西确实很有用.<br>    &gt;                   输入此命令则光标所在行向右移动一个 tab.<br>    5&gt;&gt;                  输入此命令则光标后 5 行向右移动一个 tab.<br>    :12,24&gt;              此命令将12行到14行的数据都向右移动一个 tab.<br>    :12,24&gt;&gt;             此命令将12行到14行的数据都向右移动两个 tab.<br>    那么如何定义 tab 的大小呢? 有人愿意使用 8 个空格位, 有人用4个, 有的用2个.<br>    有的人希望 tab 完全用空格代替, 也有的人希望 tab 就是 tab. 没关系, vim 能<br>    帮助你.以下的设置一般也都先写入配置文件中, 免得老敲.<br>    :set shiftwidth=4    设置自动缩进 4 个空格, 当然要设自动缩进先.<br>    :set sts=4           即设置 softtabstop 为 4. 输入 tab 后就跳了 4 格.<br>    :set tabstop=4       实际的 tab 即为 4 个空格, 而不是缺省的 8 个.<br>    :set expandtab       在输入 tab 后, vim 用恰当的空格来填充这个 tab.<br></pre><br>    </p>
+<p></p><h4>10. autocmd</h4><br><p></p>
+<p><pre><br>     这个命令十分的强大, 可以用这个命令实现对不同的文件格式应用不同的配置; 可以<br>在新建文件时自动添加上版权声明等等. 这些命令一般定义在 ~/.vimrc 这样的配置文件<br>里面. 由于他很强大, 所以我不能给出很具体的说明, 只能举几个例子, 详细的请看帮助.<br>   :autocmd!                删除所有之前的自动命令.<br>   autocmd FileType         java   source ~/.vim/files/java.vim<br>   autocmd FileType         java   source ~/.vim/files/jcommenter.vim<br>     以上两条命令让我在打开 java 文件时才应用后面提到的两个配置文件.<br>   autocmd BufNewFile       <em>.java   0r ~/.vim/files/skeletons/java.skel<br>     以上这条命令让我在新建 java 文件时自动加入 java.skel 文件的内容.<br>   autocmd BufNewFile       </em>.java   normal gnp<br>     以上这条命令让我在新建 java 文件时自动运行 gnp 命令, 这个命令进行一些特殊化<br>     处理, 比如将新 java 文件中的 <strong>date</strong> 替换成今天的日期什么的.<br></pre><br>     </p>
+<p></p><h4>11. 常用脚本</h4><br><p></p>
+<p><pre><br>     在 vim.sf.net 你可以发现很多脚本(script), 这些脚本常常有让你意想不到的作用.<br>我常用的有:<br>     jcommenter.vim         自动加入 javadoc 风格的注释.<br>     JBrowser.vim           类资源浏览. C, C++ 等可以用 Tlist<br>     还有许多有用的, 比如 checkstyle.vim 可以检验你的编程风格, jad.vim 可以直接<br>     反编译 .class 文件等等.<br></pre><br>     </p>
+<p></p><h4>12. 常用配置</h4><br><p></p>
+<p><pre><br>     在~/.vimrc 配置文件中你常常需要一些个性化配置. 比如上面写的一些宏定义, 一些<br>autocmd 定义等等. 比如:<br>     set suffixes=.bak,~,.o,.h,.info,.swp,.aux,.bbl,.blg,.dvi,.lof,.log,.lot,.ps,.toc<br>         这样在vim中打开文件时, 按 tab 键补齐文件名时它会忽略上述文件.<br>     set nu           显示行号<br>     set ai           设置自动缩进<br>     map Y y$         让 Y 和 D 一样, 要不然 Y 的本意和 yy 一样.<br></pre><br>    </p>
+<p></p><h4>13. 其他</h4><br><p></p>
+<p><pre><br>     还有许多有意思的命令, 记录在这里免得忘记.<br>     .                                                重复上次编辑命令.<br>     :g/^/exec “s/^/“.strpart(line(“.”).” “, 0, 4)    在行首插入行号<br>     :runtime! syntax/2html.vim                       转换 txt 成 html, 会按照你的颜色配置来转<br></pre><br><br></p>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">First Article</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">1. 选定文字 / 拷贝粘贴</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">2. 折叠代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">3. 缩进代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">4. 移动光标</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">5. 多文件编辑 / 缓冲区命令</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#null"><span class="toc-text">5.1 打开文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#null"><span class="toc-text">5.2 缓冲区跳转</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#null"><span class="toc-text">5.3 移除缓冲区</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#null"><span class="toc-text">5.4 重新编辑</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#null"><span class="toc-text">5.5 其他命令</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">6. 查找命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">7. 修改文字</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">8. 函数间跳转</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">9. 窗口命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">10. 自动完成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">11. 注释整块内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">12. 代码折叠</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">13. 其他命令</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Second Article</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">1. 查找</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">2. 快速移动光标</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">3. 拷贝, 删除与粘贴</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">4. 数字与命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">5. 快速输入字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">6. 替换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">7. 多文件编辑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">8. 宏替换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">9. TAB</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">10. autocmd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">11. 常用脚本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">12. 常用配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">13. 其他</span></a></li></ol></li></ol></li></ol></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2014/08/30/how-to-change-the-brightness-in-ubuntu1404/" rel="next" title="How to change the brightness in Ubuntu14.04">
+          How to change the brightness in Ubuntu14.04
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2014/09/09/Creating-an-Application-in-Kivy-Part-1/" rel="prev" title="建立一个kivy应用（翻译）----第一部分">
+            建立一个kivy应用（翻译）----第一部分
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2014/09/01/2-articles-for-vim-skills/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

@@ -1,0 +1,357 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="Tony Tan">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>Jekyll Quick Start [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        Jekyll Quick Start
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2014-06-28T16:00:00.000Z">
+        2014-06-29
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p><em>How to create github blog, how to install jekyll-bootstrap,run jekyll locally, create a post,create a page,publish,customize</em></p>
+<h1 id="Host-on-GitHub-in-3-minutes"><a href="#Host-on-GitHub-in-3-minutes" class="headerlink" title="Host on GitHub in 3 minutes"></a>Host on GitHub in 3 minutes</h1><p>Make sure to input your GitHub username so the instructions reflect the exact code you need to run to host your blog.</p>
+<h2 id="1-Create-a-New-Repository"><a href="#1-Create-a-New-Repository" class="headerlink" title="1. Create a New Repository"></a>1. Create a New Repository</h2><p>Go to your <a href="https://github.com" target="_blank" rel="noopener">https://github.com</a> and create a new repository named<br><br><strong>USERNAME.github.com</strong></p>
+<h2 id="2-Install-Jekyll-Bootstrap"><a href="#2-Install-Jekyll-Bootstrap" class="headerlink" title="2. Install Jekyll-Bootstrap"></a>2. Install Jekyll-Bootstrap</h2><p>Enter these commands into your terminal in a directory you want your blog to be:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/plusjade/jekyll-bootstrap.git USERNAME.github.com </span><br><span class="line">cd USERNAME.github.com </span><br><span class="line">git remote set-url origin git@github.com:USERNAME/USERNAME.github.com.git </span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
+<h2 id="3-Profit"><a href="#3-Profit" class="headerlink" title="3. Profit"></a>3. Profit</h2><p>After GitHub has a couple minutes to do its magic your blog will be publicly available at <a href="http://USERNAME.github.com" target="_blank" rel="noopener">http://USERNAME.github.com</a></p>
+<h1 id="Already-have-your-blog-on-GitHub"><a href="#Already-have-your-blog-on-GitHub" class="headerlink" title="Already have your blog on GitHub?"></a>Already have your blog on GitHub?</h1><p>I’ll assume you have the Jekyll gem installed on your local machine. Run Jekyll-Bootstrap locally to see what all the fuss is about:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/plusjade/jekyll-bootstrap.git </span><br><span class="line">$ cd jekyll-bootstrap </span><br><span class="line">$ jekyll serve</span><br></pre></td></tr></table></figure>
+<p>See it in action at <a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a>.</p>
+<h2 id="2-Run-Jekyll-Locally"><a href="#2-Run-Jekyll-Locally" class="headerlink" title="2. Run Jekyll Locally"></a>2. Run Jekyll Locally</h2><p>In order to preview your blog locally you’ll need to install the Jekyll ruby gem. Note gem dependencies will also be installed. You don’t have to run a local version but it helps if you want to preview your content before publishing.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gem install jekyll</span><br></pre></td></tr></table></figure>
+<p>If you run into a problem please consult the original Jekyll installation documentation. You can also create a support issue using GitHub Issues.</p>
+<p>Once the gem is installed you can navigate to your Jekyll-Bootstrap directory. If you’ve followed the homepage instructions this will be: USERNAME.github.com. Once in the directory you’ll run jekyll with server support:</p>
+<p><strong>remember to change USERNAME to your GitHub username.</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd USERNAME.github.com  </span><br><span class="line">$ jekyll serve</span><br></pre></td></tr></table></figure>
+<p>Your blog is now available at: <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a>.</p>
+<h2 id="3-Create-a-Post"><a href="#3-Create-a-Post" class="headerlink" title="3. Create a Post"></a>3. Create a Post</h2><p>Create posts easily via rake task:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rake post title=&quot;Hello World&quot;</span><br></pre></td></tr></table></figure>
+<p>The rake task automatically creates a file with properly formatted filename and YAML Front Matter. Make sure to specify your own title. By default, the date is the current date.</p>
+<p>The rake task will never overwrite existing posts unless you tell it to.</p>
+<h2 id="4-Create-a-Page"><a href="#4-Create-a-Page" class="headerlink" title="4. Create a Page"></a>4. Create a Page</h2><p>Create pages easily via rake task:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rake page name=&quot;about.md&quot;</span><br></pre></td></tr></table></figure>
+<p>Create a nested page:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rake page name=&quot;pages/about.md&quot;</span><br></pre></td></tr></table></figure>
+<p>Create a page with a “pretty” path:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rake page name=&quot;pages/about&quot; </span><br><span class="line"># this will create the file: ./pages/about/index.html</span><br></pre></td></tr></table></figure>
+<p>The rake task automatically creates a page file with properly formatted filename and YAML Front Matter as well as includes the Jekyll Bootstrap “setup” file.</p>
+<h2 id="5-Publish"><a href="#5-Publish" class="headerlink" title="5. Publish"></a>5. Publish</h2><p>After you’ve added posts or made changes to your theme or other files, simply commit them to your git repo and push the commits up to GitHub.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git add . </span><br><span class="line">$ git commit -m &quot;Add new content&quot; </span><br><span class="line">$ git push origin master</span><br></pre></td></tr></table></figure>
+<p>A GitHub post-commit hook will automatically deploy your changes to your hosted blog. You will receive a success or failure notice for every commit you make to your blog.</p>
+<h2 id="6-Customize"><a href="#6-Customize" class="headerlink" title="6. Customize"></a>6. Customize</h2><p>Jekyll-Bootstrap can be used as-is as a basic blogging platform. However there are plenty of ways to dig into deeper customization. The following outlines deeper Jekyll-Bootstrap customization techniques:</p>
+<h1 id="Themes"><a href="#Themes" class="headerlink" title="Themes"></a>Themes</h1><p>Jekyll-Bootstrap supports modular theming. Themes can co-exist and be enabled/disabled on demand. Editing, configuring, and creating themes is docummented in the Theming section.</p>
+<h2 id="Blog-Configuration"><a href="#Blog-Configuration" class="headerlink" title="Blog Configuration"></a>Blog Configuration</h2><p>Jekyll and Jekyll-Bootstrap has a simple but powerful Jekyll Configuration System. You can:</p>
+<ul>
+<li>Specify a custom permalink format for blog posts.</li>
+<li>Specify a commenting engine like disqus, intensedebate, livefyre, or custom.</li>
+<li>Specify an analytics engine like google, getclicky, or custom.</li>
+</ul>
+<h2 id="Programming-Interface"><a href="#Programming-Interface" class="headerlink" title="Programming Interface"></a>Programming Interface</h2><p>The API pages document main data-structures and code available for use in Jekyll and Jekyll-Bootstrap. Consult these pages for how and where to use the data and code provided.</p>
+<h2 id="Jekyll-Introduction"><a href="#Jekyll-Introduction" class="headerlink" title="Jekyll Introduction"></a>Jekyll Introduction</h2><p>I highly recommend reading the Jekyll Introduction if you plan to customize your blog. The introduction is meant for core understanding of how and why Jekyll works the way it does. This will provide you with the proper context, knowledge-base, and fundamentals necessary to understand and be efficient in working with Jekyll and Jekyll-Bootstrap.</p>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Host-on-GitHub-in-3-minutes"><span class="toc-text">Host on GitHub in 3 minutes</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Create-a-New-Repository"><span class="toc-text">1. Create a New Repository</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Install-Jekyll-Bootstrap"><span class="toc-text">2. Install Jekyll-Bootstrap</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Profit"><span class="toc-text">3. Profit</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Already-have-your-blog-on-GitHub"><span class="toc-text">Already have your blog on GitHub?</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Run-Jekyll-Locally"><span class="toc-text">2. Run Jekyll Locally</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Create-a-Post"><span class="toc-text">3. Create a Post</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Create-a-Page"><span class="toc-text">4. Create a Page</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Publish"><span class="toc-text">5. Publish</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Customize"><span class="toc-text">6. Customize</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Themes"><span class="toc-text">Themes</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Blog-Configuration"><span class="toc-text">Blog Configuration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Programming-Interface"><span class="toc-text">Programming Interface</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Jekyll-Introduction"><span class="toc-text">Jekyll Introduction</span></a></li></ol></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2014/06/29/karrigell-tutorial/" rel="next" title="Karrigell Tutorial">
+          Karrigell Tutorial
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2014/06/30/object-oriented-programming-in-python/" rel="prev" title="Object oriented programming in Python">
+            Object oriented programming in Python
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2014/06/29/jekyll-quick-start/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

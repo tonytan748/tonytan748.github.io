@@ -1,0 +1,451 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="Tony Tan">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>Configuring and Running Django + Celery in Docker Containers [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        Configuring and Running Django + Celery in Docker Containers
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2016-11-21T16:00:00.000Z">
+        2016-11-22
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p><em>After reading this blog post, you will be able to configure Celery with Django, PostgreSQL, Redis, and RabbitMQ, and then run everything in Docker containers.</em></p>
+<p>This blog translated from <a href="https://www.syncano.io/blog/configuring-running-django-celery-docker-containers-pt-1/" target="_blank" rel="noopener">here</a></p>
+<p>Today, you’ll learn how to set up a distributed task processing system for quick prototyping. You will configure Celery with Django, PostgreSQL, Redis, and RabbitMQ, and then run everything in Docker containers. You’ll need some working knowledge of <a href="http://www.docker.com/" target="_blank" rel="noopener">Docker</a> for this tutorial, which you can get in one my previous posts <a href="https://www.syncano.io/blog/getting-started-with-docker/" target="_blank" rel="noopener">here</a>.</p>
+<p><a href="https://www.djangoproject.com/" target="_blank" rel="noopener">Django</a> is a well-known Python web framework, and <a href="https://celery.readthedocs.org/en/latest/" target="_blank" rel="noopener">Celery</a> is a distributed task queue. You’ll use PostgreSQL as a regular database to store jobs, RabbitMQ as message broker, and Redis as a task storage backend.</p>
+<h1 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h1><p>When you build a web application, sooner or later you’ll have to implement some kind of offline task processing.</p>
+<p><strong>Example:</strong></p>
+<blockquote>
+<p>Alice wants to convert her cat photos from .jpg to .png or create a .pdf from her collection of .jpg cat files. Doing either of these tasks in one HTTP request will take too long to execute and will unnecessarily burden the web server - meaning we can’t serve other requests at the same time. The common solution is to execute the task in the background - often on another machine - and poll for the result.  </p>
+</blockquote>
+<p>A simple setup for an offline task processing could look like this:</p>
+<blockquote>
+<ol>
+<li>Alice uploads a picture.  </li>
+<li>Web server schedules job on worker.  </li>
+<li>Worker gets job and converts photo.  </li>
+<li>Worker creates some result of the task (in this case, a converted photo).  </li>
+<li>Web browser polls for the result.  </li>
+<li>Web browser gets the result from the server.  </li>
+</ol>
+</blockquote>
+<p>This setup looks clear, but it has a serious flaw - it doesn’t scale well. What if Alice has a lot of cat pictures and one server wouldn’t be enough to process them all at once? Or, if there was some other very big job and all other jobs would be blocked by it? Does she care if all of the images are processed at once? What if processing fails at some point?</p>
+<p>Frankly, there is a solution that won’t kill your machine every time you get a bigger selection of images. You need something between the web server and worker: a broker. The web server would schedule new tasks by communicating with the broker, and the broker would communicate with workers to actually execute these tasks. You probably also want to buffer your tasks, retry if they fail, and monitor how many of them were processed.</p>
+<p>You would have to create queues for tasks with different priorities, or for those suitable for different kinds of workers.</p>
+<p>All of this can be greatly simplified by using Celery - an open-source, distributed tasks queue. It works like a charm after you configure it - as long as you do so correctly.</p>
+<h1 id="How-Celery-is-built"><a href="#How-Celery-is-built" class="headerlink" title="How Celery is built"></a>How Celery is built</h1><p>Celery consists of:</p>
+<ul>
+<li>Tasks, as defined in your app</li>
+<li>A broker that routes tasks to workers and queues</li>
+<li>Workers doing the actual work</li>
+<li>A storage backend</li>
+</ul>
+<p>You can watch a more in-depth introduction to Celery <a href="https://www.youtube.com/watch?v=3cyq5DHjymw" target="_blank" rel="noopener">here</a> or jump straight to Celery’s getting started guide.</p>
+<h1 id="Your-setup"><a href="#Your-setup" class="headerlink" title="Your setup"></a>Your setup</h1><p>Start with the standard Django project structure. It can be created with django-admin, by running in shell:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ django-admin startproject myproject</span><br></pre></td></tr></table></figure>
+<p>Which creates a project structure:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">└── myproject</span><br><span class="line">    ├── manage.py</span><br><span class="line">    └── myproject</span><br><span class="line">        ├── __init__.py</span><br><span class="line">        ├── settings.py</span><br><span class="line">        ├── urls.py</span><br><span class="line">        └── wsgi.py</span><br></pre></td></tr></table></figure>
+<p>At the end of this tutorial, it’ll look like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── Dockerfile</span><br><span class="line">├── docker-compose.yml</span><br><span class="line">├── myproject</span><br><span class="line">│   ├── manage.py</span><br><span class="line">│   └── myproject</span><br><span class="line">│       ├── celeryconf.py</span><br><span class="line">│       ├── __init__.py</span><br><span class="line">│       ├── models.py</span><br><span class="line">│       ├── serializers.py</span><br><span class="line">│       ├── settings.py</span><br><span class="line">│       ├── tasks.py</span><br><span class="line">│       ├── urls.py</span><br><span class="line">│       ├── views.py</span><br><span class="line">│       └── wsgi.py</span><br><span class="line">├── requirements.txt</span><br><span class="line">├── run_celery.sh</span><br><span class="line">└── run_web.sh</span><br></pre></td></tr></table></figure>
+<h1 id="Creating-containers"><a href="#Creating-containers" class="headerlink" title="Creating containers"></a>Creating containers</h1><p>Since we are working with <a href="https://docs.docker.com/engine/installation/" target="_blank" rel="noopener">Docker 1.12</a>, we need a proper Dockerfile to specify how our image will be built.</p>
+<h2 id="Custom-container"><a href="#Custom-container" class="headerlink" title="Custom container"></a>Custom container</h2><p><strong>Dockerfile</strong></p>
+<blockquote>
+<p>#use base python image with python 2.7</p>
+</blockquote>
+<blockquote>
+<p>FROM python:2.7</p>
+</blockquote>
+<blockquote>
+<p>#add requirements.txt to the image</p>
+</blockquote>
+<blockquote>
+<p>ADD requirements.txt /app/requirements.txt</p>
+</blockquote>
+<blockquote>
+<p>#set working directory to /app/</p>
+</blockquote>
+<blockquote>
+<p>WORKDIR /app/</p>
+</blockquote>
+<blockquote>
+<p>#install python dependencies</p>
+</blockquote>
+<blockquote>
+<p>RUN pip install -r requirements.txt</p>
+</blockquote>
+<blockquote>
+<p>#create unprivileged user</p>
+</blockquote>
+<blockquote>
+<p>RUN adduser –disabled-password –gecos ‘’ myuser  </p>
+</blockquote>
+<p>Our dependencies are:</p>
+<p><strong>requirements.txt</strong></p>
+<blockquote>
+<p>Django==1.9.8<br>celery==3.1.20<br>djangorestframework==3.3.1<br>psycopg2==2.5.3<br>redis==2.10.5  </p>
+</blockquote>
+<p>I’ve frozen versions of dependencies to make sure that you will have a working setup. If you wish, you can update any of them, but it’s not guaranteed to work.</p>
+<h2 id="Choosing-images-for-services"><a href="#Choosing-images-for-services" class="headerlink" title="Choosing images for services"></a>Choosing images for services</h2><p>Now we only need to set up RabbitMQ, PostgreSQL, and Redis. Since Docker introduced its official library, I use its official images whenever possible. However, even these can be broken sometimes. When that happens, you’ll have to use something else.</p>
+<p>Here are images I tested and selected for this project:</p>
+<blockquote>
+<p><a href="https://github.com/docker-library/official-images" target="_blank" rel="noopener">Official PostgreSQL image</a><br><a href="https://registry.hub.docker.com/_/redis/" target="_blank" rel="noopener">Official Redis image</a><br><a href="https://hub.docker.com/_/rabbitmq/" target="_blank" rel="noopener">Official RabbitMQ image</a></p>
+</blockquote>
+<h2 id="Using-docker-compose-to-set-up-a-multicontainer-app"><a href="#Using-docker-compose-to-set-up-a-multicontainer-app" class="headerlink" title="Using docker-compose to set up a multicontainer app"></a>Using docker-compose to set up a multicontainer app</h2><p>Now you’ll use <a href="https://docs.docker.com/compose/" target="_blank" rel="noopener">docker-compose</a> to combine your own containers with the ones we chose in the last section.</p>
+<p><strong>docker-compose.yml</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">version: &apos;2&apos;</span><br><span class="line"></span><br><span class="line">services:  </span><br><span class="line">  # PostgreSQL database</span><br><span class="line">  db:</span><br><span class="line">    image: postgres:9.4</span><br><span class="line">    hostname: db</span><br><span class="line">    environment:</span><br><span class="line">      - POSTGRES_USER=postgres</span><br><span class="line">      - POSTGRES_PASSWORD=postgres</span><br><span class="line">      - POSTGRES_DB=postgres</span><br><span class="line">    ports:</span><br><span class="line">      - &quot;5432:5432&quot;</span><br><span class="line"></span><br><span class="line">  # Redis</span><br><span class="line">  redis:</span><br><span class="line">    image: redis:2.8.19</span><br><span class="line">    hostname: redis</span><br><span class="line"></span><br><span class="line">  # RabbitMQ</span><br><span class="line">  rabbit:</span><br><span class="line">    hostname: rabbit</span><br><span class="line">    image: rabbitmq:3.6.0</span><br><span class="line">    environment:</span><br><span class="line">      - RABBITMQ_DEFAULT_USER=admin</span><br><span class="line">      - RABBITMQ_DEFAULT_PASS=mypass</span><br><span class="line">    ports:</span><br><span class="line">      - &quot;5672:5672&quot;  # we forward this port because it&apos;s useful for debugging</span><br><span class="line">      - &quot;15672:15672&quot;  # here, we can access rabbitmq management plugin</span><br><span class="line"></span><br><span class="line">  # Django web server</span><br><span class="line">  web:</span><br><span class="line">    build:</span><br><span class="line">      context: .</span><br><span class="line">      dockerfile: Dockerfile</span><br><span class="line">    hostname: web</span><br><span class="line">    command: ./run_web.sh</span><br><span class="line">    volumes:</span><br><span class="line">      - .:/app  # mount current directory inside container</span><br><span class="line">    ports:</span><br><span class="line">      - &quot;8000:8000&quot;</span><br><span class="line">  # set up links so that web knows about db, rabbit and redis</span><br><span class="line">  links:</span><br><span class="line">    - db</span><br><span class="line">    - rabbit</span><br><span class="line">    - redis</span><br><span class="line">    depends_on:</span><br><span class="line">      - db</span><br><span class="line"></span><br><span class="line">  # Celery worker</span><br><span class="line">  worker:</span><br><span class="line">  build:</span><br><span class="line">  context: .</span><br><span class="line">      dockerfile: Dockerfile</span><br><span class="line">    command: ./run_celery.sh</span><br><span class="line">    volumes:</span><br><span class="line">      - .:/app</span><br><span class="line">    links:</span><br><span class="line">      - db</span><br><span class="line">      - rabbit</span><br><span class="line">      - redis</span><br><span class="line">    depends_on:</span><br><span class="line">      - rabbit</span><br></pre></td></tr></table></figure></p>
+<h1 id="Configuring-the-web-server-and-worker"><a href="#Configuring-the-web-server-and-worker" class="headerlink" title="Configuring the web server and worker"></a>Configuring the web server and worker</h1><p>You’ve probably noticed that both the worker and web server run some starting scripts. Here they are (make sure they’re executable):</p>
+<p><strong>run_web.sh</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line"></span><br><span class="line"># wait for PSQL server to start</span><br><span class="line">sleep 10</span><br><span class="line"></span><br><span class="line">cd myproject  </span><br><span class="line"># prepare init migration</span><br><span class="line">su -m myuser -c &quot;python manage.py makemigrations myproject&quot;  </span><br><span class="line"># migrate db, so we have the latest db schema</span><br><span class="line">su -m myuser -c &quot;python manage.py migrate&quot;  </span><br><span class="line"># start development server on public ip interface, on port 8000</span><br><span class="line">su -m myuser -c &quot;python manage.py runserver 0.0.0.0:8000&quot;</span><br></pre></td></tr></table></figure></p>
+<p><strong>run_celery.sh</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line"></span><br><span class="line"># wait for RabbitMQ server to start</span><br><span class="line">sleep 10</span><br><span class="line"></span><br><span class="line">cd myproject  </span><br><span class="line"># run Celery worker for our project myproject with Celery configuration stored in Celeryconf</span><br><span class="line">su -m myuser -c &quot;celery worker -A myproject.celeryconf -Q default -n default@%h&quot;</span><br></pre></td></tr></table></figure></p>
+<p>The first script - <strong>run_web.sh</strong> - will migrate the database and start the Django development server on port 8000.</p>
+<p>The second one , <strong>run_celery.sh</strong>, will start a Celery worker listening on a queue default.</p>
+<p>At this stage, these scripts won’t work as we’d like them to because we haven’t yet configured them. Our app still doesn’t know that we want to use PostgreSQL as the database, or where to find it (in a container somewhere). We also have to configure Redis and RabbitMQ.</p>
+<p>But before we get to that, there are some useful Celery settings that will make your system perform better. Below are the complete settings of this Django app.</p>
+<p><strong>myproject/settings.py</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line"></span><br><span class="line">from kombu import Exchange, Queue</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">BASE_DIR = os.path.dirname(os.path.dirname(__file__))</span><br><span class="line"></span><br><span class="line"># SECURITY WARNING: keep the secret key used in production secret!</span><br><span class="line">SECRET_KEY = &apos;megg_yej86ln@xao^+)it4e&amp;amp;ueu#!4tl9p1h%2sjr7ey0)m25f&apos;</span><br><span class="line"></span><br><span class="line"># SECURITY WARNING: don&apos;t run with debug turned on in production!</span><br><span class="line">DEBUG = True  </span><br><span class="line">TEMPLATE_DEBUG = True  </span><br><span class="line">ALLOWED_HOSTS = []</span><br><span class="line"></span><br><span class="line"># Application definition</span><br><span class="line"></span><br><span class="line">INSTALLED_APPS = (  </span><br><span class="line">    &apos;rest_framework&apos;,</span><br><span class="line">    &apos;myproject&apos;,</span><br><span class="line">    &apos;django.contrib.sites&apos;,</span><br><span class="line">    &apos;django.contrib.staticfiles&apos;,</span><br><span class="line"></span><br><span class="line">    # required by Django 1.9</span><br><span class="line">    &apos;django.contrib.auth&apos;,</span><br><span class="line">    &apos;django.contrib.contenttypes&apos;,</span><br><span class="line"></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">MIDDLEWARE_CLASSES = (  </span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">REST_FRAMEWORK = &#123;  </span><br><span class="line">    &apos;DEFAULT_PERMISSION_CLASSES&apos;: (&apos;rest_framework.permissions.AllowAny&apos;,),</span><br><span class="line">    &apos;PAGINATE_BY&apos;: 10</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ROOT_URLCONF = &apos;myproject.urls&apos;</span><br><span class="line"></span><br><span class="line">WSGI_APPLICATION = &apos;myproject.wsgi.application&apos;</span><br><span class="line"></span><br><span class="line"># Localization ant timezone settings</span><br><span class="line"></span><br><span class="line">TIME_ZONE = &apos;UTC&apos;  </span><br><span class="line">USE_TZ = True</span><br><span class="line"></span><br><span class="line">CELERY_ENABLE_UTC = True  </span><br><span class="line">CELERY_TIMEZONE = &quot;UTC&quot;</span><br><span class="line"></span><br><span class="line">LANGUAGE_CODE = &apos;en-us&apos;  </span><br><span class="line">USE_I18N = True  </span><br><span class="line">USE_L10N = True</span><br><span class="line"></span><br><span class="line"># Static files (CSS, JavaScript, Images)</span><br><span class="line"># https://docs.djangoproject.com/en/1.7/howto/static-files/</span><br><span class="line">STATIC_URL = &apos;/static/&apos;</span><br><span class="line"></span><br><span class="line"># Database Condocker-composeuration</span><br><span class="line">DATABASES = &#123;  </span><br><span class="line">    &apos;default&apos;: &#123;</span><br><span class="line">        &apos;ENGINE&apos;: &apos;django.db.backends.postgresql_psycopg2&apos;,</span><br><span class="line">        &apos;NAME&apos;: os.environ.get(&apos;DB_ENV_DB&apos;, &apos;postgres&apos;),</span><br><span class="line">        &apos;USER&apos;: os.environ.get(&apos;DB_ENV_POSTGRES_USER&apos;, &apos;postgres&apos;),</span><br><span class="line">        &apos;PASSWORD&apos;: os.environ.get(&apos;DB_ENV_POSTGRES_PASSWORD&apos;, &apos;postgres&apos;),</span><br><span class="line">        &apos;HOST&apos;: os.environ.get(&apos;DB_PORT_5432_TCP_ADDR&apos;, &apos;db&apos;),</span><br><span class="line">        &apos;PORT&apos;: os.environ.get(&apos;DB_PORT_5432_TCP_PORT&apos;, &apos;&apos;),</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># Redis</span><br><span class="line"></span><br><span class="line">REDIS_PORT = 6379  </span><br><span class="line">REDIS_DB = 0  </span><br><span class="line">REDIS_HOST = os.environ.get(&apos;REDIS_PORT_6379_TCP_ADDR&apos;, &apos;redis&apos;)</span><br><span class="line"></span><br><span class="line">RABBIT_HOSTNAME = os.environ.get(&apos;RABBIT_PORT_5672_TCP&apos;, &apos;rabbit&apos;)</span><br><span class="line"></span><br><span class="line">if RABBIT_HOSTNAME.startswith(&apos;tcp://&apos;):  </span><br><span class="line">    RABBIT_HOSTNAME = RABBIT_HOSTNAME.split(&apos;//&apos;)[1]</span><br><span class="line"></span><br><span class="line">BROKER_URL = os.environ.get(&apos;BROKER_URL&apos;,  </span><br><span class="line">                            &apos;&apos;)</span><br><span class="line">if not BROKER_URL:  </span><br><span class="line">    BROKER_URL = &apos;amqp://&#123;user&#125;:&#123;password&#125;@&#123;hostname&#125;/&#123;vhost&#125;/&apos;.format(</span><br><span class="line">        user=os.environ.get(&apos;RABBIT_ENV_USER&apos;, &apos;admin&apos;),</span><br><span class="line">        password=os.environ.get(&apos;RABBIT_ENV_RABBITMQ_PASS&apos;, &apos;mypass&apos;),</span><br><span class="line">        hostname=RABBIT_HOSTNAME,</span><br><span class="line">        vhost=os.environ.get(&apos;RABBIT_ENV_VHOST&apos;, &apos;&apos;))</span><br><span class="line"></span><br><span class="line"># We don&apos;t want to have dead connections stored on rabbitmq, so we have to negotiate using heartbeats</span><br><span class="line">BROKER_HEARTBEAT = &apos;?heartbeat=30&apos;  </span><br><span class="line">if not BROKER_URL.endswith(BROKER_HEARTBEAT):  </span><br><span class="line">    BROKER_URL += BROKER_HEARTBEAT</span><br><span class="line"></span><br><span class="line">BROKER_POOL_LIMIT = 1  </span><br><span class="line">BROKER_CONNECTION_TIMEOUT = 10</span><br><span class="line"></span><br><span class="line"># Celery configuration</span><br><span class="line"></span><br><span class="line"># configure queues, currently we have only one</span><br><span class="line">CELERY_DEFAULT_QUEUE = &apos;default&apos;  </span><br><span class="line">CELERY_QUEUES = (  </span><br><span class="line">    Queue(&apos;default&apos;, Exchange(&apos;default&apos;), routing_key=&apos;default&apos;),</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"># Sensible settings for celery</span><br><span class="line">CELERY_ALWAYS_EAGER = False  </span><br><span class="line">CELERY_ACKS_LATE = True  </span><br><span class="line">CELERY_TASK_PUBLISH_RETRY = True  </span><br><span class="line">CELERY_DISABLE_RATE_LIMITS = False</span><br><span class="line"></span><br><span class="line"># By default we will ignore result</span><br><span class="line"># If you want to see results and try out tasks interactively, change it to False</span><br><span class="line"># Or change this setting on tasks level</span><br><span class="line">CELERY_IGNORE_RESULT = True  </span><br><span class="line">CELERY_SEND_TASK_ERROR_EMAILS = False  </span><br><span class="line">CELERY_TASK_RESULT_EXPIRES = 600</span><br><span class="line"></span><br><span class="line"># Set redis as celery result backend</span><br><span class="line">CELERY_RESULT_BACKEND = &apos;redis://%s:%d/%d&apos; % (REDIS_HOST, REDIS_PORT, REDIS_DB)  </span><br><span class="line">CELERY_REDIS_MAX_CONNECTIONS = 1</span><br><span class="line"></span><br><span class="line"># Don&apos;t use pickle as serializer, json is much safer</span><br><span class="line">CELERY_TASK_SERIALIZER = &quot;json&quot;  </span><br><span class="line">CELERY_ACCEPT_CONTENT = [&apos;application/json&apos;]</span><br><span class="line"></span><br><span class="line">CELERYD_HIJACK_ROOT_LOGGER = False  </span><br><span class="line">CELERYD_PREFETCH_MULTIPLIER = 1  </span><br><span class="line">CELERYD_MAX_TASKS_PER_CHILD = 1000</span><br></pre></td></tr></table></figure>
+<p>Those settings will configure the Django app so that it will discover the PostgreSQL database, Redis cache, and Celery.</p>
+<p>Now, it’s time to connect Celery to the app. Create a file celeryconf.py and paste in this code:</p>
+<p><strong>myproject/celeryconf.py</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line"></span><br><span class="line">from celery import Celery  </span><br><span class="line">from django.conf import settings</span><br><span class="line"></span><br><span class="line">os.environ.setdefault(&quot;DJANGO_SETTINGS_MODULE&quot;, &quot;myproject.settings&quot;)</span><br><span class="line"></span><br><span class="line">app = Celery(&apos;myproject&apos;)</span><br><span class="line"></span><br><span class="line">CELERY_TIMEZONE = &apos;UTC&apos;</span><br><span class="line"></span><br><span class="line">app.config_from_object(&apos;django.conf:settings&apos;)  </span><br><span class="line">app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)</span><br></pre></td></tr></table></figure></p>
+<p>That should be enough to connect Celery to our app, so the run_X scripts will work. You can read more about first steps with Django and Celery <a href="http://celery.readthedocs.org/en/latest/django/first-steps-with-django.html" target="_blank" rel="noopener">here</a>.</p>
+<h1 id="Defining-tasks"><a href="#Defining-tasks" class="headerlink" title="Defining tasks"></a>Defining tasks</h1><p>Celery looks for tasks inside the tasks.py file in each Django app. Usually, tasks are created either with a decorator, or by inheriting the Celery Task Class.</p>
+<p>Here’s how you can create a task using decorator:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@app.task</span><br><span class="line">def power(n):  </span><br><span class="line">    &quot;&quot;&quot;Return 2 to the n&apos;th power&quot;&quot;&quot;</span><br><span class="line">    return 2 ** n</span><br></pre></td></tr></table></figure>
+<p>And here’s how you can create a task by inheriting after the Celery Task Class:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class PowerTask(app.Task):  </span><br><span class="line">    def run(self, n):</span><br><span class="line">    &quot;&quot;&quot;Return 2 to the n&apos;th power&quot;&quot;&quot;</span><br><span class="line">        return 2 ** n</span><br></pre></td></tr></table></figure>
+<p>Both are fine and good for slightly different use cases.</p>
+<p><strong>myproject/tasks.py</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">from functools import wraps</span><br><span class="line"></span><br><span class="line">from myproject.celeryconf import app  </span><br><span class="line">from .models import Job</span><br><span class="line"></span><br><span class="line"># decorator to avoid code duplication</span><br><span class="line"></span><br><span class="line">def update_job(fn):  </span><br><span class="line">    &quot;&quot;&quot;Decorator that will update Job with result of the function&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">    # wraps will make the name and docstring of fn available for introspection</span><br><span class="line">    @wraps(fn)</span><br><span class="line">    def wrapper(job_id, *args, **kwargs):</span><br><span class="line">        job = Job.objects.get(id=job_id)</span><br><span class="line">        job.status = &apos;started&apos;</span><br><span class="line">        job.save()</span><br><span class="line">        try:</span><br><span class="line">            # execute the function fn</span><br><span class="line">            result = fn(*args, **kwargs)</span><br><span class="line">            job.result = result</span><br><span class="line">            job.status = &apos;finished&apos;</span><br><span class="line">            job.save()</span><br><span class="line">        except:</span><br><span class="line">            job.result = None</span><br><span class="line">            job.status = &apos;failed&apos;</span><br><span class="line">            job.save()</span><br><span class="line">    return wrapper</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># two simple numerical tasks that can be computationally intensive</span><br><span class="line"></span><br><span class="line">@app.task</span><br><span class="line">@update_job</span><br><span class="line">def power(n):  </span><br><span class="line">    &quot;&quot;&quot;Return 2 to the n&apos;th power&quot;&quot;&quot;</span><br><span class="line">    return 2 ** n</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@app.task</span><br><span class="line">@update_job</span><br><span class="line">def fib(n):  </span><br><span class="line">    &quot;&quot;&quot;Return the n&apos;th Fibonacci number.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    if n &lt; 0:</span><br><span class="line">        raise ValueError(&quot;Fibonacci numbers are only defined for n &gt;= 0.&quot;)</span><br><span class="line">    return _fib(n)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def _fib(n):  </span><br><span class="line">    if n == 0 or n == 1:</span><br><span class="line">        return n</span><br><span class="line">    else:</span><br><span class="line">        return _fib(n - 1) + _fib(n - 2)</span><br><span class="line"></span><br><span class="line"># mapping from names to tasks</span><br><span class="line"></span><br><span class="line">TASK_MAPPING = &#123;  </span><br><span class="line">    &apos;power&apos;: power,</span><br><span class="line">    &apos;fibonacci&apos;: fib</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Building-an-API-for-scheduling-tasks"><a href="#Building-an-API-for-scheduling-tasks" class="headerlink" title="Building an API for scheduling tasks"></a>Building an API for scheduling tasks</h1><p>If you have tasks in your system, how do you run them? In this section, you’ll create a user interface for job scheduling. In a backend application, the API will be your user interface. Let’s use the <a href="http://www.django-rest-framework.org/" target="_blank" rel="noopener">Django REST Framework</a> for your API.</p>
+<p>To make it as simple as possible, your app will have one model and only one ViewSet (endpoint with many HTTP methods).</p>
+<p>Create your model, called Job, in <strong>myproject/models.py</strong>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">from django.db import models</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Job(models.Model):  </span><br><span class="line">    &quot;&quot;&quot;Class describing a computational job&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">    # currently, available types of job are:</span><br><span class="line">    TYPES = (</span><br><span class="line">        (&apos;fibonacci&apos;, &apos;fibonacci&apos;),</span><br><span class="line">        (&apos;power&apos;, &apos;power&apos;),</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    # list of statuses that job can have</span><br><span class="line">    STATUSES = (</span><br><span class="line">        (&apos;pending&apos;, &apos;pending&apos;),</span><br><span class="line">        (&apos;started&apos;, &apos;started&apos;),</span><br><span class="line">        (&apos;finished&apos;, &apos;finished&apos;),</span><br><span class="line">        (&apos;failed&apos;, &apos;failed&apos;),</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    type = models.CharField(choices=TYPES, max_length=20)</span><br><span class="line">    status = models.CharField(choices=STATUSES, max_length=20)</span><br><span class="line"></span><br><span class="line">    created_at = models.DateTimeField(auto_now_add=True)</span><br><span class="line">    updated_at = models.DateTimeField(auto_now=True)</span><br><span class="line">    argument = models.PositiveIntegerField()</span><br><span class="line">    result = models.IntegerField(null=True)</span><br><span class="line"></span><br><span class="line">    def save(self, *args, **kwargs):</span><br><span class="line">        &quot;&quot;&quot;Save model and if job is in pending state, schedule it&quot;&quot;&quot;</span><br><span class="line">        super(Job, self).save(*args, **kwargs)</span><br><span class="line">        if self.status == &apos;pending&apos;:</span><br><span class="line">            from .tasks import TASK_MAPPING</span><br><span class="line">            task = TASK_MAPPING[self.type]</span><br><span class="line">            task.delay(job_id=self.id, n=self.argument)</span><br></pre></td></tr></table></figure>
+<p>Then create a serializer, view, and URL configuration to access it.</p>
+<p><strong>myproject/serializers.py</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from rest_framework import serializers</span><br><span class="line"></span><br><span class="line">from .models import Job</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class JobSerializer(serializers.HyperlinkedModelSerializer):  </span><br><span class="line">    class Meta:</span><br><span class="line">        model = Job</span><br></pre></td></tr></table></figure>
+<p><strong>myproject/views.py</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from rest_framework import mixins, viewsets</span><br><span class="line"></span><br><span class="line">from .models import Job  </span><br><span class="line">from .serializers import JobSerializer</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class JobViewSet(mixins.CreateModelMixin,  </span><br><span class="line">                 mixins.ListModelMixin,</span><br><span class="line">                 mixins.RetrieveModelMixin,</span><br><span class="line">                 viewsets.GenericViewSet):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    API endpoint that allows jobs to be viewed or created.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    queryset = Job.objects.all()</span><br><span class="line">    serializer_class = JobSerializer</span><br></pre></td></tr></table></figure>
+<p><strong>myproject/urls.py</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">from django.conf.urls import url, include  </span><br><span class="line">from rest_framework import routers</span><br><span class="line"></span><br><span class="line">from myproject import views</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">router = routers.DefaultRouter()  </span><br><span class="line"># register job endpoint in the router</span><br><span class="line">router.register(r&apos;jobs&apos;, views.JobViewSet)</span><br><span class="line"></span><br><span class="line"># Wire up our API using automatic URL routing.</span><br><span class="line"># Additionally, we include login URLs for the browsable API.</span><br><span class="line">urlpatterns = [  </span><br><span class="line">    url(r&apos;^&apos;, include(router.urls)),</span><br><span class="line">    url(r&apos;^api-auth/&apos;, include(&apos;rest_framework.urls&apos;, namespace=&apos;rest_framework&apos;))</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>For completeness, there is also <strong>myproject/wsgi.py</strong>, defining WSGI config for the project:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import os  </span><br><span class="line">os.environ.setdefault(&quot;DJANGO_SETTINGS_MODULE&quot;, &quot;myproject.settings&quot;)</span><br><span class="line"></span><br><span class="line">from django.core.wsgi import get_wsgi_application  </span><br><span class="line">application = get_wsgi_application()</span><br></pre></td></tr></table></figure>
+<p>and <strong>manage.py</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env python</span><br><span class="line">import os  </span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:  </span><br><span class="line">    os.environ.setdefault(&quot;DJANGO_SETTINGS_MODULE&quot;, &quot;myproject.settings&quot;)</span><br><span class="line"></span><br><span class="line">    from django.core.management import execute_from_command_line</span><br><span class="line"></span><br><span class="line">    execute_from_command_line(sys.argv)</span><br></pre></td></tr></table></figure>
+<p>Leave <strong><strong>init</strong>.py</strong> empty.</p>
+<p>That’s all. Uh… lots of code. Luckily, everything is on <a href="https://github.com/Syncano/docker-django-celery" target="_blank" rel="noopener">GitHub</a>, so you can just fork it.</p>
+<h1 id="Running-the-setup"><a href="#Running-the-setup" class="headerlink" title="Running the setup"></a>Running the setup</h1><p>Since everything is run from Docker Compose, make sure you have both Docker and Docker Compose installed before you try to start the app:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cd /path/to/myproject/where/is/docker-compose.yml</span><br><span class="line">$ docker-compose build</span><br><span class="line">$ docker-compose up</span><br></pre></td></tr></table></figure>
+<p>The last command will start five different containers, so just start using your API and have some fun with Celery in the meantime.</p>
+<h1 id="Accessing-the-API"><a href="#Accessing-the-API" class="headerlink" title="Accessing the API"></a>Accessing the API</h1><p>Navigate in your browser to 127.0.0.1:8000 to browse your API and schedule some jobs.</p>
+<h1 id="Scale-things-out"><a href="#Scale-things-out" class="headerlink" title="Scale things out"></a>Scale things out</h1><p>Currently, we have only one instance of each container. We can get information about our group of containers with the docker-compose ps command.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ docker-compose ps</span><br><span class="line">           Name                          Command               State                                        Ports                                      </span><br><span class="line">------------------------------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line">dockerdjangocelery_db_1       /docker-entrypoint.sh postgres   Up      0.0.0.0:5432-&gt;5432/tcp  </span><br><span class="line">dockerdjangocelery_rabbit_1   /docker-entrypoint.sh rabb ...   Up      0.0.0.0:15672-&gt;15672/tcp, 25672/tcp, 4369/tcp, 5671/tcp, 0.0.0.0:5672-&gt;5672/tcp  </span><br><span class="line">dockerdjangocelery_redis_1    /entrypoint.sh redis-server      Up      6379/tcp  </span><br><span class="line">dockerdjangocelery_web_1      ./run_web.sh                     Up      0.0.0.0:8000-&gt;8000/tcp  </span><br><span class="line">dockerdjangocelery_worker_1   ./run_celery.sh                  Up</span><br></pre></td></tr></table></figure>
+<p>Scaling out a container with docker-compose is extremely easy. Just use the docker-compose scale command with the container name and amount:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ docker-compose scale worker=5</span><br><span class="line">Creating and starting dockerdjangocelery_worker_2 ... done  </span><br><span class="line">Creating and starting dockerdjangocelery_worker_3 ... done  </span><br><span class="line">Creating and starting dockerdjangocelery_worker_4 ... done  </span><br><span class="line">Creating and starting dockerdjangocelery_worker_5 ... done</span><br></pre></td></tr></table></figure>
+<p>Output says that docker-compose just created an additional four worker containers for us. We can double-check it with the docker-compose ps command again:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ docker-compose ps</span><br><span class="line">           Name                          Command               State                                        Ports                                      </span><br><span class="line">------------------------------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line">dockerdjangocelery_db_1       /docker-entrypoint.sh postgres   Up      0.0.0.0:5432-&gt;5432/tcp  </span><br><span class="line">dockerdjangocelery_rabbit_1   /docker-entrypoint.sh rabb ...   Up      0.0.0.0:15672-&gt;15672/tcp, 25672/tcp, 4369/tcp, 5671/tcp, 0.0.0.0:5672-&gt;5672/tcp  </span><br><span class="line">dockerdjangocelery_redis_1    /entrypoint.sh redis-server      Up      6379/tcp  </span><br><span class="line">dockerdjangocelery_web_1      ./run_web.sh                     Up      0.0.0.0:8000-&gt;8000/tcp  </span><br><span class="line">dockerdjangocelery_worker_1   ./run_celery.sh                  Up  </span><br><span class="line">dockerdjangocelery_worker_2   ./run_celery.sh                  Up  </span><br><span class="line">dockerdjangocelery_worker_3   ./run_celery.sh                  Up  </span><br><span class="line">dockerdjangocelery_worker_4   ./run_celery.sh                  Up  </span><br><span class="line">dockerdjangocelery_worker_5   ./run_celery.sh                  Up</span><br></pre></td></tr></table></figure>
+<p>You’ll see there five powerful Celery workers. Nice!</p>
+<h1 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h1><p>Congrats! You just married Django with Celery to build a distributed asynchronous computation system. I think you’ll agree it was pretty easy to build an API, and even easier to scale workers for it! However, life isn’t always so nice to us, and sometimes we have to troubleshoot.</p>
+<h3 id="Contribution"><a href="#Contribution" class="headerlink" title="Contribution"></a>Contribution</h3><p>Original article written by Justyna Ilczuk, updated by Michał Kobus.</p>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Motivation"><span class="toc-text">Motivation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#How-Celery-is-built"><span class="toc-text">How Celery is built</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Your-setup"><span class="toc-text">Your setup</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Creating-containers"><span class="toc-text">Creating containers</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Custom-container"><span class="toc-text">Custom container</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Choosing-images-for-services"><span class="toc-text">Choosing images for services</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-docker-compose-to-set-up-a-multicontainer-app"><span class="toc-text">Using docker-compose to set up a multicontainer app</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Configuring-the-web-server-and-worker"><span class="toc-text">Configuring the web server and worker</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Defining-tasks"><span class="toc-text">Defining tasks</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Building-an-API-for-scheduling-tasks"><span class="toc-text">Building an API for scheduling tasks</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Running-the-setup"><span class="toc-text">Running the setup</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Accessing-the-API"><span class="toc-text">Accessing the API</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Scale-things-out"><span class="toc-text">Scale things out</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Summary"><span class="toc-text">Summary</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Contribution"><span class="toc-text">Contribution</span></a></li></ol></li></ol></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2016/10/21/5-favorite-open-source-django-packages/" rel="next" title="5 favorite open source Django packages">
+          5 favorite open source Django packages
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2017/01/16/django-celery-simple-use/" rel="prev" title="django-celery simple use">
+            django-celery simple use
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2016/11/22/configuring-and-running-django--celery-in-docker-containers/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

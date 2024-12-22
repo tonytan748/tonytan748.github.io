@@ -1,0 +1,583 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="Tony Tan">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>How to use Python datetime and time [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        How to use Python datetime and time
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2014-11-26T16:00:00.000Z">
+        2014-11-27
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p><em>How to use Python datetime and time</em></p>
+<p></p><h2>Time method often used</h2><br>1.Get now time：<p></p>
+<pre>
+Use time method, get the now Timestamp
+In [42]: time.time()
+Out[42]: 1408066927.208922
+
+Change timestamp to time tuple: struct_time
+In [43]: time.localtime(time.time())
+Out[43]: time.struct_time(tm_year=2014, tm_mon=8, tm_mday=15, tm_hour=9, tm_min=42, tm_sec=20, tm_wday=4, tm_yday=227, tm_isdst=0)
+
+Formatted output desired time
+In [44]: time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+Out[44]: '2014-08-15 09:43:04'
+
+Connected to the text, when no parameters, the default is the output current time
+In [48]: time.strftime('%Y-%m-%d %H:%M:%S')
+Out[48]: '2014-08-15 09:46:53’
+
+Of course, can be achieved through the datetime module, as follows:
+In [68]: t = time.time()
+In [69]: datetime.datetime.fromtimestamp(t).strftime('%Y-%m-%d %H:%M:%S')
+Out[69]: '2014-08-15 10:04:51’
+
+Also, you can only use the datetime module:
+In [46]: datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+Out[46]: '2014-08-15 09:45:27’
+In [47]: datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
+Out[47]: '2014-08-15 09:46:10'
+
+</pre>
+
+<p>2.Get time difference,Calculation program execution time etc.</p>
+<pre>
+Use time module:
+In [75]: def t():
+   ....:     start = time.time()
+   ....:     time.sleep(10)
+   ....:     end = time.time()
+   ....:     print end - start
+   ....:
+
+In [76]: t()
+10.0014948845
+
+Use datetime module:
+In [49]: starttime = datetime.datetime.now()
+In [50]: endtime = datetime.datetime.now()
+In [51]: print (endtime - starttime).seconds
+6
+
+</pre>
+
+<p>3.Yesterday’s date calculations</p>
+<pre>
+In [52]: d1 = datetime.datetime.now()
+In [53]: d2 = d1 - datetime.timedelta(days=1)
+In [54]: d1
+Out[54]: datetime.datetime(2014, 8, 15, 9, 54, 10, 68665)
+In [55]: d2
+Out[55]: datetime.datetime(2014, 8, 14, 9, 54, 10, 68665)
+</pre>
+
+<p>4.Struct_time: time tuple into a timestamp</p>
+<pre>
+In [56]: datetime.datetime.now()
+Out[56]: datetime.datetime(2014, 8, 15, 9, 57, 52, 779893)
+
+In [57]: datetime.datetime.now().timetuple()
+Out[57]: time.struct_time(tm_year=2014, tm_mon=8, tm_mday=15, tm_hour=9, tm_min=58, tm_sec=12, tm_wday=4, tm_yday=227, tm_isdst=-1)
+
+In [58]: time.mktime(datetime.datetime.now().timetuple())
+Out[58]: 1408067904.0
+</pre>
+
+<p>5.strptime: time to convert a string to a time tuple struct_time.</p>
+<pre>
+In [73]: time.strftime('%Y-%m-%d %H:%M:%S')
+Out[73]: '2014-08-15 10:27:36'
+
+In [74]: time.strptime('2014-08-15 10:27:36','%Y-%m-%d %H:%M:%S')
+Out[74]: time.struct_time(tm_year=2014, tm_mon=8, tm_mday=15, tm_hour=10, tm_min=27, tm_sec=36, tm_wday=4, tm_yday=227, tm_isdst=-1)
+</pre>
+
+<p></p><h2>time and datetime</h2><br>Representing time in two ways<p></p>
+<p><br>1. timestamp (relative to 1970.1.1 00:00:00 seconds offset calculation), the time stamp is the only<br>2. Time tuples that (struct_time), a total of nine elements, respectively, with a timestamp struct_time because of the different time zones and different<br></p>
+
+<p></p><h4>time module commonly used method</h4><br>1.time.clock()<p></p>
+<pre>
+budong@budongdeMacBook-Pro:/tmp$ cat clock.py
+#!/usr/bin/env python
+import time
+if __name__ == '__main__':
+    time.sleep(1)
+    print "clock1:%s" % time.clock()
+    time.sleep(1)
+    print "clock2:%s" % time.clock()
+    time.sleep(1)
+    print "clock3:%s" % time.clock()
+
+Running:
+budong@budongdeMacBook-Pro:/tmp$ ./clock.py
+clock1:0.059173
+clock2:0.059299
+clock3:0.059416
+</pre>
+
+<p>2.time.sleep(secs)</p>
+<pre>
+Delayed the specified time to run a thread
+Suitable for a script, a sleep timer will then continue doing
+
+In [138]: while True:
+   .....:     time.sleep(3)
+   .....:     print time.strftime('%H:%M:%S')
+   .....:
+17:21:35
+17:21:38
+17:21:41
+17:21:44
+……
+</pre>
+
+<p>3.time.localtime([secs])</p>
+<pre>
+A timestamp into a current struct_time time zone, if not seconds parameter input, places the current time is to convert standard
+Unavailable secs parameters, according to the current time, whichever
+In [141]: time.localtime()
+Out[141]: time.struct_time(tm_year=2014, tm_mon=8, tm_mday=14, tm_hour=17, tm_min=23, tm_sec=48, tm_wday=3, tm_yday=226, tm_isdst=0)
+
+Provide for the current timestamp when secs
+In [142]: time.time()
+Out[142]: 1408008232.217969
+In [143]: time.localtime(time.time())
+Out[143]: time.struct_time(tm_year=2014, tm_mon=8, tm_mday=14, tm_hour=17, tm_min=24, tm_sec=2, tm_wday=3, tm_yday=226, tm_isdst=0)
+</pre>
+
+<p>4.time.strftime(format[,t])</p>
+<pre>
+Specified struct_time (defaults to the current time), according to the specified format string output
+"t" is not specified, the incoming time.localtime () as the default parameters:
+In [156]: time.strftime('%Y-%m-%d %H:%M:%S')
+Out[156]: '2014-08-14 17:28:16’
+
+T specify when time.localtime (1407945600.0):
+In [157]: time.localtime(1407945600.0)
+Out[157]: time.struct_time(tm_year=2014, tm_mon=8, tm_mday=14, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=3, tm_yday=226, tm_isdst=0)
+
+In [158]: time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(1407945600.0))
+Out[158]: '2014-08-14 00:00:00’
+</pre>
+
+<p>5.time.time()</p>
+<pre>
+Returns the timestamp of the current time
+In [161]: time.time()
+Out[161]: 1408008711.730218
+</pre>
+
+<p>6.time.mktime(t)</p>
+<pre>
+Struct_time convert a timestamp, as time.localtime receives a timestamp returns a struct_time, while time.mktime receive a struct_time, returns a timestamp
+In [159]: time.localtime(1407945600.0)
+Out[159]: time.struct_time(tm_year=2014, tm_mon=8, tm_mday=14, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=3, tm_yday=226, tm_isdst=0)
+In [160]: time.mktime(time.localtime(1407945600.0))
+Out[160]: 1407945600.0
+</pre>
+
+<p></p><h4>datetime module commonly used method</h4><br>datetime module commonly used are the following four categories:<p></p>
+<p><br>1. datetime.date: The date refers to the date of composition (equivalent to the calendar)<br>2. datetime.time: refers to the day, 24 hours minutes and seconds microseconds constituted a specific time (equivalent to watch)<br>3. datetime.datetime: The above two together, contains both time and contain a date<br>4. datetime.timedelta: Interval object (timedelta). A point in time (datetime) plus an interval (timedelta) can get a new point in time (datetime). For example, today’s 3:00 plus five hours to get today’s 8:00. Similarly, the two time points will be subtracted from a time interval.<br></p>
+
+<p>1.datetime.date</p>
+<pre>
+1.create a date object,the date is today, it can call datetime.date.today(), also can to datetime.date() by value, look the following:
+In [4]: today = datetime.date.today()
+In [5]: today
+Out[5]: datetime.date(2014, 8, 15)
+In [6]: t = datetime.date(2014,8,15)
+In [7]: t
+Out[7]: datetime.date(2014, 8, 15)
+
+2.datetime.date.strftime(format) format datetime,like the format "Y-m-d H:M:S"
+In [8]: today.strftime('%Y-%m-%d %H:%M:%S')
+Out[8]: '2014-08-15 00:00:00’
+date object in hours, minutes, seconds, the default is 0, that era in time.
+
+3.datetime.date.timple() change to struct-time format,when transfer to tiem.mktime(t), it will change to timestamp format
+In [9]: today.timetuple()
+Out[9]: time.struct_time(tm_year=2014, tm_mon=8, tm_mday=15, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=4, tm_yday=227, tm_isdst=-1)
+In [10]: time.mktime(today.timetuple())
+Out[10]: 1408032000.0
+
+4.datetime.date.replace(year, month, day)  Returns a date object after replacement
+In [11]: today.replace(year=2013)
+Out[11]: datetime.date(2013, 8, 15)
+
+5.datetime.date.fromtimestamp(timestamp) The timestamp change to a date object
+In [12]: datetime.date.fromtimestamp(1408058729)
+Out[12]: datetime.date(2014, 8, 15)
+</pre>
+
+<p>2.datetime.time</p>
+<pre>
+1.create a new time object
+In [15]: t
+Out[15]: datetime.time(8, 45, 20)
+
+2.datetime.time.(format) format out
+In [16]: t.strftime('%Y-%m-%d %H:%M:%S')
+Out[16]: '1900-01-01 08:45:20’
+time corresponding to the year, month, day 1900,01,01, in that time era.
+
+3.datetime.time.replace([hour[, minute[, second[, microsecond[, tzinfo]]]]])  Return time after replacement object.
+In [17]: t.replace(hour=9)
+Out[17]: datetime.time(9, 45, 20)
+</pre>
+
+<p>3.datetime.datetime</p>
+<pre>
+1.Create a "datetime"" object, dated today, either directly call "datetime.datetime.today()", or directly  pass values to "datetime.datetime()", as follows:
+In [21]: d1 = datetime.datetime.today()
+In [22]: d1
+Out[22]: datetime.datetime(2014, 8, 15, 8, 12, 34, 790945)
+In [23]: d2 = datetime.datetime(2014, 8, 15, 8, 12, 34, 790945)
+In [24]: d2
+Out[24]: datetime.datetime(2014, 8, 15, 8, 12, 34, 790945)
+
+2.datetime.datetime.now([tz]) when now select timezone, it's the same with datetime.datetime.today().
+In [25]: datetime.datetime.now()
+Out[25]: datetime.datetime(2014, 8, 15, 8, 14, 50, 738672)
+
+3..datetime.datetime.strftime(format) format a datetime which we need, like "Y-m-d H:M:S".
+In [27]: d1
+Out[27]: datetime.datetime(2014, 8, 15, 8, 12, 34, 790945)
+In [28]: d1.strftime('%Y-%m-%d %H:%M:%S')
+Out[28]: '2014-08-15 08:12:34’
+
+4.datetime.datetime.timple() Turn into struct_time format, so passed to time.mktime (t), and directly transferred into a timestamp format.
+In [29]: d1
+Out[29]: datetime.datetime(2014, 8, 15, 8, 12, 34, 790945)
+In [30]: d1.timetuple()
+Out[30]: time.struct_time(tm_year=2014, tm_mon=8, tm_mday=15, tm_hour=8, tm_min=12, tm_sec=34, tm_wday=4, tm_yday=227, tm_isdst=-1)
+In [31]: time.mktime(d1.timetuple())
+Out[31]: 1408061554.0
+
+5.datetime.datetime.replace(year, month, day)  Returns a date object after replacement.
+In [32]: d1
+Out[32]: datetime.datetime(2014, 8, 15, 8, 12, 34, 790945)
+In [33]: d1.replace(year=2000)
+Out[33]: datetime.datetime(2000, 8, 15, 8, 12, 34, 790945)
+
+6.datetime.datetime.fromtimestamp(timestamp) The timestamp into a datetime object.
+In [34]: time.time()
+Out[34]: 1408061894.081552
+In [35]: datetime.datetime.fromtimestamp(1408061894)
+Out[35]: datetime.datetime(2014, 8, 15, 8, 18, 14)
+</pre>
+
+<p>4.datetime.timedelta</p>
+<pre>
+In [78]: today = datetime.datetime.today()
+In [79]: yesterday = today - datetime.timedelta(days=1)
+In [80]: yesterday
+Out[80]: datetime.datetime(2014, 8, 14, 15, 8, 25, 783471)
+In [81]: today
+Out[81]: datetime.datetime(2014, 8, 15, 15, 8, 25, 783471)
+</pre>
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Time method often used</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">time and datetime</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">time module commonly used method</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">datetime module commonly used method</span></a></li></ol></li></ol></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2014/11/22/pygeoipmappy/" rel="next" title="pygeoipmap.py">
+          pygeoipmap.py
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2014/12/10/what-are-useful-cli-tools-for-linux-system-admins/" rel="prev" title="What are useful CLI tools for Linux system admins">
+            What are useful CLI tools for Linux system admins
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2014/11/27/how-to-use-python-datetime-and-time/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

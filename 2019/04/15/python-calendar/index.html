@@ -1,0 +1,413 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="python,">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>python calendar [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        python calendar
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2019-04-15T08:47:57.000Z">
+        2019-04-15
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <h1 id="Calendar"><a href="#Calendar" class="headerlink" title="Calendar"></a>Calendar</h1><ul>
+<li><p>setfirstweekday(firstweekday)  指定一周的第一天,0是星期一,… 6为星期日</p>
+</li>
+<li><p>firstweekday()：返回一周的第一天，0是星期一，…，6为星期日</p>
+</li>
+<li><p>isleap(year)：判断指定是否是闰年，闰年为True，平年为False</p>
+</li>
+<li><p>leapdays(y1, y2)：返回y1与y2年份之间的闰年数量，y1与y2皆为年份。包括起始年，不包括结束年</p>
+</li>
+<li><p>weekday(year, month, day)：获取指定日期为星期几</p>
+</li>
+<li><p>weekheader(n)：返回包含星期的英文缩写，n表示英文缩写所占的宽度</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import calendar</span><br><span class="line">print(calendar.weekheader(4))</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; Mon  Tue  Wed  Thu  Fri  Sat  Sun</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>monthrange(year, month)：返回一个由一个月第一个天的星期与当前月的天数组成的元组</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import calendar</span><br><span class="line">print(2018, 8) </span><br><span class="line">    </span><br><span class="line">&gt;&gt;&gt; (2, 31)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>monthcalendar(year, month)：返回一个月中天数列表(不是当前月份的天数为0)，按周划分，为一个二维数组。包括月份开始那周的所有日期和月份结束那周的所有日期</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import calendar</span><br><span class="line"></span><br><span class="line">calendar.setfirstweekday(firstweekday=6)</span><br><span class="line">print(calendar.monthcalendar(2018, 8))</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;[[0, 0, 0, 1, 2, 3, 4], [5, 6, 7, 8, 9, 10, 11], [12, 13, 14, 15, 16, 17, 18], [19, 20, 21, 22, 23, 24, 25], [26, 27, 28, 29, 30, 31, 0]]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>prmonth(theyear, themonth, w=0, l=0)：打印一个月的日历，theyear指定年份，themonth指定月份，w每个单元格宽度，默认0，内部已做处理，最小宽度为2，l每列换l行，默认为0，内部已做处理，至少换行1行</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import calendar</span><br><span class="line"></span><br><span class="line">calendar.setfirstweekday(firstweekday=6)</span><br><span class="line">calendar.prmonth(2018, 8)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;    August 2018</span><br><span class="line">Su Mo Tu We Th Fr Sa</span><br><span class="line">        1  2  3  4</span><br><span class="line">5  6  7  8  9 10 11</span><br><span class="line">12 13 14 15 16 17 18</span><br><span class="line">19 20 21 22 23 24 25</span><br><span class="line">26 27 28 29 30 31</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>month(theyear, themonth, w=0, l=0)：返回一个月的日历的多行文本字符串。theyear指定年份，themonth指定月份，w每个单元格宽度，默认0，内部已做处理，最小宽度为2，l每列换l行，默认为0，内部已做处理，至少换行1行</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import calendar</span><br><span class="line"></span><br><span class="line">calendar.setfirstweekday(firstweekday=6)</span><br><span class="line">print(calendar.month(2018, 8))</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;    August 2018</span><br><span class="line">Su Mo Tu We Th Fr Sa</span><br><span class="line">        1  2  3  4</span><br><span class="line">5  6  7  8  9 10 11</span><br><span class="line">12 13 14 15 16 17 18</span><br><span class="line">19 20 21 22 23 24 25</span><br><span class="line">26 27 28 29 30 31</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>prcal(year, w=0, l=0, c=6, m=3)：打印一年的日历，w每个单元格宽度，默认0，内部已做处理，最小宽度为2，l每列换l行，默认为0，内部已做处理，至少换行1行，c表示月与月之间的间隔宽度，默认为6，内部已做处理，最小宽度为2，m表示将12个月分为m列</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import calendar</span><br><span class="line"></span><br><span class="line">calendar.setfirstweekday(firstweekday=6)</span><br><span class="line">calendar.prcal(2018, m=4)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;                                            2018</span><br><span class="line"></span><br><span class="line">    January                   February                   March                     April</span><br><span class="line">Su Mo Tu We Th Fr Sa      Su Mo Tu We Th Fr Sa      Su Mo Tu We Th Fr Sa      Su Mo Tu We Th Fr Sa</span><br><span class="line">    1  2  3  4  5  6                   1  2  3                   1  2  3       1  2  3  4  5  6  7</span><br><span class="line">7  8  9 10 11 12 13       4  5  6  7  8  9 10       4  5  6  7  8  9 10       8  9 10 11 12 13 14</span><br><span class="line">14 15 16 17 18 19 20      11 12 13 14 15 16 17      11 12 13 14 15 16 17      15 16 17 18 19 20 21</span><br><span class="line">21 22 23 24 25 26 27      18 19 20 21 22 23 24      18 19 20 21 22 23 24      22 23 24 25 26 27 28</span><br><span class="line">28 29 30 31               25 26 27 28               25 26 27 28 29 30 31      29 30</span><br><span class="line"></span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>calendar(year, w=2, l=1, c=6, m=3)：以多行字符串形式返回一年的日历，w每个单元格宽度，默认2，内部已做处理，最小宽度为2，l每列换l行，默认为1，内部已做处理，至少换行1行，c表示月与月之间的间隔宽度，默认为6，内部已做处理，最小宽度为2，m表示将12个月分为m列</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import calendar</span><br><span class="line"></span><br><span class="line">calendar.setfirstweekday(firstweekday=6)</span><br><span class="line">print(calendar.calendar(2018, m=4))</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;                                               2018</span><br><span class="line"></span><br><span class="line">    January                   February                   March                     April</span><br><span class="line">Su Mo Tu We Th Fr Sa      Su Mo Tu We Th Fr Sa      Su Mo Tu We Th Fr Sa      Su Mo Tu We Th Fr Sa</span><br><span class="line">    1  2  3  4  5  6                   1  2  3                   1  2  3       1  2  3  4  5  6  7</span><br><span class="line">7  8  9 10 11 12 13       4  5  6  7  8  9 10       4  5  6  7  8  9 10       8  9 10 11 12 13 14</span><br><span class="line">14 15 16 17 18 19 20      11 12 13 14 15 16 17      11 12 13 14 15 16 17      15 16 17 18 19 20 21</span><br><span class="line">21 22 23 24 25 26 27      18 19 20 21 22 23 24      18 19 20 21 22 23 24      22 23 24 25 26 27 28</span><br><span class="line">28 29 30 31               25 26 27 28               25 26 27 28 29 30 31      29 30</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="calendar-Calendar-firstweekday-0-类"><a href="#calendar-Calendar-firstweekday-0-类" class="headerlink" title="calendar.Calendar(firstweekday=0)类"></a>calendar.Calendar(firstweekday=0)类</h1><p>firstweekday为一个整数，指定一周的第一天，0是星期一(默认)，6为星期日</p>
+<ul>
+<li><p>iterweekdays()：获取一周的数字的迭代器，迭代器的第一个值与firstweekday的值相同</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from calendar import Calendar</span><br><span class="line"></span><br><span class="line">c = Calendar()</span><br><span class="line">print(list(c.iterweekdays()))</span><br><span class="line">&gt;&gt;&gt;[0, 1, 2, 3, 4, 5, 6]   # 代表星期一至星期日，0为星期一，即一周的第一天</span><br><span class="line"></span><br><span class="line">c = Calendar(firstweekday=6)</span><br><span class="line">print(list(c.iterweekdays()))       </span><br><span class="line">&gt;&gt;&gt;[6, 0, 1, 2, 3, 4, 5]    # 代表星期日至星期六，6为星期日，即一周的第一天</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>itermonthdates(year, month)：获取一个月日期的迭代器，此迭代器会返回指定月份的所有日期，包括月份开始那周的所有日期和月份结束那周的所有日期</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from calendar import Calendar</span><br><span class="line"></span><br><span class="line">c = Calendar(firstweekday=6)</span><br><span class="line">for item in c.itermonthdates(2018, 8):</span><br><span class="line">    print(item)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;2018-07-29</span><br><span class="line">2018-07-30</span><br><span class="line">2018-07-31</span><br><span class="line">2018-08-01</span><br><span class="line">...</span><br><span class="line">2018-08-31</span><br><span class="line">2018-09-01</span><br></pre></td></tr></table></figure>
+<p>  备注:</p>
+<pre><code>1. 这里的日期为datatime.date类型
+2. 请将星期天设置为一周的第一天，否则将无法直观显示其作用
+</code></pre></li>
+<li><p>itermonthdays(year, month)：返回一个月天数的迭代器(不是当前月份的天数为0)，此迭代器将返回指定月份的日期数字，包括月份开始那周的所有日期和月份结束那周的所有日期</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from calendar import Calendar</span><br><span class="line"></span><br><span class="line">c = Calendar(firstweekday=6)</span><br><span class="line">for item in c.itermonthdays(2018, 8):</span><br><span class="line">    print(item)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;0</span><br><span class="line">0</span><br><span class="line">0</span><br><span class="line">1</span><br><span class="line">...</span><br><span class="line">31</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>itermonthdays2(year, month)：返回一个月天数与星期的迭代器(不是当前月份的天数为0)，此迭代器将返回指定月份的日期数字与星期几所代表的数字组成的元组，包括月份开始那周的所有日期和月份结束那周的所有日期</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from calendar import Calendar</span><br><span class="line"></span><br><span class="line">c = Calendar(firstweekday=6)</span><br><span class="line">for item in c.itermonthdays2(2018, 8):</span><br><span class="line">    print(item)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;(0, 6)</span><br><span class="line">(0, 0)</span><br><span class="line">(0, 1)</span><br><span class="line">(1, 2)</span><br><span class="line">...</span><br><span class="line">(31, 4)</span><br><span class="line">(0, 5)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>monthdatescalendar(year, month)：返回一个月日期列表，按周划分，为一个二维数组。包括月份开始那周的所有日期和月份结束那周的所有日期</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from calendar import Calendar</span><br><span class="line"></span><br><span class="line">c = Calendar(firstweekday=6)</span><br><span class="line">for item in c.monthdatescalendar(2018, 8):</span><br><span class="line">    print(item)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;[datetime.date(2018, 7, 29), datetime.date(2018, 7, 30), datetime.date(2018, 7, 31), datetime.date(2018, 8, 1), datetime.date(2018, 8, 2), datetime.date(2018, 8, 3), datetime.date(2018, 8, 4)]</span><br><span class="line">[datetime.date(2018, 8, 5), datetime.date(2018, 8, 6), datetime.date(2018, 8, 7), datetime.date(2018, 8, 8), datetime.date(2018, 8, 9), datetime.date(2018, 8, 10), datetime.date(2018, 8, 11)]</span><br><span class="line">[datetime.date(2018, 8, 12), datetime.date(2018, 8, 13), datetime.date(2018, 8, 14), datetime.date(2018, 8, 15), datetime.date(2018, 8, 16), datetime.date(2018, 8, 17), datetime.date(2018, 8, 18)]</span><br><span class="line">[datetime.date(2018, 8, 19), datetime.date(2018, 8, 20), datetime.date(2018, 8, 21), datetime.date(2018, 8, 22), datetime.date(2018, 8, 23), datetime.date(2018, 8, 24), datetime.date(2018, 8, 25)]</span><br><span class="line">[datetime.date(2018, 8, 26), datetime.date(2018, 8, 27), datetime.date(2018, 8, 28), datetime.date(2018, 8, 29), datetime.date(2018, 8, 30), datetime.date(2018, 8, 31), datetime.date(2018, 9, 1)]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>monthdayscalendar(year, month)：返回一个月中天数列表(不是当前月份的天数为0)，按周划分，为一个二维数组。包括月份开始那周的所有日期和月份结束那周的所有日期</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from calendar import Calendar</span><br><span class="line"></span><br><span class="line">c = Calendar(firstweekday=6)</span><br><span class="line">for item in c.monthdayscalendar(2018, 8):</span><br><span class="line">    print(item)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;[0, 0, 0, 1, 2, 3, 4]</span><br><span class="line">[5, 6, 7, 8, 9, 10, 11]</span><br><span class="line">[12, 13, 14, 15, 16, 17, 18]</span><br><span class="line">[19, 20, 21, 22, 23, 24, 25]</span><br><span class="line">[26, 27, 28, 29, 30, 31, 0]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>monthdays2calendar(year, month)：返回一个月中天数与星期的列表(不是当前月份的天数为0)，按周划分，为一个二维数组。包括月份开始那周的所有日期和月份结束那周的所有日期</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from calendar import Calendar</span><br><span class="line"></span><br><span class="line">c = Calendar(firstweekday=6)</span><br><span class="line">for item in c.monthdays2calendar(2018, 8):</span><br><span class="line">    print(item)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;[(0, 6), (0, 0), (0, 1), (1, 2), (2, 3), (3, 4), (4, 5)]</span><br><span class="line">[(5, 6), (6, 0), (7, 1), (8, 2), (9, 3), (10, 4), (11, 5)]</span><br><span class="line">[(12, 6), (13, 0), (14, 1), (15, 2), (16, 3), (17, 4), (18, 5)]</span><br><span class="line">[(19, 6), (20, 0), (21, 1), (22, 2), (23, 3), (24, 4), (25, 5)]</span><br><span class="line">[(26, 6), (27, 0), (28, 1), (29, 2), (30, 3), (31, 4), (0, 5)]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>yeardatescalendar(year, width=3)：返回一年中所有的日期，为一个4维数组。width表示将一年中12个月份进行划分，每width个月为一份，每一份包含各个月份，每个月份包含周，每周包含日期信息。包括月份开始那周的所有日期和月份结束那周的所有日期</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from calendar import Calendar</span><br><span class="line"></span><br><span class="line">c = Calendar(firstweekday=6)</span><br><span class="line">for item in c.yeardatescalendar(2018, 3):</span><br><span class="line">    print(item)</span><br><span class="line">&gt;&gt;&gt;[[[datetime.date(2017, 12, 31), datetime.date(2018, 1, 1), datetime.date(2018, 1, 2),...]]]</span><br><span class="line">[[[datetime.date(2018, 4, 1), datetime.date(2018, 4, 2), datetime.date(2018, 4, 3),...]]]</span><br><span class="line">[[[datetime.date(2018, 7, 1), datetime.date(2018, 7, 2), datetime.date(2018, 7, 3),...]]]</span><br><span class="line">[[[datetime.date(2018, 9, 30), datetime.date(2018, 10, 1), datetime.date(2018, 10, 2),...]]]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>yeardayscalendar(year, width=3)：返回一年中每个月的天数，为一个4维数组。width表示将一年中12个月份进行划分，每width个月为一份；每一份包含各个月份，每个月份包含周，每周包含天数信息(不是当前月份的天数为0)。包括月份开始那周的所有日期和月份结束那周的所有日期</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from calendar import Calendar</span><br><span class="line"></span><br><span class="line">c = Calendar(firstweekday=6)</span><br><span class="line">for item in c.yeardayscalendar(2018, 3):</span><br><span class="line">    print(item)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;[[[0, 1, 2, 3, 4, 5, 6], [7, 8, 9, 10, 11, 12, 13], [14, 15, 16, 17, 18, 19, 20], ...]]]</span><br><span class="line">[[[1, 2, 3, 4, 5, 6, 7], [8, 9, 10, 11, 12, 13, 14], [15, 16, 17, 18, 19, 20, 21], ...]]]</span><br><span class="line">[[[1, 2, 3, 4, 5, 6, 7], [8, 9, 10, 11, 12, 13, 14], [15, 16, 17, 18, 19, 20, 21], ...]]]</span><br><span class="line">[[[0, 1, 2, 3, 4, 5, 6], [7, 8, 9, 10, 11, 12, 13], [14, 15, 16, 17, 18, 19, 20], ...]]]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>yeardays2calendar(year, width=3)：返回一年中农每个月的天数与星期的元组，为一个4维的元组列表。width表示将一年中12个月份进行划分，每width个月为一份；每一份包含各个月份，每个月份包含周，每周包含天数与星期的元组信息(不是当前月份的天数为0)。包括月份开始那周的所有日期和月份结束那周的所有日期</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from calendar import Calendar</span><br><span class="line"></span><br><span class="line">c = Calendar(firstweekday=6)</span><br><span class="line">for item in c.yeardays2calendar(2018, 3):</span><br><span class="line">    print(item)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;[[[(0, 6), (1, 0), (2, 1), (3, 2), (4, 3), (5, 4), (6, 5)], [(7, 6), (8, 0), ...]]]</span><br><span class="line">[[[(1, 6), (2, 0), (3, 1), (4, 2), (5, 3), (6, 4), (7, 5)], [(8, 6), (9, 0), ...]]]</span><br><span class="line">[[[(1, 6), (2, 0), (3, 1), (4, 2), (5, 3), (6, 4), (7, 5)], [(8, 6), (9, 0), ...]]]</span><br><span class="line">[[[(0, 6), (1, 0), (2, 1), (3, 2), (4, 3), (5, 4), (6, 5)], [(7, 6), (8, 0), ...]]]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="calendar-TextCalendar-firstweekday-0"><a href="#calendar-TextCalendar-firstweekday-0" class="headerlink" title="calendar.TextCalendar(firstweekday=0)"></a>calendar.TextCalendar(firstweekday=0)</h1><pre><code>Calendar子类，firstweekday为一个整数，指定一周的第一天，0是星期一(默认)，6为星期日
+</code></pre><ul>
+<li><p>formatmonth(theyear, themonth, w=0, l=0)：以多行字符串形式返回一个月的日历。theyear指定年，themonth指定月，w每个单元格宽度，默认0，内部已做处理，最小宽度为2，l每列换l行，默认为0，内部已做处理，至少换行1行</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from calendar import TextCalendar</span><br><span class="line"></span><br><span class="line">c = TextCalendar(firstweekday=6)</span><br><span class="line">print(c.formatmonth(2018, 8))</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;    August 2018</span><br><span class="line">Su Mo Tu We Th Fr Sa</span><br><span class="line">        1  2  3  4</span><br><span class="line">5  6  7  8  9 10 11</span><br><span class="line">12 13 14 15 16 17 18</span><br><span class="line">19 20 21 22 23 24 25</span><br><span class="line">26 27 28 29 30 31</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>prmonth(theyear, themonth, w=0, l=0)：打印formatmonth(theyear, themonth, w=0, l=0)的结果，无返回值</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from calendar import TextCalenadr</span><br><span class="line"></span><br><span class="line">c = TextCalendar(firstweekday=6)</span><br><span class="line">c.prmonth(2018, 8)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;    August 2018</span><br><span class="line">Su Mo Tu We Th Fr Sa</span><br><span class="line">        1  2  3  4</span><br><span class="line">5  6  7  8  9 10 11</span><br><span class="line">12 13 14 15 16 17 18</span><br><span class="line">19 20 21 22 23 24 25</span><br><span class="line">26 27 28 29 30 31</span><br></pre></td></tr></table></figure>
+<p>  因为无返回值，所以返回的结果为None</p>
+</li>
+<li><p>formatyear(theyear, w=2, l=1, c=6, m=3)：以多行字符串形式返回一年的日历，w每个单元格宽度，默认0，内部已做处理，最小宽度为2，l每列换l行，默认为0，内部已做处理，至少换行1行，c月与月之间的间隔宽度，默认为6，内部已做处理，最小宽度为2，m表示将12个月分为m列</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from calendar import TextCalendar</span><br><span class="line"></span><br><span class="line">c = TextCalendar(firstweekday=6)</span><br><span class="line">print(c.format(2018, m=4))</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;                                       2018</span><br><span class="line"></span><br><span class="line">    January                   February                   March                     April</span><br><span class="line">Su Mo Tu We Th Fr Sa      Su Mo Tu We Th Fr Sa      Su Mo Tu We Th Fr Sa      Su Mo Tu We Th Fr Sa</span><br><span class="line">    1  2  3  4  5  6                   1  2  3                   1  2  3       1  2  3  4  5  6  7</span><br><span class="line">7  8  9 10 11 12 13       4  5  6  7  8  9 10       4  5  6  7  8  9 10       8  9 10 11 12 13 14</span><br><span class="line">14 15 16 17 18 19 20      11 12 13 14 15 16 17      11 12 13 14 15 16 17      15 16 17 18 19 20 21</span><br><span class="line">21 22 23 24 25 26 27      18 19 20 21 22 23 24      18 19 20 21 22 23 24      22 23 24 25 26 27 28</span><br><span class="line">28 29 30 31               25 26 27 28               25 26 27 28 29 30 31      29 30</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>pryear(theyear, w=2, l=1, c=6, m=3)：将formatyear(theyear, w=2, l=1, c=6, m=3)的结果作为返回</p>
+</li>
+</ul>
+<h1 id="calendar-HTMLCalendar-firstweekday-0"><a href="#calendar-HTMLCalendar-firstweekday-0" class="headerlink" title="calendar.HTMLCalendar(firstweekday=0)"></a>calendar.HTMLCalendar(firstweekday=0)</h1><pre><code>Calendar的子类，firstweekday为一个整数，指定一周的第一天，0是星期一(默认)，6为星期日
+</code></pre><ul>
+<li><p>formatmonth(theyear, themonth, withyear=Ture)：返回一个月日历的html内容，withyear是否显示年份，默认为True，即显示年份</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from calendar import HTMLCalendar</span><br><span class="line"></span><br><span class="line">c = HTMLCalendar(firstweekday=6)</span><br><span class="line">print(c.formatmonth(2018, 8, withyear=False))</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; class=&quot;month&quot;&gt;</span><br><span class="line">&lt;tr&gt;&lt;th colspan=&quot;7&quot; class=&quot;month&quot;&gt;August&lt;/th&gt;&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;&lt;th class=&quot;sun&quot;&gt;Sun&lt;/th&gt;&lt;th class=&quot;mon&quot;&gt;Mon&lt;/th&gt;&lt;th class=&quot;tue&quot;&gt;Tue&lt;/th&gt;&lt;th class=&quot;wed&quot;&gt;Wed&lt;/th&gt;&lt;th class=&quot;thu&quot;&gt;Thu&lt;/th&gt;&lt;th class=&quot;fri&quot;&gt;Fri&lt;/th&gt;&lt;th class=&quot;sat&quot;&gt;Sat&lt;/th&gt;&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;&lt;td class=&quot;noday&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td class=&quot;noday&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td class=&quot;noday&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td class=&quot;wed&quot;&gt;1&lt;/td&gt;&lt;td class=&quot;thu&quot;&gt;2&lt;/td&gt;&lt;td class=&quot;fri&quot;&gt;3&lt;/td&gt;&lt;td class=&quot;sat&quot;&gt;4&lt;/td&gt;&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;&lt;td class=&quot;sun&quot;&gt;5&lt;/td&gt;&lt;td class=&quot;mon&quot;&gt;6&lt;/td&gt;&lt;td class=&quot;tue&quot;&gt;7&lt;/td&gt;&lt;td class=&quot;wed&quot;&gt;8&lt;/td&gt;&lt;td class=&quot;thu&quot;&gt;9&lt;/td&gt;&lt;td class=&quot;fri&quot;&gt;10&lt;/td&gt;&lt;td class=&quot;sat&quot;&gt;11&lt;/td&gt;&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;&lt;td class=&quot;sun&quot;&gt;12&lt;/td&gt;&lt;td class=&quot;mon&quot;&gt;13&lt;/td&gt;&lt;td class=&quot;tue&quot;&gt;14&lt;/td&gt;&lt;td class=&quot;wed&quot;&gt;15&lt;/td&gt;&lt;td class=&quot;thu&quot;&gt;16&lt;/td&gt;&lt;td class=&quot;fri&quot;&gt;17&lt;/td&gt;&lt;td class=&quot;sat&quot;&gt;18&lt;/td&gt;&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;&lt;td class=&quot;sun&quot;&gt;19&lt;/td&gt;&lt;td class=&quot;mon&quot;&gt;20&lt;/td&gt;&lt;td class=&quot;tue&quot;&gt;21&lt;/td&gt;&lt;td class=&quot;wed&quot;&gt;22&lt;/td&gt;&lt;td class=&quot;thu&quot;&gt;23&lt;/td&gt;&lt;td class=&quot;fri&quot;&gt;24&lt;/td&gt;&lt;td class=&quot;sat&quot;&gt;25&lt;/td&gt;&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;&lt;td class=&quot;sun&quot;&gt;26&lt;/td&gt;&lt;td class=&quot;mon&quot;&gt;27&lt;/td&gt;&lt;td class=&quot;tue&quot;&gt;28&lt;/td&gt;&lt;td class=&quot;wed&quot;&gt;29&lt;/td&gt;&lt;td class=&quot;thu&quot;&gt;30&lt;/td&gt;&lt;td class=&quot;fri&quot;&gt;31&lt;/td&gt;&lt;td class=&quot;noday&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span><br><span class="line">&lt;/table&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>formatyear(theyear, width=3)：返回一年日历的html内容，width表示将12个月分为width列</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from calendar import HTMLCalendar</span><br><span class="line"></span><br><span class="line">c = HTMLCalendar(firstweekday=6)</span><br><span class="line">print(c.formatyear(2018, width=4))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>formatyearpage(theyear, width=3, css=’calendar.css’, encoding=None)：返回一年日历的html内容，width表示将12个月分为width列，css可自定义css样式，encoding编码方式</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from calendar import HTMLCalendar</span><br><span class="line"></span><br><span class="line">c = HTMLCalendar(firstweekday=6)</span><br><span class="line">print(c.formatyearpage(2018, width=4))</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Calendar"><span class="toc-text">Calendar</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#calendar-Calendar-firstweekday-0-类"><span class="toc-text">calendar.Calendar(firstweekday=0)类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#calendar-TextCalendar-firstweekday-0"><span class="toc-text">calendar.TextCalendar(firstweekday=0)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#calendar-HTMLCalendar-firstweekday-0"><span class="toc-text">calendar.HTMLCalendar(firstweekday=0)</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2019/04/09/django2-2-build-website-and-deploy-in-ubuntu-server/" rel="next" title="django2.2 build website and deploy in ubuntu server">
+          django2.2 build website and deploy in ubuntu server
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2019/05/17/Python-datetime模块介绍及示例/" rel="prev" title="Python datetime模块介绍及示例">
+            Python datetime模块介绍及示例
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2019/04/15/python-calendar/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

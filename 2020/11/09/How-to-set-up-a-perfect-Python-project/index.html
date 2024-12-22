@@ -1,0 +1,397 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="python,">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>How to set up a perfect Python project [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        How to set up a perfect Python project
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2020-11-09T03:13:21.000Z">
+        2020-11-09
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p>This blog is from <a href="https://sourcery.ai/blog/python-best-practices/" target="_blank" rel="noopener">here</a></p>
+<p>When starting a new Python project, it is tempting to just dive in and start coding. Spending a tiny amount of time to setup a project with the best tools will save immense time and lead to a happier coding experience.</p>
+<p>In an ideal world, dependencies would be identical for all developers, code would be perfectly formatted, common errors forbidden and everything would be covered by tests. Additionally, all of these would ensured at each commit.</p>
+<p>In this article I’ll go through how to set up a project that does exactly that. You can either follow along with the steps or jump straight to generating a new project automatically by installing <a href="https://sourcery.ai/blog/python-best-practices/#pipx" target="_blank" rel="noopener">pipx</a> and <a href="https://sourcery.ai/blog/python-best-practices/#pipenv" target="_blank" rel="noopener">pipenv</a> then <a href="https://sourcery.ai/blog/python-best-practices/#pipenv" target="_blank" rel="noopener">generating a new project</a>.</p>
+<p>Let’s create a new project directory:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir best_practices</span><br><span class="line">cd best_practices</span><br></pre></td></tr></table></figure>
+<h1 id="Python-command-line-tools-with-pipx"><a href="#Python-command-line-tools-with-pipx" class="headerlink" title="Python command line tools with pipx"></a>Python command line tools with pipx</h1><p><a href="https://pipxproject.github.io/pipx/" target="_blank" rel="noopener">Pipx</a> is a handy utility that allows quick installation of python command line tools. We’ll be using it to install pipenv and cookiecutter.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python3 -m pip install --user pipx</span><br><span class="line">python3 -m pipx ensurepath</span><br></pre></td></tr></table></figure>
+<h1 id="Dependency-management-with-pipenv"><a href="#Dependency-management-with-pipenv" class="headerlink" title="Dependency management with pipenv"></a>Dependency management with pipenv</h1><blockquote>
+<p><a href="https://github.com/pypa/pipenv" target="_blank" rel="noopener">Pipenv</a> automatically creates and manages a virtualenv for your projects, as well as adding/removing packages from your Pipfile as you install/uninstall packages. It also generates the ever-important Pipfile.lock, which is used to produce deterministic builds.</p>
+</blockquote>
+<p>Knowing that you and your teammates are using the same library versions is a huge confidence boost. Pipenv takes care of this and has gained massive traction in the last year or so.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipx install pipenv</span><br></pre></td></tr></table></figure>
+<h1 id="Code-formatting-with-black-and-isort"><a href="#Code-formatting-with-black-and-isort" class="headerlink" title="Code formatting with black and isort"></a>Code formatting with black and isort</h1><p><a href="https://github.com/psf/black" target="_blank" rel="noopener">Black</a> formats our code:</p>
+<blockquote>
+<p>Black is the uncompromising Python code formatter. By using it, you agree to cede control over minutiae of hand-formatting. In return, Black gives you speed, determinism, and freedom from pycodestyle nagging about formatting. You will save time and mental energy for more important matters.<br>Blackened code looks the same regardless of the project you’re reading. Formatting becomes transparent after a while and you can focus on the content instead.<br>Black makes code review faster by producing the smallest diffs possible.</p>
+</blockquote>
+<p>while <a href="https://github.com/timothycrosley/isort" target="_blank" rel="noopener">isort</a> sorts our imports:</p>
+<blockquote>
+<p>isort your python imports for you so you don’t have to. isort is a Python utility / library to sort imports alphabetically, and automatically separated into sections.</p>
+</blockquote>
+<p>Let’s install them using pipenv as development dependencies so they don’t clutter a deployment:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install black isort --dev</span><br></pre></td></tr></table></figure>
+<p>Black and isort have incompatible default options so we’ll override isort to follow black’s lead. Create a <code>setup.cfg</code> file and add this config:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[isort]</span><br><span class="line">multi_line_output=3</span><br><span class="line">include_trailing_comma=True</span><br><span class="line">force_grid_wrap=0</span><br><span class="line">use_parentheses=True</span><br><span class="line">line_length=88</span><br></pre></td></tr></table></figure>
+<p>We can run these tools with:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pipenv run black</span><br><span class="line">pipenv run isort</span><br></pre></td></tr></table></figure>
+<h1 id="Style-enforcement-with-flake8"><a href="#Style-enforcement-with-flake8" class="headerlink" title="Style enforcement with flake8"></a>Style enforcement with flake8</h1><p>Flake8 ensures our code follows the standard python conventions as defined in PEP8. Install using pipenv:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install flake8 --dev</span><br></pre></td></tr></table></figure>
+<p>Just like isort it needs a little configuration to work well with black. Add this config to <code>setup.cfg</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[flake8]</span><br><span class="line">ignore = E203, E266, E501, W503</span><br><span class="line">max-line-length = 88</span><br><span class="line">max-complexity = 18</span><br><span class="line">select = B,C,E,F,W,T4</span><br></pre></td></tr></table></figure>
+<p>Now we can run flake8 with pipenv run flake8.</p>
+<h1 id="Static-types-with-mypy"><a href="#Static-types-with-mypy" class="headerlink" title="Static types with mypy"></a>Static types with mypy</h1><blockquote>
+<p><a href="http://mypy-lang.org/" target="_blank" rel="noopener">Mypy</a> is an optional static type checker for Python that aims to combine the benefits of dynamic (or “duck”) typing and static typing. Mypy combines the expressive power and convenience of Python with a powerful type system and compile-time type checking. Mypy type checks standard Python programs; run them using any Python VM with basically no runtime overhead.</p>
+</blockquote>
+<p>Having types in Python takes a little getting used to but the benefits are substantial. From the website:</p>
+<ul>
+<li>Static typing can make programs easier to understand and maintain</li>
+<li>Static typing can help you find bugs earlier and with less testing and debugging</li>
+<li>Static typing can help you find difficult-to-find bugs before your code goes into production</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install mypy --dev</span><br></pre></td></tr></table></figure>
+<p>Mypy by default will recursively check all imports for type annotations which leads to errors when libraries do not include these annotations. We need to configure mypy to run only on our code and to ignore any errors for imports without type annotations. We are assuming that our code lives in the best_practices package for the following config. Add this to <code>setup.cfg</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[mypy]</span><br><span class="line">files=best_practices,test</span><br><span class="line">ignore_missing_imports=true</span><br></pre></td></tr></table></figure>
+<p>Now we can run mypy with:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv run mypy</span><br></pre></td></tr></table></figure>
+<p>Here’s a useful <a href="https://mypy.readthedocs.io/en/latest/cheat_sheet_py3.html" target="_blank" rel="noopener">cheat sheet</a> for using it.</p>
+<h1 id="Testing-with-pytest-and-pytest-cov"><a href="#Testing-with-pytest-and-pytest-cov" class="headerlink" title="Testing with pytest and pytest-cov"></a>Testing with pytest and pytest-cov</h1><p>Writing tests with <a href="https://docs.pytest.org/en/latest/" target="_blank" rel="noopener">pytest</a> is incredibly easy and removing any friction to writing tests means we will write more of them!</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install pytest pytest-cov --dev</span><br></pre></td></tr></table></figure>
+<p>Here’s a simple example from the pytest website:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># content of test_sample.py</span><br><span class="line">def inc(x):</span><br><span class="line">    return x + 1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def test_answer():</span><br><span class="line">    assert inc(3) == 5</span><br></pre></td></tr></table></figure>
+<p>To execute it:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ pipenv run pytest</span><br><span class="line">=========================== test session starts ============================</span><br><span class="line">platform linux -- Python 3.x.y, pytest-5.x.y, py-1.x.y, pluggy-0.x.y</span><br><span class="line">cachedir: $PYTHON_PREFIX/.pytest_cache</span><br><span class="line">rootdir: $REGENDOC_TMPDIR</span><br><span class="line">collected 1 item</span><br><span class="line"></span><br><span class="line">test_sample.py F                                                     [100%]</span><br><span class="line"></span><br><span class="line">================================= FAILURES =================================</span><br><span class="line">_______________________________ test_answer ________________________________</span><br><span class="line"></span><br><span class="line">    def test_answer():</span><br><span class="line">&gt;       assert inc(3) == 5</span><br><span class="line">E       assert 4 == 5</span><br><span class="line">E        +  where 4 = inc(3)</span><br><span class="line"></span><br><span class="line">test_sample.py:6: AssertionError</span><br><span class="line">========================= 1 failed in 0.12 seconds =========================</span><br></pre></td></tr></table></figure>
+<p>All our tests should go in the <code>test</code> directory so add this config to <code>setup.cfg</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[tool:pytest]</span><br><span class="line">testpaths=test</span><br></pre></td></tr></table></figure>
+<p>We also want to check how much of our code is covered by tests. Create a new file <code>.coveragerc</code> to only return coverage statistics for our application code, again we are assuming our application code lives in the <code>best_practices</code> module:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[run]</span><br><span class="line">source = best_practices</span><br><span class="line"></span><br><span class="line">[report]</span><br><span class="line">exclude_lines =</span><br><span class="line">    # Have to re-enable the standard pragma</span><br><span class="line">    pragma: no cover</span><br><span class="line"></span><br><span class="line">    # Don&apos;t complain about missing debug-only code:</span><br><span class="line">    def __repr__</span><br><span class="line">    if self\.debug</span><br><span class="line"></span><br><span class="line">    # Don&apos;t complain if tests don&apos;t hit defensive assertion code:</span><br><span class="line">    raise AssertionError</span><br><span class="line">    raise NotImplementedError</span><br><span class="line"></span><br><span class="line">    # Don&apos;t complain if non-runnable code isn&apos;t run:</span><br><span class="line">    if 0:</span><br><span class="line">    if __name__ == .__main__.:</span><br></pre></td></tr></table></figure>
+<p>We can now run our tests and report coverage with</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv run pytest --cov --cov-fail-under=100</span><br></pre></td></tr></table></figure>
+<p>This will fail if our test coverage of the application code is less than 100%.</p>
+<h1 id="Git-hooks-with-pre-commit"><a href="#Git-hooks-with-pre-commit" class="headerlink" title="Git hooks with pre-commit"></a>Git hooks with pre-commit</h1><p>Git hooks allow you to run scripts any time you want to commit or push. This lets us run all of our linting and tests automatically every time we commit/push. <a href="https://pre-commit.com/" target="_blank" rel="noopener">pre‑commit</a> allows easy configuration of these hooks:</p>
+<blockquote>
+<p>Git hook scripts are useful for identifying simple issues before submission to code review. We run our hooks on every commit to automatically point out issues in code such as missing semicolons, trailing whitespace, and debug statements. By pointing these issues out before code review, this allows a code reviewer to focus on the architecture of a change while not wasting time with trivial style nitpicks.</p>
+</blockquote>
+<p>Here we configure all of the above tools to run on any changed python files on committing, and also to run pytest coverage only when pushing as it can be slow. Create a new file <code>.pre-commit-config.yaml</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">repos:</span><br><span class="line">  - repo: local</span><br><span class="line">    hooks:</span><br><span class="line">      - id: isort</span><br><span class="line">        name: isort</span><br><span class="line">        stages: [commit]</span><br><span class="line">        language: system</span><br><span class="line">        entry: pipenv run isort</span><br><span class="line">        types: [python]</span><br><span class="line"></span><br><span class="line">      - id: black</span><br><span class="line">        name: black</span><br><span class="line">        stages: [commit]</span><br><span class="line">        language: system</span><br><span class="line">        entry: pipenv run black</span><br><span class="line">        types: [python]</span><br><span class="line"></span><br><span class="line">      - id: flake8</span><br><span class="line">        name: flake8</span><br><span class="line">        stages: [commit]</span><br><span class="line">        language: system</span><br><span class="line">        entry: pipenv run flake8</span><br><span class="line">        types: [python]</span><br><span class="line">        exclude: setup.py</span><br><span class="line"></span><br><span class="line">      - id: mypy</span><br><span class="line">        name: mypy</span><br><span class="line">        stages: [commit]</span><br><span class="line">        language: system</span><br><span class="line">        entry: pipenv run mypy</span><br><span class="line">        types: [python]</span><br><span class="line">        pass_filenames: false</span><br><span class="line"></span><br><span class="line">      - id: pytest</span><br><span class="line">        name: pytest</span><br><span class="line">        stages: [commit]</span><br><span class="line">        language: system</span><br><span class="line">        entry: pipenv run pytest</span><br><span class="line">        types: [python]</span><br><span class="line"></span><br><span class="line">      - id: pytest-cov</span><br><span class="line">        name: pytest</span><br><span class="line">        stages: [push]</span><br><span class="line">        language: system</span><br><span class="line">        entry: pipenv run pytest --cov --cov-fail-under=100</span><br><span class="line">        types: [python]</span><br><span class="line">        pass_filenames: false</span><br></pre></td></tr></table></figure>
+<p>If you ever need to skip these hooks you can run <code>git commit --no-verify</code> or <code>git push --no-verify</code></p>
+<h1 id="Generate-a-project-using-cookiecutter"><a href="#Generate-a-project-using-cookiecutter" class="headerlink" title="Generate a project using cookiecutter"></a>Generate a project using cookiecutter</h1><p>Now we’ve seen what an ideal project contains, we can turn this into a <a href="https://github.com/sourcery-ai/python-best-practices-cookiecutter" target="_blank" rel="noopener">template</a> to generate a new project with a single command:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipx run cookiecutter gh:sourcery-ai/python-best-practices-cookiecutter</span><br></pre></td></tr></table></figure>
+<p>Fill in the project name and repo name and your project will be generated for you.</p>
+<p>To finish setting up, follow these steps:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># Enter project directory</span><br><span class="line">cd &lt;repo_name&gt;</span><br><span class="line"></span><br><span class="line"># Initialise git repo</span><br><span class="line">git init</span><br><span class="line"></span><br><span class="line"># Install dependencies</span><br><span class="line">pipenv install --dev</span><br><span class="line"></span><br><span class="line"># Setup pre-commit and pre-push hooks</span><br><span class="line">pipenv run pre-commit install -t pre-commit</span><br><span class="line">pipenv run pre-commit install -t pre-push</span><br></pre></td></tr></table></figure>
+<p>The template project contains a very simple Python file and test to try the tools out on. Once you’re happy with the code you can then do your first <code>git commit</code> and all the hooks will be run.</p>
+<h1 id="Editor-Integration"><a href="#Editor-Integration" class="headerlink" title="Editor Integration"></a>Editor Integration</h1><p>While it is great to know that the standard of code on our project will always be maintained at the highest level when committing code, it is somewhat frustrating to find out any issues after we think the code changes have all been done. It is much better to get the issues displayed in real-time.</p>
+<p>Spend some time to make sure these commands are run by your code editor when saving a file. Having instant feedback means you can quickly fixup any minor issues introduced while the code is fresh in the mind.</p>
+<p>Personally I use some excellent Vim plugins to accomplish this:</p>
+<ul>
+<li><a href="https://github.com/dense-analysis/ale" target="_blank" rel="noopener">ale</a> runs flake8 in real-time, and runs black, isort and mypy on file save</li>
+<li><a href="https://github.com/janko/vim-test" target="_blank" rel="noopener">vim-test</a> with <a href="https://github.com/janko/vim-test#projectionist-integration" target="_blank" rel="noopener">projectionist integration</a> runs pytest on file save</li>
+</ul>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python-command-line-tools-with-pipx"><span class="toc-text">Python command line tools with pipx</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Dependency-management-with-pipenv"><span class="toc-text">Dependency management with pipenv</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Code-formatting-with-black-and-isort"><span class="toc-text">Code formatting with black and isort</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Style-enforcement-with-flake8"><span class="toc-text">Style enforcement with flake8</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Static-types-with-mypy"><span class="toc-text">Static types with mypy</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Testing-with-pytest-and-pytest-cov"><span class="toc-text">Testing with pytest and pytest-cov</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git-hooks-with-pre-commit"><span class="toc-text">Git hooks with pre-commit</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Generate-a-project-using-cookiecutter"><span class="toc-text">Generate a project using cookiecutter</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Editor-Integration"><span class="toc-text">Editor Integration</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2019/05/17/Python-datetime模块介绍及示例/" rel="next" title="Python datetime模块介绍及示例">
+          Python datetime模块介绍及示例
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2020/12/18/装饰器的六种写法/" rel="prev" title="装饰器的六种写法">
+            装饰器的六种写法
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2020/11/09/How-to-set-up-a-perfect-Python-project/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

@@ -1,0 +1,515 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="Tony Tan">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>GIT Common Operations Command [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        GIT Common Operations Command
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2014-08-12T16:00:00.000Z">
+        2014-08-13
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p><em>GIT Common Operations Command</em></p>
+<h3>1) 远程仓库相关命令</h3>
+
+<p>检出仓库：</p>
+<pre>$ git clone git://github.com/jquery/jquery.git</pre>
+
+<p>查看远程仓库：</p>
+<pre>$ git remote -v</pre>
+
+<p>添加远程仓库：</p>
+<pre>$ git remote add [name] [url]</pre>
+
+<p>删除远程仓库：</p>
+<pre>$ git remote rm [name]</pre>
+
+<p>修改远程仓库：</p>
+<pre>$ git remote set-url --push [name] [newUrl]</pre>
+
+<p>拉取远程仓库：</p>
+<pre>$ git pull [remoteName] [localBranchName]</pre>
+
+<p>推送远程仓库：</p>
+<pre>$ git push [remoteName] [localBranchName]</pre>
+
+
+<ul>
+<li>如果想把本地的某个分支test提交到远程仓库，并作为远程仓库的master分支，或者作为另外一个名叫test的分支，如下：<pre>
+$ git push origin test:master         // 提交本地test分支作为远程的master分支
+$ git push origin test:test              // 提交本地test分支作为远程的test分支
+</pre>
+
+
+</li>
+</ul>
+<h3>2）分支(branch)操作相关命令</h3>
+
+<p>查看本地分支：</p>
+<pre>$ git branch</pre>
+
+<p>查看远程分支：</p>
+<pre>$ git branch -r （如果还是看不到就先 git fetch origin 先）</pre>
+
+<p>创建本地分支：</p>
+<pre>$ git branch [name] ----注意新分支创建后不会自动切换为当前分支</pre>
+
+<p>切换分支：</p>
+<pre>$ git checkout [name]</pre>
+
+<p>创建新分支并立即切换到新分支：</p>
+<pre>$ git checkout -b [name]</pre>
+
+<p>直接检出远程分支：</p>
+<pre>$ git checkout -b [name] [remoteName] (如：git checkout -b myNewBranch origin/dragon)</pre>
+
+<p>删除分支：</p>
+<pre>$ git branch -d [name] ---- -d选项只能删除已经参与了合并的分支，对于未有合并的分支是无法删除的。如果想强制删除一个分支，可以使用-D选项</pre>
+
+<p>合并分支：</p>
+<pre>$ git merge [name] ----将名称为[name]的分支与当前分支合并</pre>
+
+<p>合并最后的2个提交：</p>
+<pre>$ git rebase -i HEAD~2 ---- 数字2按需修改即可（如果需提交到远端$ git push -f origin master 慎用！）</pre>
+
+<p>创建远程分支(本地分支push到远程)：</p>
+<pre>$ git push origin [name]</pre>
+
+<p>删除远程分支：</p>
+<pre>$ git push origin :heads/[name] 或 $ git push origin :[name] </pre>
+
+
+<ul>
+<li>创建空的分支：(执行命令之前记得先提交你当前分支的修改，否则会被强制删干净没得后悔)<pre>
+$ git symbolic-ref HEAD refs/heads/[name]
+$ rm .git/index
+$ git clean -fdx
+</pre>
+
+
+</li>
+</ul>
+<h3>3）版本(tag)操作相关命令</h3>
+
+<p>查看版本：</p>
+<pre>$ git tag</pre>
+
+<p>创建版本：</p>
+<pre>$ git tag [name]</pre>
+
+<p>删除版本：</p>
+<pre>$ git tag -d [name]</pre>
+
+<p>查看远程版本：</p>
+<pre>$ git tag -r</pre>
+
+<p>创建远程版本(本地版本push到远程)：</p>
+<pre>$ git push origin [name]</pre>
+
+<p>删除远程版本：</p>
+<pre>$ git push origin :refs/tags/[name]</pre>
+
+<p>合并远程仓库的tag到本地：</p>
+<pre>$ git pull origin --tags</pre>
+
+<p>上传本地tag到远程仓库：</p>
+<pre>$ git push origin --tags</pre>
+
+<p>创建带注释的tag：</p>
+<pre>$ git tag -a [name] -m 'yourMessage'</pre>
+
+
+<h3>4) 子模块(submodule)相关操作命令</h3>
+
+<p>添加子模块：</p>
+<pre>$ git submodule add [url] [path]</pre>
+
+<p>如：</p>
+<pre>$ git submodule add git://github.com/soberh/ui-libs.git src/main/webapp/ui-libs</pre>
+
+<p>初始化子模块：</p>
+<pre>$ git submodule init  ----只在首次检出仓库时运行一次就行</pre>
+
+<p>更新子模块：</p>
+<pre>$ git submodule update ----每次更新或切换分支后都需要运行一下</pre>
+
+<p>删除子模块：（分4步走哦）</p>
+<ul><br><li>1) $ git rm –cached [path]</li><br><li>2) 编辑“.gitmodules”文件，将子模块的相关配置节点删除掉</li><br><li>3) 编辑“ .git/config”文件，将子模块的相关配置节点删除掉</li><br><li>4) 手动删除子模块残留的目录</li><br></ul>
+
+
+<h3>5）忽略一些文件、文件夹不提交</h3>
+
+<p>在仓库根目录下创建名称为“.gitignore”的文件，写入不需要的文件夹名或文件，每个元素占一行即可，如</p>
+<pre>
+target
+bin
+*.db
+</pre>
+
+
+<h3>6）后悔药</h3>
+
+<p>删除当前仓库内未受版本管理的文件：</p>
+<pre>$ git clean -f</pre>
+
+<p>恢复仓库到上一次的提交状态：</p>
+<pre>$ git reset --hard</pre>
+
+<p>回退所有内容到上一个版本：</p>
+<pre>$ git reset HEAD^</pre>
+
+<p>回退a.py这个文件的版本到上一个版本：</p>
+<pre>$ git reset HEAD^ a.py</pre>
+
+<p>回退到某个版本：</p>
+<pre>$ git reset 057d </pre>
+
+<p>将本地的状态回退到和远程的一样：</p>
+<pre>$ git reset –hard origin/master</pre>
+
+<p>向前回退到第3个版本：</p>
+<pre>$ git reset –soft HEAD~3</pre>
+
+<p>修改最后的提交日志：</p>
+<pre>$ git commit --amend</pre>
+
+
+<h3>7）Git一键推送多个远程仓库</h3>
+
+<p>编辑本地仓库的.git/config文件：</p>
+<pre>
+[remote "all"]
+    url = git@github.com:dragon/test.git
+    url = git@gitcafe.com:dragon/test.git
+</pre>
+
+<p>这样，使用git push all即可一键Push到多个远程仓库中。</p>
+<p></p><h3>8）缓存认证信息</h3><p></p>
+<pre>
+$ git config credential.helper cache
+</pre>
+
+
+<p>资料参考：</p>
+<p><a href="http://josephjiang.com/entry.php?id=342" target="_blank" rel="noopener">Git Submodule 的認識與!</a></p>
+<p><a href="http://icyleaf.com/2010/08/03/how-to-keep-public-and-private-versions-of-a-git-submodule-repo-in-sync/" target="_blank" rel="noopener">如何保持在 Git Submodule 代码的开放和私有共存</a></p>
+<p><a href="https://git.wiki.kernel.org/index.php/GitSubmoduleTutorial" target="_blank" rel="noopener">Git Submodule Tutorial</a></p>
+<p><a href="http://blog.ossxp.com/2010/01/425/" target="_blank" rel="noopener">删除 git submodule </a></p>
+<p><a href="http://pages.github.com/" target="_blank" rel="noopener">pages.github.com</a></p>
+<p><a href="http://lfeng.me/2009/07/23/git-remote-branch-access/" target="_blank" rel="noopener">Git获取远程分支</a></p>
+<p><a href="https://github.com/msysgit/msysgit/wiki/Git-for-Windows-Unicode-Support" target="_blank" rel="noopener">Git for Windows Unicode Support</a></p>
+<p><a href="http://my.oschina.net/chinesedragon/blog/81483" target="_blank" rel="noopener">Git一键推送多个远程仓库</a></p>
+<p><a href="http://my.oschina.net/u/198088/blog/114383" target="_blank" rel="noopener">图解Git</a></p>
+<p><a href="http://www.cnblogs.com/wujianlundao/archive/2012/07/30/2615873.html" target="_blank" rel="noopener">使用git合并多个提交</a></p>
+<p><a href="http://zn-moonlight-gmail-com.iteye.com/blog/1217841" target="_blank" rel="noopener">git:多个commit合并提交</a></p>
+<p><a href="http://blog.csdn.net/nebulali/article/details/7682813" target="_blank" rel="noopener">git merge 和git rebase</a></p>
+<p><a href="http://ihower.tw/git/" target="_blank" rel="noopener">版本控制系統 Git 精要</a></p>
+<p><a href="http://www.oschina.net/translate/10-useful-advanced-git-commands" target="_blank" rel="noopener">10 个很有用的高级 Git 命令</a></p>
+<p><a href="http://yuxu9710108.blog.163.com/blog/static/237515342011910113822476/" target="_blank" rel="noopener">git修改历史提交  </a></p>
+<p>说明：Git for Windows 从 1.7.9 版本开始支持使用中文文件、文件夹名称了，结束了跨平台中文乱码的问题。</p>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">1) 远程仓库相关命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">2）分支(branch)操作相关命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">3）版本(tag)操作相关命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">4) 子模块(submodule)相关操作命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">5）忽略一些文件、文件夹不提交</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">6）后悔药</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">7）Git一键推送多个远程仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">8）缓存认证信息</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2014/08/12/how-to-install-google-authenticator-on-linux/" rel="next" title="How to install Google Authenticator on Linux">
+          How to install Google Authenticator on Linux
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2014/08/17/use-frabic-in-update-github/" rel="prev" title="Use Frabic in update Github">
+            Use Frabic in update Github
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2014/08/13/git-common-operations-command/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

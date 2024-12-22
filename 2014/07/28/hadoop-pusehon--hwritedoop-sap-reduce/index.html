@@ -1,0 +1,414 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="Tony Tan">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>hadoop用純 python 寫 hadoop 的 map reduce 程式 [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        hadoop用純 python 寫 hadoop 的 map reduce 程式
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2014-07-27T16:00:00.000Z">
+        2014-07-28
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p><em>hadoop用純 python 寫 hadoop 的 map reduce 程式</em></p>
+<p>好繞口的標題:)。hadoop 是 java 寫成的，但是並不是只能用 java 才能在 hadoop 裡面執行程式。但是第一個的觀念要有的是，程式的執行環境，就是在 java VM 裡面。所以，在 hadoop 文件裡介紹的 python 程式，要執行的時候，是用 jython 轉成 java jar，然後交由 hadoop framework 來執行。所以，以此類推，任何語言有能力轉成 java jar 的，應該都可以寫出程式讓 hadoop framework 執行。</p>
+<p>回頭講 python。用慣 python 的人，應該是不太習慣 jython 的(我就是)。這兩個的確有些差別，讓我無法適應(ironpython 也是)。所以，Noll 先生就介紹了如何用純 python 在 hadoop framework 執行。</p>
+<p>他所利用的是，hadoop 的一個 Streaming API 收發串流資料的能力，且 hadoop 可存取 stdin 及 stdout 。因此把它們當做通道，把 hadoop framework 與 python 執行期結合起來。所以，接下來要注意的是，mapper.py、reducer.py 是放在本機環境，而資料是放在 hadoop 環境裡。稍不注意放錯位置就會無法執行。</p>
+<p>準備環境：</p>
+<ul><br>    <li>hadoop 環境，照之前的文章，</li><br>    <li>準備以下的程式<br>    <ul><br>        <li>mapper.py 放在 /home/hduser/mapper.py (記得 chmod +x)</li><br><pre><br>#!/usr/bin/env python<br>import sys<br># input comes from STDIN (standard input)<br>for line in sys.stdin:<br>    # remove leading and trailing whitespace<br>    line = line.strip()<br>    # split the line into words<br>    words = line.split()<br>    # increase counters<br>    for word in words:<br>        # write the results to STDOUT (standard output);<br>        # what we output here will be the input for the<br>        # Reduce step, i.e. the input for reducer.py<br>        #<br>        # tab-delimited; the trivial word count is 1<br>    print ‘%s\t%s’ % (word, 1)<br></pre><br>        <li>reducer.py 放在 /home/hduser/reducer.py (記得 chmod +x)</li><br><pre><br>#!/usr/bin/env python<br>from operator import itemgetter<br>import sys<br>current_word = None<br>current_count = 0<br>word = None<br># input comes from STDIN<br>for line in sys.stdin:<br>    # remove leading and trailing whitespace<br>    line = line.strip()<br>    # parse the input we got from mapper.py<br>    word, count = line.split(‘\t’, 1)<br>    # convert count (currently a string) to int<br>    try:<br>        count = int(count)<br>    except ValueError:<br>        # count was not a number, so silently<br>        # ignore/discard this line<br>        continue<br>    # this IF-switch only works because Hadoop sorts map output<br>    # by key (here: word) before it is passed to the reducer<br>    if current_word == word:<br>        current_count += count<br>    else:<br>        if current_word:<br>            # write result to STDOUT<br>            print ‘%s\t%s’ % (current_word, current_count)<br>        current_count = count<br>        current_word = word<br># do not forget to output the last word if needed!<br>if current_word == word:<br>      print ‘%s\t%s’ % (current_word, current_count)<br></pre><br>    </ul>
+
+<p></p></li></ul><p></p>
+<p>Noll 先生還很好心地建議，利用一點小手法測試一下 mapper.py 及 reducer.py，免得執行完不如預期，牽拖別人。</p>
+<pre>
+
+# very basic test  hduser@ubuntu:~$ echo "foo foo quux labs foo bar quux" | /home/hduser/mapper.py  
+foo     1  
+foo     1  
+quux    1  
+labs    1  
+foo     1  
+bar     1  
+quux    1 
+hduser@ubuntu:~$ echo "foo foo quux labs foo bar quux" | /home/hduser/mapper.py | sort -k1,1 | /home/hduser/reducer.py  
+bar     1  
+foo     3  
+labs    1  
+quux    2 
+# using one of the ebooks as example input  
+# (see below on where to get the ebooks)  
+hduser@ubuntu:~$ cat /tmp/gutenberg/20417-8.txt | /home/hduser/mapper.py  
+The     1  
+Project 1  
+Gutenberg       1  
+EBook   1  
+of      1  
+[...]  
+(you get the idea)
+</pre>
+
+<p>好了，程式就這麼簡單。接下來要試著讓它跑。要準備材料。跟之前測試的一樣，到 Project Gutenberg 下載三本書，要下載文字版，UTF-8 編碼的檔案。(Plain Text UTF-8)</p>
+<p>The Outline of Science, Vol. 1 (of 4) by J. Arthur Thomson<br>The Notebooks of Leonardo Da Vinci<br>Ulysses by James Joyce</p>
+<p>把文字檔放到 /tmp/gutenberg 目錄去。<br>然後，要把這三個檔案，放到 HDFS 去(也就是 Hadoop 環境的檔案區)</p>
+<pre>
+hduser@ubuntu:/usr/local/hadoop$ bin/hadoop dfs -copyFromLocal /tmp/gutenberg /user/hduser/gutenberg  
+hduser@ubuntu:/usr/local/hadoop$ bin/hadoop dfs -ls  
+Found 1 items  
+drwxr-xr-x   - hduser supergroup          0 2010-05-08 17:40 /user/hduser/gutenberg  
+hduser@ubuntu:/usr/local/hadoop$ bin/hadoop dfs -ls /user/hduser/gutenberg  
+Found 3 items  
+-rw-r--r--   3 hduser supergroup     674566 2011-03-10 11:38 /user/hduser/gutenberg/pg20417.txt  
+-rw-r--r--   3 hduser supergroup    1573112 2011-03-10 11:38 /user/hduser/gutenberg/pg4300.txt  -
+-rw-r--r--   3 hduser supergroup    1423801 2011-03-10 11:38 /user/hduser/gutenberg/pg5000.txt  
+hduser@ubuntu:/usr/local/hadoop$
+
+</pre>
+
+<p>然後，就是執行 mapreduce job 的時候，只有一行指令，當然參數很多，不要換行！</p>
+<pre>
+hduser@ubuntu:/usr/local/hadoop$ bin/hadoop jar contrib/streaming/hadoop-*streaming*.jar 
+-file /home/hduser/mapper.py    -mapper /home/hduser/mapper.py  -file /home/hduser/reducer.py   -reducer /home/hduser/reducer.py -input /user/hduser/gutenberg/* -output /user/hduser/gutenberg-output
+
+</pre>
+
+<p>執行完的結果會放在，執行範例如下：</p>
+<pre>
+hduser@ubuntu:/usr/local/hadoop$ bin/hadoop jar contrib/streaming/hadoop-*streaming*.jar -mapper /home/hduser/mapper.py -reducer /home/hduser/reducer.py -input /user/hduser/gutenberg/* -output /user/hduser/gutenberg-output  
+additionalConfSpec_:null  
+null=@@@userJobConfProps_.get(stream.shipped.hadoopstreaming  
+packageJobJar: [/app/hadoop/tmp/hadoop-unjar54543/]  
+[] /tmp/streamjob54544.jar tmpDir=null  
+[...] INFO mapred.FileInputFormat: Total input paths to process : 7  
+[...] INFO streaming.StreamJob: getLocalDirs(): [/app/hadoop/tmp/mapred/local]  
+[...] INFO streaming.StreamJob: Running job: job_200803031615_0021  
+[...]  
+[...] INFO streaming.StreamJob:  map 0%  reduce 0%  
+[...] INFO streaming.StreamJob:  map 43%  reduce 0%  
+[...] INFO streaming.StreamJob:  map 86%  reduce 0%  
+[...] INFO streaming.StreamJob:  map 100%  reduce 0%  
+[...] INFO streaming.StreamJob:  map 100%  reduce 33%  
+[...] INFO streaming.StreamJob:  map 100%  reduce 70%  
+[...] INFO streaming.StreamJob:  map 100%  reduce 77%  
+[...] INFO streaming.StreamJob:  map 100%  reduce 100%  
+[...] INFO streaming.StreamJob: Job complete: job_200803031615_0021  
+[...] INFO streaming.StreamJob: Output: /user/hduser/gutenberg-output  hduser@ubuntu:/usr/local/hadoop$
+</pre>
+
+<p>執行完的結果在 HDFS 的 /user/hduser/gutenberg-output，用指令看一下結果的內容</p>
+<pre>
+hduser@ubuntu:/usr/local/hadoop$ bin/hadoop dfs -ls /user/hduser/gutenberg-output  
+Found 1 items  
+/user/hduser/gutenberg-output/part-00000     &lt;r 1&gt;   903193  2007-09-21 13:00  
+hduser@ubuntu:/usr/local/hadoop$  
+hduser@ubuntu:/usr/local/hadoop$ bin/hadoop dfs -cat /user/hduser/gutenberg-output/part-00000  
+"(Lo)cra"       1  
+"1490   1  
+"1498," 1  
+"35"    1  
+"40,"   1  
+"A      2  
+"AS-IS".        2  
+"A_     1  
+"Absoluti       1  
+[...]  
+hduser@ubuntu:/usr/local/hadoop$
+</pre>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2014/07/27/a-sample-game-use-pygame/" rel="next" title="A Sample Game Use Pygame">
+          A Sample Game Use Pygame
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2014/08/04/read--open-a-csv-file--randomly-select-an-entry/" rel="prev" title="Read &amp; Open a CSV File &amp; Randomly Select an Entry">
+            Read &amp; Open a CSV File &amp; Randomly Select an Entry
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2014/07/28/hadoop-pusehon--hwritedoop-sap-reduce/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

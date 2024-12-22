@@ -1,0 +1,431 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="Tony Tan">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>pygeoipmap.py [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        pygeoipmap.py
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2014-11-21T16:00:00.000Z">
+        2014-11-22
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p><em>pygeoipmap.py</em></p>
+<pre>
+#!/usr/bin/env python
+# coding: utf-8
+
+from __future__ import print_function, unicode_literals, with_statement
+import argparse
+import requests
+import json
+import numpy
+import csv
+import matplotlib
+# Anti-Grain Geometry (AGG) backend so PyGeoIpMap can be used 'headless'
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+import GeoIP
+
+def get_ip(ip_file):
+    """
+    Returns a list of IP addresses from a file containing one IP per line.
+    """
+    with open(ip_file, 'r') as f:
+        ip_list = [line.strip() for line in f]
+    return ip_list
+
+
+def get_lat_lon(ip_list=[], lats=[], lons=[]):
+    """
+    This function connects to the FreeGeoIP web service to get info from
+    a list of IP addresses.
+    Returns two lists (latitude and longitude).
+    """
+    print("Processing {} IPs...".format(len(ip_list)))
+    for ip in ip_list:
+        r = requests.get("https://freegeoip.net/json/"+ip)
+        json_response = r.json()
+        print("{ip}, {region_name}, {country_name}, {latitude}, {longitude}".format(**json_response))
+        if json_response['latitude'] and json_response['longitude']:
+            lats.append(json_response['latitude'])
+            lons.append(json_response['longitude'])
+    return lats, lons
+
+def geoip_lat_lon(gi, ip_list=[], lats=[], lons=[]):
+    """
+    This function uses the MaxMind library and databases to geolocate IP addresses
+    Returns two lists (latitude and longitude).
+    """
+    print("Processing {} IPs...".format(len(ip_list)))
+    for ip in ip_list:
+        try:
+            r = gi.record_by_addr(ip)
+        except Exception:
+            print("Unable to locate IP: %s" % ip)
+            continue
+        if r is not None:
+            print("%s {country_code} {latitude}, {longitude}".format(**r) % ip)
+            lats.append(r['latitude'])
+            lons.append(r['longitude'])
+    return lats, lons
+
+def get_lat_lon_from_csv(csv_file, lats=[], lons=[]):
+    """
+    Retrieves the last two rows of a CSV formatted file to use as latitude
+    and longitude.
+    Returns two lists (latitudes and longitudes).
+    Example CSV file:
+    119.80.39.54, Beijing, China, 39.9289, 116.3883
+    101.44.1.135, Shanghai, China, 31.0456, 121.3997
+    219.144.17.74, Xian, China, 34.2583, 108.9286
+    64.27.26.7, Los Angeles, United States, 34.053, -118.2642
+    """
+    with open(csv_file, 'rb') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            lats.append(row[-2])
+            lons.append(row[-1])
+    return lats, lons
+
+
+def generate_map(output, lats=[], lons=[]):
+    """
+    Using Basemap and the matplotlib toolkit, this function generates a map and
+    puts a red dot at the location of every IP addresses found in the list.
+    The map is then saved in the file specified in `output`.
+    """
+    print("Generating map and saving it to {}".format(output))
+    m = Basemap(projection='cyl', resolution='l')
+    m.bluemarble()
+    x, y = m(lons, lats)
+    m.scatter(x, y, s=1, color='#ff0000', marker='o', alpha=0.3)
+    plt.savefig(output, dpi=300, bbox_inches='tight')
+
+
+def main():
+    parser = argparse.ArgumentParser(description='Visualize community on a map.')
+    parser.add_argument('input', type=str, help='Input file. One IP per line or, if FORMAT set to \'csv\', CSV formatted file ending with latitude and longitude positions')
+    parser.add_argument('-o', '--output', default='output.png', help='Path to save the file (e.g. /tmp/output.png)')
+    parser.add_argument('-f', '--format', default='ip', choices=['ip', 'csv'], help='Format of the input file.')
+    parser.add_argument('-s', '--service', default='f', choices=['f','m'], help='Geolocation service (f=FreeGeoIP, m=MaxMind local database)')
+    parser.add_argument('-db', '--db', default='./GeoLiteCity.dat', help='Full path to MaxMind database file (default = ./GeoLiteCity.dat)')
+    args = parser.parse_args()
+
+    output = args.output
+
+    if args.format == 'ip':
+        ip_list = get_ip(args.input)
+        if args.service == 'm':
+            gi = GeoIP.open(args.db, GeoIP.GEOIP_STANDARD)
+            lats, lons = geoip_lat_lon(gi, ip_list)
+        else:  # default service
+            lats, lons = get_lat_lon(ip_list)
+    elif args.format == 'csv':
+        lats, lons = get_lat_lon_from_csv(args.input)
+
+    generate_map(output, lats, lons)
+
+if __name__ == '__main__':
+    main()
+</pre>
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2014/11/11/export-excel-in-django17/" rel="next" title="Export Excel in Django1.7">
+          Export Excel in Django1.7
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2014/11/27/how-to-use-python-datetime-and-time/" rel="prev" title="How to use Python datetime and time">
+            How to use Python datetime and time
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2014/11/22/pygeoipmappy/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

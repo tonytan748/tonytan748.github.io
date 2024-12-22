@@ -1,0 +1,343 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="python,">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>Mocks and monkeypatching in python [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        Mocks and monkeypatching in python
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2017-09-09T14:14:16.000Z">
+        2017-09-09
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p>Translate from <a href="https://krzysztofzuraw.com/blog/2016/mocks-monkeypatching-in-python.html" target="_blank" rel="noopener">krzysztofzuraw</a></p>
+<p>First of all, what I want to accomplish here is to give you basic examples of how to mock data using two tools: mock and pytest monkeypatch.</p>
+<h1 id="Why-bother-mocking"><a href="#Why-bother-mocking" class="headerlink" title="Why bother mocking?"></a>Why bother mocking?</h1><p>Some of the parts of our application may have dependencies for other libraries or objects. To isolate behaviour of our parts we need to substitue external dependencies. Here comes the mocking. We mock external API to have certain behaviours such as proper return values that we previously defined.</p>
+<h1 id="Mocking-function"><a href="#Mocking-function" class="headerlink" title="Mocking function"></a>Mocking function</h1><p>Let’s say we have module called <strong>function.py</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def square(value):</span><br><span class="line">    return value ** 2</span><br><span class="line"></span><br><span class="line">def cube(value):</span><br><span class="line">    return value ** 3</span><br><span class="line"></span><br><span class="line">def main(value):</span><br><span class="line">    return square(value) + cube(value)</span><br></pre></td></tr></table></figure>
+<p>Then let’s look how these functions are mocked using <strong>mock</strong> library:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">1  try:</span><br><span class="line">2      import mock</span><br><span class="line">3  except ImportError:</span><br><span class="line">4      from unittest import mock</span><br><span class="line">5 </span><br><span class="line">6  import unittest</span><br><span class="line">7 </span><br><span class="line">8  from function import square, main</span><br><span class="line">9 </span><br><span class="line">10</span><br><span class="line">11 class TestNotMockedFunction(unittest.TestCase):</span><br><span class="line">12     @mock.patch(&apos;__main__.square&apos;, return_value=1)</span><br><span class="line">13     def test_function(self, mocked_square):</span><br><span class="line">14         # because you need to patch in exact place where function that has to be mocked is called</span><br><span class="line">15         self.assertEquals(square(5), 1)</span><br><span class="line">16        </span><br><span class="line">17     @mock.patch(&apos;function.square&apos;)</span><br><span class="line">18     @mock.patch(&apos;function.cube&apos;)</span><br><span class="line">19     def test_main_function(self, mocked_square, mocked_cube):</span><br><span class="line">20         # underling function are mocks so calling main(5) will return mock</span><br><span class="line">21         mocked_square.return_value = 1</span><br><span class="line">22         mocked_cube.return_value = 0</span><br><span class="line">23         self.assertEquals(main(5), 1)</span><br><span class="line">24         mocked_square.assert_called_once_with(5)</span><br><span class="line">25         mocked_cube.assert_called_once_with(5)</span><br><span class="line">26</span><br><span class="line">27 if __name__ == &apos;__main__&apos;:</span><br><span class="line">28     unittest.main()</span><br></pre></td></tr></table></figure>
+<p>What is happening here? Lines 1-4 are for making this code compatible between python 2 and 3. In python 3 mock is part of standard library whereas in python 2 you need to install by <strong>pip install mock</strong>.</p>
+<p>In line 13 I patched the <code>square</code> function. But you have to remember to patch it in the same place you use it. For instance, I’m calling <code>square(5)</code> in test itself so I need to patch it in <code>__main__</code>. This is the case if I’m running this by <code>python tests/test_function.py</code>. If I’m using pytest for that I need to patch it like <code>test_function.square</code>.</p>
+<p>In lines 17-18, I patch <code>square</code> and <code>cube</code> functions in their module because they are used in <code>main</code> function. The last two asserts come from mock library and are for making sure that mock was called with proper values.</p>
+<p>The same can be accomplished using <code>mokeypatching</code> for py.test:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from function import square, main</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def test_function(monkeypatch):</span><br><span class="line">    monkeypatch.setattr(&quot;test_function_pytest.square&quot;, lambda x: 1)</span><br><span class="line">    assert square(5) == 1</span><br><span class="line"></span><br><span class="line">def test_main_function(monkeypatch):</span><br><span class="line">    monkeypatch.setattr(&apos;function.square&apos;, lambda x: 1)</span><br><span class="line">    monkeypatch.setattr(&apos;function.cube&apos;, lambda x: 0)</span><br><span class="line">    assert main(5) == 1</span><br></pre></td></tr></table></figure>
+<p>As you can see I’m using <code>monkeypatch.setattr</code> for setting up return value for given functions. I’m still need to monkeypatch it in proper place: <code>test_function_pytest</code> and <code>function</code>.</p>
+<h1 id="Mocking-classes"><a href="#Mocking-classes" class="headerlink" title="Mocking classes"></a>Mocking classes</h1><p>I have module called <code>square</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import math</span><br><span class="line"></span><br><span class="line">class Square(object):</span><br><span class="line">    def __init__(radius):</span><br><span class="line">         self.radius = radius</span><br><span class="line"></span><br><span class="line">    def calculate_area(self):</span><br><span class="line">         return math.sqrt(self.radius) * math.pi</span><br></pre></td></tr></table></figure>
+<p>And mocks using standard lib:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">1  try:</span><br><span class="line">2      import mock</span><br><span class="line">3  except ImportError:</span><br><span class="line">4      from unittest import mock</span><br><span class="line">5 </span><br><span class="line">6  import unittest</span><br><span class="line">7  </span><br><span class="line">8  from square import Square</span><br><span class="line">9  </span><br><span class="line">10  </span><br><span class="line">11 class TestClass(unittest.TestCase):</span><br><span class="line">12 </span><br><span class="line">13     @mock.patch(&apos;__main__.Square&apos;) # depends in witch from is run</span><br><span class="line">14     def test_mocking_instance(self, mocked_instance):</span><br><span class="line">15         mocked_instance = mocked_instance.return_value</span><br><span class="line">16         mocked_instance.calculate_area.return_value = 1</span><br><span class="line">17         sq = Square(100)</span><br><span class="line">18         self.assertEquals(sq.calculate_area(), 1)</span><br><span class="line">19 </span><br><span class="line">20 </span><br><span class="line">21     def test_mocking_classes(self):</span><br><span class="line">22         sq = Square</span><br><span class="line">23         sq.calculate_area = mock.MagicMock(return_value=1)</span><br><span class="line">24         self.assertEquals(sq.calculate_area(), 1)</span><br><span class="line">25 </span><br><span class="line">26     @mock.patch.object(Square, &apos;calculate_area&apos;)</span><br><span class="line">27     def test_mocking_class_methods(self, mocked_method):</span><br><span class="line">28         mocked_method.return_value = 20</span><br><span class="line">29         self.assertEquals(Square.calculate_area(), 20)</span><br><span class="line">30 </span><br><span class="line">31 if __name__ == &apos;__main__&apos;:</span><br><span class="line">32     unittest.main()</span><br></pre></td></tr></table></figure>
+<p>At line 13 I patch class <code>Square</code> (again be aware if you run this test using pytest or standard way). Lines 15 and 16 presents mocking instance; at first <code>mocked_instance</code> is mock object which by default returns another mock and to these <code>mock.calculate_area</code> I add <code>return_value</code> 1. In line 23 I’m using <code>MagicMock</code> which is normal mock class except it also retrieves magic methods from given object. Lastly I use <code>patch.object</code> to mock method in <code>Square</code> class.</p>
+<p>The same using pytest:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">try:</span><br><span class="line">    from mock import MagicMock</span><br><span class="line">except ImportError:</span><br><span class="line">   from unittest.mock import MagicMock</span><br><span class="line"></span><br><span class="line">from square import Square</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def test_mocking_class_methods(monkeypatch):</span><br><span class="line">    monkeypatch.setattr(&apos;test_class_pytest.Square.calculate_area&apos;, lambda: 1)</span><br><span class="line">    assert Square.calculate_area() ==  1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def test_mocking_classes(monkeypatch):</span><br><span class="line">    monkeypatch.setattr(&apos;test_class_pytest.Square&apos;, MagicMock(Square))</span><br><span class="line">    sq = Square</span><br><span class="line">    sq.calculate_area.return_value = 1</span><br><span class="line">    assert sq.calculate_area() ==  1</span><br></pre></td></tr></table></figure>
+<p>The issue here is with <code>test_mocking_class_methods</code> which works well in python 3 but not in python 2. Right now I don’t have clear answer to this so if you can help I appreciate this!</p>
+<p>All examples can be found under this <a href="https://github.com/krzysztofzuraw/personal-blog-projects/tree/master/blog_mocks" target="_blank" rel="noopener">repo</a>.</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References:"></a>References:</h1><ol>
+<li><a href="http://stackoverflow.com/questions/2665812/what-is-mocking" target="_blank" rel="noopener">What is mocking</a>.</li>
+<li><a href="http://manishamde.github.io/blog/2013/10/06/mocking-python-with-kung-fu-panda/#mock_classes" target="_blank" rel="noopener">Mocking Python With Kung Fu Panda</a>.</li>
+</ol>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Why-bother-mocking"><span class="toc-text">Why bother mocking?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Mocking-function"><span class="toc-text">Mocking function</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Mocking-classes"><span class="toc-text">Mocking classes</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#References"><span class="toc-text">References:</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2017/08/19/Nevwe-Write-For-Loops-Again/" rel="next" title="Nevwe Write For-Loops Again">
+          Nevwe Write For-Loops Again
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2018/06/12/Enhance-your-Python-with-an-interactive-shell/" rel="prev" title="Enhance your Python with an interactive shell">
+            Enhance your Python with an interactive shell
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2017/09/09/Mocks-and-monkeypatching-in-python/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

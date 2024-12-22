@@ -1,0 +1,354 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="python,">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>Pywebio试用总结 [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        Pywebio试用总结
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2021-12-23T09:21:46.000Z">
+        2021-12-23
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p><a href="https://pywebio.readthedocs.io/zh_CN/latest/guide.html" target="_blank" rel="noopener">使用手册</a></p>
+<p>功能分类</p>
+<ul>
+<li>输入模块 pywebio.input</li>
+<li>输出模块 pywebio.output</li>
+<li>会话相关 pywebio.session</li>
+<li>应用部署 pywebio.platform</li>
+<li>持续性输入 pywebio.pin</li>
+</ul>
+<p>pywebio是一个用python直接渲染web页面的库，主要实现了页面输入，输出的操作，支持多线程/携程. 并且可以整合到主流的python web框架中。功能小巧，比较好玩。</p>
+<p>试用了几个例子，直接可以页面展示</p>
+<ol>
+<li>输入</li>
+</ol>
+<p>输入包含了表单页面中常用的文本框，下拉选择，文本域，单选，多选，文件上传等功能，可以直接生成表单</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">from pywebio.input import *</span><br><span class="line">data = input_group(&quot;Basic info&quot;, [ # 1</span><br><span class="line">        input(&quot;what&apos;s name&quot;, type=TEXT, placeholder=&apos;This is placeholder&apos;,</span><br><span class="line">              help_text=&apos;This is help text&apos;, required=True, name=&quot;name&quot;),</span><br><span class="line">        input(&quot;How old are you?&quot;, type=NUMBER, validate=check_age, name=&quot;age&quot;), # 2</span><br><span class="line">        # Password input</span><br><span class="line">        input(&quot;Input password&quot;, type=PASSWORD, name=&quot;password&quot;),</span><br><span class="line"></span><br><span class="line">        # Drop-down selection</span><br><span class="line">        select(&apos;Which gift you want?&apos;, [&apos;keyboard&apos;, &apos;ipad&apos;], name=&quot;gift&quot;),</span><br><span class="line"></span><br><span class="line">        # Checkbox</span><br><span class="line">        checkbox(&quot;User Term&quot;, options=[&apos;I agree to terms and conditions&apos;], name=&quot;term&quot;),</span><br><span class="line"></span><br><span class="line">        # Single choice</span><br><span class="line">        radio(&quot;Choose one&quot;, options=[&apos;A&apos;, &apos;B&apos;, &apos;C&apos;, &apos;D&apos;], name=&quot;choose&quot;),</span><br><span class="line"></span><br><span class="line">        # Multi-line text input</span><br><span class="line">        textarea(&apos;Text Area&apos;, rows=3, placeholder=&apos;Some text&apos;, name=&quot;text&quot;),</span><br><span class="line"></span><br><span class="line">        textarea(&apos;Code Edit&apos;, code=&#123;</span><br><span class="line">            &apos;mode&apos;: &quot;python&quot;,</span><br><span class="line">            &apos;theme&apos;: &apos;darcula&apos;,</span><br><span class="line">        &#125;, value=&apos;import something\n# Write your python code&apos;, name=&quot;code&quot;),</span><br><span class="line">        # File Upload</span><br><span class="line">        file_upload(&quot;Select a image:&quot;, accept=&quot;image/*&quot;, name=&quot;file&quot;)</span><br><span class="line">    ])</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>输出</li>
+</ol>
+<p>输出包含了文本，图片，文件，弹框，Tab切换，进度条，按钮，链接，HTML等等功能。通过输出域Scope，能实现多种页面布局，基本上能完成一个较复杂页面的展示。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">from pywebio.output import *</span><br><span class="line"> # Text Output</span><br><span class="line">put_text(&quot;Hello world!&quot;)</span><br><span class="line"></span><br><span class="line"># Table Output</span><br><span class="line">put_table([ # 1</span><br><span class="line">    [&apos;Commodity&apos;, &apos;Price&apos;],</span><br><span class="line">    [&apos;Apple&apos;, &apos;5.5&apos;],</span><br><span class="line">    [&apos;Banana&apos;, &apos;7&apos;],</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"># Image Output</span><br><span class="line">put_image(open(r&apos;C:\Program Files (x86)\Microsoft\EdgeCore\97.0.1060.2\VisualElements\Logo.png&apos;, &apos;rb&apos;).read())  # local image</span><br><span class="line"># put_image(&apos;http://example.com/some-image.png&apos;)  # internet image</span><br><span class="line"></span><br><span class="line"># Markdown Output</span><br><span class="line">put_markdown(&apos;~~Strikethrough~~&apos;)</span><br><span class="line"></span><br><span class="line"># File Output</span><br><span class="line">put_file(&apos;hello_word.txt&apos;, b&apos;hello word!&apos;)</span><br><span class="line"></span><br><span class="line"># Show a PopUp</span><br><span class="line">popup(&apos;popup title&apos;, &apos;popup text content&apos;)</span><br><span class="line"></span><br><span class="line"># Show a notification message</span><br><span class="line">toast(&apos;New message  &apos;)</span><br><span class="line"></span><br><span class="line">popup(&apos;Popup title&apos;, [</span><br><span class="line">    put_html(&apos;&lt;h3&gt;Popup Content&lt;/h3&gt;&apos;),</span><br><span class="line">    &apos;plain html: &lt;br/&gt;&apos;,  # Equivalent to: put_text(&apos;plain html: &lt;br/&gt;&apos;)</span><br><span class="line">    put_table([[&apos;A&apos;, &apos;B&apos;], [&apos;C&apos;, &apos;D&apos;]]),</span><br><span class="line">    put_button(&apos;close_popup()&apos;, onclick=close_popup)</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line">hobby = output(&apos;Coding&apos;)  # equal to output(put_text(&apos;Coding&apos;)) # 2</span><br><span class="line">put_table([</span><br><span class="line">    [&apos;Name&apos;, &apos;Hobbies&apos;],</span><br><span class="line">    [&apos;Wang&apos;, hobby]      # hobby is initialized to Coding</span><br><span class="line">])</span><br><span class="line">#</span><br><span class="line">hobby.reset(&apos;Movie&apos;)  # hobby is reset to Movie</span><br><span class="line">hobby.append(&apos;Music&apos;, put_text(&apos;Drama&apos;))   # append Music, Drama to hobby</span><br><span class="line">hobby.insert(0, put_markdown(&apos;**Coding**&apos;))  # insert the Coding into the top of the hobby</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">with put_collapse(&apos;This is title&apos;): # 3</span><br><span class="line">    for i in range(4):</span><br><span class="line">        put_text(i)</span><br><span class="line"></span><br><span class="line">    put_table([</span><br><span class="line">        [&apos;Commodity&apos;, &apos;Price&apos;],</span><br><span class="line">        [&apos;Apple&apos;, &apos;5.5&apos;],</span><br><span class="line">        [&apos;Banana&apos;, &apos;7&apos;],</span><br><span class="line">    ])</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>会话</li>
+</ol>
+<p>会话可推送文件，运行js代码，注册线程, 不同服务间跳转，协程管理等等操作，具体的参考文档。</p>
+<ol start="4">
+<li>事件回调</li>
+</ol>
+<p>PyWebIO允许你输出一些控件并绑定回调函数，当控件被点击时相应的回调函数便会被执行。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">from functools import partial</span><br><span class="line"></span><br><span class="line">def edit_row(choice, row):</span><br><span class="line">    put_text(&quot;You click %s button ar row %s&quot; % (choice, row))</span><br><span class="line"></span><br><span class="line">put_table([</span><br><span class="line">    [&apos;Idx&apos;, &apos;Actions&apos;],</span><br><span class="line">    [1, put_buttons([&apos;edit&apos;, &apos;delete&apos;], onclick=partial(edit_row, row=1))],</span><br><span class="line">    [2, put_buttons([&apos;edit&apos;, &apos;delete&apos;], onclick=partial(edit_row, row=2))],</span><br><span class="line">    [3, put_buttons([&apos;edit&apos;, &apos;delete&apos;], onclick=partial(edit_row, row=3))],</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line">def btn_click(btn_val):</span><br><span class="line">    put_text(&quot;You click %s button&quot; % btn_val)</span><br><span class="line"></span><br><span class="line">put_buttons([&apos;A&apos;, &apos;B&apos;, &apos;C&apos;], onclick=btn_click)  # a group of buttons</span><br><span class="line"></span><br><span class="line">put_button(&quot;Click me&quot;, onclick=lambda: toast(&quot;Clicked&quot;))  # single button</span><br></pre></td></tr></table></figure></p>
+<ol start="5">
+<li>输出域</li>
+</ol>
+<p>PyWebIO使用scope模型来控制内容输出的位置。scope为输出内容的容器，你可以创建一个scope并将内容输出到其中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">with use_scope(&apos;scope1&apos;):  # 创建并进入scope &apos;scope1&apos;</span><br><span class="line">    put_text(&apos;text1 in scope1&apos;)  # 输出内容到 scope1</span><br><span class="line"></span><br><span class="line">put_text(&apos;text in parent scope of scope1&apos;)  # 输出内容到 ROOT scope</span><br><span class="line"></span><br><span class="line">with use_scope(&apos;scope1&apos;):  # 进入之前创建的scope &apos;scope1&apos;</span><br><span class="line">    put_text(&apos;text2 in scope1&apos;)  # 输出内容到 scope1</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>持续性输入</li>
+</ol>
+<p>用于非阻塞形式的输入，普通输入完成后表单即销毁，持续性输入可以继续接受输入。</p>
+<ol start="7">
+<li>运行</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start_server(app, port=8080, debug=True)</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2021/11/22/Python支付宝接口-int-argument-must-be-a-string-a-bytes-like-object-or-a-number-not-Sequence-错误/" rel="next" title="Python支付宝接口 int() argument must be a string, a bytes-like object or a number, not &#39;Sequence&#39;错误">
+          Python支付宝接口 int() argument must be a string, a bytes-like object or a number, not &#39;Sequence&#39;错误
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2021/12/23/Hexo插件无误，但无法生成index的解决办法/" rel="prev" title="Hexo插件无误，但无法生成index的解决办法">
+            Hexo插件无误，但无法生成index的解决办法
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2021/12/23/Pywebio试用总结/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

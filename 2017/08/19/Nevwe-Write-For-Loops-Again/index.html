@@ -1,0 +1,350 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="python,">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>Nevwe Write For-Loops Again [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        Nevwe Write For-Loops Again
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2017-08-19T00:15:44.000Z">
+        2017-08-19
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p>Translate from <a href="https://dev.to/dawranliou/never-write-for-loops-again" target="_blank" rel="noopener">Randy Daw-Ran Liou </a></p>
+<p>This is a challenge. I challenge you to avoid writing for-loops in every scenario. Also, I challenge you to find the scenarios that are so freaking hard to write anything else but a for-loop. Please share your findings. I’d like to hear about them.</p>
+<p>It’s been a while since I started exploring the amazing language features in Python. At the beginning, it’s just a challenge I gave myself to practice using more language features instead of those I learned from other programming language. And things are just getting more fun! Not only the code become shorter and cleaner, but also code looks more structured and disciplined. I’ll get into those benefits more in this article.</p>
+<p>But first, let’s take a step back and see what’s the intuition behind writing a for-loop:<br>1.To go through a sequence to extract out some information<br>2.To generate another sequence out of the current sequence<br>3.This is my second nature to write for-loops because I’m a programmer</p>
+<p>Fortunately, there are already great tools that are built into Python to help you accomplish the goals! All you need is to shift your mind and look at the things in a different angle.</p>
+<h2 id="What-you-gain-by-not-writing-for-loops-everywhere"><a href="#What-you-gain-by-not-writing-for-loops-everywhere" class="headerlink" title="What you gain by not writing for-loops everywhere"></a>What you gain by not writing for-loops everywhere</h2><p>1.Fewer lines of code<br>2.Better code readability<br>3.Leave indentation for managing context only</p>
+<p>Let’s see the code skeleton below:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 1</span><br><span class="line">with ...:</span><br><span class="line">    for ...:</span><br><span class="line">        if ...:</span><br><span class="line">            try:</span><br><span class="line">            except:</span><br><span class="line">        else:</span><br></pre></td></tr></table></figure></p>
+<p>In this example, we are dealing with multiple layers of code. THIS IS HARD TO READ. The problem I found in this code is that it is mixing the <strong>administrative</strong> logic (the <code>with</code>, <code>try-except</code>) with the <strong>business logic</strong> (the <code>for</code>, <code>if</code>) by giving them the indentation ubiquitously. If you are disciplined about using indentation only for administrative logic, your core business logic would stand out immediately.</p>
+<blockquote>
+<p>“Flat is better than nested” - The Zen of Python</p>
+</blockquote>
+<h2 id="Tools-you-can-use-to-avoid-using-for-loops"><a href="#Tools-you-can-use-to-avoid-using-for-loops" class="headerlink" title="Tools you can use to avoid using for-loops"></a>Tools you can use to avoid using for-loops</h2><h3 id="1-List-Comprehension-Generator-Expression"><a href="#1-List-Comprehension-Generator-Expression" class="headerlink" title="1.List Comprehension / Generator Expression"></a>1.List Comprehension / Generator Expression</h3><p>Let’s see a simple example. Basically you want to compile a sequence based on another existing sequence:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">result = []</span><br><span class="line">for item in item_list:</span><br><span class="line">    new_item = do_something_with(item)</span><br><span class="line">    result.append(item)</span><br></pre></td></tr></table></figure></p>
+<p>You can use <code>map</code> if you love MapReduce, or, Python has List Comprehension:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result = [do_something_with(item) for item in item_list]</span><br></pre></td></tr></table></figure></p>
+<p>Similarly, if you wish to get a iterator only, you can use Generator Expression with almost the same syntax. (How can you not love the consistency in Python?)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result = (do_something_with(item) for item in item_list)</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-Functions"><a href="#2-Functions" class="headerlink" title="2. Functions"></a>2. Functions</h3><p>Thinking in a higher-order, more functional programming way, if you want to map a sequence to another, simply call the <code>map</code> function. (Be my guest to use list comprehension here instead.)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">doubled_list = map(lambda x: x * 2, old_list)</span><br></pre></td></tr></table></figure>
+<p>If you want to reduce a sequence into a single, use <code>reduce</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from functools import reduce</span><br><span class="line">summation = reduce(lambda x, y: x + y, numbers)</span><br></pre></td></tr></table></figure>
+<p>Also, lots of Python’s builtin functions consumes iterables:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = list(range(10))</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span><br><span class="line">&gt;&gt;&gt; all(a)</span><br><span class="line">False</span><br><span class="line">&gt;&gt;&gt; any(a)</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; max(a)</span><br><span class="line">9</span><br><span class="line">&gt;&gt;&gt; min(a)</span><br><span class="line">0</span><br><span class="line">&gt;&gt;&gt; list(filter(bool, a))</span><br><span class="line">[1, 2, 3, 4, 5, 6, 7, 8, 9]</span><br><span class="line">&gt;&gt;&gt; set(a)</span><br><span class="line">&#123;0, 1, 2, 3, 4, 5, 6, 7, 8, 9&#125;</span><br><span class="line">&gt;&gt;&gt; dict(zip(a,a))</span><br><span class="line">&#123;0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9&#125;</span><br><span class="line">&gt;&gt;&gt; sorted(a, reverse=True)</span><br><span class="line">[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]</span><br><span class="line">&gt;&gt;&gt; str(a)</span><br><span class="line">&apos;[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]&apos;</span><br><span class="line">&gt;&gt;&gt; sum(a)</span><br><span class="line">45</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-Extract-Functions-or-Generators"><a href="#3-Extract-Functions-or-Generators" class="headerlink" title="3. Extract Functions or Generators"></a>3. Extract Functions or Generators</h3><p>The above two methods are great to deal with simpler logic. How about more complex logic? As a programmer, we write functions to abstract out the difficult things. Same idea applies here. If you are writing this:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">results = []</span><br><span class="line">for item in item_list:</span><br><span class="line">    # setups</span><br><span class="line">    # condition</span><br><span class="line">    # processing</span><br><span class="line">    # calculation</span><br><span class="line">    results.append(result)</span><br></pre></td></tr></table></figure></p>
+<p>Apparently you are giving too much responsibility to a single code block. Instead, I propose you do:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def process_item(item):</span><br><span class="line">    # setups</span><br><span class="line">    # condition</span><br><span class="line">    # processing</span><br><span class="line">    # calculation</span><br><span class="line">    return result</span><br><span class="line"></span><br><span class="line">results = [process_item(item) for item in item_list]</span><br></pre></td></tr></table></figure></p>
+<p>How about nested for-loops?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">results = []</span><br><span class="line">for i in range(10):</span><br><span class="line">    for j in range(i):</span><br><span class="line">        results.append((i, j))</span><br></pre></td></tr></table></figure></p>
+<p>List Comprehension got your back:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">results = [(i, j)</span><br><span class="line">           for i in range(10)</span><br><span class="line">           for j in range(i)]</span><br></pre></td></tr></table></figure></p>
+<p>How about if you have some internal state in the code block to<br>keep?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># finding the max prior to the current item</span><br><span class="line">a = [3, 4, 6, 2, 1, 9, 0, 7, 5, 8]</span><br><span class="line">results = []</span><br><span class="line">current_max = 0</span><br><span class="line">for i in a:</span><br><span class="line">    current_max = max(i, current_max)</span><br><span class="line">    results.append(current_max)</span><br><span class="line"></span><br><span class="line"># results = [3, 4, 6, 6, 6, 9, 9, 9, 9, 9]</span><br></pre></td></tr></table></figure></p>
+<p>Let’s extract a generator to achieve this:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def max_generator(numbers):</span><br><span class="line">    current_max = 0</span><br><span class="line">    for i in numbers:</span><br><span class="line">        current_max = max(i, current_max)</span><br><span class="line">        yield current_max</span><br><span class="line"></span><br><span class="line">a = [3, 4, 6, 2, 1, 9, 0, 7, 5, 8]</span><br><span class="line">results = list(max_generator(a))</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>“Oh wait, you just used a for-loop in the generator function. That’s cheating!”</p>
+</blockquote>
+<p>Fine, smart ass, let’s try the following.</p>
+<h3 id="4-Don’t-write-it-yourself-itertools-got-you-covered"><a href="#4-Don’t-write-it-yourself-itertools-got-you-covered" class="headerlink" title="4. Don’t write it yourself. itertools got you covered"></a>4. Don’t write it yourself. <code>itertools</code> got you covered</h3><p>This module is simply brilliant. I believe this module covers 80% of the cases that you makes you want to write for-loops. For example, the last example can be rewritten to:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from itertools import accumulate</span><br><span class="line">a = [3, 4, 6, 2, 1, 9, 0, 7, 5, 8]</span><br><span class="line">resutls = list(accumulate(a, max))</span><br></pre></td></tr></table></figure></p>
+<p>Also, if you are iterating on combinatoric sequnces, there are <code>product()</code>, <code>permutations()</code>, <code>combinations()</code> to use.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>1.You don’t need to write for-loops in most scenarios<br>2.You should avoid writing for-loops, so you have better code readability</p>
+<h2 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h2><p>1.Look at your code again. Spot any places that you wrote a for-loop previously by intuition. Think again and see if it make sense to re-write it without using for-loop.<br>2.Share your cases that are hard to code without using for-loops</p>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-you-gain-by-not-writing-for-loops-everywhere"><span class="toc-text">What you gain by not writing for-loops everywhere</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tools-you-can-use-to-avoid-using-for-loops"><span class="toc-text">Tools you can use to avoid using for-loops</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-List-Comprehension-Generator-Expression"><span class="toc-text">1.List Comprehension / Generator Expression</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Functions"><span class="toc-text">2. Functions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Extract-Functions-or-Generators"><span class="toc-text">3. Extract Functions or Generators</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Don’t-write-it-yourself-itertools-got-you-covered"><span class="toc-text">4. Don’t write it yourself. itertools got you covered</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-text">Conclusion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Action"><span class="toc-text">Action</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2017/06/08/High-Concurrency-Web-System-In-Ecommerce-Website-Seckill-And-Falsh-Sale/" rel="next" title="High Concurrency Web System In Ecommerce Website Seckill And Falsh Sale">
+          High Concurrency Web System In Ecommerce Website Seckill And Falsh Sale
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2017/09/09/Mocks-and-monkeypatching-in-python/" rel="prev" title="Mocks and monkeypatching in python">
+            Mocks and monkeypatching in python
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2017/08/19/Nevwe-Write-For-Loops-Again/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

@@ -1,0 +1,437 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="Tony Tan">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>How to set up a Samba file server to use with Windows clients [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        How to set up a Samba file server to use with Windows clients
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2014-08-11T16:00:00.000Z">
+        2014-08-12
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p><em>According to the Samba project web site, Samba is an open source/free software suite that provides seamless file and print services to SMB/CIFS clients.</em></p>
+<p>According to the Samba project web site, Samba is an open source/free software suite that provides seamless file and print services to SMB/CIFS clients. Unlike other implementations of the SMB/CIFS networking protocol (such as LM Server for HP-UX, LAN Server for OS/2, or VisionFS), Samba (along with its source code) is freely available (at no cost to the end user), and allows for interoperability between Linux/Unix servers and Windows/Unix/Linux clients.</p>
+<p>For these reasons, Samba is the preferred solution for a file server in networks where different operating systems (other than Linux) coexist - the most common setup being the case of multiple Microsoft Windows clients accessing a Linux server where Samba is installed, which is the situation we are going to deal with in this article.</p>
+<p>Please note that on the other hand, if our network consists of only Unix-based clients (such as Linux, AIX, or Solaris, to name a few examples), we can consider using NFS (although Samba is still an option in this case), which has greater reported speeds.</p>
+<h3>Installing Samba in Debian and CentOS</h3>
+
+<p>Before we proceed with the installation, we can use our operating system’s package management system to look for information about Samba:</p>
+<p>On Debian:</p>
+<pre>
+# aptitude show samba
+</pre>
+
+<p>On CentOS:</p>
+<pre>
+# yum info samba
+</pre>
+
+<p>In the following screenshot we can see the output of ‘aptitude show samba’ (‘yum info samba’ yields similar results):</p>
+<p><img src="https://farm4.staticflickr.com/3868/14837993244_0fa525eb35_z.jpg"></p>
+<p>Now let’s install Samba (the screenshot below corresponds to the installation on a Debian 7 [Wheezy] server):</p>
+<p>On Debian:</p>
+<pre>
+# aptitude install samba
+</pre>
+
+<p>On CentOS:</p>
+<pre>
+# yum install samba
+</pre>
+
+<h3>Adding Users to Samba</h3>
+
+<p>For versions earlier than 4.x, a local Unix account is required for adding users to Samba:</p>
+<pre>
+# adduser username
+</pre>
+
+<p><img src="https://farm6.staticflickr.com/5574/14837266181_fed68bddf2_o.png"></p>
+<p>Next, we need to add the user to Samba using the smbpasswd command with the ‘-a’ option, which specifies that the username following should be added to the local smbpasswd file. We will be prompted to enter a password (which does not necessarily have to be the same as the password of the local Unix account):</p>
+<pre>
+# smbpassword -a username
+</pre>
+
+<p><img src="https://farm6.staticflickr.com/5555/14653711099_578f8613ca.jpg"></p>
+<p>Finally, we will give access to user xmodulo to a directory within our system that will be used as a Samba share for him (and other users as well, if needed). This is done by opening the /etc/samba/smb.conf file with a text editor (such as Vim), navigating to the end of the file, and creating a section (enclose name between square brackets) with a descriptive name, such as [xmodulo]:</p>
+<pre>
+# SAMBA SHARE 
+[xmodulo] 
+path = /home/xmodulo 
+available = yes 
+valid users = xmodulo 
+read only = no 
+browseable = yes 
+public = yes 
+writeable = yes
+</pre>
+
+<p>We must now restart Samba and -just in case- check the smb.conf file for syntax errors with the testparm command:</p>
+<pre>
+# service samba restart 
+# testparm
+</pre>
+
+<p><img src="https://farm6.staticflickr.com/5589/14653655390_becb4f4981_z.jpg"></p>
+<p>If there are any errors, they will be reported when testparm ends.</p>
+<h3>Mapping the Samba Share as a Network Drive on a Windows 7 PC</h3>
+
+<p>Right click on Computer, and select “Map network drive”:</p>
+<p><img src="https://farm6.staticflickr.com/5571/14837993154_981b73ea92.jpg"></p>
+<p>Type the IP address of the machine where Samba is installed, followed by the name of the share (this is the name that is enclosed between single brackets in the smb.conf file), and make sure that the “Connect using different credentials” checkbox is checked:</p>
+<p><img src="https://farm4.staticflickr.com/3881/14839997172_d67ec98933_o.png"></p>
+<p>Enter the username and password that were set with ‘smbpasswd -a’ earlier:</p>
+<p><img src="https://farm6.staticflickr.com/5563/14653711029_ddfea53bd6_o.png"></p>
+<p>Go to Computer and check if the network drive has been added correctly:</p>
+<p><img src="https://farm6.staticflickr.com/5584/14837993124_c664728039_o.png"></p>
+<p>As a test, let’s create a pdf file from the man page of Samba, and save it in the /home/xmodulo directory:</p>
+<p><img src="https://farm6.staticflickr.com/5593/14860219723_e8380f0d0f_o.png"></p>
+<p>Next, we can verify that the file is accessible from Windows:</p>
+<p><img src="https://farm4.staticflickr.com/3869/14817386696_74a12dfdcd_o.png"></p>
+<p>And we can open it using our default pdf reader:</p>
+<p><img src="https://farm6.staticflickr.com/5584/14653655350_8a243b1493_z.jpg"></p>
+<p>Finally, let’s see if we can save a file from Windows in our newly mapped network drive. We will open the change.log file that lists the features of Notepad++:</p>
+<p><img src="https://farm6.staticflickr.com/5565/14817386676_18c1d7bc60_o.png"></p>
+<p>and try to save it in Z:\ as a plain text file (.txt extension); then let’s see if the file is visible in Linux:</p>
+<p><img src="https://farm4.staticflickr.com/3841/14817386656_fb09a95a65_o.png"></p>
+<h3>Enabling quotas</h3>
+
+<p>As a first step, we need to verify whether the current kernel has been compiled with quota support:</p>
+<pre>
+# cat /boot/config-$(uname -r) | grep -i config_quota
+</pre>
+
+<p><img src="https://farm4.staticflickr.com/3867/14837993054_081dc9b0dc_z.jpg"></p>
+<p>Each file system has up to five types of quota limits that can be enforced on it: user soft limit, user hard limit, group soft limit, group hard limit, and grace time.</p>
+<p>We will now enable quotas for the /home file system by adding the usrquota and grpquota mount options to the existing defaults option in the line that corresponds to the /home filesystem in the /etc/fstab file, and we will remount the file system in order to apply the changes:</p>
+<p><img src="https://farm6.staticflickr.com/5561/14653806067_b8b0dc2333_z.jpg"></p>
+<p>Next, we need to create two files that will serve as the databases for user and group quotas: <b>aquota.user</b> and <b>aquota.group</b>, respectively, in <b>/home</b>. Then, we will generate the table of current disk usage per file system with quotas enabled:</p>
+<pre>
+# quotacheck -cug /home 
+# quotacheck -avugm
+</pre>
+
+<p><img src="https://farm6.staticflickr.com/5584/14837265971_654e8f3bc0_o.png"></p>
+<p>Even though we have enabled quotas for the /home file system, we have not yet set any limits for any user or group. Check for quota information for existing user/group:</p>
+<pre>
+# quota -u username 
+# quota -g groupname
+</pre>
+
+<p><img src="https://farm6.staticflickr.com/5582/14653735848_8de88d69c4_o.png"></p>
+<p>Finally, the last couple of steps consist of assigning the quotas per user and / or group with the quotatool command (note that this task can also be performed by using edquota, but quotatool is more straightforward and less error-prone).</p>
+<p>To set the soft limits to 4 MB and the hard limit to 5 MB for the user called xmodulo, and 10 MB / 15 MB for the xmodulo group:</p>
+<pre>
+# quotatool -u xmodulo -bq 4M -l '5 Mb' /home 
+# quotatool -g xmodulo -bq 10M -l '15 Mb' /home
+</pre>
+
+<p><img src="https://farm4.staticflickr.com/3888/14653806037_5438b5034e_z.jpg"></p>
+<p>And we can see the results in Windows 7 (3.98 MB free of 4.00 MB):</p>
+<p><img src="https://farm4.staticflickr.com/3919/14653805967_c2b1551869_o.png"></p>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Installing Samba in Debian and CentOS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Adding Users to Samba</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Mapping the Samba Share as a Network Drive on a Windows 7 PC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Enabling quotas</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2014/08/12/what-are-useful-online-tools-for-linux/" rel="next" title="What are useful online tools for Linux">
+          What are useful online tools for Linux
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2014/08/12/how-to-install-google-authenticator-on-linux/" rel="prev" title="How to install Google Authenticator on Linux">
+            How to install Google Authenticator on Linux
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2014/08/12/how-to-set-up-a-samba-file-server-to-use-with-windows-clients/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

@@ -1,0 +1,514 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="Tony Tan">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>IPython Notebook Introduction 1 [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        IPython Notebook Introduction 1
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2016-05-09T16:00:00.000Z">
+        2016-05-10
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p><em>This article will introduce some base usage for ipython notebook.</em></p>
+<p>IPython Notebook使用浏览器作为界面，向后台的IPython服务器发送请求，并显示结果。在浏览器的界面中使用单元(Cell)保存各种信息。Cell有多种类型，经常使用的有表示格式化文本的Markdown单元，和表示代码的Code单元。</p>
+<p>每个代码单元都有一个输出区域，在Code单元中输入代码，按 Shift-Enter 将运行此代码，代码中最后一个表达式的值将输出区域显示。如果希望屏蔽输出，可以在最后一条语句之后添加一个分号：”;”。此外，代码中还可以使用print语句在输出区域中显示信息。</p>
+<p>在Markdown单元中还可以直接使用Html和Javascript</p>
+<h2 id="数学公式"><a href="#数学公式" class="headerlink" title="数学公式"></a>数学公式</h2><p>在Markdown单元中可以使用LaTeX表示数学公式，例如\sqrt{x^2+y^2}。数学公式的显示使用MathJax，缺省情况下，MathJax从网络上下载，如果希望离线使用它，需要在IPython Notebook中输入如下代码，把MathJax安装到本地磁盘中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from IPython.external.mathjax import install_mathjax</span><br><span class="line">install_mathjax()</span><br></pre></td></tr></table></figure>
+<p>Code单元的输出也可以显示为数学公式，例如在单元中输入如下代码，将显示为数学公式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from IPython.display import Latex</span><br><span class="line">Latex(r&quot;$\sqrt&#123;x^2+y^2&#125;$&quot;)</span><br></pre></td></tr></table></figure></p>
+<p>\sqrt{x^2+y^2}</p>
+<p>SymPy的表达式也可以显示为LaTex，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">%load_ext sympyprinting</span><br><span class="line">from sympy import *</span><br><span class="line">x, y = symbols(&quot;x,y&quot;)</span><br><span class="line">sqrt(x**2+y**2)</span><br></pre></td></tr></table></figure></p>
+<p>\sqrt{x^{2} + y^{2}}</p>
+<p>以%开头的为IPython的命令(Magic Command)，这里通过%load_ext命令载入sympyprinting扩展插件，载入此插件之后，所有的SymPy表达式都显示为数学公式。</p>
+<h2 id="各种显示"><a href="#各种显示" class="headerlink" title="各种显示"></a>各种显示</h2><p>IPython.display模块中提供了许多显示Python返回值的类，例如下面的代码用Image类显示”python.png”图片，缺省路径为Notebook文件所在的目录：</p>
+<pre>
+from IPython.display import Image
+Image(filename="python.png")
+</pre>
+
+
+<p>Image还可以用来显示表示图像的字符串。例如下面的代码通过cv2的imencode()将NumPy数组转换为一个表示PNG图像数据的数组，然后将此数组转换为字符串之后通过Image()将显示为图像：</p>
+<pre>
+import cv2
+import numpy as np
+from IPython.display import Image
+img = np.random.randint(0,255,(250,250,3))
+cv2.blur(img, (11,11), img)
+r, dat = cv2.imencode(".png",img)
+Image(dat.tostring())
+</pre>
+
+
+<p>此外，还可以通过HTML和Javascript将Python代码的输出显示为Html，或者作为Javascript运行。</p>
+<pre>
+from IPython.display import Javascript
+Javascript("alert('ok')")
+</pre>
+
+
+<p>将在浏览器中运行Javascript代码。</p>
+<h2 id="Magic命令"><a href="#Magic命令" class="headerlink" title="Magic命令"></a>Magic命令</h2><p>IPython中Magic命令有两种执行方式，以%开始的命令被称为行命令，它只对单行有效，以%%开头的为单元命令，它放在单元的第一行，对整个单元有效。例如timeit命令可以快速测试代码的执行效率，它可以作为行命令或者单元命令。</p>
+<pre>
+%timeit 1 + 1
+%timeit 1.0 + 1.0
+%timeit "1" + "1"
+</pre>
+
+
+<pre>
+10000000 loops, best of 3: 52 ns per loop
+10000000 loops, best of 3: 53.4 ns per loop
+10000000 loops, best of 3: 50.9 ns per loop
+</pre>
+
+
+<pre>
+%%timeit
+s = 0
+for i in xrange(100):
+    s += i
+</pre>
+
+
+<pre>
+100000 loops, best of 3: 11 us per loop
+</pre>
+
+
+<p>每个Magic命令都可以指定参数，可以输入timeit?查看其帮助文档。下面让我们看看一些常用的Magic命令。</p>
+<p><strong>%pylab</strong>命令将载入numpy和pylab，并且将这两个模块中的名字载入到全局名字空间中。缺省参数时，它使用matplotlib的缺省界面库显示图表，如果带inline参数则将图表作为图像插入到Notebook中。使用界面库显示图像时可以使用交互工具，而将图表直接插入到Notebook中则有利于编写文档。</p>
+<p>下面的例子，plot和random是从pylab和numpy中载入的。</p>
+<pre>
+%pylab inline
+plot(random.randn(100));
+</pre>
+
+
+<pre>
+Welcome to pylab, a matplotlib-based Python environment [backend: module://IPython.zmq.pylab.backend_inline].
+For more information, type 'help(pylab)'.
+</pre>
+
+
+<p><strong>%load</strong>可以从文件或者网址载入代码到一个新的单元中，例如下面载入某个matplotlib的示例程序，并执行：</p>
+<pre>
+%load http://matplotlib.org/mpl_examples/pylab_examples/histogram_demo.py
+</pre>
+
+
+<pre>
+\#!/usr/bin/env python
+import numpy as np
+import matplotlib.mlab as mlab
+import matplotlib.pyplot as plt
+
+mu, sigma = 100, 15
+x = mu + sigma*np.random.randn(10000)
+
+\# the histogram of the data
+n, bins, patches = plt.hist(x, 50, normed=1, facecolor='green', alpha=0.75)
+
+\# add a 'best fit' line
+y = mlab.normpdf( bins, mu, sigma)
+l = plt.plot(bins, y, 'r--', linewidth=1)
+
+plt.xlabel('Smarts')
+plt.ylabel('Probability')
+plt.title(r'$\mathrm{Histogram\ of\ IQ:}\ \mu=100,\ \sigma=15$')
+plt.axis([40, 160, 0, 0.03])
+plt.grid(True)
+
+plt.show()
+</pre>
+
+
+<p><strong>%prun</strong>用于代码的执行性能分析，可以作为行命令和单元命令使用。下面的程序分析numpy.linalg.det()的性能：</p>
+<pre>
+%%prun
+for i in xrange(100):
+    linalg.det(random.rand(10,10))
+</pre>
+
+
+<p>其输出如下：</p>
+<pre>
+3402 function calls in 0.096 seconds
+
+Ordered by: internal time
+
+ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+   100    0.032    0.000    0.091    0.001 linalg.py:1560(slogdet)
+   300    0.022    0.000    0.022    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+   200    0.011    0.000    0.012    0.000 numeric.py:167(asarray)
+   100    0.006    0.000    0.006    0.000 linalg.py:84(_realType)
+   100    0.005    0.000    0.005    0.000 linalg.py:151(_assertRank2)
+   ...
+</pre>
+
+
+<p><strong>%load_ext</strong>载入IPython的扩展模块，通过它可以载入更多的Magic命令。下面我们载入cythonmagic模块，并使用%%cython命令编译一个高效的频率统计函数count()。</p>
+<pre>
+%load_ext cythonmagic
+</pre>
+
+
+<h2 id="测试Cython代码"><a href="#测试Cython代码" class="headerlink" title="测试Cython代码"></a>测试Cython代码</h2><p>Cython的代码基本和Python的代码类似，但是可以使用类型声明，Cython可以使用这些类型声明产生更高效的C语言代码，并编译成Python的扩展模块。使用%%cython命令简化了编译扩展模块的过程，它会自动创建C语言程序，编译并载入。由于扩展模块无法卸载，因此IPython采用的策略是每次编译不同的代码都会产生一个全新的扩展模块。方便我们不退出Python环境即可运行新的代码。</p>
+<pre>
+\%%cython
+def count(list data):
+    cdef:
+    dict result = {}
+    int i, length = len(data)
+    object item
+
+    for i in range(length):
+    item = data[i]
+    if item in result:
+        (<list> result[item]).append(i)
+    else:
+        result[item] = return result
+    return result
+</list></pre>
+
+
+<p>下面是count()的Python版本。</p>
+<pre>
+from collections import defaultdict
+def countpy(data):
+    result = defaultdict(list)
+    for i,item in enumerate(data):
+    result[item].append(i)
+    return result
+</pre>
+
+
+<p>先测试二者的结果是否相同：</p>
+<pre>
+import random
+data = [random.randint(0,100) for _ in xrange(10000)]
+count(data) == countpy(data)
+</pre>
+
+
+<pre>
+True
+</pre>
+
+
+<p>然后测试它们的执行速度，可以看出Cython版本比Python的要快2倍多。在这个测试中，Cython程序也同样使用列表和字典等对象，但是由于可以直接调用Python的C API，因此Cython版本的效率能提高几倍。如果只是单纯的数值运算，Cython能将程序提升到与C语言相近的速度。</p>
+<pre>
+\%timeit countpy(data)
+\%timeit count(data)
+</pre>
+
+
+<pre>
+100 loops, best of 3: 4.52 ms per loop
+1000 loops, best of 3: 1.8 ms per loop
+</pre>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#数学公式"><span class="toc-text">数学公式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#各种显示"><span class="toc-text">各种显示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Magic命令"><span class="toc-text">Magic命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试Cython代码"><span class="toc-text">测试Cython代码</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2016/05/09/creating-volcano-maps-with-pandas-and-the-matplotlib-basemap-toolkit/" rel="next" title="Creating Volcano Maps with Pandas and the Matplotlib Basemap Toolkit">
+          Creating Volcano Maps with Pandas and the Matplotlib Basemap Toolkit
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2016/05/14/a-few-things-to-remember-while-coding-in-python/" rel="prev" title="A Few Things To Remember While Coding In Python">
+            A Few Things To Remember While Coding In Python
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2016/05/10/ipython-notebook-introduction-1/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

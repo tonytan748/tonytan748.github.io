@@ -1,0 +1,451 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="Tony Tan">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>Models in Python [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        Models in Python
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2014-06-30T16:00:00.000Z">
+        2014-07-01
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p><em>In this part of the Python programming tutorial, we will talk about Python modules.</em></p>
+<p>A <b>module</b> is a file in which we have Python code. The modules in Python have the .py extension.<br>There are several ways to manage Python code:</p>
+<p><ul></ul></p>
+<p><li>functions</li></p>
+<p><li>classes</li></p>
+<p><li>modules</li></p>
+<p><li>packages</li><br><br>Python modules are used to organize Python code. For example, database related code is placed inside a database module, security code in a security module etc. Smaller Python scripts can have one module. But larger programs are split into several modules. Modules are grouped together to form packages.</p>
+<p></p><h3>Module names</h3><br>A module name is the file name with the .py extension. When we have a file called empty.py, empty is the module name. The <strong>name</strong> is a variable that holds the name of the module being referenced. The current module, the module being executed (called also the main module) has a special name: ‘<strong>main</strong>‘. With this name it can be referenced from the Python code.<p></p>
+<p>We have two files. empty.py and modulename.py. The second module is the main module, which is executed. It imports the first module. Modules are imported using the import keyword.</p>
+<p><pre><br>$ cat empty.py<br>“””<br>An empty module<br>“””<br></pre><br>This is empty.py module.</p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<p>import empty<br>import sys</p>
+<p>print <strong>name</strong><br>print empty.<strong>name</strong><br>print sys.<strong>name</strong><br><br>In this code example we import two modules. One built-in module (sys) and one custom module (empty). We print the names of modules to the console.</p>
+<p><pre><br>$ ./modulename.py<br><strong>main</strong><br>empty<br>sys<br></pre><br>The name of the module, which is being executed is always ‘<strong>main</strong>‘. Other modules are named after the file name. Modules can be imported into other modules using the import keyword.</p>
+<p></p><h3>Locating modules</h3><br>When a module is imported the interpreter first searches for a built-in module with that name. If not found, it then searches in a list of directories given by the variable sys.path. The sys.path is a list of strings that specifies the search path for modules. It consists of the current working directory, directory names specified in the <b>PYTHONPATH</b> environment variable plus some additional installation dependent directories. If the module is not found, an ImportError is raised.<p></p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<p>import sys<br>import textwrap</p>
+<p>sp = sorted(sys.path)<br>dnames = ‘, ‘.join(sp)</p>
+<p>print textwrap.fill(dnames)<br><br>The script prints all directories from sys.path variable.</p>
+<p><pre><br>import textwrap<br></pre><br>The textwrap module is used for easy formatting of paragraphs.</p>
+<p><pre><br>sp = sorted(sys.path)<br></pre><br>We retrieve a list of directories from the sys.path variable and sort them.</p>
+<p><pre><br>dnames = ‘, ‘.join(sp)<br></pre><br>We make a string out of the list.</p>
+<p><pre><br>$ ./syspath.py<br>/home/janbodnar/programming/python/modules,<br>/usr/lib/pymodules/python2.7, /usr/lib/python2.7, /usr/lib/python2.7<br>/dist-packages, /usr/lib/python2.7/dist-packages/PIL,<br>…<br></pre><br>Sample output.</p>
+<p></p><h3>The import keyword</h3><br>The import keyword can be used in several ways.<p></p>
+<p><pre><br>from module import *<br></pre><br>This construct will import all Python definitions into the namespace of another module. There is one exception. Objects beginning with underscore character _ are not imported. They are expected to be used only internally by the module being imported. This way of importing modules is not recommended.</p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<p>from math import *</p>
+<p>print cos(3)<br>print pi<br><br>This import construct has imported all definitions from the built-in math module. We can call the math funtcions directly, without referencing the math module.</p>
+<p><pre><br>$ ./everything.py<br>-0.9899924966<br>3.14159265359<br></pre><br>The use of this import construct may result in namespace pollution. We may have several objects of the same name and their definitions can be overriden.</p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<p>from math import  *</p>
+<p>pi = 3.14</p>
+<p>print cos(3)<br>print pi<br><br>The example will print 3.14 to the console. Which may not be, what we wanted. The namespace pollution may become critical in larger projects.</p>
+<p>The following example will show definitions, that are not being imported using this import construct.</p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<p>“””<br>names is a test module<br>“””</p>
+<p>_version = 1.0</p>
+<p>names = [“Paul”, “Frank”, “Jessica”, “Thomas”, “Katherine”]</p>
+<p>def show_names():<br>   for i in names:<br>      print i</p>
+<p>def _show_version():<br>   print _version<br><br>This is the names.py module.</p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<p>from names import *</p>
+<p>print locals()</p>
+<p>show_names()<br><br>The _version variable and the _show_version() function are not imported into the private.py module. We don’t see them in the namespace. The locals() function give us all the definitions available in the private module.</p>
+<p><pre><br>$ ./private.py<br>{‘<strong>builtins</strong>‘: <module '__builtin__' (built-in)>, ‘<strong>file</strong>‘: ‘./private.py’,<br>‘show_names’: <function show_names at 0xb7dd233c>,<br>‘names’: [‘Paul’, ‘Frank’, ‘Jessica’, ‘Thomas’, ‘Katherine’],<br> ‘<strong>name</strong>‘: ‘<strong>main</strong>‘, ‘<strong>doc</strong>‘: None}<br>Paul<br>Frank<br>Jessica<br>Thomas<br>Katherine<br></function></module></pre></p>
+<p><hr></p>
+<p><pre><br>from module import fun, var<br></pre><br>This import construct imports only specific objects from a module. This way we import only definitions that we need.</p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<p>from math import sin, pi</p>
+<p>print sin(3)<br>print pi<br><br>We import two objects from the math module. There is no way, how we could reference other definitions like e.g. a cos function.</p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<p>from names import _version, _show_version</p>
+<p>print _version<br>_show_version()<br><br>We could also import definitions beginning with an underscore. But this is a bad practice.</p>
+<p><pre><br>$ ./imnames.py<br>1.0<br>1.0<br></pre></p>
+<p><hr></p>
+<p><pre><br>import module<br></pre><br>The last construct is most widely used. It prevents the namespace pollution and enables to access all definitios from a module.</p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<p>import math</p>
+<p>pi = 3.14</p>
+<p>print math.cos(3)<br>print math.pi<br>print math.sin(3)<br>print pi<br><br>In this case, we reference the definitions via the module name. As we can see, we are able to use both pi variables. Our definition and the one from the math module.</p>
+<p><pre><br>$ ./widely.py<br>-0.9899924966<br>3.14159265359<br>0.14112000806<br>3.14<br></pre></p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<h1 id="importas-py"><a href="#importas-py" class="headerlink" title="importas.py"></a>importas.py</h1><p>import math as m</p>
+<p>print m.pi<br>print m.cos(3)<br><br>We can change the name through which we can reference the module. To do this, we use the as keyword.</p>
+<p><pre><br>$ ./importas.py<br>3.14159265359<br>-0.9899924966<br></pre></p>
+<p><hr><br>An ImportError is raised, if a module cannot be imported.</p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<p>try:<br>    import empty2<br>except ImportError, e:<br>    print ‘Failed to import:’, e<br><br>We have not created an empty2 module. Therefore an exception is raised.</p>
+<p><pre><br>$ ./importerror.py<br>Failed to import: No module named empty2<br></pre><br>Output.</p>
+<p></p><h3>Executing modules</h3><br>Modules can be imported into other modules or they can be also executed. Module authors often create a testing suite to test the module. Only if the module is executed as a script, the <strong>name</strong> attribute equals to <strong>main</strong>.<br>We will demonstrate this on a fibonacci module. Fibonacci numbers is a sequence of numbers, where each is the sum of its two immediate predecessors.<p></p>
+<p><pre></pre></p>
+<blockquote>
+<p>   #!/usr/bin/python</p>
+<p>   “””<br>   A module containing the fibonacci<br>   function.<br>   “””</p>
+<p>   def fib(n):<br>       a, b = 0, 1<br>       while b &lt; n:<br>           print b,<br>           (a, b) = (b, a + b)</p>
+<h1 id="testing"><a href="#testing" class="headerlink" title="testing"></a>testing</h1><p>   if <strong>name</strong> == ‘<strong>main</strong>‘:<br>      fib(500)<br><br>The module can be normally imported as usual. The module can be also executed.</p>
+</blockquote>
+<p><pre><br>$ ./fibonacci.py<br>1 1 2 3 5 8 13 21 34 55 89 144 233 377<br></pre><br>If we do import the fibonacci module, the test is not executed automatically.</p>
+<p><pre></pre></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>import fibonacci as fib<br>fib.fib(500)<br>1 1 2 3 5 8 13 21 34 55 89 144 233 377<br><br>The fibonacci module is imported and the fib() function is executed.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p></p><h3>The dir() function</h3><br>The built-in dir() function gives a sorted list of strings containing the names defined by a module.<p></p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<p>“””<br>This is dirfun module<br>“””</p>
+<p>import math, sys</p>
+<p>version = 1.0</p>
+<p>names = [“Paul”, “Frank”, “Jessica”, “Thomas”, “Katherine”]</p>
+<p>def show_names():</p>
+<p>   for i in names:<br>      print i</p>
+<p>print dir(sys.modules[‘<strong>main</strong>‘])<br><br>In this module, we import two system modules. We define a variable, a list and a function.</p>
+<p><pre><br>print dir(sys.modules[‘<strong>main</strong>‘])<br></pre><br>The dir() function returns all the names available in the current namespace of the module. ‘<strong>main</strong>‘ is the name of the current module. The sys.modules is a dictionary that maps module names to modules which have already been loaded.</p>
+<p><pre><br>$ ./dirfun.py<br>[‘<strong>builtins</strong>‘, ‘<strong>doc</strong>‘, ‘<strong>file</strong>‘, ‘<strong>name</strong>‘, ‘<strong>package</strong>‘, ‘math’,<br>‘names’, ‘show_names’, ‘sys’, ‘version’]<br></pre><br>We can see some built-in names like ‘<strong>file</strong>‘ or ‘<strong>name</strong>‘ and all the others, that we have defined.</p>
+<p></p><h3>The globals() function</h3><br>The globals() function returns a dictionary that represents the current global namespace. It is a dictionary of global names and their values. It is the dictionary of the current module.<p></p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<p>import sys<br>import textwrap</p>
+<p>version = 1.0</p>
+<p>def myfun():<br>    pass</p>
+<p>gl = globals()<br>gnames = ‘, ‘.join(gl)</p>
+<p>print textwrap.fill(gnames)<br><br>We use the globals() function to print all the global names of the current module.</p>
+<p><pre><br>$ ./globalsfun.py<br><strong>builtins</strong>, <strong>file</strong>, textwrap, <strong>package</strong>, sys, myfun, version,<br><strong>name</strong>, gl, <strong>doc</strong><br></pre><br>These are the global names of the current module.</p>
+<p></p><h3>The <strong>module</strong> attribute</h3><br>The <strong>module</strong> class attribute has the name of the module in which the class is defined.<p></p>
+<p><pre><br>“””<br>module animals<br>“””</pre></p>
+<p>class Cat:<br>  pass</p>
+<p>class Dog:<br>  pass<br><br>This are the contents of the animals.py file. We have two classes.</p>
+<p><pre></pre></p>
+<p>#!/usr/bin/python</p>
+<p>from animals import Cat</p>
+<p>class Being:<br>    pass</p>
+<p>b = Being()<br>print b.<strong>module</strong></p>
+<p>c = Cat()<br>print c.<strong>module</strong><br><br>In this code we use the <strong>module</strong> attribute.</p>
+<p><pre><br>from animals import Cat<br></pre><br>From the animals module, we import the Cat class.</p>
+<p><pre><br>class Being:<br>    pass<br></pre><br>In the current module, we define a class Being.</p>
+<p><pre><br>b = Being()<br>print b.<strong>module</strong><br></pre><br>An instance of the Being class is created. We print the name of its module.</p>
+<p><pre><br>c = Cat()<br>print c.<strong>module</strong><br></pre><br>We create an object from the Cat class. We also print the module, where it was defined.</p>
+<p><pre><br>$ ./mclass.py<br><strong>main</strong><br>animals<br></pre><br>The current module’s name is <strong>main</strong>. And the Cat’s module name is animals.</p>
+<p>This chapter was about modules in Python.</p>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Module names</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Locating modules</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">The import keyword</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#importas-py"><span class="toc-text">importas.py</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Executing modules</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#testing"><span class="toc-text">testing</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">The dir() function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">The globals() function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">The module attribute</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2014/06/30/object-oriented-programming-in-python/" rel="next" title="Object oriented programming in Python">
+          Object oriented programming in Python
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2014/07/02/how-to-use-date-and-time-in-python/" rel="prev" title="How to use Date and Time in Python">
+            How to use Date and Time in Python
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2014/07/01/models-in-python/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

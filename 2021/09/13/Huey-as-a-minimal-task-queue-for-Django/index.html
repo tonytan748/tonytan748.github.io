@@ -1,0 +1,465 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="django,">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>Huey as a minimal task queue for Django [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        Huey as a minimal task queue for Django
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2021-09-13T03:30:19.000Z">
+        2021-09-13
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/django/">django</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p>This blog transfer from <a href="https://www.untangled.dev/2020/07/01/huey-minimal-task-queue-django/" target="_blank" rel="noopener">here</a></p>
+<p>Are you considering adding a task queue to your Django project? Then this article should be useful to you.</p>
+<p>When I was “younger” task queue with Django project meant celery task queue.</p>
+<p>Now that I’m “older” there are simpler alternatives. The simplest I found was Huey. But the ideas presented here apply to evaluating all task queues for your Django project.</p>
+<h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><h3 id="Frustrated-with-celery-and-django-celery"><a href="#Frustrated-with-celery-and-django-celery" class="headerlink" title="Frustrated with celery and django-celery"></a>Frustrated with celery and django-celery</h3><p>In December 2019 I was taking a Django project from Python 2 to 3. This project relied on celery and its integration for Django for asynchronous task processing. Github project link here. This codebase’s work was mostly done back in 2012-2015.</p>
+<p><code>django-celery</code> was the first problematic part. “Problematic” because it was not being actively maintained. Python 3 support was only “planned” at the time.</p>
+<p>Besides, by testing celery with my Python3 setup I realised how “heavy” it is. “Heavy” in terms of dependencies. <code>billiard</code>, <code>kombu</code>, etc.</p>
+<p>I had used <code>celery</code> for a very long time. A decade! But this nudged me into looking for alternatives.</p>
+<p>My use cases for using an async task queue were:</p>
+<ul>
+<li>Handle tasks async. For example, sending an email out. Tasks that you should not handle within the request-response cycle.</li>
+<li>Scheduled tasks.</li>
+<li>Retrying of failed tasks. For example, reading from an API fails due to a network error. I want that task retried for a few times.</li>
+<li>Simple locking. More on what I mean by “simple” further down.</li>
+</ul>
+<p>The above were (are) handled nicely by <code>celery</code>. The scheduled tasks part relied entirely on <code>django-celery</code>.</p>
+<p>Another factor that pushed me “off the celery train” was something in my last long-term gig. The increasing reputation that celery is “heavyweight”.</p>
+<p>Finally, celery provides a whole lot more than the above basic set of use cases I need.</p>
+<h3 id="Is-celery-heavyweight"><a href="#Is-celery-heavyweight" class="headerlink" title="Is celery heavyweight?"></a>Is celery heavyweight?</h3><p>A colleague achieved significant gains in task execution time by moving off celery. To dramatiq. This was on a Python 3 project I didn’t work directly on. By significant I mean ~50% throughput. In this case, “tasks” were about handling a simple message that wrote one row to the database, at most. With no real processing of that message.</p>
+<p>At about the same time the above happened, I was listening to the DjangoChat podcast.</p>
+<p>The below is a transcript from the “Caching” episode from November 2019. Transcript here. The podcast folks were discussing caches. And brought up the usual suspects; Memcached and Redis. On mentioning Redis, Carlton Gibson calls out how easy it is to add a queue when you have Redis in place. And how much of an “overkill” celery is. Emphaisis in the below quote is mine:</p>
+<blockquote>
+<p>have Redis? Yeah. You want to you want to use a queue. So let’s take a good queue package. So, you know, everyone always talks about celery, but celery is overkill for, you know, the majority of use cases. So what’s a good package? Well, there’s one called django-q, which I love and have fun with. That’s nice and simple. And that’s got a Redis back end. So you pip install, right or, you know, apt install Redis. And then you pip install django-q into your project, you know, a little bit of settings, magic, and you’re up and running [..]</p>
+</blockquote>
+<h3 id="Packages-Considered"><a href="#Packages-Considered" class="headerlink" title="Packages Considered"></a>Packages Considered</h3><p>I did not compare packages. To compare would mean installing each one, run the same task and measure. I had what was left of a “free” day to switch over from celery to another package and have things deployed by day’s end.</p>
+<p>I considered these packages to see if I could adopt a more lightweight alternative to celery. Before I continue, by “lightweight” I mean, “lightweight in terms of”:</p>
+<ul>
+<li>package size and dependencies</li>
+<li>code that I would need to rework to transition from celery to this task queue</li>
+<li>works with Redis, a pre-existing component in my stack</li>
+</ul>
+<p>The packages I <del>compared</del> considered:</p>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Link</th>
+<th>How I got to know about it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dramatiq</td>
+<td><a href="https://dramatiq.io/" target="_blank" rel="noopener">Link</a></td>
+<td>Ex-colleague’s experience, described above.</td>
+</tr>
+<tr>
+<td>django-q</td>
+<td><a href="https://django-q.readthedocs.io/en/latest/" target="_blank" rel="noopener">Link</a></td>
+<td>Recommended during the DjangoChat podcast.</td>
+</tr>
+<tr>
+<td>huey</td>
+<td><a href="https://huey.readthedocs.io/en/latest/" target="_blank" rel="noopener">Link</a></td>
+<td>Recommended by Adam Johnson, Django blogger I follow.</td>
+</tr>
+</tbody>
+</table>
+<p>I decided to move on with <code>Huey</code>. It was not a clear-cut decision.</p>
+<p>My mindset was not about installing the best. It was about installing a minimal package. That removes my dependency on celery/django-celery. And allows me to continue taking that project’s codebase to Python 3.</p>
+<p>Why not <code>dramatiq</code>? I did not go with <code>dramatiq</code> because of two reasons:</p>
+<ul>
+<li>It required installation of another package. The “Advanced Python Scheduler”, APS, to allow scheduling of tasks.</li>
+<li><code>django-dramatiq</code>, while maintained by the author of <code>dramatiq</code> itself, is “yet another package”.</li>
+</ul>
+<p>After my experience with <code>django-celery</code> any extra package scared me. I did not want to end up being unable to use a main library due to a smaller accompanying library not being maintained.</p>
+<p>In comparison, for <code>Huey</code> I would only need to <code>pip install huey</code>. The Django integration part is part of the package. Docs <a href="https://huey.readthedocs.io/en/latest/django.html" target="_blank" rel="noopener">here</a>.</p>
+<p>In addition, dramatiq is intended for rabbitmq. I see no need for advanced messaging such as that enabled by rabbitmq right now.1</p>
+<p>Why not <code>django-q</code>? It is actively maintained. And targeted for Django. And offers a lot of features. But by the looks of it, it offered many features I was not going to be using. At the cost of being less lightweight than <code>Huey</code>.</p>
+<p>The above does not mean <code>dramatiq</code> or <code>django-q</code> are not great packages. Far from it. I have them in mind in case the use case changes.</p>
+<h2 id="Huey"><a href="#Huey" class="headerlink" title="Huey"></a>Huey</h2><p><a href="https://huey.readthedocs.io/en/latest/django.html" target="_blank" rel="noopener">Huey’s Django integration</a> provides:</p>
+<ul>
+<li>Configuration of huey via the Django settings module.</li>
+<li>Running the consumer as a Django management command.</li>
+<li>Auto-discovery of tasks.py modules to simplify task importing.</li>
+<li>Properly manage database connections.</li>
+</ul>
+<p>Sweet.</p>
+<h3 id="Code-changes"><a href="#Code-changes" class="headerlink" title="Code changes"></a>Code changes</h3><p>Installed <code>huey</code>? The <a href="https://huey.readthedocs.io/en/latest/django.html#setting-things-up" target="_blank" rel="noopener">Setting Things Up</a> section in Huey’s Django integration guide covers what you need to do from then on.</p>
+<p>Instead of importing the <code>task</code> or <code>periodic_task</code> decorators from the main Huey package, import from <code>huey.contrib.djhuey</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from huey.contrib.djhuey import periodic_task, task</span><br></pre></td></tr></table></figure>
+<p>Huey also <a href="https://huey.readthedocs.io/en/latest/django.html#tasks-that-execute-queries" target="_blank" rel="noopener">offers function decorators for tasks that execute queries</a>, which automatically close the database connection:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from huey.contrib.djhuey import db_periodic_task, db_task</span><br></pre></td></tr></table></figure>
+<p>To set a task performing a <code>db_task</code> therefore:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from huey.contrib import djhuey as huey</span><br><span class="line"></span><br><span class="line">@huey.db_task()</span><br><span class="line">def save_data_and_send_email():</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<p>What about settings files? Main settings:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># HUEY</span><br><span class="line">HUEY = &#123;</span><br><span class="line">    &apos;name&apos;: &apos;mydjangoproject&apos;,</span><br><span class="line">    &apos;url&apos;: &apos;redis://localhost:6379/?db=1&apos;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Seriously, that’s enough to have things running!</p>
+<p>A note about how things run locally by default:</p>
+<blockquote>
+<p>When <code>settings.DEBUG = True</code>, tasks will be executed synchronously just like regular function calls. The purpose of this is to avoid running both Redis and an additional consumer process while developing or running tests.</p>
+</blockquote>
+<p>This is probably the reason why <code>run_huey</code> doesn’t autoreload.</p>
+<p>To have Huey use redis to broker tasks locally:</p>
+<ul>
+<li>ensure <code>redis</code> service is available locally (duh!)</li>
+<li>set <code>immediate</code> and <code>immediate_use_memory</code> to <code>False</code>:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HUEY[&apos;immediate_use_memory&apos;] = False</span><br><span class="line">HUEY[&apos;immediate&apos;] = False</span><br></pre></td></tr></table></figure>
+<p>More details on debug and synchronous execution with Huey <a href="https://huey.readthedocs.io/en/latest/django.html#debug-and-synchronous-execution" target="_blank" rel="noopener">here</a>.</p>
+<h3 id="Passing-Parameters"><a href="#Passing-Parameters" class="headerlink" title="Passing Parameters"></a>Passing Parameters</h3><p>Note that, like in celery’s case, Huey uses <code>pickle</code> to serialize messages (<a href="https://docs.python.org/3/library/pickle.html" target="_blank" rel="noopener">docs</a>).</p>
+<p>So pay attention to pass variable types that play well with <code>pickle</code> when passing parameters.</p>
+<p>Thus avoid passing a Django model instance or queryset as parameter, as shown below:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from huey.contrib import djhuey as huey</span><br><span class="line"></span><br><span class="line">@huey.task()</span><br><span class="line">def notify_user(user):</span><br><span class="line">    send_email(user.email, ...)</span><br><span class="line"></span><br><span class="line">my_user = User.objects.get(id=user_id)</span><br><span class="line">send_email(my_user)()  # enqueue task</span><br></pre></td></tr></table></figure>
+<p>Instead pass the object <code>id</code>, which is an <code>int</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from huey.contrib import djhuey as huey</span><br><span class="line"></span><br><span class="line">@huey.task()</span><br><span class="line">def notify_user(user_id):</span><br><span class="line">    user = User.objects.get(id=user_id)</span><br><span class="line">    send_email(user.email, ...)</span><br><span class="line"></span><br><span class="line">send_email(my_user.id)()  # enqueue task</span><br></pre></td></tr></table></figure>
+<p>The serializer can be overridden. But going into that takes us beyond minimal for today.</p>
+<h3 id="Periodic-tasks"><a href="#Periodic-tasks" class="headerlink" title="Periodic tasks"></a>Periodic tasks</h3><p>This is an example of a periodic task. It calls a Django management command to clear expired user sessions every 2 hours:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from huey import crontab</span><br><span class="line">from huey.contrib import djhuey as huey</span><br><span class="line"></span><br><span class="line">@huey.periodic_task(crontab(hour=&apos;*/2&apos;))</span><br><span class="line">def clear_expired_sessions():</span><br><span class="line">    from django.core.management import call_command</span><br><span class="line">    return call_command(&apos;clearsessions&apos;)</span><br></pre></td></tr></table></figure>
+<p>One minimal aspect of Django+Huey is when it comes to deployment (tackled further down).</p>
+<p><code>manage.py run_huey</code> takes care of executing both:</p>
+<ul>
+<li>tasks that your code adds to the queue while it’s running, e.g. send an email triggered by a user action</li>
+<li>scheduled (aka “periodic”) tasks</li>
+</ul>
+<p>Both the task <code>consumer</code> and <code>scheduler</code> are run by the same <code>run_huey</code> process.</p>
+<h3 id="Retries"><a href="#Retries" class="headerlink" title="Retries"></a>Retries</h3><p>Example: I want to fetch API data on the first of the month at 2:30PM:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from huey import crontab</span><br><span class="line">from huey.contrib import djhuey as huey</span><br><span class="line"></span><br><span class="line">@huey.db_periodic_task(</span><br><span class="line">    crontab(day=&apos;1&apos;, hour=&apos;14&apos;, minute=&apos;30&apos;),</span><br><span class="line">    retries=2, retry_delay=10)</span><br><span class="line">@huey.lock_task(&apos;sync_gsuite_data&apos;)</span><br><span class="line">def fetch_api_data():</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<p>The above retries the function twice, with an interval of 10 seconds.</p>
+<p>The one aspect that’s missing in this setup is a hook to retry only in case of specific exception. I want an exception caused by a network error to be retried. But not an exception due to a <code>ZeroDivisionError</code>, for example.</p>
+<p><code>huey</code> provides signals that allow you to inspect an exception on various types of events. For example, you could use the below code to notify admins when a Huey task fails without being retried:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import traceback</span><br><span class="line"></span><br><span class="line">from django.core.mail import mail_admins</span><br><span class="line"></span><br><span class="line">from huey import signals</span><br><span class="line">from huey.contrib import djhuey as huey</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@huey.signal(signals.SIGNAL_ERROR)</span><br><span class="line">def task_error(signal, task, exc):</span><br><span class="line">    if task.retries &gt; 0:</span><br><span class="line">        return  # do not notify when task is to be retried</span><br><span class="line">    subject = f&apos;Task [&#123;task.name&#125;] failed&apos;</span><br><span class="line">    message = f&quot;&quot;&quot;Task ID: &#123;task.id&#125;</span><br><span class="line">Args: &#123;task.args&#125;</span><br><span class="line">Kwargs: &#123;task.kwargs&#125;</span><br><span class="line">Exception: &#123;exc&#125;</span><br><span class="line">&#123;traceback.format_exc()&#125;&quot;&quot;&quot;</span><br><span class="line">    mail_admins(subject, message)</span><br></pre></td></tr></table></figure>
+<p>Sidenote 1: Keep in mind signals are executed synchronously by the consumer as it processes tasks.</p>
+<p>Sidenote 2: this is just to demonstrate what can be done. A more standard way to do this is to attach an email handler at loglevel <code>ERROR</code> to the huey consumer logger.</p>
+<p>But I would prefer the hook that <code>dramatiq</code> provides to determine whether a task should be retried in this style:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def should_retry(retries_so_far, exception):</span><br><span class="line">    return retries_so_far &lt; 3 and isinstance(exception, HttpTimeout)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@dramatiq.actor(retry_when=should_retry)</span><br><span class="line">def count_words(url):</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<p>See? I’m veering off “minimal” and into better features. Let’s move on.</p>
+<h3 id="Simple-locking"><a href="#Simple-locking" class="headerlink" title="Simple locking"></a>Simple locking</h3><p>To quote <code>huey’s</code> author <a href="https://github.com/coleifer/huey/issues/413#issuecomment-488794415" target="_blank" rel="noopener">himself</a>:</p>
+<blockquote>
+<p>A simple lock ensures that one task cannot be executed in parallel.</p>
+</blockquote>
+<p>Example use case: a report generation task that runs every 10 minutes, but occasionally it can take 15 minutes to complete. You want to ensure that it does not start a stampede. So you use a lock to ensure that only one instance of the task can run at a time.</p>
+<p>Example code from <code>huey</code>’s docs on <a href="https://huey.readthedocs.io/en/latest/guide.html#locking-tasks" target="_blank" rel="noopener">locking tasks</a>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@huey.periodic_task(crontab(minute=&apos;*/10&apos;))</span><br><span class="line">@huey.lock_task(&apos;reports-lock&apos;)  # Goes *after* the task decorator.</span><br><span class="line">def generate_report():</span><br><span class="line">    run_report()</span><br></pre></td></tr></table></figure>
+<h3 id="Take-a-look-around"><a href="#Take-a-look-around" class="headerlink" title="Take a look around"></a>Take a look around</h3><p>A nice thing about Huey is its <a href="https://huey.readthedocs.io/en/latest/index.html" target="_blank" rel="noopener">docs</a>. Being a relatively small package, you don’t easily get lost.</p>
+<p>The docs feel “cohesive”. Unlike how I used to feel with celery’s docs. So feel free to take a look around for other features not mentioned in this tutorial.</p>
+<p>The <a href="https://huey.readthedocs.io/en/latest/troubleshooting.html" target="_blank" rel="noopener">troubleshooting and common pitfalls</a> section saved me a headscratch or two.</p>
+<h2 id="Deployment"><a href="#Deployment" class="headerlink" title="Deployment"></a>Deployment</h2><p>In my Ubuntu setup I use <a href="http://supervisord.org/" target="_blank" rel="noopener">supervisor</a> for process management. For example supervisor manages the <code>gunicorn</code> which binds the Django application to Nginx.</p>
+<h3 id="The-bash-scipt"><a href="#The-bash-scipt" class="headerlink" title="The bash scipt"></a>The bash scipt</h3><p>To run Huey, supervisor runs a bash script that runs Huey:</p>
+<p>start_huey.bash<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">NAME=&quot;mydjangoproject-huey&quot;  # Name of the application</span><br><span class="line">DJANGODIR=/home/ubuntu/webapp/mydjangoproject/proj  # Django project directory</span><br><span class="line">DJANGOENVDIR=/home/ubuntu/webapp/mydjangoproject_env  # Django project virtualenv</span><br><span class="line"></span><br><span class="line">echo &quot;Starting $NAME as `whoami`&quot;</span><br><span class="line"></span><br><span class="line"># Activate the virtual environment</span><br><span class="line">cd $DJANGODIR</span><br><span class="line">source /home/ubuntu/webapp/mydjangoproject_env/bin/activate</span><br><span class="line">source /home/ubuntu/webapp/mydjangoproject/proj/.env</span><br><span class="line">export PYTHONPATH=$DJANGODIR:$PYTHONPATH</span><br><span class="line"></span><br><span class="line"># Start Huey</span><br><span class="line">exec $&#123;DJANGOENVDIR&#125;/bin/python manage.py run_huey</span><br></pre></td></tr></table></figure></p>
+<p>Test the bash script above by running it.</p>
+<p>It has to be executable, i.e. <code>chmod +x start_huey.bash</code> if it’s not.</p>
+<p>Output should be similar to this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Starting mydjangoproject-huey as ubuntu</span><br><span class="line">[2020-07-01 16:26:54,455] INFO:huey.consumer:MainThread:Huey consumer started with 1 thread, PID 12113 at 2020-07-01 14:26:54.455715</span><br><span class="line">[2020-07-01 16:26:54,456] INFO:huey.consumer:MainThread:Scheduler runs every 1 second(s).</span><br><span class="line">[2020-07-01 16:26:54,456] INFO:huey.consumer:MainThread:Periodic tasks are enabled.</span><br><span class="line">[2020-07-01 16:26:54,456] INFO:huey.consumer:MainThread:The following commands are available:</span><br><span class="line">+ myapp.tasks.send_email</span><br><span class="line">[...]</span><br></pre></td></tr></table></figure>
+<h3 id="supervisor-conf-file"><a href="#supervisor-conf-file" class="headerlink" title="supervisor conf file"></a>supervisor conf file</h3><p>File located at: <code>/etc/supervisor/conf.d/huey.conf</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">; ================================</span><br><span class="line">;  huey supervisor</span><br><span class="line">; ================================</span><br><span class="line"></span><br><span class="line">[program:huey]</span><br><span class="line">command = /home/ubuntu/webapp/start_huey.bash  ; Command to start huey</span><br><span class="line"></span><br><span class="line">user=ubuntu</span><br><span class="line">numprocs=1</span><br><span class="line">stdout_logfile=/home/ubuntu/webapp/logs/huey/worker.log</span><br><span class="line">stderr_logfile=/home/ubuntu/webapp/logs/huey/error.log</span><br><span class="line">stdout_logfile_maxbytes=50MB</span><br><span class="line">stderr_logfile_maxbytes=50MB</span><br><span class="line">stdout_logfile_backups=10</span><br><span class="line">stderr_logfile_backups=10</span><br><span class="line">autostart=true</span><br><span class="line">autorestart=true</span><br><span class="line">startsecs=10</span><br><span class="line"></span><br><span class="line">; Need to wait for currently executing tasks to finish at shutdown.</span><br><span class="line">; Increase this if you have very long running tasks.</span><br><span class="line">stopwaitsecs = 2</span><br><span class="line"></span><br><span class="line">; Causes supervisor to send the termination signal (SIGTERM) to the whole process group.</span><br><span class="line">stopasgroup=true</span><br></pre></td></tr></table></figure>
+<p>A lot of the <code>conf</code> file above is supervisor-specific.</p>
+<p>The point of this section is to show you how simple it is to have <code>huey</code> with Django run reliably on an Ubuntu instance.</p>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Background"><span class="toc-text">Background</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Frustrated-with-celery-and-django-celery"><span class="toc-text">Frustrated with celery and django-celery</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Is-celery-heavyweight"><span class="toc-text">Is celery heavyweight?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Packages-Considered"><span class="toc-text">Packages Considered</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Huey"><span class="toc-text">Huey</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Code-changes"><span class="toc-text">Code changes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Passing-Parameters"><span class="toc-text">Passing Parameters</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Periodic-tasks"><span class="toc-text">Periodic tasks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Retries"><span class="toc-text">Retries</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Simple-locking"><span class="toc-text">Simple locking</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Take-a-look-around"><span class="toc-text">Take a look around</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deployment"><span class="toc-text">Deployment</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-bash-scipt"><span class="toc-text">The bash scipt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#supervisor-conf-file"><span class="toc-text">supervisor conf file</span></a></li></ol></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2021/09/10/用python绘制太极图/" rel="next" title="用python绘制太极图">
+          用python绘制太极图
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2021/10/23/Python第三方字典模块：Addict-模块/" rel="prev" title="Python第三方字典模块：Addict 模块">
+            Python第三方字典模块：Addict 模块
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2021/09/13/Huey-as-a-minimal-task-queue-for-Django/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

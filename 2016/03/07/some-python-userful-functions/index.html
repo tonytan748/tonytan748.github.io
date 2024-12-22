@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="Tony Tan">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>Some Python userful functions [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        Some Python userful functions
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2016-03-06T16:00:00.000Z">
+        2016-03-07
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <ol>
+<li>use Glob() to find files</li>
+</ol>
+<p>Many python functions have a long and descriptly name, but maybe you dont know the namespace of glob() functions unless you understand it.<br>It’s like a more powerful version of the listdir() function. it can search files use pattern matching.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import glob</span><br><span class="line"></span><br><span class="line">files = glob.glob(&apos;*.py&apos;)</span><br><span class="line">print files</span><br></pre></td></tr></table></figure>
+<p>you can also search files by many file types:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import itertools as it</span><br><span class="line">import glob</span><br><span class="line"></span><br><span class="line">def multiple_file_types(*patterns):</span><br><span class="line">    return it.chain.from_iterable(glob.glob(pattern) for pattern in patterns)</span><br><span class="line"></span><br><span class="line">for filename in multiple_file_types(&apos;*.txt&apos;,&apos;*.py&apos;)</span><br><span class="line">    print filename</span><br></pre></td></tr></table></figure>
+<p>If you want get the real path of every file. you can called the realpath() function in return value:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import itertools as it</span><br><span class="line">import glob</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">def multiple_file_types(*patterns):</span><br><span class="line">    return it.chain.from_iterable(glob.glob(pattern) for pattern in patterns)</span><br><span class="line"></span><br><span class="line">for filename in multiple_file_types(&apos;*.txt&apos;,&apos;*.py&apos;):</span><br><span class="line">    realpath = os.path.realpath(filename)</span><br><span class="line">    print realpath</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>Testing</li>
+</ol>
+<p>Some examples use inspect model, this model is userful for testing. It has more function than here.</p>
+<p>Some useful example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import logging</span><br><span class="line">import inpect</span><br><span class="line"></span><br><span class="line">logging.basicConfig(level=logging.INFO, format=&apos;%(asctime)s %(levelname)-8s %(lineno)-4d %(message)s&apos;, datefmt=&apos;%m-%d %H:%M&apos;,)</span><br><span class="line"></span><br><span class="line">logging.debug(&quot;A debug message&quot;)</span><br><span class="line">logging.info(&apos;Some information&apos;)</span><br><span class="line">logging.warming(&apos;A shot across the bow&apos;)</span><br><span class="line"></span><br><span class="line">def test():</span><br><span class="line">    frame,filename,line_number,function_name,lines,index = inspect.getouterframes(inspect.currentframe())[1]</span><br><span class="line">    print(frame,filename,line_number,function_name,lines,index)</span><br><span class="line"></span><br><span class="line">test()</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>Create a unique ID</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">improt uuid</span><br><span class="line">result = uuid.uuid()</span><br><span class="line">print result</span><br></pre></td></tr></table></figure>
+<p>but the result have many character are some with each running.<br>update:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import hmac, hashlib</span><br><span class="line">key = &apos;1&apos;</span><br><span class="line">data = &apos;a&apos;</span><br><span class="line"></span><br><span class="line">print hmac.new(key, data, hashlib.sha256).hexdigest()</span><br><span class="line"></span><br><span class="line">m = hashlib.sha1()</span><br><span class="line">m.update(&apos;The quick brown fox jumps over the lazy dog&apos;)</span><br><span class="line">print m.hexdigest()</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>Serialization</li>
+</ol>
+<p>Do you ever need to store a complex variable in a database or text file?<br>You don’t need to think of an unusual way to format an array or object as a string, since Python already provides this functionality.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import pickle</span><br><span class="line"></span><br><span class="line">variable = [&apos;hello&apos;, 22, [1, &apos;two&apos;], &apos;dog&apos;]</span><br><span class="line"></span><br><span class="line">#serizlize content</span><br><span class="line">file = open(&apos;serial.txt&apos;, &apos;w&apos;)</span><br><span class="line">serialized_obj = pickle.dumps(variable)</span><br><span class="line">file.write(serialized_obj)</span><br><span class="line">file.close()</span><br><span class="line"></span><br><span class="line">#unserizlize to content</span><br><span class="line">target = open(&apos;serial.txt&apos;, &apos;r&apos;)</span><br><span class="line">myObj = pickle.load(target)</span><br><span class="line"></span><br><span class="line">print myObj</span><br></pre></td></tr></table></figure>
+<p>This is a native method, can also be use JSON to encode and decode.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import json</span><br><span class="line"></span><br><span class="line">variable = [&apos;hello&apos;, 22, [1, &apos;two&apos;], &apos;dog&apos;] </span><br><span class="line"></span><br><span class="line">#encoding</span><br><span class="line">encode = json.dumps(variable)</span><br><span class="line"></span><br><span class="line">#deconding</span><br><span class="line">decoded = json.loads(encode)</span><br></pre></td></tr></table></figure>
+<p>This is more compact, and is compatible with javascript or other language.<br>For complex objects, however, some information may be lost.</p>
+<ol start="5">
+<li>Compression character</li>
+</ol>
+<p>Python can compres long character dont refer to any documents.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import zlib</span><br><span class="line"></span><br><span class="line">string = &quot;&quot;&quot;ther sections do not refer to any specific file but give step by step instructions on how to access features and what some of the feature highlights are</span><br><span class="line">Illustration 3-1: At the outset, a transaction involves shipments of one commodity, but without any commercial explanation, the goods being sold are described as a different commodity in later documentation.</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">print &quot;Original Size: (0)&quot;.format(len(string))</span><br><span class="line"></span><br><span class="line">compressed = zlib.compress(string)</span><br><span class="line">print &quot;Compressed Size: (0)&quot;.format(len(compressed))</span><br><span class="line"></span><br><span class="line">decompressed = zlib.decompress(compressed)</span><br><span class="line">print &quot;Decompressed Size: (0)&quot;.format(len(decompressed))</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>Register ShutDown function</li>
+</ol>
+<p>A model name is atexit, it can be running some coding after script.<br>For example if you want measure some benchmark datasets after running script, like running time.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import atexit</span><br><span class="line">import time</span><br><span class="line">import math</span><br><span class="line"></span><br><span class="line">def microtime(get_as_float=False):</span><br><span class="line">    if get_as_float:</span><br><span class="line">        return time.time()</span><br><span class="line">    alse:</span><br><span class="line">        return &quot;%f %d&quot;%math.modf(time.time())</span><br><span class="line"></span><br><span class="line">start_time = microtime(False)</span><br><span class="line">atexit.registar(start_time)</span><br><span class="line"></span><br><span class="line">def shutdowm():</span><br><span class="line">    global start_time</span><br><span class="line">    print &quot;Execution took: &#123;0&#125; seconds.&quot;.format(start_time)</span><br><span class="line"></span><br><span class="line">atexit.register(shutdown)</span><br></pre></td></tr></table></figure>
+<p>whatever reason cause the script shutdown. the atexit.register() function all with running.</p>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2016/03/05/tornado-web-framework-1/" rel="next" title="Tornado Web Framework 1">
+          Tornado Web Framework 1
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2016/03/08/tornado-web-framework-2/" rel="prev" title="Tornado Web Framework 2">
+            Tornado Web Framework 2
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2016/03/07/some-python-userful-functions/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

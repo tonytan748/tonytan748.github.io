@@ -1,0 +1,364 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="Tony Tan">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>5 favorite open source Django packages [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        5 favorite open source Django packages
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2016-10-20T16:00:00.000Z">
+        2016-10-21
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p>this blog translate from <a href="ttps://opensource.com/business/15/12/5-favorite-open-source-django-packages" target="_blank" rel="noopener">https://opensource.com/business/15/12/5-favorite-open-source-django-packages</a></p>
+<p>Django is built around the concept of reusable apps: self-contained packages that provide re-usable features. You can build your site by composing these reusable apps, together with your own site-specific code. There’s a rich and varied ecosystem of reusable apps available for your use—PyPI lists more than 8,000 Django apps—but how do you know which ones are best?</p>
+<p>To help focus your app search, we’ve put together this list of our five favorites. They are:</p>
+<ul>
+<li><a href="https://github.com/audreyr/cookiecutter" target="_blank" rel="noopener">Cookiecutter</a>: the best way to start a new Django site.</li>
+<li><a href="https://github.com/audreyr/cookiecutter" target="_blank" rel="noopener">Whitenoise</a>: the best static asset server.</li>
+<li><a href="http://www.django-rest-framework.org/" target="_blank" rel="noopener">Django Rest Framework</a>: the best way to write REST APIs with Django.</li>
+<li><a href="https://wagtail.io/" target="_blank" rel="noopener">Wagtail</a>: the best Django-based content-management system.</li>
+<li><a href="http://www.intenct.nl/projects/django-allauth/" target="_blank" rel="noopener">django-allauth</a>: the best way to provide “social login” (e.g., Twitter, Facebook, GitHub, etc).</li>
+</ul>
+<p>We also recommend you check out <a href="https://www.djangopackages.com/" target="_blank" rel="noopener">Django Packages</a>, a directory of reusable Django apps. Django Packages organizes Django apps into “grids” that allow you to compare similar packages and chose between them. You can see which features are offered by each package, as well as usage statistics. (For example: here’s <a href="https://www.djangopackages.com/grids/g/rest/" target="_blank" rel="noopener">the grid for REST tools</a>, which might help you understand why we recommend Django REST Framework.)</p>
+<h2 id="Why-you-should-trust-us"><a href="#Why-you-should-trust-us" class="headerlink" title="Why you should trust us?"></a>Why you should trust us?</h2><p>We’ve been using Django for longer than almost anyone. Two of us (Frank and Jacob) worked at the Lawrence Journal-World (birthplace of Django) before Django was released (and in fact helped make the open source release happen). We’ve all spent the past eight years running a consultancy that advises companies on how best to use Django.</p>
+<p>So, we’ve seen the entire history of the Django project and community, and we’ve seen popular packages come and go. Between the three of us, we’ve probably tried at least half of these 8,000 apps personally, or we know someone who has. We have a strong understanding of what makes an app solid and reliable, and we have a good understanding of what gives these things staying power.</p>
+<h2 id="Best-way-to-start-a-new-Django-site-Cookiecutter"><a href="#Best-way-to-start-a-new-Django-site-Cookiecutter" class="headerlink" title="Best way to start a new Django site: Cookiecutter"></a>Best way to start a new Django site: Cookiecutter</h2><p>Starting off a new project or app is always a bit of a pain. You can use Django’s built in <code>startproject</code> but if you’re like us, you’re particular in how you do things. Cookiecutter solves this by giving you a quick and easy way to define project or app templates that can be easily reused. A quick example, just <code>pip install cookiecutter</code> and then run this from the command line:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cookiecutter https://github.com/marcofucci/cookiecutter-simple-django</span><br></pre></td></tr></table></figure>
+<p>You’ll immediately start getting prompted for quick answers, such as the name of your project, repo, author name, email, and a few other bits of configuration. These are used to help fill out the project details. We picked the ever so original ‘foo’ to be our repo name. So cookiecutter created a simple Django project in the subdirectory ‘foo’.</p>
+<p>If you poke around in the ‘foo’ project a bit, you’ll see the other bits of configuration you were prompted for have been templated into the files themselves along with sub-directories as necessary. This “template” is all defined at the GitHub repo URL we used as the only argument when we called <code>cookiecutter</code>. This example used a remote GitHub repo as the template; however, note that you can use local file system directories as well, which is perfect for non-reusable scenarios.</p>
+<p>We mention cookiecutter as a great Django package, but honestly it’s useful for plain Python or even non-Python-related purposes. Being able to lay things out exactly as you like in an easily repeatable way makes cookiecutter a great tool for keeping your workflow DRY.</p>
+<h2 id="Best-static-asset-server-Whitenoise"><a href="#Best-static-asset-server-Whitenoise" class="headerlink" title="Best static asset server: Whitenoise"></a>Best static asset server: <a href="http://whitenoise.evans.io/en/latest/base.html" target="_blank" rel="noopener">Whitenoise</a></h2><p>For many years, serving your site’s static assets—images, JavaScript, CSS—was a pain. The built-in django.views.static.serve view is, as the documentation states, “not hardened for production use and should be used only as a development aid.” But serving media from a “real” web server, such as NGINX or out of a CDN, can be difficult to set up.</p>
+<p>Whitenoise cleanly solves this problem. It’s as easy to set up as the development-only static server, and is hardened and optimized for production. Setup is simple:</p>
+<ol>
+<li>Make sure you’re using Django’s contrib.staticfiles app, and that you’ve correctly set <code>STATIC_ROOT</code> in your settings file.</li>
+<li>Enable Whitenoise in your <code>wsgi.py</code> file:</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from django.core.wsgi import get_wsgi_application</span><br><span class="line">from whitenoise.django import DjangoWhiteNoise</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">application = get_wsgi_application()</span><br><span class="line">application = DjangoWhiteNoise(application)</span><br></pre></td></tr></table></figure>
+<p>That’s really all it takes! For large applications, you’ll likely want to use a dedicated media server and/or a CDN, but for most small- or medium-sized Django sites, Whitenoise is more than powerful enough.</p>
+<p>For more information on Whitenoise, <a href="http://whitenoise.evans.io/en/latest/index.html" target="_blank" rel="noopener">check out the documentation</a>.</p>
+<h2 id="Best-Tool-for-REST-APIs-Django-REST-Framework"><a href="#Best-Tool-for-REST-APIs-Django-REST-Framework" class="headerlink" title="Best Tool for REST APIs: Django REST Framework"></a>Best Tool for REST APIs: <a href="http://www.django-rest-framework.org/" target="_blank" rel="noopener">Django REST Framework</a></h2><p>REST APIs are quickly becoming a standard feature of modern web applications. An API is really simply talking in JSON rather than HTML, and of course you can do this with just Django. You can craft your own views that set the proper content types and return data in JSON rather than templated HTML responses. This is exactly what many people did before API frameworks such as <a href="http://www.django-rest-framework.org/" target="_blank" rel="noopener">Django Rest Framework</a> (a.k.a., DRF) were released.</p>
+<p>Building a REST API with DRF is similar to working with Django’s Class Based Views if you’re familiar with them, except these are specifically designed and targeted around an API use case. Quite a bit of code is involved in your average API setup, so instead of a code sample to get you excited, we’ll highlight some of DRF’s features that make your life easier:</p>
+<ul>
+<li>Automatic browseable API which makes development and manual testing a breeze. Click around in the DRF <a href="http://restframework.herokuapp.com/" target="_blank" rel="noopener">demo example</a>. You can view API responses and support POST/PUT/DELETE type operations without having to do anything yourself.</li>
+<li>Easy integration of authentication styles, such as OAuth, Basic Auth, or API Tokens.</li>
+<li>Simple permission system for fine-grained control of which users can use which API endpoints and/or actions.</li>
+<li>Built in rate limiting.</li>
+<li>Nearly automatic API documentation when combined with <a href="http://django-rest-swagger.readthedocs.org/en/latest/index.html" target="_blank" rel="noopener">django-rest-swagger</a>.</li>
+<li>Extensive ecosystem of third-party libraries.</li>
+</ul>
+<p>Although you could certainly build an API without DRF, we can’t fathom a reason why you would start off down that path. Even if you don’t use all of DRF’s features, building up your own API views from their solid base view classes is a huge win in terms of safety, consistency of your API, and development velocity. If you aren’t using DRF already, you should set aside some time to check it out.</p>
+<p>Best Django-based CMS: <a href="https://wagtail.io/" target="_blank" rel="noopener">Wagtail</a></p>
+<p>Wagtail is the current darling of the Django CMS world and with good reason. Like most CMS systems, it gives you flexibility to define different types of pages and their content via simple Django models. This takes you from zero to a basically working system in hours, not days. To give you a quick example, to define a Staff page type for people at your company can be as simple as:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">from wagtail.wagtailcore.models import Page</span><br><span class="line">from wagtail.wagtailcore.fields import RichTextField</span><br><span class="line">from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel</span><br><span class="line">from wagtail.wagtailimages.edit_handlers import ImageChooserPanel </span><br><span class="line"></span><br><span class="line">class StaffPage(Page):</span><br><span class="line">	name = models.CharField(max_length=100)</span><br><span class="line">	hire_date = models.DateField()</span><br><span class="line">	bio = models.RichTextField()</span><br><span class="line">	email = models.EmailField()</span><br><span class="line">	headshot = models.ForeignKey(&apos;wagtailimages.Image&apos;, null=True, blank=True) </span><br><span class="line">	content_panels = Page.content_panels + [</span><br><span class="line"> 		FieldPanel(&apos;name&apos;),</span><br><span class="line">		FieldPanel(&apos;hire_date&apos;),</span><br><span class="line">		FieldPanel(&apos;email&apos;),</span><br><span class="line">		FieldPanel(&apos;bio&apos;,classname=&quot;full&quot;),</span><br><span class="line">		ImageChoosePanel(&apos;headshot&apos;),</span><br><span class="line">		]</span><br></pre></td></tr></table></figure>
+<p>The real appeal of Wagtail, however, is in its easy-to-use modern admin interface and flexibility. You can control which types of pages are allowed in different areas of the site, add additional complex logic to your pages, and get standard moderation/approval workflows right out of the box. With most CMS systems, at some point you run into a wall you can work around. With Wagtail, we have yet to find a wall we couldn’t easy find a door through to make it do exactly what we want in an easy and maintainable way. If you’re interested, we wrote up a (deeper dive into Wagtail)[<a href="https://opensource.com/business/15/5/wagtail-cms]" target="_blank" rel="noopener">https://opensource.com/business/15/5/wagtail-cms]</a>.</p>
+<h2 id="Best-Social-Login-Tool-django-allauth"><a href="#Best-Social-Login-Tool-django-allauth" class="headerlink" title="Best Social Login Tool: django-allauth"></a>Best Social Login Tool: <a href="http://www.intenct.nl/projects/django-allauth/" target="_blank" rel="noopener">django-allauth</a></h2><p>django-allauth is a reusable Django application that solves your registration and authentication needs. Whether you need a local or social registration system, django-allauth has you covered.</p>
+<p>The project supports multiple authentication schemes, such as user name or email address. Once a user has signed up, multiple strategies are supported for account verification ranging from none to email verification. Multiple social and email accounts are also supported. Pluggable signup forms are also supports which allows asking additional questions during registration.</p>
+<p>django-allauth supports more than 20 authentication providers, including Facebook, GitHub, Google, and Twitter. If you have an account on a social website that’s not supported, then it’s most supported through a third-party add-on. The project supports writing custom backends, which allows custom authentication systems to work, too. This is nice for anyone with custom authentication needs.</p>
+<p>django-allauth is easy to setup and has <a href="http://django-allauth.readthedocs.org/en/latest/" target="_blank" rel="noopener">extensive documentation</a>. The project is also well tested so you know that everything actually works.</p>
+<p>Do you have a favorite Django package? Let us know about it in the comments.</p>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-you-should-trust-us"><span class="toc-text">Why you should trust us?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Best-way-to-start-a-new-Django-site-Cookiecutter"><span class="toc-text">Best way to start a new Django site: Cookiecutter</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Best-static-asset-server-Whitenoise"><span class="toc-text">Best static asset server: Whitenoise</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Best-Tool-for-REST-APIs-Django-REST-Framework"><span class="toc-text">Best Tool for REST APIs: Django REST Framework</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Best-Social-Login-Tool-django-allauth"><span class="toc-text">Best Social Login Tool: django-allauth</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2016/09/03/how-to-find-some-characters-in-all-files-in-linux/" rel="next" title="How to find some characters in all files in linux">
+          How to find some characters in all files in linux
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2016/11/22/configuring-and-running-django--celery-in-docker-containers/" rel="prev" title="Configuring and Running Django + Celery in Docker Containers">
+            Configuring and Running Django + Celery in Docker Containers
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2016/10/21/5-favorite-open-source-django-packages/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

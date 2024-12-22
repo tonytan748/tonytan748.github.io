@@ -1,0 +1,315 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="sqlalchemy,">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>SQLAlchemy Example: Create Database, CURD, Faker [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        SQLAlchemy Example: Create Database, CURD, Faker
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2017-04-03T14:37:37.000Z">
+        2017-04-03
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sqlalchemy/">sqlalchemy</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pip install sqlalchemy</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pip install faker</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"># coding: utf-8</span><br><span class="line">import random</span><br><span class="line">from faker import Factory</span><br><span class="line"></span><br><span class="line">from sqlalchemy import create_engine, Table</span><br><span class="line">from sqlalchemy.ext.declarative import declarative_base</span><br><span class="line">from sqlalchemy import ForeignKey</span><br><span class="line">from sqlalchemy import Column, String, Integer, Text</span><br><span class="line">from sqlalchemy.orm import sessionmaker, relationship</span><br><span class="line"></span><br><span class="line">engine = create_engine(&apos;mysql+mysqldb://root@localhost:3306/blog?charset=utf8&apos;)</span><br><span class="line">Base = declarative_base()</span><br><span class="line"></span><br><span class="line">class User(Base):</span><br><span class="line">    __tablename__ = &apos;users&apos;</span><br><span class="line"></span><br><span class="line">    id = Column(Integer, primary_key=True)</span><br><span class="line">    username = Column(String(64), nullable=False, index=True)</span><br><span class="line">    password = Column(String(64), nullable=False)</span><br><span class="line">    email = Column(String(64), nullable=False, index=True)</span><br><span class="line">    articles = relationship(&apos;Article&apos;, backref=&apos;author&apos;)</span><br><span class="line">    userinfo = relationship(&apos;UserInfo&apos;, backref=&apos;user&apos;, uselist=False)</span><br><span class="line"></span><br><span class="line">    def __repr__(self):</span><br><span class="line">        return &apos;&#123;&#125;(&#123;&#125;)&apos;.format(self.__class__.__name__, self.username)</span><br><span class="line"></span><br><span class="line">class UserInfo(Base):</span><br><span class="line">    __tablename__ = &apos;userinfos&apos;</span><br><span class="line"></span><br><span class="line">    id = Column(Integer, primary_key=True)</span><br><span class="line">    name = Column(String(64))</span><br><span class="line">    qq = Column(String(11))</span><br><span class="line">    phone = Column(String(11))</span><br><span class="line">    link = Column(String(64))</span><br><span class="line">    user_id = Column(Integer, ForeignKey(&apos;users.id&apos;))</span><br><span class="line"></span><br><span class="line"> class Article(Base):</span><br><span class="line">    __tablename__ = &apos;articles&apos;</span><br><span class="line"></span><br><span class="line">    id = Column(Integer, primary_key=True)</span><br><span class="line">    title = Column(String(255), nullable=False, index=True)</span><br><span class="line">    content = Column(Text)</span><br><span class="line">    user_id = Column(Integer, ForeignKey(&apos;users.id&apos;))</span><br><span class="line">    cate_id = Column(Integer, ForeignKey(&apos;categories.id&apos;))</span><br><span class="line">    tags = relationship(&apos;Tag&apos;, secondary=&apos;article_tag&apos;, backref=&apos;articles&apos;)</span><br><span class="line"></span><br><span class="line">    def __repr__(self):</span><br><span class="line">        return &quot;&#123;&#125;(&#123;&#125;)&quot;.format(self.__class__.__name__, self.title)</span><br><span class="line"></span><br><span class="line">class Category(Base):</span><br><span class="line">    __tablename__ = &apos;categories&apos;</span><br><span class="line"></span><br><span class="line">    id = Column(Integer, primary_key=True)</span><br><span class="line">    name = Column(String(64), nullable=False, index=True)</span><br><span class="line">    articles = relationship(&apos;Article&apos;, backref=&apos;category&apos;)</span><br><span class="line"></span><br><span class="line">    def __repr__(self):</span><br><span class="line">        return &apos;&#123;&#125;(&#123;&#125;)&apos;.format(self.__class__.__name__, self.name)</span><br><span class="line"></span><br><span class="line">article_tag = Table(</span><br><span class="line">    &apos;article_tag&apos;, Base.metadata,</span><br><span class="line">    Column(&apos;article_id&apos;, Integer, ForeignKey(&apos;article.id&apos;)),</span><br><span class="line">    Column(&apos;tag_id&apos;, Integer, ForeignKey(&apos;tags.id&apos;)),</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">class Tag(Base):</span><br><span class="line">    __tablename__ = &apos;tags&apos;</span><br><span class="line"></span><br><span class="line">    id = Column(Integer, primary_key=True)</span><br><span class="line">    name = Column(String(64), nullable=False, index=True)</span><br><span class="line"></span><br><span class="line">    def __repr__(self):</span><br><span class="line">        return &apos;&#123;&#125;(&#123;&#125;)&apos;.format(self.__class__.__name__, self.name)</span><br><span class="line"></span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">    Base.metadata.create_al(engine)</span><br><span class="line"></span><br><span class="line">    faker = Factory.create()</span><br><span class="line">    Session = sessionmaker(bind=engine)</span><br><span class="line">    session = Session()</span><br><span class="line"></span><br><span class="line">    faker_users = [User(username=faker.name(),password=faker.word(),email=faker.email()) for i in range(10)]</span><br><span class="line">    session.add_all(faker_usres)</span><br><span class="line"></span><br><span class="line">    faker_categories = [Category(name=faker.word()) for i in range(5)]</span><br><span class="line">    session.add_all(faker_categories)</span><br><span class="line"></span><br><span class="line">    faker_tags = [Tag(name=faker.word()) for i in range(20)]</span><br><span class="line">    session.add_all(faker_tags)</span><br><span class="line"></span><br><span class="line">    for i in range(100):</span><br><span class="line">        article = Article(title=faker.sentence(), content=&apos; &apos;.join(faker.sentence(nb=random.rendint(10, 20))), author=random.choice(faker_users), category=random.choice(faker_categories))</span><br><span class="line">        for tag in random.sample(faker_tags, randon.randint(2, 5)):</span><br><span class="line">            article.tags.append(tag)</span><br><span class="line">        session.add(article)</span><br><span class="line"></span><br><span class="line">    session.commit()</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2017/04/01/Building-RESTful-APIs-with-Tornado/" rel="next" title="Building RESTful APIs with Tornado">
+          Building RESTful APIs with Tornado
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2017/05/22/Understanding-Django-s-Cached-property-Decorator/" rel="prev" title="Understanding Django&#39;s Cached_property Decorator">
+            Understanding Django&#39;s Cached_property Decorator
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2017/04/03/SQLAlchemy-Example-Create-Database-CURD-Faker/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

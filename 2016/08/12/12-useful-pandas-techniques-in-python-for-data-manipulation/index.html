@@ -1,0 +1,493 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="Tony Tan">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>12 Useful Pandas Techniques in Python for Data Manipulation [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        12 Useful Pandas Techniques in Python for Data Manipulation
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2016-08-11T16:00:00.000Z">
+        2016-08-12
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p><em>12 Useful Pandas Techniques in Python for Data Manipulation</em></p>
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>Python is fast becoming the preferred language for data scientists – and for good reasons. It provides the larger ecosystem of a programming language and the depth of good scientific computation libraries. If you are starting to learn Python, have a look at learning path on Python.</p>
+<p>Among its scientific computation libraries, I found Pandas to be the most useful for data science operations. Pandas, along with Scikit-learn provides almost the entire stack needed by a data scientist. This article focuses on providing 12 ways for data manipulation in Python. I’ve also shared some tips &amp; tricks which will allow you to work faster.</p>
+<p>I would recommend that you look at the codes for data exploration before going ahead. To help you understand better, I’ve taken a data set to perform these operations and manipulations.</p>
+<p>Data Set: I’ve used the data set of Loan Prediction problem. Download the data set and get started.</p>
+<h1 id="Let’s-get-started"><a href="#Let’s-get-started" class="headerlink" title="Let’s get started"></a>Let’s get started</h1><p>I’ll start by importing modules and loading the data set into Python environment:</p>
+<pre><code>import pandas as pd
+import numpy as np
+data = pd.read_csv(&quot;train.csv&quot;, index_col=&quot;Loan_ID&quot;)
+</code></pre><h1 id="1-–-Boolean-Indexing"><a href="#1-–-Boolean-Indexing" class="headerlink" title="1 – Boolean Indexing"></a>1 – Boolean Indexing</h1><p>What do you do, if you want to filter values of a column based on conditions from another set of columns? For instance, we want a list of all females who are not graduate and got a loan. Boolean indexing can help here. You can use the following code:</p>
+<pre><code>data.loc[(data[&quot;Gender&quot;]==&quot;Female&quot;) &amp; (data[&quot;Education&quot;]==&quot;Not Graduate&quot;) &amp; (data[&quot;Loan_Status&quot;]==&quot;Y&quot;), [&quot;Gender&quot;,&quot;Education&quot;,&quot;Loan_Status&quot;]]
+</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/1.-boolean-indexing-217x300.png" alt></p>
+<p>Read More: <a href="http://pandas.pydata.org/pandas-docs/stable/indexing.html" target="_blank" rel="noopener">Pandas Selecting and Indexing</a></p>
+<h1 id="2-–-Apply-Function"><a href="#2-–-Apply-Function" class="headerlink" title="2 – Apply Function"></a>2 – Apply Function</h1><p>It is one of the commonly used functions for playing with data and creating new variables. Apply returns some value after passing each row/column of a data frame with some function. The function can be both default or user-defined. For instance, here it can be used to find the #missing values in each row and column.</p>
+<p>Create a new function:</p>
+<pre><code>def num_missing(x):
+    return sum(x.isnull())
+</code></pre><p>Applying per column:</p>
+<pre><code>print &quot;Missing values per column:&quot;
+print data.apply(num_missing, axis=0) #axis=0 defines that function is to be applied on each column
+</code></pre><p>Applying per row:</p>
+<pre><code>print &quot;\nMissing values per row:&quot;
+print data.apply(num_missing, axis=1).head() #axis=1 defines that function is to be applied on each row
+</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/3-apply-161x300.png" alt></p>
+<p>Thus we get the desired result.</p>
+<p>Note: head() function is used in second output because it contains many rows.</p>
+<p>Read More: <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.apply.html#pandas.DataFrame.apply" target="_blank" rel="noopener">Pandas Reference (apply)</a></p>
+<h1 id="3-–-Imputing-missing-files"><a href="#3-–-Imputing-missing-files" class="headerlink" title="3 – Imputing missing files"></a>3 – Imputing missing files</h1><p>‘fillna()’ does it in one go. It is used for updating missing values with the overall mean/mode/median of the column. Let’s impute the ‘Gender’, ‘Married’ and ‘Self_Employed’ columns with their respective modes.</p>
+<p>First we import a function to determine the mode</p>
+<pre><code>from scipy.stats import mode
+mode(data[&apos;Gender&apos;])
+</code></pre><p>Output: <em>ModeResult(mode=array([‘Male’], dtype=object), count=array([489]))</em></p>
+<p>This returns both mode and count. Remember that mode can be an array as there can be multiple values with high frequency. We will take the first one by default always using:</p>
+<pre><code>mode(data[&apos;Gender&apos;]).mode[0]
+</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/4.2-mode2.png" alt></p>
+<p>Now we can fill the missing values and check using technique #2.</p>
+<p>Impute the values:</p>
+<pre><code>data[&apos;Gender&apos;].fillna(mode(data[&apos;Gender&apos;]).mode[0], inplace=True)
+data[&apos;Married&apos;].fillna(mode(data[&apos;Married&apos;]).mode[0], inplace=True)
+data[&apos;Self_Employed&apos;].fillna(mode(data[&apos;Self_Employed&apos;]).mode[0], inplace=True)
+</code></pre><p>Now check the #missing values again to confirm:</p>
+<pre><code>print data.apply(num_missing, axis=0)
+</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/4.3-after-impute.png" alt></p>
+<p>Hence, it is confirmed that missing values are imputed. Please note that this is the most primitive form of imputation. Other sophisticated techniques include modeling the missing values, using grouped averages (mean/mode/median). I’ll cover that part in my next articles.</p>
+<p>Read More: <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.fillna.html#pandas.DataFrame.fillna" target="_blank" rel="noopener">Pandas Reference (fillna)</a></p>
+<h1 id="4-–-Pivot-Table"><a href="#4-–-Pivot-Table" class="headerlink" title="4 – Pivot Table"></a>4 – Pivot Table</h1><p>Pandas can be used to create MS Excel style pivot tables. For instance, in this case, a key column is “LoanAmount” which has missing values. We can impute it using mean amount of each ‘Gender’, ‘Married’ and ‘Self_Employed’ group. The mean ‘LoanAmount’ of each group can be determined as:</p>
+<p>Determine pivot table</p>
+<pre><code>impute_grps = data.pivot_table(values=[&quot;LoanAmount&quot;], index=[&quot;Gender&quot;,&quot;Married&quot;,&quot;Self_Employed&quot;], aggfunc=np.mean)
+print impute_grps
+</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/5.-pivot-table-262x141.png" alt></p>
+<p>More: <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.pivot_table.html#pandas.DataFrame.pivot_table" target="_blank" rel="noopener">Pandas Reference (Pivot Table)</a></p>
+<h1 id="5-–-Multi-Indexing"><a href="#5-–-Multi-Indexing" class="headerlink" title="5 – Multi-Indexing"></a>5 – Multi-Indexing</h1><p>If you notice the output of step #3, it has a strange property. Each index is made up of a combination of 3 values. This is called Multi-Indexing. It helps in performing operations really fast.</p>
+<p>Continuing the example from #3, we have the values for each group but they have not been imputed.<br>This can be done using the various techniques learned till now.</p>
+<p>iterate only through rows with missing LoanAmount</p>
+<pre>
+    for i,row in data.loc[data['LoanAmount'].isnull(),:].iterrows():
+        ind = tuple([row['Gender'],row['Married'],row['Self_Employed']])
+        data.loc[i,'LoanAmount'] = impute_grps.loc[ind].values[0]
+</pre>
+
+
+<p>Now check the #missing values again to confirm:</p>
+<pre><code>print data.apply(num_missing, axis=0)
+</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/6.-multi-indexing.png" alt></p>
+<p>Note:</p>
+<p>1.Multi-index requires tuple for defining groups of indices in loc statement. This a tuple used in function.<br>2.The .values[0] suffix is required because, by default a series element is returned which has an index not matching with that of the dataframe. In this case, a direct assignment gives an error.</p>
+<h1 id="6-Crosstab"><a href="#6-Crosstab" class="headerlink" title="6. Crosstab"></a>6. Crosstab</h1><p>This function is used to get an initial “feel” (view) of the data. Here, we can validate some basic hypothesis. For instance, in this case, “Credit_History” is expected to affect the loan status significantly. This can be tested using cross-tabulation as shown below:</p>
+<pre><code>pd.crosstab(data[&quot;Credit_History&quot;],data[&quot;Loan_Status&quot;],margins=True)
+</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/7.1-abs-crosstab.png" alt></p>
+<p>These are absolute numbers. But, percentages can be more intuitive in making some quick insights. We can do this using the apply function:</p>
+<pre><code>def percConvert(ser):
+    return ser/float(ser[-1])
+    pd.crosstab(data[&quot;Credit_History&quot;],data[&quot;Loan_Status&quot;],margins=True).apply(percConvert, axis=1)
+</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/7.2-perc-crosstab.png" alt></p>
+<p>Now, it is evident that people with a credit history have much higher chances of getting a loan as 80% people with credit history got a loan as compared to only 9% without credit history.</p>
+<p>But that’s not it. It tells an interesting story. Since I know that having a credit history is super important, what if I predict loan status to be Y for ones with credit history and N otherwise. Surprisingly, we’ll be right 82+378=460 times out of 614 which is a whopping 75%!</p>
+<p>I won’t blame you if you’re wondering why the hell do we need statistical models. But trust me, increasing the accuracy by even 0.001% beyond this mark is a challenging task. Would you take this challenge?</p>
+<p>Note: 75% is on train set. The test set will be slightly different but close. Also, I hope this gives some intuition into why even a 0.05% increase in accuracy can result in jump of 500 ranks on the Kaggle leaderboard.</p>
+<p>Read More: <a href="http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.crosstab.html" target="_blank" rel="noopener">Pandas Reference (crosstab)</a></p>
+<h1 id="7-–-Merge-DataFrames"><a href="#7-–-Merge-DataFrames" class="headerlink" title="7 – Merge DataFrames"></a>7 – Merge DataFrames</h1><p>Merging dataframes become essential when we have information coming from different sources to be collated. Consider a hypothetical case where the average property rates (INR per sq meters) is available for different property types. Let’s define a dataframe as:</p>
+<pre><code>prop_rates = pd.DataFrame([1000, 5000, 12000], index=[&apos;Rural&apos;,&apos;Semiurban&apos;,&apos;Urban&apos;],columns=[&apos;rates&apos;])
+prop_rates
+</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/8.1-rates.png" alt></p>
+<p>Now we can merge this information with the original dataframe as:</p>
+<pre><code>data_merged = data.merge(right=prop_rates, how=&apos;inner&apos;,left_on=&apos;Property_Area&apos;,right_index=True, sort=False)
+data_merged.pivot_table(values=&apos;Credit_History&apos;,index=[&apos;Property_Area&apos;,&apos;rates&apos;], aggfunc=len)
+</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/8.2-pivot.png" alt></p>
+<p>The pivot table validates successful merge operation. Note that the ‘values’ argument is irrelevant here because we are simply counting the values.</p>
+<p>ReadMore: <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.merge.html#pandas.DataFrame.merge" target="_blank" rel="noopener">Pandas Reference (merge)</a></p>
+<h1 id="8-–-Sorting-DataFrames"><a href="#8-–-Sorting-DataFrames" class="headerlink" title="8 – Sorting DataFrames"></a>8 – Sorting DataFrames</h1><p>Pandas allow easy sorting based on multiple columns. This can be done as:</p>
+<pre><code>data_sorted = data.sort_values([&apos;ApplicantIncome&apos;,&apos;CoapplicantIncome&apos;], ascending=False)
+data_sorted[[&apos;ApplicantIncome&apos;,&apos;CoapplicantIncome&apos;]].head(10)
+</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/9.-sort-300x295.png" alt></p>
+<p>Note: Pandas “sort” function is now deprecated. We should use “sort_values” instead.</p>
+<p>More: <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.sort_values.html#pandas.DataFrame.sort_values" target="_blank" rel="noopener">Pandas Reference (sort_values)</a></p>
+<h1 id="9-–-Plotting-Boxplot-amp-Histogram"><a href="#9-–-Plotting-Boxplot-amp-Histogram" class="headerlink" title="9 – Plotting (Boxplot &amp; Histogram)"></a>9 – Plotting (Boxplot &amp; Histogram)</h1><p>Many of you might be unaware that boxplots and histograms can be directly plotted in Pandas and calling matplotlib separately is not necessary. It’s just a 1-line command. For instance, if we want to compare the distribution of ApplicantIncome by Loan_Status:</p>
+<pre><code>import matplotlib.pyplot as plt
+%matplotlib inline
+data.boxplot(column=&quot;ApplicantIncome&quot;,by=&quot;Loan_Status&quot;)
+</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/10.1-boxplot-300x215.png" alt></p>
+<pre><code>data.hist(column=&quot;ApplicantIncome&quot;,by=&quot;Loan_Status&quot;,bins=30)
+</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/10.2-hist-300x217.png" alt></p>
+<p>This shows that income is not a big deciding factor on its own as there is no appreciable difference between the people who received and were denied the loan.</p>
+<p>Read More: <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.hist.html#pandas.DataFrame.hist" target="_blank" rel="noopener">Pandas Reference (hist)</a>|<a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.boxplot.html#pandas.DataFrame.boxplot" target="_blank" rel="noopener"> Pandas Reference (boxplot)</a></p>
+<h1 id="10-–-Cut-function-for-binning"><a href="#10-–-Cut-function-for-binning" class="headerlink" title="10 – Cut function for binning"></a>10 – Cut function for binning</h1><p>Sometimes numerical values make more sense if clustered together. For example, if we’re trying to model traffic (#cars on road) with time of the day (minutes). The exact minute of an hour might not be that relevant for predicting traffic as compared to actual period of the day like “Morning”, “Afternoon”, “Evening”, “Night”, “Late Night”. Modeling traffic this way will be more intuitive and will avoid overfitting.</p>
+<p>Here we define a simple function which can be re-used for binning any variable fairly easily.</p>
+<p>Binning:</p>
+<pre><code>def binning(col, cut_points, labels=None):
+    #Define min and max values:
+    minval = col.min()
+    maxval = col.max()
+
+#create list by adding min and max to cut_points
+break_points = [minval] + cut_points + [maxval]
+
+#if no labels provided, use default labels 0 ... (n-1)
+if not labels:
+    labels = range(len(cut_points)+1)
+
+#Binning using cut function of pandas
+colBin = pd.cut(col,bins=break_points,labels=labels,include_lowest=True)
+return colBin
+
+#Binning age:
+cut_points = [90,140,190]
+labels = [&quot;low&quot;,&quot;medium&quot;,&quot;high&quot;,&quot;very high&quot;]
+data[&quot;LoanAmount_Bin&quot;] = binning(data[&quot;LoanAmount&quot;], cut_points, labels)
+print pd.value_counts(data[&quot;LoanAmount_Bin&quot;], sort=False)
+</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2016/01/eg12-257x144.png" alt></p>
+<p>Read More: <a href="http://pandas.pydata.org/pandas-docs/version/0.17.1/generated/pandas.cut.html" target="_blank" rel="noopener">Pandas Reference (cut)</a></p>
+<h1 id="11-–-Coding-nominal-data"><a href="#11-–-Coding-nominal-data" class="headerlink" title="11 – Coding nominal data"></a>11 – Coding nominal data</h1><p>Often, we find a case where we’ve to modify the categories of a nominal variable. This can be due to various reasons:</p>
+<p>1.Some algorithms (like Logistic Regression) require all inputs to be numeric. So nominal variables are mostly coded as 0, 1….(n-1)<br>2.Sometimes a category might be represented in 2 ways. For e.g. temperature might be recorded as “High”, “Medium”, “Low”, “H”, “low”. Here, both “High” and “H” refer to same category. Similarly, in “Low” and “low” there is only a difference of case. But, python would read them as different levels.<br>3.Some categories might have very low frequencies and its generally a good idea to combine them.</p>
+<p>Here I’ve defined a generic function which takes in input as a dictionary and codes the values using ‘replace’ function in Pandas.</p>
+<pre><code>#Define a generic function using Pandas replace function
+def coding(col, codeDict):
+    colCoded = pd.Series(col, copy=True)
+    for key, value in codeDict.items():
+        colCoded.replace(key, value, inplace=True)
+    return colCoded
+
+#Coding LoanStatus as Y=1, N=0:
+print &apos;Before Coding:&apos;
+print pd.value_counts(data[&quot;Loan_Status&quot;])
+data[&quot;Loan_Status_Coded&quot;] = coding(data[&quot;Loan_Status&quot;], {&apos;N&apos;:0,&apos;Y&apos;:1})
+print &apos;\nAfter Coding:&apos;
+print pd.value_counts(data[&quot;Loan_Status_Coded&quot;])
+</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/12.-code.png" alt></p>
+<p>Similar counts before and after proves the coding.</p>
+<p>Read More: <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.replace.html#pandas.DataFrame.replace" target="_blank" rel="noopener">Pandas Reference (replace)</a></p>
+<h1 id="12-–-Iterating-over-rows-of-a-dataframe"><a href="#12-–-Iterating-over-rows-of-a-dataframe" class="headerlink" title="12 – Iterating over rows of a dataframe"></a>12 – Iterating over rows of a dataframe</h1><p>This is not a frequently used operation. Still, you don’t want to get stuck. Right? At times you may need to iterate through all rows using a for loop. For instance, one common problem we face is the incorrect treatment of variables in Python. This generally happens when:</p>
+<p>1.Nominal variables with numeric categories are treated as numerical.<br>2.Numeric variables with characters entered in one of the rows (due to a data error) are considered categorical.</p>
+<p>So it’s generally a good idea to manually define the column types. If we check the data types of all columns:</p>
+<pre><code>#Check current type:
+data.dtypes
+</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/12/2.1-initial-type.png" alt></p>
+<p>Here we see that Credit_History is a nominal variable but appearing as float. A good way to tackle such issues is to create a csv file with column names and types. This way, we can make a generic function to read the file and assign column data types. For instance, here I have created a csv file datatypes.csv.</p>
+<pre><code>#Load the file:
+colTypes = pd.read_csv(&apos;datatypes.csv&apos;)
+print colTypes
+</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2016/01/2.2-file-content-300x227.png" alt></p>
+<p>After loading this file, we can iterate through each row and assign the datatype using column ‘type’ to the variable name defined in the ‘feature’ column.</p>
+<pre><code>#Iterate through each row and assign variable type.
+#Note: astype is used to assign types
+
+for i, row in colTypes.iterrows():  #i: dataframe index; row: each row in series format
+    if row[&apos;type&apos;]==&quot;categorical&quot;:
+        data[row[&apos;feature&apos;]]=data[row[&apos;feature&apos;]].astype(np.object)
+    elif row[&apos;type&apos;]==&quot;continuous&quot;:
+        data[row[&apos;feature&apos;]]=data[row[&apos;feature&apos;]].astype(np.float)
+print data.dtypes
+</code></pre><p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2016/01/2.3-after-changing-300x276.png" alt></p>
+<p>Now the credit history column is modified to ‘object’ type which is used for representing nominal variables in Pandas.</p>
+<p>Read More: <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.iterrows.html#pandas.DataFrame.iterrows" target="_blank" rel="noopener">Pandas Reference (iterrows)</a></p>
+<h1 id="End-Notes"><a href="#End-Notes" class="headerlink" title="End Notes"></a>End Notes</h1><p>In this article, we covered various functions of Pandas which can make our life easy while performing data exploration and feature engineering. Also, we defined some generic functions which can be reused for achieving similar objective on different datasets.</p>
+<p>Also See: If you have any doubts pertaining to Pandas or Python in general, feel free to discuss with us.</p>
+<p>Did you find the article useful? Do you use some better (easier/faster) techniques for performing the tasks discussed above? Do you think there are better alternatives to Pandas in Python? We’ll be glad if you share your thoughts as comments below.</p>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Introduction"><span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Let’s-get-started"><span class="toc-text">Let’s get started</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-–-Boolean-Indexing"><span class="toc-text">1 – Boolean Indexing</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-–-Apply-Function"><span class="toc-text">2 – Apply Function</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-–-Imputing-missing-files"><span class="toc-text">3 – Imputing missing files</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-–-Pivot-Table"><span class="toc-text">4 – Pivot Table</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-–-Multi-Indexing"><span class="toc-text">5 – Multi-Indexing</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-Crosstab"><span class="toc-text">6. Crosstab</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-–-Merge-DataFrames"><span class="toc-text">7 – Merge DataFrames</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#8-–-Sorting-DataFrames"><span class="toc-text">8 – Sorting DataFrames</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#9-–-Plotting-Boxplot-amp-Histogram"><span class="toc-text">9 – Plotting (Boxplot &amp; Histogram)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#10-–-Cut-function-for-binning"><span class="toc-text">10 – Cut function for binning</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#11-–-Coding-nominal-data"><span class="toc-text">11 – Coding nominal data</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#12-–-Iterating-over-rows-of-a-dataframe"><span class="toc-text">12 – Iterating over rows of a dataframe</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#End-Notes"><span class="toc-text">End Notes</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2016/08/01/set-up-data-in-custom-django-context-processors-to-access-on-all-django-templates/" rel="next" title="Set up data in custom Django context processors to access on all Django templates">
+          Set up data in custom Django context processors to access on all Django templates
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2016/09/03/how-to-find-some-characters-in-all-files-in-linux/" rel="prev" title="How to find some characters in all files in linux">
+            How to find some characters in all files in linux
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2016/08/12/12-useful-pandas-techniques-in-python-for-data-manipulation/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

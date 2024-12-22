@@ -1,0 +1,358 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="python,">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>Python+Supervisor+Gunicorn+Nginx部署 [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        Python+Supervisor+Gunicorn+Nginx部署
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2022-01-17T02:27:52.000Z">
+        2022-01-17
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <h2 id="删除nano"><a href="#删除nano" class="headerlink" title="删除nano"></a>删除nano</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在终端输入删除nano编辑器的命令：</span></span><br><span class="line">sudo apt-get remove nano</span><br></pre></td></tr></table></figure>
+<h2 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo adduser xxxxxx</span><br><span class="line"></span><br><span class="line">chmod -R 640 /etc/sudoers</span><br><span class="line">sudo vim /etc/sudoers</span><br><span class="line">chmod -R 440 /etc/sudoers</span><br><span class="line"></span><br><span class="line">或者使用</span><br><span class="line"></span><br><span class="line">sudo visudo</span><br></pre></td></tr></table></figure>
+<p>退出并用<code>xxxxxx</code>登录</p>
+<h2 id="安装宝塔"><a href="#安装宝塔" class="headerlink" title="安装宝塔"></a>安装宝塔</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O install.sh https://download.bt.cn/install/install-ubuntu_6.0.sh &amp;&amp; sudo bash install.sh ed8484bec</span><br></pre></td></tr></table></figure>
+<h2 id="创建代码仓库密钥"><a href="#创建代码仓库密钥" class="headerlink" title="创建代码仓库密钥"></a>创建代码仓库密钥</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -b 2048 -C <span class="string">"xxxxxx@example.com"</span></span><br><span class="line">cat .ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+<h2 id="下载-安装-配置-conda"><a href="#下载-安装-配置-conda" class="headerlink" title="下载/安装/配置 conda"></a>下载/安装/配置 conda</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh</span><br><span class="line">bash Miniconda3-py310_22.11.1-1-Linux-x86_64.sh</span><br><span class="line"><span class="built_in">source</span> ../.bashrc</span><br><span class="line">conda create -n 环境名称 python=3.x</span><br></pre></td></tr></table></figure>
+<h2 id="pip修改源"><a href="#pip修改源" class="headerlink" title="pip修改源"></a>pip修改源</h2><h3 id="临时使用"><a href="#临时使用" class="headerlink" title="临时使用"></a>临时使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -r requestment.txt -i https://pypi.tuna.tsinghua.edu.cn/simple/</span><br></pre></td></tr></table></figure>
+<h3 id="将pip源设置为默认源"><a href="#将pip源设置为默认源" class="headerlink" title="将pip源设置为默认源"></a>将pip源设置为默认源</h3><p>我们可以通过在用户的Home目录下创建一个pip目录，然后在pip目录下创建一个pip.conf文件来实现将新源设置为默认源：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/.pip</span><br><span class="line">echo &quot;</span><br><span class="line">[global]</span><br><span class="line">index-url = https://mirrors.aliyun.com/pypi/simple/</span><br><span class="line">&quot; &gt; ~/.pip/pip.conf</span><br></pre></td></tr></table></figure></p>
+<p>以上命令将新源写到了pip.conf中，在下一次使用pip的时候，就会使用新源了。我们可以通过以下命令来验证是否设置成功：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">more ~/.pip/pip.conf</span><br></pre></td></tr></table></figure></p>
+<h2 id="fastapi-安装"><a href="#fastapi-安装" class="headerlink" title="fastapi 安装"></a>fastapi 安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /www/wwwroot/voucher_shubi_apis/</span><br><span class="line">pip install <span class="string">"fastapi[all]"</span></span><br><span class="line">pip install gunicorn</span><br><span class="line">pip install pyopenssl</span><br><span class="line">pip install python-jose[cryptography]</span><br><span class="line">pip install uvicorn[standard]</span><br></pre></td></tr></table></figure>
+<h2 id="其它运营项目安装"><a href="#其它运营项目安装" class="headerlink" title="其它运营项目安装"></a>其它运营项目安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install supervisor</span><br><span class="line">sudo apt-get install redis-server</span><br><span class="line">sudo apt-get install gunicorn</span><br></pre></td></tr></table></figure>
+<h2 id="Supervisor-配置"><a href="#Supervisor-配置" class="headerlink" title="Supervisor 配置"></a>Supervisor 配置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/supervisor/conf.d/voucher.conf</span><br><span class="line"></span><br><span class="line">; 应用部署设置名称</span><br><span class="line">[program: xxx_8000]</span><br><span class="line">; fastapi使用gunicorn + uvicorn组合运行</span><br><span class="line">command=/home/tonytan/miniconda3/envs/fastapi/bin/gunicorn main:app -w 4 --worker-class uvicorn.workers.UvicornWorker -b 0.0.0.0:8000</span><br><span class="line">; django使用gunicorn运行</span><br><span class="line">command=/home/tonytan/miniconda3/envs/voucher/bin/gunicorn -w 4 -b 0.0.0.0:8000 xxxx_admin.wsgi</span><br><span class="line">; django使用gunicorn + uvicorn组合运行</span><br><span class="line">command=/home/tonytan/miniconda3/envs/voucher/bin/gunicorn -w 4 -b 0.0.0.0:8000 xxxx_admin.asgi:application -k uvicorn.workers.UvicornWorker</span><br><span class="line">; 使用gunicorn配置文件调用来运行</span><br><span class="line">command=/home/tonytan/miniconda3/envs/fastapi/bin/gunicorn main:app -c gunicorn.conf</span><br><span class="line">directory=/www/wwwroot/activity_voucher_apis</span><br><span class="line">user = root</span><br><span class="line">redirect_stderr=true</span><br><span class="line">stdout_logfile = /var/log/supervisor/stdout.log</span><br><span class="line">stderr_logfile = /var/log/supervisor/stderr.log</span><br><span class="line">environment=LANG=en_US.UTF-8,LC_ALL=en_US.UTF-8</span><br><span class="line"></span><br><span class="line">; huey异步任务部署</span><br><span class="line">[program:voucher_huey]</span><br><span class="line">command=/home/tonytan/miniconda3/envs/voucher/bin/python3 manage.py run_huey -w 4</span><br><span class="line">directory = /www/wwwroot/xxxx_admin</span><br><span class="line">user = root</span><br><span class="line">redirect_stderr=true</span><br><span class="line">stdout_logfile = /var/log/supervisor/voucher_stdout.log</span><br><span class="line">stderr_logfile = /var/log/supervisor/voucher_stderr.log</span><br><span class="line">environment=DOMAIN=pro</span><br></pre></td></tr></table></figure>
+<h2 id="gunicorn-conf"><a href="#gunicorn-conf" class="headerlink" title="gunicorn.conf"></a>gunicorn.conf</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># 并行工作进程数</span><br><span class="line">workers = 4</span><br><span class="line"># 指定每个工作者的线程数</span><br><span class="line">threads = 2</span><br><span class="line"># 监听内网端口5000</span><br><span class="line">bind = &apos;127.0.0.1:5000&apos;</span><br><span class="line"># 设置守护进程,将进程交给supervisor管理</span><br><span class="line">daemon = &apos;false&apos;</span><br><span class="line"># 工作模式协程</span><br><span class="line">worker_class = &apos;gevent&apos;</span><br><span class="line"># 设置最大并发量</span><br><span class="line">worker_connections = 2000</span><br><span class="line"># 设置进程文件目录</span><br><span class="line">pidfile = &apos;/var/run/gunicorn.pid&apos;</span><br><span class="line"># 设置访问日志和错误信息日志路径</span><br><span class="line">accesslog = &apos;/var/log/gunicorn_acess.log&apos;</span><br><span class="line">errorlog = &apos;/var/log/gunicorn_error.log&apos;</span><br><span class="line"># 设置日志记录水平</span><br><span class="line">loglevel = &apos;warning&apos;</span><br></pre></td></tr></table></figure>
+<h2 id="Nginx配置"><a href="#Nginx配置" class="headerlink" title="Nginx配置"></a>Nginx配置</h2><p>wenzhou.trust-will.com</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">upstream apis &#123;</span><br><span class="line">    least_conn;</span><br><span class="line">    server 127.0.0.1:8000;</span><br><span class="line">    server 127.0.0.1:8001;</span><br><span class="line">    server 127.0.0.1:8002;</span><br><span class="line">    server 127.0.0.1:8003;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location / &#123;</span><br><span class="line">        proxy_pass http://apis;</span><br><span class="line">        proxy_set_header Host $host;</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header X-Forwarded-Proto $scheme;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="文档配置"><a href="#文档配置" class="headerlink" title="文档配置"></a>文档配置</h2><h3 id="Gitbook安装-django"><a href="#Gitbook安装-django" class="headerlink" title="Gitbook安装(django)"></a>Gitbook安装(django)</h3><p>npm 版本尽量不要选择最新版，按照管理工具 n</p>
+<p>命令行输入 <code>n</code>, 列出当前有的版本，选择一个不是最新的</p>
+<p>初始化<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gitbook init</span><br></pre></td></tr></table></figure></p>
+<h3 id="docs-不能访问问题-fastapi"><a href="#docs-不能访问问题-fastapi" class="headerlink" title="docs 不能访问问题(fastapi)"></a>docs 不能访问问题(fastapi)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /home/tonytan/miniconda3/envs/fastapi/lib/python3.9/site-packages/fastapi/openapi/docs.py</span><br><span class="line"></span><br><span class="line">注释20·22行</span><br><span class="line">增加：</span><br><span class="line">swagger_js_url: str = &quot;/static/swagger-ui/swagger-ui-bundle.js&quot;,</span><br><span class="line">swagger_css_url: str = &quot;/static/swagger-ui/swagger-ui.css&quot;,</span><br><span class="line">swagger_favicon_url: str = &quot;/static/swagger-ui/favicon-32x32.png&quot;,</span><br><span class="line"></span><br><span class="line">注释82-83行</span><br><span class="line">增加：</span><br><span class="line">redoc_js_url: str = &quot;/static/redoc/bundles/redoc.standalone.js&quot;,</span><br><span class="line">redoc_favicon_url: str = &quot;/static/redoc/favicon.png&quot;,</span><br></pre></td></tr></table></figure>
+<h3 id="文档更新同步-fastapi"><a href="#文档更新同步-fastapi" class="headerlink" title="文档更新同步(fastapi)"></a>文档更新同步(fastapi)</h3><ul>
+<li>本地运行程序</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uvicorn main:app --reload</span><br></pre></td></tr></table></figure>
+<ul>
+<li>浏览器打开 <code>127.0.0.1:800/openapi.json</code></li>
+<li>将文件另存到 <code>./static/openapi.json</code></li>
+<li>git更新提交</li>
+</ul>
+<h2 id="admin-登录成功跳转报CSRF错误-django"><a href="#admin-登录成功跳转报CSRF错误-django" class="headerlink" title="admin 登录成功跳转报CSRF错误(django)"></a>admin 登录成功跳转报CSRF错误(django)</h2><ul>
+<li>seetings.py 中增加 <code>CSRF_TRUSTED_ORIGINS = [&#39;https://www.02405.com&#39;, &#39;https://02405.com&#39;]</code>, 主要要加<code>http</code>或<code>https</code>前缀</li>
+</ul>
+<h2 id="jwt报错"><a href="#jwt报错" class="headerlink" title="jwt报错"></a>jwt报错</h2><ul>
+<li>jwt和pyjwt冲突, 要卸载jwt</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># jwt卸载命令</span><br><span class="line">pip uninstall jwt</span><br><span class="line"></span><br><span class="line"># 保险起见，将PyJWT一同卸载</span><br><span class="line">pip uninstall PyJWT</span><br><span class="line"></span><br><span class="line"># 重新安装PyJWT</span><br><span class="line">pip install PyJWT</span><br></pre></td></tr></table></figure>
+<h2 id="针对django报错mysql得升级8的问题"><a href="#针对django报错mysql得升级8的问题" class="headerlink" title="针对django报错mysql得升级8的问题"></a>针对django报错mysql得升级8的问题</h2><blockquote>
+<p>Django提示mysq版本Q过低: django db. utils NotSuppotedError: MySQL 8 or later is required (found 5.7.26).<br>因为mysql5.7及以下是免费的数据库，8.0之后是收费的。使用免费的数据库更放心,使用上没有什么区别。这个提示只是Django的版本<br>检测提示，把它注释掉就好了。</p>
+</blockquote>
+<p>在pycharm中 搜索路径 :<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">django\db\backends\base\base.py   &quot;小提示pycharm中搜索快捷键为 Ctrl+shift+n 苹果系统除外&quot;</span><br></pre></td></tr></table></figure></p>
+<p>把如下代码注释了就行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def init_connection_state(self):</span><br><span class="line">	Initialize the database connection settings.</span><br><span class="line">	global RAN_ DB_ VERSION_ CHECK</span><br><span class="line">	if self.alias not in RAN_ DB_ VERSION_ CHECK:</span><br><span class="line">	# self.check_database_version_supported( )</span><br><span class="line">	RAN_DB_VERSION_CHECK.add(self.alias )</span><br><span class="line"></span><br><span class="line">    &quot;&quot;&quot;就注释一句话就行&quot;&quot;&quot;</span><br></pre></td></tr></table></figure></p>
+<p>之后就可以重新运行项目了</p>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#删除nano"><span class="toc-text">删除nano</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建用户"><span class="toc-text">创建用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装宝塔"><span class="toc-text">安装宝塔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建代码仓库密钥"><span class="toc-text">创建代码仓库密钥</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#下载-安装-配置-conda"><span class="toc-text">下载/安装/配置 conda</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pip修改源"><span class="toc-text">pip修改源</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#临时使用"><span class="toc-text">临时使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#将pip源设置为默认源"><span class="toc-text">将pip源设置为默认源</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fastapi-安装"><span class="toc-text">fastapi 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其它运营项目安装"><span class="toc-text">其它运营项目安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Supervisor-配置"><span class="toc-text">Supervisor 配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gunicorn-conf"><span class="toc-text">gunicorn.conf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nginx配置"><span class="toc-text">Nginx配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文档配置"><span class="toc-text">文档配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Gitbook安装-django"><span class="toc-text">Gitbook安装(django)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docs-不能访问问题-fastapi"><span class="toc-text">docs 不能访问问题(fastapi)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文档更新同步-fastapi"><span class="toc-text">文档更新同步(fastapi)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#admin-登录成功跳转报CSRF错误-django"><span class="toc-text">admin 登录成功跳转报CSRF错误(django)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jwt报错"><span class="toc-text">jwt报错</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#针对django报错mysql得升级8的问题"><span class="toc-text">针对django报错mysql得升级8的问题</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2021/12/23/Hexo插件无误，但无法生成index的解决办法/" rel="next" title="Hexo插件无误，但无法生成index的解决办法">
+          Hexo插件无误，但无法生成index的解决办法
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2022/05/21/PDF转图片/" rel="prev" title="PDF转图片">
+            PDF转图片
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2022/01/17/Python-Supervisor-Gunicorn-Nginx部署/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

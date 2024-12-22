@@ -1,0 +1,711 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="Tony Tan">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>Creating Volcano Maps with Pandas and the Matplotlib Basemap Toolkit [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        Creating Volcano Maps with Pandas and the Matplotlib Basemap Toolkit
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2016-05-08T16:00:00.000Z">
+        2016-05-09
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p><em>Creating Volcano Maps with Pandas and the Matplotlib Basemap Toolkit</em></p>
+<p>Transfer from <a href="http://ramiro.org/notebook/mapping-volcanoes/" target="_blank" rel="noopener">http://ramiro.org/notebook/mapping-volcanoes/</a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>This notebook walks through the process of creating maps of volcanoes with Python. The main steps involve getting, cleaning and finally mapping the data.</p>
+<p>All Python 3rd party packages used, except the Matplotlib Basemap Toolkit, are included with the Anaconda distribution and installed when you create an anaconda environment. To add Basemap simply run the command conda install basemap in your activated anaconda environment. To follow the code you should be familiar with Python, Pandas and Matplotlib.</p>
+<h2 id="Get-into-work"><a href="#Get-into-work" class="headerlink" title="Get into work"></a>Get into work</h2><p>First load all Python libraries required in this notebook.</p>
+<pre>
+%load_ext signature
+%matplotlib inline
+
+import json
+
+from lxml import html
+from mpl_toolkits.basemap import Basemap
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+chartinfo = 'Author: Ramiro Gomez - ramiro.org | Data: Volcano World - Volcano.oregonstate.edu'
+</pre>
+
+
+<h2 id="Get-the-volcano-data"><a href="#Get-the-volcano-data" class="headerlink" title="Get the volcano data"></a>Get the volcano data</h2><p>The data is downloaded and parsed using lxml. The Volcano World source page lists the volcano data in several HTML tables, which are each read into individual Pandas data frames that are appended to a list of data frames. Since the page also uses tables for layout the first four tables are omitted.</p>
+<pre>
+url ='http://volcano.oregonstate.edu/oldroot/volcanoes/alpha.html'
+xpath='//table'
+tree = html.parse(url)
+tables = tree.xpath(xpath)
+
+table_dfs = []
+for idx in range(4, len(tables)):
+    df = pd.read_html(html.tostring(tables[idx]), header=0)[0]
+        table_dfs.append(df)
+</pre>
+
+
+<p>The next step is to create a single data frame from the ones in the list using Pandas’ concat method. To create a new index with consecutive numbers the index_ignore parameter is set to True.</p>
+<pre>
+df_volc = pd.concat(table_dfs, ignore_index=True)
+</pre>
+
+
+<p>Let’s take a look at the data contained in the newly created data frame.</p>
+<pre>
+print(len(df_volc))
+df_volc.head(10)
+</pre>
+
+
+<pre>
+1560
+</pre>
+
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align:center">Name</th>
+<th style="text-align:center">Location</th>
+<th style="text-align:center">Type</th>
+<th style="text-align:center">Latitude</th>
+<th style="text-align:center">Longitude</th>
+<th style="text-align:center">Elevation (m)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td style="text-align:center">Abu</td>
+<td style="text-align:center">Honshu-Japan</td>
+<td style="text-align:center">Shield volcanoes</td>
+<td style="text-align:center">34.50</td>
+<td style="text-align:center">131.60</td>
+<td style="text-align:center">641</td>
+</tr>
+<tr>
+<td>1</td>
+<td style="text-align:center">Acamarachi</td>
+<td style="text-align:center">Chile-N</td>
+<td style="text-align:center">Stratovolcano</td>
+<td style="text-align:center">-23.30</td>
+<td style="text-align:center">-67.62</td>
+<td style="text-align:center">6046</td>
+</tr>
+<tr>
+<td>2</td>
+<td style="text-align:center">Acatenango</td>
+<td style="text-align:center">Guatemala</td>
+<td style="text-align:center">Stratovolcano</td>
+<td style="text-align:center">14.50</td>
+<td style="text-align:center">-90.88</td>
+<td style="text-align:center">3976</td>
+</tr>
+<tr>
+<td>3</td>
+<td style="text-align:center">Acigöl-Nevsehir</td>
+<td style="text-align:center">Turkey</td>
+<td style="text-align:center">Caldera</td>
+<td style="text-align:center">38.57</td>
+<td style="text-align:center">34.52</td>
+<td style="text-align:center">1689</td>
+</tr>
+<tr>
+<td>4</td>
+<td style="text-align:center">Adams</td>
+<td style="text-align:center">US-Washington</td>
+<td style="text-align:center">Stratovolcano</td>
+<td style="text-align:center">46.21</td>
+<td style="text-align:center">-121.49</td>
+<td style="text-align:center">3742</td>
+</tr>
+<tr>
+<td>5</td>
+<td style="text-align:center">Adams Seamount</td>
+<td style="text-align:center">Pacific-C</td>
+<td style="text-align:center">Submarine volcano</td>
+<td style="text-align:center">-25.37</td>
+<td style="text-align:center">-129.27</td>
+<td style="text-align:center">-39</td>
+</tr>
+<tr>
+<td>6</td>
+<td style="text-align:center">Adatara</td>
+<td style="text-align:center">Honshu-Japan</td>
+<td style="text-align:center">Stratovolcanoes</td>
+<td style="text-align:center">37.64</td>
+<td style="text-align:center">140.29</td>
+<td style="text-align:center">1718</td>
+</tr>
+<tr>
+<td>7</td>
+<td style="text-align:center">Adwa</td>
+<td style="text-align:center">Ethiopia</td>
+<td style="text-align:center">Stratovolcano</td>
+<td style="text-align:center">10.07</td>
+<td style="text-align:center">40.84</td>
+<td style="text-align:center">1733</td>
+</tr>
+<tr>
+<td>8</td>
+<td style="text-align:center">Afderà</td>
+<td style="text-align:center">Ethiopia</td>
+<td style="text-align:center">Stratovolcano</td>
+<td style="text-align:center">13.08</td>
+<td style="text-align:center">40.85</td>
+<td style="text-align:center">1295</td>
+</tr>
+<tr>
+<td>9    Agrigan</td>
+<td style="text-align:center">Mariana Is-C Pacific</td>
+<td style="text-align:center">Stratovolcano</td>
+<td style="text-align:center">18.77</td>
+<td style="text-align:center">145.67</td>
+<td style="text-align:center">965</td>
+</tr>
+</tbody>
+</table>
+<pre>
+df_volc['Type'].value_counts()
+</pre>
+
+
+<pre>
+Stratovolcano           601
+Shield volcano          121
+Stratovolcanoes         109
+Submarine volcano        95
+Volcanic field           82
+Caldera                  78
+Cinder cones             62
+Complex volcano          49
+Shield volcanoes         31
+Pyroclastic cones        30
+Lava domes               26
+Submarine volcano ?      19
+Volcanic  field          16
+Fissure vents            16
+Shield  volcano          16
+Submarine  volcano       16
+Maars                    12
+Compound volcano         10
+Cinder  cones            10
+Lava dome                 9
+Cinder cone               9
+Calderas                  9
+Pyroclastic cone          8
+Tuff cones                7
+Scoria cones              7
+Maar                      7
+Unknown                   6
+Complex  volcano          6
+Somma volcano             5
+Lava  domes               5
+                 ...
+Subglacial  volcano       2
+Lava cone                 2
+Explosion craters         2
+Fissure vent              2
+Fissure  vents            2
+Volcanic Landform         1
+Tuff  cone                1
+Lava  cone                1
+Compound  volcano         1
+Scoria  cones             1
+Lava Cone                 1
+Lava cones                1
+Lava Field                1
+Somma volcanoes           1
+Submarine  volcano ?      1
+Cinder Cone               1
+Flood  Basalt             1
+Flood Basalts             1
+Cone                      1
+Lava  dome                1
+Shield volcanoe           1
+Pyroclastic  cone         1
+Stratovolcano  ?          1
+Complex volcanoes         1
+Cones                     1
+Island Arc                1
+Tuff  rings               1
+Crater  rows              1
+Hydrothermal field        1
+Pumice cone               1
+dtype: int64
+</pre>
+
+
+<p>Looking at the output we see that a single type may be represented by diffent tokens, for example Stratvolcano and Stratvolcanoes refer to the same type. Sometimes entries contain question marks, indicating that the classification may not be correct.</p>
+<h2 id="Cleaning-the-data"><a href="#Cleaning-the-data" class="headerlink" title="Cleaning the data"></a>Cleaning the data</h2><p>The next step is to clean the data. I decided to take the classification for granted and simply remove question marks. Also, use one token for each type and change the alternative spellings accordingly. Finally remove superfluous whitespace and start all words with capital letter.</p>
+<pre>
+def cleanup_type(s):
+    if not isinstance(s, str):
+            return s
+    s = s.replace('?', '').replace('  ', ' ')
+    s = s.replace('volcanoes', 'volcano')
+    s = s.replace('volcanoe', 'Volcano')
+    s = s.replace('cones', 'cone')
+    s = s.replace('Calderas', 'Caldera')
+    return s.strip().title()
+
+df_volc['Type'] = df_volc['Type'].map(cleanup_type)
+df_volc['Type'].value_counts()
+</pre>
+
+
+<pre>
+Stratovolcano         713
+Shield Volcano        173
+Submarine Volcano     137
+Volcanic Field         98
+Caldera                87
+Cinder Cone            84
+Complex Volcano        56
+Pyroclastic Cone       43
+Lava Domes             31
+Fissure Vents          18
+Tuff Cone              14
+Maars                  12
+Compound Volcano       11
+Lava Dome              10
+Scoria Cone             8
+Pyroclastic Shield      8
+Maar                    7
+Unknown                 6
+Somma Volcano           6
+Subglacial Volcano      6
+Crater Rows             5
+Lava Cone               5
+Fumarole Field          3
+Pumice Cone             3
+Explosion Craters       2
+Volcanic Complex        2
+Fissure Vent            2
+Flood Basalt            1
+Cones                   1
+Hydrothermal Field      1
+Island Arc              1
+Cone                    1
+Volcanic Landform       1
+Lava Field              1
+Tuff Rings              1
+Flood Basalts           1
+dtype: int64
+</pre>
+
+
+<p>Now let’s get rid of incomplete records.</p>
+<pre>
+df_volc.dropna(inplace=True)
+len(df_volc)
+</pre>
+
+
+<pre>
+1513
+</pre>
+
+
+<h2 id="Creating-the-maps"><a href="#Creating-the-maps" class="headerlink" title="Creating the maps"></a>Creating the maps</h2><p>Volcanoes will be plotted as red triangles, whose sizes depend on the elevation values, that’s why I’ll only consider positive elevations, i. e. remove submarine volcanoes from the data frame.</p>
+<pre>
+df_volc = df_volc[df_volc['Elevation (m)'] >= 0]
+len(df_volc)
+</pre>
+
+
+<pre>
+1406
+</pre>
+
+
+<p>Next I define a function that will plot a volcano map for the given parameters. Lists of longitudes, latitudes and elevations, that all need to have the same lengths, are mandatory, the other parameters have defaults set.</p>
+<p>As mentioned above, sizes correspond to elevations, i. e. a higher volcano will be plotted as a larger triangle. To achieve this the 1st line in the plot_map function creates an array of bins and the 2nd line maps the individual elevation values to these bins.</p>
+<p>Next a Basemap object is created, coastlines and boundaries will be drawn and continents filled in the given color. Then the volcanoes are plotted. The 3rd parameter of the plot method is set to ^r, the circumflex stands for triangle and r for red. For more details, see the documentation for plot.</p>
+<p>The Basemap object will be returned so it can be manipulated after the function finishes and before the map is plotted, you’ll see why in a later example.</p>
+<pre>
+def plot_map(lons, lats, elevations, projection='mill', llcrnrlat=-80, urcrnrlat=90, llcrnrlon=-180, urcrnrlon=180, resolution='i', min_marker_size=2):
+    bins = np.linspace(0, elevations.max(), 10)
+    marker_sizes = np.digitize(elevations, bins) + min_marker_size
+
+    m = Basemap(projection=projection, llcrnrlat=llcrnrlat, urcrnrlat=urcrnrlat, llcrnrlon=llcrnrlon, urcrnrlon=urcrnrlon, resolution=resolution)
+    m.drawcoastlines()
+    m.drawmapboundary()
+    m.fillcontinents(color = '#333333')
+
+    for lon, lat, msize in zip(lons, lats, marker_sizes):
+        x, y = m(lon, lat)
+        m.plot(x, y, '^r', markersize=msize, alpha=.7)
+
+    return m
+</pre>
+
+
+<h2 id="Map-of-Stratovolcanos"><a href="#Map-of-Stratovolcanos" class="headerlink" title="Map of Stratovolcanos"></a>Map of Stratovolcanos</h2><p>The 1st map shows the locations of Stratovolcanoes on a world map, so the data frame is filtered on the type column beforehand.</p>
+<pre>
+plt.figure(figsize=(16, 8))
+df = df_volc[df_volc['Type'] == 'Stratovolcano']
+plot_map(df['Longitude'], df['Latitude'], df['Elevation (m)'])
+plt.annotate('Stratovolcanoes of the world | ' + chartinfo, xy=(0, -1.04), xycoords='axes fraction')
+</pre>
+
+
+<p><img src="./_posts/images/20160510/mapping-volcanoes_19_1.png" alt="images/20160510/mapping-volcanoes_19_1.png"></p>
+<p>We can clearly see that most Stratovolcanoes are located, where tectonic plates meet. Let’s look at all volcanoes of some of those regions now.</p>
+<h2 id="Volcanoes-of-North-America"><a href="#Volcanoes-of-North-America" class="headerlink" title="Volcanoes of North America"></a>Volcanoes of North America</h2><p>The next map shows all North American volcanoes in the data frame. To display only that part of the map the parameters that determine the bounding box are set accordingly, i. e. the latitudes and longitudes of the lower left and upper right corners of the bounding box.</p>
+<pre>
+plt.figure(figsize=(12, 10))
+plot_map(df_volc['Longitude'], df_volc['Latitude'], df_volc['Elevation (m)'],
+         llcrnrlat=5.5, urcrnrlat=83.2, llcrnrlon=-180, urcrnrlon=-52.3, min_marker_size=4)
+     plt.annotate('Volcanoes of North America | ' + chartinfo, xy=(0, -1.03), xycoords='axes fraction')
+</pre>
+
+
+<p><img src="./images/20160510/mapping-volcanoes_22_1.png" alt="./images/20160510/mapping-volcanoes_22_1.png"></p>
+<h2 id="Volcanoes-of-Indonesia"><a href="#Volcanoes-of-Indonesia" class="headerlink" title="Volcanoes of Indonesia"></a>Volcanoes of Indonesia</h2><p>Another region with many volcanoes is the Indonesian archipelago. Some of them like the Krakatoa and Mount Tambora have undergone catastrophic eruptions with tens of thousands of victims in the past 200 years.</p>
+<pre>
+plt.figure(figsize=(18, 8))
+plot_map(df_volc['Longitude'], df_volc['Latitude'], df_volc['Elevation (m)'],
+         llcrnrlat=-11.1, urcrnrlat=6.1, llcrnrlon=95, urcrnrlon=141.1, min_marker_size=4)
+     plt.annotate('Volcanoes of Indonesia | ' + chartinfo, xy=(0, -1.04), xycoords='axes fraction'
+</pre>
+
+
+<p><img src="./images/20160510/mapping-volcanoes_24_1.png" alt="/images/20160510/mapping-volcanoes_24_1.png"></p>
+<h2 id="Volcanoes-of-the-world"><a href="#Volcanoes-of-the-world" class="headerlink" title="Volcanoes of the world"></a>Volcanoes of the world</h2><p>The final map shows all volcanoes in the data frame and the whole map using a background image obtained from the NASA Web site. To be able to add this image to the map by calling the warpimage method, is why the plot_map function returns the Basemap object. Moreover, a title and an annotation are added with the code below.</p>
+<pre>
+plt.figure(figsize=(20, 12))
+m = plot_map(df_volc['Longitude'], df_volc['Latitude'], df_volc['Elevation (m)'], min_marker_size=2)
+m.warpimage(image='img/raw-bathymetry.jpg', scale=1)
+
+plt.title('Volcanoes of the World', color='#000000', fontsize=40)
+plt.annotate(chartinfo + ' | Image: NASA - nasa.gov',
+             (0, 0), color='#bbbbbb', fontsize=11)plt.show()
+plt.show()
+</pre>
+
+
+<p><img src="../../../../_posts/images/20160510/mapping-volcanoes_26_1.png" alt="./_posts/images/20160510/mapping-volcanoes_26_1.png"></p>
+<h2 id="Bonus-volcano-globe"><a href="#Bonus-volcano-globe" class="headerlink" title="Bonus: volcano globe"></a>Bonus: volcano globe</h2><p>In addition to these static maps I created this volcano globe. It is built with the WebGL globe project, that expects the following data structure [ latitude, longitude, magnitude, latitude, longitude, magnitude, … ].</p>
+<p>To achieve this structure, I create a data frame that contains only latitude, longitude, and elevation, call the as_matrix method which creates an array with a list of lists containing the column values, flatten this into a 1-dimensional array, turn it to a list and save the new data structure as a JSON file.</p>
+<pre>
+df_globe_values = df_volc[['Latitude', 'Longitude', 'Elevation (m)']]
+globe_values = df_globe_values.as_matrix().flatten().tolist()
+with open('json/globe_volcanoes.json', 'w') as f:
+    json.dump(globe_values, f)
+</pre>
+
+
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>This notebook shows how you can plot maps with locations using Pandas and Basemap. This was a rather quick walk-through, which did not go into too much detail explaining the code. If you like to learn more about the topic, I highly recommend the Mapping Global Earthquake Activity tutorial, which is more in-depth and contains various nice examples. Have fun mapping data with Python!</p>
+<pre>
+%signature
+</pre>
+
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Get-into-work"><span class="toc-text">Get into work</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Get-the-volcano-data"><span class="toc-text">Get the volcano data</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cleaning-the-data"><span class="toc-text">Cleaning the data</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Creating-the-maps"><span class="toc-text">Creating the maps</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Map-of-Stratovolcanos"><span class="toc-text">Map of Stratovolcanos</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Volcanoes-of-North-America"><span class="toc-text">Volcanoes of North America</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Volcanoes-of-Indonesia"><span class="toc-text">Volcanoes of Indonesia</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Volcanoes-of-the-world"><span class="toc-text">Volcanoes of the world</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bonus-volcano-globe"><span class="toc-text">Bonus: volcano globe</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Summary"><span class="toc-text">Summary</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2016/03/08/tornado-web-framework-2/" rel="next" title="Tornado Web Framework 2">
+          Tornado Web Framework 2
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2016/05/10/ipython-notebook-introduction-1/" rel="prev" title="IPython Notebook Introduction 1">
+            IPython Notebook Introduction 1
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2016/05/09/creating-volcano-maps-with-pandas-and-the-matplotlib-basemap-toolkit/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

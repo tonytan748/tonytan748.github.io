@@ -1,0 +1,410 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="Tony Tan">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>Python修饰器的函数式编程 [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        Python修饰器的函数式编程
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2016-02-10T16:00:00.000Z">
+        2016-02-11
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p>本文转自”<a href="http://coolshell.cn/articles/11265.html&quot;" target="_blank" rel="noopener">http://coolshell.cn/articles/11265.html&quot;</a></p>
+<p>Python的修饰器的英文名叫Decorator，当你看到这个英文名的时候，你可能会把其跟Design Pattern里的Decorator搞混了，其实这是完全不同的两个东西。虽然好像，他们要干的事都很相似——都是想要对一个已有的模块做一些“修饰工作”，所谓修饰工作就是想给现有的模块加上一些小装饰（一些小功能，这些小功能可能好多模块都会用到），但又不让这个小装饰（小功能）侵入到原有的模块中的代码里去。但是OO的Decorator简直就是一场恶梦，不信你就去看看wikipedia上的词条（Decorator Pattern）里的UML图和那些代码，这就是我在《 从面向对象的设计模式看软件设计》“餐后甜点”一节中说的，OO鼓励了——“厚重地胶合和复杂层次”，也是《 如此理解面向对象编程》中所说的“OO的狂热者们非常害怕处理数据”，Decorator Pattern搞出来的代码简直就是OO的反面教程。</p>
+<p>Python 的 Decorator在使用上和Java/C#的Annotation很相似，就是在方法名前面加一个@XXX注解来为这个方法装饰一些东西。但是，Java/C#的Annotation也很让人望而却步，太TMD的复杂了，你要玩它，你需要了解一堆Annotation的类库文档，让人感觉就是在学另外一门语言。</p>
+<p>而Python使用了一种相对于Decorator Pattern和Annotation来说非常优雅的方法，这种方法不需要你去掌握什么复杂的OO模型或是Annotation的各种类库规定，完全就是语言层面的玩法：一种函数式编程的技巧。如果你看过本站的《函数式编程》，你一定会为函数式编程的那种“描述你想干什么，而不是描述你要怎么去实现”的编程方式感到畅快。（如果你不了解函数式编程，那在读本文之前，还请你移步去看看《函数式编程》） 好了，我们先来点感性认识，看一个Python修饰器的Hello World的代码。</p>
+<h2 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h2><p>下面是代码:</p>
+<p>文件名:hello.py</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">def hello(fn):</span><br><span class="line">    def wrapper():</span><br><span class="line">        print &quot;hello,%s&quot; % fn.__name__</span><br><span class="line">        fn()</span><br><span class="line">        print &quot;goodbye, %s&quot; % fn.__name__</span><br><span class="line">    return wrapper</span><br><span class="line"></span><br><span class="line">@hello</span><br><span class="line">def foo():</span><br><span class="line">    print &quot;I am foo&quot;</span><br><span class="line"></span><br><span class="line">foo()</span><br></pre></td></tr></table></figure>
+<p>当你运行代码，输出如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[chenaho@chenhao-air]$ python hello.py</span><br><span class="line">hello, foo</span><br><span class="line">i am foo</span><br><span class="line">goodby, foo</span><br></pre></td></tr></table></figure>
+<p>你可以看到如下的东西：<br>1.函数foo前面有个@hello的“注解”，hello就是我们前面定义的函数hello<br>2.在hello函数中，其需要一个fn的参数（这就用来做回调的函数）<br>3.hello函数中返回了一个inner函数wrapper，这个wrapper函数回调了传进来的fn，并在回调前后加了两条语句。</p>
+<h2 id="Decorator的本质"><a href="#Decorator的本质" class="headerlink" title="Decorator的本质"></a>Decorator的本质</h2><p>对于Python的这个@注解语法糖- Syntactic Sugar 来说，当你在用某个@decorator来修饰某个函数func时，如下所示:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@decorator</span><br><span class="line">def func():</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
+<p>其解释器会解释成如下语句:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func = decorator(func)</span><br></pre></td></tr></table></figure>
+<p>尼玛，这不就是把一个函数当参数传到另一个函数中，然后再回调吗？是的，但是，我们需要注意，那里还有一个赋值语句，把decorator这个函数的返回值赋值回了原来的func。 根据《函数式编程》中的first class functions中的定义的，你可以把函数当成变量来使用，所以，decorator必需得返回了一个函数出来给func，这就是所谓的higher order function 高阶函数，不然，后面当func()调用的时候就会出错。 就我们上面那个hello.py里的例子来说，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@hello</span><br><span class="line">def foo():</span><br><span class="line">    print &quot;I am foo&quot;</span><br></pre></td></tr></table></figure>
+<p>被解释成:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">foo = hello(foo)</span><br></pre></td></tr></table></figure>
+<p>是的，这是一条语句，而且还被执行了。你如果不信的话，你可以写这样的程序来试试看：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def fuck(fn):</span><br><span class="line">    print &quot;fuck %s!&quot; % fn.__name__[::-1].upper()</span><br><span class="line"></span><br><span class="line">@fuck</span><br><span class="line">def wfg():</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
+<p>没了，就上面这段代码，没有调用wfg()的语句，你会发现， fuck函数被调用了，而且还很NB地输出了我们每个人的心声！</p>
+<p>再回到我们hello.py的那个例子，我们可以看到，hello(foo)返回了wrapper()函数，所以，foo其实变成了wrapper的一个变量，而后面的foo()执行其实变成了wrapper()。</p>
+<p>知道这点本质，当你看到有多个decorator或是带参数的decorator，你也就不会害怕了。</p>
+<p>比如：多个decorator</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@decorator_one</span><br><span class="line">@decorator_two</span><br><span class="line">def func():</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
+<p>相当于:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func = decorator_one(decorator_two(func))</span><br></pre></td></tr></table></figure>
+<p>比如:带参数的decorator:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@decorator(arg1,arg2)</span><br><span class="line">def func():</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
+<p>相当于:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func = decorator(arg1,arg2)(func)</span><br></pre></td></tr></table></figure>
+<p>这意味着decorator(arg1,arg2)这个函数需要返回一个”真正的decorator”.</p>
+<h2 id="带参数及多个decorator"><a href="#带参数及多个decorator" class="headerlink" title="带参数及多个decorator"></a>带参数及多个decorator</h2><p>我们来看一个有点意义的例子:<br>html.py</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">def makeHtmlTag(tag,*args,**kwargs):</span><br><span class="line">    def real_decorator(fn):</span><br><span class="line">        css_class = &quot; class=&apos;&#123;0&#125;&apos;&quot;.format(kwargs[&apos;css_class&apos;]) if &quot;css_class&quot; in kwargs else &apos;&apos;</span><br><span class="line">        def wrapped(*args,**kwargs):</span><br><span class="line">            return &quot;&lt;&quot; + tag + css_class + &quot;&gt;&quot; + fn(*args,**kwargs) + &quot;&lt;/&quot; + tag + &quot;&gt;&quot;</span><br><span class="line">        return wrapped</span><br><span class="line">    return real_decorator</span><br><span class="line"></span><br><span class="line">@makeHtmlTag(tag=&apos;b&apos;,css_class=&apos;bold_css&apos;)</span><br><span class="line">@makeHtmlTag(tag=&apos;i&apos;,css_class=&apos;italic_css&apos;)</span><br><span class="line">def hello():</span><br><span class="line">    return &apos;hello world&apos;</span><br><span class="line"></span><br><span class="line">print hello()</span><br><span class="line"></span><br><span class="line">#输出</span><br><span class="line">#&lt;b class=&apos;bold_css&apos;&gt;&lt;i class=&apos;italic_css&apos;&gt;hello world&lt;/i&gt;&lt;/b&gt;</span><br></pre></td></tr></table></figure>
+<p>在上面这个例子中，我们可以看到：makeHtmlTag有两个参数。所以，为了让 hello = makeHtmlTag(arg1, arg2)(hello) 成功，makeHtmlTag 必需返回一个decorator（这就是为什么我们在makeHtmlTag中加入了real_decorator()的原因），这样一来，我们就可以进入到 decorator 的逻辑中去了—— decorator得返回一个wrapper，wrapper里回调hello。看似那个makeHtmlTag() 写得层层叠叠，但是，已经了解了本质的我们觉得写得很自然。</p>
+<p>你看，Python的Decorator就是这么简单，没有什么复杂的东西，你也不需要了解过多的东西，使用起来就是那么自然、体贴、干爽、透气，独有的速效凹道和完美的吸收轨迹，让你再也不用为每个月的那几天感到焦虑和不安，再加上贴心的护翼设计，量多也不用当心。对不起，我调皮了。</p>
+<p>什么，你觉得上面那个带参数的Decorator的函数嵌套太多了，你受不了。好吧，没事，我们看看下面的方法。</p>
+<h2 id="class式的Decorator"><a href="#class式的Decorator" class="headerlink" title="class式的Decorator"></a>class式的Decorator</h2><p>首先，先得说一下，decorator的class方式，还是看个示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class myDecorator(object):</span><br><span class="line">    def __init__(self,fn):</span><br><span class="line">        print &quot;inside myDecorator.__init__()&quot;</span><br><span class="line">        self.fn = fn</span><br><span class="line"></span><br><span class="line">    def __call__(self):</span><br><span class="line">        self.fn()</span><br><span class="line">        print &quot;inside myDecorator.__call__()&quot;</span><br><span class="line"></span><br><span class="line">@myDecorator</span><br><span class="line">def aFunction():</span><br><span class="line">    print &quot;inside aFunction()&quot;</span><br><span class="line"></span><br><span class="line">print &quot;Finished...&quot;</span><br><span class="line"></span><br><span class="line">aFunction()</span><br><span class="line"></span><br><span class="line">#输出</span><br><span class="line"># inside myDecorator.__init__()</span><br><span class="line"># Finished decorating aFunction()</span><br><span class="line"># inside aFunction()</span><br><span class="line"># inside myDecorator.__call__()</span><br></pre></td></tr></table></figure>
+<p>上面这个示例展示了，用类的方式声明一个decorator。我们可以看到这个类中有两个成员：</p>
+<p>1.一个是<strong>init</strong>()，这个方法是在我们给某个函数decorator时被调用，所以，需要有一个fn的参数，也就是被decorator的函数。<br>2.一个是<strong>call</strong>()，这个方法是在我们调用被decorator函数时被调用的。</p>
+<p>上面输出可以看到整个程序的执行顺序。</p>
+<p>这看上去要比“函数式”的方式更易读一些。</p>
+<p>下面，我们来看看用类的方式来重写上面的html.py的代码：</p>
+<p>html.py</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class makeHtmlTagClass(object):</span><br><span class="line">    def __init__(self,tag,css_class=&apos;&apos;):</span><br><span class="line">        self._tag = tag</span><br><span class="line">        self._css_class = &quot; class=&apos;&#123;0&#125;&apos;&quot;.format(css_class) if css_class != &apos;&apos; else &apos;&apos;</span><br><span class="line"></span><br><span class="line">    def __call__(self,fn):</span><br><span class="line">        def wrapped(*args,**kwargs):</span><br><span class="line">            return &quot;&lt;&quot; + self._tag + self._css_class + &quot;&gt;&quot; + fn(*args,**kwargs) + &quot;&lt;/&quot; + tag + &quot;&gt;&quot;</span><br><span class="line">        return wrapped</span><br><span class="line"></span><br><span class="line">@makeHtmlTagClass(tag=&apos;b&apos;,css_class=&apos;bold_css&apos;)</span><br><span class="line">@makeHtmlTagClass(tag=&apos;i&apos;,css_class=&apos;italic_css&apos;)</span><br><span class="line">def hello(name):</span><br><span class="line">    return &quot;Hello, &#123;&#125;&quot;.format(name)</span><br><span class="line"></span><br><span class="line">print hello(&apos;Tony Tan&apos;)</span><br></pre></td></tr></table></figure>
+<p>上面这段代码中，我们需要注意这几点：</p>
+<p>1.如果decorator有参数的话，<strong>init</strong>() 成员就不能传入fn了，而fn是在<strong>call</strong>的时候传入的。<br>2.这段代码还展示了 wrapped(*args, **kwargs) 这种方式来传递被decorator函数的参数。（其中：args是一个参数列表，kwargs是参数dict，具体的细节，请参考Python的文档或是StackOverflow的这个问题，这里就不展开了）</p>
+<h2 id="用Decorator设置函数的调用参数"><a href="#用Decorator设置函数的调用参数" class="headerlink" title="用Decorator设置函数的调用参数"></a>用Decorator设置函数的调用参数</h2><p>你有三种方法可以干这个事：</p>
+<p>第一种，通过 **kwargs，这种方法decorator会在kwargs中注入参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">def decorator_A(function):</span><br><span class="line">    def wrap_function(*args,**kwargs):</span><br><span class="line">        kwargs[&apos;str&apos;] = &apos;hello&apos;</span><br><span class="line">        return function(*args,**kwargs)</span><br><span class="line">    return wrap_function</span><br><span class="line"></span><br><span class="line">@decorator_A</span><br><span class="line">def print_message_A(*args,**kwargs):</span><br><span class="line">    print kwargs[&apos;str&apos;]</span><br><span class="line"></span><br><span class="line">print_message_A()</span><br></pre></td></tr></table></figure>
+<p>第二种，约定好参数，直接修改参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">def decorate_B(function):</span><br><span class="line">    def wrap_function(*args,**kwargs):</span><br><span class="line">        str = &apos;hello&apos;</span><br><span class="line">        return function(str,*args,**kwargs)</span><br><span class="line">    return wrap_function</span><br><span class="line"></span><br><span class="line">@decorate_B</span><br><span class="line">def print_message_B(str,*args,**kwargs):</span><br><span class="line">    print str</span><br><span class="line"></span><br><span class="line">print_message_B()</span><br></pre></td></tr></table></figure>
+<p>第三种，通过 *args 注入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">def decorate_C(function):</span><br><span class="line">    def wrap_function(*args,**kwargs):</span><br><span class="line">        str = &apos;hello&apos;</span><br><span class="line">        args = args + (str,)</span><br><span class="line">        return function(*args,**kwargs)</span><br><span class="line">    return wrap_function</span><br><span class="line"></span><br><span class="line">class Printer:</span><br><span class="line">    @decorate_C</span><br><span class="line">    def print_message(self,str,*args,**kwargs):</span><br><span class="line">        print str</span><br><span class="line"></span><br><span class="line">p=Printer()</span><br><span class="line">p.print_message()</span><br></pre></td></tr></table></figure>
+<h2 id="Decorator的副作用"><a href="#Decorator的副作用" class="headerlink" title="Decorator的副作用"></a>Decorator的副作用</h2><p>到这里，我相信你应该了解了整个Python的decorator的原理了。</p>
+<p>相信你也会发现，被decorator的函数其实已经是另外一个函数了，对于最前面那个hello.py的例子来说，如果你查询一下foo.<strong>name</strong>的话，你会发现其输出的是“wrapper”，而不是我们期望的“foo”，这会给我们的程序埋一些坑。所以，Python的functool包中提供了一个叫wrap的decorator来消除这样的副作用。下面是我们新版本的hello.py。</p>
+<p>文件名：hello.py</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">from functools import wraps</span><br><span class="line">def hello(fn):</span><br><span class="line">    @wraps(fn)</span><br><span class="line">    def wrapper():</span><br><span class="line">        print &quot;hello, %s&quot; % fn.__name__</span><br><span class="line">        fn()</span><br><span class="line">        print &quot;goodbye, %s&quot; % fn.__name__</span><br><span class="line">    return wrapper</span><br><span class="line"></span><br><span class="line">＠hello</span><br><span class="line">def foo():</span><br><span class="line">    print &quot;I am foo&quot;</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">foo()</span><br><span class="line">print foo.__name__    #输出 foo</span><br><span class="line">print foo.__doc__     #输出 foo help doc</span><br></pre></td></tr></table></figure>
+<p>当然，即使是你用了functools的wraps，也不能完全消除这样的副作用。</p>
+<p>来看下面这个示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">from inspect import getmembers, getargspec</span><br><span class="line">from functools import wraps</span><br><span class="line"></span><br><span class="line">def wraps_decorator(f):</span><br><span class="line">    @wraps(f)</span><br><span class="line">    def wraps_wrapper(*args,**kwargs):</span><br><span class="line">        return f(*args,**kwargs)</span><br><span class="line">    return wraps_wrapper</span><br><span class="line"></span><br><span class="line">class SomeClass(object):</span><br><span class="line">    @wraps_decorator</span><br><span class="line">    def method(self,x,y):</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line">obj = SomeClass()</span><br><span class="line">for name,func in getmembers(obj, predicate=inspect.ismethod):</span><br><span class="line">    print &quot;Member Name: &#123;&#125;&quot;.format(name)</span><br><span class="line">    print &quot;Func Name: &#123;&#125;&quot;.format(func.func_name)</span><br><span class="line">    print &quot;Args: &#123;&#125;&quot;.format(getargspec(func)[0])</span><br><span class="line"></span><br><span class="line">#输出</span><br><span class="line">#Member Name: method</span><br><span class="line">#Func Name: method</span><br><span class="line">#Args: []</span><br></pre></td></tr></table></figure>
+<p>你会发现，即使是你你用了functools的wraps，你在用getargspec时，参数也不见了。</p>
+<p>要修正这一问，我们还得用Python的反射来解决，下面是相关的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">def get_true_argspec(method):</span><br><span class="line">    argspec = inspect.getargspec(method)</span><br><span class="line">    args = argspec[0]</span><br><span class="line">    if args and args[0] == &apos;self&apos;:</span><br><span class="line">        return argspec</span><br><span class="line">    if hasattr(method, &apos;__func__&apos;):</span><br><span class="line">        method = method.__func__</span><br><span class="line">    if not hasattr(method, &apos;func_closure&apos;) or method.func_closure is None:</span><br><span class="line">        raise Exception(&quot;No closure for method.&quot;)</span><br><span class="line"></span><br><span class="line">    method = method.func_closure[0].cell_contents</span><br><span class="line">    return get_true_argspec(method)</span><br></pre></td></tr></table></figure>
+<p>当然，我相信大多数人的程序都不会去getargspec。所以，用functools的wraps应该够用了。</p>
+<h2 id="一些decorator的实例"><a href="#一些decorator的实例" class="headerlink" title="一些decorator的实例"></a>一些decorator的实例</h2><p>好了，现在我们来看一下各种decorator的例子：</p>
+<h4 id="给函数调用做缓存"><a href="#给函数调用做缓存" class="headerlink" title="给函数调用做缓存"></a>给函数调用做缓存</h4><p>这个例实在是太经典了，整个网上都用这个例子做decorator的经典范例，因为太经典了，所以，我这篇文章也不能免俗。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">from functools import wraps</span><br><span class="line">def memo(fn):</span><br><span class="line">    cache = &#123;&#125;</span><br><span class="line">    miss = object()</span><br><span class="line">    @wraps(fn)</span><br><span class="line">    def wrapper(*args):</span><br><span class="line">        result = cache.get(args, miss)</span><br><span class="line">        if result is miss:</span><br><span class="line">            result = fn(*args)</span><br><span class="line">            cache[args] = result</span><br><span class="line">        return result</span><br><span class="line">    return wrapper</span><br><span class="line"></span><br><span class="line">@memo</span><br><span class="line">def fib(n):</span><br><span class="line">    if n &lt; 2:</span><br><span class="line">        return n</span><br><span class="line">    return fib(n - 1) + fib(n - 2)</span><br></pre></td></tr></table></figure>
+<p>上面这个例子中，是一个斐波拉契数例的递归算法。我们知道，这个递归是相当没有效率的，因为会重复调用。比如：我们要计算fib(5)，于是其分解成fib(4) + fib(3)，而fib(4)分解成fib(3)+fib(2)，fib(3)又分解成fib(2)+fib(1)…… 你可看到，基本上来说，fib(3), fib(2), fib(1)在整个递归过程中被调用了两次。</p>
+<p>而我们用decorator，在调用函数前查询一下缓存，如果没有才调用了，有了就从缓存中返回值。一下子，这个递归从二叉树式的递归成了线性的递归。</p>
+<h4 id="Profiler的例子"><a href="#Profiler的例子" class="headerlink" title="Profiler的例子"></a>Profiler的例子</h4><p>这个例子没什么高深的，就是实用一些。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import cProfile, pstats, StringIO</span><br><span class="line">def profiler(func):</span><br><span class="line">    def wrapper(*args,**kwargs):</span><br><span class="line">        datafn = func.__name__ + &quot;.profile&quot;</span><br><span class="line">        prof = cProfile.Profile()</span><br><span class="line">        retval = prof.runcall(func, *args, **kwargs)</span><br><span class="line">        s = StringIO.StringIO()</span><br><span class="line">        sortby = &apos;cumulative&apos;</span><br><span class="line">        ps = pstats.Stats(prof, stream=s).sort_stats(sortby)</span><br><span class="line">        ps.print_stats()</span><br><span class="line">        print s.getvalue()</span><br><span class="line">        return retval</span><br><span class="line">    return wrapper</span><br></pre></td></tr></table></figure>
+<h4 id="注册回调函数"><a href="#注册回调函数" class="headerlink" title="注册回调函数"></a>注册回调函数</h4><p>下面这个示例展示了通过URL的路由来调用相关注册的函数示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">class MyApp():</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.func_map = &#123;&#125;</span><br><span class="line"></span><br><span class="line">    def register(self, name):</span><br><span class="line">        def func_wrapper(func):</span><br><span class="line">            self.func_map[name] = func</span><br><span class="line">            return func</span><br><span class="line">    def call_method(self, name=None):</span><br><span class="line">        func = self.func_map.get(name, None)</span><br><span class="line">        if func is None:</span><br><span class="line">            raise Exception(&quot;No function registered against - &quot; + str(name))</span><br><span class="line">        return func()</span><br><span class="line"></span><br><span class="line">app = MyApp()</span><br><span class="line"></span><br><span class="line">@app.register(&apos;/&apos;)</span><br><span class="line">def main_page_func():</span><br><span class="line">    return &quot;This is the main page.&quot;</span><br><span class="line"></span><br><span class="line">@app.register(&apos;/next_page&apos;)</span><br><span class="line">def next_page_func():</span><br><span class="line">    return &quot;This is the next page.&quot;</span><br><span class="line"></span><br><span class="line">print app.call_method(&apos;/&apos;)</span><br><span class="line">print app.call_method(&apos;/next_page&apos;)</span><br></pre></td></tr></table></figure>
+<p>注意：</p>
+<p>1.上面这个示例中，用类的实例来做decorator。<br>2.decorator类中没有<strong>call</strong>()，但是wrapper返回了原函数。所以，原函数没有发生任何变化。</p>
+<h4 id="给函数打日志"><a href="#给函数打日志" class="headerlink" title="给函数打日志"></a>给函数打日志</h4><p>下面这个示例演示了一个logger的decorator，这个decorator输出了函数名，参数，返回值，和运行时间。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">from functools import wraps</span><br><span class="line">def looger(fn):</span><br><span class="line">    @wraps(fn)</span><br><span class="line">    def wrapper(*args,**kwargs):</span><br><span class="line">        ts = time.time()</span><br><span class="line">        result = fn(*args,**kwargs)</span><br><span class="line">        te = time.time()</span><br><span class="line">        print &quot;function    = &#123;0&#125;&quot;.format(fn.__name__)</span><br><span class="line">        print &quot;    arguments = &#123;0&#125;&quot;.format(args,kwargs)</span><br><span class="line">        print &quot;    return = &#123;0&#125;&quot;.format(result)</span><br><span class="line">        print &quot;    time = %.6f sec&quot; % (te-ts)</span><br><span class="line">        return result</span><br><span class="line">    return wrapper</span><br><span class="line"></span><br><span class="line">@logger</span><br><span class="line">def multipy(x,y):</span><br><span class="line">    return x * y</span><br><span class="line"></span><br><span class="line">@logger</span><br><span class="line">def sum_num(n):</span><br><span class="line">    s = 0</span><br><span class="line">    for i in xrange(n+1):</span><br><span class="line">        s += i</span><br><span class="line">    return s</span><br><span class="line"></span><br><span class="line">print multipy(2,10)</span><br><span class="line">print sum_num(100)</span><br><span class="line">print sum_num(1000000)</span><br></pre></td></tr></table></figure>
+<p>上面那个打日志还是有点粗糙，让我们看一个更好一点的（带log level参数的）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import inspect</span><br><span class="line">def get_line_number():</span><br><span class="line">    return inspect.currentframe().f_back.f_back.f_lineno</span><br><span class="line"> </span><br><span class="line">def logger(loglevel):</span><br><span class="line">    def log_decorator(fn):</span><br><span class="line">        @wraps(fn)</span><br><span class="line">        def wrapper(*args, **kwargs):</span><br><span class="line">            ts = time.time()</span><br><span class="line">            result = fn(*args, **kwargs)</span><br><span class="line">            te = time.time()</span><br><span class="line">            print &quot;function   = &quot; + fn.__name__,</span><br><span class="line">            print &quot;    arguments = &#123;0&#125; &#123;1&#125;&quot;.format(args, kwargs)</span><br><span class="line">            print &quot;    return    = &#123;0&#125;&quot;.format(result)</span><br><span class="line">            print &quot;    time      = %.6f sec&quot; % (te-ts)</span><br><span class="line">            if (loglevel == &apos;debug&apos;):</span><br><span class="line">                print &quot;    called_from_line : &quot; + str(get_line_number())</span><br><span class="line">            return result</span><br><span class="line">        return wrapper</span><br><span class="line">    return log_decorator</span><br></pre></td></tr></table></figure>
+<p>但是，上面这个带log level参数的有两具不好的地方，</p>
+<p>1.loglevel不是debug的时候，还是要计算函数调用的时间。<br>2.不同level的要写在一起，不易读。</p>
+<p>我们再接着改进：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">import inspect</span><br><span class="line">from functools import wraps</span><br><span class="line">def advance_logger(loglevel):</span><br><span class="line"></span><br><span class="line">    def get_line_number():</span><br><span class="line">        return inspect.currentframe().f_back.f_back.f_lineno</span><br><span class="line"></span><br><span class="line">    def _basic_log(fn, result, *args, **kwargs):</span><br><span class="line">        print &quot;function    = &quot; + fn.__name__</span><br><span class="line">        print &quot;    arguments = &#123;0&#125;&quot;.format(args,kwargs)</span><br><span class="line">        print &quot;    return = &#123;0&#125;&quot;.format(result)</span><br><span class="line"></span><br><span class="line">    def info_log_decorator(fn):</span><br><span class="line">        @wraps(fn)</span><br><span class="line">        def wrappers(*args,**kwargs):</span><br><span class="line">            result = fn(*args,**kwargs)</span><br><span class="line">            _basic_log(fn, result, args, kwargs)</span><br><span class="line"></span><br><span class="line">    def debug_log_decorator(fn):</span><br><span class="line">        @wraps(fn)</span><br><span class="line">        def wrapper(*args,**kwargs):</span><br><span class="line">            ts = time.time()</span><br><span class="line">            result = fn(*args, **kwargs)</span><br><span class="line">            te = time.time()</span><br><span class="line">            _basic_log(fn, result, args, kwargs)</span><br><span class="line">            print &quot;    time = %.6f sec&quot; % (te-ts)</span><br><span class="line">            print &quot;    called_from_line : &quot; + str(get_line_number())</span><br><span class="line">        return wrapper</span><br><span class="line"></span><br><span class="line">    if loglevel is &quot;debug&quot;:</span><br><span class="line">        return debug_log_decorator</span><br><span class="line">    else:</span><br><span class="line">        return info_log_decorator</span><br></pre></td></tr></table></figure>
+<p>你可以看到两点，</p>
+<p>1.我们分了两个log level，一个是info的，一个是debug的，然后我们在外尾根据不同的参数返回不同的decorator。<br>2.我们把info和debug中的相同的代码抽到了一个叫_basic_log的函数里，DRY原则。</p>
+<h4 id="一个MySQL的Decorator"><a href="#一个MySQL的Decorator" class="headerlink" title="一个MySQL的Decorator"></a>一个MySQL的Decorator</h4><p>下面这个decorator是我在工作中用到的代码，我简化了一下，把DB连接池的代码去掉了，这样能简单点，方便阅读。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">import umysql</span><br><span class="line">from functools import wraps</span><br><span class="line"></span><br><span class="line">class Configuration:</span><br><span class="line">    def __init__(self, env):</span><br><span class="line">        if env == &quot;Prod&quot;:</span><br><span class="line">            self.host = &quot;coolshell.cn&quot;</span><br><span class="line">            self.port = 3306</span><br><span class="line">            self.db = &quot;coolshell&quot;</span><br><span class="line">            self.user = &quot;coolshell&quot;</span><br><span class="line">            self.passwd = &quot;fuckgfw&quot;</span><br><span class="line">        elif env == &quot;Test&quot;:</span><br><span class="line">            self.host = &quot;localhost&quot;</span><br><span class="line">            self.port =3300</span><br><span class="line">            self.db = &quot;coolshell&quot;</span><br><span class="line">            self.user =&quot;coolshell&quot;</span><br><span class="line">            self.passwd = &quot;fuckgfw&quot;</span><br><span class="line"></span><br><span class="line">def mysql(sql):</span><br><span class="line">    _conf = Configuration(env=&apos;Prod&apos;)</span><br><span class="line">    def on_sql_error(err):</span><br><span class="line">        print err</span><br><span class="line">        sys.exit(-1)</span><br><span class="line"></span><br><span class="line">    def handle_sql_result(rs):</span><br><span class="line">        if rs.rows &gt; 0:</span><br><span class="line">            fieldnames = [f[0] for f in rs.fields]</span><br><span class="line">        else:</span><br><span class="line">            return []</span><br><span class="line"></span><br><span class="line">    def decorator(fn):</span><br><span class="line">        @wraps(fn)</span><br><span class="line">        def wrapper(*args,**kwargs):</span><br><span class="line">            mysqlconn = umysql.Connection()</span><br><span class="line">            mysqlconn.settimeout(5)</span><br><span class="line">            mysqlconn.connect(_conf.host, _conf.port, _conf.user, _conf.passwd, _conf.db, True,&apos;utf8&apos;)</span><br><span class="line">            try:</span><br><span class="line">                rs = mysqlconn.query(sql, &#123;&#125;)</span><br><span class="line">            except umysql.Error as e:</span><br><span class="line">                on_sql_error(e)</span><br><span class="line"></span><br><span class="line">            data = handle_sql_result(rs)</span><br><span class="line">            kwargs[&apos;data&apos;] = data</span><br><span class="line">            result = fn(*args,**kwargs)</span><br><span class="line">            mysqlconn.close()</span><br><span class="line">            return result</span><br><span class="line">        return wrapper</span><br><span class="line">    return decorator</span><br><span class="line"></span><br><span class="line">@mysql(sql = &quot;select * from coolshell&quot;)</span><br><span class="line">def get_coolshell(data):</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<h4 id="线程异步"><a href="#线程异步" class="headerlink" title="线程异步"></a>线程异步</h4><p>下面是个非常简单的异步执行的decorator，注意，异步处理并不简单，下面只是一个示例。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">from threading import Thread</span><br><span class="line">from functools import wraps</span><br><span class="line"></span><br><span class="line">def async(func):</span><br><span class="line">    @wraps(func)</span><br><span class="line">    def async_func(*args,**kwargs):</span><br><span class="line">        func_hl = Thread(target=func, args=args, kwargs=kwargs)</span><br><span class="line">        func_hl.start()</span><br><span class="line">        return func_hl</span><br><span class="line">    return async_func</span><br><span class="line"></span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">    from time import sleep</span><br><span class="line">    </span><br><span class="line">    @async</span><br><span class="line">    def print_somedata():</span><br><span class="line">        print &quot;starting pring_somedta&quot;</span><br><span class="line">        sleep(2)</span><br><span class="line">        print &quot;print_somedata: 2 sec passed&quot;</span><br><span class="line">        sleep(2)</span><br><span class="line">        print &quot;print_somedata: 2 sec passed&quot;</span><br><span class="line">        sleep(2)</span><br><span class="line">        print &quot;finished print_somedata&quot;</span><br><span class="line"></span><br><span class="line">    def main():</span><br><span class="line">        print_somedata()</span><br><span class="line">        print &quot;back in main&quot;</span><br><span class="line">        print_somedata()</span><br><span class="line">        print &quot;back in main&quot;</span><br><span class="line"></span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><p>关于更多的示例，你可以参看： Python Decorator Library</p>
+<p>关于Python Decroator的各种提案，可以参看：Python Decorator Proposals</p>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hello-World"><span class="toc-text">Hello World</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Decorator的本质"><span class="toc-text">Decorator的本质</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#带参数及多个decorator"><span class="toc-text">带参数及多个decorator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#class式的Decorator"><span class="toc-text">class式的Decorator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用Decorator设置函数的调用参数"><span class="toc-text">用Decorator设置函数的调用参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Decorator的副作用"><span class="toc-text">Decorator的副作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一些decorator的实例"><span class="toc-text">一些decorator的实例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#给函数调用做缓存"><span class="toc-text">给函数调用做缓存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Profiler的例子"><span class="toc-text">Profiler的例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注册回调函数"><span class="toc-text">注册回调函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#给函数打日志"><span class="toc-text">给函数打日志</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#一个MySQL的Decorator"><span class="toc-text">一个MySQL的Decorator</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#线程异步"><span class="toc-text">线程异步</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其它"><span class="toc-text">其它</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2016/02/10/use-cron--crontab-to-run-schedule-tasks/" rel="next" title="Use Cron &amp; Crontab to run schedule tasks">
+          Use Cron &amp; Crontab to run schedule tasks
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2016/02/13/the-samplest-django-project/" rel="prev" title="The Samplest Django Project">
+            The Samplest Django Project
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2016/02/11/python修饰器的函数式编程/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

@@ -1,0 +1,351 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="django,">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>后台edite页面实现三级联动 [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        后台edite页面实现三级联动
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2020-12-30T01:45:03.000Z">
+        2020-12-30
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/django/">django</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>在项目中使用Django admin作为后台管理，在店铺表编辑页面需要设置省市区三级联动，查了很多资源，没有发现原生支持的联动方式。 在网上借鉴了别人的写法。</p>
+<p>配置：</p>
+<ul>
+<li><p>Python 3.7</p>
+</li>
+<li><p>Django3.1</p>
+</li>
+</ul>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
+<li><p>在app文件下创建templates文件夹，创建<code>shop_detail.html</code>用于复写店铺编辑页。 文件名字可自定义。</p>
+</li>
+<li><p>在app的admin.py中增加并注册ShopAdmin类，在类中增加<code>change_form_template = &quot;shop_detail.html&quot;</code>，指向的html文件名和1中的一致。</p>
+</li>
+<li><p>从当前python环境中，找到Django包，复制里面的<code>chang_form.html</code>全部内容到前面创建的html中。 该html具体地址为<code>python3.7/site-packages/django/contrib/admin/templates/admin/change_form.html</code>。</p>
+</li>
+<li><p>编辑<code>shop_detail.html</code></p>
+</li>
+</ol>
+<ul>
+<li>将以下ajax请求增加到替换到<code>admin_change_form_document_ready</code>的block中。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&#123;% block admin_change_form_document_ready %&#125;</span><br><span class="line">    &lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">        (function($) &#123;</span><br><span class="line">            $(document).ready(function() &#123;</span><br><span class="line">                $(&apos;.add-another&apos;).click(function(e) &#123;</span><br><span class="line">                    e.preventDefault();</span><br><span class="line">                    var event = $.Event(&apos;django:add-another-related&apos;);</span><br><span class="line">                    $(this).trigger(event);</span><br><span class="line">                    if (!event.isDefaultPrevented()) &#123;</span><br><span class="line">                        showAddAnotherPopup(this);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line"></span><br><span class="line">            &#123;% if adminform and add %&#125;</span><br><span class="line">                $(&apos;form#&#123;&#123; opts.model_name &#125;&#125;_form :input:visible:enabled:first&apos;).focus()</span><br><span class="line">            &#123;% endif %&#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">            $.get(&apos;/common/choose/province/&apos;,function(p_info)&#123;          // 获取省份接口 这里的地址自定义，已实际的接口地址为准</span><br><span class="line">                var province_info = $(&apos;#id_province&apos;).empty().append(&apos;&lt;option value&gt;&apos;+&apos;---------&apos;+&apos;&lt;/option&gt;&apos;);</span><br><span class="line">                // id_province 已实际的省份字段名为准，可在admin页面中查找</span><br><span class="line">                $.each(p_info.p_lists,function(i,province)&#123;</span><br><span class="line">                    province_info.append(&apos;&lt;option value=&quot;&apos;+province.p_id+&apos;&quot;&gt;&apos;+province.p_name+&apos;&lt;/option&gt;&apos;)</span><br><span class="line">                &#125;);</span><br><span class="line"></span><br><span class="line">                $(&apos;#id_province&apos;).change(function()&#123;</span><br><span class="line">                    p_id = $(this).val();</span><br><span class="line">                    $.get(&apos;/common/choose/city/&apos;,&#123;&apos;p_id&apos;:p_id&#125;,function(c_info)&#123;        // 获取城市接口 这里的地址自定义，已实际的接口地址为准</span><br><span class="line">                        var city_info = $(&apos;#id_city&apos;).empty().append(&apos;&lt;option value&gt;&apos;+&apos;---------&apos;+&apos;&lt;/option&gt;&apos;);</span><br><span class="line">                        // id_city 已实际的城市字段名为准，可在admin页面中查找</span><br><span class="line">                        $.each(c_info.c_lists,function(i,city)&#123;</span><br><span class="line">                            city_info.append(&apos;&lt;option value=&quot;&apos;+city.c_id+&apos;&quot;&gt;&apos;+city.c_name+&apos;&lt;/option&gt;&apos;)</span><br><span class="line">                        &#125;)</span><br><span class="line">                    &#125;)</span><br><span class="line">                &#125;);</span><br><span class="line"></span><br><span class="line">                $(&apos;#id_city&apos;).change(function()&#123;</span><br><span class="line">                    c_id = $(this).val();</span><br><span class="line">                    $.get(&apos;/common/choose/area/&apos;,&#123;&quot;c_id&quot;: c_id&#125;,function(a_info)&#123;       // 获取地区接口 这里的地址自定义，已实际的接口地址为准</span><br><span class="line">                        var area_info = $(&apos;#id_district&apos;).empty().append(&apos;&lt;option value&gt;&apos;+&apos;---------&apos;+&apos;&lt;/option&gt;&apos;);</span><br><span class="line">                        // id_district 已实际的地区字段名为准，可在admin页面中查找</span><br><span class="line">                        $.each(a_info.a_lists,function(i,area)&#123;</span><br><span class="line">                            area_info.append(&apos;&lt;option value=&quot;&apos;+area.a_id+&apos;&quot;&gt;&apos;+area.a_name+&apos;&lt;/option&gt;&apos;)</span><br><span class="line">                        &#125;);</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;)(django.jQuery);</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&#123;% endblock %&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>注意里面的省市区字段在page页面中的类名，不确定的话可通过浏览器开发者工具查找。</p>
+</li>
+<li><p>增加省市区调用接口， 我的地区表在<code>common</code>模块中，同时为避免接口地址冲突，增加了 <code>/choose</code>字段。</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">def choose_province(request):</span><br><span class="line">    &quot;&quot;&quot;查询省&quot;&quot;&quot;</span><br><span class="line">    provinces = Area.objects.filter(parent=None)</span><br><span class="line">    p_lists = [&#123;&quot;p_id&quot;: province.id, &quot;p_name&quot;: province.name&#125; for province in provinces]</span><br><span class="line">    p_info = &#123;&quot;p_lists&quot;: p_lists&#125;</span><br><span class="line">    return JsonResponse(p_info, safe=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def choose_city(request):</span><br><span class="line">    &quot;&quot;&quot;查询市&quot;&quot;&quot;</span><br><span class="line">    p_id = request.GET.get(&apos;p_id&apos;)</span><br><span class="line">    print(p_id, &apos;--------&apos;)</span><br><span class="line">    if not p_id:</span><br><span class="line">        return JsonResponse(&#123;&#125;, safe=False)</span><br><span class="line">    citys = Area.objects.filter(parent_id=p_id)</span><br><span class="line">    c_lists = [&#123;&quot;c_id&quot;: city.id, &quot;c_name&quot;: city.name&#125; for city in citys]</span><br><span class="line">    print(c_lists[0:5])</span><br><span class="line">    c_info = &#123;&quot;c_lists&quot;: c_lists&#125;</span><br><span class="line">    return JsonResponse(c_info, safe=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def choose_area(request):</span><br><span class="line">    &quot;&quot;&quot;查询区&quot;&quot;&quot;</span><br><span class="line">    c_id = request.GET.get(&apos;c_id&apos;)</span><br><span class="line">    print(c_id, &apos;=======&apos;)</span><br><span class="line">    if not c_id:</span><br><span class="line">        return JsonResponse(&#123;&#125;, safe=False)</span><br><span class="line">    areas = Area.objects.filter(parent_id=c_id)</span><br><span class="line">    print(areas)</span><br><span class="line">    a_lists = [&#123;&quot;a_id&quot;: area.id, &quot;a_name&quot;: area.name&#125; for area in areas]</span><br><span class="line">    a_info = &#123;&quot;a_lists&quot;: a_lists&#125;</span><br><span class="line">    print(a_info)</span><br><span class="line">    return JsonResponse(a_info, safe=False)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>URL地址设置。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">url(r&apos;^choose/province/$&apos;, views.choose_province),</span><br><span class="line">url(r&apos;^choose/city/$&apos;, views.choose_city),</span><br><span class="line">url(r&apos;^choose/area/$&apos;, views.choose_area),</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Django admin功能比较齐全，以前只是按照文档使用，并没有涉及到修改页面。 通过这个3级联动，也清楚了admin的部分原理。对于一些复杂的页面，可以用自定义的形式来重构页面。</p>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#需求"><span class="toc-text">需求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤"><span class="toc-text">步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2020/12/18/装饰器的六种写法/" rel="next" title="装饰器的六种写法">
+          装饰器的六种写法
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2021/01/11/modulesb报错/" rel="prev" title="解决Go中ambiguous import in multiple modules错误">
+            解决Go中ambiguous import in multiple modules错误
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2020/12/30/后台edite页面实现三级联动/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

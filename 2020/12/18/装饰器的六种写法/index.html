@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="python,">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>装饰器的六种写法 [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        装饰器的六种写法
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2020-12-18T05:37:49.000Z">
+        2020-12-18
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>装饰器本质上是一个Python函数，它可以让其他函数在不需要做任何代码变动的前提下增加额外功能，装饰器的返回值也是一个函数对象。</p>
+<p>它经常用于有切面需求的场景，比如：插入日志、性能测试、事务处理、缓存、权限校验等场景。</p>
+<p>装饰器是解决这类问题的绝佳设计，有了装饰器，我们就可以抽离出大量与函数功能本身无关的雷同代码并继续重用。</p>
+<p>装饰器的使用方法很固定</p>
+<ul>
+<li><p>先定义一个装饰器（帽子）</p>
+</li>
+<li><p>再定义你的业务函数或者类（人）</p>
+</li>
+<li><p>最后把这装饰器（帽子）扣在这个函数（人）头上</p>
+</li>
+</ul>
+<p>就像下面这样子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 定义装饰器</span><br><span class="line">def decorator(func):</span><br><span class="line">    def wrapper(*args, **kw):</span><br><span class="line">        return func()</span><br><span class="line">    return wrapper</span><br><span class="line"></span><br><span class="line"># 定义业务函数并进行装饰</span><br><span class="line">@decorator</span><br><span class="line">def function():</span><br><span class="line">    print(&quot;hello, decorator&quot;)</span><br></pre></td></tr></table></figure>
+<p>实际上，装饰器并不是编码必须性，意思就是说，你不使用装饰器完全可以，它的出现，应该是使我们的代码</p>
+<ul>
+<li><p>更加优雅，代码结构更加清晰</p>
+</li>
+<li><p>将实现特定的功能代码封装成装饰器，提高代码复用率，增强代码可读性</p>
+</li>
+</ul>
+<p>接下来，我将以实例讲解，如何编写出各种简单及复杂的装饰器。</p>
+<h1 id="1-普通装饰器"><a href="#1-普通装饰器" class="headerlink" title="1. 普通装饰器"></a>1. 普通装饰器</h1><p>首先咱来写一个最普通的装饰器，它实现的功能是：</p>
+<ul>
+<li><p>在函数执行前，先记录一行日志</p>
+</li>
+<li><p>在函数执行完，再记录一行日志</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># 这是装饰器函数，参数 func 是被装饰的函数</span><br><span class="line">def logger(func):</span><br><span class="line">    def wrapper(*args, **kw):</span><br><span class="line">        print(&apos;我准备开始执行：&#123;&#125; 函数了:&apos;.format(func.__name__))</span><br><span class="line"></span><br><span class="line">        # 真正执行的是这行。</span><br><span class="line">        func(*args, **kw)</span><br><span class="line"></span><br><span class="line">        print(&apos;主人，我执行完啦。&apos;)</span><br><span class="line">    return wrapper</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@logger</span><br><span class="line">def add(x, y):</span><br><span class="line">    print(&apos;&#123;&#125; + &#123;&#125; = &#123;&#125;&apos;.format(x, y, x+y))</span><br><span class="line"></span><br><span class="line">add(200, 50)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; 我准备开始执行：add 函数了:</span><br><span class="line">&gt;&gt;&gt; 200 + 50 = 250</span><br><span class="line">&gt;&gt;&gt; 我执行完啦。</span><br></pre></td></tr></table></figure>
+<h1 id="2-带参数的函数装饰器"><a href="#2-带参数的函数装饰器" class="headerlink" title="2.带参数的函数装饰器"></a>2.带参数的函数装饰器</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">def say_hello(contry):</span><br><span class="line">    def wrapper(func):</span><br><span class="line">        def deco(*args, **kwargs):</span><br><span class="line">            if contry == &quot;china&quot;:</span><br><span class="line">                print(&quot;你好!&quot;)</span><br><span class="line">            elif contry == &quot;america&quot;:</span><br><span class="line">                print(&apos;hello.&apos;)</span><br><span class="line">            else:</span><br><span class="line">                return</span><br><span class="line"></span><br><span class="line">            # 真正执行函数的地方</span><br><span class="line">            func(*args, **kwargs)</span><br><span class="line">        return deco</span><br><span class="line">    return wrapper</span><br><span class="line"></span><br><span class="line"># 小明，中国人</span><br><span class="line">@say_hello(&quot;china&quot;)</span><br><span class="line">def xiaoming():</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line"># jack，美国人</span><br><span class="line">@say_hello(&quot;america&quot;)</span><br><span class="line">def jack():</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">xiaoming()</span><br><span class="line">print(&quot;------------&quot;)</span><br><span class="line">jack()</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; 你好!</span><br><span class="line">&gt;&gt;&gt; ------------</span><br><span class="line">&gt;&gt;&gt; hello.</span><br></pre></td></tr></table></figure>
+<h1 id="3-不带参数的类装饰器"><a href="#3-不带参数的类装饰器" class="headerlink" title="3. 不带参数的类装饰器"></a>3. 不带参数的类装饰器</h1><p>基于类装饰器的实现，必须实现 <code>__call__</code> 和 <code>__init__</code>两个内置函数。</p>
+<ul>
+<li><p><code>__init__</code> ：接收被装饰函数</p>
+</li>
+<li><p><code>__call__</code> ：实现装饰逻辑。</p>
+</li>
+</ul>
+<p>日志打印的例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class logger(object):</span><br><span class="line">    def __init__(self, func):</span><br><span class="line">        self.func = func</span><br><span class="line"></span><br><span class="line">    def __call__(self, *args, **kwargs):</span><br><span class="line">        print(&quot;[INFO]: the function &#123;func&#125;() is running...&quot;\</span><br><span class="line">            .format(func=self.func.__name__))</span><br><span class="line">        return self.func(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">@logger</span><br><span class="line">def say(something):</span><br><span class="line">    print(&quot;say &#123;&#125;!&quot;.format(something))</span><br><span class="line"></span><br><span class="line">say(&quot;hello&quot;)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; [INFO]: the function say() is running...</span><br><span class="line">&gt;&gt;&gt; say hello!</span><br></pre></td></tr></table></figure>
+<h1 id="4-带参数的类装饰器"><a href="#4-带参数的类装饰器" class="headerlink" title="4. 带参数的类装饰器"></a>4. 带参数的类装饰器</h1><p>带参数和不带参数的类装饰器有很大的不同。</p>
+<ul>
+<li><p><code>__init__</code> ：不再接收被装饰函数，而是接收传入参数。</p>
+</li>
+<li><p><code>__call__</code> ：接收被装饰函数，实现装饰逻辑。</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class logger(object):</span><br><span class="line">    def __init__(self, level=&apos;INFO&apos;):</span><br><span class="line">        self.level = level</span><br><span class="line"></span><br><span class="line">    def __call__(self, func): # 接受函数</span><br><span class="line">        def wrapper(*args, **kwargs):</span><br><span class="line">            print(&quot;[&#123;level&#125;]: the function &#123;func&#125;() is running...&quot;\</span><br><span class="line">                .format(level=self.level, func=func.__name__))</span><br><span class="line">            func(*args, **kwargs)</span><br><span class="line">        return wrapper  #返回函数</span><br><span class="line"></span><br><span class="line">@logger(level=&apos;WARNING&apos;)</span><br><span class="line">def say(something):</span><br><span class="line">    print(&quot;say &#123;&#125;!&quot;.format(something))</span><br><span class="line"></span><br><span class="line">say(&quot;hello&quot;)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; [WARNING]: the function say() is running...</span><br><span class="line">&gt;&gt;&gt; say hello!</span><br></pre></td></tr></table></figure>
+<h1 id="5-使用偏函数与类实现装饰器"><a href="#5-使用偏函数与类实现装饰器" class="headerlink" title="5. 使用偏函数与类实现装饰器"></a>5. 使用偏函数与类实现装饰器</h1><p>Python 对某个对象是否能通过装饰器（<code>@decorator</code>）形式使用只有一个要求：<code>decorator</code> 必须是一个“可被调用（<code>callable</code>）”的对象。</p>
+<p>对于这个 <code>callable</code> 对象，我们最熟悉的就是函数了。</p>
+<p>除函数之外，类也可以是 <code>callable</code> 对象，只要实现了<code>__call__</code> 函数（上面几个例子已经接触过了）。</p>
+<p>还有容易被人忽略的偏函数其实也是 <code>callable</code> 对象。</p>
+<p>接下来就来说说，如何使用 类和偏函数结合实现一个与众不同的装饰器。</p>
+<p>示例： <code>DelayFunc</code> 是一个实现了 <code>__call__</code> 的类，<code>delay</code> 返回一个偏函数，在这里 <code>delay</code> 就可以做为一个装饰器。（以下代码摘自 Python工匠：使用装饰器的小技巧）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">import time</span><br><span class="line">import functools</span><br><span class="line"></span><br><span class="line">class DelayFunc:</span><br><span class="line">    def __init__(self,  duration, func):</span><br><span class="line">        self.duration = duration</span><br><span class="line">        self.func = func</span><br><span class="line"></span><br><span class="line">    def __call__(self, *args, **kwargs):</span><br><span class="line">        print(f&apos;Wait for &#123;self.duration&#125; seconds...&apos;)</span><br><span class="line">        time.sleep(self.duration)</span><br><span class="line">        return self.func(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">    def eager_call(self, *args, **kwargs):</span><br><span class="line">        print(&apos;Call without delay&apos;)</span><br><span class="line">        return self.func(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">def delay(duration):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    装饰器：推迟某个函数的执行。</span><br><span class="line">    同时提供 .eager_call 方法立即执行</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    # 此处为了避免定义额外函数，</span><br><span class="line">    # 直接使用 functools.partial 帮助构造 DelayFunc 实例</span><br><span class="line">    return functools.partial(DelayFunc, duration)</span><br><span class="line"></span><br><span class="line"># 使用</span><br><span class="line">@delay(duration=2)</span><br><span class="line">def add(a, b):</span><br><span class="line">    return a+b</span><br><span class="line"></span><br><span class="line"># 执行过程</span><br><span class="line">&gt;&gt;&gt; add    # 可见 add 变成了 Delay 的实例</span><br><span class="line">&lt;__main__.DelayFunc object at 0x107bd0be0&gt;</span><br><span class="line">&gt;&gt;&gt; </span><br><span class="line">&gt;&gt;&gt; add(3,5)  # 直接调用实例，进入 __call__</span><br><span class="line">Wait for 2 seconds...</span><br><span class="line">8</span><br><span class="line">&gt;&gt;&gt; </span><br><span class="line">&gt;&gt;&gt; add.func # 实现实例方法</span><br><span class="line">&lt;function add at 0x107bef1e0&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="6-能装饰类的装饰器"><a href="#6-能装饰类的装饰器" class="headerlink" title="6. 能装饰类的装饰器"></a>6. 能装饰类的装饰器</h1><p>装饰器版的单例写法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">instances = &#123;&#125;</span><br><span class="line"></span><br><span class="line">def singleton(cls):</span><br><span class="line">    def get_instance(*args, **kw):</span><br><span class="line">        cls_name = cls.__name__</span><br><span class="line">        print(&apos;===== 1 ====&apos;)</span><br><span class="line">        if not cls_name in instances:</span><br><span class="line">            print(&apos;===== 2 ====&apos;)</span><br><span class="line">            instance = cls(*args, **kw)</span><br><span class="line">            instances[cls_name] = instance</span><br><span class="line">        return instances[cls_name]</span><br><span class="line">    return get_instance</span><br><span class="line"></span><br><span class="line">@singleton</span><br><span class="line">class User:</span><br><span class="line">    _instance = None</span><br><span class="line">    def __init__(self, name):</span><br><span class="line">        print(&apos;===== 3 ====&apos;)</span><br><span class="line">        self.name = name</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍"><span class="toc-text">介绍</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-普通装饰器"><span class="toc-text">1. 普通装饰器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-带参数的函数装饰器"><span class="toc-text">2.带参数的函数装饰器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-不带参数的类装饰器"><span class="toc-text">3. 不带参数的类装饰器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-带参数的类装饰器"><span class="toc-text">4. 带参数的类装饰器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-使用偏函数与类实现装饰器"><span class="toc-text">5. 使用偏函数与类实现装饰器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-能装饰类的装饰器"><span class="toc-text">6. 能装饰类的装饰器</span></a>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2020/11/09/How-to-set-up-a-perfect-Python-project/" rel="next" title="How to set up a perfect Python project">
+          How to set up a perfect Python project
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2020/12/30/后台edite页面实现三级联动/" rel="prev" title="后台edite页面实现三级联动">
+            后台edite页面实现三级联动
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2020/12/18/装饰器的六种写法/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

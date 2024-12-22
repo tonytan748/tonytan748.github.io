@@ -1,0 +1,353 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="django,">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>Django.ContentTypes使用示例 [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        Django.ContentTypes使用示例
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2021-02-19T02:22:46.000Z">
+        2021-02-19
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/django/">django</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p>转载于<a href="https://blog.csdn.net/qq_29113041/article/details/87285265?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.control&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.control" target="_blank" rel="noopener">这里</a></p>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>Django创建项目后，在settings.py中默认加载了以下几个app：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = [</span><br><span class="line">    &apos;django.contrib.admin&apos;,</span><br><span class="line">    &apos;django.contrib.auth&apos;,</span><br><span class="line">    &apos;django.contrib.contenttypes&apos;,</span><br><span class="line">    &apos;django.contrib.sessions&apos;,</span><br><span class="line">    &apos;django.contrib.messages&apos;,</span><br><span class="line">    &apos;django.contrib.staticfiles&apos;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>其中有个app为<code>django.contrib.contenttypes</code>，在使用了<code>python manage.py makemigrations</code> 和 <code>python manage.py migrate</code>命令后，这个app会在数据库创建表 <code>django_content_type</code></p>
+<p><code>django_content_type</code>表存储了用户所提交的所有model名称与model所在的app名称</p>
+<p>其中的<code>model</code>字段为用户定义的模型类的名称，<code>app_label</code>为该模型所在app名称</p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>使用的例子，现在有四个model，我们自己创建的Post，Picture和Comment，加上django原生的User。</p>
+<ul>
+<li><p>django原生的User model即用户表</p>
+</li>
+<li><p>Comment为用户提交的评论表</p>
+</li>
+<li><p>Picture为存储图片信息的表</p>
+</li>
+<li><p>Post为存储文章信息的表</p>
+</li>
+</ul>
+<p>场景如下：用户可以对图片或者文章提交评论，那么Comment中首先要存储的是，该评论对应的用户，再就是该评论是针对哪张图片或者哪篇文章的评论，代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from django.db import models</span><br><span class="line">from django.contrib.auth.models import User</span><br><span class="line">class Post(models.Model):</span><br><span class="line">    author = models.ForeignKey(User, on_delete=models.CASCADE)</span><br><span class="line">    body = models.TextField(blank=True)</span><br><span class="line">class Picture(models.Model):</span><br><span class="line">    author = models.ForeignKey(User, on_delete=models.CASCADE)</span><br><span class="line">    body = models.TextField(blank=True)</span><br><span class="line">class Comment(models.Model):</span><br><span class="line">    author = models.ForeignKey(to=User, on_delete=models.CASCADE)</span><br><span class="line">    body = models.TextField(blank=True)</span><br><span class="line">    pic = models.ForeignKey(to=Picture, on_delete=models.CASCADE, null=True)</span><br><span class="line">    post = models.ForeignKey(to=Post, on_delete=models.CASCADE, null=True)</span><br></pre></td></tr></table></figure>
+<p>为了建立Comment与Post或者Picture的关系，我们就需要创建外键，如果该Comment与Picture有关联，那么pic字段是有值的，而其余的关联字段为null。这样实现的缺点是，每增加一种被评论的类型，在Comment model中就需要多新增一个外键，扩展性极差。</p>
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><p>如果使用contenttypes就不需要再使用多个Foreignkey，因为在<code>django_content_type</code>表已经存储了app名和model名，所以我们只需要将我们创建的模型与<code>django_content_type</code>表关联起来，然后再存储一个实例 id 即可准确定位到某个app中某个模型的具体实例。代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">from django.db import models</span><br><span class="line">from django.contrib.contenttypes.models import ContentType</span><br><span class="line">from django.contrib.auth.models import User</span><br><span class="line">from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation</span><br><span class="line">class Post(models.Model):</span><br><span class="line">    author = models.ForeignKey(User, on_delete=models.CASCADE)</span><br><span class="line">    body = models.TextField(blank=True)</span><br><span class="line">    comments = GenericRelation(&apos;Comment&apos;)  # 使用GenericRelation可以建立该类与Comment类的反向关联，</span><br><span class="line">                                           # 那么可以通过该类的实例来创建对应的comment</span><br><span class="line">class Picture(models.Model):</span><br><span class="line">    author = models.ForeignKey(User, on_delete=models.CASCADE)</span><br><span class="line">    body = models.TextField(blank=True)</span><br><span class="line">    comments = GenericRelation(&apos;Comment&apos;)</span><br><span class="line">class Comment(models.Model):</span><br><span class="line">    #  user_name = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)</span><br><span class="line">    author = models.ForeignKey(to=User, on_delete=models.CASCADE)</span><br><span class="line">    body = models.TextField(blank=True)</span><br><span class="line">    # step1</span><br><span class="line">    # ForeignKey为外键，即在Comment类中，content_type对应了django_content_type表中的某个对象</span><br><span class="line">    content_type = models.ForeignKey(to=ContentType, on_delete=models.CASCADE)  # 与数据库中的django_content_type表关联起来</span><br><span class="line">    # step2</span><br><span class="line">    object_id = models.PositiveIntegerField()  # 正整数类型，在被关联的表中的实例id，以此来定位具体的实例</span><br><span class="line">    # step3</span><br><span class="line">    content_object = GenericForeignKey()  # 根据content_type和object_id来指向一个模型中的具体实例</span><br></pre></td></tr></table></figure>
+<p>首先看Comment这个模型，与contenttypes相关的就三个字段：<code>content_tpye</code>   <code>object_id</code>    <code>content_object</code></p>
+<p><code>content_type</code>字段为外键，指向ContentType这个模型，也就是上面提到的<code>django_content_type</code>表</p>
+<p><code>object_id</code>为一个整数，存储了实例id，实例id不理解可以看下面的数据表结构分析</p>
+<p><code>content_object</code>为<code>GenericForeignKey</code>类型，主要作用是根据<code>content_type</code>字段和<code>object_id</code>字段来定位某个模型中具体某个实例</p>
+<p>所以实际上在使用<code>GenericForeignKey()</code>函数时需要传入两个参数，即<code>content_type</code>和<code>object_id</code>字段的名字，注意是名字不是value。但是默认在该函数的构造函数中已经赋予了默认值，即<code>content_type</code>和<code>object_id</code>，所以如果我们定义的变量名为这两个，那么我们可以省略该参数。该字段不会存储到数据库中，在查询的时候ORM会用到。</p>
+<p>GenericForeignKey构造函数如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def __init__(self, ct_field=&apos;content_type&apos;, fk_field=&apos;object_id&apos;, for_concrete_model=True):</span><br><span class="line">    self.ct_field = ct_field</span><br><span class="line">    self.fk_field = fk_field</span><br><span class="line">    self.for_concrete_model = for_concrete_model</span><br><span class="line">    self.editable = False</span><br><span class="line">    self.rel = None</span><br><span class="line">    self.column = None</span><br></pre></td></tr></table></figure>
+<p>将模型同步到数据库，并创建几个测试数据，使用manage.py自带的shell可以轻松的创建测试数据。</p>
+<p><code>python manage.py shell</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from app1.models import Post, Picture, Comment  # app1即为你自己所创建的app名</span><br><span class="line">from django.contrib.auth.models import User  # django原生用户模型</span><br><span class="line">user = User.objects.get(username=&apos;admin-x&apos;)</span><br><span class="line">post = Post.objects.create(author=user, body=&apos;admin-x post test&apos;)</span><br><span class="line">picture = Picture.objects.create(author=user, body=&apos;admin-x pic test&apos;)</span><br><span class="line"> </span><br><span class="line">pic = Picture.objects.get(id=1) # 获取id为1的pic对象</span><br><span class="line">c1 = Comment.objects.create(author=user, body=&apos;test&apos;, content_object=pic) # 创建一个评论并与上述的pic对象关联起来</span><br></pre></td></tr></table></figure>
+<p>还可以注意到，在Post和Picture模型中我们定义了<code>comments = GenericRelation(&#39;Comment&#39;)</code></p>
+<p>GenericRelation的作用是建立该model与Comment的反向关联，我们这样就可以通过Post实例或者Picture实例直接查询属于该实例的所有评论，或者创建一个属于该实例的新评论。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pic = Picture.objects.get(id=1) # 获取id为1的pic对象</span><br><span class="line">pic.comments.create(author=user, body=&apos;test02&apos;)  # 创建一个属于pic对象的评论</span><br><span class="line">pic.comments.all()  # 获取属于pic对象的所有评论</span><br></pre></td></tr></table></figure>
+<p>实际上在数据表中，根据<code>content_type_id</code>就可以在<code>django_content_type</code>这个表中定位到哪个app的哪个model，然后根据<code>object_id</code>定位到该model中具体实例。</p>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#说明"><span class="toc-text">说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实例"><span class="toc-text">实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作"><span class="toc-text">操作</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2021/02/04/Django-queryset实现按指定字段的值进行排序/" rel="next" title="[Django]queryset实现按指定字段的值进行排序">
+          [Django]queryset实现按指定字段的值进行排序
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2021/02/19/mysql查询近7天，半年，一年数据/" rel="prev" title="mysql查询近7天，半年，一年数据">
+            mysql查询近7天，半年，一年数据
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2021/02/19/Django-ContentTypes使用示例/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

@@ -1,0 +1,356 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="Tony Tan">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>What are useful CLI tools for Linux system admins [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        What are useful CLI tools for Linux system admins
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2014-12-09T16:00:00.000Z">
+        2014-12-10
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p><em>What are useful CLI tools for Linux system admins</em></p>
+<p>System administrators (sysadmins) are responsible for day-to-day operations of production systems and services. One of the critical roles of sysadmins is to ensure that operational services are available round the clock. For that, they have to carefully plan backup policies, disaster management strategies, scheduled maintenance, security audits, etc. Like every other discipline, sysadmins have their tools of trade. Utilizing proper tools in the right case at the right time can help maintain the health of operating systems with minimal service interruptions and maximum uptime.</p>
+
+<p>This article will present some of the most popular and useful CLI tools recommended for sysadmins in their day to day activities. If you would like to recommend any useful tool which is not listed here, don’t forget to share it in the comment section.</p>
+
+<p></p><h3>Network Tools</h3><p></p>
+<ol><br><li><b>ping:</b> <p>Check end-to-end connectivity (RTT delay, jitter, packet loss) of a remote host with ICMP echo/reply. Useful to check system status and reachability.</p></li><br><br><li><b>hping:</b> <p>Network scanning and testing tool that can generate ICMP/TCP/UDP ping packets. Often used for advanced port scanning, firewall testing, manual path MTU discovery and fragmentation testing.</p></li><br><br><li><b>traceroute:</b> <p>Discover a layer-3 forwarding path from a local host to a remote destination host with TTL-limited ICMP/UDP/TCP probe packets. Useful to troubleshoot network reachability and routing problems.</p></li><br><br><li><b>mtr:</b> <p>A variation of traceroute which characterizes per-hop packet loss/jitter with running statistics. Useful to characterize routing path delays.</p></li><br><br><li><b>netcat/socat:</b> <p>A swiss army knife of TCP/IP networking, allowing to read/write byte streams over TCP/UDP. Useful to troubleshoot firewall policies and service availability.</p></li><br><br><li><b>dig:</b> <p>DNS troubleshooting tool that can generate forward queries, reverse queries, find authoritative name servers, check CNAME, MX and other DNS records. Can be instructed to query a specific DNS server of your choosing.</p></li><br><br><li><b>nslookup:</b> <p>Another DNS checking/troubleshooting tool. Works with all DNS queries and records. Can query a particular DNS server.</p></li><br><br><li><b>dnsyo:</b> <p>A DNS testing tool which checks DNS propagation by performing DNS lookup from over a number of open resolvers located across 1,500 different networks around the world.</p></li><br><br><li><b>lsof:</b> <p>Show information about files (e.g., regular files, pipes or sockets) which are opened by processes. Useful to monitor processes or users in terms of their open network connections or opened files.</p></li><br><br><li><b>iftop:</b> <p>A ncurses-based TUI utility that can be used to monitor in real time bandwidth utilization and network connections for individual network interfaces. Useful to keep track of bandwidth hogging applications, users, destinations and ports.</p></li><br><br><li><b>netstat:</b> <p>A network statistics utility that can show status information and statistics about open network connections (TCP/UDP ports, IP addresses), routing tables, TX/RX traffic and protocols. Useful for network related diagnosis and performance tuning.</p></li><br><br><li><b>tcpdump:</b> <p>A popular packet sniffer tool based on libpcap packet capture library. Can define packet capturing filters in Berkeley Packet Filters format.</p></li><br><br><li><b>tshark:</b> <p>Another CLI packet sniffer software with full compatibility with its GUI counterpart, Wireshark. Supports 1,000 protocols and the list is growing. Useful to troubleshoot, analyze and store information on live packets.</p></li><br><br><li><b>ip:</b> <p>A versatile CLI networking tool which is part of iproute2 package. Used to check and modifying routing tables, network device state, and IP tunneling settings. Useful to view routing tables, add/remove static routes, configure network interfaces, and otherwise troubleshoot routing issues.</p></li><br><br><li><b>ifup/ifdown:</b> <p>Used to bring up or shut down a particular network interface. Often a preferred alternative to restarting the entire network service.</p></li><br><br><li><b>autossh:</b> <p>A program which creates an SSH session and automatically restarts the session should it disconnect. Often useful to create a persistent reverse SSH tunnel across restrictive corporate networks.</p></li><br><br><li><b>iperf:</b> <p>A network testing tool which measures maximum bi-directional throughput between a pair of hosts by injecting customizable TCP/UDP data streams in between.</p></li><br><br><li><b>elinks/lynx:</b> <p>text-based web browsers for CLI-based server environment.</p></li><br></ol>
+
+<p></p><h3>Security Tools</h3><p></p>
+<ol><br><li><b>iptables:</b> <p>A user-space CLI tool for configuring Linux kernel firewall. Provides means to create and modify rules for incoming, transit and outgoing packets within Linux kernel space.</p></li><br><br><li><b>nmap:</b> <p>A popular port scanning and network discovery tool used for security auditing purposes. Useful to find out which hosts are up and running on the local network, and what ports are open on a particular host.</p></li><br><br><li><b>TCP Wrappers:</b> <p>A host-based network ACL tool that can be used to filter incoming/outgoing reqeuests/replies. Often used alongside iptables as an additional layer of security.</p></li><br><br><li><b>getfacl/setfacl:</b> <p>View and customize access control lists of files and directories, as extensions to traditional file permissions.</p></li><br><br><li><b>cryptsetup:</b> <p>Used to create and manage LUKS-encrypted disk partitions.</p></li><br><br><li><b>lynis:</b> <p>A CLI-based vulnerability scanner tool. Can scan the entire Linux system, and report potential vulnerabilities along with possible solutions.</p></li><br><br><li><b>maldet:</b> <p>A malware scanner CLI tool which can detect and quarantine potentially malware-infected files. Can run as a background daemon for continuous monitoring.</p></li><br><br><li><b>rkhunter/chkrootkit:</b> <p>CLI tools which scan for potential rootkits, hidden backdoors and suspected exploits on a local system, and disable them.</p></li><br></ol>
+
+<p></p><h3>Storage Tools</h3><p></p>
+<ol><br><br><li><b>fdisk:</b> <p>A disk partition editor tool. Used to view, create and modify disk partitions on hard drives and removable media.</p></li><br><br><li><b>sfdisk:</b> <p>A variant of fdisk which accesses or updates a partition table in a non-interactive fashion. Useful to automate disk partitioning as part of backup and recovery procedure.</p></li><br><br><li><b>parted:</b> <p>Another disk partition editor which can support disk larger than 2TB with GPT (GUID Partitioning Table). Gparted is a GTK+ GUI front-end of parted.</p></li><br><br><li><b>df:</b> <p>Used to check used/available storage and mount point of different partitions or file directories. A user-friendly variant dfc exists.</p></li><br><br><li><b>du:</b> <p>Used to view current disk usage associated with different files and directories (e.g., du -sh *).</p></li><br><br><li><b>mkfs:</b> <p>A disk formatting command used to build a filesystem on individual disk partitions. Filesystem-specific versions of mkfs exist for a number of filesystems including ext2, ext3, ext4, bfs, ntfs, vfat/fat.</p></li><br><br><li><b>fsck:</b> <p>A CLI tool used to check a filesystem for errors and repair where possible. Typically run automatically upon boot when necessary, but also invoked manually on demand once unmounting a partition.</p></li><br><br><li><b>mount:</b> <p>Used to map a physical disk partition, network share or remote storage to a local mount point. Any read/write in the mount point makes actual data being read/written in the corresponding actual storage.</p></li><br><br><li><b>mdadm:</b> <p>A CLI tool for managing software RAID devices on top of physical block devices. Can create, build, grow or monitor RAID array.</p></li><br><br><li><b>lvm:</b> <p>A suite of CLI tools for managing volume groups and physical/logical volumes, which allows one to create, resize, split and merge volumes on top of multiple physical disks with minimum downtime.</p></li><br></ol>
+
+<p></p><h3>Log Processing Tools</h3><p></p>
+<ol><br><li><b>tail:</b> <p>Used to monitor trailing part of a (growing) log file. Other variants include multitail (multi-window monitoring) and ztail (inotify support and regex filtering and coloring).</p></li><br><br><li><b>logrotate:</b> <p>A CLI tool that can split, compress and mail old/large log files in a pre-defined interval. Useful for administration of busy servers which may produce a large volume of log files.</p></li><br><br><li><b>grep/egrep:</b> <p>Can be used to filter log content for a particular pattern or a regular expression. Variants include user-friendly ack and faster ag.</p></li><br><br><li><b>awk:</b> <p>A versatile text scanning and processing tool. Often used to extract certain columns or fields from text/log files, and feed the result to other tools.</p></li><br><br><li><b>sed:</b> <p>A text stream editor tool which can filter and transform (e.g., remove line/whitespace, substitute/convert a word, add numbering) text streams and pipeline the result to stdout/stderr or another tool.</p></li><br></ol>
+
+<p></p><h3>Backup Tools</h3><p></p>
+<ol><br><li><b>rsync:</b> <p>A fast one-way incremental backup and mirroring tool. Often used to replicate a data repository to an offsite storage, optionally over a secure connection such as SSH or stunnel.</p></li><br><br><li><b>rdiff-backup:</b> <p>Another bandwidth-efficient, incremental backup tool. Maintains differential of two consecutive snapshots.</p></li><br><br><li><b>duplicity:</b> <p>An encrypted incremental backup utility. Uses GnuPG to encrypt a backup, and transfers to a remote server over SSH.</p></li><br></ol>
+
+<p></p><h3>Performance Monitoring Tools</h3><p></p>
+<ol><br><li><b>top:</b> <p>A CLI-based process viewer program. Can monitor system load, process states, CPU and memory utilization. Variants include more user-friendly htop.</p></li><br><br><li><b>ps:</b> <p>Shows a snapshot of all running processes in the system. The output can be customized to show PID, PPID, user, load, memory, cumulative user/system time, start time, and more. Variants include pstree which shows processes in a tree hierarchy.</p></li><br><br><li><b>nethogs:</b> <p>A bandwidth monitoring tool which groups active network connections by processes, and reports per-process (upload/download) bandwidth consumption in real-time.</p></li><br><br><li><b>ngxtop:</b> <p>A web-server access log parser and monitoring tool whose interface is inspired by top command. It can report, in real time, a sorted list of web requests along with frequency, size, HTTP return code, IP address, etc.</p></li><br><br><li><b>vmstat:</b> <p>A simple CLI tool which shows various run-time system properties such as process count, free memory, paging status, CPU utilization, block I/O activities, interrupt/context switch statistics, and more.</p></li><br><br><li><b>iotop:</b> <p>An ncurses-based I/O monitoring tool which shows in real time disk I/O activities of all running processes in sorted order.</p></li><br><br><li><b>iostat:</b> <p>A CLI tool which reports current CPU utilization, as well as device I/O utilization, where I/O utilization (e.g., block transfer rate, byte read/write rate) is reported on a per-device or per-partition basis.</p></li><br><br><li><b>sysdig:</b> <p>A versatile and comprehensive open source tool for capturing and analyzing system behavior and server state in both real-time and offline modes.</p></li><br></ol>
+
+<p></p><h3>Productivity Tools</h3><p></p>
+<ol><br><li><b>screen:</b> <p>Used to split a single terminal into multiple persistent virtual terminals, which can also be made accessible to remote users, like teamviewer-like screen sharing.</p></li><br><br><li><b>tmux:</b> <p>Another terminal multiplexer tool which enables multiple persistent sessions, as well as horizontal/vertial splits of a terminal.</p></li><br><br><li><b>cheat:</b> <p>A simple CLI tool which allows you to read cheat sheets of many common Linux commands, conveniently right at your fingertips. Pre-built cheat sheets are fully customizable.</p></li><br><br><li><b>apropos:</b> <p>Useful when you are searching man pages for descriptions or keywords.</p></li><br></ol>
+
+<p></p><h3>Package Management Tools</h3><p></p>
+<ol><br><li><b>apt:</b> <p>The de facto package manager for Debian based systems like Debian, Ubuntu, Backtrack or elementary OS. A life saver.</p></li><br><br><li><b>apt-fast:</b> <p>A supporting utility for apt-get, which can significantly improve apt-get’s download speed by using multiple concurrent connections.</p></li><br><br><li><b>apt-file:</b> <p>Used to find out which .deb package a specific file belongs to, or to show all files in a particular .deb package. Works on both installed and non-installed packages.</p></li><br><br><li><b>dpkg:</b> <p>A CLI utility to install a .deb package manually. Highly advised to use apt whenever possible.</p></li><br><br><li><b>yum:</b> <p>The de facto automatic package manager for Red Hat based systems like RHEL, CentOS or Fedora. Yet another life saver.</p></li><br><br><li><b>rpm:</b> <p>Typically I use rpmyum something. Has some useful parameters like -q, -f, -l for querying, files and locations, respectively.</p></li><br></ol>
+
+<p></p><h3>Hardware Tools</h3><p></p>
+<p><ol></ol></p>
+<li><b>lspci:</b> <p>A command line tool which shows various information about installed PCI devices, such as model names, device drivers, capabilities, memory address, PCI bus address.</p></li>
+
+<li><b>lshw:</b> <p>A command line tool which queries and displays detailed information of hardware configuration in various categories (e.g., processor, memory, motherboard, network, video, storage). Supports multiple output formats: html, xml, json, text.</p></li>
+
+<li><b>inxi:</b> <p>A comprehensive hardware reporting tool which gives an overview of various hardware components such as CPU, graphics card, sound card, network card, temperature/fan sensors, etc.</p></li>
+
+<p></p>
+<p>If you would like to recommend any useful tool which is not listed here, feel free to share it in the comment section.</p>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Network Tools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Security Tools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Storage Tools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Log Processing Tools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Backup Tools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Performance Monitoring Tools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Productivity Tools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Package Management Tools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Hardware Tools</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2014/11/27/how-to-use-python-datetime-and-time/" rel="next" title="How to use Python datetime and time">
+          How to use Python datetime and time
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2015/06/03/top-10-algorithm/" rel="prev" title="Top 10 Algorithm">
+            Top 10 Algorithm
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2014/12/10/what-are-useful-cli-tools-for-linux-system-admins/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

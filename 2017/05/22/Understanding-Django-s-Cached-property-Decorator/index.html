@@ -1,0 +1,371 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="django,">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>Understanding Django&#39;s Cached_property Decorator [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        Understanding Django&#39;s Cached_property Decorator
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2017-05-22T08:47:39.000Z">
+        2017-05-22
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/django/">django</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p>This blog is transfer from <a href="http://ericplumb.com/blog/understanding-djangos-cached_property-decorator.html" target="_blank" rel="noopener">http://ericplumb.com/blog/understanding-djangos-cached_property-decorator.html</a></p>
+<p>There is not a lot of documentation out there about Django’s <code>cached_property</code> decorator, which is one worth using. Today I want to talk about what it does, how I discovered it, and explore how it works.</p>
+<p>Let’s get started with what it does and why you would use it. How often, in Python or Django, do you find yourself doing something like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class House():</span><br><span class="line">    @property</span><br><span class="line">    def color(self):</span><br><span class="line">        if not getattr(self, &apos;_color&apos;, None):</span><br><span class="line">            self._color = load_color_from_db(self.id)</span><br><span class="line">        return self._color</span><br></pre></td></tr></table></figure>
+<p>When objects have a method or property which is expensive to access (DB query, intensive calculation, etc.), it makes sense to only make the effort to retrieve the value once. This pattern allows you to access it subsequent times without paying the cost for any access past the first.</p>
+<p>However, it’s somewhat clunky, and adds a namespace-polluting attribute to your object, and — most of all — if you have several properties with the same issue, you will find yourself repeating yourself a lot.[^1]</p>
+<h1 id="DIY-DRY"><a href="#DIY-DRY" class="headerlink" title="DIY DRY"></a>DIY DRY</h1><p>When I realized that this was a pattern worth abstracting, I wrote a <code>cached_property</code> decorator which looked something like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def cached_property(method):</span><br><span class="line">    prop_name = &apos;_()&apos;.format(method.__name__)</span><br><span class="line">    def wrapped_func(self, *args, **kwargs):</span><br><span class="line">        if not hasattr(self, prop_name):</span><br><span class="line">            setattr(self, prop_name, method(self, *args, **kwargs))</span><br><span class="line">        return getattr(self, prop_name)</span><br><span class="line">    return property(wrapped_func)</span><br></pre></td></tr></table></figure>
+<p>Demonstrating its use:[^2]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; class House():</span><br><span class="line">...     @property</span><br><span class="line">...     def color(self):</span><br><span class="line">...         print(&quot;Accessing color&quot;)</span><br><span class="line">...         return &quot;blue&quot;</span><br><span class="line">...     @cached_property</span><br><span class="line">...     def square_footage(self):</span><br><span class="line">...         print(&quot;Accessing square footage&quot;)</span><br><span class="line">...         return 1500</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; h.color</span><br><span class="line">Accessing color</span><br><span class="line">&apos;blue&apos;</span><br><span class="line">&gt;&gt;&gt; h.color    # Prints &quot;Accessing color&quot; each time you asscee the property</span><br><span class="line">Accessing color</span><br><span class="line">&apos;blue&apos;</span><br><span class="line">&gt;&gt;&gt; h.square_footage</span><br><span class="line">Accessing square footage</span><br><span class="line">1500</span><br><span class="line">&gt;&gt;&gt; h.square_footage    # Only prints message the first time</span><br><span class="line">1500</span><br></pre></td></tr></table></figure></p>
+<h1 id="Serendipity"><a href="#Serendipity" class="headerlink" title="Serendipity"></a>Serendipity</h1><p>I was pretty proud of myself after having written this decorator. While I didn’t like that it created extra attributes on my object, it replaced lots of clunky <code>if</code> blocks with a clean decorator.</p>
+<p>I immediately resolved to go through some Django projects and add the decorator to all the objects I’d previously been using the first pattern on. At some point, I typed <code>@cached_property</code> and activated autoimport, [^3] and what to my wondering eyes should appear but <code>django.utils.functional.cached_property</code>!</p>
+<p>What is this!? Had my genius idea been pre-empted? I imported it into my project and tried it out and: in a word, yes. Its effect was precisely the same as that of my little handmade decorator. (You can test this for yourself by trying the console session above, replacing the decorator definition with <code>from django.utils.functional import cached_property</code>.)</p>
+<p>Well, let’s see if my version is any faster:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; timeit.timeit(&quot;&quot;&quot;</span><br><span class="line">... class House():</span><br><span class="line">...     @cached_property</span><br><span class="line">...     def color(self):</span><br><span class="line">...         return 5</span><br><span class="line">... &quot;&quot;&quot;, setup=&quot;from django.utils.functional import cached_property&quot;)</span><br><span class="line">2.063973829377808</span><br><span class="line">&gt;&gt;&gt; timeit.timeit(&quot;&quot;&quot;</span><br><span class="line">class House():</span><br><span class="line">    @cached_property</span><br><span class="line">    def color(self):</span><br><span class="line">        return 5</span><br><span class="line">&quot;&quot;&quot;, setup=&quot;&quot;&quot;</span><br><span class="line">def cached_property(method):</span><br><span class="line">    prop_name=&apos;_()&apos;.format(method.__name__)</span><br><span class="line">    def wrapped_func(self, *args, **kwargs):</span><br><span class="line">        if not hasattr(self, prop_name):</span><br><span class="line">            setattr(self, prop_name, method(self, *args, **kwargs))</span><br><span class="line">        return getattr(self, prop_name)</span><br><span class="line">    return property(wrapped_func)</span><br><span class="line">&quot;&quot;&quot;)</span><br><span class="line">3.4206963438101354</span><br></pre></td></tr></table></figure></p>
+<p>I’m 75% slower; damn. Well, I’ve been thoroughly outprogrammed here — all that’s left is to look at the Django code and see how they implemented this.</p>
+<h1 id="Django-Knows"><a href="#Django-Knows" class="headerlink" title="Django Knows"></a>Django Knows</h1><p>The code for this decorator is at <a href="https://github.com/django/django/blob/2456ffa42c33d63b54579eae0f5b9cf2a8cd3714/django/utils/functional.py#L38-50" target="_blank" rel="noopener">https://github.com/django/django/blob/2456ffa42c33d63b54579eae0f5b9cf2a8cd3714/django/utils/functional.py#L38-50</a> and is reproduced below. [^4]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class cached_property(object):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Decorator that converts a method with a single self argument into a property cached on the instance</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def __init__(self, func):</span><br><span class="line">        self.func = func</span><br><span class="line">    def __get__(self, instance, type=None):</span><br><span class="line">        if instance is None:</span><br><span class="line">            return self</span><br><span class="line">        res = instance.__dict__[self.func.__name__] = self.func(instance)</span><br><span class="line">        return res</span><br></pre></td></tr></table></figure>
+<p>Remarkably simple for what it does. It is a class-based decorator rather than a more familiar function-based one. In addition to allowing it to keep state, this allows it to do something extremely clever and audacious at the expense of extensibility. Let’s go through it briefly, using the following code as a concrete example.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class House(object):</span><br><span class="line">    @cached_property</span><br><span class="line">    def color(self):</span><br><span class="line">        return &apos;blue&apos;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong><code>__init__</code></strong></li>
+</ol>
+<p><small>The <code>__init__</code> method of a class-based decorator is called when its decorated function is defined (in this case at class definition time), with its only argument besides the omnipresent self being the decorated function. The <code>cached_property</code> decorator class simply stores this function (a method, in this case) for future reference. Important for the next item is that at this point, <code>House.color</code> is a <code>cached_property</code> object instance.</small></p>
+<ol start="2">
+<li><strong><code>__get__</code></strong></li>
+</ol>
+<p><small>Those of you who use class-based decorators are probably more familiar with implementing the decoration logic in the <code>__call__</code> method. This is where the genius comes in: if <code>h</code> is a <code>House</code> instance, at the time the <code>h.color</code> attribute is accessed, if it points to an object like the current <code>cached_property</code> instance, Python calls the special <code>__get__()</code> descriptor method of that object. (This object’s class is in fact referred to as a descriptor class in the docs, and the containing class (<code>House</code> in this case) as the owner class.)</small></p>
+<p><small>The arguments to <code>__get__()</code> are as follows:</small></p>
+<ul>
+<li><p><small> <code>self</code>, the current <code>cached_property</code> instance, on which the original method is stored as <code>self.func</code></small></p>
+</li>
+<li><p><small> <code>instance</code>, the instance of the owner class — in this case <code>h</code>. This is essentially a second <code>self</code> argument, with the instance in this case being the one we actually care about.</small></p>
+</li>
+<li><p><small> <code>type</code>, the class type of the owner class — in this case <code>House</code>.</small></p>
+</li>
+</ul>
+<p><small>With this in mind, look at what <code>__get__()</code> does. Ignore the <code>if</code> block for now and let’s focus on the next line, starting from the right and going left.</small></p>
+<p><small><strong><code>self.func(instance)</code></strong></small></p>
+<p><small>calls the original (decorated) method which was cached as <code>self.func</code> under this <code>cached_property</code> instance at definition time. The <code>instance</code> argument it passes is the <code>House</code> instance which <code>color</code> was referenced from. Normally, when you call an instance method, this first argument would be named <code>self</code>.</small></p>
+<p><small>See where this is going? <code>self.func(instance)</code> is the same as calling <code>h.color()</code> (or <code>House.color(h)</code>) if you hadn’t decorated the method at all.</small></p>
+<p><small><strong><code>instance.__dict__[self.func.__name__]</code></strong></small></p>
+<p><small>is where the magic happens. It asks <code>self.func</code> what its <code>__name__</code> is (in this case <code>color</code>), then uses the instance’s <code>__dict__</code> attribute to replace itself with a property consisting of the value calculated in step 1. In other words, before this statement is executed, <code>h.color</code> refers to a <code>cached_property</code> instance. After it is executed, <code>h.color</code> refers to the string “blue”. What this instance is doing, at the very time it’s being accessed, is replacing itself with the value calculated by the decorated method.</small></p>
+<ul>
+<li><small> <strong><code>res = ...</code></strong></small></li>
+</ul>
+<p><small>It’s all over now but for the cleanup. The calculated value is passed to a temporary variable which is then <code>return</code> ed so that this invocation of <code>cached_property.__get__()</code> (accessed via <code>h.color</code>) returns the value (“blue”) which is now stored as the property <code>h.color</code>.</small></p>
+<p><small>So that’s <code>cached_property.__get__()</code>, which selflessly overwrites its containing instance with a dumb value. Once out of the scope of this function, the <code>cached_property</code> instance is no longer referred to and can be garbage-collected.</small></p>
+<ol start="3">
+<li><strong><code>if instance is None: return self</code></strong><br><small>Briefly on this: this is relevant when the <code>color</code> attribute is accessed via the class instead of an instance, e.g. <code>House.color</code> instead of <code>h.color</code>. It simply returns the <code>cached_property</code> instance itself. This isn’t all that useful to the user, and I assume it’s just done to avoid a <code>TypeError</code> when the cached function would otherwise be called with a <code>None</code> instance. [^5]</small></li>
+</ol>
+<p>So that’s what some brilliant mind on the Django team came up with. Being able to “monkeypatch” attributes and properties is one of the benefits of any dynamic language, but seldom have I seen it used so audaciously. It also shows the power of Python’s double-underscore descriptors, which continue to amaze me in what they are capable of.</p>
+<p>Now that I’m done gushing, one note about this decorator is that it will only work for object methods, not pure functions. Can you tell why? This is one downside of this method over the function-based decorator — that one could fairly easily be extended to work on any function. However, it would be just as easy to write a module-level version of this decorator.</p>
+<h1 id="Wrapping-Up"><a href="#Wrapping-Up" class="headerlink" title="Wrapping Up"></a>Wrapping Up</h1><p>The links above on class-based decorators and Python’s descriptor methods are both worth reading in their entirety. Both helped me understand what was going on in Django’s cached_property definition, especially understanding the double level of indirection (i.e., inside <code>cached_property.__get__()</code>, <code>self</code> represents the <code>cached_property</code> object whereas <code>instance</code> represents the object whose method it’s decorating) and the use of <code>__get__</code> instead of the more familiar <code>__call__</code>.</p>
+<p>If you read this far, thanks! Comments and corrections are always appreciated.</p>
+<p>[^1]: I initially typed “if you have several properties with this same property.” Talk about repeating yourself repeating yourself.<br>[^2]: Note that if you try this example in an IDE or console with autocomplete, you may find it printing the “Accessing” messages as soon as you have typed h.. This is because your console is accessing the properties as it tries to inspect which properties/methods are on the object in order to bring up the autocomplete options. You can test this by copy/pasting “h.color” which gives it no time to autocomplete.<br>[^3]: <code>Ctrl + Shift + O</code> in Eclipse, <code>Alt + Enter</code> while on the unimported name in IDEA. Of course you knew this already, but for those who didn’t: you’re welcome.<br>[^4]: Updated 7/25/13 to reflect changes in Django codebase — Django 1.4.0, about which I originally wrote this article, did not have the <code>if instance is None</code> check<br>[^5]: A side effect of this is that if you implemented a <code>__call__</code> method on cached_property which simply returned <code>self.func(instance)</code>, you could then use <code>House.color(h)</code> as a way to get the value via a function call instead of attribute access. This isn’t much more than a parlor trick though.</p>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DIY-DRY"><span class="toc-text">DIY DRY</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Serendipity"><span class="toc-text">Serendipity</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Django-Knows"><span class="toc-text">Django Knows</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Wrapping-Up"><span class="toc-text">Wrapping Up</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2017/04/03/SQLAlchemy-Example-Create-Database-CURD-Faker/" rel="next" title="SQLAlchemy Example: Create Database, CURD, Faker">
+          SQLAlchemy Example: Create Database, CURD, Faker
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2017/05/23/python-descriptor-howto-guide/" rel="prev" title="python descriptor howto guide">
+            python descriptor howto guide
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2017/05/22/Understanding-Django-s-Cached-property-Decorator/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

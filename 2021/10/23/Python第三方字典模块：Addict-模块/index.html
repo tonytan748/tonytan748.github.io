@@ -1,0 +1,345 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="python,">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>Python第三方字典模块：Addict 模块 [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        Python第三方字典模块：Addict 模块
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2021-10-23T11:41:29.000Z">
+        2021-10-23
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p>转载自<a href="https://mp.weixin.qq.com/s/j_nsJ9LH_biZPUqgHV4A_g" target="_blank" rel="noopener">这里</a></p>
+<p>Addit 是一个Python模块，除了提供标准的字典语法外，Addit 生成的字典的值既可以使用属性来获取，也可以使用属性进行设置。</p>
+<p>这意味着你不用再写这样的字典了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">body = &#123;</span><br><span class="line">    &apos;query&apos;: &#123;</span><br><span class="line">        &apos;filtered&apos;: &#123;</span><br><span class="line">            &apos;query&apos;: &#123;</span><br><span class="line">                &apos;match&apos;: &#123;&apos;description&apos;: &apos;addictive&apos;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &apos;filter&apos;: &#123;</span><br><span class="line">                &apos;term&apos;: &#123;&apos;created_by&apos;: &apos;Mats&apos;&#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>相反，你只需编写以下三行代码就能完成目的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">body = Dict()</span><br><span class="line">body.query.filtered.query.match.description = &apos;addictive&apos;</span><br><span class="line">body.query.filtered.filter.term.created_by = &apos;Mats&apos;</span><br></pre></td></tr></table></figure>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>你可以通过 <code>pip</code> 安装：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install addict</span><br></pre></td></tr></table></figure></p>
+<p>或通过 <code>conda</code> ：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install addict -c conda-forge</span><br></pre></td></tr></table></figure></p>
+<p>Addit 在Python2.7+和Python3上都可以运行。</p>
+<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><p>Addict 继承自字典，但在访问和设置其值方面更加灵活。使用 Addict 的字典是一种乐趣！</p>
+<p>设置嵌套词典的项是极其舒服的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from addict import Dict</span><br><span class="line">&gt;&gt;&gt; mapping = Dict()</span><br><span class="line">&gt;&gt;&gt; mapping.a.b.c.d.e = 2</span><br><span class="line">&gt;&gt;&gt; mapping</span><br><span class="line">&#123;&apos;a&apos;: &#123;&apos;b&apos;: &#123;&apos;c&apos;: &#123;&apos;d&apos;: &#123;&apos;e&apos;: 2&#125;&#125;&#125;&#125;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果Dict是用任何可迭代值实例化的，它将遍历并克隆这些值，然后写入到对应的属性及值中，比如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; mapping = &#123;&apos;a&apos;: [&#123;&apos;b&apos;: 3&#125;, &#123;&apos;b&apos;: 3&#125;]&#125;</span><br><span class="line">&gt;&gt;&gt; dictionary = Dict(mapping)</span><br><span class="line">&gt;&gt;&gt; dictionary.a[0].b</span><br><span class="line">3</span><br></pre></td></tr></table></figure></p>
+<p>但 <code>mapping[&#39;a&#39;]</code> 不再与 <code>dictionary[&#39;a&#39;]</code> 相同。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; mapping[&apos;a&apos;] is dictionary[&apos;a&apos;]</span><br><span class="line">False</span><br></pre></td></tr></table></figure></p>
+<p>当然，此特点仅限于构造函数，而不是在使用属性或设置值时：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = Dict()</span><br><span class="line">&gt;&gt;&gt; b = [1, 2, 3]</span><br><span class="line">&gt;&gt;&gt; a.b = b</span><br><span class="line">&gt;&gt;&gt; a.b is b</span><br><span class="line">True</span><br></pre></td></tr></table></figure></p>
+<h2 id="要牢记的事情"><a href="#要牢记的事情" class="headerlink" title="要牢记的事情"></a>要牢记的事情</h2><p>记住， <code>int</code> 不是有效的属性名，因此必须使用 get/setitem 语法 设置/获取 非字符串的 dict 键：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; addicted = Dict()</span><br><span class="line">&gt;&gt;&gt; addicted.a.b.c.d.e = 2</span><br><span class="line">&gt;&gt;&gt; addicted[2] = [1, 2, 3]</span><br><span class="line">&#123;2: [1, 2, 3], &apos;a&apos;: &#123;&apos;b&apos;: &#123;&apos;c&apos;: &#123;&apos;d&apos;: &#123;&apos;e&apos;: 2&#125;&#125;&#125;&#125;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>不过，你可以随意混合使用这两种语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; addicted.a.b[&apos;c&apos;].d.e</span><br><span class="line">2</span><br></pre></td></tr></table></figure></p>
+<h2 id="属性，如键、item等"><a href="#属性，如键、item等" class="headerlink" title="属性，如键、item等"></a>属性，如键、item等</h2><p>Addit 不会让你覆盖 <code>dict</code> 的属性，因此以下操作将不起作用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; mapping = Dict()</span><br><span class="line">&gt;&gt;&gt; mapping.keys = 2</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span><br><span class="line"> File &quot;addict/addict.py&quot;, line 53, in __setattr__</span><br><span class="line"> raise AttributeError(&quot;&apos;Dict&apos; object attribute &apos;%s&apos; is read-only&quot; % name)</span><br><span class="line">AttributeError: &apos;Dict&apos; object attribute &apos;keys&apos; is read-only</span><br></pre></td></tr></table></figure></p>
+<p>不过，使用下面这种方式就可以：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = Dict()</span><br><span class="line">&gt;&gt;&gt; a[&apos;keys&apos;] = 2</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">&#123;&apos;keys&apos;: 2&#125;</span><br><span class="line">&gt;&gt;&gt; a[&apos;keys&apos;]</span><br><span class="line">2</span><br></pre></td></tr></table></figure></p>
+<h2 id="默认值"><a href="#默认值" class="headerlink" title="默认值"></a>默认值</h2><p>对于不在字典中的键，Addit的行为如 <code>defaultdict(Dict)</code> ，因此丢失的键返回一个空的 <code>Dict</code> 而不是抛出 <code>KeyError</code> 如果此行为不是所需的，则可以使用以下方式恢复抛出KeyError：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; class DictNoDefault(Dict):</span><br><span class="line">&gt;&gt;&gt;   def __missing__(self, key):</span><br><span class="line">&gt;&gt;&gt;     raise KeyError(key)</span><br></pre></td></tr></table></figure></p>
+<p>但请注意，这样会失去速记赋值功能(<code>addicted.a.b.c.d.e = 2</code>)</p>
+<h2 id="转化为普通字典"><a href="#转化为普通字典" class="headerlink" title="转化为普通字典"></a>转化为普通字典</h2><p>如果你觉得将 Addict 传递到其他函数或模块并不安全，请使用 <code>to_dict()</code> 方法，它返回会把 Addict 转化为普通字典。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; regular_dict = my_addict.to_dict()</span><br><span class="line">&gt;&gt;&gt; regular_dict.a = 2</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span><br><span class="line"> AttributeError: &apos;dict&apos; object has no attribute &apos;a&apos;</span><br></pre></td></tr></table></figure></p>
+<p>当您希望在几行代码中创建嵌套的字典，然后将其发送到不同的函数或模块时，这非常适合：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">body = Dict()</span><br><span class="line">body.query.filtered.query.match.description = &apos;addictive&apos;</span><br><span class="line">body.query.filtered.filter.term.created_by = &apos;Mats&apos;</span><br><span class="line">third_party_module.search(query=body.to_dict())</span><br></pre></td></tr></table></figure></p>
+<h2 id="计数"><a href="#计数" class="headerlink" title="计数"></a>计数</h2><p><code>Dict</code> <code>轻松访问和修改深度嵌套属性的能力使其成为计数的理想选择。使用Addict，你还可以容易允许按多个级别计数，内部使用的原理是collections.Counter</code> 。</p>
+<p>比如以下数据：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">data = [</span><br><span class="line">    &#123;&apos;born&apos;: 1980, &apos;gender&apos;: &apos;M&apos;, &apos;eyes&apos;: &apos;green&apos;&#125;,</span><br><span class="line">    &#123;&apos;born&apos;: 1980, &apos;gender&apos;: &apos;F&apos;, &apos;eyes&apos;: &apos;green&apos;&#125;,</span><br><span class="line">    &#123;&apos;born&apos;: 1980, &apos;gender&apos;: &apos;M&apos;, &apos;eyes&apos;: &apos;blue&apos;&#125;,</span><br><span class="line">    &#123;&apos;born&apos;: 1980, &apos;gender&apos;: &apos;M&apos;, &apos;eyes&apos;: &apos;green&apos;&#125;,</span><br><span class="line">    &#123;&apos;born&apos;: 1980, &apos;gender&apos;: &apos;M&apos;, &apos;eyes&apos;: &apos;green&apos;&#125;,</span><br><span class="line">    &#123;&apos;born&apos;: 1980, &apos;gender&apos;: &apos;F&apos;, &apos;eyes&apos;: &apos;blue&apos;&#125;,</span><br><span class="line">    &#123;&apos;born&apos;: 1981, &apos;gender&apos;: &apos;M&apos;, &apos;eyes&apos;: &apos;blue&apos;&#125;,</span><br><span class="line">    &#123;&apos;born&apos;: 1981, &apos;gender&apos;: &apos;F&apos;, &apos;eyes&apos;: &apos;green&apos;&#125;,</span><br><span class="line">    &#123;&apos;born&apos;: 1981, &apos;gender&apos;: &apos;M&apos;, &apos;eyes&apos;: &apos;blue&apos;&#125;,</span><br><span class="line">    &#123;&apos;born&apos;: 1981, &apos;gender&apos;: &apos;F&apos;, &apos;eyes&apos;: &apos;blue&apos;&#125;,</span><br><span class="line">    &#123;&apos;born&apos;: 1981, &apos;gender&apos;: &apos;M&apos;, &apos;eyes&apos;: &apos;green&apos;&#125;,</span><br><span class="line">    &#123;&apos;born&apos;: 1981, &apos;gender&apos;: &apos;F&apos;, &apos;eyes&apos;: &apos;blue&apos;&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
+<p>如果你想计算有多少人出生在born性别的gender使用eyes眼睛，你可以很容易地计算出这些信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">counter = Dict()</span><br><span class="line"></span><br><span class="line">for row in data:</span><br><span class="line">    born = row[&apos;born&apos;]</span><br><span class="line">    gender = row[&apos;gender&apos;]</span><br><span class="line">    eyes = row[&apos;eyes&apos;]</span><br><span class="line"></span><br><span class="line">    counter[born][gender][eyes] += 1 print(counter)</span><br><span class="line"></span><br><span class="line"># 结果：&#123;1980: &#123;&apos;M&apos;: &#123;&apos;blue&apos;: 1, &apos;green&apos;: 3&#125;, &apos;F&apos;: &#123;&apos;blue&apos;: 1, &apos;green&apos;: 1&#125;&#125;, 1981: &#123;&apos;M&apos;: &#123;&apos;blue&apos;: 2, &apos;green&apos;: 1&#125;, &apos;F&apos;: &#123;&apos;blue&apos;: 2, &apos;green&apos;: 1&#125;&#125;&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><p>普通字典的更新方式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; d = &#123;&apos;a&apos;: &#123;&apos;b&apos;: 3&#125;&#125;</span><br><span class="line">&gt;&gt;&gt; d.update(&#123;&apos;a&apos;: &#123;&apos;c&apos;: 4&#125;&#125;)</span><br><span class="line">&gt;&gt;&gt; print(d)</span><br><span class="line">&#123;&apos;a&apos;: &#123;&apos;c&apos;: 4&#125;&#125;</span><br></pre></td></tr></table></figure></p>
+<p> <code>addict</code> 的更新方式如下，它会递归并实际更新嵌套的字典：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; D = Dict(&#123;&apos;a&apos;: &#123;&apos;b&apos;: 3&#125;&#125;)</span><br><span class="line">&gt;&gt;&gt; D.update(&#123;&apos;a&apos;: &#123;&apos;c&apos;: 4&#125;&#125;)</span><br><span class="line">&gt;&gt;&gt; print(D)</span><br><span class="line">&#123;&apos;a&apos;: &#123;&apos;b&apos;: 3, &apos;c&apos;: 4&#125;&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Addict-是怎么来的？"><a href="#Addict-是怎么来的？" class="headerlink" title="Addict 是怎么来的？"></a>Addict 是怎么来的？</h2><p>这个模块完全是从用Python创建Elasticsearch查询的繁琐过程中发展而来的。每当你发现自己在写了很复杂的字典逻辑时，只要记住你没有必要这样做，使用 Addict 就行。</p>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用法"><span class="toc-text">用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#要牢记的事情"><span class="toc-text">要牢记的事情</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#属性，如键、item等"><span class="toc-text">属性，如键、item等</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#默认值"><span class="toc-text">默认值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#转化为普通字典"><span class="toc-text">转化为普通字典</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#计数"><span class="toc-text">计数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更新"><span class="toc-text">更新</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Addict-是怎么来的？"><span class="toc-text">Addict 是怎么来的？</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2021/09/13/Huey-as-a-minimal-task-queue-for-Django/" rel="next" title="Huey as a minimal task queue for Django">
+          Huey as a minimal task queue for Django
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2021/11/22/Python支付宝接口-int-argument-must-be-a-string-a-bytes-like-object-or-a-number-not-Sequence-错误/" rel="prev" title="Python支付宝接口 int() argument must be a string, a bytes-like object or a number, not &#39;Sequence&#39;错误">
+            Python支付宝接口 int() argument must be a string, a bytes-like object or a number, not &#39;Sequence&#39;错误
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2021/10/23/Python第三方字典模块：Addict-模块/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

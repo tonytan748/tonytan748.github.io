@@ -1,0 +1,348 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="python,">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>A multiprocessing tutorial [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        A multiprocessing tutorial
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2017-03-17T18:31:45.000Z">
+        2017-03-18
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p><em>this blog translate from <a href="http://www.blog.pythonlibrary.org/2016/08/02/python-201-a-multiprocessing-tutorial/" target="_blank" rel="noopener">http://www.blog.pythonlibrary.org/2016/08/02/python-201-a-multiprocessing-tutorial/</a></em></p>
+<p>The multiprocessing module was added to Python in version 2.6. It was originally defined in PEP 371 by Jesse Noller and Richard Oudkerk. The multiprocessing module allows you to spawn processes in much that same manner than you can spawn threads with the threading module. The idea here is that because you are now spawning processes, you can avoid the Global Interpreter Lock (GIL) and take full advantages of multiple processors on a machine.</p>
+<p>The multiprocessing package also includes some APIs that are not in the threading module at all. For example, there is a neat Pool class that you can use to parallelize executing a function across multiple inputs. We will be looking at Pool in a later section. We will start with the multiprocessing module’s Process class.</p>
+<h2 id="Getting-started-with-multiprocessing"><a href="#Getting-started-with-multiprocessing" class="headerlink" title="Getting started with multiprocessing"></a>Getting started with multiprocessing</h2><p>The Process class is very similar to the threading module’s Thread class. Let’s try creating a series of processes that call the same function and see how that works:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">from multiprocessing import Process</span><br><span class="line"></span><br><span class="line">def boubler(number):</span><br><span class="line">    result = number * 2</span><br><span class="line">    proc = os.getpid()</span><br><span class="line">    print(&apos;&#123;0&#125; doubled to &#123;1&#125; by process id: &#123;2&#125;&apos;.format(number, result, proc))</span><br><span class="line"></span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">    numbers = [5,10,15,20,25]</span><br><span class="line">    procs = []</span><br><span class="line"></span><br><span class="line">    for index, number in enumerate(numbers):</span><br><span class="line">        proc = Process(target=doubler, args=(number,))</span><br><span class="line">        procs.append(proc)</span><br><span class="line">        proc.start()</span><br><span class="line"></span><br><span class="line">    for proc in procs:</span><br><span class="line">        proc.join()</span><br></pre></td></tr></table></figure>
+<p>For this example, we import Process and create a doubler function. Inside the function, we double the number that was passed in. We also use Python’s os module to get the current process’s ID (or pid). This will tell us which process is calling the function. Then in the block of code at the bottom, we create a series of Processes and start them. The very last loop just calls the join() method on each process, which tells Python to wait for the process to terminate. If you need to stop a process, you can call its terminate() method.</p>
+<p>When you run this code, you should see output that is similar to the following:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">5 doubled to 10 by process id: 10468</span><br><span class="line">10 doubled to 20 by process id: 10469</span><br><span class="line">15 doubled to 30 by process id: 10470</span><br><span class="line">20 doubled to 40 by process id: 10471</span><br><span class="line">25 doubled to 50 by process id: 10472</span><br></pre></td></tr></table></figure></p>
+<p>Sometimes it’s nicer to have a more human readable name for your process though. Fortunately, the Process class does allow you to access the same of your process. Let’s take a look:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line"></span><br><span class="line">from multiprocessing import Process, current_process</span><br><span class="line"></span><br><span class="line">def doubler(number):</span><br><span class="line">    result = number * 2</span><br><span class="line">    proc_name = current_process().name</span><br><span class="line">    print(&apos;&#123;0&#125; doubled to &#123;1&#125; by: &#123;2&#125;&apos;.format(number, result, proc_name))</span><br><span class="line"></span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">    numbers = [5,10,15,20,25]</span><br><span class="line">    procs = []</span><br><span class="line">    proc = Process(target=doubler, args=(5,))</span><br><span class="line"></span><br><span class="line">    for index, number in enumerate(numbers):</span><br><span class="line">        proc = Process(target=doubler, args=(number,))</span><br><span class="line">        procs.append(proc)</span><br><span class="line">        proc.start()</span><br><span class="line"></span><br><span class="line">    proc = Process(target=doubler, name=&apos;Test&apos;, args=(2,))</span><br><span class="line">    proc.start()</span><br><span class="line">    procs.append(proc)</span><br><span class="line"></span><br><span class="line">    for proc in procs:</span><br><span class="line">        proc.join()</span><br></pre></td></tr></table></figure>
+<p>This time around, we import something extra: current_process. The current_process is basically the same thing as the threading module’s current_thread. We use it to grab the name of the thread that is calling our function. You will note that for the first five processes, we don’t set a name. Then for the sixth, we set the process name to “Test”. Let’s see what we get for output:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">5 doubled to 10 by: Process-2</span><br><span class="line">10 doubled to 20 by: Process-3</span><br><span class="line">15 doubled to 30 by: Process-4</span><br><span class="line">20 doubled to 40 by: Process-5</span><br><span class="line">25 doubled to 50 by: Process-6</span><br><span class="line">2 doubled to 4 by: Test</span><br></pre></td></tr></table></figure>
+<p>The output demonstrates that the multiprocessing module assigns a number to each process as a part of its name by default. Of course, when we specify a name, a number isn’t going to get added to it.</p>
+<h2 id="Locks"><a href="#Locks" class="headerlink" title="Locks"></a>Locks</h2><p>The multiprocessing module supports locks in much the same way as the threading module does. All you need to do is import Lock, acquire it, do something and release it. Let’s take a look:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from multiprocessing import Process, Lock</span><br><span class="line"></span><br><span class="line">def printer(item, lock):</span><br><span class="line">    lock.actuire()</span><br><span class="line">    try:</span><br><span class="line">        print(item)</span><br><span class="line">    finally:</span><br><span class="line">        lock.release()</span><br><span class="line"></span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">    lock = Lock()</span><br><span class="line">    items = [&apos;tango&apos;, &apos;foxtrot&apos;, 10]</span><br><span class="line">    for item in items:</span><br><span class="line">        p = Process(target=printer, args=(item, lock))</span><br><span class="line">        p.start()</span><br></pre></td></tr></table></figure>
+<p>Here we create a simple printing function that prints whatever you pass to it. To prevent the threads from interfering with each other, we use a Lock object. This code will loop over our list of three items and create a process for each of them. Each process will call our function and pass it one of the items from the iterable. Because we’re using locks, the next process in line will wait for the lock to release before it can continue.</p>
+<h2 id="Logging"><a href="#Logging" class="headerlink" title="Logging"></a>Logging</h2><p>Logging processes is a little different than logging threads. The reason for this is that Python’s logging packages doesn’t use process shared locks, so it’s possible for you to end up with messages from different processes getting mixed up. Let’s try adding basic logging to the previous example. Here’s the code:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">import logging</span><br><span class="line">import multiprocessing</span><br><span class="line"></span><br><span class="line">from multiprocessing import Process, Lock</span><br><span class="line"></span><br><span class="line">def printer(item, lock):</span><br><span class="line">    lock.acquire()</span><br><span class="line">    try:</span><br><span class="line">        print(item)</span><br><span class="line">    finally:</span><br><span class="line">        lock.release()</span><br><span class="line"></span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">    lock = Lock()</span><br><span class="line">    items = [&apos;tango&apos;, &apos;foxtrot&apos;, 10]</span><br><span class="line">    multiprocessing.log_to_stderr()</span><br><span class="line">    logger = multiprocessing.get_logger()</span><br><span class="line">    logger.setLevel(logging.INFO)</span><br><span class="line">    for item in items:</span><br><span class="line">        p = Process(targe=printer, args=(item, lock))</span><br><span class="line">        p.start()</span><br></pre></td></tr></table></figure>
+<p>The simplest way to log is to send it all to stderr. We can do this by calling the log_to_stderr() function. Then we call the get_logger function to get access to a logger and set its logging level to INFO. The rest of the code is the same. I will note that I’m not calling the join() method here. Instead, the parent thread (i.e. your script) will call join() implicitly when it exits.</p>
+<p>When you do this, you should get output like the following:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[INFO/Process-1] child process calling self.run()</span><br><span class="line">tango</span><br><span class="line">[INFO/Process-1] process shutting down</span><br><span class="line">[INFO/Process-1] process exiting with exitcode 0</span><br><span class="line">[INFO/Process-2] child process calling self.run()</span><br><span class="line">[INFO/MainProcess] process shutting down</span><br><span class="line">foxtrot</span><br><span class="line">[INFO/Process-2] process shutting down</span><br><span class="line">[INFO/Process-3] child process calling self.run()</span><br><span class="line">[INFO/Process-2] process exiting with exitcode 0</span><br><span class="line">10</span><br><span class="line">[INFO/MainProcess] calling join() for process Process-3</span><br><span class="line">[INFO/Process-3] process shutting down</span><br><span class="line">[INFO/Process-3] process exiting with exitcode 0</span><br><span class="line">[INFO/MainProcess] calling join() for process Process-2</span><br></pre></td></tr></table></figure>
+<p>Now if you want to save the log to disk, then it gets a little trickier. You can read about that topic in Python’s logging Cookbook.</p>
+<h2 id="The-Pool-Class"><a href="#The-Pool-Class" class="headerlink" title="The Pool Class"></a>The Pool Class</h2><p>The Pool class is used to represent a pool of worker processes. It has methods which can allow you to offload tasks to the worker processes. Let’s look at a really simple example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from multiprocessing import Pool</span><br><span class="line"></span><br><span class="line">def doubler(number):</span><br><span class="line">    return number * 2</span><br><span class="line"></span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">    numbers = [5,10,20]</span><br><span class="line">    pool = Pool(processes=3)</span><br><span class="line">    print(pool.map(doubler, numbers))</span><br></pre></td></tr></table></figure>
+<p>Basically what’s happening here is that we create an instance of Pool and tell it to create three worker processes. Then we use the map method to map a function and an iterable to each process. Finally we print the result, which in this case is actually a list: [10, 20, 40].</p>
+<p>You can also get the result of your process in a pool by using the apply_async method:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from multiprocessing import Pool</span><br><span class="line"></span><br><span class="line">def doubler(num):</span><br><span class="line">    return num * 2</span><br><span class="line"></span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">    pool = Pool(processes=3)</span><br><span class="line">    result = pool.apply_async(doubler, (25,))</span><br><span class="line">    print(result.get(timeout=1))</span><br></pre></td></tr></table></figure>
+<p>What this allows us to do is actually ask for the result of the process. That is what the get function is all about. It tries to get our result. You will note that we also have a timeout set just in case something happened to the function we were calling. We don’t want it to block indefinitely after all.</p>
+<h2 id="Process-Communication"><a href="#Process-Communication" class="headerlink" title="Process Communication"></a>Process Communication</h2><p>When it comes to communicating between processes, the multiprocessing modules has two primary methods: Queues and Pipes. The Queue implementation is actually both thread and process safe. Let’s take a look at a fairly simple example that’s based on the Queue code from one of my threading articles:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">from multiprocessing import Process, Queue</span><br><span class="line"></span><br><span class="line">setinel = -1</span><br><span class="line"></span><br><span class="line">def creator(data, q):</span><br><span class="line">    print(&apos;Creating data and putting it on the queue&apos;)</span><br><span class="line">    for item in data:</span><br><span class="line">        q.put(item)</span><br><span class="line"></span><br><span class="line">def my_consumer(q):</span><br><span class="line">    while True:</span><br><span class="line">        data = q.get()</span><br><span class="line">        print(&apos;data found to be processed: &#123;&#125;&apos;.format(data))</span><br><span class="line">        processed = data * 2</span><br><span class="line">        print(processed)</span><br><span class="line">        if data is sentinel:</span><br><span class="line">            break</span><br><span class="line"></span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">    q = Queue()</span><br><span class="line">    data = [5,10,13,-1]</span><br><span class="line">    process_one = Process(target=creator, args=(data, q))</span><br><span class="line">    process_two = Process(target=my_consumer, args=(q,))</span><br><span class="line">    process_one.start()</span><br><span class="line">    process_two.start()</span><br><span class="line"></span><br><span class="line">    q.close()</span><br><span class="line">    q.join_thread()</span><br><span class="line"></span><br><span class="line">    process_one.join()</span><br><span class="line">    process_two.join()</span><br></pre></td></tr></table></figure>
+<p>Here we just need to import Queue and Process. Then we two functions, one to create data and add it to the queue and the second to consume the data and process it. Adding data to the Queue is done by using the Queue’s put() method whereas getting data from the Queue is done via the get method. The last chunk of code just creates the Queue object and a couple of Processes and then runs them. You will note that we call join() on our process objects rather than the Queue itself.</p>
+<h2 id="Wrapping-Up"><a href="#Wrapping-Up" class="headerlink" title="Wrapping Up"></a>Wrapping Up</h2><p>We have a lot of material here. You have learned how to use the multiprocessing module to target regular functions, communicate between processes using Queues, naming threads and much more. There is also a lot more in the Python documentation that isn’t even touched in this article, so be sure to dive into that as well. In the meantime, you now know how to utilize all your computer’s processing power with Python!</p>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Getting-started-with-multiprocessing"><span class="toc-text">Getting started with multiprocessing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Locks"><span class="toc-text">Locks</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Logging"><span class="toc-text">Logging</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Pool-Class"><span class="toc-text">The Pool Class</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Process-Communication"><span class="toc-text">Process Communication</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Wrapping-Up"><span class="toc-text">Wrapping Up</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2017/03/17/Building-a-simple-workflow-engine-in-Python/" rel="next" title="Building a simple workflow engine in Python">
+          Building a simple workflow engine in Python
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2017/03/19/Creating-a-multiprocessing-Downloader-App/" rel="prev" title="Creating a multiprocessing Downloader App">
+            Creating a multiprocessing Downloader App
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2017/03/18/Python-201-A-multiprocessing-tutorial/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

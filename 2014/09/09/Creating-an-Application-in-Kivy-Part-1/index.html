@@ -1,0 +1,453 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="Tony Tan">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>建立一个kivy应用（翻译）----第一部分 [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        建立一个kivy应用（翻译）----第一部分
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2014-09-08T16:00:00.000Z">
+        2014-09-09
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p><em>第一次翻译文章，因为正在学kivy的缘故，在网上搜了半天也没看到什么合适的中文资料，英文的虽然能看懂，但还是母语的看着舒服点。正好碰到这位兄弟写的文章感觉适合我这种初学者，索性翻译过来自己保存了。不过貌似这兄弟说话很饶，翻译起来真是痛苦万分…</em></p>
+<p></p><h3>Creating an Application in Kivy: Part 1</h3><p></p>
+<p></p><h3>建立一个kivy应用–第一部分</h3><br>June 13, 2013, 5:26 pm<br><br><br>This is the first in what I expect to be a series of tutorials on creating user interfaces in Kivy. Kivy is a cross platform user interface framework that allows us to write applications in Python that run on various desktop operating systems, Android, and IOS.<br><br><br>这是第一个我使用Kivy创建用户界面的系列教程。 Kivy是一个跨平台的用户界面框架，使我们能够用python编写的应用程序运行在各种桌面操作系统，Android和IOS上。<br><br><br>I’ve wanted to write a tutorial on Kivy since hacking on Python 3 support during the dev sprints at Pycon 2013. My goal is to create a useful application that runs on multiple devices and highlights use of the KV Language to design user interfaces. I also want this multi-part series to describe end-to-end how to develop, maintain, and deploy a Kivy application. I intend it to be a model for newcomers to Kivy and even Python to develop their own cross platform or mobile applications in Python. Thus, it doesn’t just include code, but also deployment instructions and information on how to use the git version control system for basic history management.<br><br><br>在pycon2013开发过程中我就一直想写一篇关于支持python3的Kivy的教程，我的目标是创建一个运行在多种设备上，并强调使用KV语言来设计用户界面的一个有用的应用程序。我也想在这个多部分组成的系列中描述端对端如何开发，维护和部署Kivy应用。我想把它做为一个模型提供给Kivy初学者以及其他使用Python开发跨平台和移动应用程序的人。因此，它不只是包括代码，也有如何使用Git的版本控制系统进行基本代码管理的指令和信息。<br><br><br>Therefore, this tutorial series is written at a more basic level than a lot of my technical articles. My intended audience is new programmers who have some basic Python experience; perhaps having read The Python Tutorial and Learn Python The Hard Way, but possibly not the beginner-intermediate topics covered in my book, Python 3 Object Oriented Programming.<br><br><br>因此，本系列教程所包含的基本知识要多余我的其他很多技术文章。我的目标受众是入门程序员，他们有一些基本的Python经验;也许看了 The Python Tutorial和Learn Python The Hard Way，但在Python 3 Object Oriented Programming中没有初中级内容。<br><br><br>Having decided to write a tutorial, I needed to decide what kind of application to develop. This actually took quite a bit of thought. I decided on a Jabber client, as it has a user interface with reasonable complexity, and I am hoping that most of the difficult bits can be abstracted away into the SleekXMPP library. Finally, I had to settle on a name for the app; I chose Orkiv. I do not know why.<br><br><br>在决定写一个教程时，我需要决定做什么样的应用程序开发。这实际上花了相当多的心思。我决定做一个具多用户界面的Jabber客户端，并且我希望将有难度的代码可以被抽象出来放到SleekXMPP库中。最后，我不得不选择为这个应用程序选择一个名称;我选择Orkiv。没有原因。<br><br><p></p>
+<h5>Table Of Contents</h5><br><br><br>A blog isn’t the best platform for publishing a multi-part tutorial. I’ll include a Table Of Contents section in each part with references to all the other parts. Hopefully I’ll even keep it up to date!<br><br><br>博客并不是发布一个多章节教程的最佳平台。以下是文章的目录及导航。但愿我能保持最新！<br><br><ul><br>    <li>Part 1: Introduction to Kivy</li><br>    <li>Part 2: Creating a Form</li><br>    <li>Part 3: Handling Events</li><br>    <li>Part 4: Code and Interface Improvements</li><br>    <li>Part 5: Rendering a Buddy List</li><br>    <li>Part 6: ListView Interaction</li><br>    <li>Part 7: Receiving messages and interface fixes</li><br>    <li>Part 8: Width based layout</li><br>    <li>Part 9: Deploying your Kivy application</li><br></ul><br><h5>Prerequisites</h5><br>Start by installing the following pre-requisites using standard operating system tools.<br><br><br>首先安装以下标准的工具。<br><ul><br>    <li>python2 (2.7 preferred)</li><br>    <li>git</li><br>    <li>virtualenv</li><br>    <li>pip</li><br></ul><br><br>Python is the programming language and interpreter that Kivy programs are written in. Git is a version control system that we will use to track changes to our code. Virtualenv is a tool for creating isolated Python environments. Pip is an installer for installing python packages, in this case into the isolated virtualenv.<br><br><br>Kivy是由python写成的，Git的是用来跟踪代码更新的版本控制系统。 VIRTUALENV是一个用于创建虚拟的Python环境的工具。 PIP是一个能在VIRTUALENV中安装Python包的程序。<br><br><br>Note: Use of git is optional if you are more interested in learning to code than learning to manage a project. You are also welcome to use another version control system of your choice. At the level we will be working, the commands are virtually interchangeable.<br><br><br>注：git是可选的，如果你更感兴趣的是学代码。也欢迎您选择的其他版本控制系统。在我们工作的层面上，这些命令几乎是可以互换的。<br><br><br><h5>Setting up the environment</h5>
+
+<p>Run the following commands in a terminal. (Note this tutorial was written using Arch Linux, and will probably work flawlessly on MacOS and other Linux distributions. However, you may need to do some experimenting to make Windows cooperate).<br><br><br>在终端执行以下命令。 （注意：本教程采用的Arch Linux编写的，并可能会在Mac OS和其他Linux发行工作得很好，但你可能需要做一些使系统合作的尝试）。</p>
+<pre>
+mkdir orkiv
+cd orkiv
+git init
+virtualenv -p python2.7 venv
+echo venv >> .gitignore
+echo "*.pyc" >> .gitignore
+git add .gitignore
+git commit -m "Create .gitignore file. Ignores compiled python files and venv."
+source venv/bin/activate
+</pre>
+We’re creating a directory to hold our project and then initialize a git repository in there. We next create a virtualenv in a folder named venv. This folder will hold the isolated python files so that you can interact with Kivy without adding cruft to your system Python. I highly recommend creating a separate virtualenv for every project you work on.
+<br>
+我们建立一个文件夹保存我们的项目，并初始化git。然后我们建立一个virtualenv环境并命名为venv。这个文件夹能够于系统的python隔离以便我们使用kivy。我极力推荐在每个项目中都使用virtualenv。
+<br>
+Next, we set up a .gitignore file that tells git not to track certain files in our repository; in this instance all compiled python files, which end in .pyc, and the virtualenv directory we just created. We commit the changes to this file as our first commit in the git repository.
+<br>
+下一步，我们建立一个.gitignore文件告诉git我们不需要管理一些文件。在这里是所有的.pyc文件以及我们刚刚建立的virtualenv文件夹。然后在git中进行第一次提交。
+<br>
+Finally, we “turn on” the virtualenv by sourcing its activate script. This essentially tells our shell to “use the isolated python for this project instead of system python”. When you are done working on this project, you should enter the command deactivate. When you come back to the project in the future, reenter the source venv/bin/activate command to turn on the isolated environment.
+<br>
+最后， 我们使用打开虚拟环境。这实际上是告诉我们的命令行“使用隔离的Python项目，而不是系统的python”。当你在这个项目上完成工作，你应该输入命令deactivate。当你将来回到这个项目，重新输入source venv/bin/activate命令打开隔离环境。
+<br>
+Note: If you maintain a lot of virtualenvs in a lot of different projects, as I do, you may be interested in a small script I wrote to facilitate switching between them.
+<br>
+注意：如果你在不同的项目中有各自的虚拟环境，和我一样，你可能对我写个一个自动转换的程序感兴趣。
+<br>
+
+
+<h5>Kivy Dependencies</h5>
+
+Kivy depends on several Python libraries. Unfortunately, it does not have a setuptools-enabled setup.py to automatically install these dependencies into our virtualenv, so we have to do a little work ourselves. This takes a while, but if you copy paste these commands into your terminal, you should get lucky.
+<br>
+Kivy基于几个Python库。但不幸的是，它并没有一个设置的功能setup.py自动安装这些依赖关系到我们虚拟环境，所以我们必须自己做一些工作。这需要花一点时间，但幸运的是你只要复制粘贴这些命令到你的终端。
+
+<pre>
+pip install cython
+pip install pygame
+</pre>
+Sadly, on Arch Linux, the last command, for pygame fails. I suspect it works fine on less bleeding edge operating systems, however, if you encounter an error about linux/videodev.h not existing, applying the Arch Linux patch to pygame may get you to the next step.
+<br>
+可悲的是，在Arch Linux的中，最后的pygame命令运行失败。我怀疑它不能在边缘的操作系统中正常工作，但是，如果你遇到一个关于linux/ videodev.h不存在的错误，下一步可以应用Arch Linux修补pygame。
+<pre>
+wget http://www.pygame.org/ftp/pygame-1.9.1release.tar.gz
+wget https://projects.archlinux.org/svntogit/packages.git/plain/trunk/pygame-v4l.patch?h=packages/python-pygame -O pygame-v4l.patch
+tar xf pygame-1.9.1release.tar.gz
+cd pygame-1.9.1release/
+patch -Np1 -i ../pygame-v4l.patch
+python setup.py install
+cd ..
+rm pygame* -r
+</pre>
+And now, you should finally be ready to install Kivy itself: This will take a while, so grab a smoothie while it runs:
+<br>
+现在，你终于可以准备安装kivy了，这需要一点时间，在运行时可以和点东西了。
+
+<pre>
+pip install kivy
+python -c 'import kivy'
+</pre>
+
+<p>The latter command should output the kivy version (I’m working with 1.7.1). If it exits without failure, then you have successfully installed Kivy!<br><br><br>最后一条命令是输出kivy的版本信息(我的是1.7.1).如果没有错误，那么kivy就安装成功。</p>
+<h5>Now let’s create a basic Kivy app</h5>
+
+<p>Create a directory to hold the application code:<br><br><br>建立一个保存程序代码的文档：</p>
+<pre>
+mkdir orkiv
+</pre>
+This directory will contain your Python and Kivy source files. Our goal is to be able to always create a zipfile from this directory and be able to run it using python orkiv.zip. As long as the required dependencies are installed on the target system (as described above), the program should run. It will therefore be nice and self-contained.
+<br>
+这个文档将包含你的python和kivy代码文件。我们的目标是能够始终建立一个该目录中的zip文件，并能够使用python orkiv.zip来运行它。只要所需要的依赖都安装在目标系统上（如上所述），则程序应运行。
+<br>
+There is a relatively unknown feature of recent versions of Python to support this. If a directory or zipfile contains a __main__.py, that module will be executed if python is called with that directory or zipfile as an argument. First, create a file inside the new orkiv directory named __main__.py. Create a simple “hello world” in this file to test that it’s working:
+<br>
+不确定最新版本的Python是否支持。如果一个目录或zip文件中含有一个__main__.py，如果python将该目录或zip文件作为参数调用，该模块将被执行。首先，创建一个名为__main__.py文件在新orkiv目录中。在文件中创建一个简单的“Hello World”来测试它的工作：
+(commit)
+<pre>
+print("hello world!")
+</pre>
+Now from the parent directory, run the command python orkiv. If you want to test it with a zipfile, try this:
+<br>
+现在从父文件夹运行命令python orkiv，如果你要用zip文件测试，可以这样：
+
+<pre>
+cd orkiv
+zip ../orkiv.zip *
+cd ..
+python orkiv.zip
+</pre>
+
+<p>It is possible to code Kivy applications in pure Python, but in my opinion, it is much better to use the amazing KV Language to do layouts. The basic approach is to have a Python file (in our case <strong>main</strong>.py above) that contains the logic for the application, and a KV Language file that contains the layout information. The KV Language is very similar to Python and you can learn it as you go.<br><br><br>可以用纯Python来编码kivy应用，但在我看来，更好的方法是用KV语言做布局。其基本做法是有一个Python文件（在我们上面的例子<strong>main</strong>.py），其中包含应用程序的逻辑，KV文件包含布局信息。KV与Python非常相似,你可以直接去学习它。<br><br><br>Lets start by removing the print statement from our <strong>main</strong>.py and replacing it with the most basic possible Kivy application:<br><br><br>让我们从<strong>main</strong>.py中去除print语句，并用最基本的Kivy应用程序替换它：<br>(commit)</p>
+<pre>
+from kivy.app import App
+
+class Orkiv(App):
+    pass
+
+Orkiv().run()
+</pre>
+
+<p>This simply imports a Kivy App class and creates a subclass of it using Python’s notoriously simple inheritance syntax. Inheritance is a useful feature of Object Oriented Programming that basically means that a class can be defined that has all the functionality of the parent class. In this case, since we didn’t add anything to the subclass, that’s ALL it has. However, the true beauty of inheritance is that we can add new properties and methods (functions attached to objects) to the subclass or even change the functionality that comes with the parent class (App). The best part is, we don’t really have to know what is going on inside the App, and can assume the Kivy devs know what they are doing.<br><br><br>这里仅仅引入了Kivy App类，并用Python的出了名的简单语法创建一个继承它的子类。继承是面向对象编程的一个非常有用的功能，基本上意味着一个类可以定义具有父类的所有功能。在这种情况下，因为我们没有在子类中添加任何东西。然而，继承了真正的美妙之处在于我们可以在子类中添加新的属性和方法（将函数赋予功能），或者甚至改变自带的父类（APP）的功能。最重要的是，我们并不真正需要知道app中是怎么运行的，只需要让Kivy开发者知道自己要做做什么。<br><br><br>It doesn’t even add anything to the subclass! Then it instantiates an instance of that subclass and calls the run() method on the newly created object.<br><br><br>这里甚至不添加任何东西到子类！然后实例化该子类的一个实例，并在新创建的对象中调用run（）方法。<br><br><br>If you run python orkiv with the new code saved, you’ll see an empty window pop up.<br><br><br>如果在新代码保存后运行python orkiv， 你将看到一个空的窗口出现。<br><br><br>As far as boilerplate goes, that’s pretty damn concise, don’t you think? The amazing thing is that we can start laying out KV Language widgets in a separate file without touching this boilerplate at all! Don’t believe me? Try saving the following as orkiv/orkiv.kv:<br><br>至于模板也非常的简洁，你不觉得吗？令人惊奇的是，我们可以在一个单独的文件中开始布置kv部件，而不涉及的到模板！不相信我吗？尝试保存为orkiv/ orkiv.kv：<br>(commit)</p>
+<pre>
+Label:    text: "hello world"
+</pre>
+
+<p>Now if you run python orkiv, you should see the “hello world” label centered in the window that pops up. It’s almost like magic, and if you’re like me, you’re probably wondering how that’s even possible.<br><br><br>现在如果你运行python orkiv， 你将看到在弹出的窗口中有一个“hello world” 标签。这就像一个魔术，如果你喜欢这个，你一定很想知道这是怎么出现的。<br><br><br>When you create a subclass of a kivy.app.App, it introspects the name of the new class (we named it Orkiv). Then it looks for a file in the same directory that follows these rules:<br><br><br>当你建立一个kivy.app.App的子类时，它会检查新类的名称（我们命名为Orkiv）。然后，它会遵循以下规则在相同目录下查找文件：</p>
+<ul><br>    <li>1. Ends with the .kv extension    1.以.kv扩展名结尾</li><br>    <li>2. Starts with the name of the class converted to lowercase and with any trailing App stripped.    2.以类名小写开始</li><br></ul>
+
+<p>The Kivy documentation would have named the class OrkivApp and still used the orkiv.kv filename. Personally, I don’t see the redundant need to add App to the class name, since the inheritance structure clearly indicates that Orkiv is a App.<br><br><br>kivy稳当会命名类OrkivApp，继续使用orkiv.py文件。个人看来，我没有必要在类名中加App，因为继承的结果已经清楚表明orkiv是一个程序。<br><br><br>We’ll be working with the Kivy Language a lot as we proceed through each part of this tutorial. You’ll soon see that it’s possible to do more, a lot more, than add a label to a window!<br><br><br>在本教程每部分我们都将与Kivy语言打交道。您很快就会看到，它可能做很多事，不仅仅是添加一个标签到窗口！<br><br></p>
+<h5>A note on version control</h5>
+
+<p>At this point, you’ve created a logical related set of changes that are in a working state. I want to encourage you to experiment with these files, maybe change the contents of the label, try a different application and KV Language filename, or see if you can figure out how to group two labels into a single layout. But before doing that, you should record this known state that your repository is currently in so it’s easy to get back to. That way, you can be free to explore without fear of getting completely lost; you’ll always have a path straight back to your current state. You can do that from the command line using git:<br><br><br>现在，你已经在一个改变了的工作环境中创建了一组逻辑关系。我鼓励你在这些文件中做些尝试，改变标签的内容，尝试用不同的应用程序和KV文件名，或者看看你是否可以在一个单一布局中设置在两组标签。但在这之前，你应该在git仓库中记录目前的状态以利于退回。这样，你就可以无忧无虑的去尝试了;总有一个通道让你直接回到当前的状态。你可以在命令行中运行git：</p>
+<pre>
+git add orkiv/
+git commit -m "A basic Kivy boiler plate"
+</pre>
+
+<p>You just made a commit on the master branch in git. First you listed the changes you wanted to include in the commit (the entirety of every file in the new orkiv directory), then you told git to record the current state of those files forever. It is generally recommended that you only save consistent, known-to-be-working state on the master branch. For the purposes of this tutorial, I suggest that you only save the code you copied from the tutorial to the master branch, and do your other development on other branches.<br><br><br>你只是在git中提交了一个master分支。首先在提交中列出了你想做的更改（在新orkiv目录下的每个文件），然后你告诉git永远记录这些文件的当前状态。通常建议您只保存一致的，已知的状态到master分支上。本教程的目的，我建议你不仅可以保存你从教程中复制的代码到master分支，你也可以在其他分支上做不同的开发。<br><br><br>Are you confused by what a branch is, exactly? Think of it like walking down a forest path in a national park. You are following signs for a marked trail; that’s this tutorial. As you walk, you see things that you want to remember, so you take a photo. That’s like making a commit on the master branch. However, you also see side paths that you would like to explore on your own. You can go down that path as far as you want, or even take other random paths without fear of getting lost. You can even take photos on those paths, knowing they won’t get mixed in with the photos from the main trail. Then when you want to return to the point where you left the main trail, you can magically teleport back to it (or indeed, to any of the other branches you walked down in your exploration).<br><br><br>你是不是很困惑通过什么是分支？你可以把它想像成在国家公园的林路上行走。本教程就是要你按照标识前进。你可以用拍照去记住你走过的看到的事情。这就像做一个master分支的提交。但是，你也想探索一条你自己的路。不管走多远，而不用担心迷路。你甚至可以在这些路上拍照片，也不会和在主道上的照片混在一起。然后，当你想回到主路的时候，你可以瞬间回去（或者到其他你想去的路上）。<br><br><br>You probably won’t be doing it for this tutorial, but the most import aspect of version control is that if you are in unmarked forest rather than a national park, you can walk down all the paths and decide which one you’re going to choose as the main path. You can even merge paths back into each other so that the photos (code commits) taken on each of them end up in the same final presentation.<br><br><br>你可能在这本教程中不想这样做，但是版本控制中最重要的方面是，即使你在一个没有任何方向的原始森林里，你可以从所有路径中选择一天作为主路径。你甚至可以互相合并路径，这样的所有的照片（代码提交）都只提交到同一个终点。<br><br><br>Enough digressing! For your purposes, the first thing you should do is create a new branch in git:<br><br><br>闲话少说！根据你的目的，你应该做的第一件事是在git中创建一个新的分支：</p>
+<pre>
+git checkout -b my_exploration
+</pre>
+You are now on a new branch named my_exploration (you can call each branch whatever you want, of course) that is exactly the same as the master branch as you last saw it. But you can make changes on that branch to your heart’s content; you can add and commit them as above if you want to remember them for later. When you’re ready to come back to the tutorial, you can use this command to return to the current state of the master branch:
+<br>
+现在你有一个新分支叫my_exploration（当然你可以取其他任何名字），这个分支和master分支一摸一样。但你可以依据你自己的想法进行修改;添加并提交他们，如果你想稍后保存可以增加和提交。当你打算返回这个教程，你可以使用此命令返回到当前状态的主分支：
+
+<pre>
+git checkout master
+</pre>
+
+<p>From there, you could continue with the next part of the tutorial, or you could create a new branch and explore in a different direction.<br><br><br>到此为止，有可以继续本教程的下一部分，或者建立一个新分支。</p>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Creating an Application in Kivy: Part 1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">建立一个kivy应用–第一部分</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#null"><span class="toc-text">Table Of Contents</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#null"><span class="toc-text">Prerequisites</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#null"><span class="toc-text">Setting up the environment</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#null"><span class="toc-text">Kivy Dependencies</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#null"><span class="toc-text">Now let’s create a basic Kivy app</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#null"><span class="toc-text">A note on version control</span></a></li></ol></li></ol></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2014/09/01/2-articles-for-vim-skills/" rel="next" title="2 Articles for VIM Skills">
+          2 Articles for VIM Skills
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2014/09/16/how-to-set-lightness-in-ubuntu1404/" rel="prev" title="how to set lightness in ubuntu14.04">
+            how to set lightness in ubuntu14.04
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2014/09/09/Creating-an-Application-in-Kivy-Part-1/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

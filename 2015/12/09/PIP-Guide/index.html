@@ -1,0 +1,368 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="Tony Tan">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>PIP Guide [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        PIP Guide
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2015-12-08T16:00:00.000Z">
+        2015-12-09
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p><em>PIP Guide</em></p>
+<p>###目录</p>
+<ol>
+<li>前言</li>
+<li>获取pip<br>2.1. 脚本安装pip<br>2.2. 使用包管理软件安装<br>2.3. 更新pip</li>
+<li>pip基本使用<br>3.1. 安装PyPI软件<br>3.2. 查看具体安装文件<br>3.3. 查看哪些软件需要更新<br>3.4. 升级软件包<br>3.5. 卸载软件包</li>
+<li>pip简明手册<br>4.1. 安装具体版本软件<br>4.2. Requirements文件安装依赖软件<br>4.3. 列出软件包清单<br>4.4. 查看软件包信息<br>4.5. 搜寻<br>4.6. 配置文件<br>4.7 命令行自动补全</li>
+<li>后记</li>
+</ol>
+<p>###1 前言<br>pip 是一个Python包管理工具，主要是用于安装 PyPI 上的软件包，可以替代 easy_install 工具。</p>
+<p>GitHub: <a href="https://github.com/pypa/pip" target="_blank" rel="noopener">https://github.com/pypa/pip</a><br>Doc: <a href="https://pip.pypa.io/en/latest/" target="_blank" rel="noopener">https://pip.pypa.io/en/latest/</a></p>
+<p>###2 获取pip</p>
+<p>#####2.1 脚本安装pip</p>
+<p>  $ curl -O <a href="https://raw.github.com/pypa/pip/master/contrib/get-pip.py" target="_blank" rel="noopener">https://raw.github.com/pypa/pip/master/contrib/get-pip.py</a></p>
+<p>  $ python get-pip.py</p>
+<p>#####2.2 使用包管理软件安装<br>  $ sudo yum install python-pip</p>
+<p>  $ sudo apt-get install python-pip</p>
+<p>#####2.3 更新pip<br>  $ pip install -U pip</p>
+<p>###3 pip基本使用</p>
+<p>#####3.1 安装PyPI软件<br>  $ pip install SomePackage</p>
+<p>  […]<br>  Successfully installed SomePackage’</p>
+<p>#####3.2 查看具体安装文件<br>  $ pip show –files SomePackage</p>
+<p>  Name: SomePackage<br>  Version: 1.0<br>  Location: /my/env/lib/pythonx.x/site-packages<br>  Files:<br>   ../somepackage/<strong>init</strong>.py<br>   […]</p>
+<p>#####3.3 查看哪些软件需要更新<br>  $ pip list –outdated</p>
+<p>  SomePackage (Current: 1.0 Latest: 2.0)</p>
+<p>#####3.4 升级软件包<br>  $ pip install –upgrade SomePackage</p>
+<p>  […]<br>  Found existing installation: SomePackage 1.0<br>  Uninstalling SomePackage:<br>    Successfully uninstalled SomePackage<br>  Running setup.py install for SomePackage<br>  Successfully installed SomePackage</p>
+<p>#####3.5 卸载软件包<br>  $ pip uninstall SomePackage</p>
+<p>  Uninstalling SomePackage:<br>    /my/env/lib/pythonx.x/site-packages/somepackage<br>  Proceed (y/n)? y<br>  Successfully uninstalled SomePackage</p>
+<p>###4 pip简明手册</p>
+<p>#####4.1 安装具体版本软件<br>  $ pip install SomePackage            # latest version<br>  $ pip install SomePackage==1.0.4     # specific version<br>  $ pip install ‘SomePackage&gt;=1.0.4’     # minimum version’</p>
+<p>#####4.2 Requirements文件安装依赖软件<br>Requirements文件 一般记录的是依赖软件列表，通过pip可以一次性安装依赖软件包:</p>
+<p>  $ pip freeze &gt; requirements.txt</p>
+<p>  $ pip install -r requirements.txt’</p>
+<p>#####4.3 列出软件包清单<br>  $ pip list</p>
+<p>  $ pip list –outdated</p>
+<p>  ipython (Current: 1.2.0 Latest: 2.3.0)’</p>
+<p>#####4.4 查看软件包信息</p>
+<h2 id="pip-show-pip"><a href="#pip-show-pip" class="headerlink" title="  $ pip show pip"></a>  $ pip show pip</h2><p>  Name: pip<br>  Version: 1.4.1<br>  Location: /Library/Python/2.7/site-packages/pip-1.4.1-py2.7.egg<br>  Requires:</p>
+<h2 id="pip-show-pyopencl"><a href="#pip-show-pyopencl" class="headerlink" title="  $ pip show pyopencl"></a>  $ pip show pyopencl</h2><p>  Name: pyopencl<br>  Version: 2014.1<br>  Location: /Library/Python/2.7/site-packages<br>  Requires: pytools, pytest, decorator’</p>
+<p>#####4.5 搜寻<br>  $ pip search pycuda</p>
+<p>  pycuda                    - Python wrapper for Nvidia CUDA<br>  pyfft                     - FFT library for PyCuda and PyOpenCL<br>  cudatree                  - Random Forests for the GPU using PyCUDA<br>  reikna                    - GPGPU algorithms for PyCUDA and PyOpenCL<br>  compyte                   - A common set of compute primitives for PyCUDA and PyOpenCL (to be created)’</p>
+<p>#####4.6 配置文件<br>配置文件: $HOME/.pip/pip.conf, 举例:</p>
+<p>  [global]<br>  timeout = 60<br>  index-url = <a href="http://download.zope.org/ppix" target="_blank" rel="noopener">http://download.zope.org/ppix</a></p>
+<p>  [install]<br>  ignore-installed = true<br>  no-dependencies = yes’</p>
+<p>#####4.7 命令行自动补全<br>对于bash:</p>
+<p>  $ pip completion –bash &gt;&gt; ~/.profile’</p>
+<p>对于zsh:</p>
+<p>  $ pip completion –zsh &gt;&gt; ~/.zprofile</p>
+<p>加载此配置文件后，则pip命令支持自动补全功能.</p>
+<p>###5 后记<br>应该尽量使用pip，不要继续使用easy_install.</p>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#pip-show-pip"><span class="toc-text">  $ pip show pip</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pip-show-pyopencl"><span class="toc-text">  $ pip show pyopencl</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2015/08/28/Fill-Character-in-String-Python/" rel="next" title="Fill Character in String In Python">
+          Fill Character in String In Python
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2016/01/25/how-to-install-celery-on-django-and-create-a-periodic-task/" rel="prev" title="How to install Celery on Django and create a periodic task">
+            How to install Celery on Django and create a periodic task
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2015/12/09/PIP-Guide/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

@@ -1,0 +1,387 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="Tony Tan">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>A Few Things To Remember While Coding In Python [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        A Few Things To Remember While Coding In Python
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2016-05-13T16:00:00.000Z">
+        2016-05-14
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <p>Transfer from <a href="http://satyajit.ranjeev.in/2012/05/17/python-a-few-things-to-remember.html" target="_blank" rel="noopener">http://satyajit.ranjeev.in/2012/05/17/python-a-few-things-to-remember.html</a></p>
+<h3 id="Zen-of-Python"><a href="#Zen-of-Python" class="headerlink" title="Zen of Python"></a>Zen of Python</h3><p>Learing the culture that surrounds a language bringd you one step closer to being a better programmer. If you haven’t read the Zen of Python yet open a Python prompt and type ‘import this’.For each of the item on the list you can find example here <a href="http://artifex.org/~hblanks/talks/2011/pep20_by_example.html" target="_blank" rel="noopener">http://artifex.org/~hblanks/talks/2011/pep20_by_example.html</a></p>
+<p>One caught my attention:</p>
+<p><strong>Beautiful is better then ugly</strong></p>
+<p>Give me a function that takes a list of numbers and return only the even ones,divided by two.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#-----------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">halve_evens_only = lambda nums: map(lambda i: i/2, filter(lambda i: not i%2, nums))</span><br><span class="line"></span><br><span class="line">#-----------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">def halve_evens_only(nums):</span><br><span class="line">    return [i/2 for i in nums if not i % 2]</span><br></pre></td></tr></table></figure>
+<h3 id="Remembar-the-very-simple-things-in-Python"><a href="#Remembar-the-very-simple-things-in-Python" class="headerlink" title="Remembar the very simple things in Python"></a>Remembar the very simple things in Python</h3><ul>
+<li>Swaping two variables:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a,b = b, a</span><br></pre></td></tr></table></figure>
+<ul>
+<li>The step argument in slice operator. For example:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = [1,2,3,4,5]</span><br><span class="line">&gt;&gt;&gt;a[::2] #iterate over the whole list in 2-increments</span><br><span class="line">[1,3,5]</span><br></pre></td></tr></table></figure>
+<p>THe special case x[:-1:] is a useful idiom for ‘x reversed’.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;z[::-1]</span><br><span class="line">[5,4,3,2,1]</span><br></pre></td></tr></table></figure>
+<p>UPDATE: Do keep in mind <code>x.reverse()</code> reverses the list in place and slices gives you the ability to do this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;x[::-1]</span><br><span class="line">[5,4,3,2,1]</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;x[::-2]</span><br><span class="line">[5,3,1]</span><br></pre></td></tr></table></figure>
+<h3 id="Don’t-use-mutables-as-defaults"><a href="#Don’t-use-mutables-as-defaults" class="headerlink" title="Don’t use mutables as defaults"></a>Don’t use mutables as defaults</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def function(x,l=[]):    #Don&apos;t do this</span><br><span class="line"></span><br><span class="line">def function(x,l=None):    #way better</span><br><span class="line">	if l is None:</span><br><span class="line">		l = []</span><br></pre></td></tr></table></figure>
+<p>UPDATE: I realise I haven’t explained why. I would recommend reading the <a href="http://effbot.org/zone/default-values.htm" target="_blank" rel="noopener">article by Fredrik Lundh</a>. In short it is by design that this happens. “Default parameter values are always evaluted when, and only when, the “def” statement they belong to is executed;”</p>
+<h3 id="Use-iteritems-rather-than-items"><a href="#Use-iteritems-rather-than-items" class="headerlink" title="Use iteritems rather than items"></a>Use iteritems rather than items</h3><p><code>iteritems</code> uses <code>generators</code> and thus are better whle iterating though very large lists.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">d = &#123;1:&apos;1&apos;,2:&apos;2&apos;,3:&apos;3&apos;&#125;</span><br><span class="line"></span><br><span class="line">for key, val in d.items()    # builds complete list when called.</span><br><span class="line"></span><br><span class="line">for key, val in d.iteritems()    # calls values only when requested.</span><br></pre></td></tr></table></figure>
+<p>This is similar with <code>range</code> and <code>xrange</code> only calls values when requested.</p>
+<p>UPDATE: Do note that the <code>iteritems,iterkeys,itervalues</code> are removed from Python3.x. The <code>dict.keys()</code>,<code>dict.items()</code> and ‘dict.values()’ return views instead of <code>lists</code>.</p>
+<p><a href="http://docs.python.org/release/3.1.5/whatsnew/3.0.html#views-and-iterators-instead-of-lists" target="_blank" rel="noopener">http://docs.python.org/release/3.1.5/whatsnew/3.0.html#views-and-iterators-instead-of-lists</a></p>
+<h3 id="Use-isinstance-rather-than-type"><a href="#Use-isinstance-rather-than-type" class="headerlink" title="Use isinstance rather than type"></a>Use <code>isinstance</code> rather than type</h3><p>Don’t do</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if type(s) == type(&quot;&quot;): ,,,</span><br><span class="line">if type(seq) == list or type(seq) == tuple: ...</span><br></pre></td></tr></table></figure>
+<p>rather:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if isinstance(s, basestring): ...</span><br><span class="line">if isinstance(seq, (list, tuple)): ...</span><br></pre></td></tr></table></figure>
+<p>For why not to do so: <a href="http://stackoverflow.com/a/1549854/504262" target="_blank" rel="noopener">http://stackoverflow.com/a/1549854/504262</a></p>
+<p>Notice I used <code>basestring</code> and not <code>str</code> as you might be trying to check if a nuicode object is a string. For example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = u&apos;aaa&apos;</span><br><span class="line">&gt;&gt;&gt; print isinstance(a, basestring)</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; print isinstance(a, str)</span><br><span class="line">False</span><br></pre></td></tr></table></figure>
+<p>This is because in Python version below 3.0 there are two string types <code>str</code> and <code>uuicode</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  object</span><br><span class="line">     |</span><br><span class="line">     |</span><br><span class="line">basestring</span><br><span class="line">    /\</span><br><span class="line">  /    \</span><br><span class="line">str   unicode</span><br></pre></td></tr></table></figure>
+<h3 id="Learn-the-various-collection"><a href="#Learn-the-various-collection" class="headerlink" title="Learn the various collection"></a>Learn the various <code>collection</code></h3><p>Python has various container datatypes which are better alternative to the built-in containers like <code>list</code> and <code>dict</code> for specific cases.</p>
+<p>UPDATE: I’m sure most do not use this. Carelessness from my side. A few may consider writing it this way:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">freqs = &#123;&#125;</span><br><span class="line">for c in &quot;abcdgfgdgddgf&quot;:</span><br><span class="line">  try:</span><br><span class="line">    freqs[c] += 1</span><br><span class="line">  except:</span><br><span class="line">    freqs[c] = 1</span><br></pre></td></tr></table></figure>
+<p>Some may say a better solution would be:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">freqs = &#123;&#125;</span><br><span class="line">for c in &quot;fgsdcacacacscac&quot;:</span><br><span class="line">  freqs[c] = freqs.get(c,0) + 1</span><br></pre></td></tr></table></figure>
+<p>Rether go for the <code>collection</code> type <code>defaultdict</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from collections import defaultdict</span><br><span class="line">freqs = defaultdict(int)</span><br><span class="line">for c in &quot;fgdhffjjg&quot;:</span><br><span class="line">  freqs[c] += 1</span><br></pre></td></tr></table></figure>
+<p><strong>Other collections</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">namedtuple()    # factory function for creating tuple subclasses with named fields</span><br><span class="line">deque    #list-like container with fast appends and pops on either end</span><br><span class="line">Counter    #dict subclass for counting hashable objects</span><br><span class="line">OrderedDict    #dict subclass that remembers the order entries were added</span><br><span class="line">defaultdict    #dict subclass that calls a factory function to supply missing values</span><br></pre></td></tr></table></figure>
+<p>UPDATE: As noted by a few in Hacker News I could have used <code>Counter</code> instead of <code>defaultdict</code>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from collections import Counter</span><br><span class="line">&gt;&gt;&gt; c = Counter(&quot;ghdgdfgfhgfhgfh&quot;)</span><br><span class="line">&gt;&gt;&gt; c[&apos;d&apos;]</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+<h3 id="When-creating-classes-Python’s-magic-methods"><a href="#When-creating-classes-Python’s-magic-methods" class="headerlink" title="When creating classes Python’s magic methods"></a>When creating classes Python’s magic methods</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">__eq__(self, other)    # Defines behavior for the equality operator, ==</span><br><span class="line">__ne__(self,other)    # Defines behavior for the inequality operator, !=</span><br><span class="line">__lt__(self,other)     # Defines behavior for the less-than operator, &lt;.</span><br><span class="line">  __gt__(self, other)      # Defines behavior for the greater-than operator, &gt;.</span><br><span class="line">  __le__(self, other)      # Defines behavior for the less-than-or-equal-to operator, &lt;=.</span><br><span class="line">  __ge__(self, other)      # Defines behavior for the greater-than-or-equal-to operator, &gt;=.</span><br></pre></td></tr></table></figure>
+<p>There are serveral others.</p>
+<h3 id="Conditional-Assignments"><a href="#Conditional-Assignments" class="headerlink" title="Conditional Assignments"></a>Conditional Assignments</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = 3 if (y == 1) else 2    It does exactly what it sounds like:&quot;assign 3 to x if y is 1, otherwise assign 2 to x&quot;, You can also chain it if you have something more complicated:</span><br><span class="line">x = 3 if (y == 1) else 2 if (y == -1) else 1</span><br></pre></td></tr></table></figure>
+<p>Though at a certain point, it goes a little too far.</p>
+<p>Note that you can use if … else in any expression. For example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(func1 if y == 1 else func2)(arg1, arg2)</span><br></pre></td></tr></table></figure>
+<p>Here <code>func1</code> will be called if y is 1 and func2. otherwise. In both cases the corresponding function will be called with arguments arg1 and arg2.</p>
+<p>Analogously, the following is also valid:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x = (class1 if y == 1 else class2)(arg1, arg2)</span><br></pre></td></tr></table></figure>
+<p>where <code>class1</code> and <code>class2</code> are two classes.</p>
+<h3 id="Use-the-Ellipsis-when-necessary"><a href="#Use-the-Ellipsis-when-necessary" class="headerlink" title="Use the Ellipsis when necessary."></a>Use the <code>Ellipsis</code> when necessary.</h3><p>UPDATE: As one commenter mentioned in Hacker News “Using Ellipsis for getting all items is a violation of the only One Way TO Do It principle. The standard notation is [:].” I do agree with him. A better example is given using numpy in <a href="http://stackoverflow.com/a/118508/504262" target="_blank" rel="noopener">stackoverflow</a>:</p>
+<p>The ellipsis is used to slice higher-dimensional data structures.</p>
+<p>It’s designed to mean at this point. insert as many full slices(:) to extend the multi-dimensional slice to all dimensions.</p>
+<p>Example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from numpy import arrage</span><br><span class="line">&gt;&gt;&gt; a = arange(16).reshape(2,2,2,2)</span><br></pre></td></tr></table></figure>
+<p>Now, you have a 4-dimensional matrix of order 2x2x2x2. To select all first elements in the 4th dimension, you can use the ellipsis notation</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a[...,0].flatten()</span><br><span class="line">array([0,2,4,6,8,10,12,14])</span><br></pre></td></tr></table></figure>
+<p><strong>Previous suggestion.</strong></p>
+<p>When creating a class you can use <code>__gititem__</code> to make you class’s object work like a dictionary. Take this class as an example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class MyCLass(object):</span><br><span class="line">  def __init__(self,a,b,c,d):</span><br><span class="line">    self.a, self.b,self.c,self.d = a,b,c,d</span><br><span class="line"></span><br><span class="line">  def __getitem__(self, item):</span><br><span class="line">    return getattr(self,item)</span><br><span class="line"></span><br><span class="line">x = MyCLass(10,12,22,14)</span><br></pre></td></tr></table></figure>
+<p>Because of <code>__getitem__</code> you will be able to get the value of <code>a</code> in the object <code>x</code> by <code>x[&#39;a&#39;]</code>. This is probably a know fact.</p>
+<p>This object is used to extend the Python slicing.(<a href="(http://docs.python.org/library/stdtypes.html#bltin-ellipsis-object">(http://docs.python.org/library/stdtypes.html#bltin-ellipsis-object</a>). Thus if we add a clause:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def __getitem__(self,item):</span><br><span class="line">  if item is Ellipsis:</span><br><span class="line">    return [self.a, self.b,self.c, self.d]</span><br><span class="line">  else:</span><br><span class="line">    return getattr(self, item)</span><br></pre></td></tr></table></figure>
+<p>We can use <code>x[...]</code> to get list containing all the items.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; x = MyCLass(11,24,23,12)</span><br><span class="line">&gt;&gt;&gt; x[...]</span><br><span class="line">(11,24,23,12)</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Zen-of-Python"><span class="toc-text">Zen of Python</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Remembar-the-very-simple-things-in-Python"><span class="toc-text">Remembar the very simple things in Python</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Don’t-use-mutables-as-defaults"><span class="toc-text">Don’t use mutables as defaults</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Use-iteritems-rather-than-items"><span class="toc-text">Use iteritems rather than items</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Use-isinstance-rather-than-type"><span class="toc-text">Use isinstance rather than type</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Learn-the-various-collection"><span class="toc-text">Learn the various collection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#When-creating-classes-Python’s-magic-methods"><span class="toc-text">When creating classes Python’s magic methods</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Conditional-Assignments"><span class="toc-text">Conditional Assignments</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Use-the-Ellipsis-when-necessary"><span class="toc-text">Use the Ellipsis when necessary.</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2016/05/10/ipython-notebook-introduction-1/" rel="next" title="IPython Notebook Introduction 1">
+          IPython Notebook Introduction 1
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2016/05/21/install-kernel46-in-ubuntu-1504/" rel="prev" title="Install Kernel4.6 in Ubuntu 15.04">
+            Install Kernel4.6 in Ubuntu 15.04
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2016/05/14/a-few-things-to-remember-while-coding-in-python/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

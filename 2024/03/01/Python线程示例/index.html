@@ -1,0 +1,330 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="python,">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>Python线程示例 [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        Python线程示例
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2024-03-01T11:33:37.000Z">
+        2024-03-01
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <h1 id="线程简述"><a href="#线程简述" class="headerlink" title="线程简述"></a>线程简述</h1><blockquote>
+<p>一个程序运行起来后，一定有一个执行代码的东西，这个东西就是线程；<br>一般计算(CPU)密集型任务适合多进程，IO密集型任务适合多线程；<br>一个进程可拥有多个并行的(concurrent)线程，当中每一个线程，共享当前进程的资源</p>
+</blockquote>
+<p>以下是对发现的几种多线程进行的汇总整理，均已测试运行<br>多线程实现的四种方式分别是：<br>multiprocessing下面有两种：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing.dummy <span class="keyword">import</span> Pool <span class="keyword">as</span> ThreadPool  <span class="comment"># 线程池</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> multiprocessing.pool <span class="keyword">import</span> ThreadPool   <span class="comment"># 线程池，用法无区别，唯一区别这个是线程池</span></span><br></pre></td></tr></table></figure>
+<p>另外两种：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> concurrent.futures <span class="keyword">import</span> ThreadPoolExecutor  <span class="comment"># python原生线程池，这个更主流</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> threadpool  <span class="comment"># 线程池，需要 pip install threadpool，很早之前的</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="方式1-multiprocessing-dummy-Pool"><a href="#方式1-multiprocessing-dummy-Pool" class="headerlink" title="方式1 multiprocessing.dummy Pool()"></a>方式1 multiprocessing.dummy Pool()</h2><p>非阻塞方法<br><code>multiprocessing.dummy.Pool.apply_async()</code> 和 <code>multiprocessing.dummy.Pool.imap()</code><br>线程并发执行</p>
+<p>阻塞方法<br><code>multiprocessing.dummy.Pool.apply()</code>和 <code>multiprocessing.dummy.Pool.map()</code><br>线程顺序执行</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing.dummy <span class="keyword">import</span> Pool <span class="keyword">as</span> Pool</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(msg)</span>:</span></span><br><span class="line">    print(<span class="string">'msg:'</span>, msg)</span><br><span class="line">    time.sleep(<span class="number">2</span>)</span><br><span class="line">    print(<span class="string">'end:'</span>)</span><br><span class="line">    </span><br><span class="line">pool = Pool(processes=<span class="number">3</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">5</span>):</span><br><span class="line">    msg = <span class="string">'hello %d'</span> % (i)</span><br><span class="line">    pool.apply_async(func, (msg,))  <span class="comment"># 非阻塞，子线程有返回值</span></span><br><span class="line">    <span class="comment"># pool.apply(func,(msg,))       # 阻塞,apply()源自内建函数，用于间接的调用函数，并且按位置把元祖或字典作为参数传入。子线程无返回值</span></span><br><span class="line">    <span class="comment"># pool.imap(func,[msg,])        # 非阻塞, 注意与apply传的参数的区别 无返回值</span></span><br><span class="line">    <span class="comment"># pool.map(func, [msg, ])       # 阻塞 子线程无返回值</span></span><br><span class="line"></span><br><span class="line">print(<span class="string">'Mark~~~~~~~~~~~~~~~'</span>)</span><br><span class="line">pool.close()</span><br><span class="line">pool.join()  <span class="comment"># 调用join之前，先调用close函数，否则会出错。执行完close后不会有新的进程加入到pool,join函数等待所有子进程结束</span></span><br><span class="line">print(<span class="string">'sub-process done'</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="方式2：multiprocessing-pool-ThreadPool-Threading"><a href="#方式2：multiprocessing-pool-ThreadPool-Threading" class="headerlink" title="方式2：multiprocessing.pool ThreadPool Threading()"></a>方式2：multiprocessing.pool ThreadPool Threading()</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing.pool <span class="keyword">import</span> ThreadPool   <span class="comment"># 线程池，用法无区别，唯一区别这个是线程池</span></span><br><span class="line"><span class="keyword">from</span> multiprocessing.dummy <span class="keyword">import</span> Pool <span class="keyword">as</span> ThreadPool  <span class="comment"># 线程池</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">print(<span class="string">"hi outside of main()"</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">(x)</span>:</span></span><br><span class="line">    print(<span class="string">"inside hello()"</span>)</span><br><span class="line">    print(<span class="string">"Proccess id: %s"</span> %(os.getpid()))</span><br><span class="line">    time.sleep(<span class="number">3</span>)</span><br><span class="line">    <span class="keyword">return</span> x*x</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    p = ThreadPool(<span class="number">5</span>)</span><br><span class="line">    pool_output = p.map(hello, range(<span class="number">3</span>))</span><br><span class="line">    print(pool_output)</span><br></pre></td></tr></table></figure>
+<h2 id="方式3：主流ThreadPoolExecutor"><a href="#方式3：主流ThreadPoolExecutor" class="headerlink" title="方式3：主流ThreadPoolExecutor"></a>方式3：主流ThreadPoolExecutor</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> concurrent.futures <span class="keyword">import</span> ThreadPoolExecutor</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个准备作为线程任务的函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">action</span><span class="params">(max)</span>:</span></span><br><span class="line">    my_sum = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(max):</span><br><span class="line">        print(threading.current_thread().name + <span class="string">'  '</span> + str(i))</span><br><span class="line">        my_sum += i</span><br><span class="line">    <span class="keyword">return</span> my_sum</span><br><span class="line"><span class="comment"># 创建一个包含2条线程的线程池</span></span><br><span class="line">pool = ThreadPoolExecutor(max_workers=<span class="number">2</span>)</span><br><span class="line"><span class="comment"># 向线程池提交一个task, 20会作为action()函数的参数</span></span><br><span class="line">future1 = pool.submit(action, <span class="number">20</span>)</span><br><span class="line"><span class="comment"># 向线程池再提交一个task, 30会作为action()函数的参数</span></span><br><span class="line">future2 = pool.submit(action, <span class="number">30</span>)</span><br><span class="line"><span class="comment"># 判断future1代表的任务是否结束</span></span><br><span class="line">print(future1.done())</span><br><span class="line">time.sleep(<span class="number">3</span>)</span><br><span class="line"><span class="comment"># 判断future2代表的任务是否结束</span></span><br><span class="line">print(future2.done())</span><br><span class="line"><span class="comment"># 查看future1代表的任务返回的结果</span></span><br><span class="line">print(future1.result())</span><br><span class="line"><span class="comment"># 查看future2代表的任务返回的结果</span></span><br><span class="line">print(future2.result())</span><br><span class="line"><span class="comment"># 关闭线程池</span></span><br><span class="line">pool.shutdown()</span><br></pre></td></tr></table></figure>
+<h2 id="方式4：threadpool"><a href="#方式4：threadpool" class="headerlink" title="方式4：threadpool"></a>方式4：threadpool</h2><p>需要 <code>pip install threadpool</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threadpool</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">(m, n, o)</span>:</span></span><br><span class="line">    <span class="string">""""""</span></span><br><span class="line">    print(<span class="string">"m = %s, n = %s, o = %s"</span> % (m, n, o))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="comment"># 方法1</span></span><br><span class="line">    <span class="comment"># lst_vars_1 = ['1', '2', '3']</span></span><br><span class="line">    <span class="comment"># lst_vars_2 = ['4', '5', '6']</span></span><br><span class="line">    <span class="comment"># func_var = [(lst_vars_1, None), (lst_vars_2, None)]</span></span><br><span class="line">    <span class="comment"># 方法2</span></span><br><span class="line">    dict_vars_1 = &#123;<span class="string">'m'</span>: <span class="string">'1'</span>, <span class="string">'n'</span>: <span class="string">'2'</span>, <span class="string">'o'</span>: <span class="string">'3'</span>&#125;</span><br><span class="line">    dict_vars_2 = &#123;<span class="string">'m'</span>: <span class="string">'4'</span>, <span class="string">'n'</span>: <span class="string">'5'</span>, <span class="string">'o'</span>: <span class="string">'6'</span>&#125;</span><br><span class="line">    func_var = [(<span class="literal">None</span>, dict_vars_1), (<span class="literal">None</span>, dict_vars_2)]</span><br><span class="line">    <span class="comment"># 定义了一个线程池，表示最多可以创建poolsize这么多线程</span></span><br><span class="line">    pool = threadpool.ThreadPool(<span class="number">2</span>)</span><br><span class="line">    <span class="comment"># 调用makeRequests创建了要开启多线程的函数，以及函数相关参数和回调函数，其中回调函数可以不写</span></span><br><span class="line">    requests = threadpool.makeRequests(hello, func_var)</span><br><span class="line">    [pool.putRequest(req) <span class="keyword">for</span> req <span class="keyword">in</span> requests]   <span class="comment"># 将所有要运行多线程的请求扔进线程池</span></span><br><span class="line">    pool.wait()   <span class="comment"># 等待所有线程完成工作后退出</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">[pool.putRequest(req) for req in requests]等同于</span></span><br><span class="line"><span class="string">　　for req in requests:  </span></span><br><span class="line"><span class="string">　　　　 pool.putRequest(req) </span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#线程简述"><span class="toc-text">线程简述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#方式1-multiprocessing-dummy-Pool"><span class="toc-text">方式1 multiprocessing.dummy Pool()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方式2：multiprocessing-pool-ThreadPool-Threading"><span class="toc-text">方式2：multiprocessing.pool ThreadPool Threading()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方式3：主流ThreadPoolExecutor"><span class="toc-text">方式3：主流ThreadPoolExecutor</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方式4：threadpool"><span class="toc-text">方式4：threadpool</span></a></li></ol></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2024/02/07/Python管道使用方法/" rel="next" title="Python管道使用方法">
+          Python管道使用方法
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2024/03/17/Python获取世界新闻/" rel="prev" title="Python获取世界新闻">
+            Python获取世界新闻
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2024/03/01/Python线程示例/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>
