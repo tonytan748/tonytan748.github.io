@@ -1,733 +1,103 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="utf-8">
-  
-
-  
-  <title>Tony Tan</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Tony Tan">
-<meta name="keywords" content="Tony Tan">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Tony Tan">
-<meta property="og:url" content="https://tonytan748.github.io/page/10/index.html">
-<meta property="og:site_name" content="Tony Tan">
-<meta property="og:description" content="Tony Tan">
-<meta property="og:locale" content="default">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Tony Tan">
-<meta name="twitter:description" content="Tony Tan">
-  
-    <link rel="alternate" href="/atom.xml" title="Tony Tan" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/styles/base.css">
+    <link rel="stylesheet" href="/styles/theme.css">
+    <link rel="shortcut icon" href="/favicon.png">
+    
+    <title>首页 - Tony Tan</title>
+    
 </head>
-</html>
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Tony Tan</a>
-      </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">a python progrmmer</a>
-        </h2>
-      
+    <div class="header-title">
+        <span class="header-light"></span>
+        <span class="header-light"></span>
+        <span class="header-light"></span>
+        <span>Tony Tan tonytan748.github.io<span>
+    </span></span></div>
+    <div class="container">
+        <ul class="nav">
+        
+            <li><a href="/">首页</a></li>
+        
+            <li><a href="/categories">分类</a></li>
+        
+            <li><a href="/about">关于</a></li>
+        
+        </ul>
+        <div class="content">
+            
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">1.</span>
+        <h2><a href="/2015/07/04/windowspython/">Windows如何使用Python操作摄像头</a></h2>
+        <span class="post-date">2015-07-04</span>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://tonytan748.github.io"></form>
-      </div>
+    <div class="post-content">
+        Windows如何使用Python操作摄像头
+
+用过USB摄像头的都知道，你需要使用鼠标来操作它，比如截个图，录个像什么的，要点N次鼠标，对于我们那些不喜欢多次点击鼠标的人来说，这是一件很boring的事情，所以，本文将教你如何使用Python来操作摄像头。
+
+
+这里，我们需要三个Python库： VideoCapture， PIL  和 pygame...
     </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-windowspython" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/07/04/windowspython/" class="article-date">
-  <time datetime="2015-07-03T16:00:00.000Z" itemprop="datePublished">2015-07-04</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
+</div>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/07/04/windowspython/">Windows如何使用Python操作摄像头</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>Windows如何使用Python操作摄像头</em></p>
-<blockquote>
-<p>用过USB摄像头的都知道，你需要使用鼠标来操作它，比如截个图，录个像什么的，要点N次鼠标，对于我们那些不喜欢多次点击鼠标的人来说，这是一件很boring的事情，所以，本文将教你如何使用Python来操作摄像头。</p>
-</blockquote>
-<blockquote>
-<p>这里，我们需要三个Python库： VideoCapture， PIL  和 pygame。使用这三个库你可以非常容易的编写一个摄像头程序。之所以使用pygame，其目的就是因为这个库可以处理视频帧（fps）。下面是代码：</p>
-</blockquote>
-<pre>
-from VideoCapture import Device
-import ImageDraw, sys, pygame, time
-from pygame.locals import *
-from PIL import ImageEnhance
-
-res = (640,480)
-pygame.init()
-cam = Device()
-cam.setResolution(res[0],res[1])
-screen = pygame.display.set_mode((640,480))
-pygame.display.set_caption('Webcam')
-pygame.font.init()
-font = pygame.font.SysFont("Courier",11)
-
-def disp(phrase,loc):
-    s = font.render(phrase, True, (200,200,200))
-    sh = font.render(phrase, True, (50,50,50))
-    screen.blit(sh, (loc[0]+1,loc[1]+1))
-    screen.blit(s, loc)
-
-brightness = 1.0
-contrast = 1.0
-shots = 0
-
-while 1:
-    camshot = ImageEnhance.Brightness(cam.getImage()).enhance(brightness)
-    camshot = ImageEnhance.Contrast(camshot).enhance(contrast)
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT: sys.exit()
-    keyinput = pygame.key.get_pressed()
-    if keyinput[K_1]: brightness -= .1
-    if keyinput[K_2]: brightness += .1
-    if keyinput[K_3]: contrast -= .1
-    if keyinput[K_4]: contrast += .1
-    if keyinput[K_q]: cam.displayCapturePinProperties()
-    if keyinput[K_w]: cam.displayCaptureFilterProperties()
-    if keyinput[K_s]:
-        filename = str(time.time()) + ".jpg"
-        cam.saveSnapshot(filename, quality=80, timestamp=0)
-        shots += 1
-    camshot = pygame.image.frombuffer(camshot.tostring(), res, "RGB")
-    screen.blit(camshot, (0,0))
-    disp("S:" + str(shots), (10,4))
-    disp("B:" + str(brightness), (10,16))
-    disp("C:" + str(contrast), (10,28))
-    pygame.display.flip()
-</pre>
-
-<blockquote>
-<p>这段代码中的一些要点的解释如下：</p>
-</blockquote>
-<blockquote>
-<ul>
-<li>第15行的那个函数是在视频上显示些信息。这个例子中，显示的是抓图的数量以及当前的亮度和对比度。这个函数先显示深灰色的文本，然后偏移几个像素，再显示浅灰色的，这样可以有阴影的效果。</li>
-<li>第26行是在调整亮度和对比度。30-33行是在设置数字键1-4用于调整亮度和对比度。</li>
-<li>34 和35行是在设置 ‘q’ 和 ‘w’ 来显示摄像头的对话框。在那里你可以调整分辨率和暴光度等等。</li>
-<li>36行及以下的代码，是在存一个抓图文件。文件名中使用了当前时间。.</li>
-</ul>
-</blockquote>
-
-      
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">2.</span>
+        <h2><a href="/2015/06/03/top-10-algorithm/">Top 10 Algorithm</a></h2>
+        <span class="post-date">2015-06-03</span>
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2015/07/04/windowspython/" data-id="cm50h3r8u003byfhtqg6u4p5i" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2015/07/04/windowspython/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-top-10-algorithm" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/06/03/top-10-algorithm/" class="article-date">
-  <time datetime="2015-06-02T16:00:00.000Z" itemprop="datePublished">2015-06-03</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/06/03/top-10-algorithm/">Top 10 Algorithm</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>快速排序算法,堆排序算法,归并排序,二分查找算法,DFS,BFS,Dijkstra算法,动态规划算法,朴素贝叶斯分类算法</em></p>
-<p>###算法一：快速排序算法</p>
-<p> 快速排序是由东尼·霍尔所发展的一种排序算法。在平均状况下，排序 n 个项目要Ο(n log n)次比较。在最坏状况下则需要Ο(n2)次比较，但这种状况并不常见。事实上，快速排序通常明显比其他Ο(n log n) 算法更快，因为它的内部循环（inner loop）可以在大部分的架构上很有效率地被实现出来。<br> 快速排序使用分治法（Divide and conquer）策略来把一个串行（list）分为两个子串行（sub-lists）。 </p>
-<p> 算法步骤： </p>
-<ol>
-<li>从数列中挑出一个元素，称为 “基准”（pivot），</li>
-<li>重新排序数列，所有元素比基准值小的摆放在基准前面，所有元素比基准值大的摆在基准的后面（相同的数可以到任一边）。在这个分区退出之后，该基准就处于数列的中间位置。这个称为分区（partition）操作。</li>
-<li>递归地（recursive）把小于基准值元素的子数列和大于基准值元素的子数列排序。<br>递归的最底部情形，是数列的大小是零或一，也就是永远都已经被排序好了。虽然一直递归下去，但是这个算法总会退出，因为在每次的迭代（iteration）中，它至少会把一个元素摆到它最后的位置去。 </li>
-</ol>
-<p><img src="/images/20150603/7231.gif"></p>
-<p>###算法二：堆排序算法</p>
-<p> 堆排序（Heapsort）是指利用堆这种数据结构所设计的一种排序算法。堆积是一个近似完全二叉树的结构，并同时满足堆积的性质：即子结点的键值或索引总是小于（或者大于）它的父节点。<br> 堆排序的平均时间复杂度为Ο(nlogn) 。 </p>
-<p> 算法步骤：</p>
-<ol>
-<li>创建一个堆H[0..n-1]</li>
-<li>把堆首（最大值）和堆尾互换</li>
-<li>把堆的尺寸缩小1，并调用shift_down(0),目的是把新的数组顶端数据调整到相应位置</li>
-<li><p>重复步骤2，直到堆的尺寸为1</p>
-<p>算法演示 </p>
-</li>
-</ol>
-<p><img src="images/20150603/7231.gif"></p>
-<p>###算法三：归并排序</p>
-<p> 归并排序（Merge sort，台湾译作：合并排序）是建立在归并操作上的一种有效的排序算法。该算法是采用分治法（Divide and Conquer）的一个非常典型的应用。 </p>
-<p> 算法步骤： </p>
-<ol>
-<li>申请空间，使其大小为两个已经排序序列之和，该空间用来存放合并后的序列</li>
-<li>设定两个指针，最初位置分别为两个已经排序序列的起始位置</li>
-<li>比较两个指针所指向的元素，选择相对小的元素放入到合并空间，并移动指针到下一位置</li>
-<li>重复步骤3直到某一指针达到序列尾</li>
-<li><p>将另一序列剩下的所有元素直接复制到合并序列尾</p>
-<p>算法演示 </p>
-</li>
-</ol>
-<p><img src="/images/20150603/10dalunce-7233.gif" alt="快速排序算法"></p>
-<p>###算法四：二分查找算法</p>
-<p> 二分查找算法是一种在有序数组中查找某一特定元素的搜索算法。搜素过程从数组的中间元素开始，如果中间元素正好是要查找的元素，则搜 素过程结束；如果某一特定元素大于或者小于中间元素，则在数组大于或小于中间元素的那一半中查找，而且跟开始一样从中间元素开始比较。如果在某一步骤数组 为空，则代表找不到。这种搜索算法每一次比较都使搜索范围缩小一半。折半搜索每次把搜索区域减少一半，时间复杂度为Ο(logn) 。 </p>
-<p>###算法五：BFPRT(线性查找算法)</p>
-<p> BFPRT算法解决的问题十分经典，即从某n个元素的序列中选出第k大（第k小）的元素，通过巧妙的分 析，BFPRT可以保证在最坏情况下仍为线性时间复杂度。该算法的思想与快速排序思想相似，当然，为使得算法在最坏情况下，依然能达到o(n)的时间复杂 度，五位算法作者做了精妙的处理。 </p>
-<p> 算法步骤： </p>
-<ol>
-<li>将n个元素每5个一组，分成n/5(上界)组。</li>
-<li>取出每一组的中位数，任意排序方法，比如插入排序。</li>
-<li>递归的调用selection算法查找上一步中所有中位数的中位数，设为x，偶数个中位数的情况下设定为选取中间小的一个。</li>
-<li>用x来分割数组，设小于等于x的个数为k，大于x的个数即为n-k。</li>
-<li><p>若i==k，返回x；若i&lt;k，在小于x的元素中递归查找第i小的元素；若i&gt;k，在大于x的元素中递归查找第i-k小的元素。</p>
-<p>终止条件：n=1时，返回的即是i小元素。 </p>
-</li>
-</ol>
-<p>###算法六：DFS（深度优先搜索）</p>
-<p>深度优先搜索算法（Depth-First-Search），是搜索算法的一种。它沿着树的深度遍历树的节点，尽可能深的搜索树的分 支。当节点v的所有边都己被探寻过，搜索将回溯到发现节点v的那条边的起始节点。这一过程一直进行到已发现从源节点可达的所有节点为止。如果还存在未被发 现的节点，则选择其中一个作为源节点并重复以上过程，整个进程反复进行直到所有节点都被访问为止。DFS属于盲目搜索。 </p>
-<p> 深度优先搜索是图论中的经典算法，利用深度优先搜索算法可以产生目标图的相应拓扑排序表，利用拓扑排序表可以方便的解决很多相关的图论问题，如最大路径问题等等。一般用堆数据结构来辅助实现DFS算法。 </p>
-<p> 深度优先遍历图算法步骤： </p>
-<ol>
-<li>访问顶点v；</li>
-<li>依次从v的未被访问的邻接点出发，对图进行深度优先遍历；直至图中和v有路径相通的顶点都被访问；</li>
-<li><p>若此时图中尚有顶点未被访问，则从一个未被访问的顶点出发，重新进行深度优先遍历，直到图中所有顶点均被访问过为止。<br>上述描述可能比较抽象，举个实例： </p>
-<p>DFS 在访问图中某一起始顶点 v 后，由 v 出发，访问它的任一邻接顶点 w1；再从 w1 出发，访问与 w1邻 接但还没有访问过的顶点 w2；然后再从 w2 出发，进行类似的访问，… 如此进行下去，直至到达所有的邻接顶点都被访问过的顶点 u 为止。<br>接着，退回一步，退到前一次刚访问过的顶点，看是否还有其它没有被访问的邻接顶点。如果有，则访问此顶点，之后再从此顶点出发，进行与前述类似的访问；如果没有，就再退回一步进行搜索。重复上述过程，直到连通图中所有顶点都被访问过为止。 </p>
-</li>
-</ol>
-<p>###算法七：BFS(广度优先搜索)</p>
-<p> 广度优先搜索算法（Breadth-First-Search），是一种图形搜索算法。简单的说，BFS是从根节点开始，沿着树(图)的宽度遍历树(图)的节点。如果所有节点均被访问，则算法中止。BFS同样属于盲目搜索。一般用队列数据结构来辅助实现BFS算法。 </p>
-<p> 算法步骤： </p>
-<ol>
-<li>首先将根节点放入队列中。</li>
-<li>从队列中取出第一个节点，并检验它是否为目标。<br>如果找到目标，则结束搜寻并回传结果。<br>否则将它所有尚未检验过的直接子节点加入队列中。 </li>
-<li>若队列为空，表示整张图都检查过了——亦即图中没有欲搜寻的目标。结束搜寻并回传“找不到目标”。</li>
-<li><p>重复步骤2。</p>
-<p>算法演示 </p>
-</li>
-</ol>
-<p>###算法八：Dijkstra算法</p>
-<p> 戴克斯特拉算法（Dijkstra’s algorithm）是由荷兰计算机科学家艾兹赫尔·戴克斯特拉提出。迪科斯彻算法使用了广度优先搜索解决非负权有向图的单源最短路径问题，算法最终得到一个最短路径树。该算法常用于路由算法或者作为其他图算法的一个子模块。<br> 该算法的输入包含了一个有权重的有向图 G，以及G中的一个来源顶点 S。我们以 V 表示 G 中所有顶点的集合。每一个图中的边，都是两个顶点所形成的有序元素对。(u, v) 表示从顶点 u 到 v 有路径相连。我们以 E 表示G中所有边的集合，而边的权重则由权重函数 w: E → [0, ∞] 定义。因此，w(u, v) 就是从顶点 u 到顶点 v 的非负权重（weight）。边的权重可以想像成两个顶点之间的距离。任两点间路径的权重，就是该路径上所有边的权重总和。已知有 V 中有顶点 s 及 t，Dijkstra 算法可以找到 s 到 t的最低权重路径(例如，最短路径)。这个算法也可以在一个图中，找到从一个顶点 s 到任何其他顶点的最短路径。对于不含负权的有向图，Dijkstra算法是目前已知的最快的单源最短路径算法。 </p>
-<p> 算法步骤： </p>
-<ol>
-<li>初始时令 S={V0},T={其余顶点}，T中顶点对应的距离值<br>若存在&lt;v0,vi&gt;，d(V0,Vi)为&lt;v0,vi&gt;弧上的权值<br>若不存在&lt;v0,vi&gt;，d(V0,Vi)为∞ </li>
-<li>从T中选取一个其距离值为最小的顶点W且不在S中，加入S</li>
-<li><p>对其余T中顶点的距离值进行修改：若加进W作中间顶点，从V0到Vi的距离值缩短，则修改此距离值<br>重复上述步骤2、3，直到S中包含所有顶点，即W=Vi为止 </p>
-<p>算法演示 </p>
-</li>
-</ol>
-<p>###算法九：动态规划算法</p>
-<p> 动态规划（Dynamic programming）是一种在数学、计算机科学和经济学中使用的，通过把原问题分解为相对简单的子问题的方式求解复杂问题的方法。 动态规划常常适用于有重叠子问题和最优子结构性质的问题，动态规划方法所耗时间往往远少于朴素解法。<br> 动态规划背后的基本思想非常简单。大致上，若要解一个给定问题，我们需要解其不同部分（即子问题），再合并子问题的解以得出原问题的解。 通常许多 子问题非常相似，为此动态规划法试图仅仅解决每个子问题一次，从而减少计算量： 一旦某个给定子问题的解已经算出，则将其记忆化存储，以便下次需要同一个 子问题解之时直接查表。 这种做法在重复子问题的数目关于输入的规模呈指数增长时特别有用。<br> 关于动态规划最经典的问题当属背包问题。 </p>
-<p> 算法步骤： </p>
-<ol>
-<li>最优子结构性质。如果问题的最优解所包含的子问题的解也是最优的，我们就称该问题具有最优子结构性质（即满足最优化原理）。最优子结构性质为动态规划算法解决问题提供了重要线索。</li>
-<li>子问题重叠性质。子问题重叠性质是指在用递归算法自顶向下对问题进行求解时，每次产生的子问题并不总是新问题，有些子问题会被重复计算多次。 动态规划算法正是利用了这种子问题的重叠性质，对每一个子问题只计算一次，然后将其计算结果保存在一个表格中，当再次需要计算已经计算过的子问题时，只是 在表格中简单地查看一下结果，从而获得较高的效率。</li>
-</ol>
-<p>###算法十：朴素贝叶斯分类算法</p>
-<p> 朴素贝叶斯分类算法是一种基于贝叶斯定理的简单概率分类算法。贝叶斯分类的基础是概率推理，就是在各种条件的存在不确定，仅知其出现概率的情况下， 如何完成推理和决策任务。概率推理是与确定性推理相对应的。而朴素贝叶斯分类器是基于独立假设的，即假设样本每个特征与其他特征都不相关。<br> 朴素贝叶斯分类器依靠精确的自然概率模型，在有监督学习的样本集中能获取得非常好的分类效果。在许多实际应用中，朴素贝叶斯模型参数估计使用最大似然估计方法，换言之朴素贝叶斯模型能工作并没有用到贝叶斯概率或者任何贝叶斯模型。 </p>
-
-      
+    <div class="post-content">
+        快速排序算法,堆排序算法,归并排序,二分查找算法,DFS,BFS,Dijkstra算法,动态规划算法,朴素贝叶斯分类算法
+###算法一：快速排序算法
+ 快速排序是由东尼·霍尔所发展的一种排序算法。在平均状况下，排序 n 个项目要Ο(n log n)次比较。在最坏状况下则需要Ο(n2)次比较，但这种状况并不常见。事实上，快速排序通常明显比其他Ο(n lo...
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2015/06/03/top-10-algorithm/" data-id="cm50h3r8x003dyfht96gaaez8" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2015/06/03/top-10-algorithm/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
+</div>
 
-
-  
-    <article id="post-what-are-useful-cli-tools-for-linux-system-admins" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/12/10/what-are-useful-cli-tools-for-linux-system-admins/" class="article-date">
-  <time datetime="2014-12-09T16:00:00.000Z" itemprop="datePublished">2014-12-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/linux/">linux</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/12/10/what-are-useful-cli-tools-for-linux-system-admins/">What are useful CLI tools for Linux system admins</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>What are useful CLI tools for Linux system admins</em></p>
-<p>System administrators (sysadmins) are responsible for day-to-day operations of production systems and services. One of the critical roles of sysadmins is to ensure that operational services are available round the clock. For that, they have to carefully plan backup policies, disaster management strategies, scheduled maintenance, security audits, etc. Like every other discipline, sysadmins have their tools of trade. Utilizing proper tools in the right case at the right time can help maintain the health of operating systems with minimal service interruptions and maximum uptime.</p>
-
-<p>This article will present some of the most popular and useful CLI tools recommended for sysadmins in their day to day activities. If you would like to recommend any useful tool which is not listed here, don’t forget to share it in the comment section.</p>
-
-<p></p><h3>Network Tools</h3><p></p>
-<ol><br><li><b>ping:</b> <p>Check end-to-end connectivity (RTT delay, jitter, packet loss) of a remote host with ICMP echo/reply. Useful to check system status and reachability.</p></li><br><br><li><b>hping:</b> <p>Network scanning and testing tool that can generate ICMP/TCP/UDP ping packets. Often used for advanced port scanning, firewall testing, manual path MTU discovery and fragmentation testing.</p></li><br><br><li><b>traceroute:</b> <p>Discover a layer-3 forwarding path from a local host to a remote destination host with TTL-limited ICMP/UDP/TCP probe packets. Useful to troubleshoot network reachability and routing problems.</p></li><br><br><li><b>mtr:</b> <p>A variation of traceroute which characterizes per-hop packet loss/jitter with running statistics. Useful to characterize routing path delays.</p></li><br><br><li><b>netcat/socat:</b> <p>A swiss army knife of TCP/IP networking, allowing to read/write byte streams over TCP/UDP. Useful to troubleshoot firewall policies and service availability.</p></li><br><br><li><b>dig:</b> <p>DNS troubleshooting tool that can generate forward queries, reverse queries, find authoritative name servers, check CNAME, MX and other DNS records. Can be instructed to query a specific DNS server of your choosing.</p></li><br><br><li><b>nslookup:</b> <p>Another DNS checking/troubleshooting tool. Works with all DNS queries and records. Can query a particular DNS server.</p></li><br><br><li><b>dnsyo:</b> <p>A DNS testing tool which checks DNS propagation by performing DNS lookup from over a number of open resolvers located across 1,500 different networks around the world.</p></li><br><br><li><b>lsof:</b> <p>Show information about files (e.g., regular files, pipes or sockets) which are opened by processes. Useful to monitor processes or users in terms of their open network connections or opened files.</p></li><br><br><li><b>iftop:</b> <p>A ncurses-based TUI utility that can be used to monitor in real time bandwidth utilization and network connections for individual network interfaces. Useful to keep track of bandwidth hogging applications, users, destinations and ports.</p></li><br><br><li><b>netstat:</b> <p>A network statistics utility that can show status information and statistics about open network connections (TCP/UDP ports, IP addresses), routing tables, TX/RX traffic and protocols. Useful for network related diagnosis and performance tuning.</p></li><br><br><li><b>tcpdump:</b> <p>A popular packet sniffer tool based on libpcap packet capture library. Can define packet capturing filters in Berkeley Packet Filters format.</p></li><br><br><li><b>tshark:</b> <p>Another CLI packet sniffer software with full compatibility with its GUI counterpart, Wireshark. Supports 1,000 protocols and the list is growing. Useful to troubleshoot, analyze and store information on live packets.</p></li><br><br><li><b>ip:</b> <p>A versatile CLI networking tool which is part of iproute2 package. Used to check and modifying routing tables, network device state, and IP tunneling settings. Useful to view routing tables, add/remove static routes, configure network interfaces, and otherwise troubleshoot routing issues.</p></li><br><br><li><b>ifup/ifdown:</b> <p>Used to bring up or shut down a particular network interface. Often a preferred alternative to restarting the entire network service.</p></li><br><br><li><b>autossh:</b> <p>A program which creates an SSH session and automatically restarts the session should it disconnect. Often useful to create a persistent reverse SSH tunnel across restrictive corporate networks.</p></li><br><br><li><b>iperf:</b> <p>A network testing tool which measures maximum bi-directional throughput between a pair of hosts by injecting customizable TCP/UDP data streams in between.</p></li><br><br><li><b>elinks/lynx:</b> <p>text-based web browsers for CLI-based server environment.</p></li><br></ol>
-
-<p></p><h3>Security Tools</h3><p></p>
-<ol><br><li><b>iptables:</b> <p>A user-space CLI tool for configuring Linux kernel firewall. Provides means to create and modify rules for incoming, transit and outgoing packets within Linux kernel space.</p></li><br><br><li><b>nmap:</b> <p>A popular port scanning and network discovery tool used for security auditing purposes. Useful to find out which hosts are up and running on the local network, and what ports are open on a particular host.</p></li><br><br><li><b>TCP Wrappers:</b> <p>A host-based network ACL tool that can be used to filter incoming/outgoing reqeuests/replies. Often used alongside iptables as an additional layer of security.</p></li><br><br><li><b>getfacl/setfacl:</b> <p>View and customize access control lists of files and directories, as extensions to traditional file permissions.</p></li><br><br><li><b>cryptsetup:</b> <p>Used to create and manage LUKS-encrypted disk partitions.</p></li><br><br><li><b>lynis:</b> <p>A CLI-based vulnerability scanner tool. Can scan the entire Linux system, and report potential vulnerabilities along with possible solutions.</p></li><br><br><li><b>maldet:</b> <p>A malware scanner CLI tool which can detect and quarantine potentially malware-infected files. Can run as a background daemon for continuous monitoring.</p></li><br><br><li><b>rkhunter/chkrootkit:</b> <p>CLI tools which scan for potential rootkits, hidden backdoors and suspected exploits on a local system, and disable them.</p></li><br></ol>
-
-<p></p><h3>Storage Tools</h3><p></p>
-<ol><br><br><li><b>fdisk:</b> <p>A disk partition editor tool. Used to view, create and modify disk partitions on hard drives and removable media.</p></li><br><br><li><b>sfdisk:</b> <p>A variant of fdisk which accesses or updates a partition table in a non-interactive fashion. Useful to automate disk partitioning as part of backup and recovery procedure.</p></li><br><br><li><b>parted:</b> <p>Another disk partition editor which can support disk larger than 2TB with GPT (GUID Partitioning Table). Gparted is a GTK+ GUI front-end of parted.</p></li><br><br><li><b>df:</b> <p>Used to check used/available storage and mount point of different partitions or file directories. A user-friendly variant dfc exists.</p></li><br><br><li><b>du:</b> <p>Used to view current disk usage associated with different files and directories (e.g., du -sh *).</p></li><br><br><li><b>mkfs:</b> <p>A disk formatting command used to build a filesystem on individual disk partitions. Filesystem-specific versions of mkfs exist for a number of filesystems including ext2, ext3, ext4, bfs, ntfs, vfat/fat.</p></li><br><br><li><b>fsck:</b> <p>A CLI tool used to check a filesystem for errors and repair where possible. Typically run automatically upon boot when necessary, but also invoked manually on demand once unmounting a partition.</p></li><br><br><li><b>mount:</b> <p>Used to map a physical disk partition, network share or remote storage to a local mount point. Any read/write in the mount point makes actual data being read/written in the corresponding actual storage.</p></li><br><br><li><b>mdadm:</b> <p>A CLI tool for managing software RAID devices on top of physical block devices. Can create, build, grow or monitor RAID array.</p></li><br><br><li><b>lvm:</b> <p>A suite of CLI tools for managing volume groups and physical/logical volumes, which allows one to create, resize, split and merge volumes on top of multiple physical disks with minimum downtime.</p></li><br></ol>
-
-<p></p><h3>Log Processing Tools</h3><p></p>
-<ol><br><li><b>tail:</b> <p>Used to monitor trailing part of a (growing) log file. Other variants include multitail (multi-window monitoring) and ztail (inotify support and regex filtering and coloring).</p></li><br><br><li><b>logrotate:</b> <p>A CLI tool that can split, compress and mail old/large log files in a pre-defined interval. Useful for administration of busy servers which may produce a large volume of log files.</p></li><br><br><li><b>grep/egrep:</b> <p>Can be used to filter log content for a particular pattern or a regular expression. Variants include user-friendly ack and faster ag.</p></li><br><br><li><b>awk:</b> <p>A versatile text scanning and processing tool. Often used to extract certain columns or fields from text/log files, and feed the result to other tools.</p></li><br><br><li><b>sed:</b> <p>A text stream editor tool which can filter and transform (e.g., remove line/whitespace, substitute/convert a word, add numbering) text streams and pipeline the result to stdout/stderr or another tool.</p></li><br></ol>
-
-<p></p><h3>Backup Tools</h3><p></p>
-<ol><br><li><b>rsync:</b> <p>A fast one-way incremental backup and mirroring tool. Often used to replicate a data repository to an offsite storage, optionally over a secure connection such as SSH or stunnel.</p></li><br><br><li><b>rdiff-backup:</b> <p>Another bandwidth-efficient, incremental backup tool. Maintains differential of two consecutive snapshots.</p></li><br><br><li><b>duplicity:</b> <p>An encrypted incremental backup utility. Uses GnuPG to encrypt a backup, and transfers to a remote server over SSH.</p></li><br></ol>
-
-<p></p><h3>Performance Monitoring Tools</h3><p></p>
-<ol><br><li><b>top:</b> <p>A CLI-based process viewer program. Can monitor system load, process states, CPU and memory utilization. Variants include more user-friendly htop.</p></li><br><br><li><b>ps:</b> <p>Shows a snapshot of all running processes in the system. The output can be customized to show PID, PPID, user, load, memory, cumulative user/system time, start time, and more. Variants include pstree which shows processes in a tree hierarchy.</p></li><br><br><li><b>nethogs:</b> <p>A bandwidth monitoring tool which groups active network connections by processes, and reports per-process (upload/download) bandwidth consumption in real-time.</p></li><br><br><li><b>ngxtop:</b> <p>A web-server access log parser and monitoring tool whose interface is inspired by top command. It can report, in real time, a sorted list of web requests along with frequency, size, HTTP return code, IP address, etc.</p></li><br><br><li><b>vmstat:</b> <p>A simple CLI tool which shows various run-time system properties such as process count, free memory, paging status, CPU utilization, block I/O activities, interrupt/context switch statistics, and more.</p></li><br><br><li><b>iotop:</b> <p>An ncurses-based I/O monitoring tool which shows in real time disk I/O activities of all running processes in sorted order.</p></li><br><br><li><b>iostat:</b> <p>A CLI tool which reports current CPU utilization, as well as device I/O utilization, where I/O utilization (e.g., block transfer rate, byte read/write rate) is reported on a per-device or per-partition basis.</p></li><br><br><li><b>sysdig:</b> <p>A versatile and comprehensive open source tool for capturing and analyzing system behavior and server state in both real-time and offline modes.</p></li><br></ol>
-
-<p></p><h3>Productivity Tools</h3><p></p>
-<ol><br><li><b>screen:</b> <p>Used to split a single terminal into multiple persistent virtual terminals, which can also be made accessible to remote users, like teamviewer-like screen sharing.</p></li><br><br><li><b>tmux:</b> <p>Another terminal multiplexer tool which enables multiple persistent sessions, as well as horizontal/vertial splits of a terminal.</p></li><br><br><li><b>cheat:</b> <p>A simple CLI tool which allows you to read cheat sheets of many common Linux commands, conveniently right at your fingertips. Pre-built cheat sheets are fully customizable.</p></li><br><br><li><b>apropos:</b> <p>Useful when you are searching man pages for descriptions or keywords.</p></li><br></ol>
-
-<p></p><h3>Package Management Tools</h3><p></p>
-<ol><br><li><b>apt:</b> <p>The de facto package manager for Debian based systems like Debian, Ubuntu, Backtrack or elementary OS. A life saver.</p></li><br><br><li><b>apt-fast:</b> <p>A supporting utility for apt-get, which can significantly improve apt-get’s download speed by using multiple concurrent connections.</p></li><br><br><li><b>apt-file:</b> <p>Used to find out which .deb package a specific file belongs to, or to show all files in a particular .deb package. Works on both installed and non-installed packages.</p></li><br><br><li><b>dpkg:</b> <p>A CLI utility to install a .deb package manually. Highly advised to use apt whenever possible.</p></li><br><br><li><b>yum:</b> <p>The de facto automatic package manager for Red Hat based systems like RHEL, CentOS or Fedora. Yet another life saver.</p></li><br><br><li><b>rpm:</b> <p>Typically I use rpmyum something. Has some useful parameters like -q, -f, -l for querying, files and locations, respectively.</p></li><br></ol>
-
-<p></p><h3>Hardware Tools</h3><p></p>
-<p><ol></ol></p>
-<li><b>lspci:</b> <p>A command line tool which shows various information about installed PCI devices, such as model names, device drivers, capabilities, memory address, PCI bus address.</p></li>
-
-<li><b>lshw:</b> <p>A command line tool which queries and displays detailed information of hardware configuration in various categories (e.g., processor, memory, motherboard, network, video, storage). Supports multiple output formats: html, xml, json, text.</p></li>
-
-<li><b>inxi:</b> <p>A comprehensive hardware reporting tool which gives an overview of various hardware components such as CPU, graphics card, sound card, network card, temperature/fan sensors, etc.</p></li>
-
-<p></p>
-<p>If you would like to recommend any useful tool which is not listed here, feel free to share it in the comment section.</p>
-
-      
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">3.</span>
+        <h2><a href="/2014/12/10/what-are-useful-cli-tools-for-linux-system-admins/">What are useful CLI tools for Linux system admins</a></h2>
+        <span class="post-date">2014-12-10</span>
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2014/12/10/what-are-useful-cli-tools-for-linux-system-admins/" data-id="cm50h3r8p0037yfht1zrbadu2" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2014/12/10/what-are-useful-cli-tools-for-linux-system-admins/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
+    <div class="post-content">
+        What are useful CLI tools for Linux system admins
+System administrators (sysadmins) are responsible for day-to-day operations of production systems and services. One of the crit...
+    </div>
+</div>
 
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">4.</span>
+        <h2><a href="/2014/11/27/how-to-use-python-datetime-and-time/">How to use Python datetime and time</a></h2>
+        <span class="post-date">2014-11-27</span>
+    </div>
+    <div class="post-content">
+        How to use Python datetime and time
+Time method often used1.Get now time：
 
-  
-    <article id="post-how-to-use-python-datetime-and-time" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/11/27/how-to-use-python-datetime-and-time/" class="article-date">
-  <time datetime="2014-11-26T16:00:00.000Z" itemprop="datePublished">2014-11-27</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/11/27/how-to-use-python-datetime-and-time/">How to use Python datetime and time</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>How to use Python datetime and time</em></p>
-<p></p><h2>Time method often used</h2><br>1.Get now time：<p></p>
-<pre>
 Use time method, get the now Timestamp
 In [42]: time.time()
 Out[42]: 1408066927.208922
 
-Change timestamp to time tuple: struct_time
-In [43]: time.localtime(time.time())
-Out[43]: time.struct_time(tm_year=2014, tm_mon=8, tm_mday=15, tm_hour=9, tm_min=42, tm_sec=20, tm_wday=4, tm_yday=227, tm_isdst=0)
-
-Formatted output desired time
-In [44]: time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
-Out[44]: '2014-08-15 09:43:04'
-
-Connected to the text, when no parameters, the default is the output current time
-In [48]: time.strftime('%Y-%m-%d %H:%M:%S')
-Out[48]: '2014-08-15 09:46:53’
-
-Of course, can be achieved through the datetime module, as follows:
-In [68]: t = time.time()
-In [69]: datetime.datetime.fromtimestamp(t).strftime('%Y-%m-%d %H:%M:%S')
-Out[69]: '2014-08-15 10:04:51’
-
-Also, you can only use the datetime module:
-In [46]: datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-Out[46]: '2014-08-15 09:45:27’
-In [47]: datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
-Out[47]: '2014-08-15 09:46:10'
-
-</pre>
-
-<p>2.Get time difference,Calculation program execution time etc.</p>
-<pre>
-Use time module:
-In [75]: def t():
-   ....:     start = time.time()
-   ....:     time.sleep(10)
-   ....:     end = time.time()
-   ....:     print end - start
-   ....:
-
-In [76]: t()
-10.0014948845
-
-Use datetime module:
-In [49]: starttime = datetime.datetime.now()
-In [50]: endtime = datetime.datetime.now()
-In [51]: print (endtime - starttime).seconds
-6
-
-</pre>
-
-<p>3.Yesterday’s date calculations</p>
-<pre>
-In [52]: d1 = datetime.datetime.now()
-In [53]: d2 = d1 - datetime.timedelta(days=1)
-In [54]: d1
-Out[54]: datetime.datetime(2014, 8, 15, 9, 54, 10, 68665)
-In [55]: d2
-Out[55]: datetime.datetime(2014, 8, 14, 9, 54, 10, 68665)
-</pre>
-
-<p>4.Struct_time: time tuple into a timestamp</p>
-<pre>
-In [56]: datetime.datetime.now()
-Out[56]: datetime.datetime(2014, 8, 15, 9, 57, 52, 779893)
-
-In [57]: datetime.datetime.now().timetuple()
-Out[57]: time.struct_time(tm_year=2014, tm_mon=8, tm_mday=15, tm_hour=9, tm_min=58, tm_sec=12, tm_wday=4, tm_yday=227, tm_isdst=-1)
-
-In [58]: time.mktime(datetime.datetime.now().timetuple())
-Out[58]: 1408067904.0
-</pre>
-
-<p>5.strptime: time to convert a string to a time tuple struct_time.</p>
-<pre>
-In [73]: time.strftime('%Y-%m-%d %H:%M:%S')
-Out[73]: '2014-08-15 10:27:36'
-
-In [74]: time.strptime('2014-08-15 10:27:36','%Y-%m-%d %H:%M:%S')
-Out[74]: time.struct_time(tm_year=2014, tm_mon=8, tm_mday=15, tm_hour=10, tm_min=27, tm_sec=36, tm_wday=4, tm_yday=227, tm_isdst=-1)
-</pre>
-
-<p></p><h2>time and datetime</h2><br>Representing time in two ways<p></p>
-<p><br>1. timestamp (relative to 1970.1.1 00:00:00 seconds offset calculation), the time stamp is the only<br>2. Time tuples that (struct_time), a total of nine elements, respectively, with a timestamp struct_time because of the different time zones and different<br></p>
-
-<p></p><h4>time module commonly used method</h4><br>1.time.clock()<p></p>
-<pre>
-budong@budongdeMacBook-Pro:/tmp$ cat clock.py
-#!/usr/bin/env python
-import time
-if __name__ == '__main__':
-    time.sleep(1)
-    print "clock1:%s" % time.clock()
-    time.sleep(1)
-    print "clock2:%s" % time.clock()
-    time.sleep(1)
-    print "clock3:%s" % time.clock()
-
-Running:
-budong@budongdeMacBook-Pro:/tmp$ ./clock.py
-clock1:0.059173
-clock2:0.059299
-clock3:0.059416
-</pre>
-
-<p>2.time.sleep(secs)</p>
-<pre>
-Delayed the specified time to run a thread
-Suitable for a script, a sleep timer will then continue doing
-
-In [138]: while True:
-   .....:     time.sleep(3)
-   .....:     print time.strftime('%H:%M:%S')
-   .....:
-17:21:35
-17:21:38
-17:21:41
-17:21:44
-……
-</pre>
-
-<p>3.time.localtime([secs])</p>
-<pre>
-A timestamp into a current struct_time time zone, if not seconds parameter input, places the current time is to convert standard
-Unavailable secs parameters, according to the current time, whichever
-In [141]: time.localtime()
-Out[141]: time.struct_time(tm_year=2014, tm_mon=8, tm_mday=14, tm_hour=17, tm_min=23, tm_sec=48, tm_wday=3, tm_yday=226, tm_isdst=0)
-
-Provide for the current timestamp when secs
-In [142]: time.time()
-Out[142]: 1408008232.217969
-In [143]: time.localtime(time.time())
-Out[143]: time.struct_time(tm_year=2014, tm_mon=8, tm_mday=14, tm_hour=17, tm_min=24, tm_sec=2, tm_wday=3, tm_yday=226, tm_isdst=0)
-</pre>
-
-<p>4.time.strftime(format[,t])</p>
-<pre>
-Specified struct_time (defaults to the current time), according to the specified format string output
-"t" is not specified, the incoming time.localtime () as the default parameters:
-In [156]: time.strftime('%Y-%m-%d %H:%M:%S')
-Out[156]: '2014-08-14 17:28:16’
-
-T specify when time.localtime (1407945600.0):
-In [157]: time.localtime(1407945600.0)
-Out[157]: time.struct_time(tm_year=2014, tm_mon=8, tm_mday=14, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=3, tm_yday=226, tm_isdst=0)
-
-In [158]: time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(1407945600.0))
-Out[158]: '2014-08-14 00:00:00’
-</pre>
-
-<p>5.time.time()</p>
-<pre>
-Returns the timestamp of the current time
-In [161]: time.time()
-Out[161]: 1408008711.730218
-</pre>
-
-<p>6.time.mktime(t)</p>
-<pre>
-Struct_time convert a timestamp, as time.localtime receives a timestamp returns a struct_time, while time.mktime receive a struct_time, returns a timestamp
-In [159]: time.localtime(1407945600.0)
-Out[159]: time.struct_time(tm_year=2014, tm_mon=8, tm_mday=14, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=3, tm_yday=226, tm_isdst=0)
-In [160]: time.mktime(time.localtime(1407945600.0))
-Out[160]: 1407945600.0
-</pre>
-
-<p></p><h4>datetime module commonly used method</h4><br>datetime module commonly used are the following four categories:<p></p>
-<p><br>1. datetime.date: The date refers to the date of composition (equivalent to the calendar)<br>2. datetime.time: refers to the day, 24 hours minutes and seconds microseconds constituted a specific time (equivalent to watch)<br>3. datetime.datetime: The above two together, contains both time and contain a date<br>4. datetime.timedelta: Interval object (timedelta). A point in time (datetime) plus an interval (timedelta) can get a new point in time (datetime). For example, today’s 3:00 plus five hours to get today’s 8:00. Similarly, the two time points will be subtracted from a time interval.<br></p>
-
-<p>1.datetime.date</p>
-<pre>
-1.create a date object,the date is today, it can call datetime.date.today(), also can to datetime.date() by value, look the following:
-In [4]: today = datetime.date.today()
-In [5]: today
-Out[5]: datetime.date(2014, 8, 15)
-In [6]: t = datetime.date(2014,8,15)
-In [7]: t
-Out[7]: datetime.date(2014, 8, 15)
-
-2.datetime.date.strftime(format) format datetime,like the format "Y-m-d H:M:S"
-In [8]: today.strftime('%Y-%m-%d %H:%M:%S')
-Out[8]: '2014-08-15 00:00:00’
-date object in hours, minutes, seconds, the default is 0, that era in time.
-
-3.datetime.date.timple() change to struct-time format,when transfer to tiem.mktime(t), it will change to timestamp format
-In [9]: today.timetuple()
-Out[9]: time.struct_time(tm_year=2014, tm_mon=8, tm_mday=15, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=4, tm_yday=227, tm_isdst=-1)
-In [10]: time.mktime(today.timetuple())
-Out[10]: 1408032000.0
-
-4.datetime.date.replace(year, month, day)  Returns a date object after replacement
-In [11]: today.replace(year=2013)
-Out[11]: datetime.date(2013, 8, 15)
-
-5.datetime.date.fromtimestamp(timestamp) The timestamp change to a date object
-In [12]: datetime.date.fromtimestamp(1408058729)
-Out[12]: datetime.date(2014, 8, 15)
-</pre>
-
-<p>2.datetime.time</p>
-<pre>
-1.create a new time object
-In [15]: t
-Out[15]: datetime.time(8, 45, 20)
-
-2.datetime.time.(format) format out
-In [16]: t.strftime('%Y-%m-%d %H:%M:%S')
-Out[16]: '1900-01-01 08:45:20’
-time corresponding to the year, month, day 1900,01,01, in that time era.
-
-3.datetime.time.replace([hour[, minute[, second[, microsecond[, tzinfo]]]]])  Return time after replacement object.
-In [17]: t.replace(hour=9)
-Out[17]: datetime.time(9, 45, 20)
-</pre>
-
-<p>3.datetime.datetime</p>
-<pre>
-1.Create a "datetime"" object, dated today, either directly call "datetime.datetime.today()", or directly  pass values to "datetime.datetime()", as follows:
-In [21]: d1 = datetime.datetime.today()
-In [22]: d1
-Out[22]: datetime.datetime(2014, 8, 15, 8, 12, 34, 790945)
-In [23]: d2 = datetime.datetime(2014, 8, 15, 8, 12, 34, 790945)
-In [24]: d2
-Out[24]: datetime.datetime(2014, 8, 15, 8, 12, 34, 790945)
-
-2.datetime.datetime.now([tz]) when now select timezone, it's the same with datetime.datetime.today().
-In [25]: datetime.datetime.now()
-Out[25]: datetime.datetime(2014, 8, 15, 8, 14, 50, 738672)
-
-3..datetime.datetime.strftime(format) format a datetime which we need, like "Y-m-d H:M:S".
-In [27]: d1
-Out[27]: datetime.datetime(2014, 8, 15, 8, 12, 34, 790945)
-In [28]: d1.strftime('%Y-%m-%d %H:%M:%S')
-Out[28]: '2014-08-15 08:12:34’
-
-4.datetime.datetime.timple() Turn into struct_time format, so passed to time.mktime (t), and directly transferred into a timestamp format.
-In [29]: d1
-Out[29]: datetime.datetime(2014, 8, 15, 8, 12, 34, 790945)
-In [30]: d1.timetuple()
-Out[30]: time.struct_time(tm_year=2014, tm_mon=8, tm_mday=15, tm_hour=8, tm_min=12, tm_sec=34, tm_wday=4, tm_yday=227, tm_isdst=-1)
-In [31]: time.mktime(d1.timetuple())
-Out[31]: 1408061554.0
-
-5.datetime.datetime.replace(year, month, day)  Returns a date object after replacement.
-In [32]: d1
-Out[32]: datetime.datetime(2014, 8, 15, 8, 12, 34, 790945)
-In [33]: d1.replace(year=2000)
-Out[33]: datetime.datetime(2000, 8, 15, 8, 12, 34, 790945)
-
-6.datetime.datetime.fromtimestamp(timestamp) The timestamp into a datetime object.
-In [34]: time.time()
-Out[34]: 1408061894.081552
-In [35]: datetime.datetime.fromtimestamp(1408061894)
-Out[35]: datetime.datetime(2014, 8, 15, 8, 18, 14)
-</pre>
-
-<p>4.datetime.timedelta</p>
-<pre>
-In [78]: today = datetime.datetime.today()
-In [79]: yesterday = today - datetime.timedelta(days=1)
-In [80]: yesterday
-Out[80]: datetime.datetime(2014, 8, 14, 15, 8, 25, 783471)
-In [81]: today
-Out[81]: datetime.datetime(2014, 8, 15, 15, 8, 25, 783471)
-</pre>
-      
+Change timesta...
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2014/11/27/how-to-use-python-datetime-and-time/" data-id="cm50h3r8n0035yfhtkmf66jgr" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2014/11/27/how-to-use-python-datetime-and-time/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
+</div>
 
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">5.</span>
+        <h2><a href="/2014/11/22/pygeoipmappy/">pygeoipmap.py</a></h2>
+        <span class="post-date">2014-11-22</span>
+    </div>
+    <div class="post-content">
+        pygeoipmap.py
 
-  
-    <article id="post-pygeoipmappy" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/11/22/pygeoipmappy/" class="article-date">
-  <time datetime="2014-11-21T16:00:00.000Z" itemprop="datePublished">2014-11-22</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/11/22/pygeoipmappy/">pygeoipmap.py</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>pygeoipmap.py</em></p>
-<pre>
 #!/usr/bin/env python
 # coding: utf-8
 
@@ -735,671 +105,114 @@ from __future__ import print_function, unicode_literals, with_statement
 import argparse
 import requests
 import json
-import numpy
-import csv
-import matplotlib
-# Anti-Grain Geometry (AGG) backend so PyGeoIpMap can be used 'headless'
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-from mpl_toolkits.basemap import Basemap
-import GeoIP
-
-def get_ip(ip_file):
-    """
-    Returns a list of IP addresses from a file containing one IP per line.
-    """
-    with open(ip_file, 'r') as f:
-        ip_list = [line.strip() for line in f]
-    return ip_list
-
-
-def get_lat_lon(ip_list=[], lats=[], lons=[]):
-    """
-    This function connects to the FreeGeoIP web service to get info from
-    a list of IP addresses.
-    Returns two lists (latitude and longitude).
-    """
-    print("Processing {} IPs...".format(len(ip_list)))
-    for ip in ip_list:
-        r = requests.get("https://freegeoip.net/json/"+ip)
-        json_response = r.json()
-        print("{ip}, {region_name}, {country_name}, {latitude}, {longitude}".format(**json_response))
-        if json_response['latitude'] and json_response['longitude']:
-            lats.append(json_response['latitude'])
-            lons.append(json_response['longitude'])
-    return lats, lons
-
-def geoip_lat_lon(gi, ip_list=[], lats=[], lons=[]):
-    """
-    This function uses the MaxMind library and databases to geolocate IP addresses
-    Returns two lists (latitude and longitude).
-    """
-    print("Processing {} IPs...".format(len(ip_list)))
-    for ip in ip_list:
-        try:
-            r = gi.record_by_addr(ip)
-        except Exception:
-            print("Unable to locate IP: %s" % ip)
-            continue
-        if r is not None:
-            print("%s {country_code} {latitude}, {longitude}".format(**r) % ip)
-            lats.append(r['latitude'])
-            lons.append(r['longitude'])
-    return lats, lons
-
-def get_lat_lon_from_csv(csv_file, lats=[], lons=[]):
-    """
-    Retrieves the last two rows of a CSV formatted file to use as latitude
-    and longitude.
-    Returns two lists (latitudes and longitudes).
-    Example CSV file:
-    119.80.39.54, Beijing, China, 39.9289, 116.3883
-    101.44.1.135, Shanghai, China, 31.0456, 121.3997
-    219.144.17.74, Xian, China, 34.2583, 108.9286
-    64.27.26.7, Los Angeles, United States, 34.053, -118.2642
-    """
-    with open(csv_file, 'rb') as f:
-        reader = csv.reader(f)
-        for row in reader:
-            lats.append(row[-2])
-            lons.append(row[-1])
-    return lats, lons
-
-
-def generate_map(output, lats=[], lons=[]):
-    """
-    Using Basemap and the matplotlib toolkit, this function generates a map and
-    puts a red dot at the location of every IP addresses found in the list.
-    The map is then saved in the file specified in `output`.
-    """
-    print("Generating map and saving it to {}".format(output))
-    m = Basemap(projection='cyl', resolution='l')
-    m.bluemarble()
-    x, y = m(lons, lats)
-    m.scatter(x, y, s=1, color='#ff0000', marker='o', alpha=0.3)
-    plt.savefig(output, dpi=300, bbox_inches='tight')
-
-
-def main():
-    parser = argparse.ArgumentParser(description='Visualize community on a map.')
-    parser.add_argument('input', type=str, help='Input file. One IP per line or, if FORMAT set to \'csv\', CSV formatted file ending with latitude and longitude positions')
-    parser.add_argument('-o', '--output', default='output.png', help='Path to save the file (e.g. /tmp/output.png)')
-    parser.add_argument('-f', '--format', default='ip', choices=['ip', 'csv'], help='Format of the input file.')
-    parser.add_argument('-s', '--service', default='f', choices=['f','m'], help='Geolocation service (f=FreeGeoIP, m=MaxMind local database)')
-    parser.add_argument('-db', '--db', default='./GeoLiteCity.dat', help='Full path to MaxMind database file (default = ./GeoLiteCity.dat)')
-    args = parser.parse_args()
-
-    output = args.output
-
-    if args.format == 'ip':
-        ip_list = get_ip(args.input)
-        if args.service == 'm':
-            gi = GeoIP.open(args.db, GeoIP.GEOIP_STANDARD)
-            lats, lons = geoip_lat_lon(gi, ip_list)
-        else:  # default service
-            lats, lons = get_lat_lon(ip_list)
-    elif args.format == 'csv':
-        lats, lons = get_lat_lon_from_csv(args.input)
-
-    generate_map(output, lats, lons)
-
-if __name__ == '__main__':
-    main()
-</pre>
-      
+import ...
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2014/11/22/pygeoipmappy/" data-id="cm50h3r8m0033yfhtodo6n3a3" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2014/11/22/pygeoipmappy/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
+</div>
+
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">6.</span>
+        <h2><a href="/2014/11/11/export-excel-in-django17/">Export Excel in Django1.7</a></h2>
+        <span class="post-date">2014-11-11</span>
+    </div>
+    <div class="post-content">
+        How to export Excel from Database in Django 1.7
+
+Install xlwt
 
 
-  
-    <article id="post-export-excel-in-django17" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/11/11/export-excel-in-django17/" class="article-date">
-  <time datetime="2014-11-10T16:00:00.000Z" itemprop="datePublished">2014-11-11</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/11/11/export-excel-in-django17/">Export Excel in Django1.7</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>How to export Excel from Database in Django 1.7</em></p>
-<ol>
-<li>Install xlwt</li>
-</ol>
-<pre>
 pip install xlwt
-</pre>
 
-<ol start="2">
-<li><p>Create Database Item</p>
-</li>
-<li><p>Export Excel in Views</p>
-<pre>
+
+
+Create Database Item
+
+Export Excel in Views
+
 def export_item_list(request):
- wb=xlwt.Workbook(uncoding="utf-8")
- sheet=wb.add_sheet("ITEMS")
- sheet.write(0,0,"code")
- sheet.write(0,1,"name")
-
- row=1
- for item in Item.objects.all():
-     sheet.write(row,0,item.code)
-     sheet.write(row,1,item.name)
-     row=row+1
- response=HttpResponse(content_type="application/vnd.ms-excel")
- response['Content-Description']="attachment;filename=EXCEL_NAME.xls"
- wb.save(response)
- return response
-</pre>
-</li>
-</ol>
-
-      
+ wb=xlwt.Workbook...
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2014/11/11/export-excel-in-django17/" data-id="cm50h3r8g002wyfhts4q35jiw" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2014/11/11/export-excel-in-django17/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
+</div>
 
-
-  
-    <article id="post-Python字符串替换的2种方法" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/10/19/Python字符串替换的2种方法/" class="article-date">
-  <time datetime="2014-10-18T16:00:00.000Z" itemprop="datePublished">2014-10-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/10/19/Python字符串替换的2种方法/">Python字符串替换的2种方法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>Two ways replace character in Python</em></p>
-<p>python 字符串替换 是python 操作字符串的时候经常会碰到的问题，这里简单介绍下字符串替换方法。<br>python 字符串替换可以用2种方法实现:<br>1是用字符串本身的方法。<br>2用正则来替换字符串</p>
-<p>下面用个例子来实验下：<br>a = ‘hello word’<br>把a字符串里的word替换为python</p>
-<p>1用字符串本身的replace方法</p>
-<p><pre><br>a.replace(‘word’,’python’)<br></pre><br>输出的结果是hello python</p>
-<p>2用正则表达式来完成替换:</p>
-<p><pre><br>import re<br>strinfo = re.compile(‘word’)<br>b = strinfo.sub(‘python’,a)<br>print b<br></pre><br>输出的结果也是hello python</p>
-
-      
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">7.</span>
+        <h2><a href="/2014/10/19/Python字符串替换的2种方法/">Python字符串替换的2种方法</a></h2>
+        <span class="post-date">2014-10-19</span>
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2014/10/19/Python字符串替换的2种方法/" data-id="cm50h3r93003jyfhtbvwf45dk" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2014/10/19/Python字符串替换的2种方法/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
+    <div class="post-content">
+        Two ways replace character in Python
+python 字符串替换 是python 操作字符串的时候经常会碰到的问题，这里简单介绍下字符串替换方法。python 字符串替换可以用2种方法实现:1是用字符串本身的方法。2用正则来替换字符串
+下面用个例子来实验下：a = ‘hello word’把a字符串里的word替换为p...
+    </div>
+</div>
 
-
-  
-    <article id="post-Set-Mysql-In-Python34-Virtualenv" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/10/19/Set-Mysql-In-Python34-Virtualenv/" class="article-date">
-  <time datetime="2014-10-18T16:00:00.000Z" itemprop="datePublished">2014-10-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/linux/">linux</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/10/19/Set-Mysql-In-Python34-Virtualenv/">Set Mysql In Python34 Virtualenv</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>Set mysql in python34 virtualenv</em></p>
-<p>Normally if you install mysql in ubuntu python34 virtualenv, use</p>
-<pre class="code">sudo apt-get install mysqlclient</pre>
-
-<p>so it’s better use the follow install</p>
-<pre class="code">
-sudo apt-get install python3-dev libmysqlclient-dev
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">8.</span>
+        <h2><a href="/2014/10/19/Set-Mysql-In-Python34-Virtualenv/">Set Mysql In Python34 Virtualenv</a></h2>
+        <span class="post-date">2014-10-19</span>
+    </div>
+    <div class="post-content">
+        Set mysql in python34 virtualenv
+Normally if you install mysql in ubuntu python34 virtualenv, use
 sudo apt-get install mysqlclient
-</pre>
 
-      
+so it’s better use the follow install
+
+sudo a...
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2014/10/19/Set-Mysql-In-Python34-Virtualenv/" data-id="cm50h3r95003lyfhtu84nu063" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2014/10/19/Set-Mysql-In-Python34-Virtualenv/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
+</div>
 
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">9.</span>
+        <h2><a href="/2014/10/18/command-list-for-view-linux-system-information/">Command List for View Linux System Information</a></h2>
+        <span class="post-date">2014-10-18</span>
+    </div>
+    <div class="post-content">
+        Command List for View Linux System Information
+系统
 
-  
-    <article id="post-command-list-for-view-linux-system-information" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/10/18/command-list-for-view-linux-system-information/" class="article-date">
-  <time datetime="2014-10-17T16:00:00.000Z" itemprop="datePublished">2014-10-18</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/linux/">linux</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/10/18/command-list-for-view-linux-system-information/">Command List for View Linux System Information</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>Command List for View Linux System Information</em></p>
-<p></p><h2>系统</h2><p></p>
-<pre>
 # uname -a                    #查看内核/操作系统/CPU信息
 # head -n 1 /etc/issue        #查看操作系统版本
-# cat /proc/cpuinfo            #查看cpu信息
-# hostname                    #查看计算机名
-# lspci -tv                    #列出所以PCI设备
-# lsusb -tv                    #列出所以USB设备
-# lsmod                        #列出加载的内核模块
-# env                        #查看环境变量
-</pre>
-
-<p></p><h2>资源</h2><p></p>
-<pre>
-# free -m                    #查看内存使用量和交换区使用量
-# df -h                        #查看各分区使用情况
-# du -sh &#60;filepath&#62;    #查看指定目录的大小
-# grep MemTotal /proc/meminfo    #查看内存总量
-# grep MemFree /proc/meminfo    #查看空闲内存量
-# uptime                        #查看系统运行时间　用户数　负载
-# cat /proc/loadavg                #查看系统负载
-</pre>
-
-<p></p><h2>磁盘和分区</h2><p></p>
-<pre>
-# mount | column -t            #查看挂载的分区状态
-# fdisk -l                    #查看所有分区
-# swapon -s                    #查看所有交换分区
-# hdparm -i /dev/hda        #查看磁盘参数(仅适用于IDE设备)
-# dmesg | grep IDE            #查看启动时IDE设备检测状况
-</pre>
-
-<p></p><h2>网络</h2><p></p>
-<pre>
-# ifconfig                    #查看所有网络接口的属性
-# iptables -L                #查看防火墙设置
-# route -n                    #查看路由表
-# netstart -Intp            #查看所有监听端口
-# netstart -antp            #查看所有已经建立的连接
-# netstat -s                #查看网络统计信息
-</pre>
-
-<p></p><h2>进程</h2><p></p>
-<pre>
-# ps -ef                    #查看所有进程
-# top                        #实时显示进程状态
-</pre>
-
-<p></p><h2>用户</h2><p></p>
-<pre>
-# w                            #查看活动用户
-# id &#60;username&#62;        #查看指定用户信息
-# last                        #查看用户登陆日志
-# cut -d: -fl /etc/passwd    #查看系统所有用户
-# cut -d: -fl /etc/group    #查看系统所有组
-# crontab -l                #查看当前用户的计划任务
-</pre>
-
-<p></p><h2>服务</h2><p></p>
-<pre>
-# chkconfig --list            #列出所有系统服务
-# chkconfig --list | grep on    #列出所有启动的系统服务
-</pre>
-
-<p></p><h2>程序</h2><p></p>
-<pre>
-# rpm -qa                    #查看所有安装的软件包
-</pre>
-
-      
+# cat /proc/cpuinfo            #查看cpu信息...
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2014/10/18/command-list-for-view-linux-system-information/" data-id="cm50h3r8h002zyfhtjwm2kam3" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2014/10/18/command-list-for-view-linux-system-information/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
+</div>
 
-
-  
-    <article id="post-vim-commands-cheatsheet" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/10/14/vim-commands-cheatsheet/" class="article-date">
-  <time datetime="2014-10-13T16:00:00.000Z" itemprop="datePublished">2014-10-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/VIM/">VIM</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/10/14/vim-commands-cheatsheet/">vim commands cheatsheet</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>vim commands cheatsheet</em></p>
-<p>##Cursor movement</p>
-<p>h - move left</p>
-<p>j - move down</p>
-<p>k - move up</p>
-<p>l - move right</p>
-<p>w - jump by start of words (punctuation considered words)</p>
-<p>W - jump by words (spaces separate words)</p>
-<p>e - jump to end of words (punctuation considered words)</p>
-<p>E - jump to end of words (no punctuation)</p>
-<p>b - jump backward by words (punctuation considered words)</p>
-<p>B - jump backward by words (no punctuation)</p>
-<p>0 - (zero) start of line</p>
-<p>^ - first non-blank character of line</p>
-<p>$ - end of line</p>
-<p>G - Go To command (prefix with number - 5G goes to line 5)</p>
-<p>Note: Prefix a cursor movement command with a number to repeat it. For example, 4j moves down 4 lines.</p>
-<p>##Insert Mode - Inserting/Appending text</p>
-<p>i - start insert mode at cursor</p>
-<p>I - insert at the beginning of the line</p>
-<p>a - append after the cursor</p>
-<p>A - append at the end of the line</p>
-<p>o - open (append) blank line below current line (no need to press return)</p>
-<p>O - open blank line above current line</p>
-<p>ea - append at end of word</p>
-<p>Esc - exit insert mode</p>
-<p>##Editing</p>
-<p>r - replace a single character (does not use insert mode)</p>
-<p>J - join line below to the current one</p>
-<p>cc - change (replace) an entire line</p>
-<p>cw - change (replace) to the end of word</p>
-<p>c$ - change (replace) to the end of line</p>
-<p>s - delete character at cursor and subsitute text</p>
-<p>S - delete line at cursor and substitute text (same as cc)</p>
-<p>xp - transpose two letters (delete and paste, technically)</p>
-<p>u - undo</p>
-<p>. - repeat last command</p>
-<p>##Marking text (visual mode)</p>
-<p>v - start visual mode, mark lines, then do command (such as y-yank)</p>
-<p>V - start Linewise visual mode</p>
-<p>o - move to other end of marked area</p>
-<p>Ctrl+v - start visual block mode</p>
-<p>O - move to Other corner of block</p>
-<p>aw - mark a word</p>
-<p>ab - a () block (with braces)</p>
-<p>aB - a {} block (with brackets)</p>
-<p>ib - inner () block</p>
-<p>iB - inner {} block</p>
-<p>Esc - exit visual mode</p>
-<p>##Visual commands</p>
-<p>&#62; - shift right</p>
-<p>&#60; - shift left</p>
-<p>y - yank (copy) marked text</p>
-<p>d - delete marked text</p>
-<p>~ - switch case</p>
-<p>##Cut and Paste</p>
-<p>yy - yank (copy) a line</p>
-<p>2yy - yank 2 lines</p>
-<p>yw - yank word</p>
-<p>y$ - yank to end of line</p>
-<p>p - put (paste) the clipboard after cursor</p>
-<p>P - put (paste) before cursor</p>
-<p>dd - delete (cut) a line</p>
-<p>dw - delete (cut) the current word</p>
-<p>x - delete (cut) current character</p>
-<p>##Exiting</p>
-<p>:w - write (save) the file, but don’t exit</p>
-<p>:wq - write (save) and quit</p>
-<p>:q - quit (fails if anything has changed)</p>
-<p>:q! - quit and throw away changes</p>
-<p>##Search/Replace</p>
-<p>/pattern - search for pattern</p>
-<p>?pattern - search backward for pattern</p>
-<p>n - repeat search in same direction</p>
-<p>N - repeat search in opposite direction</p>
-<p>:%s/old/new/g - replace all old with new throughout file</p>
-<p>:%s/old/new/gc - replace all old with new throughout file with confirmations</p>
-<p>##Working with multiple files</p>
-<p>:e filename - Edit a file in a new buffer</p>
-<p>:bnext (or :bn) - go to next buffer</p>
-<p>:bprev (of :bp) - go to previous buffer</p>
-<p>:bd - delete a buffer (close a file)</p>
-<p>:sp filename - Open a file in a new buffer and split window</p>
-<p>ctrl+ws - Split windows</p>
-<p>ctrl+ww - switch between windows</p>
-<p>ctrl+wq - Quit a window</p>
-<p>ctrl+wv - Split windows vertically</p>
-
-      
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">10.</span>
+        <h2><a href="/2014/10/14/vim-commands-cheatsheet/">vim commands cheatsheet</a></h2>
+        <span class="post-date">2014-10-14</span>
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2014/10/14/vim-commands-cheatsheet/" data-id="cm50h3r8j0031yfhtpwbqt9rr" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2014/10/14/vim-commands-cheatsheet/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
-
-  <nav id="page-nav">
-    
-    <a class="extend prev" rel="prev" href="/page/9/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/11/">Next &raquo;</a>
-  </nav>
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Github/">Github</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Karrigell/">Karrigell</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VIM/">VIM</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/conda/">conda</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/django/">django</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ffmpeg/">ffmpeg</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/freeswitch/">freeswitch</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/kivy/">kivy</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/mac/">mac</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/normal/">normal</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/other/">other</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/sqlalchemy/">sqlalchemy</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/system/">system</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tornado/">tornado</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ubuntu/">ubuntu</a></li></ul>
+    <div class="post-content">
+        vim commands cheatsheet
+##Cursor movement
+h - move left
+j - move down
+k - move up
+l - move right
+w - jump by start of words (punctuation considered words)
+W - jump by words (spa...
     </div>
-  </div>
+</div>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/conda/">conda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django/">django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django-celery/">django-celery</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/freeswitch/">freeswitch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlalchemy/">sqlalchemy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/system/">system</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tornado/">tornado</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a></li></ul>
-    </div>
-  </div>
 
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/conda/" style="font-size: 10px;">conda</a> <a href="/tags/django/" style="font-size: 18px;">django</a> <a href="/tags/django-celery/" style="font-size: 10px;">django-celery</a> <a href="/tags/ffmpeg/" style="font-size: 10px;">ffmpeg</a> <a href="/tags/flask/" style="font-size: 10px;">flask</a> <a href="/tags/freeswitch/" style="font-size: 10px;">freeswitch</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/go/" style="font-size: 14px;">go</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/linux/" style="font-size: 16px;">linux</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/other/" style="font-size: 12px;">other</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/sqlalchemy/" style="font-size: 10px;">sqlalchemy</a> <a href="/tags/system/" style="font-size: 12px;">system</a> <a href="/tags/tornado/" style="font-size: 10px;">tornado</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">February 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">February 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">November 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">September 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2024/12/23/Python-Typing类型提示/">Python Typing类型提示</a>
-          </li>
-        
-          <li>
-            <a href="/2024/12/23/Python-Tempfile临时文件系统对象/">Python Tempfile临时文件系统对象</a>
-          </li>
-        
-          <li>
-            <a href="/2024/12/23/Python-Pathlib处理文件路径库的使用/">Python Pathlib处理文件路径库的使用</a>
-          </li>
-        
-          <li>
-            <a href="/2024/08/31/在ubuntu上的18个非常实用的命令行工具软件/">在ubuntu上的18个非常实用的命令行工具软件</a>
-          </li>
-        
-          <li>
-            <a href="/2024/08/20/什么是动态规划？在Python中如何利用动态规划解决实际问题？/">什么是动态规划？在Python中如何利用动态规划解决实际问题？</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2024 Tony Tan<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
+<nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/9/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/11/">Next</a>
 </nav>
-    
-<script>
-  var disqus_shortname = 'TonyTan';
-  
-  (function(){
-    var dsq = document.createElement('script');
-    dsq.type = 'text/javascript';
-    dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
 
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
-
-
-
-  </div>
+        </div>
+        <div class="footer">
+            
+            <p class="footer-copyright">
+                <span>Powered by <a target="_blank" href="https://hexo.io">Hexo</a></span>
+                <span>Theme <a target="_blank" href="https://github.com/tinkink-co/hexo-theme-terminal">Terminal</a></span>
+            </p>
+        </div>
+    </div>
 </body>
 </html>

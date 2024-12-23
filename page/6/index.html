@@ -1,1057 +1,178 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="utf-8">
-  
-
-  
-  <title>Tony Tan</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Tony Tan">
-<meta name="keywords" content="Tony Tan">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Tony Tan">
-<meta property="og:url" content="https://tonytan748.github.io/page/6/index.html">
-<meta property="og:site_name" content="Tony Tan">
-<meta property="og:description" content="Tony Tan">
-<meta property="og:locale" content="default">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Tony Tan">
-<meta name="twitter:description" content="Tony Tan">
-  
-    <link rel="alternate" href="/atom.xml" title="Tony Tan" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/styles/base.css">
+    <link rel="stylesheet" href="/styles/theme.css">
+    <link rel="shortcut icon" href="/favicon.png">
+    
+    <title>首页 - Tony Tan</title>
+    
 </head>
-</html>
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Tony Tan</a>
-      </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">a python progrmmer</a>
-        </h2>
-      
+    <div class="header-title">
+        <span class="header-light"></span>
+        <span class="header-light"></span>
+        <span class="header-light"></span>
+        <span>Tony Tan tonytan748.github.io<span>
+    </span></span></div>
+    <div class="container">
+        <ul class="nav">
+        
+            <li><a href="/">首页</a></li>
+        
+            <li><a href="/categories">分类</a></li>
+        
+            <li><a href="/about">关于</a></li>
+        
+        </ul>
+        <div class="content">
+            
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">1.</span>
+        <h2><a href="/2018/11/06/how-to-change-between-in-string-and-bytes-in-pyhton/">how to change between in string and bytes in pyhton</a></h2>
+        <span class="post-date">2018-11-06</span>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://tonytan748.github.io"></form>
-      </div>
+    <div class="post-content">
+        123456789x = &amp;apos;abc&amp;apos;# string to bytesb = bytes(x, encoding=&amp;apos;utf-8&amp;apos;)#butes to strs = str(b, encoding=&amp;apos;utf-8&amp;apos;)
+
     </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-how-to-change-between-in-string-and-bytes-in-pyhton" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/11/06/how-to-change-between-in-string-and-bytes-in-pyhton/" class="article-date">
-  <time datetime="2018-11-06T01:02:37.000Z" itemprop="datePublished">2018-11-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
+</div>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/06/how-to-change-between-in-string-and-bytes-in-pyhton/">how to change between in string and bytes in pyhton</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">x = &apos;abc&apos;</span><br><span class="line"></span><br><span class="line"># string to bytes</span><br><span class="line"></span><br><span class="line">b = bytes(x, encoding=&apos;utf-8&apos;)</span><br><span class="line"></span><br><span class="line">#butes to str</span><br><span class="line"></span><br><span class="line">s = str(b, encoding=&apos;utf-8&apos;)</span><br></pre></td></tr></table></figure>
-
-      
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">2.</span>
+        <h2><a href="/2018/11/06/How-to-resoved-can-not-usw-Tab-in-Ubuntu-terminal/">How to resoved can not usw &#39;Tab&#39; in Ubuntu terminal</a></h2>
+        <span class="post-date">2018-11-06</span>
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2018/11/06/how-to-change-between-in-string-and-bytes-in-pyhton/" data-id="cm50h3rat0067yfhtfq6m60za" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2018/11/06/how-to-change-between-in-string-and-bytes-in-pyhton/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-How-to-resoved-can-not-usw-Tab-in-Ubuntu-terminal" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/11/06/How-to-resoved-can-not-usw-Tab-in-Ubuntu-terminal/" class="article-date">
-  <time datetime="2018-11-06T00:57:26.000Z" itemprop="datePublished">2018-11-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/linux/">linux</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+    <div class="post-content">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/06/How-to-resoved-can-not-usw-Tab-in-Ubuntu-terminal/">How to resoved can not usw &#39;Tab&#39; in Ubuntu terminal</a>
-    </h1>
-  
+Check current shell:
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ol>
-<li>Check current shell:</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># echo $SHELL</span><br><span class="line"></span><br><span class="line">/bin/sh</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>Change shell to <code>/bin/bash</code>:</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># usermod -s /bin/bash &lt;username&gt;</span><br></pre></td></tr></table></figure>
+123# echo $SHELL/bin/sh
 
-      
+Change shell to /bin/bash:
+
+1# usermod -s /bin/bash &amp;lt;username&amp;gt;
+
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2018/11/06/How-to-resoved-can-not-usw-Tab-in-Ubuntu-terminal/" data-id="cm50h3rap005wyfht47evs43d" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2018/11/06/How-to-resoved-can-not-usw-Tab-in-Ubuntu-terminal/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
+</div>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="_post-Enhance-your-Python-with-an-interactive-shell" class="article article-type-_post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/06/12/Enhance-your-Python-with-an-interactive-shell/" class="article-date">
-  <time datetime="2018-06-12T15:22:33.000Z" itemprop="datePublished">2018-06-12</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/12/Enhance-your-Python-with-an-interactive-shell/">Enhance your Python with an interactive shell</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Original source is <a href="https://fedoramagazine.org/enhance-python-interactive-shell/" target="_blank" rel="noopener">here</a></p>
-<p>The Python programming language has become one of the most popular languages used in IT. One reason for this success is it can be used to solve a variety of problems. From web development to data science, machine learning to task automation, the Python ecosystem is rich in popular frameworks and libraries. This article presents some useful Python shells available in the Fedora packages collection to make development easier.</p>
-<h2 id="Python-Shell"><a href="#Python-Shell" class="headerlink" title="Python Shell"></a>Python Shell</h2><p>The Python Shell lets you use the interpreter in an interactive mode. It’s very useful to test code or try a new library. In Fedora you can invoke the default shell by typing python3 in a terminal session. Some more advanced and enhanced shells are available to Fedora, though.</p>
-<h2 id="IPython"><a href="#IPython" class="headerlink" title="IPython"></a>IPython</h2><p>IPython provides many useful enhancements to the Python shell. Examples include tab completion, object introspection, system shell access and command history retrieval.  Many of these features are also used by the Jupyter Notebook , since it uses IPython underneath.</p>
-<h3 id="Install-and-run-IPython"><a href="#Install-and-run-IPython" class="headerlink" title="Install and run IPython"></a>Install and run IPython</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dnf install ipython3</span><br><span class="line">ipython3</span><br></pre></td></tr></table></figure>
-<p>Using tab completion prompts you with possible choices. This features comes in handy when you use an unfamiliar library.</p>
-<p>If you need more information, use the documentation by typing the ? command. For more details, you can use the ?? command.</p>
-<p>Another cool feature is the ability to execute a system shell command using the ! character. The result of the command can then be referenced in the IPython shell.</p>
-<p>A comprehensive list of IPython features is available in the official documentation.</p>
-<h2 id="bpython"><a href="#bpython" class="headerlink" title="bpython"></a>bpython</h2><p>bpython doesn’t do as much as  IPython, but nonetheless it provides a useful set of features in a simple and lightweight package. Among other features, bpython provides:</p>
-<ul>
-<li>In-line syntax highlighting</li>
-<li>Autocomplete with suggestions as you type</li>
-<li>Expected parameter list</li>
-<li>Ability to send or save code to a pastebin service or file</li>
-</ul>
-<h3 id="Install-and-run-bpython"><a href="#Install-and-run-bpython" class="headerlink" title="Install and run bpython"></a>Install and run bpython</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dnf install bpython3</span><br><span class="line">bpython3</span><br></pre></td></tr></table></figure>
-<p>As you type, bpython offers you choices to autocomplete your code.</p>
-<p>When you call a function or method, the expected parameters and the docstring are automatically displayed.</p>
-<p>Another neat feature is the ability to open the current bpython session in an external editor (Vim by default) using the function key F7. This is very useful when testing more complex programs.</p>
-<p>For more details about configuration and features, consult the bpython documentation.</p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Using an enhanced Python shell is a good way to increase productivity. It gives you enhanced features to write a quick prototype or try out a new library. Are you using an enhanced Python shell? Feel free to mention it in the comment section below.</p>
-
-      
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">3.</span>
+        <h2><a href="/2018/06/12/Enhance-your-Python-with-an-interactive-shell/">Enhance your Python with an interactive shell</a></h2>
+        <span class="post-date">2018-06-12</span>
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2018/06/12/Enhance-your-Python-with-an-interactive-shell/" data-id="cm50h3raq005zyfhtgkjejnnv" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2018/06/12/Enhance-your-Python-with-an-interactive-shell/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Mocks-and-monkeypatching-in-python" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/09/09/Mocks-and-monkeypatching-in-python/" class="article-date">
-  <time datetime="2017-09-09T14:14:16.000Z" itemprop="datePublished">2017-09-09</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/09/Mocks-and-monkeypatching-in-python/">Mocks and monkeypatching in python</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Translate from <a href="https://krzysztofzuraw.com/blog/2016/mocks-monkeypatching-in-python.html" target="_blank" rel="noopener">krzysztofzuraw</a></p>
-<p>First of all, what I want to accomplish here is to give you basic examples of how to mock data using two tools: mock and pytest monkeypatch.</p>
-<h1 id="Why-bother-mocking"><a href="#Why-bother-mocking" class="headerlink" title="Why bother mocking?"></a>Why bother mocking?</h1><p>Some of the parts of our application may have dependencies for other libraries or objects. To isolate behaviour of our parts we need to substitue external dependencies. Here comes the mocking. We mock external API to have certain behaviours such as proper return values that we previously defined.</p>
-<h1 id="Mocking-function"><a href="#Mocking-function" class="headerlink" title="Mocking function"></a>Mocking function</h1><p>Let’s say we have module called <strong>function.py</strong>:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def square(value):</span><br><span class="line">    return value ** 2</span><br><span class="line"></span><br><span class="line">def cube(value):</span><br><span class="line">    return value ** 3</span><br><span class="line"></span><br><span class="line">def main(value):</span><br><span class="line">    return square(value) + cube(value)</span><br></pre></td></tr></table></figure>
-<p>Then let’s look how these functions are mocked using <strong>mock</strong> library:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">1  try:</span><br><span class="line">2      import mock</span><br><span class="line">3  except ImportError:</span><br><span class="line">4      from unittest import mock</span><br><span class="line">5 </span><br><span class="line">6  import unittest</span><br><span class="line">7 </span><br><span class="line">8  from function import square, main</span><br><span class="line">9 </span><br><span class="line">10</span><br><span class="line">11 class TestNotMockedFunction(unittest.TestCase):</span><br><span class="line">12     @mock.patch(&apos;__main__.square&apos;, return_value=1)</span><br><span class="line">13     def test_function(self, mocked_square):</span><br><span class="line">14         # because you need to patch in exact place where function that has to be mocked is called</span><br><span class="line">15         self.assertEquals(square(5), 1)</span><br><span class="line">16        </span><br><span class="line">17     @mock.patch(&apos;function.square&apos;)</span><br><span class="line">18     @mock.patch(&apos;function.cube&apos;)</span><br><span class="line">19     def test_main_function(self, mocked_square, mocked_cube):</span><br><span class="line">20         # underling function are mocks so calling main(5) will return mock</span><br><span class="line">21         mocked_square.return_value = 1</span><br><span class="line">22         mocked_cube.return_value = 0</span><br><span class="line">23         self.assertEquals(main(5), 1)</span><br><span class="line">24         mocked_square.assert_called_once_with(5)</span><br><span class="line">25         mocked_cube.assert_called_once_with(5)</span><br><span class="line">26</span><br><span class="line">27 if __name__ == &apos;__main__&apos;:</span><br><span class="line">28     unittest.main()</span><br></pre></td></tr></table></figure>
-<p>What is happening here? Lines 1-4 are for making this code compatible between python 2 and 3. In python 3 mock is part of standard library whereas in python 2 you need to install by <strong>pip install mock</strong>.</p>
-<p>In line 13 I patched the <code>square</code> function. But you have to remember to patch it in the same place you use it. For instance, I’m calling <code>square(5)</code> in test itself so I need to patch it in <code>__main__</code>. This is the case if I’m running this by <code>python tests/test_function.py</code>. If I’m using pytest for that I need to patch it like <code>test_function.square</code>.</p>
-<p>In lines 17-18, I patch <code>square</code> and <code>cube</code> functions in their module because they are used in <code>main</code> function. The last two asserts come from mock library and are for making sure that mock was called with proper values.</p>
-<p>The same can be accomplished using <code>mokeypatching</code> for py.test:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from function import square, main</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def test_function(monkeypatch):</span><br><span class="line">    monkeypatch.setattr(&quot;test_function_pytest.square&quot;, lambda x: 1)</span><br><span class="line">    assert square(5) == 1</span><br><span class="line"></span><br><span class="line">def test_main_function(monkeypatch):</span><br><span class="line">    monkeypatch.setattr(&apos;function.square&apos;, lambda x: 1)</span><br><span class="line">    monkeypatch.setattr(&apos;function.cube&apos;, lambda x: 0)</span><br><span class="line">    assert main(5) == 1</span><br></pre></td></tr></table></figure>
-<p>As you can see I’m using <code>monkeypatch.setattr</code> for setting up return value for given functions. I’m still need to monkeypatch it in proper place: <code>test_function_pytest</code> and <code>function</code>.</p>
-<h1 id="Mocking-classes"><a href="#Mocking-classes" class="headerlink" title="Mocking classes"></a>Mocking classes</h1><p>I have module called <code>square</code>:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import math</span><br><span class="line"></span><br><span class="line">class Square(object):</span><br><span class="line">    def __init__(radius):</span><br><span class="line">         self.radius = radius</span><br><span class="line"></span><br><span class="line">    def calculate_area(self):</span><br><span class="line">         return math.sqrt(self.radius) * math.pi</span><br></pre></td></tr></table></figure>
-<p>And mocks using standard lib:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">1  try:</span><br><span class="line">2      import mock</span><br><span class="line">3  except ImportError:</span><br><span class="line">4      from unittest import mock</span><br><span class="line">5 </span><br><span class="line">6  import unittest</span><br><span class="line">7  </span><br><span class="line">8  from square import Square</span><br><span class="line">9  </span><br><span class="line">10  </span><br><span class="line">11 class TestClass(unittest.TestCase):</span><br><span class="line">12 </span><br><span class="line">13     @mock.patch(&apos;__main__.Square&apos;) # depends in witch from is run</span><br><span class="line">14     def test_mocking_instance(self, mocked_instance):</span><br><span class="line">15         mocked_instance = mocked_instance.return_value</span><br><span class="line">16         mocked_instance.calculate_area.return_value = 1</span><br><span class="line">17         sq = Square(100)</span><br><span class="line">18         self.assertEquals(sq.calculate_area(), 1)</span><br><span class="line">19 </span><br><span class="line">20 </span><br><span class="line">21     def test_mocking_classes(self):</span><br><span class="line">22         sq = Square</span><br><span class="line">23         sq.calculate_area = mock.MagicMock(return_value=1)</span><br><span class="line">24         self.assertEquals(sq.calculate_area(), 1)</span><br><span class="line">25 </span><br><span class="line">26     @mock.patch.object(Square, &apos;calculate_area&apos;)</span><br><span class="line">27     def test_mocking_class_methods(self, mocked_method):</span><br><span class="line">28         mocked_method.return_value = 20</span><br><span class="line">29         self.assertEquals(Square.calculate_area(), 20)</span><br><span class="line">30 </span><br><span class="line">31 if __name__ == &apos;__main__&apos;:</span><br><span class="line">32     unittest.main()</span><br></pre></td></tr></table></figure>
-<p>At line 13 I patch class <code>Square</code> (again be aware if you run this test using pytest or standard way). Lines 15 and 16 presents mocking instance; at first <code>mocked_instance</code> is mock object which by default returns another mock and to these <code>mock.calculate_area</code> I add <code>return_value</code> 1. In line 23 I’m using <code>MagicMock</code> which is normal mock class except it also retrieves magic methods from given object. Lastly I use <code>patch.object</code> to mock method in <code>Square</code> class.</p>
-<p>The same using pytest:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">try:</span><br><span class="line">    from mock import MagicMock</span><br><span class="line">except ImportError:</span><br><span class="line">   from unittest.mock import MagicMock</span><br><span class="line"></span><br><span class="line">from square import Square</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def test_mocking_class_methods(monkeypatch):</span><br><span class="line">    monkeypatch.setattr(&apos;test_class_pytest.Square.calculate_area&apos;, lambda: 1)</span><br><span class="line">    assert Square.calculate_area() ==  1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def test_mocking_classes(monkeypatch):</span><br><span class="line">    monkeypatch.setattr(&apos;test_class_pytest.Square&apos;, MagicMock(Square))</span><br><span class="line">    sq = Square</span><br><span class="line">    sq.calculate_area.return_value = 1</span><br><span class="line">    assert sq.calculate_area() ==  1</span><br></pre></td></tr></table></figure>
-<p>The issue here is with <code>test_mocking_class_methods</code> which works well in python 3 but not in python 2. Right now I don’t have clear answer to this so if you can help I appreciate this!</p>
-<p>All examples can be found under this <a href="https://github.com/krzysztofzuraw/personal-blog-projects/tree/master/blog_mocks" target="_blank" rel="noopener">repo</a>.</p>
-<h1 id="References"><a href="#References" class="headerlink" title="References:"></a>References:</h1><ol>
-<li><a href="http://stackoverflow.com/questions/2665812/what-is-mocking" target="_blank" rel="noopener">What is mocking</a>.</li>
-<li><a href="http://manishamde.github.io/blog/2013/10/06/mocking-python-with-kung-fu-panda/#mock_classes" target="_blank" rel="noopener">Mocking Python With Kung Fu Panda</a>.</li>
-</ol>
-
-      
+    <div class="post-content">
+        Original source is here
+The Python programming language has become one of the most popular languages used in IT. One reason for this success is it can be used to solve a variety...
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2017/09/09/Mocks-and-monkeypatching-in-python/" data-id="cm50h3rar0063yfhtm4kf6atr" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2017/09/09/Mocks-and-monkeypatching-in-python/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+</div>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Nevwe-Write-For-Loops-Again" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/08/19/Nevwe-Write-For-Loops-Again/" class="article-date">
-  <time datetime="2017-08-19T00:15:44.000Z" itemprop="datePublished">2017-08-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/19/Nevwe-Write-For-Loops-Again/">Nevwe Write For-Loops Again</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Translate from <a href="https://dev.to/dawranliou/never-write-for-loops-again" target="_blank" rel="noopener">Randy Daw-Ran Liou </a></p>
-<p>This is a challenge. I challenge you to avoid writing for-loops in every scenario. Also, I challenge you to find the scenarios that are so freaking hard to write anything else but a for-loop. Please share your findings. I’d like to hear about them.</p>
-<p>It’s been a while since I started exploring the amazing language features in Python. At the beginning, it’s just a challenge I gave myself to practice using more language features instead of those I learned from other programming language. And things are just getting more fun! Not only the code become shorter and cleaner, but also code looks more structured and disciplined. I’ll get into those benefits more in this article.</p>
-<p>But first, let’s take a step back and see what’s the intuition behind writing a for-loop:<br>1.To go through a sequence to extract out some information<br>2.To generate another sequence out of the current sequence<br>3.This is my second nature to write for-loops because I’m a programmer</p>
-<p>Fortunately, there are already great tools that are built into Python to help you accomplish the goals! All you need is to shift your mind and look at the things in a different angle.</p>
-<h2 id="What-you-gain-by-not-writing-for-loops-everywhere"><a href="#What-you-gain-by-not-writing-for-loops-everywhere" class="headerlink" title="What you gain by not writing for-loops everywhere"></a>What you gain by not writing for-loops everywhere</h2><p>1.Fewer lines of code<br>2.Better code readability<br>3.Leave indentation for managing context only</p>
-<p>Let’s see the code skeleton below:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 1</span><br><span class="line">with ...:</span><br><span class="line">    for ...:</span><br><span class="line">        if ...:</span><br><span class="line">            try:</span><br><span class="line">            except:</span><br><span class="line">        else:</span><br></pre></td></tr></table></figure></p>
-<p>In this example, we are dealing with multiple layers of code. THIS IS HARD TO READ. The problem I found in this code is that it is mixing the <strong>administrative</strong> logic (the <code>with</code>, <code>try-except</code>) with the <strong>business logic</strong> (the <code>for</code>, <code>if</code>) by giving them the indentation ubiquitously. If you are disciplined about using indentation only for administrative logic, your core business logic would stand out immediately.</p>
-<blockquote>
-<p>“Flat is better than nested” - The Zen of Python</p>
-</blockquote>
-<h2 id="Tools-you-can-use-to-avoid-using-for-loops"><a href="#Tools-you-can-use-to-avoid-using-for-loops" class="headerlink" title="Tools you can use to avoid using for-loops"></a>Tools you can use to avoid using for-loops</h2><h3 id="1-List-Comprehension-Generator-Expression"><a href="#1-List-Comprehension-Generator-Expression" class="headerlink" title="1.List Comprehension / Generator Expression"></a>1.List Comprehension / Generator Expression</h3><p>Let’s see a simple example. Basically you want to compile a sequence based on another existing sequence:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">result = []</span><br><span class="line">for item in item_list:</span><br><span class="line">    new_item = do_something_with(item)</span><br><span class="line">    result.append(item)</span><br></pre></td></tr></table></figure></p>
-<p>You can use <code>map</code> if you love MapReduce, or, Python has List Comprehension:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result = [do_something_with(item) for item in item_list]</span><br></pre></td></tr></table></figure></p>
-<p>Similarly, if you wish to get a iterator only, you can use Generator Expression with almost the same syntax. (How can you not love the consistency in Python?)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result = (do_something_with(item) for item in item_list)</span><br></pre></td></tr></table></figure></p>
-<h3 id="2-Functions"><a href="#2-Functions" class="headerlink" title="2. Functions"></a>2. Functions</h3><p>Thinking in a higher-order, more functional programming way, if you want to map a sequence to another, simply call the <code>map</code> function. (Be my guest to use list comprehension here instead.)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">doubled_list = map(lambda x: x * 2, old_list)</span><br></pre></td></tr></table></figure>
-<p>If you want to reduce a sequence into a single, use <code>reduce</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from functools import reduce</span><br><span class="line">summation = reduce(lambda x, y: x + y, numbers)</span><br></pre></td></tr></table></figure>
-<p>Also, lots of Python’s builtin functions consumes iterables:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = list(range(10))</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span><br><span class="line">&gt;&gt;&gt; all(a)</span><br><span class="line">False</span><br><span class="line">&gt;&gt;&gt; any(a)</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; max(a)</span><br><span class="line">9</span><br><span class="line">&gt;&gt;&gt; min(a)</span><br><span class="line">0</span><br><span class="line">&gt;&gt;&gt; list(filter(bool, a))</span><br><span class="line">[1, 2, 3, 4, 5, 6, 7, 8, 9]</span><br><span class="line">&gt;&gt;&gt; set(a)</span><br><span class="line">&#123;0, 1, 2, 3, 4, 5, 6, 7, 8, 9&#125;</span><br><span class="line">&gt;&gt;&gt; dict(zip(a,a))</span><br><span class="line">&#123;0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9&#125;</span><br><span class="line">&gt;&gt;&gt; sorted(a, reverse=True)</span><br><span class="line">[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]</span><br><span class="line">&gt;&gt;&gt; str(a)</span><br><span class="line">&apos;[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]&apos;</span><br><span class="line">&gt;&gt;&gt; sum(a)</span><br><span class="line">45</span><br></pre></td></tr></table></figure></p>
-<h3 id="3-Extract-Functions-or-Generators"><a href="#3-Extract-Functions-or-Generators" class="headerlink" title="3. Extract Functions or Generators"></a>3. Extract Functions or Generators</h3><p>The above two methods are great to deal with simpler logic. How about more complex logic? As a programmer, we write functions to abstract out the difficult things. Same idea applies here. If you are writing this:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">results = []</span><br><span class="line">for item in item_list:</span><br><span class="line">    # setups</span><br><span class="line">    # condition</span><br><span class="line">    # processing</span><br><span class="line">    # calculation</span><br><span class="line">    results.append(result)</span><br></pre></td></tr></table></figure></p>
-<p>Apparently you are giving too much responsibility to a single code block. Instead, I propose you do:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def process_item(item):</span><br><span class="line">    # setups</span><br><span class="line">    # condition</span><br><span class="line">    # processing</span><br><span class="line">    # calculation</span><br><span class="line">    return result</span><br><span class="line"></span><br><span class="line">results = [process_item(item) for item in item_list]</span><br></pre></td></tr></table></figure></p>
-<p>How about nested for-loops?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">results = []</span><br><span class="line">for i in range(10):</span><br><span class="line">    for j in range(i):</span><br><span class="line">        results.append((i, j))</span><br></pre></td></tr></table></figure></p>
-<p>List Comprehension got your back:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">results = [(i, j)</span><br><span class="line">           for i in range(10)</span><br><span class="line">           for j in range(i)]</span><br></pre></td></tr></table></figure></p>
-<p>How about if you have some internal state in the code block to<br>keep?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># finding the max prior to the current item</span><br><span class="line">a = [3, 4, 6, 2, 1, 9, 0, 7, 5, 8]</span><br><span class="line">results = []</span><br><span class="line">current_max = 0</span><br><span class="line">for i in a:</span><br><span class="line">    current_max = max(i, current_max)</span><br><span class="line">    results.append(current_max)</span><br><span class="line"></span><br><span class="line"># results = [3, 4, 6, 6, 6, 9, 9, 9, 9, 9]</span><br></pre></td></tr></table></figure></p>
-<p>Let’s extract a generator to achieve this:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def max_generator(numbers):</span><br><span class="line">    current_max = 0</span><br><span class="line">    for i in numbers:</span><br><span class="line">        current_max = max(i, current_max)</span><br><span class="line">        yield current_max</span><br><span class="line"></span><br><span class="line">a = [3, 4, 6, 2, 1, 9, 0, 7, 5, 8]</span><br><span class="line">results = list(max_generator(a))</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>“Oh wait, you just used a for-loop in the generator function. That’s cheating!”</p>
-</blockquote>
-<p>Fine, smart ass, let’s try the following.</p>
-<h3 id="4-Don’t-write-it-yourself-itertools-got-you-covered"><a href="#4-Don’t-write-it-yourself-itertools-got-you-covered" class="headerlink" title="4. Don’t write it yourself. itertools got you covered"></a>4. Don’t write it yourself. <code>itertools</code> got you covered</h3><p>This module is simply brilliant. I believe this module covers 80% of the cases that you makes you want to write for-loops. For example, the last example can be rewritten to:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from itertools import accumulate</span><br><span class="line">a = [3, 4, 6, 2, 1, 9, 0, 7, 5, 8]</span><br><span class="line">resutls = list(accumulate(a, max))</span><br></pre></td></tr></table></figure></p>
-<p>Also, if you are iterating on combinatoric sequnces, there are <code>product()</code>, <code>permutations()</code>, <code>combinations()</code> to use.</p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>1.You don’t need to write for-loops in most scenarios<br>2.You should avoid writing for-loops, so you have better code readability</p>
-<h2 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h2><p>1.Look at your code again. Spot any places that you wrote a for-loop previously by intuition. Think again and see if it make sense to re-write it without using for-loop.<br>2.Share your cases that are hard to code without using for-loops</p>
-
-      
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">4.</span>
+        <h2><a href="/2017/09/09/Mocks-and-monkeypatching-in-python/">Mocks and monkeypatching in python</a></h2>
+        <span class="post-date">2017-09-09</span>
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2017/08/19/Nevwe-Write-For-Loops-Again/" data-id="cm50h3rah005kyfhtfyp7li29" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2017/08/19/Nevwe-Write-For-Loops-Again/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-High-Concurrency-Web-System-In-Ecommerce-Website-Seckill-And-Falsh-Sale" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/06/08/High-Concurrency-Web-System-In-Ecommerce-Website-Seckill-And-Falsh-Sale/" class="article-date">
-  <time datetime="2017-06-08T07:47:04.000Z" itemprop="datePublished">2017-06-08</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/system/">system</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/08/High-Concurrency-Web-System-In-Ecommerce-Website-Seckill-And-Falsh-Sale/">High Concurrency Web System In Ecommerce Website Seckill And Falsh Sale</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a href="http://www.csdn.net/article/1970-01-01/2822858" target="_blank" rel="noopener">http://www.csdn.net/article/1970-01-01/2822858</a></p>
-<!-- toc -->
-<p>电商的秒杀和抢购，对我们来说，都不是一个陌生的东西。然而，从技术的角度来说，这对于Web系统是一个巨大的考验。当一个Web系统，在一秒钟内收到数以万计甚至更多请求时，系统的优化和稳定至关重要。这次我们会关注秒杀和抢购的技术实现和优化，同时，从技术层面揭开，为什么我们总是不容易抢到火车票的原因？ </p>
-<h1 id="大规模并发带来的挑战"><a href="#大规模并发带来的挑战" class="headerlink" title="大规模并发带来的挑战"></a>大规模并发带来的挑战</h1><p>在过去的工作中，我曾经面对过5w每秒的高并发秒杀功能，在这个过程中，整个Web系统遇到了很多的问题和挑战。如果Web系统不做针对性的优化，会轻而易举地陷入到异常状态。我们现在一起来讨论下，优化的思路和方法哈。 </p>
-<h2 id="请求接口的合理设计"><a href="#请求接口的合理设计" class="headerlink" title="请求接口的合理设计"></a>请求接口的合理设计</h2><p>一个秒杀或者抢购页面，通常分为2个部分，一个是静态的HTML等内容，另一个就是参与秒杀的Web后台请求接口。</p>
-<p>通常静态HTML等内容，是通过CDN的部署，一般压力不大，核心瓶颈实际上在后台请求接口上。这个后端接口，必须能够支持高并发请求，同时，非常重要的一点，必须尽可能“快”，在最短的时间里返回用户的请求结果。为了实现尽可能快这一点，接口的后端存储使用内存级别的操作会更好一点。仍然直接面向MySQL之类的存储是不合适的，如果有这种复杂业务的需求，都建议采用异步写入。</p>
-<p><img src="./547821ba53d6d_middle.jpg" alt="用户请求"></p>
-<p>当然，也有一些秒杀和抢购采用“滞后反馈”，就是说秒杀当下不知道结果，一段时间后才可以从页面中看到用户是否秒杀成功。但是，这种属于“偷懒”行为，同时给用户的体验也不好，容易被用户认为是“暗箱操作”。</p>
-<h2 id="高并发的挑战：一定要“快”"><a href="#高并发的挑战：一定要“快”" class="headerlink" title="高并发的挑战：一定要“快”"></a>高并发的挑战：一定要“快”</h2><p>我们通常衡量一个Web系统的吞吐率的指标是QPS（Query Per Second，每秒处理请求数），解决每秒数万次的高并发场景，这个指标非常关键。举个例子，我们假设处理一个业务请求平均响应时间为100ms，同时，系统内有20台Apache的Web服务器，配置MaxClients为500个（表示Apache的最大连接数目）。</p>
-<p>那么，我们的Web系统的理论峰值QPS为（理想化的计算方式）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">20*500/0.1 = 100000 （10万QPS）</span><br></pre></td></tr></table></figure></p>
-<p>咦？我们的系统似乎很强大，1秒钟可以处理完10万的请求，5w/s的秒杀似乎是“纸老虎”哈。实际情况，当然没有这么理想。在高并发的实际场景下，机器都处于高负载的状态，在这个时候平均响应时间会被大大增加。</p>
-<p>就Web服务器而言，Apache打开了越多的连接进程，CPU需要处理的上下文切换也越多，额外增加了CPU的消耗，然后就直接导致平均响应时间增加。因此上述的MaxClient数目，要根据CPU、内存等硬件因素综合考虑，绝对不是越多越好。可以通过Apache自带的abench来测试一下，取一个合适的值。然后，我们选择内存操作级别的存储的Redis，在高并发的状态下，存储的响应时间至关重要。网络带宽虽然也是一个因素，不过，这种请求数据包一般比较小，一般很少成为请求的瓶颈。负载均衡成为系统瓶颈的情况比较少，在这里不做讨论哈。</p>
-<p>那么问题来了，假设我们的系统，在5w/s的高并发状态下，平均响应时间从100ms变为250ms（实际情况，甚至更多）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">20*500/0.25 = 40000 （4万QPS）</span><br></pre></td></tr></table></figure></p>
-<p>于是，我们的系统剩下了4w的QPS，面对5w每秒的请求，中间相差了1w。</p>
-<p>然后，这才是真正的恶梦开始。举个例子，高速路口，1秒钟来5部车，每秒通过5部车，高速路口运作正常。突然，这个路口1秒钟只能通过4部车，车流量仍然依旧，结果必定出现大塞车。（5条车道忽然变成4条车道的感觉）</p>
-<p>同理，某一个秒内，<code>20*500</code>个可用连接进程都在满负荷工作中，却仍然有1万个新来请求，没有连接进程可用，系统陷入到异常状态也是预期之内。</p>
-<p><img src="./547821ee2d1ee_middle.jpg" alt="连接进程"></p>
-<p>其实在正常的非高并发的业务场景中，也有类似的情况出现，某个业务请求接口出现问题，响应时间极慢，将整个Web请求响应时间拉得很长，逐渐将Web服务器的可用连接数占满，其他正常的业务请求，无连接进程可用。</p>
-<p>更可怕的问题是，是用户的行为特点，系统越是不可用，用户的点击越频繁，恶性循环最终导致“雪崩”（其中一台Web机器挂了，导致流量分散到其他正常工作的机器上，再导致正常的机器也挂，然后恶性循环），将整个Web系统拖垮。</p>
-<h2 id="重启与过载保护"><a href="#重启与过载保护" class="headerlink" title="重启与过载保护"></a>重启与过载保护</h2><p>如果系统发生“雪崩”，贸然重启服务，是无法解决问题的。最常见的现象是，启动起来后，立刻挂掉。这个时候，最好在入口层将流量拒绝，然后再将重启。如果是redis/memcache这种服务也挂了，重启的时候需要注意“预热”，并且很可能需要比较长的时间。</p>
-<p>秒杀和抢购的场景，流量往往是超乎我们系统的准备和想象的。这个时候，过载保护是必要的。如果检测到系统满负载状态，拒绝请求也是一种保护措施。在前端设置过滤是最简单的方式，但是，这种做法是被用户“千夫所指”的行为。更合适一点的是，将过载保护设置在CGI入口层，快速将客户的直接请求返回。</p>
-<h1 id="作弊的手段：进攻与防守"><a href="#作弊的手段：进攻与防守" class="headerlink" title="作弊的手段：进攻与防守"></a>作弊的手段：进攻与防守</h1><p>秒杀和抢购收到了“海量”的请求，实际上里面的水分是很大的。不少用户，为了“抢“到商品，会使用“刷票工具”等类型的辅助工具，帮助他们发送尽可能多的请求到服务器。还有一部分高级用户，制作强大的自动请求脚本。这种做法的理由也很简单，就是在参与秒杀和抢购的请求中，自己的请求数目占比越多，成功的概率越高。</p>
-<p>这些都是属于“作弊的手段”，不过，有“进攻”就有“防守”，这是一场没有硝烟的战斗哈。</p>
-<h2 id="同一个账号，一次性发出多个请求"><a href="#同一个账号，一次性发出多个请求" class="headerlink" title="同一个账号，一次性发出多个请求"></a>同一个账号，一次性发出多个请求</h2><p>部分用户通过浏览器的插件或者其他工具，在秒杀开始的时间里，以自己的账号，一次发送上百甚至更多的请求。实际上，这样的用户破坏了秒杀和抢购的公平性。</p>
-<p>这种请求在某些没有做数据安全处理的系统里，也可能造成另外一种破坏，导致某些判断条件被绕过。例如一个简单的领取逻辑，先判断用户是否有参与记录，如果没有则领取成功，最后写入到参与记录中。这是个非常简单的逻辑，但是，在高并发的场景下，存在深深的漏洞。多个并发请求通过负载均衡服务器，分配到内网的多台Web服务器，它们首先向存储发送查询请求，然后，在某个请求成功写入参与记录的时间差内，其他的请求获查询到的结果都是“没有参与记录”。这里，就存在逻辑判断被绕过的风险。</p>
-<p><img src="./5478221b71722_middle.jpg" alt="一个帐号多个请求"></p>
-<p><strong>应对方案：</strong></p>
-<p>在程序入口处，一个账号只允许接受1个请求，其他请求过滤。不仅解决了同一个账号，发送N个请求的问题，还保证了后续的逻辑流程的安全。实现方案，可以通过Redis这种内存缓存服务，写入一个标志位（只允许1个请求写成功，结合watch的乐观锁的特性），成功写入的则可以继续参加。</p>
-<p><img src="./547822508a00b_middle.jpg" alt="一个帐号一个请求"></p>
-<p>或者，自己实现一个服务，将同一个账号的请求放入一个队列中，处理完一个，再处理下一个。</p>
-<h2 id="多个账号，一次性发送多个请求"><a href="#多个账号，一次性发送多个请求" class="headerlink" title="多个账号，一次性发送多个请求"></a>多个账号，一次性发送多个请求</h2><p>很多公司的账号注册功能，在发展早期几乎是没有限制的，很容易就可以注册很多个账号。因此，也导致了出现了一些特殊的工作室，通过编写自动注册脚本，积累了一大批“僵尸账号”，数量庞大，几万甚至几十万的账号不等，专门做各种刷的行为（这就是微博中的“僵尸粉“的来源）。举个例子，例如微博中有转发抽奖的活动，如果我们使用几万个“僵尸号”去混进去转发，这样就可以大大提升我们中奖的概率。</p>
-<p>这种账号，使用在秒杀和抢购里，也是同一个道理。例如，iPhone官网的抢购，火车票黄牛党。</p>
-<p><img src="547822740404f_middle.jpg" alt="多个帐号多次请求"></p>
-<p><strong>应对方案：</strong></p>
-<p>这种场景，可以通过检测指定机器IP请求频率就可以解决，如果发现某个IP请求频率很高，可以给它弹出一个验证码或者直接禁止它的请求：</p>
-<ul>
-<li>弹出验证码，最核心的追求，就是分辨出真实用户。因此，大家可能经常发现，网站弹出的验证码，有些是“鬼神乱舞”的样子，有时让我们根本无法看清。他们这样做的原因，其实也是为了让验证码的图片不被轻易识别，因为强大的“自动脚本”可以通过图片识别里面的字符，然后让脚本自动填写验证码。实际上，有一些非常创新的验证码，效果会比较好，例如给你一个简单问题让你回答，或者让你完成某些简单操作（例如百度贴吧的验证码）。</li>
-<li>直接禁止IP，实际上是有些粗暴的，因为有些真实用户的网络场景恰好是同一出口IP的，可能会有“误伤“。但是这一个做法简单高效，根据实际场景使用可以获得很好的效果。</li>
-</ul>
-<h2 id="多个账号，不同IP发送不同请求"><a href="#多个账号，不同IP发送不同请求" class="headerlink" title="多个账号，不同IP发送不同请求"></a>多个账号，不同IP发送不同请求</h2><p>所谓道高一尺，魔高一丈。有进攻，就会有防守，永不休止。这些“工作室”，发现你对单机IP请求频率有控制之后，他们也针对这种场景，想出了他们的“新进攻方案”，就是不断改变IP。</p>
-<p><img src="./5478229f6aa52_middle.jpg" alt="多个帐号不同ip多个请求"></p>
-<p>有同学会好奇，这些随机IP服务怎么来的。有一些是某些机构自己占据一批独立IP，然后做成一个随机代理IP的服务，有偿提供给这些“工作室”使用。还有一些更为黑暗一点的，就是通过木马黑掉普通用户的电脑，这个木马也不破坏用户电脑的正常运作，只做一件事情，就是转发IP包，普通用户的电脑被变成了IP代理出口。通过这种做法，黑客就拿到了大量的独立IP，然后搭建为随机IP服务，就是为了挣钱。</p>
-<p><strong>应对方案：</strong></p>
-<p>说实话，这种场景下的请求，和真实用户的行为，已经基本相同了，想做分辨很困难。再做进一步的限制很容易“误伤“真实用户，这个时候，通常只能通过设置业务门槛高来限制这种请求了，或者通过账号行为的”数据挖掘“来提前清理掉它们。</p>
-<p>僵尸账号也还是有一些共同特征的，例如账号很可能属于同一个号码段甚至是连号的，活跃度不高，等级低，资料不全等等。根据这些特点，适当设置参与门槛，例如限制参与秒杀的账号等级。通过这些业务手段，也是可以过滤掉一些僵尸号。</p>
-<h2 id="火车票的抢购"><a href="#火车票的抢购" class="headerlink" title="火车票的抢购"></a>火车票的抢购</h2><p>看到这里，同学们是否明白你为什么抢不到火车票？如果你只是老老实实地去抢票，真的很难。通过多账号的方式，火车票的黄牛将很多车票的名额占据，部分强大的黄牛，在处理验证码方面，更是“技高一筹“。</p>
-<p>高级的黄牛刷票时，在识别验证码的时候使用真实的人，中间搭建一个展示验证码图片的中转软件服务，真人浏览图片并填写下真实验证码，返回给中转软件。对于这种方式，验证码的保护限制作用被废除了，目前也没有很好的解决方案。</p>
-<p><img src="./547822ce2f038.jpg" alt="验证码中转"></p>
-<p>因为火车票是根据身份证实名制的，这里还有一个火车票的转让操作方式。大致的操作方式，是先用买家的身份证开启一个抢票工具，持续发送请求，黄牛账号选择退票，然后黄牛买家成功通过自己的身份证购票成功。当一列车厢没有票了的时候，是没有很多人盯着看的，况且黄牛们的抢票工具也很强大，即使让我们看见有退票，我们也不一定能抢得过他们哈。 </p>
-<p><img src="./547822fbe13a0.jpg" alt="黄牛退票流程"></p>
-<p>最终，黄牛顺利将火车票转移到买家的身份证下。</p>
-<p><strong>解决方案：</strong></p>
-<p>并没有很好的解决方案，唯一可以动心思的也许是对账号数据进行“数据挖掘”，这些黄牛账号也是有一些共同特征的，例如经常抢票和退票，节假日异常活跃等等。将它们分析出来，再做进一步处理和甄别。</p>
-<h1 id="高并发下的数据安全"><a href="#高并发下的数据安全" class="headerlink" title="高并发下的数据安全"></a>高并发下的数据安全</h1><p>我们知道在多线程写入同一个文件的时候，会存现“线程安全”的问题（多个线程同时运行同一段代码，如果每次运行结果和单线程运行的结果是一样的，结果和预期相同，就是线程安全的）。如果是MySQL数据库，可以使用它自带的锁机制很好的解决问题，但是，在大规模并发的场景中，是不推荐使用MySQL的。秒杀和抢购的场景中，还有另外一个问题，就是“超发”，如果在这方面控制不慎，会产生发送过多的情况。我们也曾经听说过，某些电商搞抢购活动，买家成功拍下后，商家却不承认订单有效，拒绝发货。这里的问题，也许并不一定是商家奸诈，而是系统技术层面存在超发风险导致的。</p>
-<h2 id="超发的原因"><a href="#超发的原因" class="headerlink" title="超发的原因"></a>超发的原因</h2><p>假设某个抢购场景中，我们一共只有100个商品，在最后一刻，我们已经消耗了99个商品，仅剩最后一个。这个时候，系统发来多个并发请求，这批请求读取到的商品余量都是99个，然后都通过了这一个余量判断，最终导致超发。（同文章前面说的场景）</p>
-<p><img src="./54782328bb155_middle.jpg" alt="超发"></p>
-<p>在上面的这个图中，就导致了并发用户B也“抢购成功”，多让一个人获得了商品。这种场景，在高并发的情况下非常容易出现。</p>
-<h2 id="悲观锁思路"><a href="#悲观锁思路" class="headerlink" title="悲观锁思路"></a>悲观锁思路</h2><p>解决线程安全的思路很多，可以从“悲观锁”的方向开始讨论。</p>
-<p>悲观锁，也就是在修改数据的时候，采用锁定状态，排斥外部请求的修改。遇到加锁的状态，就必须等待。</p>
-<p><img src="./5478234d530bf_middle.jpg" alt="悲观锁"></p>
-<p>虽然上述的方案的确解决了线程安全的问题，但是，别忘记，我们的场景是“高并发”。也就是说，会很多这样的修改请求，每个请求都需要等待“锁”，某些线程可能永远都没有机会抢到这个“锁”，这种请求就会死在那里。同时，这种请求会很多，瞬间增大系统的平均响应时间，结果是可用连接数被耗尽，系统陷入异常。</p>
-<h2 id="FIFO队列思路"><a href="#FIFO队列思路" class="headerlink" title="FIFO队列思路"></a>FIFO队列思路</h2><p>那好，那么我们稍微修改一下上面的场景，我们直接将请求放入队列中的，采用FIFO（First Input First Output，先进先出），这样的话，我们就不会导致某些请求永远获取不到锁。看到这里，是不是有点强行将多线程变成单线程的感觉哈。</p>
-<p><img src="./547823786991a_middle.jpg" alt="FIFO队列"></p>
-<p>然后，我们现在解决了锁的问题，全部请求采用“先进先出”的队列方式来处理。那么新的问题来了，高并发的场景下，因为请求很多，很可能一瞬间将队列内存“撑爆”，然后系统又陷入到了异常状态。或者设计一个极大的内存队列，也是一种方案，但是，系统处理完一个队列内请求的速度根本无法和疯狂涌入队列中的数目相比。也就是说，队列内的请求会越积累越多，最终Web系统平均响应时候还是会大幅下降，系统还是陷入异常。</p>
-<h2 id="乐观锁思路"><a href="#乐观锁思路" class="headerlink" title="乐观锁思路"></a>乐观锁思路</h2><p>这个时候，我们就可以讨论一下“乐观锁”的思路了。乐观锁，是相对于“悲观锁”采用更为宽松的加锁机制，大都是采用带版本号（Version）更新。实现就是，这个数据所有请求都有资格去修改，但会获得一个该数据的版本号，只有版本号符合的才能更新成功，其他的返回抢购失败。这样的话，我们就不需要考虑队列的问题，不过，它会增大CPU的计算开销。但是，综合来说，这是一个比较好的解决方案。</p>
-<p><img src="./547823d8e0db8_middle.jpg" alt="乐观锁"></p>
-<p>有很多软件和服务都“乐观锁”功能的支持，例如Redis中的watch就是其中之一。通过这个实现，我们保证了数据的安全。</p>
-<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>互联网正在高速发展，使用互联网服务的用户越多，高并发的场景也变得越来越多。电商秒杀和抢购，是两个比较典型的互联网高并发场景。虽然我们解决问题的具体技术方案可能千差万别，但是遇到的挑战却是相似的，因此解决问题的思路也异曲同工。</p>
-
-      
+    <div class="post-content">
+        Translate from krzysztofzuraw
+First of all, what I want to accomplish here is to give you basic examples of how to mock data using two tools: mock and pytest monkeypatch.
+Why bo...
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2017/06/08/High-Concurrency-Web-System-In-Ecommerce-Website-Seckill-And-Falsh-Sale/" data-id="cm50h3raj005oyfht0gahna5w" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2017/06/08/High-Concurrency-Web-System-In-Ecommerce-Website-Seckill-And-Falsh-Sale/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/system/">system</a></li></ul>
+</div>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Building-Million-Class-Web-System-From-Single-Machine-To-Distributed-Cluster" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/06/07/Building-Million-Class-Web-System-From-Single-Machine-To-Distributed-Cluster/" class="article-date">
-  <time datetime="2017-06-07T02:23:31.000Z" itemprop="datePublished">2017-06-07</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/system/">system</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/07/Building-Million-Class-Web-System-From-Single-Machine-To-Distributed-Cluster/">Building Million Class Web System From Single Machine To Distributed Cluster</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a href="http://www.csdn.net/article/2014-11-06/2822529" target="_blank" rel="noopener">http://www.csdn.net/article/2014-11-06/2822529</a></p>
-<p>当一个Web系统从日访问量10万逐步增长到1000万，甚至超过1亿的过程中，Web系统承受的压力会越来越大，在这个过程中，我们会遇到很多的问题。为了解决这些性能压力带来问题，我们需要在Web系统架构层面搭建多个层次的缓存机制。在不同的压力阶段，我们会遇到不同的问题，通过搭建不同的服务和架构来解决。</p>
-<h1 id="Web负载均衡"><a href="#Web负载均衡" class="headerlink" title="Web负载均衡"></a>Web负载均衡</h1><p>Web负载均衡（Load Balancing），简单地说就是给我们的服务器集群分配“工作任务”，而采用恰当的分配方式，对于保护处于后端的Web服务器来说，非常重要。</p>
-<p><img src="./545b7269976ae.jpg" alt="web负载均衡"></p>
-<p>负载均衡的策略有很多，我们从简单的讲起哈。</p>
-<h2 id="HTTP重定向"><a href="#HTTP重定向" class="headerlink" title="HTTP重定向"></a>HTTP重定向</h2><p>当用户发来请求的时候，Web服务器通过修改HTTP响应头中的Location标记来返回一个新的url，然后浏览器再继续请求这个新url，实际上就是页面重定向。通过重定向，来达到“负载均衡”的目标。例如，我们在下载PHP源码包的时候，点击下载链接时，为了解决不同国家和地域下载速度的问题，它会返回一个离我们近的下载地址。重定向的HTTP返回码是302，如下图：</p>
-<p><img src="./545b7298ef853.jpg" alt="重定向的HTTP返回码"></p>
-<p>如果使用PHP代码来实现这个功能，方式如下：</p>
-<p><img src="./545b72b687e30_middle.jpg" alt="PHP代码"></p>
-<p>这个重定向非常容易实现，并且可以自定义各种策略。但是，它在大规模访问量下，性能不佳。而且，给用户的体验也不好，实际请求发生重定向，增加了网络延时。</p>
-<h2 id="反向代理负载均衡"><a href="#反向代理负载均衡" class="headerlink" title="反向代理负载均衡"></a>反向代理负载均衡</h2><p>反向代理服务的核心工作主要是转发HTTP请求，扮演了浏览器端和后台Web服务器中转的角色。因为它工作在HTTP层（应用层），也就是网络七层结构中的第七层，因此也被称为“七层负载均衡”。可以做反向代理的软件很多，比较常见的一种是Nginx。</p>
-<p><img src="./545b72f9413e5.jpg" alt="Nginx反向代理"></p>
-<p>Nginx是一种非常灵活的反向代理软件，可以自由定制化转发策略，分配服务器流量的权重等。反向代理中，常见的一个问题，就是Web服务器存储的session数据，因为一般负载均衡的策略都是随机分配请求的。同一个登录用户的请求，无法保证一定分配到相同的Web机器上，会导致无法找到session的问题。</p>
-<p>解决方案主要有两种：</p>
-<ul>
-<li>配置反向代理的转发规则，让同一个用户的请求一定落到同一台机器上（通过分析cookie），复杂的转发规则将会消耗更多的CPU，也增加了代理服务器的负担。</li>
-<li>将session这类的信息，专门用某个独立服务来存储，例如redis/memchache，这个方案是比较推荐的。</li>
-</ul>
-<p>反向代理服务，也是可以开启缓存的，如果开启了，会增加反向代理的负担，需要谨慎使用。这种负载均衡策略实现和部署非常简单，而且性能表现也比较好。但是，它有“单点故障”的问题，如果挂了，会带来很多的麻烦。而且，到了后期Web服务器继续增加，它本身可能成为系统的瓶颈。</p>
-<h2 id="IP负载均衡"><a href="#IP负载均衡" class="headerlink" title="IP负载均衡"></a>IP负载均衡</h2><p>IP负载均衡服务是工作在网络层（修改IP）和传输层（修改端口，第四层），比起工作在应用层（第七层）性能要高出非常多。原理是，他是对IP层的数据包的IP地址和端口信息进行修改，达到负载均衡的目的。这种方式，也被称为“四层负载均衡”。常见的负载均衡方式，是LVS（Linux Virtual Server，Linux虚拟服务），通过IPVS（IP Virtual Server，IP虚拟服务）来实现。</p>
-<p><img src="./545b75677f774_middle.jpg" alt="IPVS"></p>
-<p>在负载均衡服务器收到客户端的IP包的时候，会修改IP包的目标IP地址或端口，然后原封不动地投递到内部网络中，数据包会流入到实际Web服务器。实际服务器处理完成后，又会将数据包投递回给负载均衡服务器，它再修改目标IP地址为用户IP地址，最终回到客户端。 </p>
-<p><img src="./545b75c339318.jpg" alt="LVS-NAT"></p>
-<p>上述的方式叫LVS-NAT，除此之外，还有LVS-RD（直接路由），LVS-TUN（IP隧道），三者之间都属于LVS的方式，但是有一定的区别，篇幅问题，不赘叙。</p>
-<p>IP负载均衡的性能要高出Nginx的反向代理很多，它只处理到传输层为止的数据包，并不做进一步的组包，然后直接转发给实际服务器。不过，它的配置和搭建比较复杂。</p>
-<h2 id="DNS负载均衡"><a href="#DNS负载均衡" class="headerlink" title="DNS负载均衡"></a>DNS负载均衡</h2><p>DNS（Domain Name System）负责域名解析的服务，域名url实际上是服务器的别名，实际映射是一个IP地址，解析过程，就是DNS完成域名到IP的映射。而一个域名是可以配置成对应多个IP的。因此，DNS也就可以作为负载均衡服务。</p>
-<p><img src="./545b76eb8dfd6_middle.jpg" alt="负载均衡策略"></p>
-<p>这种负载均衡策略，配置简单，性能极佳。但是，不能自由定义规则，而且，变更被映射的IP或者机器故障时很麻烦，还存在DNS生效延迟的问题。 </p>
-<h2 id="DNS-GSLB负载均衡"><a href="#DNS-GSLB负载均衡" class="headerlink" title="DNS/GSLB负载均衡"></a>DNS/GSLB负载均衡</h2><p>我们常用的CDN（Content Delivery Network，内容分发网络）实现方式，其实就是在同一个域名映射为多IP的基础上更进一步，通过GSLB（Global Server Load Balance，全局负载均衡）按照指定规则映射域名的IP。一般情况下都是按照地理位置，将离用户近的IP返回给用户，减少网络传输中的路由节点之间的跳跃消耗。</p>
-<p><img src="./545b77297877e_middle.jpg" alt="GSLB"></p>
-<p>图中的“向上寻找”，实际过程是LDNS（Local DNS）先向根域名服务（Root Name Server）获取到顶级根的Name Server（例如.com的），然后得到指定域名的授权DNS，然后再获得实际服务器IP。</p>
-<p><img src="./545b77510fec6.jpg" alt="LDNS"></p>
-<p>CDN在Web系统中，一般情况下是用来解决大小较大的静态资源（html/Js/Css/图片等）的加载问题，让这些比较依赖网络下载的内容，尽可能离用户更近，提升用户体验。</p>
-<p>例如，我访问了一张imgcache.gtimg.cn上的图片（腾讯的自建CDN，不使用qq.com域名的原因是防止http请求的时候，带上了多余的cookie信息），我获得的IP是183.60.217.90。 </p>
-<p><img src="./545b7776e06ce.jpg" alt="实例"></p>
-<p>这种方式，和前面的DNS负载均衡一样，不仅性能极佳，而且支持配置多种策略。但是，搭建和维护成本非常高。互联网一线公司，会自建CDN服务，中小型公司一般使用第三方提供的CDN。 </p>
-<h1 id="Web系统的缓存机制的建立和优化"><a href="#Web系统的缓存机制的建立和优化" class="headerlink" title="Web系统的缓存机制的建立和优化"></a>Web系统的缓存机制的建立和优化</h1><p>刚刚我们讲完了Web系统的外部网络环境，现在我们开始关注我们Web系统自身的性能问题。我们的Web站点随着访问量的上升，会遇到很多的挑战，解决这些问题不仅仅是扩容机器这么简单，建立和使用合适的缓存机制才是根本。</p>
-<p>最开始，我们的Web系统架构可能是这样的，每个环节，都可能只有1台机器。</p>
-<p><img src="./545b77b616295.jpg" alt="单机系统"></p>
-<p>我们从最根本的数据存储开始看哈。</p>
-<h2 id="MySQL数据库内部缓存使用"><a href="#MySQL数据库内部缓存使用" class="headerlink" title="MySQL数据库内部缓存使用"></a>MySQL数据库内部缓存使用</h2><p>MySQL的缓存机制，就从先从MySQL内部开始，下面的内容将以最常见的InnoDB存储引擎为主。</p>
-<h3 id="建立恰当的索引"><a href="#建立恰当的索引" class="headerlink" title="建立恰当的索引"></a>建立恰当的索引</h3><p>最简单的是建立索引，索引在表数据比较大的时候，起到快速检索数据的作用，但是成本也是有的。首先，占用了一定的磁盘空间，其中组合索引最突出，使用需要谨慎，它产生的索引甚至会比源数据更大。其次，建立索引之后的数据insert/update/delete等操作，因为需要更新原来的索引，耗时会增加。当然，实际上我们的系统从总体来说，是以select查询操作居多，因此，索引的使用仍然对系统性能有大幅提升的作用。</p>
-<h3 id="数据库连接线程池缓存"><a href="#数据库连接线程池缓存" class="headerlink" title="数据库连接线程池缓存"></a>数据库连接线程池缓存</h3><p>如果，每一个数据库操作请求都需要创建和销毁连接的话，对数据库来说，无疑也是一种巨大的开销。为了减少这类型的开销，可以在MySQL中配置thread_cache_size来表示保留多少线程用于复用。线程不够的时候，再创建，空闲过多的时候，则销毁。 </p>
-<p><img src="./545b78c9592f8.jpg" alt="数据库复用线程"></p>
-<p>其实，还有更为激进一点的做法，使用pconnect（数据库长连接），线程一旦创建在很长时间内都保持着。但是，在访问量比较大，机器比较多的情况下，这种用法很可能会导致“数据库连接数耗尽”，因为建立连接并不回收，最终达到数据库的max_connections（最大连接数）。因此，长连接的用法通常需要在CGI和MySQL之间实现一个“连接池”服务，控制CGI机器“盲目”创建连接数。 </p>
-<p><img src="./545b78fb44d1e.jpg" alt="数据库长连接"></p>
-<p>建立数据库连接池服务，有很多实现的方式，PHP的话，我推荐使用swoole（PHP的一个网络通讯拓展）来实现。</p>
-<h3 id="Innodb缓存设置（innodb-buffer-pool-size）"><a href="#Innodb缓存设置（innodb-buffer-pool-size）" class="headerlink" title="Innodb缓存设置（innodb_buffer_pool_size）"></a>Innodb缓存设置（innodb_buffer_pool_size）</h3><p>innodb_buffer_pool_size这是个用来保存索引和数据的内存缓存区，如果机器是MySQL独占的机器，一般推荐为机器物理内存的80%。在取表数据的场景中，它可以减少磁盘IO。一般来说，这个值设置越大，cache命中率会越高。</p>
-<h3 id="分库-分表-分区"><a href="#分库-分表-分区" class="headerlink" title="分库/分表/分区"></a>分库/分表/分区</h3><p>MySQL数据库表一般承受数据量在百万级别，再往上增长，各项性能将会出现大幅度下降，因此，当我们预见数据量会超过这个量级的时候，建议进行分库/分表/分区等操作。最好的做法，是服务在搭建之初就设计为分库分表的存储模式，从根本上杜绝中后期的风险。不过，会牺牲一些便利性，例如列表式的查询，同时，也增加了维护的复杂度。不过，到了数据量千万级别或者以上的时候，我们会发现，它们都是值得的。 </p>
-<h2 id="MySQL数据库多台服务搭建"><a href="#MySQL数据库多台服务搭建" class="headerlink" title="MySQL数据库多台服务搭建"></a>MySQL数据库多台服务搭建</h2><p>1台MySQL机器，实际上是高风险的单点，因为如果它挂了，我们Web服务就不可用了。而且，随着Web系统访问量继续增加，终于有一天，我们发现1台MySQL服务器无法支撑下去，我们开始需要使用更多的MySQL机器。当引入多台MySQL机器的时候，很多新的问题又将产生。</p>
-<h3 id="建立MySQL主从，从库作为备份"><a href="#建立MySQL主从，从库作为备份" class="headerlink" title="建立MySQL主从，从库作为备份"></a>建立MySQL主从，从库作为备份</h3><p>这种做法纯粹为了解决“单点故障”的问题，在主库出故障的时候，切换到从库。不过，这种做法实际上有点浪费资源，因为从库实际上被闲着了。</p>
-<p><img src="./545b798599590.jpg" alt="主从备份"></p>
-<h3 id="MySQL读写分离，主库写，从库读"><a href="#MySQL读写分离，主库写，从库读" class="headerlink" title="MySQL读写分离，主库写，从库读"></a>MySQL读写分离，主库写，从库读</h3><p>两台数据库做读写分离，主库负责写入类的操作，从库负责读的操作。并且，如果主库发生故障，仍然不影响读的操作，同时也可以将全部读写都临时切换到从库中（需要注意流量，可能会因为流量过大，把从库也拖垮）。 </p>
-<p><img src="./545b79b1e3207.jpg" alt="主从读写分离"></p>
-<h3 id="主主互备"><a href="#主主互备" class="headerlink" title="主主互备"></a>主主互备</h3><p>两台MySQL之间互为彼此的从库，同时又是主库。这种方案，既做到了访问量的压力分流，同时也解决了“单点故障”问题。任何一台故障，都还有另外一套可供使用的服务。<br><img src="./545b79d7666d7.jpg" alt="主主互备"></p>
-<p>不过，这种方案，只能用在两台机器的场景。如果业务拓展还是很快的话，可以选择将业务分离，建立多个主主互备。</p>
-<h2 id="MySQL数据库机器之间的数据同步"><a href="#MySQL数据库机器之间的数据同步" class="headerlink" title="MySQL数据库机器之间的数据同步"></a>MySQL数据库机器之间的数据同步</h2><p>每当我们解决一个问题，新的问题必然诞生在旧的解决方案上。当我们有多台MySQL，在业务高峰期，很可能出现两个库之间的数据有延迟的场景。并且，网络和机器负载等，也会影响数据同步的延迟。我们曾经遇到过，在日访问量接近1亿的特殊场景下，出现，从库数据需要很多天才能同步追上主库的数据。这种场景下，从库基本失去效用了。</p>
-<p>于是，解决同步问题，就是我们下一步需要关注的点。</p>
-<h3 id="MySQL自带多线程同步"><a href="#MySQL自带多线程同步" class="headerlink" title="MySQL自带多线程同步"></a>MySQL自带多线程同步</h3><p>MySQL5.6开始支持主库和从库数据同步，走多线程。但是，限制也是比较明显的，只能以库为单位。MySQL数据同步是通过binlog日志，主库写入到binlog日志的操作，是具有顺序的，尤其当SQL操作中含有对于表结构的修改等操作，对于后续的SQL语句操作是有影响的。因此，从库同步数据，必须走单进程。</p>
-<h3 id="自己实现解析binlog，多线程写入"><a href="#自己实现解析binlog，多线程写入" class="headerlink" title="自己实现解析binlog，多线程写入"></a>自己实现解析binlog，多线程写入</h3><p>以数据库的表为单位，解析binlog多张表同时做数据同步。这样做的话，的确能够加快数据同步的效率，但是，如果表和表之间存在结构关系或者数据依赖的话，则同样存在写入顺序的问题。这种方式，可用于一些比较稳定并且相对独立的数据表。 </p>
-<p><img src="./545b7a4c2a09d.jpg" alt="自己实现binlog"></p>
-<p>国内一线互联网公司，大部分都是通过这种方式，来加快数据同步效率。还有更为激进的做法，是直接解析binlog，忽略以表为单位，直接写入。但是这种做法，实现复杂，使用范围就更受到限制，只能用于一些场景特殊的数据库中（没有表结构变更，表和表之间没有数据依赖等特殊表）。 </p>
-<h2 id="在Web服务器和数据库之间建立缓存"><a href="#在Web服务器和数据库之间建立缓存" class="headerlink" title="在Web服务器和数据库之间建立缓存"></a>在Web服务器和数据库之间建立缓存</h2><p>实际上，解决大访问量的问题，不能仅仅着眼于数据库层面。根据“二八定律”，80%的请求只关注在20%的热点数据上。因此，我们应该建立Web服务器和数据库之间的缓存机制。这种机制，可以用磁盘作为缓存，也可以用内存缓存的方式。通过它们，将大部分的热点数据查询，阻挡在数据库之前。 </p>
-<p><img src="./545b7a77413bd.jpg" alt="服务器与数据库间的缓存"></p>
-<h3 id="页面静态化"><a href="#页面静态化" class="headerlink" title="页面静态化"></a>页面静态化</h3><p>用户访问网站的某个页面，页面上的大部分内容在很长一段时间内，可能都是没有变化的。例如一篇新闻报道，一旦发布几乎是不会修改内容的。这样的话，通过CGI生成的静态html页面缓存到Web服务器的磁盘本地。除了第一次，是通过动态CGI查询数据库获取之外，之后都直接将本地磁盘文件返回给用户。</p>
-<p><img src="./545b7a9e619d3_middle.jpg" alt="页面静态化"></p>
-<p>在Web系统规模比较小的时候，这种做法看似完美。但是，一旦Web系统规模变大，例如当我有100台的Web服务器的时候。那样这些磁盘文件，将会有100份，这个是资源浪费，也不好维护。这个时候有人会想，可以集中一台服务器存起来，呵呵，不如看看下面一种缓存方式吧，它就是这样做的。</p>
-<h3 id="单台内存缓存"><a href="#单台内存缓存" class="headerlink" title="单台内存缓存"></a>单台内存缓存</h3><p>通过页面静态化的例子中，我们可以知道将“缓存”搭建在Web机器本机是不好维护的，会带来更多问题（实际上，通过PHP的apc拓展，可通过Key/value操作Web服务器的本机内存）。因此，我们选择搭建的内存缓存服务，也必须是一个独立的服务。</p>
-<p>内存缓存的选择，主要有redis/memcache。从性能上说，两者差别不大，从功能丰富程度上说，Redis更胜一筹。 </p>
-<p><img src="./545b7ad852534.jpg" alt="单台内存缓存"></p>
-<h3 id="内存缓存集群"><a href="#内存缓存集群" class="headerlink" title="内存缓存集群"></a>内存缓存集群</h3><p>当我们搭建单台内存缓存完毕，我们又会面临单点故障的问题，因此，我们必须将它变成一个集群。简单的做法，是给他增加一个slave作为备份机器。但是，如果请求量真的很多，我们发现cache命中率不高，需要更多的机器内存呢？因此，我们更建议将它配置成一个集群。例如，类似redis cluster。</p>
-<p>Redis cluster集群内的Redis互为多组主从，同时每个节点都可以接受请求，在拓展集群的时候比较方便。客户端可以向任意一个节点发送请求，如果是它的“负责”的内容，则直接返回内容。否则，查找实际负责Redis节点，然后将地址告知客户端，客户端重新请求。 </p>
-<p><img src="./545b7b13eb2b0.jpg" alt="redis cluster"></p>
-<p>对于使用缓存服务的客户端来说，这一切是透明的。</p>
-<p><img src="./545b7b41c26cc_middle.jpg" alt="客户使用流程"></p>
-<p>内存缓存服务在切换的时候，是有一定风险的。从A集群切换到B集群的过程中，必须保证B集群提前做好“预热”（B集群的内存中的热点数据，应该尽量与A集群相同，否则，切换的一瞬间大量请求内容，在B集群的内存缓存中查找不到，流量直接冲击后端的数据库服务，很可能导致数据库宕机）。</p>
-<h3 id="减少数据库“写”"><a href="#减少数据库“写”" class="headerlink" title="减少数据库“写”"></a>减少数据库“写”</h3><p>上面的机制，都实现减少数据库的“读”的操作，但是，写的操作也是一个大的压力。写的操作，虽然无法减少，但是可以通过合并请求，来起到减轻压力的效果。这个时候，我们就需要在内存缓存集群和数据库集群之间，建立一个修改同步机制。</p>
-<p>先将修改请求生效在cache中，让外界查询显示正常，然后将这些sql修改放入到一个队列中存储起来，队列满或者每隔一段时间，合并为一个请求到数据库中更新数据库。 </p>
-<p><img src="./545b7b7e0ada4_middle.jpg" alt="写队列"></p>
-<p>除了上述通过改变系统架构的方式提升写的性能外，MySQL本身也可以通过配置参数innodb_flush_log_at_trx_commit来调整写入磁盘的策略。如果机器成本允许，从硬件层面解决问题，可以选择老一点的RAID（Redundant Arrays of independent Disks，磁盘列阵）或者比较新的SSD（Solid State Drives，固态硬盘）。</p>
-<h3 id="NoSQL存储"><a href="#NoSQL存储" class="headerlink" title="NoSQL存储"></a>NoSQL存储</h3><p>不管数据库的读还是写，当流量再进一步上涨，终会达到“人力有穷时”的场景。继续加机器的成本比较高，并且不一定可以真正解决问题的时候。这个时候，部分核心数据，就可以考虑使用NoSQL的数据库。NoSQL存储，大部分都是采用key-value的方式，这里比较推荐使用上面介绍过Redis，Redis本身是一个内存cache，同时也可以当做一个存储来使用，让它直接将数据落地到磁盘。</p>
-<p>这样的话，我们就将数据库中某些被频繁读写的数据，分离出来，放在我们新搭建的Redis存储集群中，又进一步减轻原来MySQL数据库的压力，同时因为Redis本身是个内存级别的Cache，读写的性能都会大幅度提升。 </p>
-<p><img src="./545b7bb88af37_middle.jpg" alt="nosql存储"></p>
-<p>国内一线互联网公司，架构上采用的解决方案很多是类似于上述方案，不过，使用的cache服务却不一定是Redis，他们会有更丰富的其他选择，甚至根据自身业务特点开发出自己的NoSQL服务。</p>
-<h3 id="空节点查询问题"><a href="#空节点查询问题" class="headerlink" title="空节点查询问题"></a>空节点查询问题</h3><p>当我们搭建完前面所说的全部服务，认为Web系统已经很强的时候。我们还是那句话，新的问题还是会来的。空节点查询，是指那些数据库中根本不存在的数据请求。例如，我请求查询一个不存在人员信息，系统会从各级缓存逐级查找，最后查到到数据库本身，然后才得出查找不到的结论，返回给前端。因为各级cache对它无效，这个请求是非常消耗系统资源的，而如果大量的空节点查询，是可以冲击到系统服务的。</p>
-<p><img src="./545b7bec98410.jpg" alt="空节点问题"></p>
-<p>在我曾经的工作经历中，曾深受其害。因此，为了维护Web系统的稳定性，设计适当的空节点过滤机制，非常有必要。</p>
-<p>我们当时采用的方式，就是设计一张简单的记录映射表。将存在的记录存储起来，放入到一台内存cache中，这样的话，如果还有空节点查询，则在缓存这一层就被阻挡了。 </p>
-<p><img src="./545b7c1a05ec6.jpg" alt="空节点过滤"></p>
-<h1 id="异地部署（地理分布式）"><a href="#异地部署（地理分布式）" class="headerlink" title="异地部署（地理分布式）"></a>异地部署（地理分布式）</h1><p>完成了上述架构建设之后，我们的系统是否就已经足够强大了呢？答案当然是否定的哈，优化是无极限的。Web系统虽然表面上看，似乎比较强大了，但是给予用户的体验却不一定是最好的。因为东北的同学，访问深圳的一个网站服务，他还是会感到一些网络距离上的慢。这个时候，我们就需要做异地部署，让Web系统离用户更近。</p>
-<h2 id="核心集中与节点分散"><a href="#核心集中与节点分散" class="headerlink" title="核心集中与节点分散"></a>核心集中与节点分散</h2><p>有玩过大型网游的同学都会知道，网游是有很多个区的，一般都是按照地域来分，例如广东专区，北京专区。如果一个在广东的玩家，去北京专区玩，那么他会感觉明显比在广东专区卡。实际上，这些大区的名称就已经说明了，它的服务器所在地，所以，广东的玩家去连接地处北京的服务器，网络当然会比较慢。</p>
-<p>当一个系统和服务足够大的时候，就必须开始考虑异地部署的问题了。让你的服务，尽可能离用户更近。我们前面已经提到了Web的静态资源，可以存放在CDN上，然后通过DNS/GSLB的方式，让静态资源的分散“全国各地”。但是，CDN只解决的静态资源的问题，没有解决后端庞大的系统服务还只集中在某个固定城市的问题。</p>
-<p>这个时候，异地部署就开始了。异地部署一般遵循：核心集中，节点分散。</p>
-<ul>
-<li>核心集中：实际部署过程中，总有一部分的数据和服务存在不可部署多套，或者部署多套成本巨大。而对于这些服务和数据，就仍然维持一套，而部署地点选择一个地域比较中心的地方，通过网络内部专线来和各个节点通讯。</li>
-<li>节点分散：将一些服务部署为多套，分布在各个城市节点，让用户请求尽可能选择近的节点访问服务。</li>
-</ul>
-<p>例如，我们选择在上海部署为核心节点，北京，深圳，武汉，上海为分散节点（上海自己本身也是一个分散节点）。我们的服务架构如图：</p>
-<p><img src="545b7cb6c163b.jpg" alt="分节点"></p>
-<p>需要补充一下的是，上图中上海节点和核心节点是同处于一个机房的，其他分散节点各自独立机房。 国内有很多大型网游，都是大致遵循上述架构。它们会把数据量不大的用户核心账号等放在核心节点，而大部分的网游数据，例如装备、任务等数据和服务放在地区节点里。当然，核心节点和地域节点之间，也有缓存机制。 </p>
-<h2 id="节点容灾和过载保护"><a href="#节点容灾和过载保护" class="headerlink" title="节点容灾和过载保护"></a>节点容灾和过载保护</h2><p>节点容灾是指，某个节点如果发生故障时，我们需要建立一个机制去保证服务仍然可用。毫无疑问，这里比较常见的容灾方式，是切换到附近城市节点。假如系统的天津节点发生故障，那么我们就将网络流量切换到附近的北京节点上。考虑到负载均衡，可能需要同时将流量切换到附近的几个地域节点。另一方面，核心节点自身也是需要自己做好容灾和备份的，核心节点一旦故障，就会影响全国服务。</p>
-<p>过载保护，指的是一个节点已经达到最大容量，无法继续接接受更多请求了，系统必须有一个保护的机制。一个服务已经满负载，还继续接受新的请求，结果很可能就是宕机，影响整个节点的服务，为了至少保障大部分用户的正常使用，过载保护是必要的。</p>
-<p>解决过载保护，一般2个方向：</p>
-<ul>
-<li>拒绝服务，检测到满负载之后，就不再接受新的连接请求。例如网游登入中的排队。</li>
-<li>分流到其他节点。这种的话，系统实现更为复杂，又涉及到负载均衡的问题。</li>
-</ul>
-<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>Web系统会随着访问规模的增长，渐渐地从1台服务器可以满足需求，一直成长为“庞然大物”的大集群。而这个Web系统变大的过程，实际上就是我们解决问题的过程。在不同的阶段，解决不同的问题，而新的问题又诞生在旧的解决方案之上。</p>
-<p>系统的优化是没有极限的，软件和系统架构也一直在快速发展，新的方案解决了老的问题，同时也带来新的挑战。</p>
-
-      
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">5.</span>
+        <h2><a href="/2017/08/19/Nevwe-Write-For-Loops-Again/">Nevwe Write For-Loops Again</a></h2>
+        <span class="post-date">2017-08-19</span>
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2017/06/07/Building-Million-Class-Web-System-From-Single-Machine-To-Distributed-Cluster/" data-id="cm50h3ram005ryfhtb4jt69ws" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2017/06/07/Building-Million-Class-Web-System-From-Single-Machine-To-Distributed-Cluster/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/system/">system</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-2-ways-to-get-subprocess-result-in-multiprocessing-pool" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/05/27/2-ways-to-get-subprocess-result-in-multiprocessing-pool/" class="article-date">
-  <time datetime="2017-05-27T03:08:17.000Z" itemprop="datePublished">2017-05-27</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/27/2-ways-to-get-subprocess-result-in-multiprocessing-pool/">2 ways to get subprocess result in multiprocessing pool</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Get-the-result-when-running-subprocess-close-it-if-the-result-is-True"><a href="#Get-the-result-when-running-subprocess-close-it-if-the-result-is-True" class="headerlink" title="Get the result when running subprocess, close it if the result is True"></a>Get the result when running subprocess, close it if the result is True</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">from multiproceeing import Pool</span><br><span class="line">import Queue</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">def test(p):</span><br><span class="line">    time.sleep(0.001)</span><br><span class="line">    if p == 10000:</span><br><span class="line">        return True</span><br><span class="line">    else:</span><br><span class="line">        return False</span><br><span class="line"></span><br><span class="line">if __name__==&quot;__main__&quot;:</span><br><span class="line">    pool = Pool(processes=10)</span><br><span class="line">    q = Queue.Queue()</span><br><span class="line">    for i in xrange(50000):</span><br><span class="line">        &apos;&apos;&apos; </span><br><span class="line">        save the subprocess into queue</span><br><span class="line">        &apos;&apos;&apos;</span><br><span class="line">        q.put(pool.apply_async(test, args=(1,)))    # keep 10 subprocess, if one closed add another one subprocess</span><br><span class="line">    while 1:</span><br><span class="line">        if q.get().get():</span><br><span class="line">            pool.terminate()    # close all subprocess if return True</span><br><span class="line">            break</span><br><span class="line">    pool.join()</span><br></pre></td></tr></table></figure>
-<p>Note:<br>    the total subprocess is 50000(concurrent is 10), after one subprocess return <code>True</code>, end the process pool. because use <code>apply_async</code>, after add subprocess by for loop, just use <code>while</code> to check the result.</p>
-<p>Advantage:<br>    no need waiting all subprocess end. </p>
-<p>Shortcoming:<br>    when the subprocess is large, the <code>for</code> loop need add all subprocess. it waste long time.</p>
-<h1 id="Multiprocessing-threading"><a href="#Multiprocessing-threading" class="headerlink" title="Multiprocessing + threading"></a>Multiprocessing + threading</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">from multiprocessing import Pool</span><br><span class="line">import Queue</span><br><span class="line">import threading</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">def test(p):</span><br><span class="line">    time.sleep(0.001)</span><br><span class="line">    if p == 10000:</span><br><span class="line">        return True</span><br><span class="line">    else:</span><br><span class="line">        return False</span><br><span class="line">if __name == &quot;__main__&quot;:</span><br><span class="line">    result = Queue.Queue()</span><br><span class="line">    pool = Pool()</span><br><span class="line"></span><br><span class="line">    def pool_th():</span><br><span class="line">        for i in xtange(500000000):</span><br><span class="line">            try:</span><br><span class="line">                result.put(pool.apply_async(test, args=(i,)))</span><br><span class="line">            except:</span><br><span class="line">                break</span><br><span class="line"></span><br><span class="line">    def result_th():</span><br><span class="line">        while 1:</span><br><span class="line">            a = result.get().get()</span><br><span class="line">            if a:</span><br><span class="line">                pool.terminate()</span><br><span class="line">                break</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    use threading, runniung Pool function create subprocess and get result from subprocess</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line"></span><br><span class="line">    t1 = threading.Thread(target=pool_th)</span><br><span class="line">    t2 = threading.Thread(target=result_th)</span><br><span class="line">    t1.start()</span><br><span class="line">    t2.start()</span><br><span class="line">    t1.join()</span><br><span class="line">    t2.join()</span><br><span class="line"></span><br><span class="line">    pool.join()</span><br></pre></td></tr></table></figure>
-<p>The running process:<br>    use threading create <code>pool_th</code> thread and <code>result_th</code> thread. <code>pool_th</code> is add subprocess into pool, and save the result into queur. <code>result_th</code> if get the result from queue, call <code>get()</code> get the result. when find the result is <code>True</code>, end all process, then end threading.</p>
-
-      
+    <div class="post-content">
+        Translate from Randy Daw-Ran Liou 
+This is a challenge. I challenge you to avoid writing for-loops in every scenario. Also, I challenge you to find the scenarios that are so fre...
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2017/05/27/2-ways-to-get-subprocess-result-in-multiprocessing-pool/" data-id="cm50h3rae005eyfht5ckn0zok" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2017/05/27/2-ways-to-get-subprocess-result-in-multiprocessing-pool/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+</div>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-python-descriptor-howto-guide" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/05/23/python-descriptor-howto-guide/" class="article-date">
-  <time datetime="2017-05-23T04:23:17.000Z" itemprop="datePublished">2017-05-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/23/python-descriptor-howto-guide/">python descriptor howto guide</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a href="https://docs.python.org/3.6/howto/descriptor.html" target="_blank" rel="noopener">https://docs.python.org/3.6/howto/descriptor.html</a></p>
-<h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>Defines descriptors, summarizes the protocol, and shows how descriptors are called. Examines a custom descriptor and several built-in python descriptors including functions, properties, static methods, and class methods. Shows how each works by giving a pure Python equivalent and a sample application.</p>
-<p>Learning about descriptors not only provides access to a larger toolset, it creates a deeper understanding of how Python works and an appreciation for the elegance of its design.</p>
-<h1 id="Definition-and-Introduction"><a href="#Definition-and-Introduction" class="headerlink" title="Definition and Introduction"></a>Definition and Introduction</h1><p>In general, a descriptor is an object attribute with “binding behavior”, one whose attribute access has been overridden by methods in the descriptor protocol. Those methods are <code>__get__()</code>,<code>__set__()</code>, and <code>__delete__()</code>. If any of those methods are defined for an object, it is said to be a descriptor.</p>
-<p>The default behavior for attribute access is to get, set, or delete the attribute from an object’s dictionary. For instance, <code>a.x</code> has a lookup chain starting with <code>a.__dict__[&#39;x&#39;]</code>, then <code>type(a).__dict__[&#39;x&#39;]</code>, and continuing through the base classes of <code>type(a)</code> excluding metaclasses. If the looked-up value is an object defining one of the descriptor methods, then Python may override the default behavior and invoke the descriptor method instead. Where this occurs in the precedence chain depends on which descriptor methods were defined.</p>
-<p>Descriptors are a powerful, general purpose protocol. They are the mechanism behind properties, methods, static methods, class methods, and <code>super()</code>. They are used throughout Python itself to implement the new style classes introduced in version 2.2. Descriptors simplify the underlying C-code and offer a flexible set of new tools for everyday Python programs.</p>
-<h1 id="Descriptor-Protocol"><a href="#Descriptor-Protocol" class="headerlink" title="Descriptor Protocol"></a>Descriptor Protocol</h1><p><code>descr.__get__(self, obj, type=None) --&gt; value</code></p>
-<p><code>descr.__set__(self, obj, value) --&gt; None</code></p>
-<p><code>descr.__delete__(self, obj) --&gt; None</code></p>
-<p>That is all there is to it. Define any of these methods and an object is considered a descriptor and can override default behavior upon being looked up as an attribute</p>
-<p>If an object defines both <code>__get__()</code> and <code>__set__()</code>, it is considered a data descriptor. Descriptors that only define <code>__get__()</code> are called non-data descriptors (they are typically used for methods but other uses are possible).</p>
-<p>Data and non-data descriptors differ in how overrides are calculated with respect to entries in an instance’s dictionary. If an instance’s dictionary has an entry with the same name as a data descriptor, the data descriptor takes precedence. If an instance’s dictionary has an entry with the same name as a non-data descriptor, the dictionary entry takes precedence.</p>
-<p>To make a read-only data descriptor, define both <code>__get__()</code> and <code>__set__()</code> with the <code>__set__()</code> raising an AttributeError when called. Defining the <code>__set__()</code> method with an exception raising placeholder is enough to make it a data descriptor.</p>
-<h1 id="Invoking-Descriptors"><a href="#Invoking-Descriptors" class="headerlink" title="Invoking Descriptors"></a>Invoking Descriptors</h1><p>A descriptor can be called directly by its method name. For example, <code>d.__get__(obj)</code>.</p>
-<p>Alternatively, it is more common for a descriptor to be invoked automatically upon attribute access. For example, <code>obj.d</code> looks up <code>d</code> in the dictionary of <code>obj</code>. If <code>d</code> defines the method <code>__get__()</code>, then <code>d.__get__(obj)</code> is invoked according to the precedence rules listed below.</p>
-<p>The details of invocation depend on whether obj is an object or a class.</p>
-<p>For objects, the machinery is in <code>object.__getattribute__()</code> which transforms <code>b.x</code> into <code>type(b).__dict__[&#39;x&#39;].__get__(b, type(b))</code>. The implementation works through a precedence chain that gives data descriptors priority over instance variables, instance variables priority over non-data descriptors, and assigns lowest priority to <code>__getattr__()</code> if provided. The full <code>C</code> implementation can be found in <code>PyObject_GenericGetAttr()</code> in <code>Objects/object.c</code>.</p>
-<p>For classes, the machinery is in <code>type.__getattribute__()</code> which transforms <code>B.x</code> into <code>B.__dict__[&#39;x&#39;].__get__(None, B)</code>. In pure Python, it looks like:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def __getattribute__(self, key):</span><br><span class="line">    &quot;Emulate type_getattro() in Objects/typeobject.c&quot;</span><br><span class="line">    v = object.__getattribute__(self, key)</span><br><span class="line">    if hasattr(v, &apos;__get__&apos;):</span><br><span class="line">        return v.__get__(None, self)</span><br><span class="line">    return v</span><br></pre></td></tr></table></figure>
-<p>The important points to remember are:</p>
-<ul>
-<li>descriptors are invoked by the <code>__getattribute__()</code> method</li>
-<li>overriding <code>__getattribute__()</code> prevents automatic descriptor calls</li>
-<li><code>object.__getattribute__()</code> and <code>type.__getattribute__()</code> make different calls to <code>__get__()</code>.</li>
-<li>data descriptors always override instance dictionaries.</li>
-<li>non-data descriptors may be overridden by instance dictionaries.</li>
-</ul>
-<p>The object returned by super() also has a custom <code>__getattribute__()</code> method for invoking descriptors. The call <code>super(B, obj).m()</code> searches <code>obj.__class__.__mro__</code> for the base class <code>A</code> immediately following <code>B</code> and then returns <code>A.__dict__[&#39;m&#39;].__get__(obj, B)</code>. If not a descriptor, <code>m</code> is returned unchanged. If not in the dictionary, <code>m</code> reverts to a search using <code>object.__getattribute__()</code>.</p>
-<p>The implementation details are in <code>super_getattro()</code> in <strong>Objects/typeobject.c</strong>. and a pure Python equivalent can be found in Guido’s Tutorial.</p>
-<p>The details above show that the mechanism for descriptors is embedded in the <code>__getattribute__()</code> methods for <strong>object</strong>, <strong>type</strong>, and <strong>super()</strong>. Classes inherit this machinery when they derive from <strong>object</strong> or if they have a meta-class providing similar functionality. Likewise, classes can turn-off descriptor invocation by overriding <code>__getattribute__()</code>.</p>
-<h1 id="Descriptor-Example"><a href="#Descriptor-Example" class="headerlink" title="Descriptor Example"></a>Descriptor Example</h1><p>The following code creates a class whose objects are data descriptors which print a message for each get or set. Overriding <code>__getattribute__()</code> is alternate approach that could do this for every attribute. However, this descriptor is useful for monitoring just a few chosen attributes:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">class RevealAccess(object):</span><br><span class="line">    &quot;&quot;&quot;A data descriptor that sets and returns values</span><br><span class="line">       normally and prints a message logging their access.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def __init__(self, initval=None, name=&apos;var&apos;):</span><br><span class="line">        self.val = initval</span><br><span class="line">        self.name = name</span><br><span class="line">    def __get__(self, obj, objtype):</span><br><span class="line">        print(&apos;Retrieving&apos;, self.name)</span><br><span class="line">        return self.val</span><br><span class="line">    def __set__(self, obj, val):</span><br><span class="line">        print(&apos;Updating&apos;, self.name)</span><br><span class="line">        self.val = val</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; class MyClass(object):</span><br><span class="line">...     x = RevealAccess(10, &apos;var &quot;x&quot;&apos;)</span><br><span class="line">...     y = 5</span><br><span class="line">...</span><br><span class="line">&gt;&gt;&gt; m = MyClass()</span><br><span class="line">&gt;&gt;&gt; m.x</span><br><span class="line">Retrieving var &quot;x&quot;</span><br><span class="line">10</span><br><span class="line">&gt;&gt;&gt; m.x = 20</span><br><span class="line">Updating var &quot;x&quot;</span><br><span class="line">&gt;&gt;&gt; m.x</span><br><span class="line">Retrieving var &quot;x&quot;</span><br><span class="line">20</span><br><span class="line">&gt;&gt;&gt; m.y</span><br><span class="line">5</span><br></pre></td></tr></table></figure>
-<p>The protocol is simple and offers exciting possibilities. Several use cases are so common that they have been packaged into individual function calls. Properties, bound and unbound methods, static methods, and class methods are all based on the descriptor protocol.</p>
-<h1 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a>Properties</h1><p>Calling <code>property()</code> is a succinct way of building a data descriptor that triggers function calls upon access to an attribute. Its signature is:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">property(fget=None, fset=None, fdel=None, doc=None) -&gt; property attribute</span><br></pre></td></tr></table></figure>
-<p>The documentation shows a typical use to define a managed attribute <code>x</code>:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class C(object):</span><br><span class="line">    def getx(self): return self.__x</span><br><span class="line">    def setx(self, value): self.__x = value</span><br><span class="line">    def delx(self): del self.__x</span><br><span class="line">    x = property(getx, setx, delx, &quot;I&apos;m the &apos;x&apos; property.&quot;)</span><br></pre></td></tr></table></figure>
-<p>To see how <code>property()</code> is implemented in terms of the descriptor protocol, here is a pure Python equivalent:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">class Property(object):</span><br><span class="line">    &quot;Emulate PyProperty_Type() in Objects/descrobject.c&quot;</span><br><span class="line"></span><br><span class="line">    def __init__(self, fget=None, fset=None, fdel=None, doc=None):</span><br><span class="line">        self.fget = fget</span><br><span class="line">        self.fset = fset</span><br><span class="line">        self.fdel = fdel</span><br><span class="line">        if doc is None and fget is not None</span><br><span class="line">            doc = fget.__doc__</span><br><span class="line">        self.__doc__ = doc</span><br><span class="line"></span><br><span class="line">    def __get__(self, obj, objtype=None):</span><br><span class="line">        if obj is None:</span><br><span class="line">            return self</span><br><span class="line">        if self.fget is None:</span><br><span class="line">            raise AttributeError(&quot;Unreadable attribute&quot;)</span><br><span class="line">        return self.fget(obj)</span><br><span class="line"></span><br><span class="line">    def __set__(self, obj, value):</span><br><span class="line">        if self.fset is None:</span><br><span class="line">            raise AttributeError(&quot;can&apos;t set attribute&quot;)</span><br><span class="line">        self.fset(obj, value)</span><br><span class="line"></span><br><span class="line">    def __delete__(self, obj):</span><br><span class="line">        if self.fdel is None:</span><br><span class="line">            raise AttributeError(&quot;can&apos;t delete attribute&quot;)</span><br><span class="line">        self.fdel(obj)</span><br><span class="line"></span><br><span class="line">    def getter(self, fget):</span><br><span class="line">        return type(self)(fget, self.fset, self.fdel, self.__doc__)</span><br><span class="line">    def setter(self, fset):</span><br><span class="line">        return type(self)(self.fget, fset, self.fdel, self.__doc__)</span><br><span class="line">    def deleter(self, fdel):</span><br><span class="line">        return type(self)(self.fget, self.fset, fdel, self.__doc__)</span><br></pre></td></tr></table></figure>
-<p>The <code>property()</code> builtin helps whenever a user interface has granted attribute access and then subsequent changes require the intervention of a method.</p>
-<p>For instance, a spreadsheet class may grant access to a cell value through <code>Cell(&#39;b10&#39;).value</code>. Subsequent improvements to the program require the cell to be recalculated on every access; however, the programmer does not want to affect existing client code accessing the attribute directly. The solution is to wrap access to the value attribute in a property data descriptor:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Cell(object):</span><br><span class="line">    ...</span><br><span class="line">    def getvalue(self, obj):</span><br><span class="line">        &quot;Recalculate cell before returning value&quot;</span><br><span class="line">        self.recalc()</span><br><span class="line">        return obj.__value</span><br><span class="line">    value = property(getvalue)</span><br></pre></td></tr></table></figure>
-<h1 id="Functions-and-Methods"><a href="#Functions-and-Methods" class="headerlink" title="Functions and Methods"></a>Functions and Methods</h1><p>Python’s object oriented features are built upon a function based environment. Using non-data descriptors, the two are merged seamlessly.</p>
-<p>Class dictionaries store methods as functions. In a class definition, methods are written using <code>def</code> and <code>lambda</code>, the usual tools for creating functions. The only difference from regular functions is that the first argument is reserved for the object instance. By Python convention, the instance reference is called self but may be called this or any other variable name.</p>
-<p>To support method calls, functions include the <code>__get__()</code> method for binding methods during attribute access. This means that all functions are non-data descriptors which return bound or unbound methods depending whether they are invoked from an object or a class. In pure python, it works like this:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Function(object):</span><br><span class="line">    ...</span><br><span class="line">    def __get__(self, obj, objtype=None):</span><br><span class="line">        &quot;Simulate func_descr_get() in Objects/funcobject.c&quot;</span><br><span class="line">        return types.MethodType(self, obj, objtype)</span><br></pre></td></tr></table></figure>
-<p>Running the interpreter shows how the function descriptor works in practice:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class D(object):</span><br><span class="line">    def f(self, x):</span><br><span class="line">        return x</span><br><span class="line">&gt;&gt;&gt; d = D()</span><br><span class="line">&gt;&gt;&gt; D.__dict__[&apos;f&apos;]    # Stored internally as a function</span><br><span class="line">&lt;function f at 0x00C45070&gt;</span><br><span class="line">&gt;&gt;&gt; D.f              # Get from a class becomes an unbound method</span><br><span class="line">&lt;unbound method D.f&gt;</span><br><span class="line">&gt;&gt;&gt; d.f              # Get from an instance becomes a bound method</span><br><span class="line">&lt;bound method D.f of &lt;__main__.D object at 0x00B18C90&gt;&gt;</span><br></pre></td></tr></table></figure></p>
-<p>The output suggests that bound and unbound methods are two different types. While they could have been implemented that way, the actual C implementation of <strong>PyMethod_Type</strong> in <strong>Objects/classobject.c</strong> is a single object with two different representations depending on whether the im_self field is set or is NULL (the C equivalent of <code>None</code>).</p>
-<p>Likewise, the effects of calling a method object depend on the im_self field. If set (meaning bound), the original function (stored in the im_func field) is called as expected with the first argument set to the instance. If unbound, all of the arguments are passed unchanged to the original function. The actual C implementation of instancemethod_call() is only slightly more complex in that it includes some type checking.</p>
-<h1 id="Static-Methods-and-Class-Methods"><a href="#Static-Methods-and-Class-Methods" class="headerlink" title="Static Methods and Class Methods"></a>Static Methods and Class Methods</h1><p>Non-data descriptors provide a simple mechanism for variations on the usual patterns of binding functions into methods.</p>
-<p>To recap, functions have a <code>__get__()</code> method so that they can be converted to a method when accessed as attributes. The non-data descriptor transforms an <code>obj.f(*args)</code> call into <code>f(obj, *args)</code>. Calling <code>klass.f(*args)</code> becomes <code>f(*args)</code>.</p>
-<p>This chart summarizes the binding and its two most useful variants:</p>
-<table>
-<thead>
-<tr>
-<th>Transformation</th>
-<th>Called from an Object</th>
-<th>Called from a Class</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>function</td>
-<td>f(obj, *args)</td>
-<td>f(*args)</td>
-</tr>
-<tr>
-<td>staticmethod</td>
-<td>f(*args)</td>
-<td>f(*args)</td>
-</tr>
-<tr>
-<td>classmethod</td>
-<td>f(type(obj), *args)</td>
-<td>f(klass, *args)</td>
-</tr>
-</tbody>
-</table>
-<p>Static methods return the underlying function without changes. Calling either <code>c.f</code> or <code>C.f</code> is the equivalent of a direct lookup into <code>object.__getattribute__(c, &quot;f&quot;)</code> or <code>object.__getattribute__(C, &quot;f&quot;)</code>. As a result, the function becomes identically accessible from either an object or a class.</p>
-<p>Good candidates for static methods are methods that do not reference the <code>self</code> variable.</p>
-<p>For instance, a statistics package may include a container class for experimental data. The class provides normal methods for computing the average, mean, median, and other descriptive statistics that depend on the data. However, there may be useful functions which are conceptually related but do not depend on the data. For instance, <code>erf(x)</code> is handy conversion routine that comes up in statistical work but does not directly depend on a particular dataset. It can be called either from an object or the class: <code>s.erf(1.5) --&gt; .9332</code> or <code>Sample.erf(1.5) --&gt; .9332</code>.</p>
-<p>Since staticmethods return the underlying function with no changes, the example calls are unexciting:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; class E(object):</span><br><span class="line">...     def f(x):</span><br><span class="line">...         print(x)</span><br><span class="line">...     f = staticmethod(f)</span><br><span class="line">...</span><br><span class="line">&gt;&gt;&gt; print(E.f(3))</span><br><span class="line">3</span><br><span class="line">&gt;&gt;&gt; print(E().f(3))</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
-<p>Using the non-data descriptor protocol, a pure Python version of <strong>staticmethod()</strong> would look like this:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class StaticMethod(object):</span><br><span class="line">    &quot;Emulate PyStaticMethod_Type() in Objects/funcobject.c&quot;</span><br><span class="line"></span><br><span class="line">    def __init__(self, f):</span><br><span class="line">        self.f = f</span><br><span class="line"></span><br><span class="line">    def __get__(self, obj, objtype=None):</span><br><span class="line">        return self.f</span><br></pre></td></tr></table></figure>
-<p>Unlike static methods, class methods prepend the class reference to the argument list before calling the function. This format is the same for whether the caller is an object or a class:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; class E(object):</span><br><span class="line">...     def f(klass, x):</span><br><span class="line">...         return klass.__name__, x</span><br><span class="line">...     f = classmethod(f)</span><br><span class="line">...</span><br><span class="line">&gt;&gt;&gt; print(E.f(3))</span><br><span class="line">(&apos;E&apos;, 3)</span><br><span class="line">&gt;&gt;&gt; print(E().f(3))</span><br><span class="line">(&apos;E&apos;, 3)</span><br></pre></td></tr></table></figure>
-<p>This behavior is useful whenever the function only needs to have a class reference and does not care about any underlying data. One use for classmethods is to create alternate class constructors. In Python 2.3, the classmethod <strong>dict.fromkeys()</strong> creates a new dictionary from a list of keys. The pure Python equivalent is:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class Dict(object):</span><br><span class="line">    . . .</span><br><span class="line">    def fromkeys(klass, iterable, value=None):</span><br><span class="line">        &quot;Emulate dict_fromkeys() in Objects/dictobject.c&quot;</span><br><span class="line">        d = klass()</span><br><span class="line">        for key in iterable:</span><br><span class="line">            d[key] = value</span><br><span class="line">        return d</span><br><span class="line">    fromkeys = classmethod(fromkeys)</span><br></pre></td></tr></table></figure>
-<p>Now a new dictionary of unique keys can be constructed like this:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; Dict.fromkeys(&apos;abracadabra&apos;)</span><br><span class="line">&#123;&apos;a&apos;: None, &apos;r&apos;: None, &apos;b&apos;: None, &apos;c&apos;: None, &apos;d&apos;: None&#125;</span><br></pre></td></tr></table></figure>
-<p>Using the non-data descriptor protocol, a pure Python version of <strong>classmethod()</strong> would look like this:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class ClassMethod(object):</span><br><span class="line">    &quot;Emulate PyClassMethod_Type() in Objects/funcobject.c&quot;</span><br><span class="line"></span><br><span class="line">    def __init__(self, f):</span><br><span class="line">        self.f = f</span><br><span class="line"></span><br><span class="line">    def __get__(self, obj, klass=None):</span><br><span class="line">        if klass is None:</span><br><span class="line">            klass = type(obj)</span><br><span class="line">        def newfunc(*args):</span><br><span class="line">            return self.f(klass, *args)</span><br><span class="line">        return newfunc</span><br></pre></td></tr></table></figure>
-
-      
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">6.</span>
+        <h2><a href="/2017/06/08/High-Concurrency-Web-System-In-Ecommerce-Website-Seckill-And-Falsh-Sale/">High Concurrency Web System In Ecommerce Website Seckill And Falsh Sale</a></h2>
+        <span class="post-date">2017-06-08</span>
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2017/05/23/python-descriptor-howto-guide/" data-id="cm50h3rag005hyfhtd9ik22ym" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2017/05/23/python-descriptor-howto-guide/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+    <div class="post-content">
+        http://www.csdn.net/article/1970-01-01/2822858
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Understanding-Django-s-Cached-property-Decorator" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/05/22/Understanding-Django-s-Cached-property-Decorator/" class="article-date">
-  <time datetime="2017-05-22T08:47:39.000Z" itemprop="datePublished">2017-05-22</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/django/">django</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/22/Understanding-Django-s-Cached-property-Decorator/">Understanding Django&#39;s Cached_property Decorator</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>This blog is transfer from <a href="http://ericplumb.com/blog/understanding-djangos-cached_property-decorator.html" target="_blank" rel="noopener">http://ericplumb.com/blog/understanding-djangos-cached_property-decorator.html</a></p>
-<p>There is not a lot of documentation out there about Django’s <code>cached_property</code> decorator, which is one worth using. Today I want to talk about what it does, how I discovered it, and explore how it works.</p>
-<p>Let’s get started with what it does and why you would use it. How often, in Python or Django, do you find yourself doing something like this:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class House():</span><br><span class="line">    @property</span><br><span class="line">    def color(self):</span><br><span class="line">        if not getattr(self, &apos;_color&apos;, None):</span><br><span class="line">            self._color = load_color_from_db(self.id)</span><br><span class="line">        return self._color</span><br></pre></td></tr></table></figure>
-<p>When objects have a method or property which is expensive to access (DB query, intensive calculation, etc.), it makes sense to only make the effort to retrieve the value once. This pattern allows you to access it subsequent times without paying the cost for any access past the first.</p>
-<p>However, it’s somewhat clunky, and adds a namespace-polluting attribute to your object, and — most of all — if you have several properties with the same issue, you will find yourself repeating yourself a lot.[^1]</p>
-<h1 id="DIY-DRY"><a href="#DIY-DRY" class="headerlink" title="DIY DRY"></a>DIY DRY</h1><p>When I realized that this was a pattern worth abstracting, I wrote a <code>cached_property</code> decorator which looked something like this:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def cached_property(method):</span><br><span class="line">    prop_name = &apos;_()&apos;.format(method.__name__)</span><br><span class="line">    def wrapped_func(self, *args, **kwargs):</span><br><span class="line">        if not hasattr(self, prop_name):</span><br><span class="line">            setattr(self, prop_name, method(self, *args, **kwargs))</span><br><span class="line">        return getattr(self, prop_name)</span><br><span class="line">    return property(wrapped_func)</span><br></pre></td></tr></table></figure>
-<p>Demonstrating its use:[^2]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; class House():</span><br><span class="line">...     @property</span><br><span class="line">...     def color(self):</span><br><span class="line">...         print(&quot;Accessing color&quot;)</span><br><span class="line">...         return &quot;blue&quot;</span><br><span class="line">...     @cached_property</span><br><span class="line">...     def square_footage(self):</span><br><span class="line">...         print(&quot;Accessing square footage&quot;)</span><br><span class="line">...         return 1500</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; h.color</span><br><span class="line">Accessing color</span><br><span class="line">&apos;blue&apos;</span><br><span class="line">&gt;&gt;&gt; h.color    # Prints &quot;Accessing color&quot; each time you asscee the property</span><br><span class="line">Accessing color</span><br><span class="line">&apos;blue&apos;</span><br><span class="line">&gt;&gt;&gt; h.square_footage</span><br><span class="line">Accessing square footage</span><br><span class="line">1500</span><br><span class="line">&gt;&gt;&gt; h.square_footage    # Only prints message the first time</span><br><span class="line">1500</span><br></pre></td></tr></table></figure></p>
-<h1 id="Serendipity"><a href="#Serendipity" class="headerlink" title="Serendipity"></a>Serendipity</h1><p>I was pretty proud of myself after having written this decorator. While I didn’t like that it created extra attributes on my object, it replaced lots of clunky <code>if</code> blocks with a clean decorator.</p>
-<p>I immediately resolved to go through some Django projects and add the decorator to all the objects I’d previously been using the first pattern on. At some point, I typed <code>@cached_property</code> and activated autoimport, [^3] and what to my wondering eyes should appear but <code>django.utils.functional.cached_property</code>!</p>
-<p>What is this!? Had my genius idea been pre-empted? I imported it into my project and tried it out and: in a word, yes. Its effect was precisely the same as that of my little handmade decorator. (You can test this for yourself by trying the console session above, replacing the decorator definition with <code>from django.utils.functional import cached_property</code>.)</p>
-<p>Well, let’s see if my version is any faster:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; timeit.timeit(&quot;&quot;&quot;</span><br><span class="line">... class House():</span><br><span class="line">...     @cached_property</span><br><span class="line">...     def color(self):</span><br><span class="line">...         return 5</span><br><span class="line">... &quot;&quot;&quot;, setup=&quot;from django.utils.functional import cached_property&quot;)</span><br><span class="line">2.063973829377808</span><br><span class="line">&gt;&gt;&gt; timeit.timeit(&quot;&quot;&quot;</span><br><span class="line">class House():</span><br><span class="line">    @cached_property</span><br><span class="line">    def color(self):</span><br><span class="line">        return 5</span><br><span class="line">&quot;&quot;&quot;, setup=&quot;&quot;&quot;</span><br><span class="line">def cached_property(method):</span><br><span class="line">    prop_name=&apos;_()&apos;.format(method.__name__)</span><br><span class="line">    def wrapped_func(self, *args, **kwargs):</span><br><span class="line">        if not hasattr(self, prop_name):</span><br><span class="line">            setattr(self, prop_name, method(self, *args, **kwargs))</span><br><span class="line">        return getattr(self, prop_name)</span><br><span class="line">    return property(wrapped_func)</span><br><span class="line">&quot;&quot;&quot;)</span><br><span class="line">3.4206963438101354</span><br></pre></td></tr></table></figure></p>
-<p>I’m 75% slower; damn. Well, I’ve been thoroughly outprogrammed here — all that’s left is to look at the Django code and see how they implemented this.</p>
-<h1 id="Django-Knows"><a href="#Django-Knows" class="headerlink" title="Django Knows"></a>Django Knows</h1><p>The code for this decorator is at <a href="https://github.com/django/django/blob/2456ffa42c33d63b54579eae0f5b9cf2a8cd3714/django/utils/functional.py#L38-50" target="_blank" rel="noopener">https://github.com/django/django/blob/2456ffa42c33d63b54579eae0f5b9cf2a8cd3714/django/utils/functional.py#L38-50</a> and is reproduced below. [^4]</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class cached_property(object):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Decorator that converts a method with a single self argument into a property cached on the instance</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def __init__(self, func):</span><br><span class="line">        self.func = func</span><br><span class="line">    def __get__(self, instance, type=None):</span><br><span class="line">        if instance is None:</span><br><span class="line">            return self</span><br><span class="line">        res = instance.__dict__[self.func.__name__] = self.func(instance)</span><br><span class="line">        return res</span><br></pre></td></tr></table></figure>
-<p>Remarkably simple for what it does. It is a class-based decorator rather than a more familiar function-based one. In addition to allowing it to keep state, this allows it to do something extremely clever and audacious at the expense of extensibility. Let’s go through it briefly, using the following code as a concrete example.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class House(object):</span><br><span class="line">    @cached_property</span><br><span class="line">    def color(self):</span><br><span class="line">        return &apos;blue&apos;</span><br></pre></td></tr></table></figure>
-<ol>
-<li><strong><code>__init__</code></strong></li>
-</ol>
-<p><small>The <code>__init__</code> method of a class-based decorator is called when its decorated function is defined (in this case at class definition time), with its only argument besides the omnipresent self being the decorated function. The <code>cached_property</code> decorator class simply stores this function (a method, in this case) for future reference. Important for the next item is that at this point, <code>House.color</code> is a <code>cached_property</code> object instance.</small></p>
-<ol start="2">
-<li><strong><code>__get__</code></strong></li>
-</ol>
-<p><small>Those of you who use class-based decorators are probably more familiar with implementing the decoration logic in the <code>__call__</code> method. This is where the genius comes in: if <code>h</code> is a <code>House</code> instance, at the time the <code>h.color</code> attribute is accessed, if it points to an object like the current <code>cached_property</code> instance, Python calls the special <code>__get__()</code> descriptor method of that object. (This object’s class is in fact referred to as a descriptor class in the docs, and the containing class (<code>House</code> in this case) as the owner class.)</small></p>
-<p><small>The arguments to <code>__get__()</code> are as follows:</small></p>
-<ul>
-<li><p><small> <code>self</code>, the current <code>cached_property</code> instance, on which the original method is stored as <code>self.func</code></small></p>
-</li>
-<li><p><small> <code>instance</code>, the instance of the owner class — in this case <code>h</code>. This is essentially a second <code>self</code> argument, with the instance in this case being the one we actually care about.</small></p>
-</li>
-<li><p><small> <code>type</code>, the class type of the owner class — in this case <code>House</code>.</small></p>
-</li>
-</ul>
-<p><small>With this in mind, look at what <code>__get__()</code> does. Ignore the <code>if</code> block for now and let’s focus on the next line, starting from the right and going left.</small></p>
-<p><small><strong><code>self.func(instance)</code></strong></small></p>
-<p><small>calls the original (decorated) method which was cached as <code>self.func</code> under this <code>cached_property</code> instance at definition time. The <code>instance</code> argument it passes is the <code>House</code> instance which <code>color</code> was referenced from. Normally, when you call an instance method, this first argument would be named <code>self</code>.</small></p>
-<p><small>See where this is going? <code>self.func(instance)</code> is the same as calling <code>h.color()</code> (or <code>House.color(h)</code>) if you hadn’t decorated the method at all.</small></p>
-<p><small><strong><code>instance.__dict__[self.func.__name__]</code></strong></small></p>
-<p><small>is where the magic happens. It asks <code>self.func</code> what its <code>__name__</code> is (in this case <code>color</code>), then uses the instance’s <code>__dict__</code> attribute to replace itself with a property consisting of the value calculated in step 1. In other words, before this statement is executed, <code>h.color</code> refers to a <code>cached_property</code> instance. After it is executed, <code>h.color</code> refers to the string “blue”. What this instance is doing, at the very time it’s being accessed, is replacing itself with the value calculated by the decorated method.</small></p>
-<ul>
-<li><small> <strong><code>res = ...</code></strong></small></li>
-</ul>
-<p><small>It’s all over now but for the cleanup. The calculated value is passed to a temporary variable which is then <code>return</code> ed so that this invocation of <code>cached_property.__get__()</code> (accessed via <code>h.color</code>) returns the value (“blue”) which is now stored as the property <code>h.color</code>.</small></p>
-<p><small>So that’s <code>cached_property.__get__()</code>, which selflessly overwrites its containing instance with a dumb value. Once out of the scope of this function, the <code>cached_property</code> instance is no longer referred to and can be garbage-collected.</small></p>
-<ol start="3">
-<li><strong><code>if instance is None: return self</code></strong><br><small>Briefly on this: this is relevant when the <code>color</code> attribute is accessed via the class instead of an instance, e.g. <code>House.color</code> instead of <code>h.color</code>. It simply returns the <code>cached_property</code> instance itself. This isn’t all that useful to the user, and I assume it’s just done to avoid a <code>TypeError</code> when the cached function would otherwise be called with a <code>None</code> instance. [^5]</small></li>
-</ol>
-<p>So that’s what some brilliant mind on the Django team came up with. Being able to “monkeypatch” attributes and properties is one of the benefits of any dynamic language, but seldom have I seen it used so audaciously. It also shows the power of Python’s double-underscore descriptors, which continue to amaze me in what they are capable of.</p>
-<p>Now that I’m done gushing, one note about this decorator is that it will only work for object methods, not pure functions. Can you tell why? This is one downside of this method over the function-based decorator — that one could fairly easily be extended to work on any function. However, it would be just as easy to write a module-level version of this decorator.</p>
-<h1 id="Wrapping-Up"><a href="#Wrapping-Up" class="headerlink" title="Wrapping Up"></a>Wrapping Up</h1><p>The links above on class-based decorators and Python’s descriptor methods are both worth reading in their entirety. Both helped me understand what was going on in Django’s cached_property definition, especially understanding the double level of indirection (i.e., inside <code>cached_property.__get__()</code>, <code>self</code> represents the <code>cached_property</code> object whereas <code>instance</code> represents the object whose method it’s decorating) and the use of <code>__get__</code> instead of the more familiar <code>__call__</code>.</p>
-<p>If you read this far, thanks! Comments and corrections are always appreciated.</p>
-<p>[^1]: I initially typed “if you have several properties with this same property.” Talk about repeating yourself repeating yourself.<br>[^2]: Note that if you try this example in an IDE or console with autocomplete, you may find it printing the “Accessing” messages as soon as you have typed h.. This is because your console is accessing the properties as it tries to inspect which properties/methods are on the object in order to bring up the autocomplete options. You can test this by copy/pasting “h.color” which gives it no time to autocomplete.<br>[^3]: <code>Ctrl + Shift + O</code> in Eclipse, <code>Alt + Enter</code> while on the unimported name in IDEA. Of course you knew this already, but for those who didn’t: you’re welcome.<br>[^4]: Updated 7/25/13 to reflect changes in Django codebase — Django 1.4.0, about which I originally wrote this article, did not have the <code>if instance is None</code> check<br>[^5]: A side effect of this is that if you implemented a <code>__call__</code> method on cached_property which simply returned <code>self.func(instance)</code>, you could then use <code>House.color(h)</code> as a way to get the value via a function call instead of attribute access. This isn’t much more than a parlor trick though.</p>
-
-      
+电商的秒杀和抢购，对我们来说，都不是一个陌生的东西。然而，从技术的角度来说，这对于Web系统是一个巨大的考验。当一个Web系统，在一秒钟内收到数以万计甚至更多请求时，系统的优化和稳定至关重要。这次我们会关注秒杀和抢购的技术实现和优化，同时，从技术层面揭开，为...
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2017/05/22/Understanding-Django-s-Cached-property-Decorator/" data-id="cm50h3rad005byfhtt2frho6b" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2017/05/22/Understanding-Django-s-Cached-property-Decorator/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/django/">django</a></li></ul>
+</div>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
-
-  <nav id="page-nav">
-    
-    <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
-  </nav>
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Github/">Github</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Karrigell/">Karrigell</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VIM/">VIM</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/conda/">conda</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/django/">django</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ffmpeg/">ffmpeg</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/freeswitch/">freeswitch</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/kivy/">kivy</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/mac/">mac</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/normal/">normal</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/other/">other</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/sqlalchemy/">sqlalchemy</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/system/">system</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tornado/">tornado</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ubuntu/">ubuntu</a></li></ul>
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">7.</span>
+        <h2><a href="/2017/06/07/Building-Million-Class-Web-System-From-Single-Machine-To-Distributed-Cluster/">Building Million Class Web System From Single Machine To Distributed Cluster</a></h2>
+        <span class="post-date">2017-06-07</span>
     </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/conda/">conda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django/">django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django-celery/">django-celery</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/freeswitch/">freeswitch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlalchemy/">sqlalchemy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/system/">system</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tornado/">tornado</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a></li></ul>
+    <div class="post-content">
+        http://www.csdn.net/article/2014-11-06/2822529
+当一个Web系统从日访问量10万逐步增长到1000万，甚至超过1亿的过程中，Web系统承受的压力会越来越大，在这个过程中，我们会遇到很多的问题。为了解决这些性能压力带来问题，我们需要在Web系统架构层面搭建多个层次的缓存机制。在不同的压力阶段，我们会遇到不同的...
     </div>
-  </div>
+</div>
 
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/conda/" style="font-size: 10px;">conda</a> <a href="/tags/django/" style="font-size: 18px;">django</a> <a href="/tags/django-celery/" style="font-size: 10px;">django-celery</a> <a href="/tags/ffmpeg/" style="font-size: 10px;">ffmpeg</a> <a href="/tags/flask/" style="font-size: 10px;">flask</a> <a href="/tags/freeswitch/" style="font-size: 10px;">freeswitch</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/go/" style="font-size: 14px;">go</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/linux/" style="font-size: 16px;">linux</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/other/" style="font-size: 12px;">other</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/sqlalchemy/" style="font-size: 10px;">sqlalchemy</a> <a href="/tags/system/" style="font-size: 12px;">system</a> <a href="/tags/tornado/" style="font-size: 10px;">tornado</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a>
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">8.</span>
+        <h2><a href="/2017/05/27/2-ways-to-get-subprocess-result-in-multiprocessing-pool/">2 ways to get subprocess result in multiprocessing pool</a></h2>
+        <span class="post-date">2017-05-27</span>
     </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">February 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">February 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">November 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">September 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a></li></ul>
+    <div class="post-content">
+        Get the result when running subprocess, close it if the result is True123456789101112131415161718192021222324from multiproceeing import Poolimport Queueimport timedef test(p):  ...
     </div>
-  </div>
+</div>
+
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">9.</span>
+        <h2><a href="/2017/05/23/python-descriptor-howto-guide/">python descriptor howto guide</a></h2>
+        <span class="post-date">2017-05-23</span>
+    </div>
+    <div class="post-content">
+        https://docs.python.org/3.6/howto/descriptor.html
+AbstractDefines descriptors, summarizes the protocol, and shows how descriptors are called. Examines a custom descriptor and se...
+    </div>
+</div>
+
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">10.</span>
+        <h2><a href="/2017/05/22/Understanding-Django-s-Cached-property-Decorator/">Understanding Django&#39;s Cached_property Decorator</a></h2>
+        <span class="post-date">2017-05-22</span>
+    </div>
+    <div class="post-content">
+        This blog is transfer from http://ericplumb.com/blog/understanding-djangos-cached_property-decorator.html
+There is not a lot of documentation out there about Django’s cached_pro...
+    </div>
+</div>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2024/12/23/Python-Typing类型提示/">Python Typing类型提示</a>
-          </li>
-        
-          <li>
-            <a href="/2024/12/23/Python-Tempfile临时文件系统对象/">Python Tempfile临时文件系统对象</a>
-          </li>
-        
-          <li>
-            <a href="/2024/12/23/Python-Pathlib处理文件路径库的使用/">Python Pathlib处理文件路径库的使用</a>
-          </li>
-        
-          <li>
-            <a href="/2024/08/31/在ubuntu上的18个非常实用的命令行工具软件/">在ubuntu上的18个非常实用的命令行工具软件</a>
-          </li>
-        
-          <li>
-            <a href="/2024/08/20/什么是动态规划？在Python中如何利用动态规划解决实际问题？/">什么是动态规划？在Python中如何利用动态规划解决实际问题？</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
 
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2024 Tony Tan<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
+<nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/5/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/7/">Next</a>
 </nav>
-    
-<script>
-  var disqus_shortname = 'TonyTan';
-  
-  (function(){
-    var dsq = document.createElement('script');
-    dsq.type = 'text/javascript';
-    dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
 
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
-
-
-
-  </div>
+        </div>
+        <div class="footer">
+            
+            <p class="footer-copyright">
+                <span>Powered by <a target="_blank" href="https://hexo.io">Hexo</a></span>
+                <span>Theme <a target="_blank" href="https://github.com/tinkink-co/hexo-theme-terminal">Terminal</a></span>
+            </p>
+        </div>
+    </div>
 </body>
 </html>

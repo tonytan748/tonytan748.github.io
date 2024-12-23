@@ -1,1106 +1,207 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="utf-8">
-  
-
-  
-  <title>Tony Tan</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Tony Tan">
-<meta name="keywords" content="Tony Tan">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Tony Tan">
-<meta property="og:url" content="https://tonytan748.github.io/page/9/index.html">
-<meta property="og:site_name" content="Tony Tan">
-<meta property="og:description" content="Tony Tan">
-<meta property="og:locale" content="default">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Tony Tan">
-<meta name="twitter:description" content="Tony Tan">
-  
-    <link rel="alternate" href="/atom.xml" title="Tony Tan" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/styles/base.css">
+    <link rel="stylesheet" href="/styles/theme.css">
+    <link rel="shortcut icon" href="/favicon.png">
+    
+    <title>首页 - Tony Tan</title>
+    
 </head>
-</html>
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Tony Tan</a>
-      </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">a python progrmmer</a>
-        </h2>
-      
+    <div class="header-title">
+        <span class="header-light"></span>
+        <span class="header-light"></span>
+        <span class="header-light"></span>
+        <span>Tony Tan tonytan748.github.io<span>
+    </span></span></div>
+    <div class="container">
+        <ul class="nav">
+        
+            <li><a href="/">首页</a></li>
+        
+            <li><a href="/categories">分类</a></li>
+        
+            <li><a href="/about">关于</a></li>
+        
+        </ul>
+        <div class="content">
+            
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">1.</span>
+        <h2><a href="/2016/03/07/some-python-userful-functions/">Some Python userful functions</a></h2>
+        <span class="post-date">2016-03-07</span>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
+    <div class="post-content">
         
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://tonytan748.github.io"></form>
-      </div>
+use Glob() to find files
+
+Many python functions have a long and descriptly name, but maybe you dont know the namespace of glob() functions unless you understand it.It’s like a ...
     </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-some-python-userful-functions" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/03/07/some-python-userful-functions/" class="article-date">
-  <time datetime="2016-03-06T16:00:00.000Z" itemprop="datePublished">2016-03-07</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
+</div>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/07/some-python-userful-functions/">Some Python userful functions</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ol>
-<li>use Glob() to find files</li>
-</ol>
-<p>Many python functions have a long and descriptly name, but maybe you dont know the namespace of glob() functions unless you understand it.<br>It’s like a more powerful version of the listdir() function. it can search files use pattern matching.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import glob</span><br><span class="line"></span><br><span class="line">files = glob.glob(&apos;*.py&apos;)</span><br><span class="line">print files</span><br></pre></td></tr></table></figure>
-<p>you can also search files by many file types:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import itertools as it</span><br><span class="line">import glob</span><br><span class="line"></span><br><span class="line">def multiple_file_types(*patterns):</span><br><span class="line">    return it.chain.from_iterable(glob.glob(pattern) for pattern in patterns)</span><br><span class="line"></span><br><span class="line">for filename in multiple_file_types(&apos;*.txt&apos;,&apos;*.py&apos;)</span><br><span class="line">    print filename</span><br></pre></td></tr></table></figure>
-<p>If you want get the real path of every file. you can called the realpath() function in return value:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import itertools as it</span><br><span class="line">import glob</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">def multiple_file_types(*patterns):</span><br><span class="line">    return it.chain.from_iterable(glob.glob(pattern) for pattern in patterns)</span><br><span class="line"></span><br><span class="line">for filename in multiple_file_types(&apos;*.txt&apos;,&apos;*.py&apos;):</span><br><span class="line">    realpath = os.path.realpath(filename)</span><br><span class="line">    print realpath</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>Testing</li>
-</ol>
-<p>Some examples use inspect model, this model is userful for testing. It has more function than here.</p>
-<p>Some useful example:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import logging</span><br><span class="line">import inpect</span><br><span class="line"></span><br><span class="line">logging.basicConfig(level=logging.INFO, format=&apos;%(asctime)s %(levelname)-8s %(lineno)-4d %(message)s&apos;, datefmt=&apos;%m-%d %H:%M&apos;,)</span><br><span class="line"></span><br><span class="line">logging.debug(&quot;A debug message&quot;)</span><br><span class="line">logging.info(&apos;Some information&apos;)</span><br><span class="line">logging.warming(&apos;A shot across the bow&apos;)</span><br><span class="line"></span><br><span class="line">def test():</span><br><span class="line">    frame,filename,line_number,function_name,lines,index = inspect.getouterframes(inspect.currentframe())[1]</span><br><span class="line">    print(frame,filename,line_number,function_name,lines,index)</span><br><span class="line"></span><br><span class="line">test()</span><br></pre></td></tr></table></figure>
-<ol start="3">
-<li>Create a unique ID</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">improt uuid</span><br><span class="line">result = uuid.uuid()</span><br><span class="line">print result</span><br></pre></td></tr></table></figure>
-<p>but the result have many character are some with each running.<br>update:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import hmac, hashlib</span><br><span class="line">key = &apos;1&apos;</span><br><span class="line">data = &apos;a&apos;</span><br><span class="line"></span><br><span class="line">print hmac.new(key, data, hashlib.sha256).hexdigest()</span><br><span class="line"></span><br><span class="line">m = hashlib.sha1()</span><br><span class="line">m.update(&apos;The quick brown fox jumps over the lazy dog&apos;)</span><br><span class="line">print m.hexdigest()</span><br></pre></td></tr></table></figure>
-<ol start="4">
-<li>Serialization</li>
-</ol>
-<p>Do you ever need to store a complex variable in a database or text file?<br>You don’t need to think of an unusual way to format an array or object as a string, since Python already provides this functionality.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import pickle</span><br><span class="line"></span><br><span class="line">variable = [&apos;hello&apos;, 22, [1, &apos;two&apos;], &apos;dog&apos;]</span><br><span class="line"></span><br><span class="line">#serizlize content</span><br><span class="line">file = open(&apos;serial.txt&apos;, &apos;w&apos;)</span><br><span class="line">serialized_obj = pickle.dumps(variable)</span><br><span class="line">file.write(serialized_obj)</span><br><span class="line">file.close()</span><br><span class="line"></span><br><span class="line">#unserizlize to content</span><br><span class="line">target = open(&apos;serial.txt&apos;, &apos;r&apos;)</span><br><span class="line">myObj = pickle.load(target)</span><br><span class="line"></span><br><span class="line">print myObj</span><br></pre></td></tr></table></figure>
-<p>This is a native method, can also be use JSON to encode and decode.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import json</span><br><span class="line"></span><br><span class="line">variable = [&apos;hello&apos;, 22, [1, &apos;two&apos;], &apos;dog&apos;] </span><br><span class="line"></span><br><span class="line">#encoding</span><br><span class="line">encode = json.dumps(variable)</span><br><span class="line"></span><br><span class="line">#deconding</span><br><span class="line">decoded = json.loads(encode)</span><br></pre></td></tr></table></figure>
-<p>This is more compact, and is compatible with javascript or other language.<br>For complex objects, however, some information may be lost.</p>
-<ol start="5">
-<li>Compression character</li>
-</ol>
-<p>Python can compres long character dont refer to any documents.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import zlib</span><br><span class="line"></span><br><span class="line">string = &quot;&quot;&quot;ther sections do not refer to any specific file but give step by step instructions on how to access features and what some of the feature highlights are</span><br><span class="line">Illustration 3-1: At the outset, a transaction involves shipments of one commodity, but without any commercial explanation, the goods being sold are described as a different commodity in later documentation.</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">print &quot;Original Size: (0)&quot;.format(len(string))</span><br><span class="line"></span><br><span class="line">compressed = zlib.compress(string)</span><br><span class="line">print &quot;Compressed Size: (0)&quot;.format(len(compressed))</span><br><span class="line"></span><br><span class="line">decompressed = zlib.decompress(compressed)</span><br><span class="line">print &quot;Decompressed Size: (0)&quot;.format(len(decompressed))</span><br></pre></td></tr></table></figure>
-<ol start="6">
-<li>Register ShutDown function</li>
-</ol>
-<p>A model name is atexit, it can be running some coding after script.<br>For example if you want measure some benchmark datasets after running script, like running time.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import atexit</span><br><span class="line">import time</span><br><span class="line">import math</span><br><span class="line"></span><br><span class="line">def microtime(get_as_float=False):</span><br><span class="line">    if get_as_float:</span><br><span class="line">        return time.time()</span><br><span class="line">    alse:</span><br><span class="line">        return &quot;%f %d&quot;%math.modf(time.time())</span><br><span class="line"></span><br><span class="line">start_time = microtime(False)</span><br><span class="line">atexit.registar(start_time)</span><br><span class="line"></span><br><span class="line">def shutdowm():</span><br><span class="line">    global start_time</span><br><span class="line">    print &quot;Execution took: &#123;0&#125; seconds.&quot;.format(start_time)</span><br><span class="line"></span><br><span class="line">atexit.register(shutdown)</span><br></pre></td></tr></table></figure>
-<p>whatever reason cause the script shutdown. the atexit.register() function all with running.</p>
-
-      
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">2.</span>
+        <h2><a href="/2016/03/05/tornado-web-framework-1/">Tornado Web Framework 1</a></h2>
+        <span class="post-date">2016-03-05</span>
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2016/03/07/some-python-userful-functions/" data-id="cm50h3r9e003vyfhtcvm0pdtu" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2016/03/07/some-python-userful-functions/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-tornado-web-framework-1" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/03/05/tornado-web-framework-1/" class="article-date">
-  <time datetime="2016-03-04T16:00:00.000Z" itemprop="datePublished">2016-03-05</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/tornado/">tornado</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/05/tornado-web-framework-1/">Tornado Web Framework 1</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>Tornado Web Framework 1</em></p>
-<p><em>文章转自<a href="http://demo.pythoner.com/itt2zh/ch1.html#ch1-1-1" target="_blank" rel="noopener">这里</a></em></p>
-<p>在过去的五年里，Web开发人员的可用工具实现了跨越式地增长。当技术专家不断推动极限，使Web应用无处不在时，我们也不得不升级我们的工具、创建框架以保证构建更好的应用。我们希望能够使用新的工具，方便我们写出更加整洁、可维护的代码，使部署到世界各地的用户时拥有高效的可扩展性。</p>
-<p>这就让我们谈论到Tornado，一个编写易创建、扩展和部署的强力Web应用的梦幻选择。我们三个都因为Tornado的速度、简单和可扩展性而深深地爱上了它，在一些个人项目中尝试之后，我们将其运用到日常工作中。我们已经看到，Tornado在很多大型或小型的项目中提升了开发者的速度（和乐趣！），同时，其鲁棒性和轻量级也给开发者一次又一次留下了深刻的印象。</p>
-<p>本书的目的是对Tornado Web服务器进行一个概述，通过框架基础、一些示例应用和真实世界使用的最佳实践来引导读者。我们将使用示例来详细讲解Tornado如何工作，你可以用它做什么，以及在构建自己第一个应用时要避免什么。</p>
-<p>在本书中，我们假定你对Python已经有了粗略的了解，知道Web服务如何运作，对数据库有一定的熟悉。有一些不错的书籍可以为你深入了解这些提供参考（比如Learning Python，Restful Web Service和MongoDB: The Definitive Guide）。</p>
-<p>你可以在<a href="https://github.com/Introduction-to-Tornado" target="_blank" rel="noopener">Github</a>上获得本书中示例的代码。如果你有关于这些示例或其他方面的任何思想，欢迎在那里告诉我们。</p>
-<p>所以，事不宜迟，让我们开始深入了解吧！</p>
-<h2 id="1-1-Tornado是什么？"><a href="#1-1-Tornado是什么？" class="headerlink" title="1.1 Tornado是什么？"></a>1.1 Tornado是什么？</h2><p>Tornado是使用Python编写的一个强大的、可扩展的Web服务器。它在处理严峻的网络流量时表现得足够强健，但却在创建和编写时有着足够的轻量级，并能够被用在大量的应用和工具中。</p>
-<p>我们现在所知道的Tornado是基于Bret Taylor和其他人员为FriendFeed所开发的网络服务框架，当FriendFeed被Facebook收购后得以开源。不同于那些最多只能达到10,000个并发连接的传统网络服务器，Tornado在设计之初就考虑到了性能因素，旨在解决C10K问题，这样的设计使得其成为一个拥有非常高性能的框架。此外，它还拥有处理安全性、用户验证、社交网络以及与外部服务（如数据库和网站API）进行异步交互的工具。</p>
-<blockquote>
-<h4 id="延伸阅读：C10K问题"><a href="#延伸阅读：C10K问题" class="headerlink" title="延伸阅读：C10K问题"></a>延伸阅读：C10K问题</h4></blockquote>
-<blockquote>
-<p>基于线程的服务器，如Apache，为了传入的连接，维护了一个操作系统的线程池。Apache会为每个HTTP连接分配线程池中的一个线程，如果所有的线程都处于被占用的状态并且尚有内存可用时，则生成一个新的线程。尽管不同的操作系统会有不同的设置，大多数Linux发布版中都是默认线程堆大小为8MB。Apache的架构在大负载下变得不可预测，为每个打开的连接维护一个大的线程池等待数据极易迅速耗光服务器的内存资源。</p>
-</blockquote>
-<blockquote>
-<p>大多数社交网络应用都会展示实时更新来提醒新消息、状态变化以及用户通知，这就要求客户端需要保持一个打开的连接来等待服务器端的任何响应。这些长连接或推送请求使得Apache的最大线程池迅速饱和。一旦线程池的资源耗尽，服务器将不能再响应新的请求。</p>
-</blockquote>
-<blockquote>
-<p>异步服务器在这一场景中的应用相对较新，但他们正是被设计用来减轻基于线程的服务器的限制的。当负载增加时，诸如Node.js，lighttpd和Tornodo这样的服务器使用协作的多任务的方式进行优雅的扩展。也就是说，如果当前请求正在等待来自其他资源的数据（比如数据库查询或HTTP请求）时，一个异步服务器可以明确地控制以挂起请求。异步服务器用来恢复暂停的操作的一个常见模式是当合适的数据准备好时调用回调函数。我们将会在第五章讲解回调函数模式以及一系列Tornado异步功能的应用。</p>
-</blockquote>
-<p>自从2009年9月10日发布以来，TornadoTornado已经获得了很多社区的支持，并且在一系列不同的场合得到应用。除FriendFeed和Facebook外，还有很多公司在生产上转向Tornado，包括Quora、Turntable.fm、Bit.ly、Hipmunk以及MyYearbook等。</p>
-<p>总之，如果你在寻找你那庞大的CMS或一体化开发框架的替代品，Tornado可能并不是一个好的选择。Tornado并不需要你拥有庞大的模型建立特殊的方式，或以某种确定的形式处理表单，或其他类似的事情。它所做的是让你能够快速简单地编写高速的Web应用。如果你想编写一个可扩展的社交应用、实时分析引擎，或RESTful API，那么简单而强大的Python，以及Tornado（和这本书）正是为你准备的！</p>
-<h4 id="Tornado入门"><a href="#Tornado入门" class="headerlink" title="Tornado入门"></a>Tornado入门</h4><p>在大部分*nix系统中安装Tornado非常容易–你既可以从PyPI获取（并使用easy_install或pip安装），也可以从Github上下载源码编译安装，如下所示[1]：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ curl -L -O https://github.com/facebook/tornado/archive/v3.1.0.tar.gz</span><br><span class="line">$ tar xvzf v3.1.0.tar.gz</span><br><span class="line">$ cd tornado-3.1.0</span><br><span class="line">$ python setup.py build</span><br><span class="line">$ sudo python setup.py install</span><br></pre></td></tr></table></figure>
-<p>Tornado官方并不支持Windows，但你可以通过ActivePython的PyPM包管理器进行安装，类似如下所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt; pypm install tornado</span><br></pre></td></tr></table></figure>
-<p>一旦Tornado在你的机器上安装好，你就可以很好的开始了！压缩包中包含很多demo，比如建立博客、整合Facebook、运行聊天服务等的示例代码。我们稍后会在本书中通过一些示例应用逐步讲解，不过你也应该看看这些官方demo。</p>
-<h4 id="1-1-2-社区和支持"><a href="#1-1-2-社区和支持" class="headerlink" title="1.1.2 社区和支持"></a>1.1.2 社区和支持</h4><p>对于问题、示例和一般的指南，Tornado官方文档是个不错的选择。在tornadoweb.org上有大量的例子和功能缺陷，更多细节和变更可以在Tornado在Github上的版本库中看到。而对于更具体的问题，可以到Tornado的Google Group中咨询，那里有很多活跃的日常使用Tornado的开发者。</p>
-<h2 id="1-2-简单的Web服务"><a href="#1-2-简单的Web服务" class="headerlink" title="1.2 简单的Web服务"></a>1.2 简单的Web服务</h2><p>既然我们已经知道了Tornado是什么了，现在让我们看看它能做什么吧。我们首先从使用Tornado编写一个简单的Web应用开始。</p>
-<h4 id="1-2-1-Hello-Tornado"><a href="#1-2-1-Hello-Tornado" class="headerlink" title="1.2.1 Hello Tornado"></a>1.2.1 Hello Tornado</h4><p>Tornado是一个编写对HTTP请求响应的框架。作为程序员，你的工作是编写响应特定条件HTTP请求的响应的handler。下面是一个全功能的Tornado应用的基础示例：</p>
-<p>代码清单1-1 基础：hello.py</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import tornado.httpserver</span><br><span class="line">import tornado.ioloop</span><br><span class="line">import tornado.options</span><br><span class="line">import tornado.web</span><br><span class="line"></span><br><span class="line">from tornado.options import define, options</span><br><span class="line">define(&apos;port&apos;, default=8000, help=&apos;run on the given port&apos;, type=int)</span><br><span class="line"></span><br><span class="line">class IndexHandler(tornado.web.RequestHandler):</span><br><span class="line">	def get(self):</span><br><span class="line">		greeting = self.get_argument(&apos;greeting&apos;, &apos;Hello world!&apos;)</span><br><span class="line">		self.write(greeting + &apos;, friendly user.&apos;)</span><br><span class="line"></span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">	tornado.options.parse_command_line()</span><br><span class="line">	app = tornado.web.Application(handlers=[(r&apos;/&apos;, IndexHandler)])</span><br><span class="line">	http_server = tornado.httpserver.HTTPServer(app)</span><br><span class="line">	http_server.listen(options.port)</span><br><span class="line">	tornado.ioloop.IOLoop.instance().start()</span><br></pre></td></tr></table></figure>
-<p>编写一个Tornado应用中最多的工作是定义类继承Tornado的RequestHandler类。在这个例子中，我们创建了一个简单的应用，在给定的端口监听请求，并在根目录（”/“）响应请求。</p>
-<p>你可以在命令行里尝试运行这个程序以测试输出：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python hello.py --port=8000</span><br></pre></td></tr></table></figure>
-<p>现在你可以在浏览器中打开<a href="http://localhost:8000，或者打开另一个终端窗口使用curl测试我们的应用：" target="_blank" rel="noopener">http://localhost:8000，或者打开另一个终端窗口使用curl测试我们的应用：</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ curl http://localhost:8000/</span><br><span class="line">Hello, friendly user!</span><br><span class="line">$ curl http://localhost:8000/?greeting=Salutations</span><br><span class="line">Salutations, friendly user!</span><br></pre></td></tr></table></figure>
-<p>让我们把这个例子分成小块，逐步分析它们：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import tornado.httpserver</span><br><span class="line">import tornado.ioloop</span><br><span class="line">import tornado.options</span><br><span class="line">import tornado.web</span><br></pre></td></tr></table></figure>
-<p>在程序的最顶部，我们导入了一些Tornado模块。虽然Tornado还有另外一些有用的模块，但在这个例子中我们必须至少包含这四个模块。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from tornado.options import define, options</span><br><span class="line">define(&quot;port&quot;, default=8000, help=&quot;run on the given port&quot;, type=int)</span><br></pre></td></tr></table></figure>
-<p>Tornado包括了一个有用的模块（tornado.options）来从命令行中读取设置。我们在这里使用这个模块指定我们的应用监听HTTP请求的端口。它的工作流程如下：如果一个与define语句中同名的设置在命令行中被给出，那么它将成为全局options的一个属性。如果用户运行程序时使用了–help选项，程序将打印出所有你定义的选项以及你在define函数的help参数中指定的文本。如果用户没有为这个选项指定值，则使用default的值进行代替。Tornado使用type参数进行基本的参数类型验证，当不合适的类型被给出时抛出一个异常。因此，我们允许一个整数的port参数作为options.port来访问程序。如果用户没有指定值，则默认为8000。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class IndexHandler(tornado.web.RequestHandler):</span><br><span class="line">    def get(self):</span><br><span class="line">        greeting = self.get_argument(&apos;greeting&apos;, &apos;Hello&apos;)</span><br><span class="line">        self.write(greeting + &apos;, friendly user!&apos;)</span><br></pre></td></tr></table></figure>
-<p>这是Tornado的请求处理函数类。当处理一个请求时，Tornado将这个类实例化，并调用与HTTP请求方法所对应的方法。在这个例子中，我们只定义了一个get方法，也就是说这个处理函数将对HTTP的GET请求作出响应。我们稍后将看到实现不止一个HTTP方法的处理函数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">greeting = self.get_argument(&apos;greeting&apos;, &apos;Hello&apos;)</span><br></pre></td></tr></table></figure>
-<p>Tornado的RequestHandler类有一系列有用的内建方法，包括get_argument，我们在这里从一个查询字符串中取得参数greeting的值。（如果这个参数没有出现在查询字符串中，Tornado将使用get_argument的第二个参数作为默认值。）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.write(greeting + &apos;, friendly user!&apos;)</span><br></pre></td></tr></table></figure>
-<p>RequestHandler的另一个有用的方法是write，它以一个字符串作为函数的参数，并将其写入到HTTP响应中。在这里，我们使用请求中greeting参数提供的值插入到greeting中，并写回到响应中。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    tornado.options.parse_command_line()</span><br><span class="line">    app = tornado.web.Application(handlers=[(r&quot;/&quot;, IndexHandler)])</span><br></pre></td></tr></table></figure>
-<p>这是真正使得Tornado运转起来的语句。首先，我们使用Tornado的options模块来解析命令行。然后我们创建了一个Tornado的Application类的实例。传递给Application类<strong>init</strong>方法的最重要的参数是handlers。它告诉Tornado应该用哪个类来响应请求。马上我们讲解更多相关知识。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http_server = tornado.httpserver.HTTPServer(app)</span><br><span class="line">http_server.listen(options.port)</span><br><span class="line">tornado.ioloop.IOLoop.instance().start()</span><br></pre></td></tr></table></figure>
-<p>从这里开始的代码将会被反复使用：一旦Application对象被创建，我们可以将其传递给Tornado的HTTPServer对象，然后使用我们在命令行指定的端口进行监听（通过options对象取出。）最后，在程序准备好接收HTTP请求后，我们创建一个Tornado的IOLoop的实例。</p>
-<h5 id="1-2-1-1-参数handlers"><a href="#1-2-1-1-参数handlers" class="headerlink" title="1.2.1.1 参数handlers"></a>1.2.1.1 参数handlers</h5><p>让我们再看一眼hello.py示例中的这一行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app = tornado.web.Application(handlers=[(r&quot;/&quot;, IndexHandler)])</span><br></pre></td></tr></table></figure>
-<p>这里的参数handlers非常重要，值得我们更加深入的研究。它应该是一个元组组成的列表，其中每个元组的第一个元素是一个用于匹配的正则表达式，第二个元素是一个RequestHanlder类。在hello.py中，我们只指定了一个正则表达式-RequestHanlder对，但你可以按你的需要指定任意多个。</p>
-<h5 id="1-2-1-2-使用正则表达式指定路径"><a href="#1-2-1-2-使用正则表达式指定路径" class="headerlink" title="1.2.1.2 使用正则表达式指定路径"></a>1.2.1.2 使用正则表达式指定路径</h5><p>Tornado在元组中使用正则表达式来匹配HTTP请求的路径。（这个路径是URL中主机名后面的部分，不包括查询字符串和碎片。）Tornado把这些正则表达式看作已经包含了行开始和结束锚点（即，字符串”/“被看作为”^/$”）。</p>
-<p>如果一个正则表达式包含一个捕获分组（即，正则表达式中的部分被括号括起来），匹配的内容将作为相应HTTP请求的参数传到RequestHandler对象中。我们将在下个例子中看到它的用法。</p>
-<h4 id="1-2-2-字符串服务"><a href="#1-2-2-字符串服务" class="headerlink" title="1.2.2 字符串服务"></a>1.2.2 字符串服务</h4><p>例1-2是一个我们目前为止看到的更复杂的例子，它将介绍更多Tornado的基本概念。</p>
-<p>*代码清单1-2 处理输入：string_service.py</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">import textwrap</span><br><span class="line"></span><br><span class="line">import tornado.httpserver</span><br><span class="line">import tornado.ioloop</span><br><span class="line">import tornado.options</span><br><span class="line">import tornado.web</span><br><span class="line"></span><br><span class="line">from tornado.options import define, options</span><br><span class="line">define(&apos;port&apos;, default=8000, help=&quot;run on the given port&quot;, type=int)</span><br><span class="line"></span><br><span class="line">cladd ReverseHandler(tornado.web.RequestHandler):</span><br><span class="line">	def get(self, input):</span><br><span class="line">		self.write(input[::-1])</span><br><span class="line"></span><br><span class="line">class WrapHandler(tornado.web.RequestHandler):</span><br><span class="line">	def post(self):</span><br><span class="line">		text = self.get_argument(&apos;text&apos;)</span><br><span class="line">		width = self.get_argument(&apos;width&apos;, 40)</span><br><span class="line">		self.write(textwrap.fill(text, int(width)))</span><br><span class="line"></span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">	tornado.options.parse_command_line()</span><br><span class="line">	app = tornado.web.Application(</span><br><span class="line">		handlers=[</span><br><span class="line">			(r&apos;/reverse/(\w+)&apos;, ReverseHandler),</span><br><span class="line">			(r&apos;/wrap&apos;, WrapHandler)</span><br><span class="line">		]</span><br><span class="line">	)</span><br><span class="line">	http_server = tornado.httpserver.HTTPServer(app)</span><br><span class="line">	http_server.listen(options.port)</span><br><span class="line">	tornado.ioloop.IOLoop.instance().start()</span><br></pre></td></tr></table></figure>
-<p>如同运行第一个例子，你可以在命令行中运行这个例子使用如下的命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python string_service.py --port=8000</span><br></pre></td></tr></table></figure>
-<p>这个程序是一个通用的字符串操作的Web服务端基本框架。到目前为止，你可以用它做两件事情。其一，到/reverse/string的GET请求将会返回URL路径中指定字符串的反转形式。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ curl http://localhost:8000/reverse/stressed</span><br><span class="line">desserts</span><br><span class="line"></span><br><span class="line">$ curl http://localhost:8000/reverse/slipup</span><br><span class="line">pupils</span><br></pre></td></tr></table></figure>
-<p>其二，到/wrap的POST请求将从参数text中取得指定的文本，并返回按照参数width指定宽度装饰的文本。下面的请求指定一个没有宽度的字符串，所以它的输出宽度被指定为程序中的get_argument的默认值40个字符。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ http://localhost:8000/wrap -d text=Lorem+ipsum+dolor+sit+amet,+consectetuer+adipiscing+elit.</span><br><span class="line">Lorem ipsum dolor sit amet, consectetuer</span><br><span class="line">adipiscing elit.</span><br></pre></td></tr></table></figure>
-<p>字符串服务示例和上一节示例代码中大部分是一样的。让我们关注那些新的代码。首先，让我们看看传递给Application构造函数的handlers参数的值：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">app = tornado.web.Application(handlers=[</span><br><span class="line">    (r&quot;/reverse/(\w+)&quot;, ReverseHandler),</span><br><span class="line">    (r&quot;/wrap&quot;, WrapHandler)</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
-<p>在上面的代码中，Application类在”handlers”参数中实例化了两个RequestHandler类对象。第一个引导Tornado传递路径匹配下面的正则表达式的请求：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/reverse/(\w+)</span><br></pre></td></tr></table></figure>
-<p>正则表达式告诉Tornado匹配任何以字符串/reverse/开始并紧跟着一个或多个字母的路径。括号的含义是让Tornado保存匹配括号里面表达式的字符串，并将其作为请求方法的一个参数传递给RequestHandler类。让我们检查ReverseHandler的定义来看看它是如何工作的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class ReverseHandler(tornado.web.RequestHandler):</span><br><span class="line">    def get(self, input):</span><br><span class="line">        self.write(input[::-1])</span><br></pre></td></tr></table></figure>
-<p>你可以看到这里的get方法有一个额外的参数input。这个参数将包含匹配处理函数正则表达式第一个括号里的字符串。（如果正则表达式中有一系列额外的括号，匹配的字符串将被按照在正则表达式中出现的顺序作为额外的参数传递进来。）</p>
-<p>现在，让我们看一下WrapHandler的定义：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class WrapHandler(tornado.web.RequestHandler):</span><br><span class="line">    def post(self):</span><br><span class="line">        text = self.get_argument(&apos;text&apos;)</span><br><span class="line">        width = self.get_argument(&apos;width&apos;, 40)</span><br><span class="line">        self.write(textwrap.fill(text, int(width)))</span><br></pre></td></tr></table></figure>
-<p>WrapHandler类处理匹配路径为/wrap的请求。这个处理函数定义了一个post方法，也就是说它接收HTTP的POST方法的请求。</p>
-<p>我们之前使用RequestHandler对象的get_argument方法来捕获请求查询字符串的的参数。同样，我们也可以使用相同的方法来获得POST请求传递的参数。（Tornado可以解析URLencoded和multipart结构的POST请求）。一旦我们从POST中获得了文本和宽度的参数，我们使用Python内建的textwrap模块来以指定的宽度装饰文本，并将结果字符串写回到HTTP响应中。</p>
-<h4 id="1-2-3-关于RequestHandler的更多知识"><a href="#1-2-3-关于RequestHandler的更多知识" class="headerlink" title="1.2.3 关于RequestHandler的更多知识"></a>1.2.3 关于RequestHandler的更多知识</h4><p>到目前为止，我们已经了解了RequestHandler对象的基础：如何从一个传入的HTTP请求中获得信息（使用get_argument和传入到get和post的参数）以及写HTTP响应（使用write方法）。除此之外，还有很多需要学习的，我们将在接下来的章节中进行讲解。同时，还有一些关于RequestHandler和Tornado如何使用它的只是需要记住。</p>
-<h5 id="1-2-3-1-HTTP方法"><a href="#1-2-3-1-HTTP方法" class="headerlink" title="1.2.3.1 HTTP方法"></a>1.2.3.1 HTTP方法</h5><p>截止到目前讨论的例子，每个RequestHandler类都只定义了一个HTTP方法的行为。但是，在同一个处理函数中定义多个方法是可能的，并且是有用的。把概念相关的功能绑定到同一个类是一个很好的方法。比如，你可能会编写一个处理函数来处理数据库中某个特定ID的对象，既使用GET方法，也使用POST方法。想象GET方法来返回这个部件的信息，而POST方法在数据库中对这个ID的部件进行改变：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># matched with (r&quot;/widget/(\d+)&quot;, WidgetHandler)</span><br><span class="line">class WidgetHandler(tornado.web.RequestHandler):</span><br><span class="line">    def get(self, widget_id):</span><br><span class="line">        widget = retrieve_from_db(widget_id)</span><br><span class="line">        self.write(widget.serialize())</span><br><span class="line"></span><br><span class="line">    def post(self, widget_id):</span><br><span class="line">        widget = retrieve_from_db(widget_id)</span><br><span class="line">        widget[&apos;foo&apos;] = self.get_argument(&apos;foo&apos;)</span><br><span class="line">        save_to_db(widget)</span><br></pre></td></tr></table></figure>
-<p>我们到目前为止只是用了GET和POST方法，但Tornado支持任何合法的HTTP请求（GET、POST、PUT、DELETE、HEAD、OPTIONS）。你可以非常容易地定义上述任一种方法的行为，只需要在RequestHandler类中使用同名的方法。下面是另一个想象的例子，在这个例子中针对特定frob ID的HEAD请求只根据frob是否存在给出信息，而GET方法返回整个对象：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># matched with (r&quot;/frob/(\d+)&quot;, FrobHandler)</span><br><span class="line">class FrobHandler(tornado.web.RequestHandler):</span><br><span class="line">    def head(self, frob_id):</span><br><span class="line">        frob = retrieve_from_db(frob_id)</span><br><span class="line">        if frob is not None:</span><br><span class="line">            self.set_status(200)</span><br><span class="line">        else:</span><br><span class="line">            self.set_status(404)</span><br><span class="line">    def get(self, frob_id):</span><br><span class="line">        frob = retrieve_from_db(frob_id)</span><br><span class="line">        self.write(frob.serialize())</span><br></pre></td></tr></table></figure>
-<h5 id="1-2-3-2-HTTP状态码"><a href="#1-2-3-2-HTTP状态码" class="headerlink" title="1.2.3.2 HTTP状态码"></a>1.2.3.2 HTTP状态码</h5><p>从上面的代码可以看出，你可以使用RequestHandler类的ser_status()方法显式地设置HTTP状态码。然而，你需要记住在某些情况下，Tornado会自动地设置HTTP状态码。下面是一个常用情况的纲要：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">404 Not Found</span><br></pre></td></tr></table></figure>
-<p>Tornado会在HTTP请求的路径无法匹配任何RequestHandler类相对应的模式时返回404（Not Found）响应码。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">400 Bad Request</span><br></pre></td></tr></table></figure>
-<p>如果你调用了一个没有默认值的get_argument函数，并且没有发现给定名称的参数，Tornado将自动返回一个400（Bad Request）响应码。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">405 Method Not Allowed</span><br></pre></td></tr></table></figure>
-<p>如果传入的请求使用了RequestHandler中没有定义的HTTP方法（比如，一个POST请求，但是处理函数中只有定义了get方法），Tornado将返回一个405（Methos Not Allowed）响应码。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">500 Internal Server Error</span><br></pre></td></tr></table></figure>
-<p>当程序遇到任何不能让其退出的错误时，Tornado将返回500（Internal Server Error）响应码。你代码中任何没有捕获的异常也会导致500响应码。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">200 OK</span><br></pre></td></tr></table></figure>
-<p>如果响应成功，并且没有其他返回码被设置，Tornado将默认返回一个200（OK）响应码。</p>
-<p>当上述任何一种错误发生时，Tornado将默认向客户端发送一个包含状态码和错误信息的简短片段。如果你想使用自己的方法代替默认的错误响应，你可以重写write_error方法在你的RequestHandler类中。比如，代码清单1-3是hello.py示例添加了常规的错误消息的版本。</p>
-<p>*代码清单1-3 常规错误响应：hello-errors.py</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">import tornado.httpserver</span><br><span class="line">import tornado.ioloop</span><br><span class="line">import tornado.options</span><br><span class="line">import tornado.web</span><br><span class="line"></span><br><span class="line">from tornado.options import define, options</span><br><span class="line">define(&quot;port&quot;, default=8000, help=&quot;run on the given port&quot;, type=int)</span><br><span class="line"></span><br><span class="line">class IndexHandler(tornado.web.RequestHandler):</span><br><span class="line">    def get(self):</span><br><span class="line">        greeting = self.get_argument(&apos;greeting&apos;, &apos;Hello&apos;)</span><br><span class="line">        self.write(greeting + &apos;, friendly user!&apos;)</span><br><span class="line">    def write_error(self, status_code, **kwargs):</span><br><span class="line">        self.write(&quot;Gosh darnit, user! You caused a %d error.&quot; % status_code)</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    tornado.options.parse_command_line()</span><br><span class="line">    app = tornado.web.Application(handlers=[(r&quot;/&quot;, IndexHandler)])</span><br><span class="line">    http_server = tornado.httpserver.HTTPServer(app)</span><br><span class="line">    http_server.listen(options.port)</span><br><span class="line">    tornado.ioloop.IOLoop.instance().start()</span><br></pre></td></tr></table></figure>
-<p>当我们尝试一个POST请求时，会得到下面的响应。一般来说，我们应该得到Tornado默认的错误响应，但因为我们覆写了write_error，我们会得到不一样的东西：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ curl -d foo=bar http://localhost:8000/</span><br><span class="line">Gosh darnit, user! You caused a 405 error.</span><br></pre></td></tr></table></figure>
-<h2 id="1-2-4-下一步"><a href="#1-2-4-下一步" class="headerlink" title="1.2.4 下一步"></a>1.2.4 下一步</h2><p>现在你已经明白了最基本的东西，我们渴望你想了解更多。在接下来的章节，我们将向你展示能够帮助你使用Tornado创建成熟的Web服务和应用的功能和技术。首先是：Tornado的模板系统。</p>
-
-      
+    <div class="post-content">
+        Tornado Web Framework 1
+文章转自这里
+在过去的五年里，Web开发人员的可用工具实现了跨越式地增长。当技术专家不断推动极限，使Web应用无处不在时，我们也不得不升级我们的工具、创建框架以保证构建更好的应用。我们希望能够使用新的工具，方便我们写出更加整洁、可维护的代码，使部署到世界各地的用户时拥有高效的可扩展性。
+这就让我们谈论到T...
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2016/03/05/tornado-web-framework-1/" data-id="cm50h3r9i003zyfht8ravins0" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2016/03/05/tornado-web-framework-1/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
+</div>
 
-
-  
-    <article id="post-the-samplest-django-project" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/02/13/the-samplest-django-project/" class="article-date">
-  <time datetime="2016-02-12T16:00:00.000Z" itemprop="datePublished">2016-02-13</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/django/">django</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/02/13/the-samplest-django-project/">The Samplest Django Project</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>Create a Django project in a python file</em></p>
-<p>project_name.py</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line">BASE_PATH = os.path.dirname(__file__)</span><br><span class="line"></span><br><span class="line">from django.conf import settings</span><br><span class="line">from django.conf.urls import patterns, url</span><br><span class="line">from django.core.management import execute_from_command_line</span><br><span class="line">from django.shortcuts import render</span><br><span class="line"></span><br><span class="line">settings.configure(</span><br><span class="line">    DEBUG=True,</span><br><span class="line">    SECRET_KEY=&quot;thisisasampleesedjangoprject&quot;,</span><br><span class="line">    ROOT_URLCONF=sys.module[__name__],</span><br><span class="line">    TEMPLATE_DIRS=(</span><br><span class="line">        os.path.join(BASE_PATH, &apos;templates&apos;),</span><br><span class="line">    ),</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">def index(request):</span><br><span class="line">    return render(request,&apos;index.html&apos;,&#123;&apos;request&apos;:request&#125;)</span><br><span class="line"></span><br><span class="line">urlpatterns = patterns(&apos;&apos;,</span><br><span class="line">    url(r&apos;^$&apos;,index,name=&apos;index&apos;),</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">    execute_from_command_line(sys.argv)</span><br></pre></td></tr></table></figure>
-<p>Run it:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python project_name.py runserver</span><br></pre></td></tr></table></figure>
-
-      
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">3.</span>
+        <h2><a href="/2016/02/13/the-samplest-django-project/">The Samplest Django Project</a></h2>
+        <span class="post-date">2016-02-13</span>
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2016/02/13/the-samplest-django-project/" data-id="cm50h3r9d003tyfhtra8olq0z" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2016/02/13/the-samplest-django-project/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-python修饰器的函数式编程" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/02/11/python修饰器的函数式编程/" class="article-date">
-  <time datetime="2016-02-10T16:00:00.000Z" itemprop="datePublished">2016-02-11</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/02/11/python修饰器的函数式编程/">Python修饰器的函数式编程</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本文转自”<a href="http://coolshell.cn/articles/11265.html&quot;" target="_blank" rel="noopener">http://coolshell.cn/articles/11265.html&quot;</a></p>
-<p>Python的修饰器的英文名叫Decorator，当你看到这个英文名的时候，你可能会把其跟Design Pattern里的Decorator搞混了，其实这是完全不同的两个东西。虽然好像，他们要干的事都很相似——都是想要对一个已有的模块做一些“修饰工作”，所谓修饰工作就是想给现有的模块加上一些小装饰（一些小功能，这些小功能可能好多模块都会用到），但又不让这个小装饰（小功能）侵入到原有的模块中的代码里去。但是OO的Decorator简直就是一场恶梦，不信你就去看看wikipedia上的词条（Decorator Pattern）里的UML图和那些代码，这就是我在《 从面向对象的设计模式看软件设计》“餐后甜点”一节中说的，OO鼓励了——“厚重地胶合和复杂层次”，也是《 如此理解面向对象编程》中所说的“OO的狂热者们非常害怕处理数据”，Decorator Pattern搞出来的代码简直就是OO的反面教程。</p>
-<p>Python 的 Decorator在使用上和Java/C#的Annotation很相似，就是在方法名前面加一个@XXX注解来为这个方法装饰一些东西。但是，Java/C#的Annotation也很让人望而却步，太TMD的复杂了，你要玩它，你需要了解一堆Annotation的类库文档，让人感觉就是在学另外一门语言。</p>
-<p>而Python使用了一种相对于Decorator Pattern和Annotation来说非常优雅的方法，这种方法不需要你去掌握什么复杂的OO模型或是Annotation的各种类库规定，完全就是语言层面的玩法：一种函数式编程的技巧。如果你看过本站的《函数式编程》，你一定会为函数式编程的那种“描述你想干什么，而不是描述你要怎么去实现”的编程方式感到畅快。（如果你不了解函数式编程，那在读本文之前，还请你移步去看看《函数式编程》） 好了，我们先来点感性认识，看一个Python修饰器的Hello World的代码。</p>
-<h2 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h2><p>下面是代码:</p>
-<p>文件名:hello.py</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">def hello(fn):</span><br><span class="line">    def wrapper():</span><br><span class="line">        print &quot;hello,%s&quot; % fn.__name__</span><br><span class="line">        fn()</span><br><span class="line">        print &quot;goodbye, %s&quot; % fn.__name__</span><br><span class="line">    return wrapper</span><br><span class="line"></span><br><span class="line">@hello</span><br><span class="line">def foo():</span><br><span class="line">    print &quot;I am foo&quot;</span><br><span class="line"></span><br><span class="line">foo()</span><br></pre></td></tr></table></figure>
-<p>当你运行代码，输出如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[chenaho@chenhao-air]$ python hello.py</span><br><span class="line">hello, foo</span><br><span class="line">i am foo</span><br><span class="line">goodby, foo</span><br></pre></td></tr></table></figure>
-<p>你可以看到如下的东西：<br>1.函数foo前面有个@hello的“注解”，hello就是我们前面定义的函数hello<br>2.在hello函数中，其需要一个fn的参数（这就用来做回调的函数）<br>3.hello函数中返回了一个inner函数wrapper，这个wrapper函数回调了传进来的fn，并在回调前后加了两条语句。</p>
-<h2 id="Decorator的本质"><a href="#Decorator的本质" class="headerlink" title="Decorator的本质"></a>Decorator的本质</h2><p>对于Python的这个@注解语法糖- Syntactic Sugar 来说，当你在用某个@decorator来修饰某个函数func时，如下所示:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@decorator</span><br><span class="line">def func():</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
-<p>其解释器会解释成如下语句:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func = decorator(func)</span><br></pre></td></tr></table></figure>
-<p>尼玛，这不就是把一个函数当参数传到另一个函数中，然后再回调吗？是的，但是，我们需要注意，那里还有一个赋值语句，把decorator这个函数的返回值赋值回了原来的func。 根据《函数式编程》中的first class functions中的定义的，你可以把函数当成变量来使用，所以，decorator必需得返回了一个函数出来给func，这就是所谓的higher order function 高阶函数，不然，后面当func()调用的时候就会出错。 就我们上面那个hello.py里的例子来说，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@hello</span><br><span class="line">def foo():</span><br><span class="line">    print &quot;I am foo&quot;</span><br></pre></td></tr></table></figure>
-<p>被解释成:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">foo = hello(foo)</span><br></pre></td></tr></table></figure>
-<p>是的，这是一条语句，而且还被执行了。你如果不信的话，你可以写这样的程序来试试看：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def fuck(fn):</span><br><span class="line">    print &quot;fuck %s!&quot; % fn.__name__[::-1].upper()</span><br><span class="line"></span><br><span class="line">@fuck</span><br><span class="line">def wfg():</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
-<p>没了，就上面这段代码，没有调用wfg()的语句，你会发现， fuck函数被调用了，而且还很NB地输出了我们每个人的心声！</p>
-<p>再回到我们hello.py的那个例子，我们可以看到，hello(foo)返回了wrapper()函数，所以，foo其实变成了wrapper的一个变量，而后面的foo()执行其实变成了wrapper()。</p>
-<p>知道这点本质，当你看到有多个decorator或是带参数的decorator，你也就不会害怕了。</p>
-<p>比如：多个decorator</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@decorator_one</span><br><span class="line">@decorator_two</span><br><span class="line">def func():</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
-<p>相当于:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func = decorator_one(decorator_two(func))</span><br></pre></td></tr></table></figure>
-<p>比如:带参数的decorator:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@decorator(arg1,arg2)</span><br><span class="line">def func():</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
-<p>相当于:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func = decorator(arg1,arg2)(func)</span><br></pre></td></tr></table></figure>
-<p>这意味着decorator(arg1,arg2)这个函数需要返回一个”真正的decorator”.</p>
-<h2 id="带参数及多个decorator"><a href="#带参数及多个decorator" class="headerlink" title="带参数及多个decorator"></a>带参数及多个decorator</h2><p>我们来看一个有点意义的例子:<br>html.py</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">def makeHtmlTag(tag,*args,**kwargs):</span><br><span class="line">    def real_decorator(fn):</span><br><span class="line">        css_class = &quot; class=&apos;&#123;0&#125;&apos;&quot;.format(kwargs[&apos;css_class&apos;]) if &quot;css_class&quot; in kwargs else &apos;&apos;</span><br><span class="line">        def wrapped(*args,**kwargs):</span><br><span class="line">            return &quot;&lt;&quot; + tag + css_class + &quot;&gt;&quot; + fn(*args,**kwargs) + &quot;&lt;/&quot; + tag + &quot;&gt;&quot;</span><br><span class="line">        return wrapped</span><br><span class="line">    return real_decorator</span><br><span class="line"></span><br><span class="line">@makeHtmlTag(tag=&apos;b&apos;,css_class=&apos;bold_css&apos;)</span><br><span class="line">@makeHtmlTag(tag=&apos;i&apos;,css_class=&apos;italic_css&apos;)</span><br><span class="line">def hello():</span><br><span class="line">    return &apos;hello world&apos;</span><br><span class="line"></span><br><span class="line">print hello()</span><br><span class="line"></span><br><span class="line">#输出</span><br><span class="line">#&lt;b class=&apos;bold_css&apos;&gt;&lt;i class=&apos;italic_css&apos;&gt;hello world&lt;/i&gt;&lt;/b&gt;</span><br></pre></td></tr></table></figure>
-<p>在上面这个例子中，我们可以看到：makeHtmlTag有两个参数。所以，为了让 hello = makeHtmlTag(arg1, arg2)(hello) 成功，makeHtmlTag 必需返回一个decorator（这就是为什么我们在makeHtmlTag中加入了real_decorator()的原因），这样一来，我们就可以进入到 decorator 的逻辑中去了—— decorator得返回一个wrapper，wrapper里回调hello。看似那个makeHtmlTag() 写得层层叠叠，但是，已经了解了本质的我们觉得写得很自然。</p>
-<p>你看，Python的Decorator就是这么简单，没有什么复杂的东西，你也不需要了解过多的东西，使用起来就是那么自然、体贴、干爽、透气，独有的速效凹道和完美的吸收轨迹，让你再也不用为每个月的那几天感到焦虑和不安，再加上贴心的护翼设计，量多也不用当心。对不起，我调皮了。</p>
-<p>什么，你觉得上面那个带参数的Decorator的函数嵌套太多了，你受不了。好吧，没事，我们看看下面的方法。</p>
-<h2 id="class式的Decorator"><a href="#class式的Decorator" class="headerlink" title="class式的Decorator"></a>class式的Decorator</h2><p>首先，先得说一下，decorator的class方式，还是看个示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class myDecorator(object):</span><br><span class="line">    def __init__(self,fn):</span><br><span class="line">        print &quot;inside myDecorator.__init__()&quot;</span><br><span class="line">        self.fn = fn</span><br><span class="line"></span><br><span class="line">    def __call__(self):</span><br><span class="line">        self.fn()</span><br><span class="line">        print &quot;inside myDecorator.__call__()&quot;</span><br><span class="line"></span><br><span class="line">@myDecorator</span><br><span class="line">def aFunction():</span><br><span class="line">    print &quot;inside aFunction()&quot;</span><br><span class="line"></span><br><span class="line">print &quot;Finished...&quot;</span><br><span class="line"></span><br><span class="line">aFunction()</span><br><span class="line"></span><br><span class="line">#输出</span><br><span class="line"># inside myDecorator.__init__()</span><br><span class="line"># Finished decorating aFunction()</span><br><span class="line"># inside aFunction()</span><br><span class="line"># inside myDecorator.__call__()</span><br></pre></td></tr></table></figure>
-<p>上面这个示例展示了，用类的方式声明一个decorator。我们可以看到这个类中有两个成员：</p>
-<p>1.一个是<strong>init</strong>()，这个方法是在我们给某个函数decorator时被调用，所以，需要有一个fn的参数，也就是被decorator的函数。<br>2.一个是<strong>call</strong>()，这个方法是在我们调用被decorator函数时被调用的。</p>
-<p>上面输出可以看到整个程序的执行顺序。</p>
-<p>这看上去要比“函数式”的方式更易读一些。</p>
-<p>下面，我们来看看用类的方式来重写上面的html.py的代码：</p>
-<p>html.py</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class makeHtmlTagClass(object):</span><br><span class="line">    def __init__(self,tag,css_class=&apos;&apos;):</span><br><span class="line">        self._tag = tag</span><br><span class="line">        self._css_class = &quot; class=&apos;&#123;0&#125;&apos;&quot;.format(css_class) if css_class != &apos;&apos; else &apos;&apos;</span><br><span class="line"></span><br><span class="line">    def __call__(self,fn):</span><br><span class="line">        def wrapped(*args,**kwargs):</span><br><span class="line">            return &quot;&lt;&quot; + self._tag + self._css_class + &quot;&gt;&quot; + fn(*args,**kwargs) + &quot;&lt;/&quot; + tag + &quot;&gt;&quot;</span><br><span class="line">        return wrapped</span><br><span class="line"></span><br><span class="line">@makeHtmlTagClass(tag=&apos;b&apos;,css_class=&apos;bold_css&apos;)</span><br><span class="line">@makeHtmlTagClass(tag=&apos;i&apos;,css_class=&apos;italic_css&apos;)</span><br><span class="line">def hello(name):</span><br><span class="line">    return &quot;Hello, &#123;&#125;&quot;.format(name)</span><br><span class="line"></span><br><span class="line">print hello(&apos;Tony Tan&apos;)</span><br></pre></td></tr></table></figure>
-<p>上面这段代码中，我们需要注意这几点：</p>
-<p>1.如果decorator有参数的话，<strong>init</strong>() 成员就不能传入fn了，而fn是在<strong>call</strong>的时候传入的。<br>2.这段代码还展示了 wrapped(*args, **kwargs) 这种方式来传递被decorator函数的参数。（其中：args是一个参数列表，kwargs是参数dict，具体的细节，请参考Python的文档或是StackOverflow的这个问题，这里就不展开了）</p>
-<h2 id="用Decorator设置函数的调用参数"><a href="#用Decorator设置函数的调用参数" class="headerlink" title="用Decorator设置函数的调用参数"></a>用Decorator设置函数的调用参数</h2><p>你有三种方法可以干这个事：</p>
-<p>第一种，通过 **kwargs，这种方法decorator会在kwargs中注入参数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">def decorator_A(function):</span><br><span class="line">    def wrap_function(*args,**kwargs):</span><br><span class="line">        kwargs[&apos;str&apos;] = &apos;hello&apos;</span><br><span class="line">        return function(*args,**kwargs)</span><br><span class="line">    return wrap_function</span><br><span class="line"></span><br><span class="line">@decorator_A</span><br><span class="line">def print_message_A(*args,**kwargs):</span><br><span class="line">    print kwargs[&apos;str&apos;]</span><br><span class="line"></span><br><span class="line">print_message_A()</span><br></pre></td></tr></table></figure>
-<p>第二种，约定好参数，直接修改参数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">def decorate_B(function):</span><br><span class="line">    def wrap_function(*args,**kwargs):</span><br><span class="line">        str = &apos;hello&apos;</span><br><span class="line">        return function(str,*args,**kwargs)</span><br><span class="line">    return wrap_function</span><br><span class="line"></span><br><span class="line">@decorate_B</span><br><span class="line">def print_message_B(str,*args,**kwargs):</span><br><span class="line">    print str</span><br><span class="line"></span><br><span class="line">print_message_B()</span><br></pre></td></tr></table></figure>
-<p>第三种，通过 *args 注入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">def decorate_C(function):</span><br><span class="line">    def wrap_function(*args,**kwargs):</span><br><span class="line">        str = &apos;hello&apos;</span><br><span class="line">        args = args + (str,)</span><br><span class="line">        return function(*args,**kwargs)</span><br><span class="line">    return wrap_function</span><br><span class="line"></span><br><span class="line">class Printer:</span><br><span class="line">    @decorate_C</span><br><span class="line">    def print_message(self,str,*args,**kwargs):</span><br><span class="line">        print str</span><br><span class="line"></span><br><span class="line">p=Printer()</span><br><span class="line">p.print_message()</span><br></pre></td></tr></table></figure>
-<h2 id="Decorator的副作用"><a href="#Decorator的副作用" class="headerlink" title="Decorator的副作用"></a>Decorator的副作用</h2><p>到这里，我相信你应该了解了整个Python的decorator的原理了。</p>
-<p>相信你也会发现，被decorator的函数其实已经是另外一个函数了，对于最前面那个hello.py的例子来说，如果你查询一下foo.<strong>name</strong>的话，你会发现其输出的是“wrapper”，而不是我们期望的“foo”，这会给我们的程序埋一些坑。所以，Python的functool包中提供了一个叫wrap的decorator来消除这样的副作用。下面是我们新版本的hello.py。</p>
-<p>文件名：hello.py</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">from functools import wraps</span><br><span class="line">def hello(fn):</span><br><span class="line">    @wraps(fn)</span><br><span class="line">    def wrapper():</span><br><span class="line">        print &quot;hello, %s&quot; % fn.__name__</span><br><span class="line">        fn()</span><br><span class="line">        print &quot;goodbye, %s&quot; % fn.__name__</span><br><span class="line">    return wrapper</span><br><span class="line"></span><br><span class="line">＠hello</span><br><span class="line">def foo():</span><br><span class="line">    print &quot;I am foo&quot;</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">foo()</span><br><span class="line">print foo.__name__    #输出 foo</span><br><span class="line">print foo.__doc__     #输出 foo help doc</span><br></pre></td></tr></table></figure>
-<p>当然，即使是你用了functools的wraps，也不能完全消除这样的副作用。</p>
-<p>来看下面这个示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">from inspect import getmembers, getargspec</span><br><span class="line">from functools import wraps</span><br><span class="line"></span><br><span class="line">def wraps_decorator(f):</span><br><span class="line">    @wraps(f)</span><br><span class="line">    def wraps_wrapper(*args,**kwargs):</span><br><span class="line">        return f(*args,**kwargs)</span><br><span class="line">    return wraps_wrapper</span><br><span class="line"></span><br><span class="line">class SomeClass(object):</span><br><span class="line">    @wraps_decorator</span><br><span class="line">    def method(self,x,y):</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line">obj = SomeClass()</span><br><span class="line">for name,func in getmembers(obj, predicate=inspect.ismethod):</span><br><span class="line">    print &quot;Member Name: &#123;&#125;&quot;.format(name)</span><br><span class="line">    print &quot;Func Name: &#123;&#125;&quot;.format(func.func_name)</span><br><span class="line">    print &quot;Args: &#123;&#125;&quot;.format(getargspec(func)[0])</span><br><span class="line"></span><br><span class="line">#输出</span><br><span class="line">#Member Name: method</span><br><span class="line">#Func Name: method</span><br><span class="line">#Args: []</span><br></pre></td></tr></table></figure>
-<p>你会发现，即使是你你用了functools的wraps，你在用getargspec时，参数也不见了。</p>
-<p>要修正这一问，我们还得用Python的反射来解决，下面是相关的代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">def get_true_argspec(method):</span><br><span class="line">    argspec = inspect.getargspec(method)</span><br><span class="line">    args = argspec[0]</span><br><span class="line">    if args and args[0] == &apos;self&apos;:</span><br><span class="line">        return argspec</span><br><span class="line">    if hasattr(method, &apos;__func__&apos;):</span><br><span class="line">        method = method.__func__</span><br><span class="line">    if not hasattr(method, &apos;func_closure&apos;) or method.func_closure is None:</span><br><span class="line">        raise Exception(&quot;No closure for method.&quot;)</span><br><span class="line"></span><br><span class="line">    method = method.func_closure[0].cell_contents</span><br><span class="line">    return get_true_argspec(method)</span><br></pre></td></tr></table></figure>
-<p>当然，我相信大多数人的程序都不会去getargspec。所以，用functools的wraps应该够用了。</p>
-<h2 id="一些decorator的实例"><a href="#一些decorator的实例" class="headerlink" title="一些decorator的实例"></a>一些decorator的实例</h2><p>好了，现在我们来看一下各种decorator的例子：</p>
-<h4 id="给函数调用做缓存"><a href="#给函数调用做缓存" class="headerlink" title="给函数调用做缓存"></a>给函数调用做缓存</h4><p>这个例实在是太经典了，整个网上都用这个例子做decorator的经典范例，因为太经典了，所以，我这篇文章也不能免俗。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">from functools import wraps</span><br><span class="line">def memo(fn):</span><br><span class="line">    cache = &#123;&#125;</span><br><span class="line">    miss = object()</span><br><span class="line">    @wraps(fn)</span><br><span class="line">    def wrapper(*args):</span><br><span class="line">        result = cache.get(args, miss)</span><br><span class="line">        if result is miss:</span><br><span class="line">            result = fn(*args)</span><br><span class="line">            cache[args] = result</span><br><span class="line">        return result</span><br><span class="line">    return wrapper</span><br><span class="line"></span><br><span class="line">@memo</span><br><span class="line">def fib(n):</span><br><span class="line">    if n &lt; 2:</span><br><span class="line">        return n</span><br><span class="line">    return fib(n - 1) + fib(n - 2)</span><br></pre></td></tr></table></figure>
-<p>上面这个例子中，是一个斐波拉契数例的递归算法。我们知道，这个递归是相当没有效率的，因为会重复调用。比如：我们要计算fib(5)，于是其分解成fib(4) + fib(3)，而fib(4)分解成fib(3)+fib(2)，fib(3)又分解成fib(2)+fib(1)…… 你可看到，基本上来说，fib(3), fib(2), fib(1)在整个递归过程中被调用了两次。</p>
-<p>而我们用decorator，在调用函数前查询一下缓存，如果没有才调用了，有了就从缓存中返回值。一下子，这个递归从二叉树式的递归成了线性的递归。</p>
-<h4 id="Profiler的例子"><a href="#Profiler的例子" class="headerlink" title="Profiler的例子"></a>Profiler的例子</h4><p>这个例子没什么高深的，就是实用一些。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import cProfile, pstats, StringIO</span><br><span class="line">def profiler(func):</span><br><span class="line">    def wrapper(*args,**kwargs):</span><br><span class="line">        datafn = func.__name__ + &quot;.profile&quot;</span><br><span class="line">        prof = cProfile.Profile()</span><br><span class="line">        retval = prof.runcall(func, *args, **kwargs)</span><br><span class="line">        s = StringIO.StringIO()</span><br><span class="line">        sortby = &apos;cumulative&apos;</span><br><span class="line">        ps = pstats.Stats(prof, stream=s).sort_stats(sortby)</span><br><span class="line">        ps.print_stats()</span><br><span class="line">        print s.getvalue()</span><br><span class="line">        return retval</span><br><span class="line">    return wrapper</span><br></pre></td></tr></table></figure>
-<h4 id="注册回调函数"><a href="#注册回调函数" class="headerlink" title="注册回调函数"></a>注册回调函数</h4><p>下面这个示例展示了通过URL的路由来调用相关注册的函数示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">class MyApp():</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.func_map = &#123;&#125;</span><br><span class="line"></span><br><span class="line">    def register(self, name):</span><br><span class="line">        def func_wrapper(func):</span><br><span class="line">            self.func_map[name] = func</span><br><span class="line">            return func</span><br><span class="line">    def call_method(self, name=None):</span><br><span class="line">        func = self.func_map.get(name, None)</span><br><span class="line">        if func is None:</span><br><span class="line">            raise Exception(&quot;No function registered against - &quot; + str(name))</span><br><span class="line">        return func()</span><br><span class="line"></span><br><span class="line">app = MyApp()</span><br><span class="line"></span><br><span class="line">@app.register(&apos;/&apos;)</span><br><span class="line">def main_page_func():</span><br><span class="line">    return &quot;This is the main page.&quot;</span><br><span class="line"></span><br><span class="line">@app.register(&apos;/next_page&apos;)</span><br><span class="line">def next_page_func():</span><br><span class="line">    return &quot;This is the next page.&quot;</span><br><span class="line"></span><br><span class="line">print app.call_method(&apos;/&apos;)</span><br><span class="line">print app.call_method(&apos;/next_page&apos;)</span><br></pre></td></tr></table></figure>
-<p>注意：</p>
-<p>1.上面这个示例中，用类的实例来做decorator。<br>2.decorator类中没有<strong>call</strong>()，但是wrapper返回了原函数。所以，原函数没有发生任何变化。</p>
-<h4 id="给函数打日志"><a href="#给函数打日志" class="headerlink" title="给函数打日志"></a>给函数打日志</h4><p>下面这个示例演示了一个logger的decorator，这个decorator输出了函数名，参数，返回值，和运行时间。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">from functools import wraps</span><br><span class="line">def looger(fn):</span><br><span class="line">    @wraps(fn)</span><br><span class="line">    def wrapper(*args,**kwargs):</span><br><span class="line">        ts = time.time()</span><br><span class="line">        result = fn(*args,**kwargs)</span><br><span class="line">        te = time.time()</span><br><span class="line">        print &quot;function    = &#123;0&#125;&quot;.format(fn.__name__)</span><br><span class="line">        print &quot;    arguments = &#123;0&#125;&quot;.format(args,kwargs)</span><br><span class="line">        print &quot;    return = &#123;0&#125;&quot;.format(result)</span><br><span class="line">        print &quot;    time = %.6f sec&quot; % (te-ts)</span><br><span class="line">        return result</span><br><span class="line">    return wrapper</span><br><span class="line"></span><br><span class="line">@logger</span><br><span class="line">def multipy(x,y):</span><br><span class="line">    return x * y</span><br><span class="line"></span><br><span class="line">@logger</span><br><span class="line">def sum_num(n):</span><br><span class="line">    s = 0</span><br><span class="line">    for i in xrange(n+1):</span><br><span class="line">        s += i</span><br><span class="line">    return s</span><br><span class="line"></span><br><span class="line">print multipy(2,10)</span><br><span class="line">print sum_num(100)</span><br><span class="line">print sum_num(1000000)</span><br></pre></td></tr></table></figure>
-<p>上面那个打日志还是有点粗糙，让我们看一个更好一点的（带log level参数的）：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import inspect</span><br><span class="line">def get_line_number():</span><br><span class="line">    return inspect.currentframe().f_back.f_back.f_lineno</span><br><span class="line"> </span><br><span class="line">def logger(loglevel):</span><br><span class="line">    def log_decorator(fn):</span><br><span class="line">        @wraps(fn)</span><br><span class="line">        def wrapper(*args, **kwargs):</span><br><span class="line">            ts = time.time()</span><br><span class="line">            result = fn(*args, **kwargs)</span><br><span class="line">            te = time.time()</span><br><span class="line">            print &quot;function   = &quot; + fn.__name__,</span><br><span class="line">            print &quot;    arguments = &#123;0&#125; &#123;1&#125;&quot;.format(args, kwargs)</span><br><span class="line">            print &quot;    return    = &#123;0&#125;&quot;.format(result)</span><br><span class="line">            print &quot;    time      = %.6f sec&quot; % (te-ts)</span><br><span class="line">            if (loglevel == &apos;debug&apos;):</span><br><span class="line">                print &quot;    called_from_line : &quot; + str(get_line_number())</span><br><span class="line">            return result</span><br><span class="line">        return wrapper</span><br><span class="line">    return log_decorator</span><br></pre></td></tr></table></figure>
-<p>但是，上面这个带log level参数的有两具不好的地方，</p>
-<p>1.loglevel不是debug的时候，还是要计算函数调用的时间。<br>2.不同level的要写在一起，不易读。</p>
-<p>我们再接着改进：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">import inspect</span><br><span class="line">from functools import wraps</span><br><span class="line">def advance_logger(loglevel):</span><br><span class="line"></span><br><span class="line">    def get_line_number():</span><br><span class="line">        return inspect.currentframe().f_back.f_back.f_lineno</span><br><span class="line"></span><br><span class="line">    def _basic_log(fn, result, *args, **kwargs):</span><br><span class="line">        print &quot;function    = &quot; + fn.__name__</span><br><span class="line">        print &quot;    arguments = &#123;0&#125;&quot;.format(args,kwargs)</span><br><span class="line">        print &quot;    return = &#123;0&#125;&quot;.format(result)</span><br><span class="line"></span><br><span class="line">    def info_log_decorator(fn):</span><br><span class="line">        @wraps(fn)</span><br><span class="line">        def wrappers(*args,**kwargs):</span><br><span class="line">            result = fn(*args,**kwargs)</span><br><span class="line">            _basic_log(fn, result, args, kwargs)</span><br><span class="line"></span><br><span class="line">    def debug_log_decorator(fn):</span><br><span class="line">        @wraps(fn)</span><br><span class="line">        def wrapper(*args,**kwargs):</span><br><span class="line">            ts = time.time()</span><br><span class="line">            result = fn(*args, **kwargs)</span><br><span class="line">            te = time.time()</span><br><span class="line">            _basic_log(fn, result, args, kwargs)</span><br><span class="line">            print &quot;    time = %.6f sec&quot; % (te-ts)</span><br><span class="line">            print &quot;    called_from_line : &quot; + str(get_line_number())</span><br><span class="line">        return wrapper</span><br><span class="line"></span><br><span class="line">    if loglevel is &quot;debug&quot;:</span><br><span class="line">        return debug_log_decorator</span><br><span class="line">    else:</span><br><span class="line">        return info_log_decorator</span><br></pre></td></tr></table></figure>
-<p>你可以看到两点，</p>
-<p>1.我们分了两个log level，一个是info的，一个是debug的，然后我们在外尾根据不同的参数返回不同的decorator。<br>2.我们把info和debug中的相同的代码抽到了一个叫_basic_log的函数里，DRY原则。</p>
-<h4 id="一个MySQL的Decorator"><a href="#一个MySQL的Decorator" class="headerlink" title="一个MySQL的Decorator"></a>一个MySQL的Decorator</h4><p>下面这个decorator是我在工作中用到的代码，我简化了一下，把DB连接池的代码去掉了，这样能简单点，方便阅读。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">import umysql</span><br><span class="line">from functools import wraps</span><br><span class="line"></span><br><span class="line">class Configuration:</span><br><span class="line">    def __init__(self, env):</span><br><span class="line">        if env == &quot;Prod&quot;:</span><br><span class="line">            self.host = &quot;coolshell.cn&quot;</span><br><span class="line">            self.port = 3306</span><br><span class="line">            self.db = &quot;coolshell&quot;</span><br><span class="line">            self.user = &quot;coolshell&quot;</span><br><span class="line">            self.passwd = &quot;fuckgfw&quot;</span><br><span class="line">        elif env == &quot;Test&quot;:</span><br><span class="line">            self.host = &quot;localhost&quot;</span><br><span class="line">            self.port =3300</span><br><span class="line">            self.db = &quot;coolshell&quot;</span><br><span class="line">            self.user =&quot;coolshell&quot;</span><br><span class="line">            self.passwd = &quot;fuckgfw&quot;</span><br><span class="line"></span><br><span class="line">def mysql(sql):</span><br><span class="line">    _conf = Configuration(env=&apos;Prod&apos;)</span><br><span class="line">    def on_sql_error(err):</span><br><span class="line">        print err</span><br><span class="line">        sys.exit(-1)</span><br><span class="line"></span><br><span class="line">    def handle_sql_result(rs):</span><br><span class="line">        if rs.rows &gt; 0:</span><br><span class="line">            fieldnames = [f[0] for f in rs.fields]</span><br><span class="line">        else:</span><br><span class="line">            return []</span><br><span class="line"></span><br><span class="line">    def decorator(fn):</span><br><span class="line">        @wraps(fn)</span><br><span class="line">        def wrapper(*args,**kwargs):</span><br><span class="line">            mysqlconn = umysql.Connection()</span><br><span class="line">            mysqlconn.settimeout(5)</span><br><span class="line">            mysqlconn.connect(_conf.host, _conf.port, _conf.user, _conf.passwd, _conf.db, True,&apos;utf8&apos;)</span><br><span class="line">            try:</span><br><span class="line">                rs = mysqlconn.query(sql, &#123;&#125;)</span><br><span class="line">            except umysql.Error as e:</span><br><span class="line">                on_sql_error(e)</span><br><span class="line"></span><br><span class="line">            data = handle_sql_result(rs)</span><br><span class="line">            kwargs[&apos;data&apos;] = data</span><br><span class="line">            result = fn(*args,**kwargs)</span><br><span class="line">            mysqlconn.close()</span><br><span class="line">            return result</span><br><span class="line">        return wrapper</span><br><span class="line">    return decorator</span><br><span class="line"></span><br><span class="line">@mysql(sql = &quot;select * from coolshell&quot;)</span><br><span class="line">def get_coolshell(data):</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
-<h4 id="线程异步"><a href="#线程异步" class="headerlink" title="线程异步"></a>线程异步</h4><p>下面是个非常简单的异步执行的decorator，注意，异步处理并不简单，下面只是一个示例。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">from threading import Thread</span><br><span class="line">from functools import wraps</span><br><span class="line"></span><br><span class="line">def async(func):</span><br><span class="line">    @wraps(func)</span><br><span class="line">    def async_func(*args,**kwargs):</span><br><span class="line">        func_hl = Thread(target=func, args=args, kwargs=kwargs)</span><br><span class="line">        func_hl.start()</span><br><span class="line">        return func_hl</span><br><span class="line">    return async_func</span><br><span class="line"></span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">    from time import sleep</span><br><span class="line">    </span><br><span class="line">    @async</span><br><span class="line">    def print_somedata():</span><br><span class="line">        print &quot;starting pring_somedta&quot;</span><br><span class="line">        sleep(2)</span><br><span class="line">        print &quot;print_somedata: 2 sec passed&quot;</span><br><span class="line">        sleep(2)</span><br><span class="line">        print &quot;print_somedata: 2 sec passed&quot;</span><br><span class="line">        sleep(2)</span><br><span class="line">        print &quot;finished print_somedata&quot;</span><br><span class="line"></span><br><span class="line">    def main():</span><br><span class="line">        print_somedata()</span><br><span class="line">        print &quot;back in main&quot;</span><br><span class="line">        print_somedata()</span><br><span class="line">        print &quot;back in main&quot;</span><br><span class="line"></span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
-<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><p>关于更多的示例，你可以参看： Python Decorator Library</p>
-<p>关于Python Decroator的各种提案，可以参看：Python Decorator Proposals</p>
-
-      
+    <div class="post-content">
+        Create a Django project in a python file
+project_name.py
+12345678910111213141516171819202122232425262728import osimport sysBASE_PATH = os.path.dirname(__file__)from django.conf ...
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2016/02/11/python修饰器的函数式编程/" data-id="cm50h3r9f003xyfhtwwu8k9s7" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2016/02/11/python修饰器的函数式编程/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
+</div>
 
-
-  
-    <article id="post-use-cron--crontab-to-run-schedule-tasks" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/02/10/use-cron--crontab-to-run-schedule-tasks/" class="article-date">
-  <time datetime="2016-02-09T16:00:00.000Z" itemprop="datePublished">2016-02-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/linux/">linux</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/02/10/use-cron--crontab-to-run-schedule-tasks/">Use Cron &amp; Crontab to run schedule tasks</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>In Ubuntu use Cron and Crontab to Run Schedule Tasks</em></p>
-<h3 id="Open-Close-Restart-Cron-in-Ubuntu"><a href="#Open-Close-Restart-Cron-in-Ubuntu" class="headerlink" title="Open/Close/Restart Cron in Ubuntu"></a>Open/Close/Restart Cron in Ubuntu</h3><p>Config file usurally is /etc/init.d/cron</p>
-<p>Start: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/cron start</span><br></pre></td></tr></table></figure>
-<p>Close:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/cron stop</span><br></pre></td></tr></table></figure>
-<p>Restart:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/cron restart</span><br><span class="line">sudo service cron restart</span><br></pre></td></tr></table></figure>
-<p>Reload config:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/cron reload</span><br></pre></td></tr></table></figure>
-<h3 id="Create-a-cron-task"><a href="#Create-a-cron-task" class="headerlink" title="Create a cron task"></a>Create a cron task</h3><p>Normally we use “crontab -u username -e” to add new task in the cron config file.</p>
-<p>If edit the exists task, the same command.</p>
-<h5 id="running-command-line"><a href="#running-command-line" class="headerlink" title="running command line"></a>running command line</h5><p>example to write “hello world” to /home/tonytan/helloworld.txt every 5 seconds.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*/5 * * * * echo &quot;hello world&quot; &gt;&gt; /home/tonytan/helloworld.txt</span><br></pre></td></tr></table></figure>
-<h5 id="use-shell-file"><a href="#use-shell-file" class="headerlink" title="use shell file"></a>use shell file</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*/5 * * * * /home/tonytan/helloworld.sh</span><br></pre></td></tr></table></figure>
-<p>Write the following codes into /home/tonytan/helloworld.sh</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">cd /home/tonytan/</span><br><span class="line">echo &quot;hello world&quot; &gt;&gt; helloworld.txt</span><br></pre></td></tr></table></figure>
-<p>Note: after edit the config file everytime must restart cron, unless unuseable.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo service cron restart</span><br><span class="line">sudo service cron status    #look the cron status</span><br><span class="line">crontab -l    #look the cron</span><br><span class="line">crontab -e    #edit cron</span><br></pre></td></tr></table></figure>
-<p>Attached is the normally example in cron config:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">every 5 sec run task:</span><br><span class="line">*/5 * * * * ?</span><br><span class="line"></span><br><span class="line">every 1 min run task:</span><br><span class="line">0 */1 * * * ?</span><br><span class="line"></span><br><span class="line">everyday 23:00 run task:</span><br><span class="line">0 0 23 * * ?</span><br><span class="line"></span><br><span class="line">everyday 1:00 run task:</span><br><span class="line">0 0 1 * * ?</span><br><span class="line"></span><br><span class="line">every month first day 1:00 run task:</span><br><span class="line">0 0 1 1 * ?</span><br><span class="line"></span><br><span class="line">every month last day 23:00 run task:</span><br><span class="line">0 0 23 L * ?</span><br><span class="line"></span><br><span class="line">every Sunday 1:00 run task:</span><br><span class="line">0 0 1 ? * L</span><br><span class="line"></span><br><span class="line">in 26min,29min,33min run task:</span><br><span class="line">0 26,29,33 * * * ?</span><br><span class="line"></span><br><span class="line">every day 0:00,13:00,18:00,21:00 run task:</span><br><span class="line">0 0 0,13,18,21 * * ?</span><br></pre></td></tr></table></figure>
-
-      
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">4.</span>
+        <h2><a href="/2016/02/11/python修饰器的函数式编程/">Python修饰器的函数式编程</a></h2>
+        <span class="post-date">2016-02-11</span>
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2016/02/10/use-cron--crontab-to-run-schedule-tasks/" data-id="cm50h3r9a003pyfht17dywl1k" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2016/02/10/use-cron--crontab-to-run-schedule-tasks/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-how-to-install-celery-on-django-and-create-a-periodic-task" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/01/25/how-to-install-celery-on-django-and-create-a-periodic-task/" class="article-date">
-  <time datetime="2016-01-24T16:00:00.000Z" itemprop="datePublished">2016-01-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/25/how-to-install-celery-on-django-and-create-a-periodic-task/">How to install Celery on Django and create a periodic task</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>How to install Celery on Django and create a periodic task</em></p>
-<p>Celery 3.1.19 and Django 1.8.7.<br>This post explains how to set up Celery with Django, using RabbitMQ as a message broker.</p>
-<p>It also explains how to create a Periodic Task.</p>
-<h3 id="The-Broker-RabbitMQ"><a href="#The-Broker-RabbitMQ" class="headerlink" title="The Broker RabbitMQ"></a>The Broker RabbitMQ</h3><p>First, we need to choose what is called a Message Broker, required by Celery in order to send and receive messages. Here we will use RabbitMQ, which is feature-complete, stable, durable and easy to install.<br>Moreover, it is the default broker so is does not require additional configuration.</p>
-<p>Check out how to install it for your particular system here. If you are using Ubuntu you can install it by following:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install rabbitmq</span><br></pre></td></tr></table></figure>
-<p>The RabbitMQ server scripts are installed into /usr/local/sbin. This is not automatically added to your path, so open or edit a .bash_profile in your home folder and the following line.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=$PATH:/usr/local/sbin</span><br></pre></td></tr></table></figure>
-<p>The server can then be statted with</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo rabbitmqctl stop</span><br></pre></td></tr></table></figure>
-<p>You can find a detailed description on how to use RabbitMQ with Celery here.</p>
-<p>After installing RabbitMQ we need to create a RabbitMQ user, a virtual host and allow that user to access the virtaul host. We also start the server before that:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo rabbitmq-server -detached</span><br><span class="line">$ sudo rabbitmqctl add_user myuser mypassword</span><br><span class="line">$ sudo rabbitmqctl add_host myvhost</span><br><span class="line">$ sudo rabbitmqctl set_permissions -p myvhost myuser &quot;.*&quot; &quot;.*&quot; &quot;.*&quot;</span><br></pre></td></tr></table></figure>
-<p>Then, open your Django project settings.py file and configure RabbitMQ by adding the lines:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BROKER_URL = &quot;amqp://myuser:mypassword@localhost:5672/myvhost&quot;</span><br></pre></td></tr></table></figure>
-<p>This tells celery, where your broker (your queue) is located. Here, we are running Celery at the same machine as RabbitMQ and using the localhost to find it.</p>
-<h3 id="Celery"><a href="#Celery" class="headerlink" title="Celery"></a>Celery</h3><p>Celery is on the Python Package Index(PyPi), and can be easily installed with pip or easy_install.</p>
-<p>Remember to active first your virtual environment(if you want to install Virtualenv to create a virtual enviroment check this post).</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install celery</span><br></pre></td></tr></table></figure>
-<p>Next, add this package to your requirements.txt file. so that both the production environment and the development environment on your local machine will use it. Recall that you can check the packages used by the current environment with</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip freeze</span><br></pre></td></tr></table></figure>
-<p>You will see that you have installed celery, pytz, billard, kombu, anyjson and amqp. Write them all on you requirements file. You can also write them directly by using</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip freeze &gt; requirements.txt</span><br></pre></td></tr></table></figure>
-<p>Now, we need to create a Celery instance, called a Celery app. Create a file at the same level of your settings.py file:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ touch myprojectfolder/myproject/celery.py</span><br></pre></td></tr></table></figure>
-<p>And write the following code:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">from celery import Celery</span><br><span class="line">from django.conf import settings</span><br><span class="line"></span><br><span class="line">os.environ.setdefault(&apos;DJANGO_SETTINGS_MODULE&apos;,&apos;myproject.settings&apos;)</span><br><span class="line"></span><br><span class="line">app = Celery(&apos;myproject&apos;)</span><br><span class="line">app.config_fron_object(&apos;django.conf:settings&apos;)</span><br><span class="line"></span><br><span class="line">app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)</span><br></pre></td></tr></table></figure>
-<p>Then, to ensure that the app is loaded when Django starts, you need to import this app in the <strong>init</strong>.py file.</p>
-<p>Open the <strong>init</strong>.py file that is at the same level than the settings.py and celery.py file and write:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from .celery import app as celery_app</span><br></pre></td></tr></table></figure>
-<p>Moreover, for security purposes, you should specigy a list of accepted content-types in the settings.py file.</p>
-<p>In this case, we will set json as our content type:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CELERY_ACCEPT_CONTENT = [&apos;json&apos;]</span><br></pre></td></tr></table></figure>
-<p>Theb we need to specify the task serializer accodingly:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CELERY_TASK_SERIALIZER = &apos;json&apos;</span><br><span class="line">CELERY_RESULT_SERIALZIER = &apos;json&apos;</span><br></pre></td></tr></table></figure>
-<p>Finally, we can specify the time zone we are in:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CELERY_TIMEZONE = &apos;Asia/Shanghai&apos;</span><br></pre></td></tr></table></figure>
-<p>Note: In Celery 3.0+ the setting CELERY_ENABLE_UTC is enabled default (it is set to True). This setting, if enabled, makes the dates and times in messages to be converted to use the UTC timezone.</p>
-<h3 id="Django-celery"><a href="#Django-celery" class="headerlink" title="Django-celery"></a>Django-celery</h3><p>If you want to store task results in the Django database, you will have to install the django-celery packags.</p>
-<p>This package defines a result backend to keep track of the state of the tasks. To install it user:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install django-celery</span><br></pre></td></tr></table></figure>
-<p>remember to include it in your requirements file, Then add it to your installed apps in your settings file:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS(</span><br><span class="line">	...,</span><br><span class="line">	&apos;djangocelery&apos;,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p>Next we need to create the corresponding database tables of this app, which can be done with:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python manage.py migrate djcelery</span><br></pre></td></tr></table></figure>
-<p>As we have indicated Celery to use our settings.py file, we can configure Celery to use the django-celery backend by adding this line into the settings.py file:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CELERY_RESULT_BACKED = &apos;djcelery.backends.database:DatabaseBackend&apos;</span><br><span class="line">CELERYBEAT_SCHEDULER = &apos;djcelery.schedulers.DatabaseScheduler&apos;</span><br></pre></td></tr></table></figure>
-<h3 id="Create-a-Periodic-Task"><a href="#Create-a-Periodic-Task" class="headerlink" title="Create a Periodic Task"></a>Create a Periodic Task</h3><p>One thing you might want to use in your project is a Scraper, for example, whick is an aplication that runs periodicaly at night to update some data for your web site.</p>
-<p>Choose or create an application in your django project to include the Scraper. Then, create and edit the file myapp/utils/scrapers.py (note: you must have an empty <strong>init</strong>.py file inside the utils folder). The scrapers.py file must contain a function that performs that performs your desired operations, like accessing an API and modifying your database.</p>
-<p>In this example, we just write:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def scraper_example(a,b):</span><br><span class="line">	return a + b</span><br></pre></td></tr></table></figure>
-<p>Then, create the file myapp/tasks.py and edit it:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from celery.task.schedules import crontab</span><br><span class="line">from celery.decorators import peeriodic_task</span><br><span class="line">from myapp.utils import scrapers</span><br><span class="line">from celery.utils.log import get_task_logger</span><br><span class="line">from datetime import datetime</span><br><span class="line"></span><br><span class="line">logger = get_task_logger(__name__)</span><br><span class="line"></span><br><span class="line">@periodic_task(run_every=(crontab(hour=&apos;*&apos;, minute=&apos;*&apos;, day_of_week=&apos;*&apos;)))</span><br><span class="line">def scraper_example():</span><br><span class="line">	logger.info(&quot;Start task&quot;)</span><br><span class="line">	now = datetime.now()</span><br><span class="line">	result = scrapers.scraper_example(now.day,now.minute)</span><br><span class="line">	logger.info(&quot;Task finished: result = %i&quot; % result)</span><br></pre></td></tr></table></figure>
-<p>Here we have created a periodic task that will run every minute, and that writes into the logger two messages indicating the beginning and the end of the task, and calls our scraper function.</p>
-<h3 id="Run-it"><a href="#Run-it" class="headerlink" title="Run it"></a>Run it</h3><p>Now we created the periodic task, but how we can run it? First start your RabbitMQ server:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo rabbitmq-server -detached</span><br></pre></td></tr></table></figure>
-<p>Next start a Celery worker</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python manage.py celeryd --verbosity=2 --loglevel=DEBUG</span><br></pre></td></tr></table></figure>
-<p>If the installtion is correct, you should see at the top of the text displayed something like</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">transport: amqp://myuser@localhost:5673/myvhost</span><br><span class="line">results: djcelery.backends.database:DatabaseBackend</span><br></pre></td></tr></table></figure>
-<p>And a list of the application tasks:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[tasks]</span><br><span class="line">  . celery.backend_cleanup</span><br><span class="line">  . ......etc</span><br><span class="line">  . myapp.tasks.scraper_example</span><br></pre></td></tr></table></figure>
-<p>Next open a new tab and start celerybeat, which will send the registered tasks periodically to RabbitMQ:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python manage.py celerybeat --verbosity=2 --loglevel=DEBUG</span><br></pre></td></tr></table></figure>
-<p>If you go back to the Celery woeker tab, you will see the results of your tasks.</p>
-<p>And finally. open another tab and start your django development server:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python manage.py runserver</span><br></pre></td></tr></table></figure>
-<p>Note: Beat needs to store the last run times of the tasks in a local database file, which by default is celerybeat-schedule.db and it’s placed at the same level of your manage.py file. If you are using GIT as version control, you should include this file into your gitignore file.</p>
-<p>That’s all.</p>
-
-      
+    <div class="post-content">
+        本文转自”http://coolshell.cn/articles/11265.html&amp;quot;
+Python的修饰器的英文名叫Decorator，当你看到这个英文名的时候，你可能会把其跟Design Pattern里的Decorator搞混了，其实这是完全不同的两个东西。虽然好像，他们要干的事都很相似——都是想要对一个已有的模块做一些“修饰工作”...
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2016/01/25/how-to-install-celery-on-django-and-create-a-periodic-task/" data-id="cm50h3r9b003ryfhtft1xqhbm" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2016/01/25/how-to-install-celery-on-django-and-create-a-periodic-task/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
+</div>
 
-
-  
-    <article id="post-PIP-Guide" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/12/09/PIP-Guide/" class="article-date">
-  <time datetime="2015-12-08T16:00:00.000Z" itemprop="datePublished">2015-12-09</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/09/PIP-Guide/">PIP Guide</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>PIP Guide</em></p>
-<p>###目录</p>
-<ol>
-<li>前言</li>
-<li>获取pip<br>2.1. 脚本安装pip<br>2.2. 使用包管理软件安装<br>2.3. 更新pip</li>
-<li>pip基本使用<br>3.1. 安装PyPI软件<br>3.2. 查看具体安装文件<br>3.3. 查看哪些软件需要更新<br>3.4. 升级软件包<br>3.5. 卸载软件包</li>
-<li>pip简明手册<br>4.1. 安装具体版本软件<br>4.2. Requirements文件安装依赖软件<br>4.3. 列出软件包清单<br>4.4. 查看软件包信息<br>4.5. 搜寻<br>4.6. 配置文件<br>4.7 命令行自动补全</li>
-<li>后记</li>
-</ol>
-<p>###1 前言<br>pip 是一个Python包管理工具，主要是用于安装 PyPI 上的软件包，可以替代 easy_install 工具。</p>
-<p>GitHub: <a href="https://github.com/pypa/pip" target="_blank" rel="noopener">https://github.com/pypa/pip</a><br>Doc: <a href="https://pip.pypa.io/en/latest/" target="_blank" rel="noopener">https://pip.pypa.io/en/latest/</a></p>
-<p>###2 获取pip</p>
-<p>#####2.1 脚本安装pip</p>
-<p>  $ curl -O <a href="https://raw.github.com/pypa/pip/master/contrib/get-pip.py" target="_blank" rel="noopener">https://raw.github.com/pypa/pip/master/contrib/get-pip.py</a></p>
-<p>  $ python get-pip.py</p>
-<p>#####2.2 使用包管理软件安装<br>  $ sudo yum install python-pip</p>
-<p>  $ sudo apt-get install python-pip</p>
-<p>#####2.3 更新pip<br>  $ pip install -U pip</p>
-<p>###3 pip基本使用</p>
-<p>#####3.1 安装PyPI软件<br>  $ pip install SomePackage</p>
-<p>  […]<br>  Successfully installed SomePackage’</p>
-<p>#####3.2 查看具体安装文件<br>  $ pip show –files SomePackage</p>
-<p>  Name: SomePackage<br>  Version: 1.0<br>  Location: /my/env/lib/pythonx.x/site-packages<br>  Files:<br>   ../somepackage/<strong>init</strong>.py<br>   […]</p>
-<p>#####3.3 查看哪些软件需要更新<br>  $ pip list –outdated</p>
-<p>  SomePackage (Current: 1.0 Latest: 2.0)</p>
-<p>#####3.4 升级软件包<br>  $ pip install –upgrade SomePackage</p>
-<p>  […]<br>  Found existing installation: SomePackage 1.0<br>  Uninstalling SomePackage:<br>    Successfully uninstalled SomePackage<br>  Running setup.py install for SomePackage<br>  Successfully installed SomePackage</p>
-<p>#####3.5 卸载软件包<br>  $ pip uninstall SomePackage</p>
-<p>  Uninstalling SomePackage:<br>    /my/env/lib/pythonx.x/site-packages/somepackage<br>  Proceed (y/n)? y<br>  Successfully uninstalled SomePackage</p>
-<p>###4 pip简明手册</p>
-<p>#####4.1 安装具体版本软件<br>  $ pip install SomePackage            # latest version<br>  $ pip install SomePackage==1.0.4     # specific version<br>  $ pip install ‘SomePackage&gt;=1.0.4’     # minimum version’</p>
-<p>#####4.2 Requirements文件安装依赖软件<br>Requirements文件 一般记录的是依赖软件列表，通过pip可以一次性安装依赖软件包:</p>
-<p>  $ pip freeze &gt; requirements.txt</p>
-<p>  $ pip install -r requirements.txt’</p>
-<p>#####4.3 列出软件包清单<br>  $ pip list</p>
-<p>  $ pip list –outdated</p>
-<p>  ipython (Current: 1.2.0 Latest: 2.3.0)’</p>
-<p>#####4.4 查看软件包信息</p>
-<h2 id="pip-show-pip"><a href="#pip-show-pip" class="headerlink" title="  $ pip show pip"></a>  $ pip show pip</h2><p>  Name: pip<br>  Version: 1.4.1<br>  Location: /Library/Python/2.7/site-packages/pip-1.4.1-py2.7.egg<br>  Requires:</p>
-<h2 id="pip-show-pyopencl"><a href="#pip-show-pyopencl" class="headerlink" title="  $ pip show pyopencl"></a>  $ pip show pyopencl</h2><p>  Name: pyopencl<br>  Version: 2014.1<br>  Location: /Library/Python/2.7/site-packages<br>  Requires: pytools, pytest, decorator’</p>
-<p>#####4.5 搜寻<br>  $ pip search pycuda</p>
-<p>  pycuda                    - Python wrapper for Nvidia CUDA<br>  pyfft                     - FFT library for PyCuda and PyOpenCL<br>  cudatree                  - Random Forests for the GPU using PyCUDA<br>  reikna                    - GPGPU algorithms for PyCUDA and PyOpenCL<br>  compyte                   - A common set of compute primitives for PyCUDA and PyOpenCL (to be created)’</p>
-<p>#####4.6 配置文件<br>配置文件: $HOME/.pip/pip.conf, 举例:</p>
-<p>  [global]<br>  timeout = 60<br>  index-url = <a href="http://download.zope.org/ppix" target="_blank" rel="noopener">http://download.zope.org/ppix</a></p>
-<p>  [install]<br>  ignore-installed = true<br>  no-dependencies = yes’</p>
-<p>#####4.7 命令行自动补全<br>对于bash:</p>
-<p>  $ pip completion –bash &gt;&gt; ~/.profile’</p>
-<p>对于zsh:</p>
-<p>  $ pip completion –zsh &gt;&gt; ~/.zprofile</p>
-<p>加载此配置文件后，则pip命令支持自动补全功能.</p>
-<p>###5 后记<br>应该尽量使用pip，不要继续使用easy_install.</p>
-
-      
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">5.</span>
+        <h2><a href="/2016/02/10/use-cron--crontab-to-run-schedule-tasks/">Use Cron &amp; Crontab to run schedule tasks</a></h2>
+        <span class="post-date">2016-02-10</span>
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2015/12/09/PIP-Guide/" data-id="cm50h3r97003nyfhtl4zcj4zs" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2015/12/09/PIP-Guide/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
+    <div class="post-content">
+        In Ubuntu use Cron and Crontab to Run Schedule Tasks
+Open/Close/Restart Cron in UbuntuConfig file usurally is /etc/init.d/cron
+Start: 
+1sudo /etc/init.d/cron start
+Close:
+1sudo ...
+    </div>
+</div>
 
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">6.</span>
+        <h2><a href="/2016/01/25/how-to-install-celery-on-django-and-create-a-periodic-task/">How to install Celery on Django and create a periodic task</a></h2>
+        <span class="post-date">2016-01-25</span>
+    </div>
+    <div class="post-content">
+        How to install Celery on Django and create a periodic task
+Celery 3.1.19 and Django 1.8.7.This post explains how to set up Celery with Django, using RabbitMQ as a message broker...
+    </div>
+</div>
 
-  
-    <article id="post-Fill-Character-in-String-Python" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/08/28/Fill-Character-in-String-Python/" class="article-date">
-  <time datetime="2015-08-27T16:00:00.000Z" itemprop="datePublished">2015-08-28</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">7.</span>
+        <h2><a href="/2015/12/09/PIP-Guide/">PIP Guide</a></h2>
+        <span class="post-date">2015-12-09</span>
+    </div>
+    <div class="post-content">
+        PIP Guide
+###目录
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/08/28/Fill-Character-in-String-Python/">Fill Character in String In Python</a>
-    </h1>
-  
+前言
+获取pip2.1. 脚本安装pip2.2. 使用包管理软件安装2.3. 更新pip
+pip基本使用3.1. 安装PyPI软件3.2. 查看具体安装文件3.3. 查看哪些软件需要更新3.4. 升级软件包3.5. 卸载软件包
+pip简明手册4.1. 安装具体版本软件4.2. Requirements文件安装依赖软件4...
+    </div>
+</div>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>In this part we will talk about Python String module.</em></p>
-<pre>
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">8.</span>
+        <h2><a href="/2015/08/28/Fill-Character-in-String-Python/">Fill Character in String In Python</a></h2>
+        <span class="post-date">2015-08-28</span>
+    </div>
+    <div class="post-content">
+        In this part we will talk about Python String module.
+
 
 import string
 
-print string.center("abc",5,"-")
+print string.center(&#34;abc&#34;,5,&#34;-&#34;)
 
 # -abc-
 
-print string.ljust("abc",5,"-")
+print string.ljust(&#34;abc&#34;,5,&#34;-&#34;)
 
 #abc--
 
-print string.rjust("abc",5,"-")
-
-#--abc
-
-print string.zfill("abc",5)
-
-#default fill by "0"
-#00abc
-
-</pre>
-
-      
+print string.rjust(&#34;ab...
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2015/08/28/Fill-Character-in-String-Python/" data-id="cm50h3r91003hyfhtemlh396a" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2015/08/28/Fill-Character-in-String-Python/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
+</div>
 
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">9.</span>
+        <h2><a href="/2015/08/27/Python字符串-元组-列表-字典互转/">Python 字符串/元组/列表/字典/互转</a></h2>
+        <span class="post-date">2015-08-27</span>
+    </div>
+    <div class="post-content">
+        Python format character tuple list and dist each other
 
-  
-    <article id="post-Python字符串-元组-列表-字典互转" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/08/27/Python字符串-元组-列表-字典互转/" class="article-date">
-  <time datetime="2015-08-26T16:00:00.000Z" itemprop="datePublished">2015-08-27</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/08/27/Python字符串-元组-列表-字典互转/">Python 字符串/元组/列表/字典/互转</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>Python format character tuple list and dist each other</em></p>
-<pre>
 #-*-coding:utf-8-*- 
 
 #1、字典
-dict = {'name': 'Zara', 'age': 7, 'class': 'First'}
+dict = {&#39;name&#39;: &#39;Zara&#39;, &#39;age&#39;: 7, &#39;class&#39;: &#39;First&#39;}
 
-#字典转为字符串，返回：<type 'str'> {'age': 7, 'name': 'Zara', 'class': 'First'}
-print type(str(dict)), str(dict)
-
-#字典可以转为元组，返回：('age', 'name', 'class')
-print tuple(dict)
-#字典可以转为元组，返回：(7, 'Zara', 'First')
-print tuple(dict.values())
-
-#字典转为列表，返回：['age', 'name', 'class']
-print list(dict)
-#字典转为列表
-print dict.values
-
-#2、元组
-tup=(1, 2, 3, 4, 5)
-
-#元组转为字符串，返回：(1, 2, 3, 4, 5)
-print tup.__str__()
-
-#元组转为列表，返回：[1, 2, 3, 4, 5]
-print list(tup)
-
-#元组不可以转为字典
-
-#3、列表
-nums=[1, 3, 5, 7, 8, 13, 20];
-
-#列表转为字符串，返回：[1, 3, 5, 7, 8, 13, 20]
-print str(nums)
-
-#列表转为元组，返回：(1, 3, 5, 7, 8, 13, 20)
-print tuple(nums)
-
-#列表不可以转为字典
-
-#4、字符串
-
-#字符串转为元组，返回：(1, 2, 3)
-print tuple(eval("(1,2,3)"))
-#字符串转为列表，返回：[1, 2, 3]
-print list(eval("(1,2,3)"))
-#字符串转为字典，返回：<type 'dict'>
-print type(eval("{'name':'ljq', 'age':24}"))
-
-</type></type></pre>
-
-      
+#字典转为字符串，返回： {&#39;age&#39;: 7, &#39;name&#39;: &#39;Zara&#39;, ...
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2015/08/27/Python字符串-元组-列表-字典互转/" data-id="cm50h3r8z003fyfhthhhq47zx" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2015/08/27/Python字符串-元组-列表-字典互转/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
+</div>
 
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">10.</span>
+        <h2><a href="/2015/08/17/Download-Files-By-Three-Ways/">Download Files by Three Ways</a></h2>
+        <span class="post-date">2015-08-17</span>
+    </div>
+    <div class="post-content">
+        Use urllib urllib2 requests download files from url
+Way 1:
 
-  
-    <article id="post-Download-Files-By-Three-Ways" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/08/17/Download-Files-By-Three-Ways/" class="article-date">
-  <time datetime="2015-08-16T16:00:00.000Z" itemprop="datePublished">2015-08-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/08/17/Download-Files-By-Three-Ways/">Download Files by Three Ways</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>Use urllib urllib2 requests download files from url</em></p>
-<p>Way 1:</p>
-<pre>
   import urllib 
-  print "downloading with urllib" 
-  url = 'http://www.pythontab.com/test/demo.zip'  
-  print "downloading with urllib"
-  urllib.urlretrieve(url, "demo.zip")
-</pre>
-
-<p>Way 2:</p>
-<pre>
-  import urllib2
-  print "downloading with urllib2"
-  url = 'http://www.pythontab.com/test/demo.zip' 
-  f = urllib2.urlopen(url) 
-  data = f.read() 
-  with open("demo2.zip", "wb") as code:     
-    code.write(data)
-</pre>
-
-<p>Way 3:</p>
-<pre>
-  import requests 
-  print "downloading with requests"
-  url = 'http://www.pythontab.com/test/demo.zip' 
-  r = requests.get(url) 
-  with open("demo3.zip", "wb") as code:
-     code.write(r.content)
-</pre>
-
-
-      
+  print &#34;downloading with urllib&#34; 
+  url = &#39;http://www.pythontab.com/test/demo.zip&#39;  
+  print &#34;downl...
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2015/08/17/Download-Files-By-Three-Ways/" data-id="cm50h3r8q0039yfhtwi3lpoa0" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2015/08/17/Download-Files-By-Three-Ways/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
+</div>
 
 
-  
 
-
-  <nav id="page-nav">
-    
-    <a class="extend prev" rel="prev" href="/page/8/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/10/">Next &raquo;</a>
-  </nav>
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Github/">Github</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Karrigell/">Karrigell</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VIM/">VIM</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/conda/">conda</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/django/">django</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ffmpeg/">ffmpeg</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/freeswitch/">freeswitch</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/kivy/">kivy</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/mac/">mac</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/normal/">normal</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/other/">other</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/sqlalchemy/">sqlalchemy</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/system/">system</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tornado/">tornado</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ubuntu/">ubuntu</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/conda/">conda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django/">django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django-celery/">django-celery</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/freeswitch/">freeswitch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlalchemy/">sqlalchemy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/system/">system</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tornado/">tornado</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/conda/" style="font-size: 10px;">conda</a> <a href="/tags/django/" style="font-size: 18px;">django</a> <a href="/tags/django-celery/" style="font-size: 10px;">django-celery</a> <a href="/tags/ffmpeg/" style="font-size: 10px;">ffmpeg</a> <a href="/tags/flask/" style="font-size: 10px;">flask</a> <a href="/tags/freeswitch/" style="font-size: 10px;">freeswitch</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/go/" style="font-size: 14px;">go</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/linux/" style="font-size: 16px;">linux</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/other/" style="font-size: 12px;">other</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/sqlalchemy/" style="font-size: 10px;">sqlalchemy</a> <a href="/tags/system/" style="font-size: 12px;">system</a> <a href="/tags/tornado/" style="font-size: 10px;">tornado</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">February 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">February 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">November 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">September 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2024/12/23/Python-Typing类型提示/">Python Typing类型提示</a>
-          </li>
-        
-          <li>
-            <a href="/2024/12/23/Python-Tempfile临时文件系统对象/">Python Tempfile临时文件系统对象</a>
-          </li>
-        
-          <li>
-            <a href="/2024/12/23/Python-Pathlib处理文件路径库的使用/">Python Pathlib处理文件路径库的使用</a>
-          </li>
-        
-          <li>
-            <a href="/2024/08/31/在ubuntu上的18个非常实用的命令行工具软件/">在ubuntu上的18个非常实用的命令行工具软件</a>
-          </li>
-        
-          <li>
-            <a href="/2024/08/20/什么是动态规划？在Python中如何利用动态规划解决实际问题？/">什么是动态规划？在Python中如何利用动态规划解决实际问题？</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2024 Tony Tan<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
+<nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/8/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/10/">Next</a>
 </nav>
-    
-<script>
-  var disqus_shortname = 'TonyTan';
-  
-  (function(){
-    var dsq = document.createElement('script');
-    dsq.type = 'text/javascript';
-    dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
 
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
-
-
-
-  </div>
+        </div>
+        <div class="footer">
+            
+            <p class="footer-copyright">
+                <span>Powered by <a target="_blank" href="https://hexo.io">Hexo</a></span>
+                <span>Theme <a target="_blank" href="https://github.com/tinkink-co/hexo-theme-terminal">Terminal</a></span>
+            </p>
+        </div>
+    </div>
 </body>
 </html>

@@ -1,679 +1,176 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="utf-8">
-  
-
-  
-  <title>Tony Tan</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Tony Tan">
-<meta name="keywords" content="Tony Tan">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Tony Tan">
-<meta property="og:url" content="https://tonytan748.github.io/page/2/index.html">
-<meta property="og:site_name" content="Tony Tan">
-<meta property="og:description" content="Tony Tan">
-<meta property="og:locale" content="default">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Tony Tan">
-<meta name="twitter:description" content="Tony Tan">
-  
-    <link rel="alternate" href="/atom.xml" title="Tony Tan" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/styles/base.css">
+    <link rel="stylesheet" href="/styles/theme.css">
+    <link rel="shortcut icon" href="/favicon.png">
+    
+    <title>首页 - Tony Tan</title>
+    
 </head>
-</html>
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Tony Tan</a>
-      </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">a python progrmmer</a>
-        </h2>
-      
+    <div class="header-title">
+        <span class="header-light"></span>
+        <span class="header-light"></span>
+        <span class="header-light"></span>
+        <span>Tony Tan tonytan748.github.io<span>
+    </span></span></div>
+    <div class="container">
+        <ul class="nav">
+        
+            <li><a href="/">首页</a></li>
+        
+            <li><a href="/categories">分类</a></li>
+        
+            <li><a href="/about">关于</a></li>
+        
+        </ul>
+        <div class="content">
+            
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">1.</span>
+        <h2><a href="/2024/04/17/nginx配置auth-basic登录认证的方法/">nginx配置auth_basic登录认证的方法</a></h2>
+        <span class="post-date">2024-04-17</span>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://tonytan748.github.io"></form>
-      </div>
+    <div class="post-content">
+        nginx配置auth_basic登录认证的方法安装htpasswd12345# ubuntusudo apt-get install apache2-utils# centossudo yum -y install httpd-tools
+htpasswd 参数说明12345678-c 创建passwdfile.如果passwdfile 已经存在,那...
     </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-nginx配置auth-basic登录认证的方法" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2024/04/17/nginx配置auth-basic登录认证的方法/" class="article-date">
-  <time datetime="2024-04-17T11:49:55.000Z" itemprop="datePublished">2024-04-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/nginx/">nginx</a>
-  </div>
+</div>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/04/17/nginx配置auth-basic登录认证的方法/">nginx配置auth_basic登录认证的方法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="nginx配置auth-basic登录认证的方法"><a href="#nginx配置auth-basic登录认证的方法" class="headerlink" title="nginx配置auth_basic登录认证的方法"></a>nginx配置auth_basic登录认证的方法</h1><h2 id="安装htpasswd"><a href="#安装htpasswd" class="headerlink" title="安装htpasswd"></a>安装htpasswd</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ubuntu</span></span><br><span class="line">sudo apt-get install apache2-utils</span><br><span class="line"></span><br><span class="line"><span class="comment"># centos</span></span><br><span class="line">sudo yum -y install httpd-tools</span><br></pre></td></tr></table></figure>
-<h2 id="htpasswd-参数说明"><a href="#htpasswd-参数说明" class="headerlink" title="htpasswd 参数说明"></a><code>htpasswd</code> 参数说明</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-c 创建passwdfile.如果passwdfile 已经存在,那么它会重新写入并删去原有内容.</span><br><span class="line">-n 不更新passwordfile，直接显示密码</span><br><span class="line">-m 使用MD5加密（默认）</span><br><span class="line">-d 使用CRYPT加密（默认）</span><br><span class="line">-p 使用普通文本格式的密码</span><br><span class="line">-s 使用SHA加密</span><br><span class="line">-b 命令行中一并输入用户名和密码而不是根据提示输入密码，可以看见明文，不需要交互</span><br><span class="line">-D 删除指定的用户</span><br></pre></td></tr></table></figure>
-<h2 id="生成密码"><a href="#生成密码" class="headerlink" title="生成密码"></a>生成密码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进入密码存储目录</span></span><br><span class="line"><span class="built_in">cd</span> /etc/nginx/conf.d/passwd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成密码</span></span><br><span class="line">htpasswd -c ./passwdfile username</span><br><span class="line"><span class="comment"># 执行上命令后会要求输入两次密码，./passwdfile 是在当前目录下创建密码文件passwdfile ，username即为需要设置的账号</span></span><br></pre></td></tr></table></figure>
-<h2 id="nginx-载入配置"><a href="#nginx-载入配置" class="headerlink" title="nginx 载入配置"></a>nginx 载入配置</h2><p>在nginx的 server段内,找到要加入账号验证的location路径<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">location /docs &#123;</span><br><span class="line">    <span class="built_in">alias</span> /www/wwwroot/dy_admin/docs;</span><br><span class="line">    auth_basic    <span class="string">"请输入账号密码"</span>;</span><br><span class="line">    auth_basic_user_file        /etc/nginx/conf.d/passwd/passwdfile; <span class="comment">#密码存储文件路径</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-      
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">2.</span>
+        <h2><a href="/2024/04/07/Python语法固定器/">Python语法固定器</a></h2>
+        <span class="post-date">2024-04-07</span>
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2024/04/17/nginx配置auth-basic登录认证的方法/" data-id="cm50h3rd0009yyfhtck11jqot" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2024/04/17/nginx配置auth-basic登录认证的方法/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li></ul>
+    <div class="post-content">
+        语法固定器
+厌倦了校对你的长文章或文本，然后，你可以试试这个自动化脚本，它将扫描你的文本并纠正语法错误，这个很棒的脚本使用 Happtransformer 模块，这是一个机器学习模块，经过训练可以修复文本中的语法错误。
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Python语法固定器" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2024/04/07/Python语法固定器/" class="article-date">
-  <time datetime="2024-04-07T11:37:16.000Z" itemprop="datePublished">2024-04-07</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/04/07/Python语法固定器/">Python语法固定器</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="语法固定器"><a href="#语法固定器" class="headerlink" title="语法固定器"></a>语法固定器</h1><blockquote>
-<p>厌倦了校对你的长文章或文本，然后，你可以试试这个自动化脚本，它将扫描你的文本并纠正语法错误，这个很棒的脚本使用 Happtransformer 模块，这是一个机器学习模块，经过训练可以修复文本中的语法错误。</p>
-</blockquote>
-<h1 id="Grammer-Fixer"><a href="#Grammer-Fixer" class="headerlink" title="Grammer Fixer"></a>Grammer Fixer</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install happytransformer</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> happytransformer <span class="keyword">import</span> HappyTextToText <span class="keyword">as</span> HappyTTT</span><br><span class="line"><span class="keyword">from</span> happytransformer <span class="keyword">import</span> TTSettings</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Grammer_Fixer</span><span class="params">(Text)</span>:</span></span><br><span class="line">    Grammer = HappyTTT(<span class="string">"T5"</span>,<span class="string">"prithivida/grammar_error_correcter_v1"</span>)</span><br><span class="line">    config = TTSettings(do_sample=<span class="literal">True</span>, top_k=<span class="number">10</span>, max_length=<span class="number">100</span>)</span><br><span class="line">    corrected = Grammer.generate_text(Text, args=config)</span><br><span class="line">    print(<span class="string">"Corrected Text: "</span>, corrected.text)</span><br><span class="line">Text = <span class="string">"This is smple tet we how know this"</span></span><br><span class="line">Grammer_Fixer(Text)</span><br></pre></td></tr></table></figure>
-
-      
+Grammer Fixer1pip install happytransformer
+123456789from happytran...
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2024/04/07/Python语法固定器/" data-id="cm50h3rcz009vyfhtpxbg8co2" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2024/04/07/Python语法固定器/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+</div>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Python获取世界新闻" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2024/03/17/Python获取世界新闻/" class="article-date">
-  <time datetime="2024-03-17T11:36:06.000Z" itemprop="datePublished">2024-03-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/03/17/Python获取世界新闻/">Python获取世界新闻</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="获取世界新闻"><a href="#获取世界新闻" class="headerlink" title="获取世界新闻"></a>获取世界新闻</h1><p>使用此自动化脚本让你随时了解每日世界新闻，你可以使用任何语言从任何国家/地区获取新闻。这个 API 让你每天免费获取 50 篇新闻文章。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># World News Fetcher</span></span><br><span class="line"><span class="comment"># pip install requests</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">ApiKey = <span class="string">"YOUR_API_KEY"</span></span><br><span class="line">url = <span class="string">"https://api.worldnewsapi.com/search-news?text=hurricane&amp;api-key=&#123;ApiKey&#125;"</span></span><br><span class="line">headers = &#123;</span><br><span class="line">  <span class="string">'Accept'</span>: <span class="string">'application/json'</span></span><br><span class="line">&#125;</span><br><span class="line">response = requests.get(url, headers=headers)</span><br><span class="line">print(<span class="string">"News: "</span>, response.json())</span><br></pre></td></tr></table></figure>
-
-      
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">3.</span>
+        <h2><a href="/2024/03/17/Python获取世界新闻/">Python获取世界新闻</a></h2>
+        <span class="post-date">2024-03-17</span>
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2024/03/17/Python获取世界新闻/" data-id="cm50h3rcu009pyfhtzrd5nxqx" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2024/03/17/Python获取世界新闻/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Python线程示例" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2024/03/01/Python线程示例/" class="article-date">
-  <time datetime="2024-03-01T11:33:37.000Z" itemprop="datePublished">2024-03-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/03/01/Python线程示例/">Python线程示例</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="线程简述"><a href="#线程简述" class="headerlink" title="线程简述"></a>线程简述</h1><blockquote>
-<p>一个程序运行起来后，一定有一个执行代码的东西，这个东西就是线程；<br>一般计算(CPU)密集型任务适合多进程，IO密集型任务适合多线程；<br>一个进程可拥有多个并行的(concurrent)线程，当中每一个线程，共享当前进程的资源</p>
-</blockquote>
-<p>以下是对发现的几种多线程进行的汇总整理，均已测试运行<br>多线程实现的四种方式分别是：<br>multiprocessing下面有两种：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing.dummy <span class="keyword">import</span> Pool <span class="keyword">as</span> ThreadPool  <span class="comment"># 线程池</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> multiprocessing.pool <span class="keyword">import</span> ThreadPool   <span class="comment"># 线程池，用法无区别，唯一区别这个是线程池</span></span><br></pre></td></tr></table></figure>
-<p>另外两种：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> concurrent.futures <span class="keyword">import</span> ThreadPoolExecutor  <span class="comment"># python原生线程池，这个更主流</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> threadpool  <span class="comment"># 线程池，需要 pip install threadpool，很早之前的</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="方式1-multiprocessing-dummy-Pool"><a href="#方式1-multiprocessing-dummy-Pool" class="headerlink" title="方式1 multiprocessing.dummy Pool()"></a>方式1 multiprocessing.dummy Pool()</h2><p>非阻塞方法<br><code>multiprocessing.dummy.Pool.apply_async()</code> 和 <code>multiprocessing.dummy.Pool.imap()</code><br>线程并发执行</p>
-<p>阻塞方法<br><code>multiprocessing.dummy.Pool.apply()</code>和 <code>multiprocessing.dummy.Pool.map()</code><br>线程顺序执行</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing.dummy <span class="keyword">import</span> Pool <span class="keyword">as</span> Pool</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(msg)</span>:</span></span><br><span class="line">    print(<span class="string">'msg:'</span>, msg)</span><br><span class="line">    time.sleep(<span class="number">2</span>)</span><br><span class="line">    print(<span class="string">'end:'</span>)</span><br><span class="line">    </span><br><span class="line">pool = Pool(processes=<span class="number">3</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">5</span>):</span><br><span class="line">    msg = <span class="string">'hello %d'</span> % (i)</span><br><span class="line">    pool.apply_async(func, (msg,))  <span class="comment"># 非阻塞，子线程有返回值</span></span><br><span class="line">    <span class="comment"># pool.apply(func,(msg,))       # 阻塞,apply()源自内建函数，用于间接的调用函数，并且按位置把元祖或字典作为参数传入。子线程无返回值</span></span><br><span class="line">    <span class="comment"># pool.imap(func,[msg,])        # 非阻塞, 注意与apply传的参数的区别 无返回值</span></span><br><span class="line">    <span class="comment"># pool.map(func, [msg, ])       # 阻塞 子线程无返回值</span></span><br><span class="line"></span><br><span class="line">print(<span class="string">'Mark~~~~~~~~~~~~~~~'</span>)</span><br><span class="line">pool.close()</span><br><span class="line">pool.join()  <span class="comment"># 调用join之前，先调用close函数，否则会出错。执行完close后不会有新的进程加入到pool,join函数等待所有子进程结束</span></span><br><span class="line">print(<span class="string">'sub-process done'</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="方式2：multiprocessing-pool-ThreadPool-Threading"><a href="#方式2：multiprocessing-pool-ThreadPool-Threading" class="headerlink" title="方式2：multiprocessing.pool ThreadPool Threading()"></a>方式2：multiprocessing.pool ThreadPool Threading()</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing.pool <span class="keyword">import</span> ThreadPool   <span class="comment"># 线程池，用法无区别，唯一区别这个是线程池</span></span><br><span class="line"><span class="keyword">from</span> multiprocessing.dummy <span class="keyword">import</span> Pool <span class="keyword">as</span> ThreadPool  <span class="comment"># 线程池</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">print(<span class="string">"hi outside of main()"</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">(x)</span>:</span></span><br><span class="line">    print(<span class="string">"inside hello()"</span>)</span><br><span class="line">    print(<span class="string">"Proccess id: %s"</span> %(os.getpid()))</span><br><span class="line">    time.sleep(<span class="number">3</span>)</span><br><span class="line">    <span class="keyword">return</span> x*x</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    p = ThreadPool(<span class="number">5</span>)</span><br><span class="line">    pool_output = p.map(hello, range(<span class="number">3</span>))</span><br><span class="line">    print(pool_output)</span><br></pre></td></tr></table></figure>
-<h2 id="方式3：主流ThreadPoolExecutor"><a href="#方式3：主流ThreadPoolExecutor" class="headerlink" title="方式3：主流ThreadPoolExecutor"></a>方式3：主流ThreadPoolExecutor</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> concurrent.futures <span class="keyword">import</span> ThreadPoolExecutor</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个准备作为线程任务的函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">action</span><span class="params">(max)</span>:</span></span><br><span class="line">    my_sum = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(max):</span><br><span class="line">        print(threading.current_thread().name + <span class="string">'  '</span> + str(i))</span><br><span class="line">        my_sum += i</span><br><span class="line">    <span class="keyword">return</span> my_sum</span><br><span class="line"><span class="comment"># 创建一个包含2条线程的线程池</span></span><br><span class="line">pool = ThreadPoolExecutor(max_workers=<span class="number">2</span>)</span><br><span class="line"><span class="comment"># 向线程池提交一个task, 20会作为action()函数的参数</span></span><br><span class="line">future1 = pool.submit(action, <span class="number">20</span>)</span><br><span class="line"><span class="comment"># 向线程池再提交一个task, 30会作为action()函数的参数</span></span><br><span class="line">future2 = pool.submit(action, <span class="number">30</span>)</span><br><span class="line"><span class="comment"># 判断future1代表的任务是否结束</span></span><br><span class="line">print(future1.done())</span><br><span class="line">time.sleep(<span class="number">3</span>)</span><br><span class="line"><span class="comment"># 判断future2代表的任务是否结束</span></span><br><span class="line">print(future2.done())</span><br><span class="line"><span class="comment"># 查看future1代表的任务返回的结果</span></span><br><span class="line">print(future1.result())</span><br><span class="line"><span class="comment"># 查看future2代表的任务返回的结果</span></span><br><span class="line">print(future2.result())</span><br><span class="line"><span class="comment"># 关闭线程池</span></span><br><span class="line">pool.shutdown()</span><br></pre></td></tr></table></figure>
-<h2 id="方式4：threadpool"><a href="#方式4：threadpool" class="headerlink" title="方式4：threadpool"></a>方式4：threadpool</h2><p>需要 <code>pip install threadpool</code></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threadpool</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">(m, n, o)</span>:</span></span><br><span class="line">    <span class="string">""""""</span></span><br><span class="line">    print(<span class="string">"m = %s, n = %s, o = %s"</span> % (m, n, o))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="comment"># 方法1</span></span><br><span class="line">    <span class="comment"># lst_vars_1 = ['1', '2', '3']</span></span><br><span class="line">    <span class="comment"># lst_vars_2 = ['4', '5', '6']</span></span><br><span class="line">    <span class="comment"># func_var = [(lst_vars_1, None), (lst_vars_2, None)]</span></span><br><span class="line">    <span class="comment"># 方法2</span></span><br><span class="line">    dict_vars_1 = &#123;<span class="string">'m'</span>: <span class="string">'1'</span>, <span class="string">'n'</span>: <span class="string">'2'</span>, <span class="string">'o'</span>: <span class="string">'3'</span>&#125;</span><br><span class="line">    dict_vars_2 = &#123;<span class="string">'m'</span>: <span class="string">'4'</span>, <span class="string">'n'</span>: <span class="string">'5'</span>, <span class="string">'o'</span>: <span class="string">'6'</span>&#125;</span><br><span class="line">    func_var = [(<span class="literal">None</span>, dict_vars_1), (<span class="literal">None</span>, dict_vars_2)]</span><br><span class="line">    <span class="comment"># 定义了一个线程池，表示最多可以创建poolsize这么多线程</span></span><br><span class="line">    pool = threadpool.ThreadPool(<span class="number">2</span>)</span><br><span class="line">    <span class="comment"># 调用makeRequests创建了要开启多线程的函数，以及函数相关参数和回调函数，其中回调函数可以不写</span></span><br><span class="line">    requests = threadpool.makeRequests(hello, func_var)</span><br><span class="line">    [pool.putRequest(req) <span class="keyword">for</span> req <span class="keyword">in</span> requests]   <span class="comment"># 将所有要运行多线程的请求扔进线程池</span></span><br><span class="line">    pool.wait()   <span class="comment"># 等待所有线程完成工作后退出</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">[pool.putRequest(req) for req in requests]等同于</span></span><br><span class="line"><span class="string">　　for req in requests:  </span></span><br><span class="line"><span class="string">　　　　 pool.putRequest(req) </span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
-
-      
+    <div class="post-content">
+        获取世界新闻使用此自动化脚本让你随时了解每日世界新闻，你可以使用任何语言从任何国家/地区获取新闻。这个 API 让你每天免费获取 50 篇新闻文章。
+12345678910# World News Fetcher# pip install requestsimport requestsApiKey = &#34;YOUR_API_KEY&#34;url = &#34;http...
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2024/03/01/Python线程示例/" data-id="cm50h3rcw009syfhtfqucsfrx" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2024/03/01/Python线程示例/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+</div>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Python管道使用方法" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2024/02/07/Python管道使用方法/" class="article-date">
-  <time datetime="2024-02-07T11:32:35.000Z" itemprop="datePublished">2024-02-07</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/02/07/Python管道使用方法/">Python管道使用方法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Python管道使用方法"><a href="#Python管道使用方法" class="headerlink" title="Python管道使用方法"></a>Python管道使用方法</h1><h2 id="使用fn-py库"><a href="#使用fn-py库" class="headerlink" title="使用fn.py库"></a>使用fn.py库</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fn <span class="keyword">import</span> F</span><br><span class="line"></span><br><span class="line">print((F() ** <span class="number">2</span>) &gt;&gt; (F() + <span class="number">1</span>))</span><br><span class="line">output = (F() ** <span class="number">2</span>).then(F() + <span class="number">1</span>)</span><br><span class="line"><span class="keyword">assert</span> <span class="number">16</span> == output(<span class="number">3</span>) </span><br><span class="line"><span class="comment"># 这个管道操作首先对输入3平方得到9，然后加1得到10，最后的结果是10.</span></span><br></pre></td></tr></table></figure>
-<h2 id="Pipe库"><a href="#Pipe库" class="headerlink" title="Pipe库"></a>Pipe库</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pipe <span class="keyword">import</span> Pipe</span><br><span class="line"></span><br><span class="line"><span class="meta">@Pipe</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">even_filter</span><span class="params">(nums)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">        <span class="keyword">if</span> num % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">yield</span> num</span><br><span class="line"></span><br><span class="line"><span class="meta">@Pipe</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">multiply_by_three</span><span class="params">(nums)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">        <span class="keyword">yield</span> num * <span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Pipe</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">convert_to_string</span><span class="params">(nums)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">        <span class="keyword">yield</span> <span class="string">'The Number: %s'</span> % num</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用</span></span><br><span class="line">nums = range(<span class="number">10</span>)</span><br><span class="line">print(nums | even_filter | multiply_by_three | convert_to_string)</span><br></pre></td></tr></table></figure>
-<h2 id="使用Toolz库的pipe函数"><a href="#使用Toolz库的pipe函数" class="headerlink" title="使用Toolz库的pipe函数"></a>使用Toolz库的pipe函数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> toolz <span class="keyword">import</span> pipe</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一系列函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(x, y)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> x + y</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">square</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> x ** <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">double</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> x * <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个计算管道</span></span><br><span class="line">calculation_pipeline = pipe(add, square, double)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用计算管道进行计算</span></span><br><span class="line">result = calculation_pipeline(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">print(result)  <span class="comment"># 输出：50，等价于 double(square(add(2, 3)))</span></span><br></pre></td></tr></table></figure>
-<h2 id="使用Toolz库的函数组合函数-compose"><a href="#使用Toolz库的函数组合函数-compose" class="headerlink" title="使用Toolz库的函数组合函数 compose"></a>使用Toolz库的函数组合函数 <code>compose</code></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> toolz <span class="keyword">import</span> compose</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义两个简单的函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(x, y)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> x + y</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">square</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> x ** <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用compose将这两个函数组合</span></span><br><span class="line">composed_function = compose(square, add)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 调用组合函数</span></span><br><span class="line">result = composed_function(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">print(result)  <span class="comment"># 输出：25，等价于 square(add(2, 3))</span></span><br></pre></td></tr></table></figure>
-
-      
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">4.</span>
+        <h2><a href="/2024/03/01/Python线程示例/">Python线程示例</a></h2>
+        <span class="post-date">2024-03-01</span>
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2024/02/07/Python管道使用方法/" data-id="cm50h3rct009myfhtmz9ia27k" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2024/02/07/Python管道使用方法/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+    <div class="post-content">
+        线程简述
+一个程序运行起来后，一定有一个执行代码的东西，这个东西就是线程；一般计算(CPU)密集型任务适合多进程，IO密集型任务适合多线程；一个进程可拥有多个并行的(concurrent)线程，当中每一个线程，共享当前进程的资源
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-用Python实现电池指示灯" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2024/01/27/用Python实现电池指示灯/" class="article-date">
-  <time datetime="2024-01-27T11:31:32.000Z" itemprop="datePublished">2024-01-27</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/01/27/用Python实现电池指示灯/">用Python实现电池指示灯</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="电池指示灯"><a href="#电池指示灯" class="headerlink" title="电池指示灯"></a>电池指示灯</h1><p>这个方便的脚本可以让你设置你想要得到通知的电池百分比，该脚本使用 Pyler 进行通知，使用 Psutil 获取当前的电池百分比。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Battery Notifier</span></span><br><span class="line"><span class="comment"># pip instal plyer</span></span><br><span class="line"><span class="keyword">from</span> plyer <span class="keyword">import</span> notification</span><br><span class="line"><span class="keyword">import</span> psutil</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> sleep</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    battery = psutil.sensors_battery()</span><br><span class="line">    life = battery.percent</span><br><span class="line">    <span class="keyword">if</span> life &lt; <span class="number">50</span>:</span><br><span class="line">        notification.notify(</span><br><span class="line">            title = <span class="string">"Battery Low"</span>,</span><br><span class="line">            message = <span class="string">"Please connect to power source"</span>,</span><br><span class="line">            timeout = <span class="number">10</span></span><br><span class="line">        )</span><br><span class="line">    sleep(<span class="number">60</span>)</span><br></pre></td></tr></table></figure>
-
-      
+以下是对发现的几种多线程进行的汇总整理，均已测试运行多线程实现的四种方式分别是：multiprocessing下面有两种：...
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2024/01/27/用Python实现电池指示灯/" data-id="cm50h3rcq009jyfhtq8vh61fx" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2024/01/27/用Python实现电池指示灯/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+</div>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-用Python完成拼写修正" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2024/01/11/用Python完成拼写修正/" class="article-date">
-  <time datetime="2024-01-11T11:30:13.000Z" itemprop="datePublished">2024-01-11</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/01/11/用Python完成拼写修正/">用Python完成拼写修正</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="拼写修正"><a href="#拼写修正" class="headerlink" title="拼写修正"></a>拼写修正</h1><p>这个很棒的脚本将帮助你纠正你的文本单词拼写错误。你可以在下面找到脚本，将告诉你如何修复句子中的单个单词或多个单词。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Spell Fixer</span></span><br><span class="line"><span class="comment"># pip install textblob</span></span><br><span class="line"><span class="keyword">from</span> textblob <span class="keyword">import</span> *</span><br><span class="line"><span class="comment"># Fixing Paragraph Spells</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fix_paragraph_words</span><span class="params">(paragraph)</span>:</span></span><br><span class="line">    sentence = TextBlob(paragraph)</span><br><span class="line">    correction = sentence.correct()</span><br><span class="line">    print(correction)</span><br><span class="line"><span class="comment"># Fixing Words Spells</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fix_word_spell</span><span class="params">(word)</span>:</span></span><br><span class="line">    word = Word(word)</span><br><span class="line">    correction = word.correct()</span><br><span class="line">    print(correction)</span><br><span class="line">fix_paragraph_words(<span class="string">"This is sammple tet!!"</span>)</span><br><span class="line">fix_word_spell(<span class="string">"maangoo"</span>)</span><br></pre></td></tr></table></figure>
-
-      
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">5.</span>
+        <h2><a href="/2024/02/07/Python管道使用方法/">Python管道使用方法</a></h2>
+        <span class="post-date">2024-02-07</span>
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2024/01/11/用Python完成拼写修正/" data-id="cm50h3rcp009gyfhttyw5kfad" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2024/01/11/用Python完成拼写修正/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-使用urllib3的PoolManager获取API数据" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2023/12/21/使用urllib3的PoolManager获取API数据/" class="article-date">
-  <time datetime="2023-12-21T11:28:38.000Z" itemprop="datePublished">2023-12-21</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2023/12/21/使用urllib3的PoolManager获取API数据/">使用urllib3的PoolManager获取API数据</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="获取-API-数据"><a href="#获取-API-数据" class="headerlink" title="获取 API 数据"></a>获取 API 数据</h1><p>需要从数据库中获取 API 数据或需要向服务器发送 API 请求。那么这个自动化脚本对你来说是一个方便的工具。使用 Urllib3 模块，可让你获取和发布 API 请求。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pip install urllib3</span></span><br><span class="line"><span class="keyword">import</span> urllib3</span><br><span class="line"><span class="comment"># Fetch API data</span></span><br><span class="line">url = <span class="string">"https://api.github.com/users/psf/repos"</span></span><br><span class="line">http = urllib3.PoolManager()</span><br><span class="line">response = http.request(<span class="string">'GET'</span>, url)</span><br><span class="line">print(response.status)</span><br><span class="line">print(response.data)</span><br><span class="line"><span class="comment"># Post API data</span></span><br><span class="line">url = <span class="string">"https://httpbin.org/post"</span></span><br><span class="line">http = urllib3.PoolManager()</span><br><span class="line">response = http.request(<span class="string">'POST'</span>, url, fields=&#123;<span class="string">'hello'</span>: <span class="string">'world'</span>&#125;)</span><br><span class="line">print(response.status)</span><br></pre></td></tr></table></figure>
-
-      
+    <div class="post-content">
+        Python管道使用方法使用fn.py库123456from fn import Fprint((F() ** 2) &amp;gt;&amp;gt; (F() + 1))output = (F() ** 2).then(F() + 1)assert 16 == output(3) # 这个管道操作首先对输入3平方得到9，然后加1得到10，最后的结果是10.
+Pipe...
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2023/12/21/使用urllib3的PoolManager获取API数据/" data-id="cm50h3rco009dyfht2w3r0imk" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2023/12/21/使用urllib3的PoolManager获取API数据/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+</div>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Python互联网下载器" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2023/11/01/Python互联网下载器/" class="article-date">
-  <time datetime="2023-11-01T11:26:15.000Z" itemprop="datePublished">2023-11-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2023/11/01/Python互联网下载器/">Python互联网下载器</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="互联网下载器"><a href="#互联网下载器" class="headerlink" title="互联网下载器"></a>互联网下载器</h1><p>平时可能使用下载软件从 Internet 下载照片或视频，但现在你可以使用 Python IDM 模块创建自己的下载器。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Python Downloader</span></span><br><span class="line"><span class="comment"># pip install internetdownloadmanager</span></span><br><span class="line"><span class="keyword">import</span> internetdownloadmanager <span class="keyword">as</span> idm</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Downloader</span><span class="params">(url, output)</span>:</span></span><br><span class="line">    pydownloader = idm.Downloader(worker=<span class="number">20</span>,</span><br><span class="line">                                part_size=<span class="number">1024</span>*<span class="number">1024</span>*<span class="number">10</span>,</span><br><span class="line">                                resumable=<span class="literal">True</span>,)</span><br><span class="line"></span><br><span class="line">    pydownloader .download(url, output)</span><br><span class="line">Downloader(<span class="string">"Link url"</span>, <span class="string">"image.jpg"</span>)</span><br><span class="line">Downloader(<span class="string">"Link url"</span>, <span class="string">"video.mp4"</span>)</span><br></pre></td></tr></table></figure>
-
-      
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">6.</span>
+        <h2><a href="/2024/01/27/用Python实现电池指示灯/">用Python实现电池指示灯</a></h2>
+        <span class="post-date">2024-01-27</span>
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2023/11/01/Python互联网下载器/" data-id="cm50h3rcl009ayfhtbtkjuydt" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2023/11/01/Python互联网下载器/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Python使用tqdm命令行进度条" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2023/10/27/Python使用tqdm命令行进度条/" class="article-date">
-  <time datetime="2023-10-27T11:22:28.000Z" itemprop="datePublished">2023-10-27</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2023/10/27/Python使用tqdm命令行进度条/">Python使用tqdm命令行进度条</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install tqdm</span><br></pre></td></tr></table></figure>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> timefrom tqdm </span><br><span class="line"><span class="keyword">import</span> tqdmmylist = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> tqdm(mylist): </span><br><span class="line">  time.sleep(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-
-      
+    <div class="post-content">
+        电池指示灯这个方便的脚本可以让你设置你想要得到通知的电池百分比，该脚本使用 Pyler 进行通知，使用 Psutil 获取当前的电池百分比。
+123456789101112131415# Battery Notifier# pip instal plyerfrom plyer import notificationimport psutilfrom t...
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2023/10/27/Python使用tqdm命令行进度条/" data-id="cm50h3rci0094yfht4ypiu7x8" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2023/10/27/Python使用tqdm命令行进度条/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+</div>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
-
-  <nav id="page-nav">
-    
-    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
-  </nav>
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Github/">Github</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Karrigell/">Karrigell</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VIM/">VIM</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/conda/">conda</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/django/">django</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ffmpeg/">ffmpeg</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/freeswitch/">freeswitch</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/kivy/">kivy</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/mac/">mac</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/normal/">normal</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/other/">other</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/sqlalchemy/">sqlalchemy</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/system/">system</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tornado/">tornado</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ubuntu/">ubuntu</a></li></ul>
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">7.</span>
+        <h2><a href="/2024/01/11/用Python完成拼写修正/">用Python完成拼写修正</a></h2>
+        <span class="post-date">2024-01-11</span>
     </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/conda/">conda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django/">django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django-celery/">django-celery</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/freeswitch/">freeswitch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlalchemy/">sqlalchemy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/system/">system</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tornado/">tornado</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a></li></ul>
+    <div class="post-content">
+        拼写修正这个很棒的脚本将帮助你纠正你的文本单词拼写错误。你可以在下面找到脚本，将告诉你如何修复句子中的单个单词或多个单词。
+123456789101112131415# Spell Fixer# pip install textblobfrom textblob import *# Fixing Paragraph Spellsdef fix_para...
     </div>
-  </div>
+</div>
 
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/conda/" style="font-size: 10px;">conda</a> <a href="/tags/django/" style="font-size: 18px;">django</a> <a href="/tags/django-celery/" style="font-size: 10px;">django-celery</a> <a href="/tags/ffmpeg/" style="font-size: 10px;">ffmpeg</a> <a href="/tags/flask/" style="font-size: 10px;">flask</a> <a href="/tags/freeswitch/" style="font-size: 10px;">freeswitch</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/go/" style="font-size: 14px;">go</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/linux/" style="font-size: 16px;">linux</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/other/" style="font-size: 12px;">other</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/sqlalchemy/" style="font-size: 10px;">sqlalchemy</a> <a href="/tags/system/" style="font-size: 12px;">system</a> <a href="/tags/tornado/" style="font-size: 10px;">tornado</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a>
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">8.</span>
+        <h2><a href="/2023/12/21/使用urllib3的PoolManager获取API数据/">使用urllib3的PoolManager获取API数据</a></h2>
+        <span class="post-date">2023-12-21</span>
     </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">February 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">February 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">November 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">September 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a></li></ul>
+    <div class="post-content">
+        获取 API 数据需要从数据库中获取 API 数据或需要向服务器发送 API 请求。那么这个自动化脚本对你来说是一个方便的工具。使用 Urllib3 模块，可让你获取和发布 API 请求。
+12345678910111213# pip install urllib3import urllib3# Fetch API dataurl = &#34;https:/...
     </div>
-  </div>
+</div>
+
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">9.</span>
+        <h2><a href="/2023/11/01/Python互联网下载器/">Python互联网下载器</a></h2>
+        <span class="post-date">2023-11-01</span>
+    </div>
+    <div class="post-content">
+        互联网下载器平时可能使用下载软件从 Internet 下载照片或视频，但现在你可以使用 Python IDM 模块创建自己的下载器。
+1234567891011# Python Downloader# pip install internetdownloadmanagerimport internetdownloadmanager as idmdef ...
+    </div>
+</div>
+
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">10.</span>
+        <h2><a href="/2023/10/27/Python使用tqdm命令行进度条/">Python使用tqdm命令行进度条</a></h2>
+        <span class="post-date">2023-10-27</span>
+    </div>
+    <div class="post-content">
+        安装1pip install tqdm
+使用1234import timefrom tqdm import tqdmmylist = [1,2,3,4,5,6,7,8]for i in tqdm(mylist):   time.sleep(1)
+
+    </div>
+</div>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2024/12/23/Python-Typing类型提示/">Python Typing类型提示</a>
-          </li>
-        
-          <li>
-            <a href="/2024/12/23/Python-Tempfile临时文件系统对象/">Python Tempfile临时文件系统对象</a>
-          </li>
-        
-          <li>
-            <a href="/2024/12/23/Python-Pathlib处理文件路径库的使用/">Python Pathlib处理文件路径库的使用</a>
-          </li>
-        
-          <li>
-            <a href="/2024/08/31/在ubuntu上的18个非常实用的命令行工具软件/">在ubuntu上的18个非常实用的命令行工具软件</a>
-          </li>
-        
-          <li>
-            <a href="/2024/08/20/什么是动态规划？在Python中如何利用动态规划解决实际问题？/">什么是动态规划？在Python中如何利用动态规划解决实际问题？</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
 
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2024 Tony Tan<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
+<nav class="pagination">
+    <a class="extend prev" rel="prev" href="/">Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/3/">Next</a>
 </nav>
-    
-<script>
-  var disqus_shortname = 'TonyTan';
-  
-  (function(){
-    var dsq = document.createElement('script');
-    dsq.type = 'text/javascript';
-    dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
 
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
-
-
-
-  </div>
+        </div>
+        <div class="footer">
+            
+            <p class="footer-copyright">
+                <span>Powered by <a target="_blank" href="https://hexo.io">Hexo</a></span>
+                <span>Theme <a target="_blank" href="https://github.com/tinkink-co/hexo-theme-terminal">Terminal</a></span>
+            </p>
+        </div>
+    </div>
 </body>
 </html>

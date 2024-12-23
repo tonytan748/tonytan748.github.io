@@ -1,1054 +1,186 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="utf-8">
-  
-
-  
-  <title>Tony Tan</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Tony Tan">
-<meta name="keywords" content="Tony Tan">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Tony Tan">
-<meta property="og:url" content="https://tonytan748.github.io/index.html">
-<meta property="og:site_name" content="Tony Tan">
-<meta property="og:description" content="Tony Tan">
-<meta property="og:locale" content="default">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Tony Tan">
-<meta name="twitter:description" content="Tony Tan">
-  
-    <link rel="alternate" href="/atom.xml" title="Tony Tan" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/styles/base.css">
+    <link rel="stylesheet" href="/styles/theme.css">
+    <link rel="shortcut icon" href="/favicon.png">
+    
+    <title>首页 - Tony Tan</title>
+    
 </head>
-</html>
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Tony Tan</a>
-      </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">a python progrmmer</a>
-        </h2>
-      
+    <div class="header-title">
+        <span class="header-light"></span>
+        <span class="header-light"></span>
+        <span class="header-light"></span>
+        <span>Tony Tan tonytan748.github.io<span>
+    </span></span></div>
+    <div class="container">
+        <ul class="nav">
+        
+            <li><a href="/">首页</a></li>
+        
+            <li><a href="/categories">分类</a></li>
+        
+            <li><a href="/about">关于</a></li>
+        
+        </ul>
+        <div class="content">
+            
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">1.</span>
+        <h2><a href="/2024/12/23/Python-Typing类型提示/">Python Typing类型提示</a></h2>
+        <span class="post-date">2024-12-23</span>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://tonytan748.github.io"></form>
-      </div>
+    <div class="post-content">
+        一、简介typing 是 Python 标准库中的一个模块，用于支持类型提示（Type Hints）。类型提示是一种在代码中指定变量、函数参数和返回值的类型的方法，它可以提供代码的可读性、可维护性和工具支持。
+二、常用类型及示例Any：表示任意类型。typing import Any123456test:Any = 2def process_data(...
     </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-Python-Typing类型提示" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2024/12/23/Python-Typing类型提示/" class="article-date">
-  <time datetime="2024-12-23T03:05:40.000Z" itemprop="datePublished">2024-12-23</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
+</div>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/12/23/Python-Typing类型提示/">Python Typing类型提示</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h1><p>typing 是 Python 标准库中的一个模块，用于支持类型提示（Type Hints）。类型提示是一种在代码中指定变量、函数参数和返回值的类型的方法，它可以提供代码的可读性、可维护性和工具支持。</p>
-<h1 id="二、常用类型及示例"><a href="#二、常用类型及示例" class="headerlink" title="二、常用类型及示例"></a>二、常用类型及示例</h1><h2 id="Any：表示任意类型。"><a href="#Any：表示任意类型。" class="headerlink" title="Any：表示任意类型。"></a>Any：表示任意类型。</h2><figure class="highlight plain"><figcaption><span>typing import Any</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">test:Any = 2</span><br><span class="line"></span><br><span class="line">def process_data(data: Any) -&gt; None:</span><br><span class="line">    # 对任意类型的数据进行处理</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
-<h2 id="List：表示列表类型。"><a href="#List：表示列表类型。" class="headerlink" title="List：表示列表类型。"></a>List：表示列表类型。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from typing import List</span><br><span class="line"></span><br><span class="line">test: List[int] = [2]</span><br><span class="line"></span><br><span class="line">def process_list(items: List[int]) -&gt; None:</span><br><span class="line">    # 处理整数列表</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
-<h2 id="Tuple：表示元组类型。"><a href="#Tuple：表示元组类型。" class="headerlink" title="Tuple：表示元组类型。"></a>Tuple：表示元组类型。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from typing import Tuple</span><br><span class="line"></span><br><span class="line">test:Tuple[int] = (2,)</span><br><span class="line"></span><br><span class="line">def process_tuple(data: Tuple[str, int]) -&gt; None:</span><br><span class="line">    # 处理包含字符串和整数的元组</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
-<h2 id="Dict：表示字典类型。"><a href="#Dict：表示字典类型。" class="headerlink" title="Dict：表示字典类型。"></a>Dict：表示字典类型。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from typing import Dict</span><br><span class="line"></span><br><span class="line">test:Dict[str,int] = &#123;&quot;key&quot;:1&#125;</span><br><span class="line"></span><br><span class="line">def process_dict(data: Dict[str, int]) -&gt; None:</span><br><span class="line">    # 处理键为字符串，值为整数的字典</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
-<h2 id="Set：表示集合类型。"><a href="#Set：表示集合类型。" class="headerlink" title="Set：表示集合类型。"></a>Set：表示集合类型。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from typing import Set</span><br><span class="line"></span><br><span class="line">test: Set[int] = &#123;2,3&#125;</span><br><span class="line"></span><br><span class="line">def process_set(data: Set[str]) -&gt; None:</span><br><span class="line">    # 处理字符串集合</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
-<h2 id="Union：表示多个可能的类型。"><a href="#Union：表示多个可能的类型。" class="headerlink" title="Union：表示多个可能的类型。"></a>Union：表示多个可能的类型。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from typing import Union</span><br><span class="line"></span><br><span class="line">test:Union[int,str] = 2</span><br><span class="line"></span><br><span class="line">def process_data(data: Union[int, float]) -&gt; None:</span><br><span class="line">    # 处理整数或浮点数</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
-<h2 id="Optional：表示可选类型，即可以是指定类型或者-None。"><a href="#Optional：表示可选类型，即可以是指定类型或者-None。" class="headerlink" title="Optional：表示可选类型，即可以是指定类型或者 None。"></a>Optional：表示可选类型，即可以是指定类型或者 None。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from typing import Optional</span><br><span class="line"></span><br><span class="line">test:Optional[int] = None</span><br><span class="line"></span><br><span class="line">def process_data(data: Optional[str]) -&gt; None:</span><br><span class="line">    # 处理可选的字符串，可以为 None</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
-<h2 id="Callable：表示可调用对象的类型。"><a href="#Callable：表示可调用对象的类型。" class="headerlink" title="Callable：表示可调用对象的类型。"></a>Callable：表示可调用对象的类型。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from typing import Callable</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">def test(nu1: int, nu2: int) -&gt; int:</span><br><span class="line">    print(&apos;test&apos;)</span><br><span class="line">    return nu1+nu2</span><br><span class="line"></span><br><span class="line">def process_function(func: Callable[[int, int], int]) -&gt; None:</span><br><span class="line">    # 处理接受两个整数参数并返回整数的函数</span><br><span class="line">    print(func(2,2))</span><br><span class="line"></span><br><span class="line">process_function(test)</span><br></pre></td></tr></table></figure>
-<h2 id="Iterator：表示迭代器类型。"><a href="#Iterator：表示迭代器类型。" class="headerlink" title="Iterator：表示迭代器类型。"></a>Iterator：表示迭代器类型。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from typing import Iterator</span><br><span class="line"></span><br><span class="line">test:Iterator[int] = iter([2])</span><br><span class="line"></span><br><span class="line">def process_iterator(data: Iterator[int]) -&gt; None:</span><br><span class="line">    # 处理整数迭代器</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
-<h2 id="Generator：表示生成器类型。"><a href="#Generator：表示生成器类型。" class="headerlink" title="Generator：表示生成器类型。"></a>Generator：表示生成器类型。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from typing import Generator</span><br><span class="line"></span><br><span class="line">def generate_numbers() -&gt; Generator[int, None, None]:</span><br><span class="line">   yield 1</span><br><span class="line">   yield 2</span><br><span class="line"></span><br><span class="line">test: Generator[int, None, None] = generate_numbers()</span><br></pre></td></tr></table></figure>
-<h2 id="Iterable：表示可迭代对象的类型。"><a href="#Iterable：表示可迭代对象的类型。" class="headerlink" title="Iterable：表示可迭代对象的类型。"></a>Iterable：表示可迭代对象的类型。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from typing import Iterable</span><br><span class="line"></span><br><span class="line">test:Iterable[str] = [&quot;apple&quot;, &quot;banana&quot;, &quot;cherry&quot;]</span><br><span class="line"></span><br><span class="line">tes1:Iterable[str] = (&quot;apple&quot;, &quot;banana&quot;, &quot;cherry&quot;)</span><br><span class="line"></span><br><span class="line">def process_iterable(data: Iterable[str]) -&gt; None:</span><br><span class="line">    # 处理可迭代的字符串对象</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
-<h2 id="Mapping：表示映射类型。"><a href="#Mapping：表示映射类型。" class="headerlink" title="Mapping：表示映射类型。"></a>Mapping：表示映射类型。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from typing import Mapping</span><br><span class="line"></span><br><span class="line">test:Mapping[str,int] = &#123;&quot;apple&quot;: 1, &quot;banana&quot;: 2, &quot;cherry&quot;: 3&#125;</span><br><span class="line"></span><br><span class="line">def process_mapping(data: Mapping[str, int]) -&gt; None:</span><br><span class="line">    # 处理键为字符串，值为整数的映射对象</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
-<h2 id="Sequence：表示序列类型。"><a href="#Sequence：表示序列类型。" class="headerlink" title="Sequence：表示序列类型。"></a>Sequence：表示序列类型。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from typing import Sequence</span><br><span class="line"></span><br><span class="line">test: Sequence[int] = [1, 2, 3, 4, 5]</span><br><span class="line"></span><br><span class="line">def process_sequence(data: Sequence[int]) -&gt; None:</span><br><span class="line">    # 处理整数序列</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
-<h2 id="AnyStr：表示任意字符串类型。"><a href="#AnyStr：表示任意字符串类型。" class="headerlink" title="AnyStr：表示任意字符串类型。"></a>AnyStr：表示任意字符串类型。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from typing import AnyStr</span><br><span class="line"></span><br><span class="line">str:AnyStr = &apos;213&apos;</span><br></pre></td></tr></table></figure>
-<h2 id="NoReturn：表示函数没有返回值。"><a href="#NoReturn：表示函数没有返回值。" class="headerlink" title="NoReturn：表示函数没有返回值。"></a>NoReturn：表示函数没有返回值。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from typing import NoReturn</span><br><span class="line"></span><br><span class="line">def my_func() -&gt; NoReturn:</span><br><span class="line">    print(&quot;This function does not return anything&quot;)</span><br><span class="line"></span><br><span class="line">my_func()</span><br></pre></td></tr></table></figure>
-<h2 id="FrozenSet-表示不可变的集合类型。类似于-Set，但不能进行修改。"><a href="#FrozenSet-表示不可变的集合类型。类似于-Set，但不能进行修改。" class="headerlink" title="FrozenSet: 表示不可变的集合类型。类似于 Set，但不能进行修改。"></a>FrozenSet: 表示不可变的集合类型。类似于 Set，但不能进行修改。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from typing import FrozenSet</span><br><span class="line"></span><br><span class="line">def process_data(data: FrozenSet[str]) -&gt; None:</span><br><span class="line">    for item in data:</span><br><span class="line">        print(item)</span><br><span class="line"></span><br><span class="line">test: FrozenSet[str] = frozenset([&quot;apple&quot;, &quot;banana&quot;, &quot;orange&quot;])</span><br><span class="line"></span><br><span class="line">process_data(test)</span><br></pre></td></tr></table></figure>
-<h2 id="Literal-表示字面值类型。用于指定变量的取值范围，只能是指定的字面值之一"><a href="#Literal-表示字面值类型。用于指定变量的取值范围，只能是指定的字面值之一" class="headerlink" title="Literal: 表示字面值类型。用于指定变量的取值范围，只能是指定的字面值之一"></a>Literal: 表示字面值类型。用于指定变量的取值范围，只能是指定的字面值之一</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from typing import Literal</span><br><span class="line"></span><br><span class="line">def process_color(color: Literal[&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;]) -&gt; None:</span><br><span class="line">    print(&quot;Selected color:&quot;, color)</span><br><span class="line"></span><br><span class="line">process_color(&quot;red&quot;)</span><br><span class="line">process_color(&quot;green&quot;)</span><br><span class="line">process_color(&quot;blue&quot;)</span><br></pre></td></tr></table></figure>
-<h2 id="AsyncGenerator-表示异步生成器类型。类似于-Generator，但用于异步上下文中生成值的类型"><a href="#AsyncGenerator-表示异步生成器类型。类似于-Generator，但用于异步上下文中生成值的类型" class="headerlink" title="AsyncGenerator: 表示异步生成器类型。类似于 Generator，但用于异步上下文中生成值的类型"></a>AsyncGenerator: 表示异步生成器类型。类似于 Generator，但用于异步上下文中生成值的类型</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from typing import AsyncGenerator</span><br><span class="line">import asyncio</span><br><span class="line"></span><br><span class="line">async def generate_data() -&gt; AsyncGenerator[int, str]:</span><br><span class="line">    yield 1</span><br><span class="line">    yield 2</span><br><span class="line">    yield 3</span><br><span class="line"></span><br><span class="line">async def process_data() -&gt; None:</span><br><span class="line">    async for num in generate_data():</span><br><span class="line">        print(&quot;Received:&quot;, num)</span><br><span class="line"></span><br><span class="line">asyncio.run(process_data())</span><br></pre></td></tr></table></figure>
-<h2 id="ContextManager-表示上下文管理器类型。用于定义支持-with-语句的对象的类型"><a href="#ContextManager-表示上下文管理器类型。用于定义支持-with-语句的对象的类型" class="headerlink" title="ContextManager: 表示上下文管理器类型。用于定义支持 with 语句的对象的类型"></a>ContextManager: 表示上下文管理器类型。用于定义支持 with 语句的对象的类型</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from typing import ContextManager</span><br><span class="line"></span><br><span class="line">class MyContextManager:</span><br><span class="line">    def __enter__(self):</span><br><span class="line">        print(&quot;Entering context&quot;)</span><br><span class="line"></span><br><span class="line">    def __exit__(self, exc_type, exc_value, traceback):</span><br><span class="line">        print(&quot;Exiting context&quot;)</span><br><span class="line"></span><br><span class="line">def process_data(manager: ContextManager) -&gt; None:</span><br><span class="line">    with manager:</span><br><span class="line">        print(&quot;Processing data&quot;)</span><br><span class="line"></span><br><span class="line">process_data(MyContextManager())</span><br></pre></td></tr></table></figure>
-<h2 id="AsyncIterator-表示异步迭代器类型。类似于-Iterator，但用于异步上下文中进行迭代的类型"><a href="#AsyncIterator-表示异步迭代器类型。类似于-Iterator，但用于异步上下文中进行迭代的类型" class="headerlink" title="AsyncIterator: 表示异步迭代器类型。类似于 Iterator，但用于异步上下文中进行迭代的类型"></a>AsyncIterator: 表示异步迭代器类型。类似于 Iterator，但用于异步上下文中进行迭代的类型</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from typing import AsyncIterator</span><br><span class="line">import asyncio</span><br><span class="line"></span><br><span class="line">async def async_range(n: int) -&gt; AsyncIterator[int]:</span><br><span class="line">    for i in range(n):</span><br><span class="line">        yield i</span><br><span class="line">        await asyncio.sleep(1)</span><br><span class="line"></span><br><span class="line">async def process_data() -&gt; None:</span><br><span class="line">    async for num in async_range(5):</span><br><span class="line">        print(&quot;Received:&quot;, num)</span><br><span class="line"></span><br><span class="line">asyncio.run(process_data())</span><br></pre></td></tr></table></figure>
-<h2 id="Annotated-用于添加类型注解的装饰器。可以在类型提示中添加额外的元数据信息"><a href="#Annotated-用于添加类型注解的装饰器。可以在类型提示中添加额外的元数据信息" class="headerlink" title="Annotated: 用于添加类型注解的装饰器。可以在类型提示中添加额外的元数据信息"></a>Annotated: 用于添加类型注解的装饰器。可以在类型提示中添加额外的元数据信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from typing import Annotated</span><br><span class="line"></span><br><span class="line">def process_data(data: Annotated[str, &quot;user input&quot;]) -&gt; None:</span><br><span class="line">    print(&quot;Received data:&quot;, data)</span><br><span class="line"></span><br><span class="line">process_data(&quot;Hello&quot;)</span><br></pre></td></tr></table></figure>
-<h2 id="AbstractSet-表示抽象集合类型。是-Set-的基类，用于指定集合的抽象接口。通常用作父类或类型注解"><a href="#AbstractSet-表示抽象集合类型。是-Set-的基类，用于指定集合的抽象接口。通常用作父类或类型注解" class="headerlink" title="AbstractSet: 表示抽象集合类型。是 Set 的基类，用于指定集合的抽象接口。通常用作父类或类型注解"></a>AbstractSet: 表示抽象集合类型。是 Set 的基类，用于指定集合的抽象接口。通常用作父类或类型注解</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from typing import AbstractSet</span><br><span class="line"></span><br><span class="line">def process_data(data: AbstractSet[str]) -&gt; None:</span><br><span class="line">    for item in data:</span><br><span class="line">        print(item)</span><br><span class="line"></span><br><span class="line">my_set: AbstractSet[str] = &#123;&quot;apple&quot;, &quot;banana&quot;, &quot;orange&quot;&#125;</span><br><span class="line">process_data(my_set)</span><br></pre></td></tr></table></figure>
-<h2 id="Awaitable-表示可等待对象的类型。用于指定可以使用-await-关键字等待的对象的类型。"><a href="#Awaitable-表示可等待对象的类型。用于指定可以使用-await-关键字等待的对象的类型。" class="headerlink" title="Awaitable: 表示可等待对象的类型。用于指定可以使用 await 关键字等待的对象的类型。"></a>Awaitable: 表示可等待对象的类型。用于指定可以使用 await 关键字等待的对象的类型。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from typing import Awaitable</span><br><span class="line">import asyncio</span><br><span class="line"></span><br><span class="line">async def async_task() -&gt; int:</span><br><span class="line">    await asyncio.sleep(1)</span><br><span class="line">    return 42</span><br><span class="line"></span><br><span class="line">async def process_task(task: Awaitable[int]) -&gt; None:</span><br><span class="line">    result = await task</span><br><span class="line">    print(&quot;Task result:&quot;, result)</span><br><span class="line"></span><br><span class="line">asyncio.run(process_task(async_task()))</span><br></pre></td></tr></table></figure>
-<h2 id="AsyncIterable-表示异步可迭代对象的类型。类似于-Iterable，但用于异步上下文中进行迭代的类型。"><a href="#AsyncIterable-表示异步可迭代对象的类型。类似于-Iterable，但用于异步上下文中进行迭代的类型。" class="headerlink" title="AsyncIterable: 表示异步可迭代对象的类型。类似于 Iterable，但用于异步上下文中进行迭代的类型。"></a>AsyncIterable: 表示异步可迭代对象的类型。类似于 Iterable，但用于异步上下文中进行迭代的类型。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from typing import AsyncIterable</span><br><span class="line">import asyncio</span><br><span class="line"></span><br><span class="line">async def async_range(n: int) -&gt; AsyncIterable[int]:</span><br><span class="line">    for i in range(n):</span><br><span class="line">        yield i</span><br><span class="line">        await asyncio.sleep(1)</span><br><span class="line"></span><br><span class="line">async def process_data() -&gt; None:</span><br><span class="line">    async for num in async_range(5):</span><br><span class="line">        print(&quot;Received:&quot;, num)</span><br><span class="line"></span><br><span class="line">asyncio.run(process_data())</span><br></pre></td></tr></table></figure>
-<h2 id="AwaitableGenerator-表示可等待生成器类型。结合了-Generator-和-Awaitable，用于异步上下文中生成值并可使用-await-等待的类型。"><a href="#AwaitableGenerator-表示可等待生成器类型。结合了-Generator-和-Awaitable，用于异步上下文中生成值并可使用-await-等待的类型。" class="headerlink" title="AwaitableGenerator: 表示可等待生成器类型。结合了 Generator 和 Awaitable，用于异步上下文中生成值并可使用 await 等待的类型。"></a>AwaitableGenerator: 表示可等待生成器类型。结合了 Generator 和 Awaitable，用于异步上下文中生成值并可使用 await 等待的类型。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from typing import AwaitableGenerator</span><br><span class="line">import asyncio</span><br><span class="line"></span><br><span class="line">async def async_generator() -&gt; AwaitableGenerator[int, str, int]:</span><br><span class="line">    yield 1</span><br><span class="line">    await asyncio.sleep(1)</span><br><span class="line">    yield 2</span><br><span class="line">    await asyncio.sleep(1)</span><br><span class="line">    yield 3</span><br><span class="line"></span><br><span class="line">async def process_generator() -&gt; None:</span><br><span class="line">    async for num in async_generator():</span><br><span class="line">        print(&quot;Received:&quot;, num)</span><br><span class="line"></span><br><span class="line">asyncio.run(process_generator())</span><br></pre></td></tr></table></figure>
-<h2 id="AsyncContextManager-表示异步上下文管理器类型。类似于-ContextManager，但用于异步上下文中支持-async-with-语句的对象的类型"><a href="#AsyncContextManager-表示异步上下文管理器类型。类似于-ContextManager，但用于异步上下文中支持-async-with-语句的对象的类型" class="headerlink" title="AsyncContextManager: 表示异步上下文管理器类型。类似于 ContextManager，但用于异步上下文中支持 async with 语句的对象的类型"></a>AsyncContextManager: 表示异步上下文管理器类型。类似于 ContextManager，但用于异步上下文中支持 async with 语句的对象的类型</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from typing import AsyncContextManager</span><br><span class="line">import asyncio</span><br><span class="line"></span><br><span class="line">class MyAsyncContextManager:</span><br><span class="line">    async def __aenter__(self):</span><br><span class="line">        print(&quot;Entering async context&quot;)</span><br><span class="line"></span><br><span class="line">    async def __aexit__(self, exc_type, exc_value, traceback):</span><br><span class="line">        print(&quot;Exiting async context&quot;)</span><br><span class="line"></span><br><span class="line">async def process_data(manager: AsyncContextManager) -&gt; None:</span><br><span class="line">    async with manager:</span><br><span class="line">        print(&quot;Processing data&quot;)</span><br><span class="line"></span><br><span class="line">asyncio.run(process_data(MyAsyncContextManager()))</span><br></pre></td></tr></table></figure>
-<h2 id="MutableMapping-可变的键值对映射类型，它是-Mapping-的子类"><a href="#MutableMapping-可变的键值对映射类型，它是-Mapping-的子类" class="headerlink" title="MutableMapping: 可变的键值对映射类型，它是 Mapping 的子类"></a>MutableMapping: 可变的键值对映射类型，它是 Mapping 的子类</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from typing import MutableMapping</span><br><span class="line"></span><br><span class="line">def process_data(data: MutableMapping[str, int]) -&gt; None:</span><br><span class="line">    data[&quot;count&quot;] = 10</span><br><span class="line"></span><br><span class="line">my_dict: MutableMapping[str, int] = &#123;&quot;name&quot;:  &quot;John&quot;, &quot;age&quot;: 30&#125;</span><br><span class="line">process_data(my_dict)</span><br><span class="line">print(my_dict)</span><br></pre></td></tr></table></figure>
-<h2 id="MutableSet-可变的集合类型，它是-Set-的子类"><a href="#MutableSet-可变的集合类型，它是-Set-的子类" class="headerlink" title="MutableSet: 可变的集合类型，它是 Set 的子类"></a>MutableSet: 可变的集合类型，它是 Set 的子类</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from typing import MutableSet</span><br><span class="line"></span><br><span class="line">def process_data(data: MutableSet[int]) -&gt; None:</span><br><span class="line">    data.add(4)</span><br><span class="line"></span><br><span class="line">my_set: MutableSet[int] = &#123;1, 2, 3&#125;</span><br><span class="line">process_data(my_set)</span><br><span class="line">print(my_set)</span><br></pre></td></tr></table></figure>
-<h2 id="MappingView-映射视图类型，它提供了对映射对象的只读访问"><a href="#MappingView-映射视图类型，它提供了对映射对象的只读访问" class="headerlink" title="MappingView: 映射视图类型，它提供了对映射对象的只读访问"></a>MappingView: 映射视图类型，它提供了对映射对象的只读访问</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from typing import MappingView</span><br><span class="line"></span><br><span class="line">def process_data(data: MappingView[str, int]) -&gt; None:</span><br><span class="line">    for key, value in data.items():</span><br><span class="line">        print(key, value)</span><br><span class="line"></span><br><span class="line">my_dict = &#123;&quot;name&quot;: &quot;John&quot;, &quot;age&quot;: 30&#125;</span><br><span class="line">process_data(my_dict.items())</span><br></pre></td></tr></table></figure>
-<h2 id="Match-正则表达式匹配对象类型，用于表示匹配的结果"><a href="#Match-正则表达式匹配对象类型，用于表示匹配的结果" class="headerlink" title="Match: 正则表达式匹配对象类型，用于表示匹配的结果"></a>Match: 正则表达式匹配对象类型，用于表示匹配的结果</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from typing import Match</span><br><span class="line">import re</span><br><span class="line"></span><br><span class="line">def process_data(pattern: str, text: str) -&gt; None:</span><br><span class="line">    match: Match = re.search(pattern, text)</span><br><span class="line">    if match:</span><br><span class="line">        print(&quot;Match found:&quot;, match.group())</span><br><span class="line">    else:</span><br><span class="line">        print(&quot;No match found&quot;)</span><br><span class="line"></span><br><span class="line">process_data(r&quot;\d+&quot;, &quot;abc123def&quot;)</span><br></pre></td></tr></table></figure>
-<h2 id="MutableSequence-可变的序列类型，它是-Sequence-的子类"><a href="#MutableSequence-可变的序列类型，它是-Sequence-的子类" class="headerlink" title="MutableSequence: 可变的序列类型，它是 Sequence 的子类"></a>MutableSequence: 可变的序列类型，它是 Sequence 的子类</h2><p><code>`</code><br>from typing import MutableSequence</p>
-<p>def process_data(data: MutableSequence[int]) -&gt; None:<br>    data.append(4)</p>
-<p>my_list: MutableSequence[int] = [1, 2, 3]<br>process_data(my_list)<br>print(my_list)<br>···</p>
-
-      
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">2.</span>
+        <h2><a href="/2024/12/23/Python-Tempfile临时文件系统对象/">Python Tempfile临时文件系统对象</a></h2>
+        <span class="post-date">2024-12-23</span>
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2024/12/23/Python-Typing类型提示/" data-id="cm50h3rdh00ayyfhtql67rjg7" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2024/12/23/Python-Typing类型提示/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Python-Tempfile临时文件系统对象" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2024/12/23/Python-Tempfile临时文件系统对象/" class="article-date">
-  <time datetime="2024-12-23T02:58:17.000Z" itemprop="datePublished">2024-12-23</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/12/23/Python-Tempfile临时文件系统对象/">Python Tempfile临时文件系统对象</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在实际的项目处理中，往往我们并不需要创建文件，仅仅用于中转而已。这个时候在系统中频繁的创建中转文件，删除中转文件，不仅浪费系统的资源，而且容易被破坏或者篡改，这个时候用临时文件反而更好。</p>
-<p>而Python给我们提供了临时文件操作库：tempfile。本篇将详细介绍临时文件的应用与处理。</p>
-<h1 id="创建临时文件（TemporaryFile）"><a href="#创建临时文件（TemporaryFile）" class="headerlink" title="创建临时文件（TemporaryFile）"></a>创建临时文件（TemporaryFile）</h1><p>一般来说，我们通过tempfile.TemporaryFile()函数创建临时文件，具体的代码如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import tempfile</span><br><span class="line"></span><br><span class="line">with tempfile.TemporaryFile(mode=&apos;w+t&apos;) as temp:</span><br><span class="line">    temp.write(&quot;My name is Li Yuanjing&quot;)</span><br><span class="line">    temp.seek(0)</span><br><span class="line">    print(temp.read())</span><br><span class="line">    print(temp.name)</span><br><span class="line">```    </span><br><span class="line"></span><br><span class="line">其中，mode表示以什么方式创建并打开临时文件，这里w+表示可以读写文件，t是以文本模式打开文件。默认写完内容后，文件句柄在末尾，要重新读取文件，需要使用seek回转重定位。</span><br><span class="line"></span><br><span class="line"># 命名文件</span><br><span class="line"></span><br><span class="line">当然，我们创建临时文件是需要使用的，也就是在程序中，我们需要给它一个名字，方便我们进行操作。我们将上面代码变更一下：</span><br></pre></td></tr></table></figure></p>
-<p>import tempfile<br>import pathlib</p>
-<p>with tempfile.TemporaryFile(mode=’w+t’) as temp:<br>    temp.write(“My name is Li Yuanjing”)<br>    temp.seek(0)<br>    print(temp.read())<br>    f = pathlib.Path(temp.name)<br>print(f.name)<br>f.exists()<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">这里，我们用f变量标记了文件，后面操作的时候，可以使用f进行操作。当我们调用f.exists()函数时，默认临时文件会被删除。</span><br><span class="line"></span><br><span class="line"># 临时目录（TemporaryDirectory）</span><br><span class="line"></span><br><span class="line">在实际的项目中，我们可能并不仅仅只是创建一个临时文件，有时候也会创建一批量的临时文件，比如上传文件时。这个时候，我们就需要创建一个临时目录，在临时目录中创建文件进行操作。操作完成之后，只要关闭临时目录，就可以批量的关闭临时文件，比单个临时文件要方便许多。</span><br><span class="line"></span><br><span class="line">下面，我们就来创建临时的目录，代码如下：</span><br></pre></td></tr></table></figure></p>
-<p>import tempfile<br>import pathlib</p>
-<p>with tempfile.TemporaryDirectory() as temp:<br>    f = pathlib.Path(temp)<br>    print(f)<br>    a_file = f / ‘a.txt’<br>    a_file.write_text(“111111111111”)<br>    b_file = f / ‘b.txt’<br>    b_file.write_text(“222222222222”)<br>    c_file = f / ‘c.txt’<br>    c_file.write_text(“333333333333”)<br>    print(a_file.read_text())<br>    print(b_file.read_text())<br>    print(c_file.read_text())<br>f.exists()<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"># 假脱机文件</span><br><span class="line"></span><br><span class="line">如果我们处理的临时文件的数据较少，其实使用SpooledTemporaryFile可能更高效，因为它使用一个io.BytesIO或io.StringIO缓冲区在内存中保存内容，直到数据超过一定的大小，才写入磁盘，然后用TemporaryFile替代缓冲区。</span><br><span class="line"></span><br><span class="line">具体使用方式如下：</span><br></pre></td></tr></table></figure></p>
-<p>import tempfile</p>
-<p>with tempfile.SpooledTemporaryFile(max_size=1000, mode=’w+t’, encoding=’utf-8’) as temp:<br>    print(temp)<br>    temp.write(‘15648497987987987’)<br>    temp.seek(0)<br>    print(temp.read())<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">这里的max_size就是决定文件小于这个值写入缓冲区，大于这个值写入TemporaryFile临时文件。</span><br><span class="line"></span><br><span class="line">当然，我们可以强制将缓冲区写入临时文件，可以调用rollover()或fileno()函数。具体代码如下所示：</span><br></pre></td></tr></table></figure></p>
-<p>import tempfile</p>
-<p>with tempfile.SpooledTemporaryFile(max_size=1000, mode=’w+t’, encoding=’utf-8’) as temp:<br>    print(temp)<br>    temp.write(‘15648497987987987’)<br>    temp.seek(0)<br>    temp.rollover()<br>    print(temp.read())<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">如上面代码所示，加一句temp.rollover()就行。</span><br><span class="line"></span><br><span class="line"># 预测名（NamedTemporaryFile）</span><br><span class="line"></span><br><span class="line">从上面的代码，我们可以看到，临时文件单独创建的方式，文件名是随机生成的，并不是由程序员指定的，但有时候还需要在名字中包含一些可预测的部分，以便查找和检查文件来进行调用。</span><br><span class="line"></span><br><span class="line">这个时候，指定文件名往往更好。我们指定文件名规律用NamedTemporaryFile()函数，代码如下：</span><br></pre></td></tr></table></figure></p>
-<p>import tempfile<br>import pathlib</p>
-<p>tmp_file = tempfile.NamedTemporaryFile(prefix=’image_’, suffix=’_png’)<br>print(tmp_file.name)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">可以看出来，我们的文件名等于：prefix+random+suffix。当然，其实该函数还有一个dir参数，可以指定目录。完整的文件名等于：dir+prefix+random+suffix。</span><br><span class="line"></span><br><span class="line"># gettempdir()与gettempprefix()</span><br><span class="line"></span><br><span class="line">在创建临时文件的时候，如果我们没有指定dir，那么该临时文件的路径会跟随平台和设置变化，也就是不确定的位置。这个时候，我们可能需要获取文件的路径以及其他参数，通过gettempdir()与gettempprefix()可以做到，具体代码如下：</span><br></pre></td></tr></table></figure></p>
-<p>import tempfile</p>
-<p>print(tempfile.gettempdir())<br>print(tempfile.gettempdirb())<br>print(tempfile.gettempprefix())<br>print(tempfile.gettempprefixb())<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">`gettempdir`：返回包含所有临时文件的默认目录</span><br><span class="line">`gettempprefix`：返回新文件和目录名的字符串前缀。</span><br><span class="line"></span><br><span class="line">而这个2个方法还有一个后缀b的方法，用于返回bytes类型的字符串对象。当然如果你想自己设置临时目录，并不跟随系统，可以直接使用tempfile.tempdir进行设置。</span><br></pre></td></tr></table></figure></p>
-<p>import tempfile</p>
-<p>tempfile.tempdir=r’d:\temp’<br>print(tempfile.gettempdir())<br><code>`</code></p>
-
-      
+    <div class="post-content">
+        前言在实际的项目处理中，往往我们并不需要创建文件，仅仅用于中转而已。这个时候在系统中频繁的创建中转文件，删除中转文件，不仅浪费系统的资源，而且容易被破坏或者篡改，这个时候用临时文件反而更好。
+而Python给我们提供了临时文件操作库：tempfile。本篇将详细介绍临时文件的应用与处理。
+创建临时文件（TemporaryFile）一般来说，我们通过te...
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2024/12/23/Python-Tempfile临时文件系统对象/" data-id="cm50h3rdd00aqyfhtnqy67z9t" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2024/12/23/Python-Tempfile临时文件系统对象/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+</div>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Python-Pathlib处理文件路径库的使用" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2024/12/23/Python-Pathlib处理文件路径库的使用/" class="article-date">
-  <time datetime="2024-12-23T02:21:54.000Z" itemprop="datePublished">2024-12-23</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/12/23/Python-Pathlib处理文件路径库的使用/">Python Pathlib处理文件路径库的使用</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Pathlib 是一个用于处理文件路径的 Python 库，提供了许多实用的函数和方法来处理文件系统路径。它提供了一个面向对象的层次结构，路径被表示为对象，这些对象拥有一些属性和方法，使得文件路径的操作变得更加直观和方便。</p>
-<p>需要注意的是，pathlib 是 Python 3.4 以上版本引入的库，在 Python 3.10 版本中得到了显著的增强。读者需注意自己的 Python 版本是否支持。</p>
-<h1 id="Pathlib-库实现"><a href="#Pathlib-库实现" class="headerlink" title="Pathlib 库实现"></a>Pathlib 库实现</h1><h2 id="Path-创建路径对象"><a href="#Path-创建路径对象" class="headerlink" title="Path 创建路径对象"></a>Path 创建路径对象</h2><p>Path 是 pathlib 库的核心类，它提供了一个高层次的接口来处理文件系统路径。通过 Path 类，你可以执行各种文件系统操作，如创建、删除、移动文件和目录，以及查询路径信息和列出目录内容等。</p>
-<p>所以使用 Pathlib 库，首先需要我们创建路径对象：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from pathlib import Path</span><br><span class="line"></span><br><span class="line"># 通过绝对路径地址创建路径对象 p_1</span><br><span class="line">p_1 = Path(&apos;D:\Code_Learner\Python\Pathlib\main.py&apos;)</span><br><span class="line"># 通过相对路径地址创建路径对象 p_2</span><br><span class="line">p_2 = Path(&apos;.&apos;)</span><br></pre></td></tr></table></figure>
-<h2 id="检查路径类型"><a href="#检查路径类型" class="headerlink" title="检查路径类型"></a>检查路径类型</h2><p><code>.is_file()</code>：检查是否是文件；<br><code>.is_dir()</code>：检查是否是目录；<br><code>.exists()</code>：检查路径是否存在；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if p_1.is_file():</span><br><span class="line">    print(&quot;It&apos;s a file.&quot;)</span><br><span class="line">if p_1.is_dir():</span><br><span class="line">    print(&quot;It&apos;s a directory.&quot;)</span><br><span class="line">if p_1.exists():</span><br><span class="line">    print(&quot;The path exists.&quot;)</span><br></pre></td></tr></table></figure></p>
-<p>输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">It&apos;s a file.</span><br><span class="line">The path exists.</span><br></pre></td></tr></table></figure></p>
-<h2 id="创建和删除路径（目录与文件）"><a href="#创建和删除路径（目录与文件）" class="headerlink" title="创建和删除路径（目录与文件）"></a>创建和删除路径（目录与文件）</h2><p><code>.mkdir()</code>：创建目录；<br><code>.rmdir()</code>：删除目录；<br><code>.touch()</code>：创建空文件；<br><code>.unlink()</code>：删除文件；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 绝对路径下创建文件夹</span><br><span class="line">Path(r&apos;D:\Code_Learner\test&apos;).mkdir()</span><br><span class="line"># 相对路径下操作</span><br><span class="line">Path(&apos;new_dir&apos;).mkdir()</span><br><span class="line">Path(&apos;del_dir&apos;).rmdir()</span><br><span class="line">Path(&apos;new_file.txt&apos;).touch()</span><br><span class="line">Path(&apos;rm_file.txt&apos;).unlink()</span><br></pre></td></tr></table></figure>
-<h1 id="读写文件"><a href="#读写文件" class="headerlink" title="读写文件"></a>读写文件</h1><p><code>.read_text()</code>：读取文件内容；<br><code>.write_text()</code>：写入文件内容；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">content = Path(&apos;example.txt&apos;).read_text()</span><br><span class="line">Path(&apos;new_file.txt&apos;).write_text(content)</span><br></pre></td></tr></table></figure>
-<p>需要注意的是，写入文件内容操作为覆盖写入。</p>
-<h2 id="路径匹配"><a href="#路径匹配" class="headerlink" title="路径匹配"></a>路径匹配</h2><p><code>.glob()</code>：匹配路径模式；<br><code>.rglob()</code>：递归匹配路径模式；<br>e.g. 示例，找到路径下所有 .txt 文件；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for file in p_2.glob(&apos;*.txt&apos;):</span><br><span class="line">    print(file)</span><br></pre></td></tr></table></figure>
-<h2 id="路径拼接和解析"><a href="#路径拼接和解析" class="headerlink" title="路径拼接和解析"></a>路径拼接和解析</h2><p><code>.joinpath()</code>：拼接路径；<br><code>.relative_to()</code>：获取相对路径；<br><code>.resolve()</code>：解析路径，返回绝对路径；<br><code>.parent</code>：获取父目录；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 拼接路径</span><br><span class="line">subpath = Path(&apos;subdir&apos;) / &apos;subfile.txt&apos;</span><br><span class="line">print(subpath)</span><br><span class="line"># 获取绝对路径</span><br><span class="line">absolute_path = subpath.resolve()</span><br><span class="line">print(absolute_path)</span><br><span class="line"># 获取相对路径</span><br><span class="line">relative_path = absolute_path.relative_to(&apos;D:/Code_Learner/Python/Pathlib&apos;)</span><br><span class="line">print(relative_path)</span><br></pre></td></tr></table></figure>
-<p>e.g. 获取父目录地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from pathlib import Path</span><br><span class="line"></span><br><span class="line"># 创建一个路径对象</span><br><span class="line">path = Path(&apos;C:/Users/example/documents/file.txt&apos;)</span><br><span class="line"></span><br><span class="line"># 获取父目录</span><br><span class="line">parent_dir = path.parent</span><br><span class="line"></span><br><span class="line"># 打印父目录</span><br><span class="line">print(parent_dir)</span><br></pre></td></tr></table></figure>
-<h2 id="路径属性"><a href="#路径属性" class="headerlink" title="路径属性"></a>路径属性</h2><p><code>.name</code>：获取路径的文件名；<br><code>.with_name()</code>：修改文件名；<br><code>.suffix</code>：获取文件的后缀；<br><code>.with_suffix()</code>：修改文件后缀；<br><code>.stem</code>：获取文件名（不包含后缀）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from pathlib import Path</span><br><span class="line"></span><br><span class="line">p = Path(&apos;.&apos;) / &apos;test.txt&apos;</span><br><span class="line">p = p.resolve()</span><br><span class="line">print(p)</span><br><span class="line">print(p.name)</span><br><span class="line">print(p.suffix)</span><br><span class="line">print(p.stem)</span><br><span class="line"></span><br><span class="line">new_path = p.with_name(&apos;new_file.txt&apos;)</span><br><span class="line">print(new_path)</span><br><span class="line">new_path = new_path.with_suffix(&apos;.py&apos;)</span><br><span class="line">print(new_path)</span><br><span class="line">new_path = new_path.with_name(&apos;hello.md&apos;)</span><br><span class="line">print(new_path)</span><br></pre></td></tr></table></figure></p>
-<p>注意修改文件名称同时会修改后缀内容，且修改文件名称和后缀名并非会修改源文件上的名称和后缀。如果想更改源文件上的名称和后缀，请使用 .rename() 方法。</p>
-<h2 id="路径迭代和列出目录内容"><a href="#路径迭代和列出目录内容" class="headerlink" title="路径迭代和列出目录内容"></a>路径迭代和列出目录内容</h2><p><code>.iterdir()</code>：迭代目录内容；<br><code>.rglob()</code>：递归列出目录内容；<br>e.g. 获取指定目录下所有文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for entry in Path(&apos;.&apos;).iterdir():</span><br><span class="line">    print(entry)</span><br></pre></td></tr></table></figure>
-<p>e.g. 递归出指定目录下所有符合指定条件的文件：</p>
-<p>假设我们的文件目录结构为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># D:\Code_Learner\Python\Pathlib\test</span><br><span class="line">- test</span><br><span class="line">	- test4.txt</span><br><span class="line">- test1.txt</span><br><span class="line">- test2.txt</span><br><span class="line">- test3.txt</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from pathlib import Path</span><br><span class="line"></span><br><span class="line">p = Path(r&apos;D:\Code_Learner\Python\Pathlib\test&apos;)</span><br><span class="line"></span><br><span class="line">for entry in p.rglob(&apos;*.txt&apos;):</span><br><span class="line">    print(entry)</span><br></pre></td></tr></table></figure>
-<p>结果为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">D:\Code_Learner\Python\Pathlib\test\test1.txt</span><br><span class="line">D:\Code_Learner\Python\Pathlib\test\test2.txt</span><br><span class="line">D:\Code_Learner\Python\Pathlib\test\test3.txt</span><br><span class="line">D:\Code_Learner\Python\Pathlib\test\test\test4.txt</span><br></pre></td></tr></table></figure></p>
-<p>通过 rglob() 函数，递归遍历出了当前目录下所有满足条件的 .txt 文件，同时也递归出其下属文件夹 test 中的 test4.txt 文件</p>
-<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>上述这些函数和方法提供了处理文件系统路径所需的大部分功能。Pathlib 提供了一个面向对象的方式来处理文件系统路径，使得文件操作更加简洁、易于理解和维护。它是 Python 编程中处理文件路径的首选方法之一。</p>
-
-      
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">3.</span>
+        <h2><a href="/2024/12/23/Python-Pathlib处理文件路径库的使用/">Python Pathlib处理文件路径库的使用</a></h2>
+        <span class="post-date">2024-12-23</span>
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2024/12/23/Python-Pathlib处理文件路径库的使用/" data-id="cm50h3rdb00anyfht770iw8nw" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2024/12/23/Python-Pathlib处理文件路径库的使用/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-在ubuntu上的18个非常实用的命令行工具软件" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2024/08/31/在ubuntu上的18个非常实用的命令行工具软件/" class="article-date">
-  <time datetime="2024-08-31T05:56:34.000Z" itemprop="datePublished">2024-08-31</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/ubuntu/">ubuntu</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/08/31/在ubuntu上的18个非常实用的命令行工具软件/">在ubuntu上的18个非常实用的命令行工具软件</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="find-在文件系统中查找所需的文件"><a href="#find-在文件系统中查找所需的文件" class="headerlink" title="find - 在文件系统中查找所需的文件"></a><code>find</code> - 在文件系统中查找所需的文件</h2><ul>
-<li><p>在当前目录及其子目录下查找 C 语言的源程序：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find . -name *.c</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在 /var 目录及其子目录下查找文件大小大于 100kb 的日志文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo find /var -name <span class="string">"*.log"</span> -size +100k</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在当前目录及其子目录下查找大于 2M 的临时文件，如果其所属用户不是 developer，则将其删除：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find . -name <span class="string">"*tmp"</span> -size +2M ! -user developer -<span class="built_in">exec</span> rm &#123;&#125; \;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>要求在删除文件前确认：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find . -name <span class="string">"*tmp"</span> -size +2M ! -user developer -ok rm &#123;&#125; \;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="grep-在文件中查找字符串"><a href="#grep-在文件中查找字符串" class="headerlink" title="grep - 在文件中查找字符串"></a><code>grep</code> - 在文件中查找字符串</h2><ul>
-<li><p>在当前目录下的文本文件中，查找含有 “hello” 字符串的文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ grep <span class="string">"hello"</span> *.txt</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在当前目录及其子目录下的所有文件中，查找含有 “hello” 字符串的文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ grep -r <span class="string">"hello"</span> ./</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在当前目录及其子目录下的 C 语言源代码文件中，查找含有 “hello” 字符串的文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ grep -r <span class="string">"hello"</span> ./ --include=<span class="string">"*.c"</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用正则表达式查找文件中的字符串:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ grep -r <span class="string">"uid-[0-9]*"</span> ./ --include=<span class="string">"*.c"</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="cut-打印文件中指定的字段-列"><a href="#cut-打印文件中指定的字段-列" class="headerlink" title="cut - 打印文件中指定的字段(列)"></a><code>cut</code> - 打印文件中指定的字段(列)</h2><ul>
-<li><p>打印文件 /etc/fstab 文件中每行的前 12 个字符</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cut -c1-12 /etc/fstab</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>打印文件 /etc/passwd 中第 1、6、7 字段的内容，字段分隔符为 “:”</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cut -d: -f1,6,7 /etc/passwd</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="bc-命令行上的计算器"><a href="#bc-命令行上的计算器" class="headerlink" title="bc - 命令行上的计算器"></a><code>bc</code> - 命令行上的计算器</h2><ul>
-<li><p>这是一个命令行下的交互式计算器，可以使用变量，还可以使用数学函数，quit 命令退出交互；</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ bc -l</span><br><span class="line">bc 1.07.1</span><br><span class="line">Copyright 1991-1994, 1997, 1998, 2000, 2004, 2006, 2008, 2012-2017 Free Software Foundation, Inc.</span><br><span class="line">This is free software with ABSOLUTELY NO WARRANTY.</span><br><span class="line">For details <span class="built_in">type</span> `warranty<span class="string">'. </span></span><br><span class="line"><span class="string">102+240*3.5</span></span><br><span class="line"><span class="string">942.0</span></span><br><span class="line"><span class="string">a=102</span></span><br><span class="line"><span class="string">b=240</span></span><br><span class="line"><span class="string">c=3.5</span></span><br><span class="line"><span class="string">a+b*c</span></span><br><span class="line"><span class="string">942.0</span></span><br><span class="line"><span class="string">b/c</span></span><br><span class="line"><span class="string">68.57142857142857142857</span></span><br><span class="line"><span class="string">sqrt(a)</span></span><br><span class="line"><span class="string">10.09950493836207795336</span></span><br><span class="line"><span class="string">quit</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>也可以在脚本中使用：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ x=100</span><br><span class="line">$ y=20</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"<span class="variable">$x</span>/<span class="variable">$y</span>"</span> | bc -l</span><br><span class="line">5.00000000000000000000</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"<span class="variable">$x</span>/<span class="variable">$y</span>"</span> | bc</span><br><span class="line">5</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="comm-比较两个已排序的文件"><a href="#comm-比较两个已排序的文件" class="headerlink" title="comm - 比较两个已排序的文件"></a><code>comm</code> - 比较两个已排序的文件</h2><ul>
-<li><p>为了演示这个命令，先制作两个简单的文本文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> -e <span class="string">"avi\ndani\nrina\nzina"</span>&gt;student1</span><br><span class="line">$ <span class="built_in">echo</span> -e <span class="string">"avi\ndina\nmeni\nzina"</span>&gt;student2</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>用 <code>comm</code> 比较这两个文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ cat student1</span><br><span class="line">avi</span><br><span class="line">dani</span><br><span class="line">rina</span><br><span class="line">zina</span><br><span class="line">$ cat student2</span><br><span class="line">avi</span><br><span class="line">dina</span><br><span class="line">meni</span><br><span class="line">zina</span><br><span class="line">$ comm student1 student2</span><br><span class="line">                avi</span><br><span class="line">dani</span><br><span class="line">        dina</span><br><span class="line">        meni</span><br><span class="line">rina</span><br><span class="line">                zina</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>第 1 列是第 1 个文件的内容，第 2 列是第 2 个文件内容，第 3 列是两个文件中相同的内容；</p>
-</li>
-</ul>
-<h2 id="diff-逐行比较两个文件"><a href="#diff-逐行比较两个文件" class="headerlink" title="diff - 逐行比较两个文件"></a><code>diff</code> - 逐行比较两个文件</h2><ul>
-<li><p>使用上面使用过的文件 student1 和 student2 进行比较：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ diff student1 student2</span><br><span class="line">2,3c2,3</span><br><span class="line">&lt; dani</span><br><span class="line">&lt; rina</span><br><span class="line">---</span><br><span class="line">&gt; dina</span><br><span class="line">&gt; meni</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>其中 2,3c2,3 的含义是：将第 1 个文件中的第 2、3 行改为第 2 个文件的第 2、3 行，两个文件就一样了；</p>
-</li>
-</ul>
-<h2 id="df-文件系统的磁盘空间使用情况"><a href="#df-文件系统的磁盘空间使用情况" class="headerlink" title="df - 文件系统的磁盘空间使用情况"></a><code>df</code> - 文件系统的磁盘空间使用情况</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ df</span><br><span class="line">Filesystem     1K-blocks    Used Available Use% Mounted on</span><br><span class="line">udev              211908       0    211908   0% /dev</span><br><span class="line">tmpfs              48496     712     47784   2% /run</span><br><span class="line">/dev/vda1        6105676 4262704   1522648  74% /</span><br><span class="line">tmpfs             242468       0    242468   0% /dev/shm</span><br><span class="line">tmpfs               5120       0      5120   0% /run/lock</span><br><span class="line">tmpfs             242468       0    242468   0% /sys/fs/cgroup</span><br><span class="line">tmpfs              48492       0     48492   0% /run/user/1000</span><br></pre></td></tr></table></figure>
-<h2 id="du-估算文件系统的磁盘使用情况"><a href="#du-估算文件系统的磁盘使用情况" class="headerlink" title="du - 估算文件系统的磁盘使用情况"></a><code>du</code> - 估算文件系统的磁盘使用情况</h2><ul>
-<li><p>使用这个命令通常都要加上参数 -h，这样显示的结果才比较清楚：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ du -h</span><br><span class="line">4.0K    ./.config/procps</span><br><span class="line">8.0K    ./.config</span><br><span class="line">28K     ./.mitmproxy</span><br><span class="line">4.0K    ./.cache</span><br><span class="line">22M     ./frp</span><br><span class="line">51M     .</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>可以不显示子目录，仅显示汇总结果：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ du -h -s</span><br><span class="line">51M     .</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>还可以指定子目录的深度，比如：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ du -h -d 1</span><br><span class="line">8.0K    ./.config</span><br><span class="line">28K	    ./.mitmproxy</span><br><span class="line">4.0K    ./.cache</span><br><span class="line">22M     ./frp</span><br><span class="line">51M     .</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>与前面的 du -h 相比，这次没有显示目录 ./.config/procps，这是因为 -d 1 指定了目录深度只有 1 层。</p>
-</li>
-</ul>
-<h2 id="file-查看文件类型"><a href="#file-查看文件类型" class="headerlink" title="file - 查看文件类型"></a><code>file</code> - 查看文件类型</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ file mytest.c</span><br><span class="line">mytest.c: C <span class="built_in">source</span>, ASCII text, with CRLF line terminators</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ file /bin/cp</span><br><span class="line">/bin/cp: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=421e1abd8faf1cb290df755a558377c5d7def3b1, <span class="keyword">for</span> GNU/Linux 3.2.0, stripped</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ file /lib64/ld-linux-x86-64.so.2</span><br><span class="line">/lib64/ld-linux-x86-64.so.2: symbolic link to /lib/x86_64-linux-gnu/ld-2.31.so</span><br></pre></td></tr></table></figure>
-<h2 id="fold-打印文件内容时，在指定宽度位置添加”换行”"><a href="#fold-打印文件内容时，在指定宽度位置添加”换行”" class="headerlink" title="fold - 打印文件内容时，在指定宽度位置添加”换行”"></a><code>fold</code> - 打印文件内容时，在指定宽度位置添加”换行”</h2><ul>
-<li><p>为演示 fold 命令，先制作一个文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">"id-2093384 id-8984773 id-8725536 id-9828835 id-6455351 id-9873773 "</span>&gt;data1</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>执行下面命令看一下打印效果：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ cat data1</span><br><span class="line">id-2093384 id-8984773 id-8725536 id-9828835 id-6455351 id-9873773 </span><br><span class="line">$ fold -w 11 data1</span><br><span class="line">id-2093384 </span><br><span class="line">id-8984773 </span><br><span class="line">id-8725536 </span><br><span class="line">id-9828835 </span><br><span class="line">id-6455351 </span><br><span class="line">id-9873773</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="head-tail-显示文件的第一行-最后一行"><a href="#head-tail-显示文件的第一行-最后一行" class="headerlink" title="head/tail - 显示文件的第一行/最后一行"></a><code>head/tail</code> - 显示文件的第一行/最后一行</h2><ul>
-<li><p>显示 /etc/passwd 文件的最前面的 2 行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ head -2 /etc/passwd</span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>显示 /etc/passwd 文件的最后 2 行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ tail -2 /etc/passwd</span><br><span class="line">snap_daemon:x:584788:584788::/nonexistent:/usr/bin/<span class="literal">false</span></span><br><span class="line">glances:x:128:135::/var/lib/glances:/usr/sbin/nologin</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>显示 /etc/passwd 文件的前 50 个字符：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ head -c 50 /etc/passwd</span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">daemon:x:1:1:daemo$</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="join-将两个具有公共字段的文件合并在一起"><a href="#join-将两个具有公共字段的文件合并在一起" class="headerlink" title="join - 将两个具有公共字段的文件合并在一起"></a><code>join</code> - 将两个具有公共字段的文件合并在一起</h2><ul>
-<li><p>为了演示 join 命令，先制作 2 个文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> -e <span class="string">"avi haifa\ndani aco\nrina tel aviv\nzina ny"</span>&gt;s1</span><br><span class="line">$ <span class="built_in">echo</span> -e <span class="string">"avi 1002\ndani 2000\nrina 3000\nzina 4255"</span>&gt;s2</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>显示这两个文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ cat s1</span><br><span class="line">avi haifa</span><br><span class="line">dani aco</span><br><span class="line">rina tel aviv</span><br><span class="line">zina ny</span><br><span class="line">$ cat s2</span><br><span class="line">avi 1002</span><br><span class="line">dani 2000</span><br><span class="line">rina 3000</span><br><span class="line">zina 4255</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>可以看到这两个文件的第一列是一样的，这就是这两个文件的公共字段，这样的文件就可以使用 join 合并：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ join -j1 1 -j2 1 s1 s2</span><br><span class="line">avi haifa 1002</span><br><span class="line">dani aco 2000</span><br><span class="line">rina tel aviv 3000</span><br><span class="line">zina ny 4255</span><br><span class="line">``` </span><br><span class="line">* 其中 -j1 1 表示第一个文件的第一个字段，-j2 1 表示第二个文件的第一个字段。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## `od` - 以各种不同的格式显示文件</span></span><br><span class="line">* 先制作一个文件</span><br><span class="line">```bash</span><br><span class="line">$ <span class="built_in">echo</span> -e <span class="string">"hello"</span>&gt;a1</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>正常显示文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cat a1</span><br><span class="line">hello</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用 od 按八进制和字符显示文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ od -bc a1</span><br><span class="line">0000000 150 145 154 154 157 012</span><br><span class="line">          h   e   l   l   o  \n</span><br><span class="line">0000006</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>按 16 进制字和字符显示文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ od -xc a1</span><br><span class="line">0000000    6568    6c6c    0a6f</span><br><span class="line">          h   e   l   l   o  \n</span><br><span class="line">0000006</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>按 16 进制字节和字符显示文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ od -t x1c a1</span><br><span class="line">0000000  68  65  6c  6c  6f  0a</span><br><span class="line">          h   e   l   l   o  \n</span><br><span class="line">0000006</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="paste-合并文件行"><a href="#paste-合并文件行" class="headerlink" title="paste - 合并文件行"></a>paste - 合并文件行</h2><ul>
-<li><p>制作一个新文件 s3</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> -e <span class="string">"20003 france\n09388 uk\n20019 italy\n98377 spain"</span>&gt;s3</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用 paste 命令将前面用过的文件 s2 和 s3 文件合并</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ cat s2</span><br><span class="line">avi 1002</span><br><span class="line">dani 2000</span><br><span class="line">rina 3000</span><br><span class="line">zina 4255</span><br><span class="line">$ cat s3</span><br><span class="line">20003 france</span><br><span class="line">09388 uk</span><br><span class="line">20019 italy</span><br><span class="line">98377 spain</span><br><span class="line">$ paste s2 s3</span><br><span class="line">avi 1002	20003 france</span><br><span class="line">dani 2000	09388 uk</span><br><span class="line">rina 3000	20019 italy</span><br><span class="line">zina 4255	98377 spain</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="sort-对文件进行排序"><a href="#sort-对文件进行排序" class="headerlink" title="sort - 对文件进行排序"></a>sort - 对文件进行排序</h2><ul>
-<li>使用 s3 文件演示 sort 的作用：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ cat s3</span><br><span class="line">20003 france</span><br><span class="line">09388 uk</span><br><span class="line">20019 italy</span><br><span class="line">98377 spain</span><br><span class="line">$ sort s3</span><br><span class="line">09388 uk</span><br><span class="line">20003 france</span><br><span class="line">20019 italy</span><br><span class="line">98377 spain</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="uniq-从一个已排序的文件中删除重复的行"><a href="#uniq-从一个已排序的文件中删除重复的行" class="headerlink" title="uniq - 从一个已排序的文件中删除重复的行"></a><code>uniq</code> - 从一个已排序的文件中删除重复的行</h2><ul>
-<li>以前面用过的 s2 文件演示 uniq 命令<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> -e <span class="string">"dani 2000\nrina 3000"</span>&gt;&gt;s2</span><br><span class="line">$ cat s2</span><br><span class="line">avi 1002</span><br><span class="line">dani 2000</span><br><span class="line">rina 3000</span><br><span class="line">zina 4255</span><br><span class="line">dani 2000</span><br><span class="line">rina 3000</span><br><span class="line">$ sort s2&gt;s4</span><br><span class="line">$ cat s4</span><br><span class="line">avi 1002</span><br><span class="line">dani 2000</span><br><span class="line">dani 2000</span><br><span class="line">rina 3000</span><br><span class="line">rina 3000</span><br><span class="line">zina 4255</span><br><span class="line">$ uniq s4</span><br><span class="line">avi 1002</span><br><span class="line">dani 2000</span><br><span class="line">rina 3000</span><br><span class="line">zina 4255</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="split-将文件分割为多个部分"><a href="#split-将文件分割为多个部分" class="headerlink" title="split - 将文件分割为多个部分"></a><code>split</code> - 将文件分割为多个部分</h2><ul>
-<li>以 s2 文件为例，下面 split 命令的意思是：将 s2 文件按照 2 行一个文件分割为若干个文件，新文件名称以 gen_ 开头<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ cat s2</span><br><span class="line">avi 1002</span><br><span class="line">dani 2000</span><br><span class="line">rina 3000</span><br><span class="line">zina 4255</span><br><span class="line">dani 2000</span><br><span class="line">rina 3000</span><br><span class="line">$ split -2 s2 gen_</span><br><span class="line">$ cat gen_aa</span><br><span class="line">avi 1002</span><br><span class="line">dani 2000</span><br><span class="line">$ cat gen_ab</span><br><span class="line">rina 3000</span><br><span class="line">zina 4255</span><br><span class="line">$ cat gen_ac</span><br><span class="line">dani 2000</span><br><span class="line">rina 3000</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="wc-打印文件中的字符数、单词数和行数"><a href="#wc-打印文件中的字符数、单词数和行数" class="headerlink" title="wc - 打印文件中的字符数、单词数和行数"></a><code>wc</code> - 打印文件中的字符数、单词数和行数</h2><ul>
-<li><p>默认情况下，打印出文件的行数、单词数和字符数：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ wc /etc/passwd</span><br><span class="line">  51   90 3070 /etc/passwd</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>其中：51 是文件行数，90 是文件中的单词数，3070 是该文件的字符数；</p>
-</li>
-<li><p>可以使用参数 -l 表示行数，-w 表示单词数，-c 表示字符数；</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ wc -l /etc/passwd</span><br><span class="line">51 /etc/passwd</span><br><span class="line">$ wc -c /etc/passwd</span><br><span class="line">3070 /etc/passwd</span><br><span class="line">$ wc -w /etc/passwd</span><br><span class="line">90 /etc/passwd</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>还可以这样用：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ps aux | wc -l</span><br><span class="line">381</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>表示 ps aux 这个命令的输出有 381 行。</p>
-</li>
-</ul>
-
-      
+    <div class="post-content">
+        简介Pathlib 是一个用于处理文件路径的 Python 库，提供了许多实用的函数和方法来处理文件系统路径。它提供了一个面向对象的层次结构，路径被表示为对象，这些对象拥有一些属性和方法，使得文件路径的操作变得更加直观和方便。
+需要注意的是，pathlib 是 Python 3.4 以上版本引入的库，在 Python 3.10 版本中得到了显著的增强。...
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2024/08/31/在ubuntu上的18个非常实用的命令行工具软件/" data-id="cm50h3rdf00avyfhte8gxs25l" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2024/08/31/在ubuntu上的18个非常实用的命令行工具软件/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/">ubuntu</a></li></ul>
+</div>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-什么是动态规划？在Python中如何利用动态规划解决实际问题？" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2024/08/20/什么是动态规划？在Python中如何利用动态规划解决实际问题？/" class="article-date">
-  <time datetime="2024-08-20T07:30:46.000Z" itemprop="datePublished">2024-08-20</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/08/20/什么是动态规划？在Python中如何利用动态规划解决实际问题？/">什么是动态规划？在Python中如何利用动态规划解决实际问题？</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>动态规划（Dynamic Programming，简称DP），它是一种通过将复杂问题分解为更小的子问题来求解问题的方法，有点类似于分治算法的思想。它特别适用于那些通过重叠子问题（Overlapping Subproblems）和最优子结构（Optimal Substructure）性质可以被高效解决的问题。</p>
-<h1 id="动态规划的基本思想"><a href="#动态规划的基本思想" class="headerlink" title="动态规划的基本思想"></a>动态规划的基本思想</h1><h2 id="重叠子问题"><a href="#重叠子问题" class="headerlink" title="重叠子问题"></a>重叠子问题</h2><p>所谓的重叠子问题，其实是将原问题分解为若干类似的子问题，这些子问题的计算过程在整个的求解过程中会被多次重复计算。</p>
-<h2 id="最优子结构"><a href="#最优子结构" class="headerlink" title="最优子结构"></a>最优子结构</h2><p>所谓的最优子结构，意思是说原问题的最优解就包含其子问题的最优解中。</p>
-<h2 id="子问题的状态和状态转移"><a href="#子问题的状态和状态转移" class="headerlink" title="子问题的状态和状态转移"></a>子问题的状态和状态转移</h2><p>通过对已经解决的子问题的结果或者是状态进行保存，来避免对于问题操作的重复计算通过状态转移方程，也被称为是递推的关系来逐步的求解原问题的解。</p>
-<p>通过利用上面的思路，我们可以总结出如下的两种实现方式。</p>
-<ul>
-<li>自顶向下的记忆化搜索（递归 + 记忆化）</li>
-<li>自底向上的递推（迭代）</li>
-</ul>
-<p>下面我们就结合具体的例子来理解一下动态规划算法。</p>
-<h1 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h1><p>斐波那契数列是一个最简单的动态规划问题，它满足重叠子问题和最优子结构的性质。我们可以通过递归 + 记忆化的方法来实现，如下所示。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib_memo</span><span class="params">(n, memo=&#123;&#125;)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> n <span class="keyword">in</span> memo:</span><br><span class="line">        <span class="keyword">return</span> memo[n]</span><br><span class="line">    <span class="keyword">if</span> n &lt;= <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> n</span><br><span class="line">    memo[n] = fib_memo(n<span class="number">-1</span>, memo) + fib_memo(n<span class="number">-2</span>, memo)</span><br><span class="line">    <span class="keyword">return</span> memo[n]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用示例</span></span><br><span class="line">print(fib_memo(<span class="number">10</span>))  <span class="comment"># 输出55</span></span><br></pre></td></tr></table></figure>
-<p>自底向上的递推方法</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib_dp</span><span class="params">(n)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> n &lt;= <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> n</span><br><span class="line">    dp = [<span class="number">0</span>] * (n + <span class="number">1</span>)</span><br><span class="line">    dp[<span class="number">1</span>] = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>, n + <span class="number">1</span>):</span><br><span class="line">        dp[i] = dp[i<span class="number">-1</span>] + dp[i<span class="number">-2</span>]</span><br><span class="line">    <span class="keyword">return</span> dp[n]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用示例</span></span><br><span class="line">print(fib_dp(<span class="number">10</span>))  <span class="comment"># 输出55</span></span><br></pre></td></tr></table></figure>
-<h1 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h1><p>背包问题是动态规划的经典应用之一。假设我们有一个容量为W 的背包和n 件物品，每件物品有一个重量和一个价值，目标是让背包中的物品总价值最大化。</p>
-<p>0-1 背包问题的动态规划实现</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">knapsack</span><span class="params">(weights, values, W)</span>:</span></span><br><span class="line">    n = len(weights)</span><br><span class="line">    dp = [[<span class="number">0</span>] * (W + <span class="number">1</span>) <span class="keyword">for</span> _ <span class="keyword">in</span> range(n + <span class="number">1</span>)]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">for</span> w <span class="keyword">in</span> range(<span class="number">1</span>, W + <span class="number">1</span>):</span><br><span class="line">            <span class="keyword">if</span> weights[i<span class="number">-1</span>] &lt;= w:</span><br><span class="line">                dp[i][w] = max(dp[i<span class="number">-1</span>][w], dp[i<span class="number">-1</span>][w-weights[i<span class="number">-1</span>]] + values[i<span class="number">-1</span>])</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                dp[i][w] = dp[i<span class="number">-1</span>][w]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> dp[n][W]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用示例</span></span><br><span class="line">weights = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">values = [<span class="number">10</span>, <span class="number">15</span>, <span class="number">40</span>]</span><br><span class="line">W = <span class="number">5</span></span><br><span class="line">print(knapsack(weights, values, W))  <span class="comment"># 输出55</span></span><br></pre></td></tr></table></figure>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>动态规划算法是一种很难理解，但是又非常强大且高效的算法设计思路，适用于很多问题的最优解求解，该算法的核心其实就是在于对问题中的重叠子问题和最优子结构进行识别，然后通过利用状态和状态转移方程高效求解。在实际编程中，选择合适的存储结构和优化计算顺序可以进一步提升动态规划算法的效率。</p>
-
-      
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">4.</span>
+        <h2><a href="/2024/08/31/在ubuntu上的18个非常实用的命令行工具软件/">在ubuntu上的18个非常实用的命令行工具软件</a></h2>
+        <span class="post-date">2024-08-31</span>
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2024/08/20/什么是动态规划？在Python中如何利用动态规划解决实际问题？/" data-id="cm50h3rd800aiyfhtnni4cg4s" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2024/08/20/什么是动态规划？在Python中如何利用动态规划解决实际问题？/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+    <div class="post-content">
+        find - 在文件系统中查找所需的文件
+在当前目录及其子目录下查找 C 语言的源程序：
+1$ find . -name *.c
 
-    </footer>
-  </div>
-  
-</article>
+在 /var 目录及其子目录下查找文件大小大于 100kb 的日志文件：
+1$ sudo find /var -name &#34;*.log&#34; -size +100k
 
-
-  
-    <article id="post-Django数据表中增加对emoji的支持" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2024/07/05/Django数据表中增加对emoji的支持/" class="article-date">
-  <time datetime="2024-07-04T16:01:25.000Z" itemprop="datePublished">2024-07-05</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/django/">django</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/07/05/Django数据表中增加对emoji的支持/">Django数据表中增加对emoji的支持</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Django项目中有一个Mysql数据表字段存储的是用户评论, 使用了系统默认的设置,导致用户提交文本中如果包含了emoji, 就会报错.</p>
-<p>报错内容为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">django.db.utils.DataError: (1366, &quot;Incorrect string value: &apos;\\xF0\\x9F\\x90\\x82\\xE7\\x89...&apos; for column &apos;content&apos; at row 1&quot;)</span><br></pre></td></tr></table></figure></p>
-<p>原因是由于使用默认的数据库设置UTF-8, Mysql只支持三个字节的值. 但是emoji是4个字节.</p>
-<p>解决办法:</p>
-<ul>
-<li><p>将存储改内容的字段设置为uft8mb4</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE table_name MODIFY colum_name VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>设置表的字符集</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE table_name CHARSET=utf8mb4;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>设置数据库字符集(可选)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET NAMES utf8mb4;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>django配置更改</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># settings.py</span></span><br><span class="line">DATABASES = &#123;</span><br><span class="line">    <span class="string">'default'</span>: &#123;</span><br><span class="line">        <span class="string">'ENGINE'</span>: <span class="string">'django.db.backends.mysql'</span>,</span><br><span class="line">        <span class="string">'NAME'</span>: <span class="string">'xxxxxx'</span>,</span><br><span class="line">        <span class="string">'USER'</span>: <span class="string">'xxxxx'</span>,</span><br><span class="line">        <span class="string">'PASSWORD'</span>: <span class="string">'xxxxx'</span>,</span><br><span class="line">        <span class="string">'HOST'</span>: <span class="string">'127.0.0.1'</span>,</span><br><span class="line">        <span class="string">'PORT'</span>: <span class="number">3306</span>,</span><br><span class="line">        <span class="string">'CONN_MAX_AGE'</span>: <span class="number">180</span>,</span><br><span class="line">        <span class="string">'OPTIONS'</span>: &#123;<span class="string">'charset'</span>: <span class="string">'utf8mb4'</span>&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-      
+在当前目录及其子目录下查找大于 2M 的临时文件，如果其所...
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2024/07/05/Django数据表中增加对emoji的支持/" data-id="cm50h3rd500acyfht60v4bcdw" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2024/07/05/Django数据表中增加对emoji的支持/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/django/">django</a></li></ul>
+</div>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Go-gin开发和Docker部署流程" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2024/06/28/Go-gin开发和Docker部署流程/" class="article-date">
-  <time datetime="2024-06-28T10:34:14.000Z" itemprop="datePublished">2024-06-28</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/go/">go</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/06/28/Go-gin开发和Docker部署流程/">Go gin开发和Docker部署流程</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="安装-Go"><a href="#安装-Go" class="headerlink" title="安装 Go"></a>安装 Go</h1><ul>
-<li>进入<a href="https://golang.google.cn/" target="_blank" rel="noopener">Go官网</a></li>
-<li>Go download 选择一个合适的版本，下载与安装。</li>
-</ul>
-<p>如果你还不熟悉 Go 的语法，可以先花一点时间进行学习，因为 Go 的语法非常简洁，多练习很快就能上手</p>
-<h1 id="Go工具链"><a href="#Go工具链" class="headerlink" title="Go工具链"></a>Go工具链</h1><p>Go有自己的工具链，使用起来还是非常方便的，如果你是一个前端开发者，发现 Go 项目没有显示 node_modules 文件夹。下面是一些常用的命令：</p>
-<h2 id="Go命令"><a href="#Go命令" class="headerlink" title="Go命令"></a>Go命令</h2><table>
-<thead>
-<tr>
-<th>命令</th>
-<th>功能</th>
-<th>示例命令</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>go run</td>
-<td>运行 Go 源文件</td>
-<td>go run main.go</td>
-</tr>
-<tr>
-<td>go build</td>
-<td>编译 Go 包和依赖包</td>
-<td>go build</td>
-</tr>
-<tr>
-<td>go test</td>
-<td>自动化测试工具</td>
-<td>go test</td>
-</tr>
-<tr>
-<td>go fmt</td>
-<td>格式化 Go 代码</td>
-<td>go fmt ./…</td>
-</tr>
-<tr>
-<td>go mod</td>
-<td>管理 Go 模块</td>
-<td>go mod tidy</td>
-</tr>
-<tr>
-<td>go get</td>
-<td>下载和安装包和依赖</td>
-<td>go get &lt;package_path&gt;</td>
-</tr>
-<tr>
-<td>go install</td>
-<td>编译并安装包</td>
-<td>go install &lt;package_path&gt;</td>
-</tr>
-<tr>
-<td>gofmt</td>
-<td>格式化 Go 源代码</td>
-<td>gofmt -w .</td>
-</tr>
-<tr>
-<td>golint</td>
-<td>静态检查 Go 代码</td>
-<td>golint ./…</td>
-</tr>
-</tbody>
-</table>
-<h2 id="Go-mod-子命令"><a href="#Go-mod-子命令" class="headerlink" title="Go mod 子命令"></a>Go mod 子命令</h2><p>Go从 v1.1 版本开始支持 mod 命令，并在 1.13 版本后成为默认包管理方式，使用 go mod 能方便的管理你的项目。</p>
-<table>
-<thead>
-<tr>
-<th>子命令</th>
-<th>功能</th>
-<th>示例命令</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>init</td>
-<td>初始化新的模块</td>
-<td>go mod init example.com/mymodule</td>
-</tr>
-<tr>
-<td>tidy</td>
-<td>整理依赖</td>
-<td>go mod tidy</td>
-</tr>
-<tr>
-<td>download</td>
-<td>下载所有模块的依赖</td>
-<td>go mod download</td>
-</tr>
-</tbody>
-</table>
-<h1 id="认识Gin"><a href="#认识Gin" class="headerlink" title="认识Gin"></a>认识Gin</h1><p>Gin 具有一下的特点：</p>
-<ul>
-<li>速度快、体积小</li>
-<li>中间件支持</li>
-<li>无崩溃</li>
-<li>json 校验</li>
-<li>分组路由</li>
-<li>错误管理</li>
-<li>内置渲染引擎</li>
-</ul>
-<h1 id="初始化一个-Gin-项目"><a href="#初始化一个-Gin-项目" class="headerlink" title="初始化一个 Gin 项目"></a>初始化一个 Gin 项目</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> your_dir</span><br><span class="line">go mod init your_porject_name</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装依赖</span></span><br><span class="line">go get -u github.com/gin-gonic/gin</span><br><span class="line">go get -u github.com/robfig/cron</span><br></pre></td></tr></table></figure>
-<h1 id="编写简单的业务代码"><a href="#编写简单的业务代码" class="headerlink" title="编写简单的业务代码"></a>编写简单的业务代码</h1><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"github.com/gin-gonic/gin"</span></span><br><span class="line">	<span class="string">"github.com/robfig/cron"</span></span><br><span class="line">	<span class="string">"net/http"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	r := gin.Default()</span><br><span class="line">	<span class="comment">// 创建一个 cron 实例</span></span><br><span class="line">	c := cron.New()</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 添加定时任务，每隔一分钟执行一次</span></span><br><span class="line">	c.AddFunc(<span class="string">"*/1 * * * *"</span>, <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">"执行定时任务："</span>, time.Now())</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 启动 cron 服务</span></span><br><span class="line">	c.Start()</span><br><span class="line">	r.GET(<span class="string">"/"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		c.JSON(http.StatusOK, gin.H&#123;</span><br><span class="line">			<span class="string">"message"</span>: <span class="string">"pong"</span>,</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;)</span><br><span class="line">	r.Run() <span class="comment">// listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>导入如 gin 和 cron 两个三方库，然后再示例化 cron，并且添加一个任务，输出一个string字符串，然后使用 gin 给出一个路由提供给外部访问。一个带有定时任务的 go gin 小程序就完成了。</p>
-</blockquote>
-<h1 id="添加-dockerfile"><a href="#添加-dockerfile" class="headerlink" title="添加 dockerfile"></a>添加 dockerfile</h1><p>dockerfile 分为两个版本一个没有分阶段构建和分阶构建的</p>
-<h2 id="没有分阶段"><a href="#没有分阶段" class="headerlink" title="没有分阶段"></a>没有分阶段</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">FROM golang:1.22.2-alpine AS builder</span><br><span class="line"></span><br><span class="line">WORKDIR /app</span><br><span class="line">COPY go.mod go.sum ./</span><br><span class="line">RUN go mod download</span><br><span class="line">COPY . .</span><br><span class="line">RUN go build -o main .</span><br><span class="line">EXPOSE 8080</span><br><span class="line"></span><br><span class="line">CMD [&quot;./main&quot;]</span><br></pre></td></tr></table></figure>
-<p>执行构建</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t cron-app--no-stage .</span><br></pre></td></tr></table></figure>
-<p>我们看到没有分阶段的大小就包含了开发阶段文件，大小是 596+MB。体积还比较大的，只有两个小的主要依赖。</p>
-<h2 id="分阶段构建"><a href="#分阶段构建" class="headerlink" title="分阶段构建"></a>分阶段构建</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">FROM golang:1.22.2-alpine AS builder</span><br><span class="line"></span><br><span class="line"># 第一阶段</span><br><span class="line">WORKDIR /app</span><br><span class="line">COPY go.mod go.sum ./</span><br><span class="line">RUN go mod download</span><br><span class="line">COPY . .</span><br><span class="line">RUN go build -o main .</span><br><span class="line"></span><br><span class="line"># 第二阶段</span><br><span class="line">FROM alpine:latest</span><br><span class="line">WORKDIR /root/</span><br><span class="line">COPY --from=builder /app/main .</span><br><span class="line"></span><br><span class="line">EXPOSE 8080</span><br><span class="line"></span><br><span class="line">CMD [&quot;./main&quot;]</span><br></pre></td></tr></table></figure>
-<p>阶段构建的 docker 镜像只有 18M， 远远小于没有分阶段的大小, 带有 linux 的镜像只有 18M, 非常小, 符合预期。</p>
-<h1 id="Docker-打包并上传"><a href="#Docker-打包并上传" class="headerlink" title="Docker 打包并上传"></a>Docker 打包并上传</h1><p>首先确保自己有一个镜像服务地址，上传镜像，这里以阿里云为例</p>
-<p>使用 docker 登录阿里云 registry<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker login --username=&lt;your_user_name&gt; &lt;your_registry&gt;</span><br></pre></td></tr></table></figure></p>
-<p>推送到云端<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 推送之前打一个 tag</span></span><br><span class="line">docker tag [ImageId] &lt;your_registry&gt;/&lt;your_name&gt;/&lt;image_name&gt;:[镜像版本号]</span><br><span class="line"></span><br><span class="line">docker push &lt;your_registry&gt;/&lt;your_name&gt;/&lt;image_name&gt;:[tag]</span><br></pre></td></tr></table></figure></p>
-<h1 id="将镜像上传容器服务"><a href="#将镜像上传容器服务" class="headerlink" title="将镜像上传容器服务"></a>将镜像上传容器服务</h1><p>上传成功之后，我们镜像会被 ali 云进行压缩，原来 15M 的现在 9.1M,压缩率是 39.33%</p>
-<h1 id="在服务器中进行部署"><a href="#在服务器中进行部署" class="headerlink" title="在服务器中进行部署"></a>在服务器中进行部署</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ssh 登录自己的服务器</span></span><br><span class="line">ssh root@&lt;your_ip&gt;</span><br><span class="line"><span class="comment"># input password</span></span><br><span class="line"><span class="comment"># docker 登录自己阿里云账号</span></span><br><span class="line">docker login --username=&lt;your_user_name&gt; &lt;your_registry&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># docker 拉取</span></span><br><span class="line">docker pull &lt;your_image&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过镜像运行容器</span></span><br><span class="line">docker run -p 8080:8080 &lt;image_id&gt; <span class="comment"># 确保 8080 没有被占用</span></span><br><span class="line"></span><br><span class="line">docker ps <span class="comment"># 查看所有的 container </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># docker stop &lt;container_id&gt;</span></span><br></pre></td></tr></table></figure>
-
-      
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">5.</span>
+        <h2><a href="/2024/08/20/什么是动态规划？在Python中如何利用动态规划解决实际问题？/">什么是动态规划？在Python中如何利用动态规划解决实际问题？</a></h2>
+        <span class="post-date">2024-08-20</span>
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2024/06/28/Go-gin开发和Docker部署流程/" data-id="cm50h3rd700agyfhtx4zsucor" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2024/06/28/Go-gin开发和Docker部署流程/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-应用公钥和私钥生成方法" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2024/06/17/应用公钥和私钥生成方法/" class="article-date">
-  <time datetime="2024-06-17T11:51:57.000Z" itemprop="datePublished">2024-06-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/mac/">mac</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/06/17/应用公钥和私钥生成方法/">应用公钥和私钥生成方法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ openssl</span><br><span class="line"></span><br><span class="line">OpenSSl&gt; genrsa -out private_key.pem 2048</span><br><span class="line">Generating RSA private key, 2048 bit long modulus</span><br><span class="line">....................+++</span><br><span class="line">...........................................................................+++</span><br><span class="line">e is 65537 (0x10001)</span><br><span class="line"></span><br><span class="line">OpenSSl&gt; rsa -<span class="keyword">in</span> private_key.pem -pubout -out public_key.pem</span><br><span class="line">writing RSA key</span><br><span class="line"></span><br><span class="line">OpenSSl&gt; <span class="built_in">exit</span></span><br><span class="line"></span><br><span class="line">$ ls</span><br><span class="line">private_key.pem public_key.pem</span><br></pre></td></tr></table></figure>
-
-      
+    <div class="post-content">
+        动态规划（Dynamic Programming，简称DP），它是一种通过将复杂问题分解为更小的子问题来求解问题的方法，有点类似于分治算法的思想。它特别适用于那些通过重叠子问题（Overlapping Subproblems）和最优子结构（Optimal Substructure）性质可以被高效解决的问题。
+动态规划的基本思想重叠子问题所谓的重叠子问题...
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2024/06/17/应用公钥和私钥生成方法/" data-id="cm50h3rd300a6yfht3sqkb2rc" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2024/06/17/应用公钥和私钥生成方法/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mac/">mac</a></li></ul>
+</div>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-git常用操作及问题解决" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2024/06/17/git常用操作及问题解决/" class="article-date">
-  <time datetime="2024-06-17T11:43:28.000Z" itemprop="datePublished">2024-06-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/git/">git</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/06/17/git常用操作及问题解决/">git常用操作及问题解决</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="git操作"><a href="#git操作" class="headerlink" title="git操作"></a>git操作</h1><h2 id="创建分支"><a href="#创建分支" class="headerlink" title="创建分支"></a>创建分支</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch 分支名称</span><br></pre></td></tr></table></figure>
-<h2 id="创建并切换分支"><a href="#创建并切换分支" class="headerlink" title="创建并切换分支"></a>创建并切换分支</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b 分支名称</span><br></pre></td></tr></table></figure>
-<h2 id="删除分支"><a href="#删除分支" class="headerlink" title="删除分支"></a>删除分支</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -d 分支名称</span><br></pre></td></tr></table></figure>
-<h2 id="合并分支"><a href="#合并分支" class="headerlink" title="合并分支"></a>合并分支</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git merge 分支名称</span><br></pre></td></tr></table></figure>
-<h2 id="git-pull-强制覆盖本地代码"><a href="#git-pull-强制覆盖本地代码" class="headerlink" title="git pull 强制覆盖本地代码"></a>git pull 强制覆盖本地代码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fetch --all</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard origin/master</span><br><span class="line"></span><br><span class="line">git reset --hard origin/&lt;branch_name&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="强制覆盖当前分支"><a href="#强制覆盖当前分支" class="headerlink" title="强制覆盖当前分支"></a>强制覆盖当前分支</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git checkout 当前分支</span><br><span class="line">git merge -X theirs 目标分支</span><br><span class="line"><span class="comment"># 使用前记得备份当前分支</span></span><br></pre></td></tr></table></figure>
-<h2 id="回退代码"><a href="#回退代码" class="headerlink" title="回退代码"></a>回退代码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br></pre></td></tr></table></figure>
-<h2 id="撤销某次修改"><a href="#撤销某次修改" class="headerlink" title="撤销某次修改"></a>撤销某次修改</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git revert ~~commit no~~</span><br></pre></td></tr></table></figure>
-<h2 id="撤销最新提交"><a href="#撤销最新提交" class="headerlink" title="撤销最新提交"></a>撤销最新提交</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git revert HEAD</span><br></pre></td></tr></table></figure>
-<h2 id="删除远程分支"><a href="#删除远程分支" class="headerlink" title="删除远程分支"></a>删除远程分支</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git push origin --delete &lt;branch_name&gt;</span><br><span class="line">或</span><br><span class="line">git push --delete origin &lt;branch_name&gt;</span><br><span class="line">或</span><br><span class="line">git push origin :&lt;branch_name&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="将另一个分支中的指定文件夹合并到当前分支"><a href="#将另一个分支中的指定文件夹合并到当前分支" class="headerlink" title="将另一个分支中的指定文件夹合并到当前分支"></a>将另一个分支中的指定文件夹合并到当前分支</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git checkout <span class="built_in">source</span>-branch — path/to/folder</span><br><span class="line"></span><br><span class="line"><span class="comment"># source-branch是包含指定文件夹的分支的名称，</span></span><br><span class="line"><span class="comment"># path/to/folder是指定文件夹的路径</span></span><br></pre></td></tr></table></figure>
-<h1 id="问题汇总"><a href="#问题汇总" class="headerlink" title="问题汇总"></a>问题汇总</h1><ul>
-<li><p><a href="mailto:`git@github.com" target="_blank" rel="noopener">`git@github.com</a>: Permission denied (publickey).`</p>
-<p>  重新注册或重新生成ssh密钥</p>
-</li>
-</ul>
-<ul>
-<li><p>push到github失败, 报repositories不存在</p>
-<p>  将ssh改为https, 设置token</p>
-</li>
-</ul>
-
-      
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">6.</span>
+        <h2><a href="/2024/07/05/Django数据表中增加对emoji的支持/">Django数据表中增加对emoji的支持</a></h2>
+        <span class="post-date">2024-07-05</span>
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2024/06/17/git常用操作及问题解决/" data-id="cm50h3rd100a1yfhthr3nndiw" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2024/06/17/git常用操作及问题解决/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-ffmpeg视频转换" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2024/05/13/ffmpeg视频转换/" class="article-date">
-  <time datetime="2024-05-13T11:40:22.000Z" itemprop="datePublished">2024-05-13</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/ffmpeg/">ffmpeg</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/05/13/ffmpeg视频转换/">ffmpeg视频转换</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i  old.mov -vcodec libx264 -s 960x540 -preset fast -crf 22 -y -acodec copy new.mp4</span><br></pre></td></tr></table></figure>
-<h2 id="指定视频压缩大小："><a href="#指定视频压缩大小：" class="headerlink" title="指定视频压缩大小："></a>指定视频压缩大小：</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg  -i  your video dir/input.mp4  -fs 100MB  your video dir/output.mp4</span><br></pre></td></tr></table></figure>
-<h2 id="设置视频码率"><a href="#设置视频码率" class="headerlink" title="设置视频码率"></a>设置视频码率</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg  -i   your video dir/input.mp4  -b:v 1M   your video dir/output.mp4</span><br><span class="line"></span><br><span class="line">-b:v : 指定视频的码率</span><br><span class="line">-b:a : 指定音频的码率</span><br><span class="line">1M：码率的值 1M 表示 1Mb/s</span><br></pre></td></tr></table></figure>
-<h2 id="设置视频分辨率"><a href="#设置视频分辨率" class="headerlink" title="设置视频分辨率"></a>设置视频分辨率</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg  -i   your video dir/input.mp4  -s 1920x1080  your video dir/output.mp4</span><br><span class="line"></span><br><span class="line">-s: 1920x1080表示分辨率为1920x1080</span><br></pre></td></tr></table></figure>
-
-      
+    <div class="post-content">
+        Django项目中有一个Mysql数据表字段存储的是用户评论, 使用了系统默认的设置,导致用户提交文本中如果包含了emoji, 就会报错.
+报错内容为:1django.db.utils.DataError: (1366, &amp;quot;Incorrect string value: &amp;apos;\\xF0\\x9F\\x90\\x82\\xE7\\x89...
     </div>
-    <footer class="article-footer">
-      <a data-url="https://tonytan748.github.io/2024/05/13/ffmpeg视频转换/" data-id="cm50h3rd400a9yfhtqgxrdl7i" class="article-share-link">Share</a>
-      
-        <a href="https://tonytan748.github.io/2024/05/13/ffmpeg视频转换/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li></ul>
+</div>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-  </nav>
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Github/">Github</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Karrigell/">Karrigell</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VIM/">VIM</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/conda/">conda</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/django/">django</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ffmpeg/">ffmpeg</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/freeswitch/">freeswitch</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/jekyll/">jekyll</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/kivy/">kivy</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/mac/">mac</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/normal/">normal</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/other/">other</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/sqlalchemy/">sqlalchemy</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/system/">system</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tornado/">tornado</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ubuntu/">ubuntu</a></li></ul>
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">7.</span>
+        <h2><a href="/2024/06/28/Go-gin开发和Docker部署流程/">Go gin开发和Docker部署流程</a></h2>
+        <span class="post-date">2024-06-28</span>
     </div>
-  </div>
+    <div class="post-content">
+        安装 Go
+进入Go官网
+Go download 选择一个合适的版本，下载与安装。
 
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/conda/">conda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django/">django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django-celery/">django-celery</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/freeswitch/">freeswitch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlalchemy/">sqlalchemy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/system/">system</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tornado/">tornado</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a></li></ul>
+如果你还不熟悉 Go 的语法，可以先花一点时间进行学习，因为 Go 的语法非常简洁，多练习很快就能上手
+Go工具链Go有自己的工具链，使用起来还是非常方便的，如果你是一个前端开发者，发现 Go 项目没有显示 node_modules 文件夹。下面是一些常用的命令：
+G...
     </div>
-  </div>
+</div>
 
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/conda/" style="font-size: 10px;">conda</a> <a href="/tags/django/" style="font-size: 18px;">django</a> <a href="/tags/django-celery/" style="font-size: 10px;">django-celery</a> <a href="/tags/ffmpeg/" style="font-size: 10px;">ffmpeg</a> <a href="/tags/flask/" style="font-size: 10px;">flask</a> <a href="/tags/freeswitch/" style="font-size: 10px;">freeswitch</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/go/" style="font-size: 14px;">go</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/linux/" style="font-size: 16px;">linux</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/other/" style="font-size: 12px;">other</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/sqlalchemy/" style="font-size: 10px;">sqlalchemy</a> <a href="/tags/system/" style="font-size: 12px;">system</a> <a href="/tags/tornado/" style="font-size: 10px;">tornado</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a>
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">8.</span>
+        <h2><a href="/2024/06/17/应用公钥和私钥生成方法/">应用公钥和私钥生成方法</a></h2>
+        <span class="post-date">2024-06-17</span>
     </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">February 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">February 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">November 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">September 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a></li></ul>
+    <div class="post-content">
+        123456789101112131415$ opensslOpenSSl&amp;gt; genrsa -out private_key.pem 2048Generating RSA private key, 2048 bit long modulus....................+++..................................
     </div>
-  </div>
+</div>
+
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">9.</span>
+        <h2><a href="/2024/06/17/git常用操作及问题解决/">git常用操作及问题解决</a></h2>
+        <span class="post-date">2024-06-17</span>
+    </div>
+    <div class="post-content">
+        git操作创建分支1git branch 分支名称
+创建并切换分支1git checkout -b 分支名称
+删除分支1git branch -d 分支名称
+合并分支12git checkout mastergit merge 分支名称
+git pull 强制覆盖本地代码1git fetch --all
+123git reset --hard orig...
+    </div>
+</div>
+
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">10.</span>
+        <h2><a href="/2024/05/13/ffmpeg视频转换/">ffmpeg视频转换</a></h2>
+        <span class="post-date">2024-05-13</span>
+    </div>
+    <div class="post-content">
+        1ffmpeg -i  old.mov -vcodec libx264 -s 960x540 -preset fast -crf 22 -y -acodec copy new.mp4
+指定视频压缩大小：1ffmpeg  -i  your video dir/input.mp4  -fs 100MB  your video dir/output.mp4
+...
+    </div>
+</div>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2024/12/23/Python-Typing类型提示/">Python Typing类型提示</a>
-          </li>
-        
-          <li>
-            <a href="/2024/12/23/Python-Tempfile临时文件系统对象/">Python Tempfile临时文件系统对象</a>
-          </li>
-        
-          <li>
-            <a href="/2024/12/23/Python-Pathlib处理文件路径库的使用/">Python Pathlib处理文件路径库的使用</a>
-          </li>
-        
-          <li>
-            <a href="/2024/08/31/在ubuntu上的18个非常实用的命令行工具软件/">在ubuntu上的18个非常实用的命令行工具软件</a>
-          </li>
-        
-          <li>
-            <a href="/2024/08/20/什么是动态规划？在Python中如何利用动态规划解决实际问题？/">什么是动态规划？在Python中如何利用动态规划解决实际问题？</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
 
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2024 Tony Tan<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
+<nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/2/">Next</a>
 </nav>
-    
-<script>
-  var disqus_shortname = 'TonyTan';
-  
-  (function(){
-    var dsq = document.createElement('script');
-    dsq.type = 'text/javascript';
-    dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
 
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
-
-
-
-  </div>
+        </div>
+        <div class="footer">
+            
+            <p class="footer-copyright">
+                <span>Powered by <a target="_blank" href="https://hexo.io">Hexo</a></span>
+                <span>Theme <a target="_blank" href="https://github.com/tinkink-co/hexo-theme-terminal">Terminal</a></span>
+            </p>
+        </div>
+    </div>
 </body>
 </html>
