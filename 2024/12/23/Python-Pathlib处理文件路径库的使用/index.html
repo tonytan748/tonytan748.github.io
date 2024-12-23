@@ -1,0 +1,345 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="python,">
+  
+
+  
+    <meta name="description" content="Tony Tan">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>Python Pathlib处理文件路径库的使用 [ Tony Tan ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <!--<img class="avatar" src="https://tonytan748.github.io/images/logo.png">-->
+    <span class="title">Tony Tan</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        Python Pathlib处理文件路径库的使用
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2024-12-23T02:21:54.000Z">
+        2024-12-23
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read"></span>
+    </header>
+
+    <div class="post-content">
+      <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Pathlib 是一个用于处理文件路径的 Python 库，提供了许多实用的函数和方法来处理文件系统路径。它提供了一个面向对象的层次结构，路径被表示为对象，这些对象拥有一些属性和方法，使得文件路径的操作变得更加直观和方便。</p>
+<p>需要注意的是，pathlib 是 Python 3.4 以上版本引入的库，在 Python 3.10 版本中得到了显著的增强。读者需注意自己的 Python 版本是否支持。</p>
+<h1 id="Pathlib-库实现"><a href="#Pathlib-库实现" class="headerlink" title="Pathlib 库实现"></a>Pathlib 库实现</h1><h2 id="Path-创建路径对象"><a href="#Path-创建路径对象" class="headerlink" title="Path 创建路径对象"></a>Path 创建路径对象</h2><p>Path 是 pathlib 库的核心类，它提供了一个高层次的接口来处理文件系统路径。通过 Path 类，你可以执行各种文件系统操作，如创建、删除、移动文件和目录，以及查询路径信息和列出目录内容等。</p>
+<p>所以使用 Pathlib 库，首先需要我们创建路径对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from pathlib import Path</span><br><span class="line"></span><br><span class="line"># 通过绝对路径地址创建路径对象 p_1</span><br><span class="line">p_1 = Path(&apos;D:\Code_Learner\Python\Pathlib\main.py&apos;)</span><br><span class="line"># 通过相对路径地址创建路径对象 p_2</span><br><span class="line">p_2 = Path(&apos;.&apos;)</span><br></pre></td></tr></table></figure>
+<h2 id="检查路径类型"><a href="#检查路径类型" class="headerlink" title="检查路径类型"></a>检查路径类型</h2><p><code>.is_file()</code>：检查是否是文件；<br><code>.is_dir()</code>：检查是否是目录；<br><code>.exists()</code>：检查路径是否存在；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if p_1.is_file():</span><br><span class="line">    print(&quot;It&apos;s a file.&quot;)</span><br><span class="line">if p_1.is_dir():</span><br><span class="line">    print(&quot;It&apos;s a directory.&quot;)</span><br><span class="line">if p_1.exists():</span><br><span class="line">    print(&quot;The path exists.&quot;)</span><br></pre></td></tr></table></figure></p>
+<p>输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">It&apos;s a file.</span><br><span class="line">The path exists.</span><br></pre></td></tr></table></figure></p>
+<h2 id="创建和删除路径（目录与文件）"><a href="#创建和删除路径（目录与文件）" class="headerlink" title="创建和删除路径（目录与文件）"></a>创建和删除路径（目录与文件）</h2><p><code>.mkdir()</code>：创建目录；<br><code>.rmdir()</code>：删除目录；<br><code>.touch()</code>：创建空文件；<br><code>.unlink()</code>：删除文件；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 绝对路径下创建文件夹</span><br><span class="line">Path(r&apos;D:\Code_Learner\test&apos;).mkdir()</span><br><span class="line"># 相对路径下操作</span><br><span class="line">Path(&apos;new_dir&apos;).mkdir()</span><br><span class="line">Path(&apos;del_dir&apos;).rmdir()</span><br><span class="line">Path(&apos;new_file.txt&apos;).touch()</span><br><span class="line">Path(&apos;rm_file.txt&apos;).unlink()</span><br></pre></td></tr></table></figure>
+<h1 id="读写文件"><a href="#读写文件" class="headerlink" title="读写文件"></a>读写文件</h1><p><code>.read_text()</code>：读取文件内容；<br><code>.write_text()</code>：写入文件内容；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">content = Path(&apos;example.txt&apos;).read_text()</span><br><span class="line">Path(&apos;new_file.txt&apos;).write_text(content)</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，写入文件内容操作为覆盖写入。</p>
+<h2 id="路径匹配"><a href="#路径匹配" class="headerlink" title="路径匹配"></a>路径匹配</h2><p><code>.glob()</code>：匹配路径模式；<br><code>.rglob()</code>：递归匹配路径模式；<br>e.g. 示例，找到路径下所有 .txt 文件；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for file in p_2.glob(&apos;*.txt&apos;):</span><br><span class="line">    print(file)</span><br></pre></td></tr></table></figure>
+<h2 id="路径拼接和解析"><a href="#路径拼接和解析" class="headerlink" title="路径拼接和解析"></a>路径拼接和解析</h2><p><code>.joinpath()</code>：拼接路径；<br><code>.relative_to()</code>：获取相对路径；<br><code>.resolve()</code>：解析路径，返回绝对路径；<br><code>.parent</code>：获取父目录；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 拼接路径</span><br><span class="line">subpath = Path(&apos;subdir&apos;) / &apos;subfile.txt&apos;</span><br><span class="line">print(subpath)</span><br><span class="line"># 获取绝对路径</span><br><span class="line">absolute_path = subpath.resolve()</span><br><span class="line">print(absolute_path)</span><br><span class="line"># 获取相对路径</span><br><span class="line">relative_path = absolute_path.relative_to(&apos;D:/Code_Learner/Python/Pathlib&apos;)</span><br><span class="line">print(relative_path)</span><br></pre></td></tr></table></figure>
+<p>e.g. 获取父目录地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from pathlib import Path</span><br><span class="line"></span><br><span class="line"># 创建一个路径对象</span><br><span class="line">path = Path(&apos;C:/Users/example/documents/file.txt&apos;)</span><br><span class="line"></span><br><span class="line"># 获取父目录</span><br><span class="line">parent_dir = path.parent</span><br><span class="line"></span><br><span class="line"># 打印父目录</span><br><span class="line">print(parent_dir)</span><br></pre></td></tr></table></figure>
+<h2 id="路径属性"><a href="#路径属性" class="headerlink" title="路径属性"></a>路径属性</h2><p><code>.name</code>：获取路径的文件名；<br><code>.with_name()</code>：修改文件名；<br><code>.suffix</code>：获取文件的后缀；<br><code>.with_suffix()</code>：修改文件后缀；<br><code>.stem</code>：获取文件名（不包含后缀）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from pathlib import Path</span><br><span class="line"></span><br><span class="line">p = Path(&apos;.&apos;) / &apos;test.txt&apos;</span><br><span class="line">p = p.resolve()</span><br><span class="line">print(p)</span><br><span class="line">print(p.name)</span><br><span class="line">print(p.suffix)</span><br><span class="line">print(p.stem)</span><br><span class="line"></span><br><span class="line">new_path = p.with_name(&apos;new_file.txt&apos;)</span><br><span class="line">print(new_path)</span><br><span class="line">new_path = new_path.with_suffix(&apos;.py&apos;)</span><br><span class="line">print(new_path)</span><br><span class="line">new_path = new_path.with_name(&apos;hello.md&apos;)</span><br><span class="line">print(new_path)</span><br></pre></td></tr></table></figure></p>
+<p>注意修改文件名称同时会修改后缀内容，且修改文件名称和后缀名并非会修改源文件上的名称和后缀。如果想更改源文件上的名称和后缀，请使用 .rename() 方法。</p>
+<h2 id="路径迭代和列出目录内容"><a href="#路径迭代和列出目录内容" class="headerlink" title="路径迭代和列出目录内容"></a>路径迭代和列出目录内容</h2><p><code>.iterdir()</code>：迭代目录内容；<br><code>.rglob()</code>：递归列出目录内容；<br>e.g. 获取指定目录下所有文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for entry in Path(&apos;.&apos;).iterdir():</span><br><span class="line">    print(entry)</span><br></pre></td></tr></table></figure>
+<p>e.g. 递归出指定目录下所有符合指定条件的文件：</p>
+<p>假设我们的文件目录结构为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># D:\Code_Learner\Python\Pathlib\test</span><br><span class="line">- test</span><br><span class="line">	- test4.txt</span><br><span class="line">- test1.txt</span><br><span class="line">- test2.txt</span><br><span class="line">- test3.txt</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from pathlib import Path</span><br><span class="line"></span><br><span class="line">p = Path(r&apos;D:\Code_Learner\Python\Pathlib\test&apos;)</span><br><span class="line"></span><br><span class="line">for entry in p.rglob(&apos;*.txt&apos;):</span><br><span class="line">    print(entry)</span><br></pre></td></tr></table></figure>
+<p>结果为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">D:\Code_Learner\Python\Pathlib\test\test1.txt</span><br><span class="line">D:\Code_Learner\Python\Pathlib\test\test2.txt</span><br><span class="line">D:\Code_Learner\Python\Pathlib\test\test3.txt</span><br><span class="line">D:\Code_Learner\Python\Pathlib\test\test\test4.txt</span><br></pre></td></tr></table></figure></p>
+<p>通过 rglob() 函数，递归遍历出了当前目录下所有满足条件的 .txt 文件，同时也递归出其下属文件夹 test 中的 test4.txt 文件</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>上述这些函数和方法提供了处理文件系统路径所需的大部分功能。Pathlib 提供了一个面向对象的方式来处理文件系统路径，使得文件操作更加简洁、易于理解和维护。它是 Python 编程中处理文件路径的首选方法之一。</p>
+
+    </div>
+
+    <div>全文完。</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简介"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pathlib-库实现"><span class="toc-text">Pathlib 库实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Path-创建路径对象"><span class="toc-text">Path 创建路径对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#检查路径类型"><span class="toc-text">检查路径类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建和删除路径（目录与文件）"><span class="toc-text">创建和删除路径（目录与文件）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#读写文件"><span class="toc-text">读写文件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#路径匹配"><span class="toc-text">路径匹配</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#路径拼接和解析"><span class="toc-text">路径拼接和解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#路径属性"><span class="toc-text">路径属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#路径迭代和列出目录内容"><span class="toc-text">路径迭代和列出目录内容</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#小结"><span class="toc-text">小结</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<!--<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>-->
+
+<!--<div class="share" style="width: 100%;">
+  <img src="https://kevinofneu-blog-static.oss-cn-beijing.aliyuncs.com/static/2018-12-10-qrcode_for_gh_ffacf5722095_258.jpg" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">老铁们关注走一走，不迷路</div>
+  
+</div>-->
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2024/08/31/在ubuntu上的18个非常实用的命令行工具软件/" rel="next" title="在ubuntu上的18个非常实用的命令行工具软件">
+          在ubuntu上的18个非常实用的命令行工具软件
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2024/12/23/Python-Tempfile临时文件系统对象/" rel="prev" title="Python Tempfile临时文件系统对象">
+            Python Tempfile临时文件系统对象
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'TonyTan';
+    
+    var disqus_url = 'https://tonytan748.github.io/2024/12/23/Python-Pathlib处理文件路径库的使用/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//TonyTan.disqus.com/count.js" async></script>
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://www.deenter.com">首页</a> |
+       <!-- <a class="bottom-item" href="" target="_blank">主站</a> |-->
+        <a class="bottom-item" href="https://github.com/tonytan748" target="_blank">GitHub</a> |
+        <!--<a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>-->
+    </div>
+</footer>
+
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>
