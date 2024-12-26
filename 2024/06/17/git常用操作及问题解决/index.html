@@ -63,6 +63,41 @@
 <h2 id="撤销最新提交"><a href="#撤销最新提交" class="headerlink" title="撤销最新提交"></a>撤销最新提交</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git revert HEAD</span><br></pre></td></tr></table></figure>
 <h2 id="删除远程分支"><a href="#删除远程分支" class="headerlink" title="删除远程分支"></a>删除远程分支</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git push origin --delete &lt;branch_name&gt;</span><br><span class="line">或</span><br><span class="line">git push --delete origin &lt;branch_name&gt;</span><br><span class="line">或</span><br><span class="line">git push origin :&lt;branch_name&gt;</span><br></pre></td></tr></table></figure>
 <h2 id="将另一个分支中的指定文件夹合并到当前分支"><a href="#将另一个分支中的指定文件夹合并到当前分支" class="headerlink" title="将另一个分支中的指定文件夹合并到当前分支"></a>将另一个分支中的指定文件夹合并到当前分支</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git checkout <span class="built_in">source</span>-branch — path/to/folder</span><br><span class="line"></span><br><span class="line"><span class="comment"># source-branch是包含指定文件夹的分支的名称，</span></span><br><span class="line"><span class="comment"># path/to/folder是指定文件夹的路径</span></span><br></pre></td></tr></table></figure>
+<h2 id="git-stash-暂存区的使用"><a href="#git-stash-暂存区的使用" class="headerlink" title="git stash 暂存区的使用"></a>git stash 暂存区的使用</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>git add.、git stash</td>
+<td>提交到暂存区</td>
+</tr>
+<tr>
+<td>git stash</td>
+<td>暂存工作区修改的内容：保存到暂存区（可以提N次）</td>
+</tr>
+<tr>
+<td>git stash pop</td>
+<td>恢复暂存的工作区内容：从暂存区取出（最近一次）</td>
+</tr>
+<tr>
+<td>git stash list</td>
+<td>查询工作区所有stash的列表</td>
+</tr>
+<tr>
+<td>git stash apply stash@{2}</td>
+<td>查询后，恢复第二次提交的</td>
+</tr>
+<tr>
+<td>git stash clear</td>
+<td>清空暂存区的所有stash</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git stash</span><br><span class="line">git pull origin XXXXX</span><br><span class="line">git stash pop</span><br></pre></td></tr></table></figure>
 <h1 id="问题汇总"><a href="#问题汇总" class="headerlink" title="问题汇总"></a>问题汇总</h1><ul>
 <li><p><a href="mailto:`git@github.com" target="_blank" rel="noopener">`git@github.com</a>: Permission denied (publickey).`</p>
 <p>  重新注册或重新生成ssh密钥</p>
