@@ -80,18 +80,20 @@
 <li>将文件另存到 <code>./static/openapi.json</code></li>
 <li>git更新提交</li>
 </ul>
-<h2 id="admin-登录成功跳转报CSRF错误-django"><a href="#admin-登录成功跳转报CSRF错误-django" class="headerlink" title="admin 登录成功跳转报CSRF错误(django)"></a>admin 登录成功跳转报CSRF错误(django)</h2><ul>
+<h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><h3 id="admin-登录成功跳转报CSRF错误-django"><a href="#admin-登录成功跳转报CSRF错误-django" class="headerlink" title="admin 登录成功跳转报CSRF错误(django)"></a>admin 登录成功跳转报CSRF错误(django)</h3><ul>
 <li>seetings.py 中增加 <code>CSRF_TRUSTED_ORIGINS = [&#39;https://www.02405.com&#39;, &#39;https://02405.com&#39;]</code>, 主要要加<code>http</code>或<code>https</code>前缀</li>
 </ul>
-<h2 id="jwt报错"><a href="#jwt报错" class="headerlink" title="jwt报错"></a>jwt报错</h2><ul>
+<h3 id="jwt报错"><a href="#jwt报错" class="headerlink" title="jwt报错"></a>jwt报错</h3><ul>
 <li>jwt和pyjwt冲突, 要卸载jwt</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># jwt卸载命令</span><br><span class="line">pip uninstall jwt</span><br><span class="line"></span><br><span class="line"># 保险起见，将PyJWT一同卸载</span><br><span class="line">pip uninstall PyJWT</span><br><span class="line"></span><br><span class="line"># 重新安装PyJWT</span><br><span class="line">pip install PyJWT</span><br></pre></td></tr></table></figure>
-<h2 id="针对django报错mysql得升级8的问题"><a href="#针对django报错mysql得升级8的问题" class="headerlink" title="针对django报错mysql得升级8的问题"></a>针对django报错mysql得升级8的问题</h2><blockquote>
+<h3 id="针对django报错mysql得升级8的问题"><a href="#针对django报错mysql得升级8的问题" class="headerlink" title="针对django报错mysql得升级8的问题"></a>针对django报错mysql得升级8的问题</h3><blockquote>
 <p>Django提示mysq版本Q过低: django db. utils NotSuppotedError: MySQL 8 or later is required (found 5.7.26).<br>因为mysql5.7及以下是免费的数据库，8.0之后是收费的。使用免费的数据库更放心,使用上没有什么区别。这个提示只是Django的版本<br>检测提示，把它注释掉就好了。</p>
 </blockquote>
 <p>在pycharm中 搜索路径 :<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">django\db\backends\base\base.py   &quot;小提示pycharm中搜索快捷键为 Ctrl+shift+n 苹果系统除外&quot;</span><br></pre></td></tr></table></figure></p>
 <p>把如下代码注释了就行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def init_connection_state(self):</span><br><span class="line">	Initialize the database connection settings.</span><br><span class="line">	global RAN_ DB_ VERSION_ CHECK</span><br><span class="line">	if self.alias not in RAN_ DB_ VERSION_ CHECK:</span><br><span class="line">	# self.check_database_version_supported( )</span><br><span class="line">	RAN_DB_VERSION_CHECK.add(self.alias )</span><br><span class="line"></span><br><span class="line">    &quot;&quot;&quot;就注释一句话就行&quot;&quot;&quot;</span><br></pre></td></tr></table></figure></p>
+<h3 id="huey定时任务时间错误处理"><a href="#huey定时任务时间错误处理" class="headerlink" title="huey定时任务时间错误处理"></a>huey定时任务时间错误处理</h3><p>huey定时任务运行的时间，如果没有处理会使用UTC时间。 比上海时间完几个小时，会导致原定于晚上的任务白天才会执行。<br>更新方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 在django的settings.py中，配置huey</span><br><span class="line"></span><br><span class="line"># &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; HUEY 设置 &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">from huey import RedisHuey</span><br><span class="line">from redis import ConnectionPool</span><br><span class="line"></span><br><span class="line">pool = ConnectionPool(host=&apos;localhost&apos;, port=6379, max_connections=100)</span><br><span class="line">HUEY = RedisHuey(f&apos;&#123;API_ENV&#125;_FENZHANG_ADMIN&apos;, connection_pool=pool, utc=False)</span><br></pre></td></tr></table></figure></p>
+<p>其中， <code>utc=False</code>就是让huey不用UTC时间，已系统时间为准。</p>
 <p>之后就可以重新运行项目了</p>
 </div>
 </div>
