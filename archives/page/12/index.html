@@ -33,23 +33,33 @@
 <div class="post-item">
     <div class="post-header">
         <span class="ui-tips post-index">1.</span>
-        <h2><a href="/2014/08/27/gui-applications/">GUI Applications</a></h2>
-        <span class="post-date">2014-08-27</span>
+        <h2><a href="/2014/08/30/how-to-change-the-brightness-in-ubuntu1404/">How to change the brightness in Ubuntu14.04</a></h2>
+        <span class="post-date">2014-08-30</span>
     </div>
     <div class="post-content">
-        Alphabetical list of GUI Applications.
-CamelotCamelot provides components for building applications on top of Python, SQLAlchemy and Qt. It is inspired by the Django admin inter...
+        How to change the brightness in Ubuntu14.04
+
+sudo vim /etc/rs.local
+
+
+add one line before “exit 0”
+
+echo 550 &gt; /sys/class/backlight/intel_backlight/brightness
+
+
+noted the “500”,...
     </div>
 </div>
 
 <div class="post-item">
     <div class="post-header">
         <span class="ui-tips post-index">2.</span>
-        <h2><a href="/2014/08/26/making-love-out-of-nothing-at-all/">Air Supply ----- Making love Out of nothing at all </a></h2>
-        <span class="post-date">2014-08-26</span>
+        <h2><a href="/2014/08/27/gui-applications/">GUI Applications</a></h2>
+        <span class="post-date">2014-08-27</span>
     </div>
     <div class="post-content">
-        Air Supply - Making love Out of nothing at all12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970...
+        Alphabetical list of GUI Applications.
+CamelotCamelot provides components for building applications on top of Python, SQLAlchemy and Qt. It is inspired by the Django admin inter...
     </div>
 </div>
 
@@ -71,6 +81,17 @@ yield 简单来说就是一个生成器,生成器是这样一个函数，它记�
 <div class="post-item">
     <div class="post-header">
         <span class="ui-tips post-index">4.</span>
+        <h2><a href="/2014/08/26/making-love-out-of-nothing-at-all/">Air Supply ----- Making love Out of nothing at all </a></h2>
+        <span class="post-date">2014-08-26</span>
+    </div>
+    <div class="post-content">
+        Air Supply - Making love Out of nothing at all12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970...
+    </div>
+</div>
+
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">5.</span>
         <h2><a href="/2014/08/25/12-basic-knowledge-in-python/">12 Basic Knowledge in Python</a></h2>
         <span class="post-date">2014-08-25</span>
     </div>
@@ -84,7 +105,7 @@ yield 简单来说就是一个生成器,生成器是这样一个函数，它记�
 
 <div class="post-item">
     <div class="post-header">
-        <span class="ui-tips post-index">5.</span>
+        <span class="ui-tips post-index">6.</span>
         <h2><a href="/2014/08/23/lean-djangos-10-precautions/">Lean Django&#39;s 10 Precautions</a></h2>
         <span class="post-date">2014-08-23</span>
     </div>
@@ -96,31 +117,13 @@ Here note summarize the ten points that can help you ...
 
 <div class="post-item">
     <div class="post-header">
-        <span class="ui-tips post-index">6.</span>
+        <span class="ui-tips post-index">7.</span>
         <h2><a href="/2014/08/21/how-to-use-args-and-kwargs-in-python/">How to use args and kwargs in Python</a></h2>
         <span class="post-date">2014-08-21</span>
     </div>
     <div class="post-content">
         How to use variable length argument lists in Python.
 The special syntax, args and **kwargs in function definitions is used to pass a variable number of arguments to a function. ...
-    </div>
-</div>
-
-<div class="post-item">
-    <div class="post-header">
-        <span class="ui-tips post-index">7.</span>
-        <h2><a href="/2014/08/17/use-frabic-in-update-github/">Use Frabic in update Github</a></h2>
-        <span class="post-date">2014-08-17</span>
-    </div>
-    <div class="post-content">
-        Fabic is used for automating deployment of your application.
-Fabric is used for automating deployment of your application.
-Install:
-
-    $ pip install fabric
-
-
-Create the fabfil...
     </div>
 </div>
 
@@ -146,6 +149,24 @@ def home(request):
 <div class="post-item">
     <div class="post-header">
         <span class="ui-tips post-index">9.</span>
+        <h2><a href="/2014/08/17/use-frabic-in-update-github/">Use Frabic in update Github</a></h2>
+        <span class="post-date">2014-08-17</span>
+    </div>
+    <div class="post-content">
+        Fabic is used for automating deployment of your application.
+Fabric is used for automating deployment of your application.
+Install:
+
+    $ pip install fabric
+
+
+Create the fabfil...
+    </div>
+</div>
+
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">10.</span>
         <h2><a href="/2014/08/13/git-common-operations-command/">GIT Common Operations Command</a></h2>
         <span class="post-date">2014-08-13</span>
     </div>
@@ -164,18 +185,6 @@ $ git remote add [name] [url]
 
 删除远程仓库：
 $ git re...
-    </div>
-</div>
-
-<div class="post-item">
-    <div class="post-header">
-        <span class="ui-tips post-index">10.</span>
-        <h2><a href="/2014/08/12/how-to-install-google-authenticator-on-linux/">How to install Google Authenticator on Linux</a></h2>
-        <span class="post-date">2014-08-12</span>
-    </div>
-    <div class="post-content">
-        Question I want to use Google Authenticator to set up two factor authentication. How can I install Google Authenticator on [insert your Linux distro]?
-Question: I want to use Go...
     </div>
 </div>
 

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/styles/base.css">
+    <link rel="stylesheet" href="/styles/theme.css">
+    <link rel="shortcut icon" href="/favicon.png">
+    
+    <title>python - 分类 - Tony Tan</title>
+    
+</head>
+<body>
+    <div class="header-title">
+        <span class="header-light"></span>
+        <span class="header-light"></span>
+        <span class="header-light"></span>
+        <span>Tony Tan tonytan748.github.io<span>
+    </span></span></div>
+    <div class="container">
+        <ul class="nav">
+        
+            <li><a href="/">首页</a></li>
+        
+            <li><a href="/categories">分类</a></li>
+        
+            <li><a href="/about">关于</a></li>
+        
+        </ul>
+        <div class="content">
+            
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">1.</span>
+        <h2><a href="/2014/06/27/Python-sqlite3-get-column-name/">Python sqlite3 get table column name</a></h2>
+        <span class="post-date">2014-06-27</span>
+    </div>
+    <div class="post-content">
+        Get the column name use inquiry result:
+
+import sqlite3
+
+db=sqlite3.connect(&#39;data.db&#39;)
+cur=db.cursor()
+cur.execute(&#39;SELECT * FROM table&#39;)
+col_name_list=[i[0] for i in cur.descri...
+    </div>
+</div>
+
+
+
+<nav class="pagination">
+    <a class="extend prev" rel="prev" href="/categories/python/page/9/">Prev</a><a class="page-number" href="/categories/python/">1</a><span class="space">&hellip;</span><a class="page-number" href="/categories/python/page/8/">8</a><a class="page-number" href="/categories/python/page/9/">9</a><span class="page-number current">10</span>
+</nav>
+
+
+        </div>
+        <div class="footer">
+            
+            <p class="footer-copyright">
+                <span>Powered by <a target="_blank" href="https://hexo.io">Hexo</a></span>
+                <span>Theme <a target="_blank" href="https://github.com/tinkink-co/hexo-theme-terminal">Terminal</a></span>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
