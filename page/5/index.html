@@ -33,6 +33,24 @@
 <div class="post-item">
     <div class="post-header">
         <span class="ui-tips post-index">1.</span>
+        <h2><a href="/2021/02/19/mysql查询近7天，半年，一年数据/">mysql查询近7天，半年，一年数据</a></h2>
+        <span class="post-date">2021-02-19</span>
+    </div>
+    <div class="post-content">
+        
+近7天数据
+
+12SELECT * from oms_order_item_comment      where comment_time between date_sub(now(),interval 1 week) and now()  -- 七天
+
+半年数据
+
+12SELECT * from oms_order_item_comment    ...
+    </div>
+</div>
+
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">2.</span>
         <h2><a href="/2021/02/19/Django-ContentTypes使用示例/">Django.ContentTypes使用示例</a></h2>
         <span class="post-date">2021-02-19</span>
     </div>
@@ -45,7 +63,7 @@
 
 <div class="post-item">
     <div class="post-header">
-        <span class="ui-tips post-index">2.</span>
+        <span class="ui-tips post-index">3.</span>
         <h2><a href="/2021/02/04/Django-queryset实现按指定字段的值进行排序/">[Django]queryset实现按指定字段的值进行排序</a></h2>
         <span class="post-date">2021-02-04</span>
     </div>
@@ -61,7 +79,7 @@ MySQL中的SQL语句的语法：
 
 <div class="post-item">
     <div class="post-header">
-        <span class="ui-tips post-index">3.</span>
+        <span class="ui-tips post-index">4.</span>
         <h2><a href="/2021/01/20/Go安装go-redis依赖被墙问题/">Go安装go-redis依赖被墙问题</a></h2>
         <span class="post-date">2021-01-20</span>
     </div>
@@ -72,7 +90,7 @@ MySQL中的SQL语句的语法：
 
 <div class="post-item">
     <div class="post-header">
-        <span class="ui-tips post-index">4.</span>
+        <span class="ui-tips post-index">5.</span>
         <h2><a href="/2021/01/11/modulesb报错/">解决Go中ambiguous import in multiple modules错误</a></h2>
         <span class="post-date">2021-01-11</span>
     </div>
@@ -84,7 +102,7 @@ MySQL中的SQL语句的语法：
 
 <div class="post-item">
     <div class="post-header">
-        <span class="ui-tips post-index">5.</span>
+        <span class="ui-tips post-index">6.</span>
         <h2><a href="/2020/12/30/后台edite页面实现三级联动/">后台edite页面实现三级联动</a></h2>
         <span class="post-date">2020-12-30</span>
     </div>
@@ -106,7 +124,7 @@ Django3.1
 
 <div class="post-item">
     <div class="post-header">
-        <span class="ui-tips post-index">6.</span>
+        <span class="ui-tips post-index">7.</span>
         <h2><a href="/2020/12/18/装饰器的六种写法/">装饰器的六种写法</a></h2>
         <span class="post-date">2020-12-18</span>
     </div>
@@ -122,7 +140,7 @@ Django3.1
 
 <div class="post-item">
     <div class="post-header">
-        <span class="ui-tips post-index">7.</span>
+        <span class="ui-tips post-index">8.</span>
         <h2><a href="/2020/11/09/How-to-set-up-a-perfect-Python-project/">How to set up a perfect Python project</a></h2>
         <span class="post-date">2020-11-09</span>
     </div>
@@ -134,7 +152,7 @@ When starting a new Python project, it is tempting to just dive in and start cod
 
 <div class="post-item">
     <div class="post-header">
-        <span class="ui-tips post-index">8.</span>
+        <span class="ui-tips post-index">9.</span>
         <h2><a href="/2019/05/17/Python-datetime模块介绍及示例/">Python datetime模块介绍及示例</a></h2>
         <span class="post-date">2019-05-17</span>
     </div>
@@ -168,7 +186,7 @@ datetime_CAPI
 
 <div class="post-item">
     <div class="post-header">
-        <span class="ui-tips post-index">9.</span>
+        <span class="ui-tips post-index">10.</span>
         <h2><a href="/2019/04/15/python-calendar/">python calendar</a></h2>
         <span class="post-date">2019-04-15</span>
     </div>
@@ -181,18 +199,6 @@ firstweekday()：返回一周的第一天，0是星期一，…，6为星期日
 isleap(year)：判断指定是否是闰年，闰年为True，平年为False
 
 leapdays(y1, y2)：返回y1与y2年份之间的闰年数量...
-    </div>
-</div>
-
-<div class="post-item">
-    <div class="post-header">
-        <span class="ui-tips post-index">10.</span>
-        <h2><a href="/2019/04/09/django2-2-build-website-and-deploy-in-ubuntu-server/">django2.2 build website and deploy in ubuntu server</a></h2>
-        <span class="post-date">2019-04-09</span>
-    </div>
-    <div class="post-content">
-        Crete virtualenv12345678910111213pip install pipenvmkdir websitecd websitepipenv shell --python 3.6pipenv install djangopipenv install pymysqlpipenv install gunicorn
-when runnin...
     </div>
 </div>
 

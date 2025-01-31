@@ -33,6 +33,19 @@
 <div class="post-item">
     <div class="post-header">
         <span class="ui-tips post-index">1.</span>
+        <h2><a href="/2022/01/17/Python-Supervisor-Gunicorn-Nginx部署/">Python+Supervisor+Gunicorn+Nginx部署</a></h2>
+        <span class="post-date">2022-01-17</span>
+    </div>
+    <div class="post-content">
+        删除nano12# 在终端输入删除nano编辑器的命令：sudo apt-get remove nano
+创建用户123456789sudo adduser xxxxxxchmod -R 640 /etc/sudoerssudo vim /etc/sudoerschmod -R 440 /etc/sudoers或者使用sudo visudo
+退出并用x...
+    </div>
+</div>
+
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">2.</span>
         <h2><a href="/2021/12/23/Hexo插件无误，但无法生成index的解决办法/">Hexo插件无误，但无法生成index的解决办法</a></h2>
         <span class="post-date">2021-12-23</span>
     </div>
@@ -50,7 +63,7 @@
 
 <div class="post-item">
     <div class="post-header">
-        <span class="ui-tips post-index">2.</span>
+        <span class="ui-tips post-index">3.</span>
         <h2><a href="/2021/12/23/Pywebio试用总结/">Pywebio试用总结</a></h2>
         <span class="post-date">2021-12-23</span>
     </div>
@@ -70,7 +83,7 @@ pywebio是一个用python直接渲染web页面的库，主要实现了页面输�
 
 <div class="post-item">
     <div class="post-header">
-        <span class="ui-tips post-index">3.</span>
+        <span class="ui-tips post-index">4.</span>
         <h2><a href="/2021/11/22/Python支付宝接口-int-argument-must-be-a-string-a-bytes-like-object-or-a-number-not-Sequence-错误/">Python支付宝接口 int() argument must be a string, a bytes-like object or a number, not &#39;Sequence&#39;错误</a></h2>
         <span class="post-date">2021-11-22</span>
     </div>
@@ -81,7 +94,7 @@ pywebio是一个用python直接渲染web页面的库，主要实现了页面输�
 
 <div class="post-item">
     <div class="post-header">
-        <span class="ui-tips post-index">4.</span>
+        <span class="ui-tips post-index">5.</span>
         <h2><a href="/2021/10/23/Python第三方字典模块：Addict-模块/">Python第三方字典模块：Addict 模块</a></h2>
         <span class="post-date">2021-10-23</span>
     </div>
@@ -95,7 +108,7 @@ Addit 是一个Python模块，除了提供标准的字典语法外，Addit 生�
 
 <div class="post-item">
     <div class="post-header">
-        <span class="ui-tips post-index">5.</span>
+        <span class="ui-tips post-index">6.</span>
         <h2><a href="/2021/09/13/Huey-as-a-minimal-task-queue-for-Django/">Huey as a minimal task queue for Django</a></h2>
         <span class="post-date">2021-09-13</span>
     </div>
@@ -108,7 +121,7 @@ When I was “younger” task queue with Djan...
 
 <div class="post-item">
     <div class="post-header">
-        <span class="ui-tips post-index">6.</span>
+        <span class="ui-tips post-index">7.</span>
         <h2><a href="/2021/09/10/用python绘制太极图/">用python绘制太极图</a></h2>
         <span class="post-date">2021-09-10</span>
     </div>
@@ -120,7 +133,7 @@ When I was “younger” task queue with Djan...
 
 <div class="post-item">
     <div class="post-header">
-        <span class="ui-tips post-index">7.</span>
+        <span class="ui-tips post-index">8.</span>
         <h2><a href="/2021/09/09/OS-X下运行sudo-go-command/">MAC下运行go command必须要sudo的处理办法</a></h2>
         <span class="post-date">2021-09-09</span>
     </div>
@@ -138,7 +151,7 @@ When I was “younger” task queue with Djan...
 
 <div class="post-item">
     <div class="post-header">
-        <span class="ui-tips post-index">8.</span>
+        <span class="ui-tips post-index">9.</span>
         <h2><a href="/2021/08/01/互联网架构，如何进行容量设计？/">互联网架构，如何进行容量设计？</a></h2>
         <span class="post-date">2021-08-01</span>
     </div>
@@ -157,7 +170,7 @@ When I was “younger” task queue with Djan...
 
 <div class="post-item">
     <div class="post-header">
-        <span class="ui-tips post-index">9.</span>
+        <span class="ui-tips post-index">10.</span>
         <h2><a href="/2021/05/30/freeswitch在centos中安装/">freeswitch在centos中安装</a></h2>
         <span class="post-date">2021-05-30</span>
     </div>
@@ -165,24 +178,6 @@ When I was “younger” task queue with Djan...
         下载freeswitch包1https://freeswitch.org/confluence/display/FREESWITCH/FreeSWITCH+1.10.x+Release+notes
 找到最新安装包for centos
 安装依赖1yum install -y git alsa-lib-devel autoconf automake bis...
-    </div>
-</div>
-
-<div class="post-item">
-    <div class="post-header">
-        <span class="ui-tips post-index">10.</span>
-        <h2><a href="/2021/02/19/mysql查询近7天，半年，一年数据/">mysql查询近7天，半年，一年数据</a></h2>
-        <span class="post-date">2021-02-19</span>
-    </div>
-    <div class="post-content">
-        
-近7天数据
-
-12SELECT * from oms_order_item_comment      where comment_time between date_sub(now(),interval 1 week) and now()  -- 七天
-
-半年数据
-
-12SELECT * from oms_order_item_comment    ...
     </div>
 </div>
 

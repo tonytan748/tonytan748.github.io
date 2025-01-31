@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/styles/base.css">
+    <link rel="stylesheet" href="/styles/theme.css">
+    <link rel="shortcut icon" href="/favicon.png">
+    
+    <title>nginx限流设置 - Tony Tan</title>
+    
+</head>
+<body>
+    <div class="header-title">
+        <span class="header-light"></span>
+        <span class="header-light"></span>
+        <span class="header-light"></span>
+        <span>Tony Tan tonytan748.github.io<span>
+    </span></span></div>
+    <div class="container">
+        <ul class="nav">
+        
+            <li><a href="/">首页</a></li>
+        
+            <li><a href="/categories">分类</a></li>
+        
+            <li><a href="/about">关于</a></li>
+        
+        </ul>
+        <div class="content">
+            <div class="post-container">
+    <div class="post-header">
+        <span class="ui-tips">标题：</span>
+        <h1 class="ui-keyword post-title">nginx限流设置</h1>
+        <span class="post-date">2025-01-31</span>
+    </div>
+    
+    <div class="post-header">
+        <span class="ui-tips">分类：</span>
+        
+        <a href="/categories/nginx/">nginx</a>
+        
+    </div>
+    
+    
+    <div class="post-header">
+        <span class="ui-tips">标签：</span>
+        
+        <a href="/tags/nginx/">nginx</a>
+        
+    </div>
+    
+    
+    <div class="post-content"><p>Nginx限流的方式有两种，一种是控制速率，另一种是控制并发量。</p>
+<h1 id="控制速率"><a href="#控制速率" class="headerlink" title="控制速率"></a>控制速率</h1><p>控制速率就是限制访问Nginx的数量，如果数量超过限制，就直接拒绝请求，不去处理。</p>
+<ul>
+<li>首先我们需要进行一个限流的配置，编辑上面提到的nginx的配置文件，在http里面添加以下内容</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#限流设置</span><br><span class="line">#binary_remote_addr 是一种key，表示基于 remote_addr(客户端IP) 来做限流，binary_ 的目的是压缩内存占用量。</span><br><span class="line">#zone：定义共享内存区来存储访问信息， contentRateLimit:10m 表示一个大小为10M，名字为contentRateLimit的内存区域。1M能存储16000 IP地址的访问信息，10M可以存储16W IP地址访问信息。</span><br><span class="line">#rate 用于设置最大访问速率，rate=10r/s 表示每秒最多处理10个请求。Nginx 实际上以毫秒为粒度来跟踪请求信息，因此 10r/s 实际上是限制：每100毫秒处理一个请求。这意味着，自上一个请求处理完后，若后续100毫秒内又有请求到达，</span><br><span class="line">limit_req_zone $binary_remote_addr zone=contentRateLimit:10m rate=2r/s;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">	include 	mime.types;</span><br><span class="line">	default_type 	application/octet-stream;</span><br><span class="line"></span><br><span class="line">	# 限制流配置</span><br><span class="line">	limit_req_zone	$binary_remote_addr  zone=contentRateLimit:10m  rate=5r/s;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>配置完之后我们还需要使用限流配置，在nginx的配置文件中，在http.server.location中使用限流配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#burst相当于队列，若rate=2r/s同时有4个请求到达，Nginx 会处理第一个请求，剩余3个请求将放入队列，然后每隔500ms从队列中获取一个请求进行处理。若请求数大于4，将拒绝处理多余的请求，直接返回503</span><br><span class="line">#nodelay，配合burst使用，并发处理不延迟，不按(1s/rate)秒/个的速率处理，等到完成之后，按照正常的速率处理</span><br><span class="line">limit_req zone=contentRateLimit burst=4 nodelay; #使用限流配置</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">	listen		80;</span><br><span class="line">	server_name	localhost;</span><br><span class="line">	charset		utf-8;</span><br><span class="line"></span><br><span class="line">	location / &#123;</span><br><span class="line">		limit_req	zone=contentRateLimit  burst=20	nodelay;	# 使用限流配置</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>最后不要忘了重新加载文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/openresty/nginx/sbin		# 切换到nginx下的sbin目录中</span><br><span class="line">./nginx -s road					  # 重新加载文件</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="控制并发量"><a href="#控制并发量" class="headerlink" title="控制并发量"></a>控制并发量</h1><p>控制并发量就是限制一个ip对服务器的连接数。首先我们需要配置一下，编辑nginx.conf文件，在http下添加如下配置。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#根据IP地址来限制，存储内存大小10M，配置名为perip，大小为1m</span><br><span class="line">limit_conn_zone $binary_remote_addr zone=perip:10m;</span><br><span class="line">#根据IP地址来限制，存储内存大小10M，配置名为perserver，大小为1m</span><br><span class="line">limit_conn_zone $server_name zone=perserver:10m;</span><br></pre></td></tr></table></figure></p>
+<p>配置完成之后，我们需要让某一个location使用这个配置，这里，我们让/brand使用这个配置，在nginx.conf中的http.server.location /brand中添加以下内容。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">limit_conn perip 10;   #设置单个客户端ip与服务器的连接数为10．</span><br><span class="line">limit_conn perserver 100; #限制与服务器的总连接数为100</span><br><span class="line">#表示这个请求给180主机处理，因为程序运行在主机上，不在虚拟机上</span><br><span class="line">proxy_pass http://192.168.31.180:18081</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">	include 	mime.types;</span><br><span class="line">	default_type 	application/octet-stream;</span><br><span class="line"></span><br><span class="line">	# 限制流配置</span><br><span class="line">	limit_req_zone	$binary_remote_addr  zone=contentRateLimit:10m  rate=5r/s;</span><br><span class="line"></span><br><span class="line">	# 限制并发配置</span><br><span class="line">	limit_req_zone	$binary_remote_addr  zone=perip:10m;</span><br><span class="line">	limit_req_zone	$binary_remote_addr  zone=preserver:10m;</span><br><span class="line"></span><br><span class="line">	server &#123;</span><br><span class="line">		listen		80;</span><br><span class="line">		server_name	localhost;</span><br><span class="line">		charset		utf-8;</span><br><span class="line"></span><br><span class="line">		location / &#123;</span><br><span class="line">			limit_conn perip 10;		# 设置单个客户端ip与服务器的连接数为10</span><br><span class="line">			limit_conn perserver 100;	# 限制与服务器的总连接数为100</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
+<p>最后，重新加载一下文件即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/openresty/nginx/sbin		# 切换到nginx下的sbin目录中</span><br><span class="line">./nginx -s road					  # 重新加载文件</span><br></pre></td></tr></table></figure></p>
+</div>
+</div>
+
+        </div>
+        <div class="footer">
+            
+            <p class="footer-copyright">
+                <span>Powered by <a target="_blank" href="https://hexo.io">Hexo</a></span>
+                <span>Theme <a target="_blank" href="https://github.com/tinkink-co/hexo-theme-terminal">Terminal</a></span>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

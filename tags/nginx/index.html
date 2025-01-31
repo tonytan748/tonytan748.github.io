@@ -33,6 +33,22 @@
 <div class="post-item">
     <div class="post-header">
         <span class="ui-tips post-index">1.</span>
+        <h2><a href="/2025/01/31/nginx限流设置/">nginx限流设置</a></h2>
+        <span class="post-date">2025-01-31</span>
+    </div>
+    <div class="post-content">
+        Nginx限流的方式有两种，一种是控制速率，另一种是控制并发量。
+控制速率控制速率就是限制访问Nginx的数量，如果数量超过限制，就直接拒绝请求，不去处理。
+
+首先我们需要进行一个限流的配置，编辑上面提到的nginx的配置文件，在http里面添加以下内容
+
+12345#限流设置#binary_remote_addr 是一种key，表示基于 remote...
+    </div>
+</div>
+
+<div class="post-item">
+    <div class="post-header">
+        <span class="ui-tips post-index">2.</span>
         <h2><a href="/2024/04/17/nginx配置auth-basic登录认证的方法/">nginx配置auth_basic登录认证的方法</a></h2>
         <span class="post-date">2024-04-17</span>
     </div>
