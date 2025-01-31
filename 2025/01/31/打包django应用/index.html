@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/styles/base.css">
+    <link rel="stylesheet" href="/styles/theme.css">
+    <link rel="shortcut icon" href="/favicon.png">
+    
+    <title>打包django应用 - Tony Tan</title>
+    
+</head>
+<body>
+    <div class="header-title">
+        <span class="header-light"></span>
+        <span class="header-light"></span>
+        <span class="header-light"></span>
+        <span>Tony Tan tonytan748.github.io<span>
+    </span></span></div>
+    <div class="container">
+        <ul class="nav">
+        
+            <li><a href="/">首页</a></li>
+        
+            <li><a href="/categories">分类</a></li>
+        
+            <li><a href="/about">关于</a></li>
+        
+        </ul>
+        <div class="content">
+            <div class="post-container">
+    <div class="post-header">
+        <span class="ui-tips">标题：</span>
+        <h1 class="ui-keyword post-title">打包django应用</h1>
+        <span class="post-date">2025-01-31</span>
+    </div>
+    
+    <div class="post-header">
+        <span class="ui-tips">分类：</span>
+        
+        <a href="/categories/python/">python</a>
+        
+    </div>
+    
+    
+    <div class="post-header">
+        <span class="ui-tips">标签：</span>
+        
+        <a href="/tags/python/">python</a>
+        
+    </div>
+    
+    
+    <div class="post-content"><p>参考django官方文档(<a href="https://docs.djangoproject.com/zh-hans/5.0/intro/reusable-apps/" target="_blank" rel="noopener">https://docs.djangoproject.com/zh-hans/5.0/intro/reusable-apps/</a>)</p>
+<h1 id="打包应用"><a href="#打包应用" class="headerlink" title="打包应用"></a>打包应用</h1><h2 id="在项目中创建一个应用，并完成功能和业务逻辑，完成测试。"><a href="#在项目中创建一个应用，并完成功能和业务逻辑，完成测试。" class="headerlink" title="在项目中创建一个应用，并完成功能和业务逻辑，完成测试。"></a>在项目中创建一个应用，并完成功能和业务逻辑，完成测试。</h2><ul>
+<li>创建项目 <code>django-admin startproject xxx_admin</code></li>
+<li>进入项目 <code>cd xxx_admin</code></li>
+<li>创建应用 <code>django-admin startapp common</code></li>
+<li>完成common应用的功能和业务逻辑</li>
+<li>完成common的测试</li>
+</ul>
+<h2 id="在项目外其他位置来配置包"><a href="#在项目外其他位置来配置包" class="headerlink" title="在项目外其他位置来配置包"></a>在项目外其他位置来配置包</h2><ul>
+<li><p>在其他目录下创建一个文件夹来存放要打包的文件, 文件夹名称使用<code>django-</code>前缀作为标记</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd ~/Training/django-common</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将<code>xxx_admin</code>项目中的<code>common</code>应用复制到<code>django-common</code>目录下</p>
+</li>
+<li><p>在<code>django-common</code>目录下创建如下文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">django-common/</span><br><span class="line">  -  common/</span><br><span class="line">  -  README.rst</span><br><span class="line">  -  LICENSE</span><br><span class="line">  -  pyproject.toml</span><br><span class="line">  -  setup.cfg </span><br><span class="line">  -  setup.py</span><br><span class="line">  -  MANIFEST.in</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>README.rst</code>内容为应用简介</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">=====</span><br><span class="line">Polls</span><br><span class="line">=====</span><br><span class="line"></span><br><span class="line">Polls is a Django app to conduct web-based polls. For each question,</span><br><span class="line">visitors can choose between a fixed number of answers.</span><br><span class="line"></span><br><span class="line">Detailed documentation is in the &quot;docs&quot; directory.</span><br><span class="line"></span><br><span class="line">Quick start</span><br><span class="line">-----------</span><br><span class="line"></span><br><span class="line">1. Add &quot;polls&quot; to your INSTALLED_APPS setting like this::</span><br><span class="line"></span><br><span class="line">    INSTALLED_APPS = [</span><br><span class="line">        ...</span><br><span class="line">        &apos;polls&apos;,</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">2. Include the polls URLconf in your project urls.py like this::</span><br><span class="line"></span><br><span class="line">    path(&apos;polls/&apos;, include(&apos;polls.urls&apos;)),</span><br><span class="line"></span><br><span class="line">3. Run ``python manage.py migrate`` to create the polls models.</span><br><span class="line"></span><br><span class="line">4. Start the development server and visit http://127.0.0.1:8000/admin/</span><br><span class="line">   to create a poll (you&apos;ll need the Admin app enabled).</span><br><span class="line"></span><br><span class="line">5. Visit http://127.0.0.1:8000/polls/ to participate in the poll.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>LICENSE</code>可以为一个空文件，其目的是写一个授权协议</p>
+</li>
+<li><p><code>pyproject.toml</code>使打包的依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[build-system]</span><br><span class="line">requires = [&apos;setuptools&gt;=40.8.0&apos;, &apos;wheel&apos;]</span><br><span class="line">build-backend = &apos;setuptools.build_meta:__legacy__&apos;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>setup.cfg</code>是打包的配置参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">[metadata]</span><br><span class="line">name = django-polls</span><br><span class="line">version = 0.1</span><br><span class="line">description = A Django app to conduct web-based polls.</span><br><span class="line">long_description = file: README.rst</span><br><span class="line">url = https://www.example.com/</span><br><span class="line">author = Your Name</span><br><span class="line">author_email = yourname@example.com</span><br><span class="line">license = BSD-3-Clause  # Example license</span><br><span class="line">classifiers =</span><br><span class="line">    Environment :: Web Environment</span><br><span class="line">    Framework :: Django</span><br><span class="line">    Framework :: Django :: X.Y  # Replace &quot;X.Y&quot; as appropriate</span><br><span class="line">    Intended Audience :: Developers</span><br><span class="line">    License :: OSI Approved :: BSD License</span><br><span class="line">    Operating System :: OS Independent</span><br><span class="line">    Programming Language :: Python</span><br><span class="line">    Programming Language :: Python :: 3</span><br><span class="line">    Programming Language :: Python :: 3 :: Only</span><br><span class="line">    Programming Language :: Python :: 3.8</span><br><span class="line">    Programming Language :: Python :: 3.9</span><br><span class="line">    Topic :: Internet :: WWW/HTTP</span><br><span class="line">    Topic :: Internet :: WWW/HTTP :: Dynamic Content</span><br><span class="line"></span><br><span class="line">[options]</span><br><span class="line">include_package_data = true</span><br><span class="line">packages = find:</span><br><span class="line">python_requires = &gt;=3.8</span><br><span class="line">install_requires =</span><br><span class="line">    Django &gt;= X.Y  # Replace &quot;X.Y&quot; as appropriate</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>setup.py</code>使打包的运行文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from setuptools import setup</span><br><span class="line"></span><br><span class="line">setup()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>MANIFEST.in</code>是在打包中明确要包含的其他模块和包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">include LICENSE</span><br><span class="line">include README.rst</span><br><span class="line">recursive-include polls/static *</span><br><span class="line">recursive-include polls/templates *</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在’django-common/‘目录下打包，命令如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ptyhon3 setup.py sdist</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>该命令会在目录下生成一个<code>dist</code>的目录，里面包含了完成的应用包， 后缀为<code>tar.gz</code></p>
+<h2 id="使用应用包"><a href="#使用应用包" class="headerlink" title="使用应用包"></a>使用应用包</h2><ul>
+<li><p>在创建虚拟环境中使用命令安装包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install --user ../django-common/dist/django-common-0.1.tar.gz</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在项目settings.py的<code>INSTALLED_APPS</code>中增加应用, 这样就可以使用common的全部功能了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">&apos;common&apos;,</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>卸载应用包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pop uninstall django-common</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</div>
+</div>
+
+        </div>
+        <div class="footer">
+            
+            <p class="footer-copyright">
+                <span>Powered by <a target="_blank" href="https://hexo.io">Hexo</a></span>
+                <span>Theme <a target="_blank" href="https://github.com/tinkink-co/hexo-theme-terminal">Terminal</a></span>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
